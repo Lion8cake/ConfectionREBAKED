@@ -1,0 +1,45 @@
+using TheConfectionRebirth.Projectiles;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
+
+namespace TheConfectionRebirth.Items.Weapons
+{
+	public class YoyoCookie : ModItem
+	{
+		public override void SetStaticDefaults() {
+		    DisplayName.SetDefault("The Crumbler");
+			ItemID.Sets.Yoyo[Item.type] = true;
+			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
+			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults() {
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.width = 24;
+			Item.height = 24;
+			Item.useAnimation = 25;
+			Item.useTime = 25;
+			Item.shootSpeed = 16f;
+			Item.knockBack = 2.5f;
+			Item.damage = 62;
+			Item.rare = ItemRarityID.LightRed;
+
+			Item.DamageType = DamageClass.Melee;
+			Item.channel = true;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+
+			Item.UseSound = SoundID.Item1;
+			Item.value = Item.sellPrice(silver: 400);
+			Item.shoot = ModContent.ProjectileType<YoyoCookieYoyo>();
+		}
+		
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(3278).AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 15).AddIngredient(ModContent.ItemType<SoulofDelight>(), 10).AddTile(TileID.MythrilAnvil).Register();
+		}
+	}
+}

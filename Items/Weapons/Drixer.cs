@@ -1,0 +1,44 @@
+using TheConfectionRebirth.Items.Placeable;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
+
+namespace TheConfectionRebirth.Items.Weapons
+{
+	public class Drixer : ModItem
+	{
+		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("'Not to be confused with a Drax'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults() {
+			Item.damage = 34;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 20;
+			Item.height = 12;
+			Item.useTime = 5;
+			Item.useAnimation = 35;
+			Item.channel = true;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
+			Item.axe = 22;
+			Item.pick = 200;
+			Item.tileBoost++;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.knockBack = 6;
+			Item.value = Item.sellPrice(silver: 440);
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item23;
+			Item.autoReuse = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Drixer>();
+			Item.shootSpeed = 40f;
+		}
+		
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 18).AddIngredient(ItemID.SoulofSight, 1).AddIngredient(ItemID.SoulofMight, 1).AddIngredient(ItemID.SoulofFright, 1).AddTile(TileID.MythrilAnvil).Register();
+		}
+	}
+}
