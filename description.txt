@@ -12,10 +12,9 @@ The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CON
 ===========================================
 Change log
 ===========================================
--Fixed confection crashing when attempting to load the mod
--Removed functionality of basically anything thats not an item
--Removed Meaty mummy
--Removed World generation (upcoming update to it soon)
+-Added Alternate Biome Library support
+-Fixed a few things
+-Removed key of decay and key of smite 
 
 ===========================================
 Credit - Coders
