@@ -17,6 +17,20 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.timeLeft = 10;
             Projectile.ai[0] = 0;
         }
+		
+		public override void SetStaticDefaults() {
+			Main.projFrames[Projectile.type] = 8;
+		}
+
+        public override void AI()
+        {			
+			if (++Projectile.frameCounter >= 5) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Projectile.type])
+					Projectile.frame = 0;
+			}
+        }
+		
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (target.boss == false)

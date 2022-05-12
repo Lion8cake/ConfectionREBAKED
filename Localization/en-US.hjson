@@ -1,0 +1,17 @@
+Mods: {
+	TheConfectionRebirth: 
+	{
+		BiomeName: {
+			ConfectionSurfaceBiome: The Confection
+			ConfectionUndergroundBiome: Confection Underground
+			IceConfectionSurfaceBiome: Confection Ice
+			IceConfectionUndergroundBiome: Confection Cave Ice
+			SandConfectionSurfaceBiome: Confection Desert
+			SandConfectionUndergroundBiome: Confection Cave Desert
+		}
+		
+		TownNPCMood: {
+			ConfectionSurfaceBiome: The Confection
+		}
+	}
+}

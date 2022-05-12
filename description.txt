@@ -12,9 +12,7 @@ The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CON
 ===========================================
 Change log
 ===========================================
--Added Alternate Biome Library support
--Fixed a few things
--Removed key of decay and key of smite 
+-Fixed Alt Library Support
 
 ===========================================
 Credit - Coders

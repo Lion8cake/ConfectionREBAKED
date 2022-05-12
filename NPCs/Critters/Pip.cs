@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A small bird found within the confection, nobody knows why it only apears in the confection.")
+				new FlavorTextBestiaryInfoElement("A small marshmellow bird found within the confection, a mutated peep that grew wings and flies.")
 			});
 		}
 

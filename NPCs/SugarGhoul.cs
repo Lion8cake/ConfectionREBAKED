@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.NPCs
 			NPC.aiStyle = 3;
 			AIType = 524;
 			AnimationType = 524;
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSandUndergroundBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionUndergroundBiome>().Type };
 		}
 		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

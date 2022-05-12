@@ -39,7 +39,7 @@ namespace TheConfectionRebirth.NPCs
 			AnimationType = NPCID.SandShark;
 			//banner = npc.type;
 			//bannerItem = ModContent.ItemType<FoaminFloatBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSandSurfaceBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
 		}
 		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

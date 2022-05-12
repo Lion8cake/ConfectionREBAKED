@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2cQ958I7iTAIa0jofhuP6kjQARHrrVi/Eag1XbgzIKOnWGQWXLK1+KGAt1gg+QmSa974VL0OAdQobniMbIPzsw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lion8\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -31,8 +31,6 @@ namespace TheConfectionRebirth
 	   public bool FoxPet;
 	   
 	   public Projectile DimensionalWarp;
-	
-       public bool ZoneConfection;
 	   
 	   public override void ResetEffects() {
 			RollerCookiePet = false;

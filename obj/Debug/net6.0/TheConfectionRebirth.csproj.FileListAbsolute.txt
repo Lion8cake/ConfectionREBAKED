@@ -1,0 +1,5 @@
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\obj\Debug\net6.0\TheConfectionRebirth.csproj.AssemblyReference.cache
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\obj\Debug\net6.0\TheConfectionRebirth.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\obj\Debug\net6.0\TheConfectionRebirth.AssemblyInfoInputs.cache
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\obj\Debug\net6.0\TheConfectionRebirth.AssemblyInfo.cs
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\obj\Debug\net6.0\TheConfectionRebirth.csproj.CoreCompileInputs.cache

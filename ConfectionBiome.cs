@@ -17,7 +17,35 @@ using TheConfectionRebirth.NPCs;
 namespace TheConfectionRebirth.Content
 {
     internal class ConfectionBiome : AltBiome
-    {
+    {		
+        public override void SetStaticDefaults()
+        {
+            BiomeType = BiomeType.Hallow;
+            BiomeGrass = ModContent.TileType<CreamGrass>();
+            BiomeStone = ModContent.TileType<Tiles.Creamstone>();
+            BiomeSand = ModContent.TileType<Tiles.Creamsand>();
+            BiomeIce = ModContent.TileType<BlueIce>();
+            BiomeSandstone = ModContent.TileType<Tiles.Creamsandstone>();
+			BiomeHardenedSand = ModContent.TileType<Tiles.HardenedCreamsand>();
+            MechDropItemType = ModContent.ItemType<Items.Placeable.NeapoliniteBar>();
+            BiomeChestItem = ModContent.ItemType<PopRocket>();
+            BiomeChestTile = ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
+            BiomeChestTileStyle = 1;
+            BiomeMowedGrass = ModContent.TileType<CreamGrassMowed>();
+            MimicKeyType = ModContent.ItemType<KeyofDelight>();
+            MimicType = ModContent.NPCType<BigMimicConfection>();
+			DisplayName.SetDefault("[c/d2c491:Confection]");
+			Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
+        }
+		
+		public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int> {
+			[TileID.Dirt] = ModContent.TileType<Tiles.CookieBlock>(),
+			[TileID.SnowBlock] = ModContent.TileType<Tiles.CreamBlock>(),
+ 			[TileID.Cloud] = ModContent.TileType<Tiles.PinkFairyFloss>(),
+			[TileID.RainCloud] = ModContent.TileType<Tiles.PurpleFairyFloss>(),
+			[TileID.SnowCloud] = ModContent.TileType<Tiles.BlueFairyFloss>()
+		};
+		
 		public override WallContext WallContext => new WallContext()
                 .AddReplacement(28, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
 				.AddReplacement(1, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
@@ -78,28 +106,7 @@ namespace TheConfectionRebirth.Content
 				.AddReplacement(40, (ushort)ModContent.WallType<Walls.CreamWall>())
 				.AddReplacement(71, (ushort)ModContent.WallType<Walls.BlueIceWall>())
 				.AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());
-				
-        public override void SetStaticDefaults()
-        {
-            BiomeType = BiomeType.Hallow;
-            BiomeGrass = ModContent.TileType<CreamGrass>();
-			BiomeDirt = ModContent.TileType<Tiles.CookieBlock>();
-            BiomeStone = ModContent.TileType<Tiles.Creamstone>();
-            BiomeSand = ModContent.TileType<Tiles.Creamsand>();
-			BiomeSnow = ModContent.TileType<Tiles.CreamBlock>();
-            BiomeIce = ModContent.TileType<BlueIce>();
-            BiomeSandstone = ModContent.TileType<Tiles.Creamsandstone>();
-			BiomeHardenedSand = ModContent.TileType<Tiles.HardenedCreamsand>();
-            MechDropItemType = ModContent.ItemType<Items.Placeable.NeapoliniteBar>();
-            BiomeChestItem = ModContent.ItemType<PopRocket>();
-            BiomeChestTile = ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
-            BiomeChestTileStyle = 1;
-            BiomeMowedGrass = ModContent.TileType<CreamGrassMowed>();
-            MimicKeyType = ModContent.ItemType<KeyofDelight>();
-            MimicType = ModContent.NPCType<BigMimicConfection>();
-			DisplayName.SetDefault("[c/d2c491:Confection]");
-			Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
-        }
+		
         public override List<int> SpreadingTiles => new List<int> { ModContent.TileType<CreamGrass>(), ModContent.TileType<Tiles.Creamstone>(), ModContent.TileType<Tiles.Creamsand>(), ModContent.TileType<BlueIce>(), ModContent.TileType<Tiles.Creamsandstone>(), ModContent.TileType<Tiles.HardenedCreamsand>() };
 
         public override string WorldIcon => "TheConfectionRebirth/Assets/WorldIcons/Confection";

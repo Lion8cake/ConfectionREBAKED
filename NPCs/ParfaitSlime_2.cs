@@ -39,7 +39,7 @@ namespace TheConfectionRebirth.NPCs
 			AnimationType = NPCID.Crimslime;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<ParfaitSlimeBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSnowUndergroundBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<IceConfectionUndergroundBiome>().Type };
 		}
 		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -35,5 +35,12 @@ namespace TheConfectionRebirth.NPCs
 				new FlavorTextBestiaryInfoElement("Mimics that are engolthed by the Confection turn into a Monsterest cake. A certain key can bring them to life.")
 			});
 		}
+		
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.Player.ZoneDirtLayerHeight /*&& spawnInfo.Player.ModBiome<ConfectionUndergroundBiome>()*/) {
+				return 0.01f;
+			}
+			return 0f;
+		}
 	}
 }

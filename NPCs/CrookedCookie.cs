@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.NPCs
 			AIType = NPCID.Unicorn;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<CrookedCookieBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSandSurfaceBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
 		}
 		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

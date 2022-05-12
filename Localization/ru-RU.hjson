@@ -1,0 +1,9 @@
+Mods: {
+	TheConfectionRebirth: 
+	{
+		BiomeName: {
+			ConfectionSurfaceBiome: The Confection
+			ConfectionUndergroundBiome: Confection Underground
+		}
+	}
+}

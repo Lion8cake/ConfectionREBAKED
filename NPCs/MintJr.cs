@@ -36,7 +36,7 @@ namespace TheConfectionRebirth.NPCs
 			AIType = NPCID.MeteorHead;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<MintJrBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSandSurfaceBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
 		}
 		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
