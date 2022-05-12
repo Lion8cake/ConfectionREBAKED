@@ -27,7 +27,7 @@ namespace TheConfectionRebirth.Tiles
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
 
-		/*public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			int style = frameX / 18;
 			string item;
 			switch (style) {
@@ -110,13 +110,13 @@ namespace TheConfectionRebirth.Tiles
 					return;
 					
 			}
-			//Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>(item).Type);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, Mod.Find<ModItem>(item).Type);
 		}
 
-		/*public override void NearbyEffects(int i, int j, bool closer) {
+		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) {
 				Player player = Main.LocalPlayer;
-				int style = Main.tile[i, j].frameX / 18;
+				int style = Main.tile[i, j].TileFrameX / 18;
 				string type;
 				switch (style) {
 					case 0:
@@ -197,12 +197,10 @@ namespace TheConfectionRebirth.Tiles
 					default:
 						return;
 				}
-				/*
-				player.NPCBannerBuff[Mod.Find<ModNPC>(type).Type] = true;
-				player.hasBanner = true;
-				*/
-			//}
-		//}
+				/*Player.HasNPCBannerBuff[Mod.Find<ModNPC>(type).Type] = true;
+				Player.NPCBanner = true;*/
+			}
+		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
 			if (i % 2 == 1) {
