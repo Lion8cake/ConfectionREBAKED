@@ -26,12 +26,12 @@ namespace TheConfectionRebirth.Tiles
             ItemDrop = Mod.Find<ModItem>("CookieBlock").Type;
         }
 		
-		/*public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			if (fail && !effectOnly)
 			{
-				Main.tile[i, j].type = (ushort)ModContent.TileType<CookieBlock>();
+				Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
 			}
-		}*/
+		}
     }
 }

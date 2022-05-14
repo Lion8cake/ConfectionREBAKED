@@ -5,6 +5,9 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Items;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -14,6 +17,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
@@ -137,65 +141,65 @@ namespace TheConfectionRebirth.Tiles
 					case 5:
 						type = "Hunger";
 						break;
-				case 6:
-					type = "SweetGummy";
-					break;
-				case 7:
-					type = "CrazyCone";
-					break;
-				case 8:
-					type = "MeetyMummy";
-					break;
-				case 9:
-					type = "MintJr";
-					break;
-				case 10:
-					type = "Birdnana";
-					break;
-				case 11:
-					type = "ChocolateBunny";
-					break;
-				case 12:
-					type = "ChocolateFrog";
-					break;
-				case 13:
-					type = "Pip";
-					break;
-				case 14:
-					type = "CherryBug";
-					break;
-				case 15:
-					type = "StripedPigron";
-					break;
-				case 16:
-				    type = "FoaminFloat";
-					break;
-				case 17:
-				    type = "CrookedCookie";
-					break;
-				case 18:
-				    type = "Iscreamer";
-					break;
-				case 19:
-				    type = "CreamsandWitchPhase2";
-					break;
-				case 20:
-				    type = "TheUnfirm";
-					break;
-				case 21:
-				    type = "GummyWyrm";
-					break;
-				case 22:
-				    type = "CreamSwollower";
-					break;
-				case 23:
-				    type = "IcecreamGal";
-					break;
-				case 24:
-				    type = "Meowzer";
-					break;
-					default:
-						return;
+					case 6:
+						type = "SweetGummy";
+						break;
+					case 7:
+						type = "CrazyCone";
+						break;
+					case 8:
+						type = "MeetyMummy";
+						break;
+					case 9:
+						type = "MintJr";
+						break;
+					case 10:
+						type = "Birdnana";
+						break;
+					case 11:
+						type = "ChocolateBunny";
+						break;
+					case 12:
+						type = "ChocolateFrog";
+						break;
+					case 13:
+						type = "Pip";
+						break;
+					case 14:
+						type = "CherryBug";
+						break;
+					case 15:
+						type = "StripedPigron";
+						break;
+					case 16:
+					    type = "FoaminFloat";
+						break;
+					case 17:
+					    type = "CrookedCookie";
+						break;
+					case 18:
+					    type = "Iscreamer";
+						break;
+					case 19:
+					    type = "CreamsandWitchPhase2";
+						break;
+					case 20:
+					    type = "TheUnfirm";
+						break;
+					case 21:
+					    type = "GummyWyrm";
+						break;
+					case 22:
+					    type = "CreamSwollower";
+						break;
+					case 23:
+					    type = "IcecreamGal";
+						break;
+					case 24:
+					    type = "Meowzer";
+						break;
+						default:
+					return;
 				}
 				/*Player.HasNPCBannerBuff[Mod.Find<ModNPC>(type).Type] = true;
 				Player.NPCBanner = true;*/

@@ -18,6 +18,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.addTile(Type);
+			TileID.Sets.SwaysInWindBasic[Type] = true;
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Cherry Bug in a Bottle");
