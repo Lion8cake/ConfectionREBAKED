@@ -1,10 +1,11 @@
 ===========================================
-Confection REBAKED
+Confection REBAKED (ALPHA)
 ===========================================
 This this a snapshot of the upcoming confection update for tmodloader 1.4
 
-Currently it is very unstable and unbalance as well as a few features missing completely
+This uses the Alternate Biome Library mod which was made by our team to allow future alternate biomes work together.
 
+Currently it is very unstable and unbalance as well as a few features missing completely
 WOULD RECOMEND USING THE 1.3 VERSION UNTIL THIS ONE IS STABLE
 
 The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CONFECTION. 
@@ -12,10 +13,26 @@ The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CON
 ===========================================
 Change log
 ===========================================
--Fixed Alt Library Support
+-Completely Remade how biomes are registered
+-Added Npc Dislike and likes for the confection Biome
+-Readded Dimensional Split although it doesn't work 100% properly
+-Fixed Solutions not working to convert purity to confection and vise versa
+-Fixed Sugar powder
+-Changed how Sugar powder looks and how far it can reach
+-Fixed CherryBug Bottle 
+-Fixed Banners apart from their buff
+-Fixed Creamsand not falling
+-Fixed Grass not spreading over cookie blocks
+-Readded Cream Grass Foliage
+-Changed how Cream Grass Foliage is managed 
+-Added Deletion for old Cream Grass from 1.3 worlds
+-Half fixed how Cream Grass looks like when placed in certain positions
+-Added Wind physics to certain tiles
+-Removed ConfectionBiome.png
+-Confection biome for AltLib icon has been moved to BestiaryIcon1 for future better texturepack support
 
 ===========================================
-Credit - Coders
+Credit - Programmers
 ===========================================
 Lion8cake - Main dev 
 Cace - For the very tricky tile spreading code, the RoD alt and much cleaner biome code

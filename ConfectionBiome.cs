@@ -111,6 +111,6 @@ namespace TheConfectionRebirth.Content
 
         public override string WorldIcon => "TheConfectionRebirth/Assets/WorldIcons/Confection";
 		
-		public override string IconSmall => "TheConfectionRebirth/ConfectionBiome";
+		public override string IconSmall => "TheConfectionRebirth/Biomes/BestiaryIcon1";
     }
 }
