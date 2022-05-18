@@ -20,9 +20,7 @@ namespace TheConfectionRebirth.Tiles
 			AddMapEntry(new Color(89, 47, 36));
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 		    TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
-			
-			SoundType = SoundID.Tink;
-		}
+			}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
