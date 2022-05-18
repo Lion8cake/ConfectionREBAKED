@@ -10,57 +10,57 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-			this.SetModTree(new Trees.CreamTree());
+            this.SetModTree(new Trees.CreamTree());
             Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBrick[Type] = true;
-		    Main.tileSolid[Type] = true;
-		    Main.tileBlockLight[Type] = true;
-		    TileID.Sets.Grass[Type] = false;
-		    TileID.Sets.ChecksForMerge[Type] = true;
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            TileID.Sets.Grass[Type] = false;
+            TileID.Sets.ChecksForMerge[Type] = true;
             AddMapEntry(new Color(235, 207, 150));
             SoundType = 0;
             SoundStyle = 2;
             ItemDrop = Mod.Find<ModItem>("CookieBlock").Type;
         }
-		
+
         private bool SpawnGrass(int i, int j)
-		{
-			if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(4) == 0)
-			{
-				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamGrass_Foliage>(), mute: true);
-				return true;
-			}
-			if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(18) == 0)
-			{
-				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<YumDrop>(), mute: true);
-				return true;
-			}
-			return false;
-		}
-		
-		public override void RandomUpdate(int i, int j)
-		{
-		if (Main.rand.Next(8) == 0)
-		   {
-			    bool spawned = false;
-			    if (!spawned)
-			    {
-				    spawned = SpawnGrass(i, j);
-			    }
-		    }
-	    }
-		
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
-		{
-			if (fail && !effectOnly)
-			{
-				Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
-			}
-		}
+        {
+            if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(4) == 0)
+            {
+                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamGrass_Foliage>(), mute: true);
+                return true;
+            }
+            if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(18) == 0)
+            {
+                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<YumDrop>(), mute: true);
+                return true;
+            }
+            return false;
+        }
+
+        public override void RandomUpdate(int i, int j)
+        {
+            if (Main.rand.Next(8) == 0)
+            {
+                bool spawned = false;
+                if (!spawned)
+                {
+                    spawned = SpawnGrass(i, j);
+                }
+            }
+        }
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            if (fail && !effectOnly)
+            {
+                Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
+            }
+        }
     }
 }

@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Assets;
-using TheConfectionRebirth;
-using Terraria;
 
 namespace TheConfectionRebirth.Tiles.Trees
 {

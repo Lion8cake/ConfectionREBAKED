@@ -6,38 +6,39 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class Creamstone : ModTile
-	{
-		public override void SetStaticDefaults() {
-			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("HallowedOre").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("SacchariteBlock").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamWood").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamBlock").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("BlueIce").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneRuby").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneSaphire").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneDiamond").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneAmethyst").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneTopaz").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneEmerald").Type] = true;
-			Main.tileBlockLight[Type] = true;
-			Main.tileLighted[Type] = false;
-			DustType = ModContent.DustType<CreamDust>();
-			ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
-			AddMapEntry(new Color(188, 168, 120));
-			
-			SoundType = SoundID.Tink;
-			SoundStyle = 1;
-			MinPick = 65;
-		}
-		
-		/*private bool SpawnRocks(int i, int j)
+    public class Creamstone : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("HallowedOre").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("SacchariteBlock").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamWood").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamBlock").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("BlueIce").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneRuby").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneSaphire").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneDiamond").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneAmethyst").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneTopaz").Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneEmerald").Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = false;
+            DustType = ModContent.DustType<CreamDust>();
+            ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
+            AddMapEntry(new Color(188, 168, 120));
+
+            SoundType = SoundID.Tink;
+            SoundStyle = 1;
+            MinPick = 65;
+        }
+
+        /*private bool SpawnRocks(int i, int j)
 	{
 		if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
 		{
@@ -84,8 +85,9 @@ namespace TheConfectionRebirth.Tiles
 		    }
 	    }*/
 
-		public override void NumDust(int i, int j, bool fail, ref int num) {
-			num = fail ? 1 : 3;
-		}
-	}
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
+    }
 }

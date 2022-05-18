@@ -5,23 +5,25 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class HallowedBrick : ModTile
-	{
-		public override void SetStaticDefaults() {
-			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
-			Main.tileBlockLight[Type] = true;
-			Main.tileLighted[Type] = false;
-			ItemDrop = ModContent.ItemType<Items.Placeable.HallowedBrick>();
-			AddMapEntry(new Color(136, 136, 160));
-			DustType = 84;
-			
-			SoundType = SoundID.Tink;
-			SoundStyle = 1;
-		}
+    public class HallowedBrick : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = false;
+            ItemDrop = ModContent.ItemType<Items.Placeable.HallowedBrick>();
+            AddMapEntry(new Color(136, 136, 160));
+            DustType = 84;
 
-		public override void NumDust(int i, int j, bool fail, ref int num) {
-			num = fail ? 1 : 3;
-		}
-	}
+            SoundType = SoundID.Tink;
+            SoundStyle = 1;
+        }
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
+    }
 }

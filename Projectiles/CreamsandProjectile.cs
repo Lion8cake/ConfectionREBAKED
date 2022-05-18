@@ -1,8 +1,6 @@
-using TheConfectionRebirth.Tiles;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Projectiles
@@ -45,8 +43,8 @@ namespace TheConfectionRebirth.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            int i = (int)(Projectile.position.X + (float)(Projectile.width / 2)) / 16;
-            int j = (int)(Projectile.position.Y + (float)(Projectile.height / 2)) / 16;
+            int i = (int)(Projectile.position.X + Projectile.width / 2) / 16;
+            int j = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
             int tileToPlace = 0;
             {
                 tileToPlace = ModContent.TileType<Tiles.Creamsand>();

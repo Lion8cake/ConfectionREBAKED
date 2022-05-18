@@ -1,5 +1,3 @@
-using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,80 +7,85 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class SherbetTorch : ModTile
-	{
-		private Asset<Texture2D> flameTexture;
+    public class SherbetTorch : ModTile
+    {
+        private Asset<Texture2D> flameTexture;
 
-		public override void SetStaticDefaults() {
-			// Properties
-			Main.tileLighted[Type] = true;
-			Main.tileFrameImportant[Type] = true;
-			Main.tileSolid[Type] = false;
-			Main.tileNoAttach[Type] = true;
-			Main.tileNoFail[Type] = true;
-			Main.tileWaterDeath[Type] = true;
-			TileID.Sets.FramesOnKillWall[Type] = true;
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			TileID.Sets.Torch[Type] = true;
+        public override void SetStaticDefaults()
+        {
+            // Properties
+            Main.tileLighted[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileNoAttach[Type] = true;
+            Main.tileNoFail[Type] = true;
+            Main.tileWaterDeath[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.SherbetTorch>();
-			DustType = ModContent.DustType<SherbetDust>();
-			AdjTiles = new int[] { TileID.Torches };
+            ItemDrop = ModContent.ItemType<Items.Placeable.SherbetTorch>();
+            DustType = ModContent.DustType<SherbetDust>();
+            AdjTiles = new int[] { TileID.Torches };
 
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
-			// Placement
-			TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(1);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(2);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorWall = true;
-			TileObjectData.addAlternate(0);
-			TileObjectData.addTile(Type);
+            // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
+            TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
+            TileObjectData.addAlternate(1);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
+            TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
+            TileObjectData.addAlternate(2);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newAlternate.AnchorWall = true;
+            TileObjectData.addAlternate(0);
+            TileObjectData.addTile(Type);
 
-			//Etc
-			ModTranslation name = CreateMapEntryName();
-			
-			name.SetDefault("Torch");
+            //Etc
+            ModTranslation name = CreateMapEntryName();
 
-			AddMapEntry(new Color(200, 200, 200), name);
+            name.SetDefault("Torch");
 
-			// Assets
-			if (!Main.dedServ) {
-				flameTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/SherbetTorch_Flame");
-			}
-		}
+            AddMapEntry(new Color(200, 200, 200), name);
 
-		public override float GetTorchLuck(Player player) {
-			// GetTorchLuck is called when there is an ExampleTorch nearby the client player
-			// In most use-cases you should return 1f for a good luck torch, or -1f for a bad luck torch.
-			// You can also add a smaller amount (eg 0.5) for a smaller postive/negative luck impact. 
-			// Remember that the overall torch luck is decided by every torch around the player, so it may be wise to have a smaller amount of luck impact.
-			// Multiple example torches on screen will have no additional effect.
+            // Assets
+            if (!Main.dedServ)
+            {
+                flameTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/SherbetTorch_Flame");
+            }
+        }
 
-			// Positive and negative luck are accumulated separately and then compared to some fixed limits in vanilla to determine overall torch luck.
-			// Postive luck is capped at 1, any value higher won't make any difference and negative luck is capped at 2.
-			// A negative luck of 2 will cancel out all torch luck bonuses. 
+        public override float GetTorchLuck(Player player)
+        {
+            // GetTorchLuck is called when there is an ExampleTorch nearby the client player
+            // In most use-cases you should return 1f for a good luck torch, or -1f for a bad luck torch.
+            // You can also add a smaller amount (eg 0.5) for a smaller postive/negative luck impact. 
+            // Remember that the overall torch luck is decided by every torch around the player, so it may be wise to have a smaller amount of luck impact.
+            // Multiple example torches on screen will have no additional effect.
 
-			// The influence positive torch luck can have overall is 0.1 (if positive luck is any number less than 1) or 0.2 (if positive luck is greater than or equal to 1)
+            // Positive and negative luck are accumulated separately and then compared to some fixed limits in vanilla to determine overall torch luck.
+            // Postive luck is capped at 1, any value higher won't make any difference and negative luck is capped at 2.
+            // A negative luck of 2 will cancel out all torch luck bonuses. 
 
-			bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>());
-			return inConfectionUndergroundBiome ? 1f : -0.1f; // ExampleTorch gives maximum positive luck when in example biome, otherwise a small negative luck
-		}
+            // The influence positive torch luck can have overall is 0.1 (if positive luck is any number less than 1) or 0.2 (if positive luck is greater than or equal to 1)
 
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
+            bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>());
+            return inConfectionUndergroundBiome ? 1f : -0.1f; // ExampleTorch gives maximum positive luck when in example biome, otherwise a small negative luck
+        }
 
-		/*public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
+
+        /*public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];
 
 			// If the torch is on
@@ -94,7 +97,7 @@ namespace TheConfectionRebirth.Tiles
 			}
 		}*/
 
-		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+        /*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			// The following code draws multiple flames on top our placed torch.
 
 			int offsetY = 0;
@@ -128,5 +131,5 @@ namespace TheConfectionRebirth.Tiles
 				spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + xx, j * 16 - (int)Main.screenPosition.Y + offsetY + yy) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default, 1f, SpriteEffects.None, 0f);
 			}
 		}*/
-	}
+    }
 }

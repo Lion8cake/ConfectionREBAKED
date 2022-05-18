@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Tiles.Trees
 {
-	public class CreamPalmTree : ModPalmTree
-	{
-		public override int DropWood()
+    public class CreamPalmTree : ModPalmTree
+    {
+        public override int DropWood()
         {
             return ModContent.ItemType<Items.Placeable.CreamWood>();
         }
@@ -20,5 +19,5 @@ namespace TheConfectionRebirth.Tiles.Trees
         {
             return ModContent.Request<Texture2D>("CreamPalmTree_Tops").Value;
         }
-	}
+    }
 }

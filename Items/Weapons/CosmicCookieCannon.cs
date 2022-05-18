@@ -1,13 +1,7 @@
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -16,8 +10,8 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Cookie Cannon");
-            Tooltip.SetDefault("'But wait? doesn't it shoot cosmic brownies instead?'");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Tooltip.SetDefault("'But wait? Doesn't it shoot cosmic brownies instead?'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -40,15 +34,9 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.useAmmo = AmmoID.FallenStar;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void AddRecipes()
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CosmicBlueTrail>(), damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CosmicCookie>(), damage, knockback, player.whoAmI);
-            return false;
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddIngredient(ItemID.StarCannon, 1).AddTile(TileID.MythrilAnvil).Register();
         }
-        public override void AddRecipes() 
-		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddIngredient(ItemID.StarCannon, 1).AddTile(TileID.MythrilAnvil).Register();
-		}
     }
 }

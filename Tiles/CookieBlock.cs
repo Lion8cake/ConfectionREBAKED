@@ -1,9 +1,5 @@
-using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Tiles
@@ -24,16 +20,16 @@ namespace TheConfectionRebirth.Tiles
         }
 
         public override void RandomUpdate(int i, int j)
-	        {
-			Tile up = Main.tile[i, j - 1];
-			Tile down = Main.tile[i, j + 1];
-			Tile left = Main.tile[i - 1, j];
-			Tile right = Main.tile[i + 1, j];
-			if (WorldGen.genRand.Next(3) == 0 && (up.TileType == ModContent.TileType<CreamGrass>() || down.TileType == ModContent.TileType<CreamGrass>() || left.TileType == ModContent.TileType<CreamGrass>() || right.TileType == ModContent.TileType<CreamGrass>()))
-			{
-				WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false, 0);
-			}
-		}
+        {
+            Tile up = Main.tile[i, j - 1];
+            Tile down = Main.tile[i, j + 1];
+            Tile left = Main.tile[i - 1, j];
+            Tile right = Main.tile[i + 1, j];
+            if (WorldGen.genRand.Next(3) == 0 && (up.TileType == ModContent.TileType<CreamGrass>() || down.TileType == ModContent.TileType<CreamGrass>() || left.TileType == ModContent.TileType<CreamGrass>() || right.TileType == ModContent.TileType<CreamGrass>()))
+            {
+                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false, 0);
+            }
+        }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

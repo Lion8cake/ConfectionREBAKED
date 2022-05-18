@@ -1,14 +1,13 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
- 
+
 namespace TheConfectionRebirth.NPCs
 {
     public class NpcDrops : GlobalNPC
     {
         public override void OnKill(NPC npc)
         {
- 
+
             /*if (npc.type == Mod.Find<ModNPC>("Rollercookie").Type)
             {
                 if (Main.rand.Next(0) == 0)
@@ -383,6 +382,6 @@ namespace TheConfectionRebirth.NPCs
                 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Marshmallow, Main.rand.Next(20, 30));
                 }
 			}*/
-		}
-	 }
+        }
+    }
 }

@@ -1,12 +1,7 @@
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -16,7 +11,7 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Neapolinite Repeater");
             Tooltip.SetDefault("Shoots 3 deadly Arrows at the cost of only 1.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -38,9 +33,9 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
         }
-        public override void AddRecipes() 
-		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
-		}
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+        }
     }
 }

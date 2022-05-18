@@ -1,9 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -17,14 +14,14 @@ namespace TheConfectionRebirth.Projectiles
         public override bool? CanUseGrapple(Player player)
         {
             int hooksOut = 0;
-            for(int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                if(Main.projectile[i].active && Main.projectile[i].owner == Main.myPlayer && Main.projectile[i].type == Projectile.type)
+                if (Main.projectile[i].active && Main.projectile[i].owner == Main.myPlayer && Main.projectile[i].type == Projectile.type)
                 {
                     hooksOut++;
                 }
             }
-            if(hooksOut > 3)
+            if (hooksOut > 3)
             {
                 return false;
             }

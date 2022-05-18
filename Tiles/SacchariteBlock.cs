@@ -5,22 +5,24 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class SacchariteBlock : ModTile
-	{
-		public override void SetStaticDefaults() {
-			Main.tileSolid[Type] = false;
-		    Main.tileLighted[Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
-			ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
-			AddMapEntry(new Color(32, 174, 221));
-			DustType = ModContent.DustType<SacchariteCrystals>();
-		}
+    public class SacchariteBlock : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = false;
+            Main.tileLighted[Type] = true;
+            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
+            ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
+            AddMapEntry(new Color(32, 174, 221));
+            DustType = ModContent.DustType<SacchariteCrystals>();
+        }
 
-		public override void NumDust(int i, int j, bool fail, ref int num) {
-			num = fail ? 1 : 3;
-		}
-		
-		/*private bool SpawnSaccharite(int i, int j)
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
+
+        /*private bool SpawnSaccharite(int i, int j)
 	{
 		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(2) == 0)
 		{
@@ -46,5 +48,5 @@ namespace TheConfectionRebirth.Tiles
 			    }
 		    }
 	    }*/
-	}
+    }
 }
