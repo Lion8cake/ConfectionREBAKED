@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -16,7 +17,7 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.width = 24;
             Projectile.height = 24;
             Projectile.friendly = true;
-            Projectile.alpha = byte.MaxValue;
+            //Projectile.alpha = byte.MaxValue;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
@@ -28,10 +29,11 @@ namespace TheConfectionRebirth.Projectiles
         public override void AI()
         {
             Projectile.velocity.Y += Projectile.ai[0];
+            Projectile.rotation += 0.3f * Projectile.direction;
             if (Main.rand.NextBool(3))
             {
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<CosmicStarDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
             }
-            Projectile.rotation += 0.3f * Projectile.direction;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -135,25 +137,14 @@ namespace TheConfectionRebirth.Projectiles
         }
 
         //Make the projectile shoot out cookie star dusts
-        /*public override void Kill(int timeLeft)
+        public override void Kill(int timeLeft)
 		{
-			for (int i = 0; i < 15; i++)
-			{
-				int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0f, 0f, 100, default, 2f);
-				Dust obj = Main.dust[dustIndex];
-				obj.velocity *= 1.4f;
-			}
-			for (int j = 0; j < 10; j++)
-			{
-				int dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
-				Main.dust[dustIndex2].noGravity = true;
-				Dust obj2 = Main.dust[dustIndex2];
-				obj2.velocity *= 5f;
-				dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
-				Dust obj3 = Main.dust[dustIndex2];
-				obj3.velocity *= 3f;
-			}
-		}*/
+            for (int k = 15; k < 50; k++)
+            {
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<CosmicStarDust>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
+            }
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+        }
 
         public override Color? GetAlpha(Color lightColor)
         {
