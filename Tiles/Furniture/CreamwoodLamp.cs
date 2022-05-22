@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(253, 221, 3), Language.GetText("MapObject.FloorLamp"));
+			AddMapEntry(new Color(106, 65, 51), Language.GetText("MapObject.FloorLamp"));
 
 			if (!Main.dedServ) {
 				flameTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Furniture/CreamwoodLamp_Flame"); // We could also reuse Main.FlameTexture[] textures, but using our own texture is nice.

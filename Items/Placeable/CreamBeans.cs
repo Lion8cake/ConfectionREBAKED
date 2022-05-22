@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override bool? UseItem(Player player)
         {
-            WorldGen.destroyObject = false;
+            // WorldGen.destroyObject = false;
             TileID.Sets.BreakableWhenPlacing[0] = false;
             return false;
         }

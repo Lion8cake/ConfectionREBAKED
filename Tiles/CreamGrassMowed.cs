@@ -33,5 +33,11 @@ namespace TheConfectionRebirth.Tiles
                 Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
             }
         }
+
+        public override int SaplingGrowthType(ref int style)
+        {
+            style = 0;
+            return ModContent.TileType<CreamSapling>();
+        }
     }
 }

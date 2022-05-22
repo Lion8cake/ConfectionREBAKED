@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileID.Sets.DisableSmartCursor[Type] = true;
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(new Color(200, 200, 200));
+            AddMapEntry(new Color(106, 65, 51));
 
             DustType = ModContent.DustType<ChipDust>();
             ItemDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodPlatform>();
@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleMultiplier = 27;
             TileObjectData.newTile.StyleWrapLimit = 27;
-            TileObjectData.newTile.UsesCustomCanPlace = false;
+            // TileObjectData.newTile.UsesCustomCanPlace = false;
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
         }

@@ -111,6 +111,15 @@ namespace TheConfectionRebirth.Tiles
                 case 24:
                     item = "MeowzerBanner";
                     break;
+				case 25:
+					item = "Dudley";
+					break;
+				case 26:
+					item = "Prickster";
+					break;
+				case 27:
+					item = "CherryBomber";
+					break;
                 default:
                     return;
 
@@ -176,6 +185,12 @@ namespace TheConfectionRebirth.Tiles
                         break;
                     case 24:
                         break;
+					case 25:
+                        break;
+					case 26:
+						break;
+					case 27:
+						break;
                     default:
                         return;
                 }

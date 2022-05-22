@@ -1,4 +1,5 @@
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Placeable.Furniture
@@ -27,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 10).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 3).AddIngredient(8, 1).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

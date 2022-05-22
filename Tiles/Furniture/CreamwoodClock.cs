@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(200, 200, 200), CreateMapEntryName());
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
 
         public override bool RightClick(int x, int y)

@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 2;
-            Projectile.tileCollide = false;
+            // Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
 

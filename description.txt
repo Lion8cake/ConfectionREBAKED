@@ -1,35 +1,25 @@
 ===========================================
 Confection REBAKED (ALPHA)
 ===========================================
-This this a snapshot of the upcoming confection update for tmodloader 1.4
+This this a snapshot of the upcoming confection full release on tmodloader 1.4
 
 This uses the Alternate Biome Library mod which was made by our team to allow future alternate biomes work together.
 
 Currently it is very unstable and unbalance as well as a few features missing completely
 WOULD RECOMEND USING THE 1.3 VERSION UNTIL THIS ONE IS STABLE
 
-The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CONFECTION. 
+The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CONFECTION.(Update: This has been fixed and there will be an update shortly after the next update to the stable release that will fix the trees) 
 
 ===========================================
 Change log
 ===========================================
--Completely Remade how biomes are registered
--Added Npc Dislike and likes for the confection Biome
--Readded Dimensional Split although it doesn't work 100% properly
--Fixed Solutions not working to convert purity to confection and vise versa
--Fixed Sugar powder
--Changed how Sugar powder looks and how far it can reach
--Fixed CherryBug Bottle 
--Fixed Banners apart from their buff
--Fixed Creamsand not falling
--Fixed Grass not spreading over cookie blocks
--Readded Cream Grass Foliage
--Changed how Cream Grass Foliage is managed 
--Added Deletion for old Cream Grass from 1.3 worlds
--Half fixed how Cream Grass looks like when placed in certain positions
--Added Wind physics to certain tiles
--Removed ConfectionBiome.png
--Confection biome for AltLib icon has been moved to BestiaryIcon1 for future better texturepack support
+-Fixed all Creamwood Furniture Tiles and Items
+-Readded Confection Menu (accessed by clicked the text at the bottom of the screen on the main menu)
+-Added Cosmic Cookie Cannon (thanks fox for the trail effect)
+-Changed Icon
+-Fixed Other tiles
+-Added Creamstone stalagmite 1-4 tiles as deletion (readded as one tile similar to the grass)
+-Added Creamwood Bench to deletion (readded as Creamwood Workbench)
 
 ===========================================
 Credit - Programmers
