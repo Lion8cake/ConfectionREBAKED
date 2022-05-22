@@ -30,10 +30,10 @@ namespace TheConfectionRebirth.Items.Placeable
                 "'A forge created from the both the lands of rainbows and candy'");
         }
 
-        public override void AddRecipes()
+        /*public override void AddRecipes()
         {
 			
-            CreateRecipe(1).AddIngredient(ItemID.CrystalShard, 10).AddIngredient(ItemID.PearlstoneBlock, 30).AddIngredient(ItemID.SoulofLight, 8).AddTile(TileID.DemonAltar).Register();
+            CreateRecipe().AddIngredient(ItemID.CrystalShard, 10).AddIngredient(ItemID.PearlstoneBlock, 30).AddIngredient(ItemID.SoulofLight, 8).AddTile(TileID.DemonAltar).Register();
 
 			CreateRecipe(1).AddIngredient(null, "Saccharite", 10).AddIngredient(null, "Creamstone", 30).AddIngredient(null, "SoulofDelight", 8).AddTile(TileID.DemonAltar).Register();
 			
@@ -124,6 +124,6 @@ namespace TheConfectionRebirth.Items.Placeable
             CreateRecipe(1).AddIngredient(ItemID.PinkIceBlock, 1).AddTile(null, "HeavensForgeTile").ReplaceResult(null);
 			
             CreateRecipe(1).AddIngredient(null, "OrangeIce", 1).AddTile(null, "HeavensForgeTile").ReplaceResult(ItemID.PinkIceBlock);
-        } 
+        }*/
     }
 }
