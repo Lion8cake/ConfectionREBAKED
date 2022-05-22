@@ -1,8 +1,11 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -42,6 +45,12 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("A zombie infected with the confection. 'do you have a golden ticket?'")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CcretTicket>(), 10));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<WonkyHat>(), ModContent.ItemType<WonkyCoat>(), ModContent.ItemType<WonkyTrousers>()));
         }
     }
 }

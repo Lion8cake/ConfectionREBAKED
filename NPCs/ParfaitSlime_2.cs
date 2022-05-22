@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
@@ -41,6 +42,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("A fruity cake for the festive season covers this slime from anyone who sees them, oddly they are only seen in one place")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
         }
     }
 }

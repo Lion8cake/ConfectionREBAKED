@@ -1,8 +1,11 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -41,6 +44,13 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("A mummy infected by the confection turning into a gummy bear. How sweet?")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 10));
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.TrifoldMap, 100, 50));
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(95, ModContent.ItemType<GummyMask>(), ModContent.ItemType<GummyShirt>(), ModContent.ItemType<GummyPants>()));
         }
     }
 }

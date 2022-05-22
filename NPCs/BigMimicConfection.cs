@@ -1,8 +1,11 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Weapons;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -46,6 +49,13 @@ namespace TheConfectionRebirth.NPCs
                 return 0.01f;
             }
             return 0f;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<CookieCrumbler>(), ModContent.ItemType<SweetTooth>(), ModContent.ItemType<SweetHook>(), ModContent.ItemType<CreamSpray>()));
+            npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
         }
     }
 }

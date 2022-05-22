@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
@@ -40,6 +41,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("This eluesive dragon-pig hybrid has excellent stealth capabilities despite its rotund figure. It is uncertain how they came to exsist.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Bacon, 3));
         }
     }
 }

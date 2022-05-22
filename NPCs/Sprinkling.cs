@@ -1,8 +1,10 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -42,6 +44,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("Sprinkles cursed with the soul power of flight will still try and kill anyone from taking over the confection.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Sprinkles>(), 1, 1, 3));
         }
     }
 }

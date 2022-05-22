@@ -3,10 +3,13 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Items.Weapons;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -105,6 +108,12 @@ namespace TheConfectionRebirth.NPCs
                 Vector2 northPosClose = NPC.Center + new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
                 Vector2 southPosClose = NPC.Center - new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
             }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BearClaw>(), 100));
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
         }
     }
 }

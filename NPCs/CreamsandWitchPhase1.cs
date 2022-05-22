@@ -1,8 +1,12 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -12,6 +16,11 @@ namespace TheConfectionRebirth.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Creamsand Witch");
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()
@@ -71,5 +80,13 @@ namespace TheConfectionRebirth.NPCs
                     NPC.NewNPC((int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<CreamsandWitchPhase2>());
                 }
             }*/
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
+        }
     }
 }

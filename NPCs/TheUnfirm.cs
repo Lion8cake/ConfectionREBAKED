@@ -1,6 +1,8 @@
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -29,6 +31,12 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = 494;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<TheUnfirmBanner>();
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AdmiralHat>(), 33));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Marshmallow, 1, 20, 30));
         }
     }
 }

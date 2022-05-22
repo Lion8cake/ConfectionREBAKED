@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
@@ -41,6 +42,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("This Drill was turned to life by the saccharite shards in the confection and would defend it with its life.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.Nazar, 100, 50));
         }
     }
 }

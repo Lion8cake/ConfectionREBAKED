@@ -29,7 +29,7 @@ Cace - For the very tricky tile spreading code, the RoD alt and much cleaner bio
 Ghasttear1 - For the menu UI
 foxyboy55 - many bug fixes an a few texture changes
 CastledKing2341 - For the awesome and very polished meowzer npc
-Basically I am Fox - for cream fox pet and Biome chest and Biome generation
+FoxXD_ - for cream fox pet and old biome chest and old biome generation, cleaning up part of confection's bad code
 SnickerBobble - Original concept creator of the Confection
 
 ===========================================
