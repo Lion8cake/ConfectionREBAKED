@@ -40,6 +40,11 @@ namespace TheConfectionRebirth.Tiles
                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<YumDrop>(), mute: true);
                 return true;
             }
+			if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(4) == 0)
+            {
+                WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamVines>(), mute: true);
+                return true;
+            }
             return false;
         }
 

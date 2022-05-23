@@ -1,3 +1,4 @@
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -18,7 +19,23 @@ namespace TheConfectionRebirth
         public bool DudlingPet;
         public bool FoxPet;
 
-        public Projectile DimensionalWarp;
+        public int DimensionalWarpIndex;
+
+        public Projectile DimensionalWarp
+        {
+            get
+            {
+                if (DimensionalWarpIndex < 0 || DimensionalWarpIndex >= Main.maxProjectiles)
+                {
+                    return null;
+                }
+                return Main.projectile[DimensionalWarpIndex];
+            }
+            set
+            {
+                DimensionalWarpIndex = value.whoAmI;
+            }
+        }
 
         public override void ResetEffects()
         {

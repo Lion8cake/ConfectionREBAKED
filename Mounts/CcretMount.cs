@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Mounts
             MountData.jumpHeight = 10; // How high the mount can jump.
             MountData.acceleration = 2f; // The rate at which the mount speeds up.
             MountData.jumpSpeed = 4f; // The rate at which the player and mount ascend towards (negative y velocity) the jump height when the jump button is presssed.
-            MountData.blockExtraJumps = false; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
+            // MountData.blockExtraJumps = false; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
             MountData.constantJump = true; // Allows you to hold the jump button down.
             MountData.heightBoost = 20; // Height between the mount and the ground
             MountData.fallDamage = 0.5f; // Fall damage multiplier.

@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Table");
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(106, 65, 51), name);
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)

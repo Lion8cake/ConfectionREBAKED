@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
@@ -41,6 +42,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("These slimes disguised as cakes look delicous although don't let it distract you from who they really are.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
         }
     }
 }

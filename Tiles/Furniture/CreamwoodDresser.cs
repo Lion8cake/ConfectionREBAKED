@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.LavaDeath = false;
+			// TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
@@ -52,7 +52,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			Player player = Main.LocalPlayer;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0) {
 				Main.CancelClothesWindow(true);
-				Main.mouseRightRelease = false;
+				// Main.mouseRightRelease = false;
 				int left = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18);
 				left %= 3;
 				left = Player.tileTargetX - left;
@@ -60,17 +60,17 @@ namespace TheConfectionRebirth.Tiles.Furniture
 				if (player.sign > -1) {
 					SoundEngine.PlaySound(SoundID.MenuClose);
 					player.sign = -1;
-					Main.editSign = false;
+					// Main.editSign = false;
 					Main.npcChatText = string.Empty;
 				}
 				if (Main.editChest) {
 					SoundEngine.PlaySound(SoundID.MenuTick);
-					Main.editChest = false;
+					// Main.editChest = false;
 					Main.npcChatText = string.Empty;
 				}
 				if (player.editedChestName) {
 					NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
-					player.editedChestName = false;
+					// player.editedChestName = false;
 				}
 				if (Main.netMode == NetmodeID.MultiplayerClient) {
 					if (left == player.chestX && top == player.chestY && player.chest != -1) {
@@ -95,7 +95,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 						else if (num213 != player.chest && player.chest == -1) {
 							player.chest = num213;
 							Main.playerInventory = true;
-							Main.recBigList = false;
+							// Main.recBigList = false;
 							SoundEngine.PlaySound(SoundID.MenuOpen);
 							player.chestX = left;
 							player.chestY = top;
@@ -103,7 +103,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 						else {
 							player.chest = num213;
 							Main.playerInventory = true;
-							Main.recBigList = false;
+							// Main.recBigList = false;
 							SoundEngine.PlaySound(SoundID.MenuTick);
 							player.chestX = left;
 							player.chestY = top;
@@ -113,7 +113,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 				}
 			}
 			else {
-				Main.playerInventory = false;
+				// Main.playerInventory = false;
 				player.chest = -1;
 				Recipe.FindRecipes();
 				Main.interactedDresserTopLeftX = Player.tileTargetX;
@@ -155,7 +155,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			Player player = Main.LocalPlayer;
 			if (player.cursorItemIconText == "")
 			{
-				player.cursorItemIconEnabled = false;
+				// player.cursorItemIconEnabled = false;
 				player.cursorItemIconID = 0;
 			}
 		}

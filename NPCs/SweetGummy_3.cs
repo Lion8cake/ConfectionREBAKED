@@ -42,5 +42,10 @@ namespace TheConfectionRebirth.NPCs
                 new FlavorTextBestiaryInfoElement("A mummy infected by the confection turning into a gummy bear. How sweet?")
             });
         }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            ModContent.GetInstance<SweetGummy>().ModifyNPCLoot(npcLoot);
+        }
     }
 }

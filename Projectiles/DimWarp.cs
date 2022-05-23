@@ -42,7 +42,7 @@ namespace TheConfectionRebirth.Projectiles
         }
         public override bool PreKill(int timeLeft)
         {
-            Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp = null;
+            Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarpIndex = -1;
             return true;
         }
     }

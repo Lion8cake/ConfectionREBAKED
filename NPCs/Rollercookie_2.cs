@@ -3,7 +3,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -45,6 +48,13 @@ namespace TheConfectionRebirth.NPCs
         public override void AI()
         {
             NPC.rotation += NPC.velocity.X * 0.05f;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CookieDough>(), maximumDropped: 2));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChocolateChunk>(), 100));
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ModContent.ItemType<CookieMask>(), ModContent.ItemType<CookieShirt>(), ModContent.ItemType<CookiePants>()));
         }
     }
 }

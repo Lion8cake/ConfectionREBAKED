@@ -1,9 +1,12 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -44,5 +47,9 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SherbetBricks>(), 1, 30, 60));
+        }
     }
 }

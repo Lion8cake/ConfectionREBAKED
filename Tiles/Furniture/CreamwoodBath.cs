@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Creamwood Bath");
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(106, 65, 51), name);
         }
 
 

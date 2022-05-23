@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "CreamWood", 15).AddIngredient(225, 5).AddTile(TileID.Sawmill).Register();
+            CreateRecipe(1).AddIngredient(null, "CreamWood", 5).AddIngredient(225, 2).AddTile(TileID.Sawmill).Register();
         }
     }
 }

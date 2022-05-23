@@ -29,5 +29,11 @@ namespace TheConfectionRebirth.Tiles
         {
             num = (fail ? 1 : 3);
         }
+
+        public override int SaplingGrowthType(ref int style)
+        {
+            style = 0;
+            return ModContent.TileType<CreamSnowSapling>();
+        }
     }
 }

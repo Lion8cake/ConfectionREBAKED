@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Items
             Item.useAnimation = 15;
             Item.width = 30;
             Item.height = 30;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.buyPrice(0, 50, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.shoot = ModContent.ProjectileType<DimWarp>();
@@ -33,13 +33,17 @@ namespace TheConfectionRebirth.Items
             ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
             int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
             int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
-            if (modPlayer.DimensionalWarp == null && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
+            if (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType])
             {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-            }
-            else if (modPlayer.DimensionalWarp != null)
-            {
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI);
+                if (modPlayer.DimensionalWarpIndex < 0)
+                {
+                    int index = Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
+                    modPlayer.DimensionalWarp = Main.projectile[index];
+                }
+                else
+                {
+                    Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI);
+                }
             }
             return false;
         }

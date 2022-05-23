@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Creamwood Door");
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(106, 65, 51), name);
 
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 3;
