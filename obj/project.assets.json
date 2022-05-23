@@ -31,19 +31,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jordan\\.nuget\\packages\\": {}
+    "C:\\Users\\palma\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jordan\\Source\\Repos\\ConfectionREBAKED-1.4\\TheConfectionRebirth.csproj",
+      "projectUniqueName": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
       "projectName": "TheConfectionRebirth",
-      "projectPath": "C:\\Users\\jordan\\Source\\Repos\\ConfectionREBAKED-1.4\\TheConfectionRebirth.csproj",
-      "packagesPath": "C:\\Users\\jordan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jordan\\Source\\Repos\\ConfectionREBAKED-1.4\\obj\\",
+      "projectPath": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
+      "packagesPath": "C:\\Users\\palma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jordan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\palma\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

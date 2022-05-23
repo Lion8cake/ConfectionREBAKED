@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sDBexsoG6Nj99qjRcq6ulhg2icpRm9/oc8nakr/p5cSnYZPRhOWySUWkJpNq1imAHl6i5ShEmtFekaBx7rJzpg==",
+  "dgSpecHash": "NtKamq9vJ21uW9GbXfxxqWWKFVasLG7IIl2sK5bKwEqOkp/yezhJPZk2g17Z640mOsWVVt8TcFb4VsIfoSxh/w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jordan\\Source\\Repos\\ConfectionREBAKED-1.4\\TheConfectionRebirth.csproj",
+  "projectFilePath": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jordan\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+    "C:\\Users\\palma\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
   ],
   "logs": []
 }
