@@ -49,6 +49,15 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneDirtLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()))
+            {
+                return 0.1f;
+            }
+            return 0f;
+        }
+
         public override void AI()
         {
             Target();

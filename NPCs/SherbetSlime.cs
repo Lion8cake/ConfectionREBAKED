@@ -51,5 +51,14 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SherbetBricks>(), 1, 30, 60));
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>()))
+            {
+                return 0.1f;
+            }
+            return 0f;
+        }
     }
 }

@@ -38,5 +38,14 @@ namespace TheConfectionRebirth.NPCs
                 new FlavorTextBestiaryInfoElement("A ghoul found in the depths of the desert tainted by the confection will hunt down anyone it sees.")
             });
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionUndergroundBiome>()))
+            {
+                return 1f;
+            }
+            return 0f;
+        }
     }
 }

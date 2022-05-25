@@ -198,6 +198,16 @@ namespace TheConfectionRebirth.Tiles.Furniture
             {
                 player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
             }
+            else
+            {
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Creamwood Chest";
+                if (player.cursorItemIconText == "Creamwood Chest")
+                {
+                    player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodChest>();
+
+                    player.cursorItemIconText = "";
+                }
+            }
 
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
@@ -209,7 +219,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Player player = Main.LocalPlayer;
             if (player.cursorItemIconText == "")
             {
-                // player.cursorItemIconEnabled = false;
+                player.cursorItemIconEnabled = false;
                 player.cursorItemIconID = 0;
             }
         }

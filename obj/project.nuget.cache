@@ -1,10 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "sDBexsoG6Nj99qjRcq6ulhg2icpRm9/oc8nakr/p5cSnYZPRhOWySUWkJpNq1imAHl6i5ShEmtFekaBx7rJzpg==",
+  "dgSpecHash": "2cQ958I7iTAIa0jofhuP6kjQARHrrVi/Eag1XbgzIKOnWGQWXLK1+KGAt1gg+QmSa974VL0OAdQobniMbIPzsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jordan\\Source\\Repos\\ConfectionREBAKED-1.4\\TheConfectionRebirth.csproj",
+  "projectFilePath": "C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jordan\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+    "C:\\Users\\Lion8\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

@@ -35,21 +35,19 @@ namespace TheConfectionRebirth.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!target.boss && !target.townNPC)
+            if (target.boss == false)
             {
                 Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
                 target.position.X = warppoint.position.X;
                 target.position.Y = warppoint.position.Y;
                 target.HealEffect(1);
-                Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
-                Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarpIndex = -1;
                 Projectile.ai[0] = 1;
                 Projectile.Kill();
             }
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (Main.player[Main.myPlayer].whoAmI == target.whoAmI)
+            if (Main.player[Main.myPlayer] == target)
             {
                 Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
                 target.Teleport(warppoint.position, 1);
@@ -78,7 +76,7 @@ namespace TheConfectionRebirth.Projectiles
                     }
                     owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 }
-                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarpIndex = -1;
+                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
             }
             return true;
         }

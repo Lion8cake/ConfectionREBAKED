@@ -48,5 +48,14 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneDirtLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()))
+            {
+                return 1.0f;
+            }
+            return 0f;
+        }
     }
 }

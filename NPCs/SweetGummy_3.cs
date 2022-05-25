@@ -47,5 +47,14 @@ namespace TheConfectionRebirth.NPCs
         {
             ModContent.GetInstance<SweetGummy>().ModifyNPCLoot(npcLoot);
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()))
+            {
+                return 0.31f;
+            }
+            return 0f;
+        }
     }
 }

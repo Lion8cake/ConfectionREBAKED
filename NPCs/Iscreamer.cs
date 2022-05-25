@@ -115,5 +115,14 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BearClaw>(), 100));
             npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneDirtLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()))
+            {
+                return 0.2f;
+            }
+            return 0f;
+        }
     }
 }

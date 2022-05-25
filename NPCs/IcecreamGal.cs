@@ -74,9 +74,9 @@ namespace TheConfectionRebirth.NPCs
         {
             NPC.width = 18;
             NPC.height = 40;
-            NPC.damage = 60;
-            NPC.defense = 26;
-            NPC.lifeMax = 180;
+            NPC.damage = 64;
+            NPC.defense = 8;
+            NPC.lifeMax = 1000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 40000f;
@@ -111,13 +111,25 @@ namespace TheConfectionRebirth.NPCs
                 chanceDenominator: 1
             ));
 		}
+		
+		public override void FindFrame(int frameHeight)
+        {
+            NPC.spriteDirection = NPC.direction;
+        }
 
-
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneDirtLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()))
+            {
+                return 0.01f;
+            }
+            return 0f;
+        }
 
 
 
         #region Custom AI Behavior by sOvr9000 (a.k.a. MetroidManiax)
-		public override void AI() {
+        public override void AI() {
             SearchForPlayerTarget();
             ChasePlayerTarget();
             SummonStarProjectiles();

@@ -17,14 +17,14 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 1200;
-            Projectile.scale = 1.4f;
+            //Projectile.scale = 1.4f;
             Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.01f / 255f, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.45f / 255f);
-            for (int num103 = 0; num103 < 2; num103++) {
+            /*for (int num103 = 0; num103 < 2; num103++) {
                 float num104 = Projectile.velocity.X / 3f * num103;
                 float num100 = Projectile.velocity.Y / 3f * num103;
                 int num101 = 4;
@@ -43,8 +43,12 @@ namespace TheConfectionRebirth.Projectiles
                 obj2.velocity *= 0.25f;
                 Dust obj3 = Main.dust[frostDustSmol];
                 obj3.velocity += Projectile.velocity * 0.5f;
-            }
-            Projectile.rotation += 0.3f * Projectile.direction;
+            }*/
+            
+            if (Projectile.timeLeft < 1100)
+            {
+                Projectile.rotation += 0.3f * Projectile.direction;
+            }   
         }
 
         public override void Kill(int timeLeft)

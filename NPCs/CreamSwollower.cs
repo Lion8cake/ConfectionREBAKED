@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Swollower");
+            DisplayName.SetDefault("Cream Swallower");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -44,6 +44,15 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.")
             });
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneSandstorm && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()))
+            {
+                return 0.5f;
+            }
+            return 0f;
         }
     }
 }

@@ -47,5 +47,14 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Bacon, 3));
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<IceConfectionUndergroundBiome>()))
+            {
+                return 0.05f;
+            }
+            return 0f;
+        }
     }
 }

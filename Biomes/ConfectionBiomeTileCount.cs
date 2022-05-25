@@ -1,6 +1,8 @@
 using System;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
+using Terraria;
+using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Biomes
 {
@@ -15,12 +17,17 @@ namespace TheConfectionRebirth.Biomes
             confectionBlockCount = tileCounts[ModContent.TileType<CookieBlock>()]
                 + tileCounts[ModContent.TileType<Creamstone>()]
                 + tileCounts[ModContent.TileType<CreamGrass>()];
-            iceConfectionBlockCount = tileCounts[ModContent.TileType<CreamBlock>()]
-                + tileCounts[ModContent.TileType<CreamBlock>()]
-                + tileCounts[ModContent.TileType<BlueIce>()];
+            
             desertConfectionBlockCount = tileCounts[ModContent.TileType<Creamsand>()]
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
         }
+
+        /*private void ExportTileCountstoMain()
+        {
+            SnowTileCount += tileCounts[ModContent.TileType<CreamBlock>()]
+                + tileCounts[ModContent.TileType<CreamBlock>()]
+                + tileCounts[ModContent.TileType<BlueIce>()];
+        }*/
     }
 }

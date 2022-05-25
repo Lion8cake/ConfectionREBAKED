@@ -33,17 +33,13 @@ namespace TheConfectionRebirth.Items
             ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
             int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
             int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
-            if (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType])
+            if (modPlayer.DimensionalWarp == null && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
             {
-                if (modPlayer.DimensionalWarpIndex < 0)
-                {
-                    int index = Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
-                    modPlayer.DimensionalWarp = Main.projectile[index];
-                }
-                else
-                {
-                    Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI);
-                }
+                Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
+            }
+            else if (modPlayer.DimensionalWarp != null)
+            {
+                Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI);
             }
             return false;
         }

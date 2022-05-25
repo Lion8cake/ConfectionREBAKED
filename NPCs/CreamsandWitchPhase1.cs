@@ -88,5 +88,15 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
         }
+
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()))
+            {
+                return 0.01f;
+            }
+            return 0f;
+        }
     }
 }

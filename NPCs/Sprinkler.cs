@@ -60,6 +60,15 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}*/
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>()))
+            {
+                return 1f;
+            }
+            return 0f;
+        }
+
         public override void AI()
         {
             Target();

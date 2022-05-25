@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -8,10 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Audio;
-using Terraria.GameContent.Achievements;
 using Terraria.GameContent.ObjectInteractions;
-using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
@@ -47,63 +43,81 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
+		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY)
+		{
+			width = 3;
+			height = 1;
+		}
+
 		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0) {
+			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)
+			{
 				Main.CancelClothesWindow(true);
-				// Main.mouseRightRelease = false;
+				Main.mouseRightRelease = false;
 				int left = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18);
 				left %= 3;
 				left = Player.tileTargetX - left;
 				int top = Player.tileTargetY - (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18);
-				if (player.sign > -1) {
+				if (player.sign > -1)
+				{
 					SoundEngine.PlaySound(SoundID.MenuClose);
 					player.sign = -1;
-					// Main.editSign = false;
+					Main.editSign = false;
 					Main.npcChatText = string.Empty;
 				}
-				if (Main.editChest) {
+				if (Main.editChest)
+				{
 					SoundEngine.PlaySound(SoundID.MenuTick);
-					// Main.editChest = false;
+					Main.editChest = false;
 					Main.npcChatText = string.Empty;
 				}
-				if (player.editedChestName) {
+				if (player.editedChestName)
+				{
 					NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
-					// player.editedChestName = false;
+					player.editedChestName = false;
 				}
-				if (Main.netMode == NetmodeID.MultiplayerClient) {
-					if (left == player.chestX && top == player.chestY && player.chest != -1) {
+				if (Main.netMode == NetmodeID.MultiplayerClient)
+				{
+					if (left == player.chestX && top == player.chestY && player.chest != -1)
+					{
 						player.chest = -1;
 						Recipe.FindRecipes();
 						SoundEngine.PlaySound(SoundID.MenuClose);
 					}
-					else {
+					else
+					{
 						NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
 						Main.stackSplit = 600;
 					}
 				}
-				else {
+				else
+				{
 					int num213 = Chest.FindChest(left, top);
-					if (num213 != -1) {
+					if (num213 != -1)
+					{
 						Main.stackSplit = 600;
-						if (num213 == player.chest) {
+						if (num213 == player.chest)
+						{
 							player.chest = -1;
 							Recipe.FindRecipes();
 							SoundEngine.PlaySound(SoundID.MenuClose);
 						}
-						else if (num213 != player.chest && player.chest == -1) {
+						else if (num213 != player.chest && player.chest == -1)
+						{
 							player.chest = num213;
 							Main.playerInventory = true;
-							// Main.recBigList = false;
+							Main.recBigList = false;
 							SoundEngine.PlaySound(SoundID.MenuOpen);
 							player.chestX = left;
 							player.chestY = top;
 						}
-						else {
+						else
+						{
 							player.chest = num213;
 							Main.playerInventory = true;
-							// Main.recBigList = false;
+							Main.recBigList = false;
 							SoundEngine.PlaySound(SoundID.MenuTick);
 							player.chestX = left;
 							player.chestY = top;
@@ -112,8 +126,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
 					}
 				}
 			}
-			else {
-				// Main.playerInventory = false;
+			else
+			{
+				Main.playerInventory = false;
 				player.chest = -1;
 				Recipe.FindRecipes();
 				Main.interactedDresserTopLeftX = Player.tileTargetX;
@@ -123,12 +138,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			return true;
 		}
 
-		public override void MouseOver(int i, int j)
+		public static string MapChestName(string name, int i, int j)
 		{
-			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
+			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
@@ -142,11 +156,49 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			int chest = Chest.FindChest(left, top);
 			if (chest < 0)
 			{
-				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
+				return Language.GetTextValue("LegacyChestType.0");
 			}
 
+			if (Main.chest[chest].name == "")
+			{
+				return name;
+			}
+
+			return name + ": " + Main.chest[chest].name;
+		}
+
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.LocalPlayer;
+			Tile tile = Main.tile[i, j];
+			int left = i;
+			int top = j;
+			left -= (int)(tile.TileFrameX % 54 / 18);
+			if (tile.TileFrameY % 36 != 0)
+			{
+				top--;
+			}
+			int chest = Chest.FindChest(left, top);
+			if (chest < 0)
+			{
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
+			}
+			else
+			{
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Chest";
+				if (player.cursorItemIconText == "Chest")
+				{
+					player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>();
+
+					player.cursorItemIconText = "";
+				}
+			}
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
+			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY > 0)
+			{
+				player.cursorItemIconID = ItemID.FamiliarShirt;
+			}
 		}
 
 		public override void MouseOverFar(int i, int j)
@@ -155,7 +207,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			Player player = Main.LocalPlayer;
 			if (player.cursorItemIconText == "")
 			{
-				// player.cursorItemIconEnabled = false;
+				player.cursorItemIconEnabled = false;
 				player.cursorItemIconID = 0;
 			}
 		}

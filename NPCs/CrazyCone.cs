@@ -48,5 +48,14 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.Nazar, 100, 50));
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneDirtLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()))
+            {
+                return 0.08f;
+            }
+            return 0f;
+        }
     }
 }

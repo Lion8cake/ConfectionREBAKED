@@ -40,11 +40,6 @@ namespace TheConfectionRebirth.Tiles
                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<YumDrop>(), mute: true);
                 return true;
             }
-			if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(4) == 0)
-            {
-                WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamVines>(), mute: true);
-                return true;
-            }
             return false;
         }
 
@@ -56,6 +51,19 @@ namespace TheConfectionRebirth.Tiles
                 if (!spawned)
                 {
                     spawned = SpawnGrass(i, j);
+                }
+            }
+
+            Tile tile = Framing.GetTileSafely(i, j);
+            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+            Tile tileAbove = Framing.GetTileSafely(i, j - 1);
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && !tileBelow.CheckingLiquid && !tile.IsHalfBlock)
+            {
+                tileBelow.TileType = (ushort)ModContent.TileType<CreamVines>();
+                WorldGen.SquareTileFrame(i, j + 1);
+                if (Main.netMode == 2)
+                {
+                    NetMessage.SendTileSquare(-1, i, j + 1, 3);
                 }
             }
         }

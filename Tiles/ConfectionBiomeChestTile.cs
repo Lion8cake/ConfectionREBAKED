@@ -18,7 +18,6 @@ namespace TheConfectionRebirth.Tiles
     {
         public override void SetStaticDefaults()
         {
-            // Properties
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;
             Main.tileShine2[Type] = true;
@@ -34,18 +33,16 @@ namespace TheConfectionRebirth.Tiles
             AdjTiles = new int[] { TileID.Containers };
             ChestDrop = ModContent.ItemType<Items.Placeable.ConfectionBiomeChestItem>();
 
-            // Names
             ContainerName.SetDefault("Confection Chest");
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Confection Chest");
             AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 
-            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
+            name = CreateMapEntryName(Name + "_Locked");
             name.SetDefault("Locked Confection Chest");
             AddMapEntry(new Color(0, 141, 63), name, MapChestName);
 
-            // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
@@ -53,7 +50,6 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
             TileObjectData.newTile.StyleHorizontal = true;
-            // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
         }
@@ -257,7 +253,7 @@ namespace TheConfectionRebirth.Tiles
             Player player = Main.LocalPlayer;
             if (player.cursorItemIconText == "")
             {
-                // player.cursorItemIconEnabled = false;
+                player.cursorItemIconEnabled = false;
                 player.cursorItemIconID = 0;
             }
         }
