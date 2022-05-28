@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -50,11 +51,31 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<IceConfectionUndergroundBiome>()))
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.ZoneSnow && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 0.05f;
             }
             return 0f;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 13);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 12);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 11);
+                }
+            }
         }
     }
 }

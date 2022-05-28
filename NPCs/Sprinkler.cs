@@ -18,6 +18,12 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Sprinkler");
             Main.npcFrameCount[NPC.type] = 2;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
         }
 
         public override void SetDefaults()
@@ -31,13 +37,13 @@ namespace TheConfectionRebirth.NPCs
             NPC.DeathSound = SoundID.NPCDeath7;
             NPC.value = 60f;
             // npc.noGravity = false;
-            NPC.knockBackResist = 1f;
+            NPC.knockBackResist = 0f;
             NPC.aiStyle = 0;
             AIType = 0;
             AnimationType = NPCID.BlueSlime;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSurfaceBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -53,16 +59,16 @@ namespace TheConfectionRebirth.NPCs
             NPC.damage = (int)(NPC.damage * 0.2f);
         }
 
-        /*public override void HitEffect(int hitDirection, double damage) {
+        public override void HitEffect(int hitDirection, double damage) {
 			if (NPC.life <= 0) {
 				Vector2 spawnAt = NPC.Center + new Vector2(0f, (float)NPC.height / 2f);
-				NPC.NewNPC((int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
+				NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
 			}
-		}*/
+		}
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 1f;
             }

@@ -79,7 +79,7 @@ namespace TheConfectionRebirth.Tiles
 
             // The influence positive torch luck can have overall is 0.1 (if positive luck is any number less than 1) or 0.2 (if positive luck is greater than or equal to 1)
 
-            bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>());
+            bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiome>());
             return inConfectionUndergroundBiome ? 1f : -0.1f; // ExampleTorch gives maximum positive luck when in example biome, otherwise a small negative luck
         }
 

@@ -7,6 +7,8 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
+using TheConfectionRebirth.Dusts;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -34,7 +36,7 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Crimslime;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SherbetSlimeBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSurfaceBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -54,11 +56,27 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 0.1f;
             }
             return 0f;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<SherbetDust>());
+                }
+            }
         }
     }
 }

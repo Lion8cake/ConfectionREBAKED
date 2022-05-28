@@ -18,14 +18,14 @@ namespace TheConfectionRebirth.NPCs
             var witchdoctorHappiness = NPCHappiness.Get(NPCID.WitchDoctor);
             var taxcollectorHappiness = NPCHappiness.Get(NPCID.TaxCollector);
 
-            nurseHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Like);
-            wizardHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Like);
-            partygirlHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Like);
-            tavernkeepHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Like);
+            nurseHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+            wizardHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+            partygirlHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+            tavernkeepHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
 
-            clothierHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Dislike);
-            witchdoctorHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Dislike);
-            taxcollectorHappiness.SetBiomeAffection<ConfectionSurfaceBiome>(AffectionLevel.Dislike);
+            clothierHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
+            witchdoctorHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
+            taxcollectorHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
         }
     }
 }

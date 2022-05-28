@@ -65,7 +65,7 @@ namespace TheConfectionRebirth
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
-            bool inConfectionSurfaceBiome = Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>());
+            bool inConfectionSurfaceBiome = Player.InModBiome(ModContent.GetInstance<ConfectionBiome>());
 
             if (inWater && inConfectionSurfaceBiome && attempt.crate)
             {

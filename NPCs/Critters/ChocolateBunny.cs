@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs.Critters
 {
@@ -26,7 +27,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             AnimationType = NPCID.Bunny;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ChocolateBunnyBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSurfaceBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -47,7 +48,24 @@ namespace TheConfectionRebirth.NPCs.Critters
             return true;
         }
 
-        //Might add gore later
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateBunnyGore1").Type);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateBunnyGore2").Type);
+                }
+            }
+        }
 
         public override void OnCatchNPC(Player player, Item item)
         {
@@ -63,6 +81,14 @@ namespace TheConfectionRebirth.NPCs.Critters
             }
         }
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            {
+                return 1f;
+            }
+            return 0f;
+        }
     }
 
     internal class ChocolateBunnyItem : ModItem

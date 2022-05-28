@@ -7,6 +7,7 @@ using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -15,6 +16,11 @@ namespace TheConfectionRebirth.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Roller Cookie");
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
         }
 
         public override void SetDefaults()
@@ -34,7 +40,7 @@ namespace TheConfectionRebirth.NPCs
             AIType = NPCID.Unicorn;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<RollerCookieBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<IceConfectionSurfaceBiome>().Type };
+            //SpawnModBiomes = new int[1] { ModContent.GetInstance<IceConfectionSurfaceBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -59,11 +65,30 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionSurfaceBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.ZoneSnow && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 0.1f;
             }
             return 0f;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("RollercookieGore1").Type);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("RollercookieGore2").Type);
+                }
+            }
         }
     }
 }

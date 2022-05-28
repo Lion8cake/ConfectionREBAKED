@@ -10,16 +10,24 @@ WOULD RECOMEND USING THE 1.3 VERSION UNTIL THIS ONE IS STABLE
 
 The trees do look a little weird, THIS IS A BUG WITH TMODLOADER NOT WITH THE CONFECTION.(Update: This has been fixed and there will be an update shortly after the next update to the stable release that will fix the trees) 
 
+As of 0.10.0 you should be able to safely convert your 1.3 worlds to 1.4
 ===========================================
 Change log
 ===========================================
--Fixed all Creamwood Furniture Tiles and Items
--Readded Confection Menu (accessed by clicked the text at the bottom of the screen on the main menu)
--Added Cosmic Cookie Cannon (thanks fox for the trail effect)
--Changed Icon
--Fixed Other tiles
--Added Creamstone stalagmite 1-4 tiles as deletion (readded as one tile similar to the grass)
--Added Creamwood Bench to deletion (readded as Creamwood Workbench)
+-Readded all Tiles from the 1.3 version
+-Added Banana Split Crate
+-Readded Fuctionality to the Confection Crate
+-Fixed Biome Registration code again
+-Merged Tile registration into vanilla tiles
+-Readded all NPC Spawning
+-Readded all NPC Gore
+-Readded Meowzer
+-Added proper Icecream Gal AI (Thanks sOvr9000)
+-Fixed Mixel in the Confection and Confection Menu Background
+-Fixed Dimensional Split Crash
+-Fixed some NPC Sprite sheets
+-Fixed Creamsand Witch and Sprinkler Spawning not working
+-Added Creamsand Witch Gore
 
 ===========================================
 Credit - Programmers
@@ -28,7 +36,8 @@ Lion8cake - Main dev
 Cace - For the very tricky tile spreading code, the RoD alt and much cleaner biome code
 Ghasttear1 - For the menu UI
 foxyboy55 - many bug fixes an a few texture changes
-CastledKing2341 - For the awesome and very polished meowzer npc
+CastledKing2341 - For the awesome and very polished Meowzer NPC
+sOvr9000 - For the awesome and very polished Icecream Gal NPC
 FoxXD_ - for cream fox pet and old biome chest and old biome generation, cleaning up part of confection's bad code
 SnickerBobble - Original concept creator of the Confection
 

@@ -4,6 +4,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Placeable;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -42,16 +47,43 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        /*public override void AI()
-	{
-		NPC.ai[0] += 1f;
-		if (Main.rand.NextBool(500) && NPC.CountNPCS(ModContent.NPCType<Hunger>()) < 25)
-		{
-			NPC.ai[0] = 0f;
-			int i = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Hunger>(), 0, NPC.whoAmI);
-			Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
-			Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
-		}
-	}*/
+        public override void AI()
+	    {
+		    NPC.ai[0] += 1f;
+		    if (Main.rand.NextBool(500) && NPC.CountNPCS(ModContent.NPCType<Hunger>()) < 25)
+		    {
+			    NPC.ai[0] = 0f;
+			    int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Hunger>(), 0, NPC.whoAmI);
+			    Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
+			    Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
+		    }
+	    }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("CreamsandWitchGore1").Type);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("CreamsandWitchGore2").Type);
+                }
+            }
+        }
     }
 }

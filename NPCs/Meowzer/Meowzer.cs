@@ -1,15 +1,17 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Graphics.Shaders;
 using TheConfectionRebirth.Items.Banners;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Placeable;
+using Terraria.GameContent.Bestiary;
 
 namespace TheConfectionRebirth.NPCs.Meowzer
 {
@@ -30,6 +32,15 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Meowzer");
+
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { 
+                CustomTexturePath = "TheConfectionRebirth/NPCs/Meowzer/Meowzer_Bestiary",
+                Position = new Vector2(0f, -12f),
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = 12f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
         }
         public override void SetDefaults()
         {
@@ -48,6 +59,16 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             NPC.DeathSound = SoundID.Item2;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<MeowzerBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+
+                new FlavorTextBestiaryInfoElement("A Cat Poptart that roams the confection with its giant cookie cannon. 50% cat, 50% poptart, 100% full of Rainbow lazers")
+            });
         }
         public override void AI()
         {
@@ -259,28 +280,37 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         }
         public override void HitEffect(int hitDirection, double damage)
         {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
             if (NPC.life <= 0)
             {
                 var entitySource = NPC.GetSource_Death();
 
-                for (int a = 0; a < 3; a++)
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>($"Gores/Meowzer/Meowzer{a}").Type);
+                for (int i = 0; i < 3; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>($"Meowzer{i}").Type);
+                }
             }
         }
-        /*public override void NPCLoot()
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(NPC.getRect(), ItemID.Gel, Main.rand.Next(5, 10));
-            if (Main.rand.NextBool(5))
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<Items.Placeable.PastryBlock>(), Main.rand.Next(10, 15));
-            if (Main.rand.NextBool(333))
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<Items.ToastyToaster>());
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PastryBlock>(), 1, 10, 15));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToastyToaster>()));
         }
+
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.player.GetModPlayer<ConfectionPlayer>().ZoneConfection)
-                return spawnInfo.player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.player.GetModPlayer<ConfectionPlayer>().ZoneConfection ? 0.8f : 0f;
-            return 0;
-        }*/
+            if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            {
+                return 0.8f;
+            }
+            return 0f;
+        }
     }
     public class MeowzerBeam : ModProjectile
     {
@@ -356,6 +386,12 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Meowzer Tail");
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
         }
         public override void SetDefaults()
         {
@@ -386,7 +422,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             else if (owner.ModNPC is Meowzer m)
                 NPC.position = m.NPC.Center + new Vector2(owner.spriteDirection == -1 ? 10f : -20f, -55f);
         }
-        //public override void NPCLoot() { Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/Meowzer/MeowzerTail"), 1f); }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) { Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("MeowzerTail").Type); }
         public override bool CheckActive() => false;
     }
 }

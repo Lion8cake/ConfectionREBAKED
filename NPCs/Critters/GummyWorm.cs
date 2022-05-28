@@ -24,24 +24,17 @@ namespace TheConfectionRebirth.NPCs.Critters
             NPC.friendly = true;
             AIType = NPCID.Worm;
             AnimationType = NPCID.Worm;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionSurfaceBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
+
                 new FlavorTextBestiaryInfoElement("Digging into the ground, gummy worms look for food to satisfy their hunger. Not to be confused with Gummy Wyrm.")
             });
-        }
-
-        public override void HitEffect(int hitDirection, double damage)
-        {
-            int num = NPC.life > 0 ? 1 : 5;
-            for (int k = 0; k < num; k++)
-            {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
-            }
         }
 
         public override bool? CanBeHitByItem(Player player, Item item)
@@ -54,7 +47,21 @@ namespace TheConfectionRebirth.NPCs.Critters
             return true;
         }
 
-        //Might add gore later
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
+                }
+            }
+        }
 
         public override void OnCatchNPC(Player player, Item item)
         {
@@ -70,6 +77,14 @@ namespace TheConfectionRebirth.NPCs.Critters
             }
         }
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            {
+                return 1f;
+            }
+            return 0f;
+        }
     }
 
     internal class GummyWormItem : ModItem
