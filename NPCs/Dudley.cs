@@ -42,15 +42,6 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
-            {
-                return 1f;
-            }
-            return 0f;
-        }
-
         public override void HitEffect(int hitDirection, double damage)
         {
             int num = NPC.life > 0 ? 1 : 5;
@@ -59,6 +50,14 @@ namespace TheConfectionRebirth.NPCs
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
             }
         }
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
+			{
+				return 1f;
+			}
+			return 0f;
+		}
 
         public override void FindFrame(int frameHeight)
         {

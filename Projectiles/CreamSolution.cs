@@ -2,7 +2,6 @@ using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Content;
 
 namespace TheConfectionRebirth.Projectiles
 {

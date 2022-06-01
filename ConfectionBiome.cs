@@ -1,5 +1,7 @@
 using AltLibrary;
 using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Systems;
+using AltLibrary.Common.Hooks;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.ID;
@@ -9,7 +11,7 @@ using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Tiles;
 
-namespace TheConfectionRebirth.Content
+namespace TheConfectionRebirth
 {
     internal class ConfectionBiome : AltBiome
     {

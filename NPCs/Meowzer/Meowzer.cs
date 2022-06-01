@@ -57,9 +57,9 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             NPC.netAlways = true;
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.Item2;
-            Banner = NPC.type;
-            BannerItem = ModContent.ItemType<MeowzerBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<MeowzerBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -306,7 +306,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
             {
                 return 0.8f;
             }

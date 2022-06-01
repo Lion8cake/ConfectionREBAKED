@@ -36,7 +36,7 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Pixie;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

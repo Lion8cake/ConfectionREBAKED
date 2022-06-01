@@ -80,23 +80,14 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
-        {
-            int num = NPC.life > 0 ? 1 : 5;
-            for (int k = 0; k < num; k++)
-            {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<SacchariteCrystals>());
-            }
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
-            {
-                return 0.05f;
-            }
-            return 0f;
-        }
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
+			{
+				return 0.05f;
+			}
+			return 0f;
+		}
 
         public override int SpawnNPC(int tileX, int tileY) // when the NPC is spawned
         {

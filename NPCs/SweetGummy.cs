@@ -56,7 +56,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
             {
                 return 0.31f;
             }

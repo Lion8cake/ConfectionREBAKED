@@ -27,7 +27,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             AnimationType = NPCID.Bird;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<PipBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -82,7 +82,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
             {
                 return 1f;
             }

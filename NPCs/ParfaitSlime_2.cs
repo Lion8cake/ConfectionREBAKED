@@ -39,7 +39,7 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Crimslime;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ParfaitSlimeBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -57,7 +57,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.ZoneSnow && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.ZoneSnow && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeBiome>()))
             {
                 return 1.0f;
             }

@@ -6,7 +6,7 @@ using TheConfectionRebirth.Backgrounds;
 
 namespace TheConfectionRebirth.Biomes
 {
-    public class ConfectionBiome : ModBiome
+    public class ConfectionBiomeBiome : ModBiome
     {
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("TheConfectionRebirth/CreamWaterStyle");
 
