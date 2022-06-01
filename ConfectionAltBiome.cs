@@ -34,7 +34,6 @@ namespace TheConfectionRebirth.Content
             MimicType = ModContent.NPCType<BigMimicConfection>();
             DisplayName.SetDefault("Confection");
             Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
-            ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
         }
 
         public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int>
