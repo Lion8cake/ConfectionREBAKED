@@ -18,8 +18,7 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(186, 134, 75));
             DustType = ModContent.DustType<NeapoliniteDust>();
 
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

@@ -14,7 +14,7 @@ using TheConfectionRebirth.Items.Weapons;
 
 namespace TheConfectionRebirth.NPCs
 {
-    public class Iscreamer : ModNPC
+    public class Iscreamer_2 : ModNPC
     {
 
         private float degrees;
@@ -23,6 +23,11 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Iscreamer");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
         }
 
         public override void SetDefaults()
@@ -42,7 +47,7 @@ namespace TheConfectionRebirth.NPCs
             AIType = NPCID.FloatyGross;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<IscreamerBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<IceConfectionUndergroundBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -8,6 +8,7 @@ using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Tiles;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.Content
 {
@@ -33,6 +34,7 @@ namespace TheConfectionRebirth.Content
             MimicType = ModContent.NPCType<BigMimicConfection>();
             DisplayName.SetDefault("Confection");
             Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
+            ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
         }
 
         public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int>
@@ -44,7 +46,7 @@ namespace TheConfectionRebirth.Content
             [TileID.SnowCloud] = ModContent.TileType<Tiles.BlueFairyFloss>()
         };
 
-        public override WallContext WallContext => new WallContext()
+        public virtual WallContext WallContext => new WallContext()
                 .AddReplacement(28, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
                 .AddReplacement(1, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
                 .AddReplacement(48, (ushort)ModContent.WallType<Walls.CreamstoneWall>())

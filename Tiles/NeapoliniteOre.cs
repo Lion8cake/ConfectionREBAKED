@@ -27,8 +27,7 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(153, 96, 62), name);
 
             ItemDrop = ModContent.ItemType<Items.Placeable.NeapoliniteOre>();
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+            HitSound  = SoundID.Tink;
             MineResist = 4f;
             MinPick = 180;
         }

@@ -33,8 +33,7 @@ namespace TheConfectionRebirth.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
             AddMapEntry(new Color(188, 168, 120));
 
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+			HitSound = SoundID.Tink;
             MinPick = 65;
         }
 

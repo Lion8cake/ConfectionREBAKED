@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -16,8 +17,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileNoFail[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			DustType = ModContent.DustType<CreamDust>();
-			SoundType = 6;
-			SoundStyle = 1;
+			HitSound = SoundID.Grass;
 		}
 	
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

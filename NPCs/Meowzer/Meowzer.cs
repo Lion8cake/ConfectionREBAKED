@@ -210,7 +210,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
                 recoil[1] = 1;
                 SoundEngine.PlaySound(SoundID.Item67, NPC.Center);
                 if (Main.rand.NextBool(4))
-                    SoundEngine.PlaySound(Main.rand.NextBool(1) ? SoundID.Item57.WithPitchVariance(0.1f) : SoundID.Item58.WithPitchVariance(0.1f), NPC.Center);
+                    SoundEngine.PlaySound(SoundID.Item57, NPC.Center);
             }
             void Recoil()
             {
@@ -223,7 +223,8 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             {
                 cannon[0] = true;
                 Reset();
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Pigron"));
+                SoundEngine.PlaySound(SoundID.NPCDeath30, NPC.Center);
+                //SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Pigron"));
             }
         }
         Player Target()

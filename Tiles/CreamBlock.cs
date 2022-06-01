@@ -22,18 +22,11 @@ namespace TheConfectionRebirth.Tiles
             DustType = ModContent.DustType<CreamSnowDust>();
             ItemDrop = ModContent.ItemType<Items.Placeable.CreamBlock>();
             AddMapEntry(new Color(219, 223, 234));
-            this.SetModTree(new Trees.CreamSnowTree());
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = (fail ? 1 : 3);
-        }
-
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<CreamSnowSapling>();
         }
     }
 }

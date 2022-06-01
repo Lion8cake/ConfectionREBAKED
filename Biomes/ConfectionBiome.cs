@@ -49,10 +49,10 @@ namespace TheConfectionRebirth.Biomes
             {
                 if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns)
                 {
-                    return MusicLoader.GetMusicSlot(Mod, "Music/UndergroundConfection");
+                    return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
                 }
 
-                return MusicLoader.GetMusicSlot(Mod, "Music/Confection");
+                return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
             }
         }
 

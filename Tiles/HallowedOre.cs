@@ -25,8 +25,7 @@ namespace TheConfectionRebirth.Tiles
 
             DustType = 84;
             ItemDrop = ModContent.ItemType<Items.Placeable.HallowedOre>();
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+            HitSound = SoundID.Tink;
             MineResist = 4f;
             MinPick = 180;
         }

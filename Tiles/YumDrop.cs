@@ -22,8 +22,7 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
-            SoundStyle = 1;
-            SoundType = 6;
+            HitSound = SoundID.Grass;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(64, 133, 44));

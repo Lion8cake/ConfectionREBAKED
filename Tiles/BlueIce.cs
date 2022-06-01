@@ -33,8 +33,7 @@ namespace TheConfectionRebirth.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.OrangeIce>();
             AddMapEntry(new Color(237, 145, 103));
 
-            SoundType = SoundID.Tink;
-            SoundStyle = 2;
+            HitSound  = SoundID.Tink;
         }
 
         public override void FloorVisuals(Player player)

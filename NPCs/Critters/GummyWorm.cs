@@ -63,7 +63,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             }
         }
 
-        public override void OnCatchNPC(Player player, Item item)
+        public virtual void OnCatchNPC(Player player, Item item)
         {
             item.stack = 1;
 

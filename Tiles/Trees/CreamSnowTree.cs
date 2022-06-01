@@ -1,40 +1,49 @@
+using TheConfectionRebirth.Items;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Tiles.Trees
+namespace TheConfectionRebirth.Tiles
 {
-    class CreamSnowTree : ModTree
-    {
-        private Mod mod
-        {
-            get
-            {
-                return ModLoader.GetMod("TheConfectionRebirth");
-            }
-        }
+	public class CreamSnowTree : ModTree
+	{
+		public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings {
+			UseSpecialGroups = true,
+			SpecialGroupMinimalHueValue = 11f / 72f,
+			SpecialGroupMaximumHueValue = 0.25f,
+			SpecialGroupMinimumSaturationValue = 0.88f,
+			SpecialGroupMaximumSaturationValue = 1f
+		};
 
-        public override int DropWood()
-        {
-            return ModContent.ItemType<Items.Placeable.CreamWood>();
-        }
+		public override void SetStaticDefaults() {
+			GrowsOnTileId = new int[1] { ModContent.TileType<CreamBlock>() };
+		}
 
-        public override Texture2D GetTexture()
-        {
-            return ModContent.Request<Texture2D>("CreamSnowTree").Value;
-        }
+		public override Asset<Texture2D> GetTexture() {
+			return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamSnowTree");
+		}
 
-        public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame)
-        {
-            return ModContent.Request<Texture2D>("CreamSnowTree_Branches").Value;
-        }
+		/*public override int SaplingGrowthType(ref int style) {
+			style = 0;
+			return ModContent.TileType<Tree.CreamSnowSapling>();
+		}*/
 
-        public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset)
-        {
-            frameWidth = 80;
-            frameHeight = 80;
-            yOffset += 2;
-            //xOffsetLeft += 16;
-            return ModContent.Request<Texture2D>("CreamSnowTree_Tops").Value;
-        }
-    }
+		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+		{
+		}
+
+		public override Asset<Texture2D> GetBranchTextures() {
+			return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamSnowTree_Branches");
+		}
+
+		public override Asset<Texture2D> GetTopTextures() {
+			return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamSnowTree_Tops");
+		}
+
+		public override int DropWood() {
+			return ModContent.ItemType<Items.Placeable.CreamWood>();
+		}
+	}
 }

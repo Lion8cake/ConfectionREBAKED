@@ -1,3 +1,4 @@
+using TheConfectionRebirth.Tiles;
 using TheConfectionRebirth.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace TheConfectionRebirth.Tiles
+namespace TheConfectionRebirth.Tiles.Trees
 {
 	public class CreamSapling : ModTile
 	{
@@ -25,48 +26,63 @@ namespace TheConfectionRebirth.Tiles
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<CreamGrass>() };
+			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<CreamGrass>() , TileID.Gold };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleMultiplier = 3;
+
 			TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newSubTile.AnchorValidTiles = new int[] { ModContent.TileType<Creamsand>() };
 			TileObjectData.addSubTile(1);
+
 			TileObjectData.addTile(Type);
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Cream Sapling");
-			AddMapEntry(new Color(231, 52, 101), name);
+			AddMapEntry(new Color(200, 200, 200), name);
+
+			TileID.Sets.TreeSapling[Type] = true;
 			TileID.Sets.CommonSapling[Type] = true;
+			TileID.Sets.SwaysInWindBasic[Type] = true;
+
+			DustType = ModContent.DustType<CreamwoodDust>();
+
 			AdjTiles = new int[] { TileID.Saplings };
 		}
 
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+		public override void NumDust(int i, int j, bool fail, ref int num) {
+			num = fail ? 1 : 3;
+		}
 
 		public override void RandomUpdate(int i, int j) {
-			if (WorldGen.genRand.NextBool(20))
-			{
-				Tile tile = Framing.GetTileSafely(i, j); 
-				bool growSucess; 
+			if (!WorldGen.genRand.NextBool(20)) {
+				return;
+			}
 
-				if (tile.TileFrameX < 54)
-					growSucess = WorldGen.GrowTree(i, j);
-				else
-					growSucess = WorldGen.GrowPalmTree(i, j);
+			Tile tile = Framing.GetTileSafely(i, j);
+			bool growSucess;
 
-				bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+			if (tile.TileFrameX < 54) {
+				growSucess = WorldGen.GrowTree(i, j);
+			}
+			else {
+				growSucess = WorldGen.GrowPalmTree(i, j);
+			}
 
-				if (growSucess && isPlayerNear)
-					WorldGen.TreeGrowFXCheck(i, j);
+			bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+
+			if (growSucess && isPlayerNear) {
+				WorldGen.TreeGrowFXCheck(i, j);
 			}
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects) {
-			if (i % 2 == 1)
+			if (i % 2 == 1) {
 				effects = SpriteEffects.FlipHorizontally;
+			}
 		}
 	}
 }

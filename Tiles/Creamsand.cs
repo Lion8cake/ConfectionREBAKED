@@ -5,7 +5,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Projectiles;
-using TheConfectionRebirth.Tiles.Trees;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -29,8 +28,6 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.Falling[Type] = true;
             AddMapEntry(new Color(99, 57, 46));
             ItemDrop = ModContent.ItemType<Items.Placeable.Creamsand>();
-            SetModCactus(new SprinkleCactus());
-            SetModPalmTree(new CreamPalmTree());
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -93,10 +90,5 @@ namespace TheConfectionRebirth.Tiles
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-
-        public override int SaplingGrowthType(ref int style) {
-			style = 1;
-			return ModContent.TileType<CreamSapling>();
-		}
     }
 }

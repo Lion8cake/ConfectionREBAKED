@@ -21,8 +21,7 @@ namespace TheConfectionRebirth.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.CreamstoneBrick>();
             AddMapEntry(new Color(180, 156, 103));
 
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

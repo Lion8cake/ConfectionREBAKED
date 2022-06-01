@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -11,7 +12,7 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileLighted[Type] = true;
-            SoundType = 2;
+            HitSound = SoundID.Dig;
             AnimationFrameHeight = 90;
             Main.tileBlockLight[Type] = true;
             ItemDrop = ModContent.ItemType<Items.Placeable.SherbetBricks>();

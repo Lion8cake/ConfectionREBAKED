@@ -1,5 +1,7 @@
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
+using Terraria;
+using Terraria.Audio;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -13,7 +15,12 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.useAnimation = 20;
             Item.useStyle = 1;
             Item.value = 10000;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/kazooSound");
+            Item.UseSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Items/KazooSound")
+            {
+                Volume = 0.9f,
+                PitchVariance = 0.2f,
+                MaxInstances = 3,
+            };
             Item.autoReuse = true;
         }
 

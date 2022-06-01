@@ -21,8 +21,6 @@ namespace TheConfectionRebirth.Tiles.Deletion
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
-            SoundStyle = 1;
-            SoundType = 6;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.addTile(Type);
         }

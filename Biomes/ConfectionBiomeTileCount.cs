@@ -9,6 +9,7 @@ namespace TheConfectionRebirth.Biomes
     public class ConfectionBiomeTileCount : ModSystem
     {
         public int confectionBlockCount;
+        public int desertOverlaytileCount;
 
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -17,6 +18,10 @@ namespace TheConfectionRebirth.Biomes
                 + tileCounts[ModContent.TileType<BlueIce>()];
 
             Main.SceneMetrics.SandTileCount += tileCounts[ModContent.TileType<Creamsand>()]
+                + tileCounts[ModContent.TileType<HardenedCreamsand>()]
+                + tileCounts[ModContent.TileType<Creamsandstone>()];
+
+            desertOverlaytileCount = tileCounts[ModContent.TileType<Creamsand>()]
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
 
