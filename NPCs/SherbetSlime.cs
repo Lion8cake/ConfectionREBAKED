@@ -4,11 +4,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
-using TheConfectionRebirth.Dusts;
-using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {

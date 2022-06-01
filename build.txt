@@ -4,5 +4,5 @@ version = 0.10.0
 homepage = https://terrariamods.fandom.com/wiki/Confection_Rebaked
 includeSource = true
 includePDB = true
-modReferences = AltLibrary
+modReferences = AltLibrary@1.0.2.2
 sortAfter = AltLibrary

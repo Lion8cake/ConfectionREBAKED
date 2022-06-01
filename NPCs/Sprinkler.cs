@@ -59,12 +59,14 @@ namespace TheConfectionRebirth.NPCs
             NPC.damage = (int)(NPC.damage * 0.2f);
         }
 
-        public override void HitEffect(int hitDirection, double damage) {
-			if (NPC.life <= 0) {
-				Vector2 spawnAt = NPC.Center + new Vector2(0f, (float)NPC.height / 2f);
-				NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
-			}
-		}
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
+            }
+        }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {

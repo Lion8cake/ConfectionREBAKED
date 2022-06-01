@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Tiles
             DustType = ModContent.DustType<CreamDust>();
             AddMapEntry(new Color(188, 168, 120));
 
-			HitSound = SoundID.Tink;
+            HitSound = SoundID.Tink;
             MinPick = 65;
         }
 

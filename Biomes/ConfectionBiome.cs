@@ -60,7 +60,7 @@ namespace TheConfectionRebirth.Biomes
         {
             get
             {
-                if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns) 
+                if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns)
                 {
                     return "Biomes/BestiaryIcon2";
                 }
@@ -143,7 +143,7 @@ namespace TheConfectionRebirth.Biomes
             {
                 DisplayName.SetDefault("The Confection Sand Underground");
             }
-        DisplayName.SetDefault("The Confection");
+            DisplayName.SetDefault("The Confection");
         }
 
         public override bool IsBiomeActive(Player player)

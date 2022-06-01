@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
-using Terraria.ID;
 
 namespace TheConfectionRebirth.Tiles
 {

@@ -1,9 +1,9 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 

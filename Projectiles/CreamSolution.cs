@@ -1,15 +1,8 @@
-using Microsoft.Xna.Framework;
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles;
-using TheConfectionRebirth.Walls;
 using AltLibrary.Common.AltBiomes;
-using AltLibrary.Common.Systems;
-using AltLibrary;
-using AltLibrary.Common;
-using TheConfectionRebirth;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ModLoader;
+using TheConfectionRebirth.Content;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -30,7 +23,7 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 2;
-            // Projectile.tileCollide = false;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
 
@@ -40,7 +33,7 @@ namespace TheConfectionRebirth.Projectiles
 
             if (Projectile.owner == Main.myPlayer)
             {
-                ALConvert.SimulateSolution<ConfectionAltBiome>(Projectile);
+                ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
             }
 
             if (Projectile.timeLeft > 133)

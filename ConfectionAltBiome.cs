@@ -8,7 +8,6 @@ using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Tiles;
-using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.Content
 {
@@ -34,9 +33,25 @@ namespace TheConfectionRebirth.Content
             MimicType = ModContent.NPCType<BigMimicConfection>();
             DisplayName.SetDefault("Confection");
             Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
+
+            BakeTileChild(ModContent.TileType<CookieBlock>(), TileID.Dirt, new(true, true, true));
+            BakeTileChild(ModContent.TileType<CreamBlock>(), TileID.SnowBlock, new(true, true, true));
+            BakeTileChild(ModContent.TileType<PinkFairyFloss>(), TileID.Cloud, new(true, true, true));
+            BakeTileChild(ModContent.TileType<PurpleFairyFloss>(), TileID.RainCloud, new(true, true, true));
+            BakeTileChild(ModContent.TileType<BlueFairyFloss>(), TileID.SnowCloud, new(true, true, true));
+
+            WallContext = new WallContext()
+                .AddReplacement<Walls.CreamstoneWall>(28, 1, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 188, 189, 190, 191, 192, 193, 194, 195, 61, 185, 212, 213, 214, 215, 3, 200, 201, 202, 203, 83)
+                .AddReplacement<Walls.CreamGrassWall>(63, 65, 66, 68, 69, 70, 81)
+                .AddReplacement<Walls.CookieWall>(59, 171, 170, 196, 198, 199, 16, 2)
+                .AddReplacement<Walls.CreamsandstoneWall>(216, 217, 218, 219)
+                .AddReplacement<Walls.HardenedCreamsandWall>(197, 220, 221, 222)
+                .AddReplacement(40, (ushort)ModContent.WallType<Walls.CreamWall>())
+                .AddReplacement(71, (ushort)ModContent.WallType<Walls.BlueIceWall>())
+                .AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());
         }
 
-        public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int>
+        public override Dictionary<int, int> SpecialConversion => new()
         {
             [TileID.Dirt] = ModContent.TileType<Tiles.CookieBlock>(),
             [TileID.SnowBlock] = ModContent.TileType<Tiles.CreamBlock>(),
@@ -45,68 +60,7 @@ namespace TheConfectionRebirth.Content
             [TileID.SnowCloud] = ModContent.TileType<Tiles.BlueFairyFloss>()
         };
 
-        public virtual WallContext WallContext => new WallContext()
-                .AddReplacement(28, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(1, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(48, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(49, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(50, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(51, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(52, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(53, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(54, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(55, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(56, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(57, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(58, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(188, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(189, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(190, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(191, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(192, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(193, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(194, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(195, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(61, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(185, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(212, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(213, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(214, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(215, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(3, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(200, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(201, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(202, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(203, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(83, (ushort)ModContent.WallType<Walls.CreamstoneWall>())
-                .AddReplacement(63, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(65, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(66, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(68, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(69, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(70, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(81, (ushort)ModContent.WallType<Walls.CreamGrassWall>())
-                .AddReplacement(59, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(171, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(170, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(196, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(198, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(199, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(16, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(2, (ushort)ModContent.WallType<Walls.CookieWall>())
-                .AddReplacement(216, (ushort)ModContent.WallType<Walls.CreamsandstoneWall>())
-                .AddReplacement(217, (ushort)ModContent.WallType<Walls.CreamsandstoneWall>())
-                .AddReplacement(218, (ushort)ModContent.WallType<Walls.CreamsandstoneWall>())
-                .AddReplacement(219, (ushort)ModContent.WallType<Walls.CreamsandstoneWall>())
-                .AddReplacement(197, (ushort)ModContent.WallType<Walls.HardenedCreamsandWall>())
-                .AddReplacement(220, (ushort)ModContent.WallType<Walls.HardenedCreamsandWall>())
-                .AddReplacement(221, (ushort)ModContent.WallType<Walls.HardenedCreamsandWall>())
-                .AddReplacement(222, (ushort)ModContent.WallType<Walls.HardenedCreamsandWall>())
-                .AddReplacement(40, (ushort)ModContent.WallType<Walls.CreamWall>())
-                .AddReplacement(71, (ushort)ModContent.WallType<Walls.BlueIceWall>())
-                .AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());
-
-        public override List<int> SpreadingTiles => new List<int> { ModContent.TileType<CreamGrass>(), ModContent.TileType<Tiles.Creamstone>(), ModContent.TileType<Tiles.Creamsand>(), ModContent.TileType<BlueIce>(), ModContent.TileType<Tiles.Creamsandstone>(), ModContent.TileType<Tiles.HardenedCreamsand>() };
+        public override List<int> SpreadingTiles => new() { ModContent.TileType<CreamGrass>(), ModContent.TileType<Tiles.Creamstone>(), ModContent.TileType<Tiles.Creamsand>(), ModContent.TileType<BlueIce>(), ModContent.TileType<Tiles.Creamsandstone>(), ModContent.TileType<Tiles.HardenedCreamsand>() };
 
         public override string WorldIcon => "TheConfectionRebirth/Assets/WorldIcons/Confection";
 

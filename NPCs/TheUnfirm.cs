@@ -1,10 +1,10 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
-using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {

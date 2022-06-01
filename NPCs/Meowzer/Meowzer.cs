@@ -1,17 +1,17 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Items.Banners;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
-using Terraria.GameContent.Bestiary;
 
 namespace TheConfectionRebirth.NPCs.Meowzer
 {
@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             DisplayName.SetDefault("Meowzer");
 
             var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-            { 
+            {
                 CustomTexturePath = "TheConfectionRebirth/NPCs/Meowzer/Meowzer_Bestiary",
                 Position = new Vector2(0f, -12f),
                 PortraitPositionXOverride = 0f,
@@ -57,8 +57,8 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             NPC.netAlways = true;
             NPC.HitSound = SoundID.NPCHit7;
             NPC.DeathSound = SoundID.Item2;
-			Banner = NPC.type;
-			BannerItem = ModContent.ItemType<MeowzerBanner>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<MeowzerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -173,7 +173,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             {
                 if (Target() != null)
                 {
-                    float rot = (float)Math.Atan2((double)((float)lastSeen.Y - NPC.Center.Y), (double)((float)lastSeen.X - NPC.Center.X));
+                    float rot = (float)Math.Atan2((double)(lastSeen.Y - NPC.Center.Y), (double)(lastSeen.X - NPC.Center.X));
                     lockOn[2] = MathHelper.Lerp(NPC.rotation + (NPC.spriteDirection == 1 ? 1.5f : -1.5f), rot + 1.75f, lockOn[1]);
                 }
             }
@@ -261,7 +261,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
                     }
                     int Y()
                     {
-                        switch(a)
+                        switch (a)
                         {
                             case 0:
                                 return 28;
@@ -349,7 +349,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(15f, Projectile.gfxOffY - 5);
-                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(beam, drawPos, new Rectangle(beam.Width / 2, 0, beam.Width / 2, beam.Height), Utilities.LerpColor(Color.Transparent, color, val * 0.5f), Projectile.rotation, drawOrigin + new Vector2(15, 0), Projectile.scale, DS.FlipTex(-1), 0);
                 Main.EntitySpriteDraw(tex, drawPos, rectangle, color, Projectile.rotation, drawOrigin + new Vector2(15, -5), Projectile.scale, DS.FlipTex(-1), 0);
             }

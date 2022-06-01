@@ -1,7 +1,7 @@
-using Terraria.GameContent.Creative;
-using Terraria.ModLoader;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.Creative;
+using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Weapons
 {

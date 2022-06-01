@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -44,11 +43,11 @@ namespace TheConfectionRebirth.Projectiles
                 Dust obj3 = Main.dust[frostDustSmol];
                 obj3.velocity += Projectile.velocity * 0.5f;
             }*/
-            
+
             if (Projectile.timeLeft < 1100)
             {
                 Projectile.rotation += 0.3f * Projectile.direction;
-            }   
+            }
         }
 
         public override void Kill(int timeLeft)

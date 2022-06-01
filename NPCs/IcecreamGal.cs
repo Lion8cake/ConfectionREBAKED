@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -9,7 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Projectiles;
 
 
 /*
@@ -57,12 +55,14 @@ namespace TheConfectionRebirth.NPCs
         public int[] starProjectiles = new int[numberOfStars];
         static readonly int[] starRange;
 
-        static IcecreamGal() {
+        static IcecreamGal()
+        {
             starRange = new int[numberOfStars];
-            for (int i = 0; i < numberOfStars; i++) {
-				starRange[i] = i;
-			}
-		}
+            for (int i = 0; i < numberOfStars; i++)
+            {
+                starRange[i] = i;
+            }
+        }
 
         public override void SetStaticDefaults()
         {
@@ -89,10 +89,11 @@ namespace TheConfectionRebirth.NPCs
             BannerItem = ModContent.ItemType<IcecreamGalBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
 
-			NPC.ai[1] = -1f; // Pause the star summoning animation
-            for (int i = 0; i < numberOfStars; i++) {
-				starProjectiles[i] = -1;
-			}
+            NPC.ai[1] = -1f; // Pause the star summoning animation
+            for (int i = 0; i < numberOfStars; i++)
+            {
+                starProjectiles[i] = -1;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -103,16 +104,17 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
             npcLoot.Add(new CommonDrop(Mod.Find<ModItem>("SoulofDelight").Type,
                 amountDroppedMinimum: 3,
                 amountDroppedMaximum: 5,
                 chanceNumerator: 1,
                 chanceDenominator: 1
             ));
-		}
-		
-		public override void FindFrame(int frameHeight)
+        }
+
+        public override void FindFrame(int frameHeight)
         {
             NPC.spriteDirection = NPC.direction;
         }
@@ -147,68 +149,92 @@ namespace TheConfectionRebirth.NPCs
         }
 
         #region Custom AI Behavior by sOvr9000 (a.k.a. MetroidManiax)
-        public override void AI() {
+        public override void AI()
+        {
             SearchForPlayerTarget();
             ChasePlayerTarget();
             SummonStarProjectiles();
             UpdateStarProjectiles();
             PerformAttacks();
-		}
+        }
 
-        private void SearchForPlayerTarget() {
-            if (NPC.target >= Main.player.Length) {
+        private void SearchForPlayerTarget()
+        {
+            if (NPC.target >= Main.player.Length)
+            {
                 Player targetPlayer = null;
-                for (int i = 0; i < Main.player.Length; i++) {
+                for (int i = 0; i < Main.player.Length; i++)
+                {
                     targetPlayer = Main.player[i];
-                    if (targetPlayer != null && targetPlayer.active && targetPlayer.statLife > 0 && (targetPlayer.Center - NPC.Center).LengthSquared() <= 256f * searchDistance * searchDistance) {
+                    if (targetPlayer != null && targetPlayer.active && targetPlayer.statLife > 0 && (targetPlayer.Center - NPC.Center).LengthSquared() <= 256f * searchDistance * searchDistance)
+                    {
                         NPC.target = i;
                         return;
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
-        private void ChasePlayerTarget() {
-            if (NPC.target < Main.player.Length) {
+        private void ChasePlayerTarget()
+        {
+            if (NPC.target < Main.player.Length)
+            {
                 Player targetPlayer = Main.player[NPC.target];
-                if (targetPlayer == null || !targetPlayer.active || targetPlayer.statLife <= 0) {
+                if (targetPlayer == null || !targetPlayer.active || targetPlayer.statLife <= 0)
+                {
                     NPC.target = 256;
-				} else {
+                }
+                else
+                {
                     float dx = targetPlayer.Center.X - NPC.Center.X;
                     float hdist = MathF.Abs(dx); // horizontal distance
-                    float speed =  MathF.Min(maxMoveSpeed, hdist / 20f);
+                    float speed = MathF.Min(maxMoveSpeed, hdist / 20f);
                     NPC.velocity.X += (dx > 0f ? 1 : -1) * acceleration;
-                    if (MathF.Abs(NPC.velocity.X) > speed) {
+                    if (MathF.Abs(NPC.velocity.X) > speed)
+                    {
                         NPC.velocity.X *= speed / MathF.Abs(NPC.velocity.X); // Normalize so that it doesn't move too fast horizontally
-				    }
-			        if (NPC.collideY) {
-                        if (hdist <= jumpProximity * 16f) {
+                    }
+                    if (NPC.collideY)
+                    {
+                        if (hdist <= jumpProximity * 16f)
+                        {
                             NPC.velocity.Y = -jumpForce;
                             // Chance to summon stars
-                            if (NPC.ai[1] == -1f && Main.rand.Next(averageNumberOfJumpsPerSummon) == 0) {
-								NPC.ai[1] = 0f; // Triggers the animation
-							}
-						} else {
+                            if (NPC.ai[1] == -1f && Main.rand.Next(averageNumberOfJumpsPerSummon) == 0)
+                            {
+                                NPC.ai[1] = 0f; // Triggers the animation
+                            }
+                        }
+                        else
+                        {
                             NPC.velocity.Y = -hopForce;
-						}
-			        }
-				}
-			} else {
+                        }
+                    }
+                }
+            }
+            else
+            {
                 NPC.velocity.X *= 0.6f;
-			}
-		}
+            }
+        }
 
-        private void PerformAttacks() {
-            if (NPC.target < Main.player.Length) {
-                if (Main.GameUpdateCount % shootingInterval == 0) {
+        private void PerformAttacks()
+        {
+            if (NPC.target < Main.player.Length)
+            {
+                if (Main.GameUpdateCount % shootingInterval == 0)
+                {
                     Shoot();
-				}
-			}
-		}
+                }
+            }
+        }
 
-        private void SummonStarProjectiles() {
-            if (NPC.ai[1] >= 0f && NPC.ai[1] < numberOfStars) { // ai value increments by one only when a star has finished the summoning animation
-                if (starProjectiles[(int)NPC.ai[1]] == -1) {
+        private void SummonStarProjectiles()
+        {
+            if (NPC.ai[1] >= 0f && NPC.ai[1] < numberOfStars)
+            { // ai value increments by one only when a star has finished the summoning animation
+                if (starProjectiles[(int)NPC.ai[1]] == -1)
+                {
                     starProjectiles[(int)NPC.ai[1]] = Projectile.NewProjectile(
                         spawnSource: NPC.GetSource_None(),
                         position: NPC.Center - Vector2.One * 5f,
@@ -217,48 +243,57 @@ namespace TheConfectionRebirth.NPCs
                         Damage: starDamage,
                         KnockBack: starKnockBack
                     );
-				}
-			}
-		}
+                }
+            }
+        }
 
-        private void UpdateStarProjectiles() {
-            for (int i = 0; i < numberOfStars; i++) {
+        private void UpdateStarProjectiles()
+        {
+            for (int i = 0; i < numberOfStars; i++)
+            {
                 if (starProjectiles[i] == -1) continue;
                 Projectile star = Main.projectile[starProjectiles[i]];
-                float t = (float)Main.time*rotationSpeed + i*MathF.Tau/numberOfStars;
+                float t = (float)Main.time * rotationSpeed + i * MathF.Tau / numberOfStars;
                 float nextRadius;
-                if (star.ai[1] == 1f) {
+                if (star.ai[1] == 1f)
+                {
                     nextRadius = targetRadius;
-				} else {
-					NPC.ai[2] += summonSpeed;
+                }
+                else
+                {
+                    NPC.ai[2] += summonSpeed;
                     nextRadius = NPC.ai[2];
-                    if (nextRadius >= targetRadius) {
-						star.ai[1] = 1f; // Mark as fully summoned
-						NPC.ai[1]++; // Allow to summon the next star
-						NPC.ai[2] = 0f;
-					}
+                    if (nextRadius >= targetRadius)
+                    {
+                        star.ai[1] = 1f; // Mark as fully summoned
+                        NPC.ai[1]++; // Allow to summon the next star
+                        NPC.ai[2] = 0f;
+                    }
                 }
                 star.Center = NPC.Center + new Vector2(nextRadius * MathF.Cos(t), nextRadius * MathF.Sin(t));
-			}
-		}
+            }
+        }
 
-        private void Shoot() {
-            if (NPC.ai[1] == numberOfStars) {
+        private void Shoot()
+        {
+            if (NPC.ai[1] == numberOfStars)
+            {
                 Player targetPlayer = Main.player[NPC.target];
-				int[] remaining = starRange.Where(i => starProjectiles[i] != -1).ToArray();
-				int i = remaining[Main.rand.Next(remaining.Length)];
+                int[] remaining = starRange.Where(i => starProjectiles[i] != -1).ToArray();
+                int i = remaining[Main.rand.Next(remaining.Length)];
                 Projectile star = Main.projectile[starProjectiles[i]];
                 Vector2 delta = targetPlayer.Center - star.Center;
                 star.velocity = delta * projectileSpeed / delta.Length();
-				starProjectiles[i] = -1;
+                starProjectiles[i] = -1;
                 Mod.Logger.Info("Shot star #" + i);
                 // Basically what happens above is that stars are selected randomly from the circle to be shot toward the target player
-                if (remaining.Length == 1) {
-					NPC.ai[1] = -1f; // Preparing to summon stars again sometime
-				    NPC.ai[2] = 0f;
-				}
-			}
-		}
+                if (remaining.Length == 1)
+                {
+                    NPC.ai[1] = -1f; // Preparing to summon stars again sometime
+                    NPC.ai[2] = 0f;
+                }
+            }
+        }
         #endregion
-	}
+    }
 }

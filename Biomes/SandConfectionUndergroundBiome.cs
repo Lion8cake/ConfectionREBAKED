@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
-using System;
-using Terraria;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Backgrounds;
 
 namespace TheConfectionRebirth.Biomes
 {

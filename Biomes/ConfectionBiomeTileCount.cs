@@ -1,8 +1,7 @@
 using System;
+using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
-using Terraria;
-using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Biomes
 {

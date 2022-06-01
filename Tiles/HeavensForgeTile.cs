@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Tiles
             r = 0.9f;
             g = 0.1f;
             b = 0.5f;
-        
+
         }
 
         public override void AnimateTile(ref int frame, ref int frameCounter)

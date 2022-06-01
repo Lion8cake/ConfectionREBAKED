@@ -9,7 +9,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {

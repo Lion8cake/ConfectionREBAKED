@@ -1,14 +1,14 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Items.Banners;
-using Terraria.GameContent.ItemDropRules;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
-using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -48,16 +48,16 @@ namespace TheConfectionRebirth.NPCs
         }
 
         public override void AI()
-	    {
-		    NPC.ai[0] += 1f;
-		    if (Main.rand.NextBool(500) && NPC.CountNPCS(ModContent.NPCType<Hunger>()) < 25)
-		    {
-			    NPC.ai[0] = 0f;
-			    int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Hunger>(), 0, NPC.whoAmI);
-			    Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
-			    Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
-		    }
-	    }
+        {
+            NPC.ai[0] += 1f;
+            if (Main.rand.NextBool(500) && NPC.CountNPCS(ModContent.NPCType<Hunger>()) < 25)
+            {
+                NPC.ai[0] = 0f;
+                int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Hunger>(), 0, NPC.whoAmI);
+                Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
+                Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
+            }
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

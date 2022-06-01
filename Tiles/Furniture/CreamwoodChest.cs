@@ -3,14 +3,12 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.Achievements;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {

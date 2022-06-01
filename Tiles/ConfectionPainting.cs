@@ -1,39 +1,35 @@
 using Microsoft.Xna.Framework;
-using TheConfectionRebirth.Items.Placeable;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.GameContent.ObjectInteractions;
-using Terraria.ID;
-using Terraria.Localization;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class ConfectionPainting : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
-			Main.tileNoAttach[Type] = true;
-			Main.tileTable[Type] = false;
-			TileObjectData.newTile.Width = 3;
-			TileObjectData.newTile.Height = 2;
-			TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 16 };
-			TileObjectData.newTile.UsesCustomCanPlace = true;
-			TileObjectData.newTile.CoordinateWidth = 16;
-			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorWall = true;
-			TileObjectData.addTile(Type);
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			AddMapEntry(new Color(133, 87, 50)); 
-		}
+    public class ConfectionPainting : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
+            Main.tileNoAttach[Type] = true;
+            Main.tileTable[Type] = false;
+            TileObjectData.newTile.Width = 3;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 16 };
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.AnchorWall = true;
+            TileObjectData.addTile(Type);
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            AddMapEntry(new Color(133, 87, 50));
+        }
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ConfectionPainting>());
-		}
-	}
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ConfectionPainting>());
+        }
+    }
 }

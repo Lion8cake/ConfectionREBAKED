@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -138,7 +137,7 @@ namespace TheConfectionRebirth.Projectiles
 
         //Make the projectile shoot out cookie star dusts
         public override void Kill(int timeLeft)
-		{
+        {
             for (int k = 15; k < 50; k++)
             {
                 Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<CosmicStarDust>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);

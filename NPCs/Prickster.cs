@@ -1,320 +1,328 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System;
-using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Biomes;
+using Terraria;
 using Terraria.GameContent.Bestiary;
-using TheConfectionRebirth.Items;
-using TheConfectionRebirth.Items.Placeable;
-using TheConfectionRebirth.Items.Armor;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.NPCs
 {
-	public class Prickster : ModNPC
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Prickster");
-			Main.npcFrameCount[NPC.type] = 6;
-		}
+    public class Prickster : ModNPC
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Prickster");
+            Main.npcFrameCount[NPC.type] = 6;
+        }
 
-		private Player targetedPlayer;
+        private Player targetedPlayer;
 
-		private int numHops = 0, numBounces = 0, maxHops = 2, maxBounces = 3;
+        private int numHops = 0, numBounces = 0, maxHops = 2, maxBounces = 3;
 
-		private int directionBeforeBounce = 0;
+        private int directionBeforeBounce = 0;
 
-		private bool noticed = false;
+        private bool noticed = false;
 
-		private bool launched = false;
+        private bool launched = false;
 
-		private const int AI_State_Slot = 0;
-		private const int AI_Timer_Slot = 1;
+        private const int AI_State_Slot = 0;
+        private const int AI_Timer_Slot = 1;
 
-		private const int State_Asleep = 0;
-		private const int State_Notice = 1;
-		private const int State_Walk = 2;
-		private const int State_Bounce = 3;
+        private const int State_Asleep = 0;
+        private const int State_Notice = 1;
+        private const int State_Walk = 2;
+        private const int State_Bounce = 3;
 
-		public float AI_State
-		{
-			get => NPC.ai[AI_State_Slot];
-			set => NPC.ai[AI_State_Slot] = value;
-		}
-		public float AI_Timer
-		{
-			get => NPC.ai[AI_Timer_Slot];
-			set => NPC.ai[AI_Timer_Slot] = value;
-		}
+        public float AI_State
+        {
+            get => NPC.ai[AI_State_Slot];
+            set => NPC.ai[AI_State_Slot] = value;
+        }
+        public float AI_Timer
+        {
+            get => NPC.ai[AI_Timer_Slot];
+            set => NPC.ai[AI_Timer_Slot] = value;
+        }
 
 
-		public override void SetDefaults()
-		{
-			NPC.width = 58;
-			NPC.height = 52;
-			NPC.damage = 75;
-			NPC.defense = 35;
-			NPC.lifeMax = 220;
-			NPC.HitSound = SoundID.NPCHit24;
-			NPC.DeathSound = SoundID.NPCDeath27;
-			NPC.value = 500f; ; // amount of money dropped
-			NPC.knockBackResist = 0f;
-			NPC.aiStyle = -1; // custom ai
-			NPC.noTileCollide = false;
-			AIType = NPCID.GiantTortoise;
-			AnimationType = NPCID.GiantTortoise;
-			Banner = NPC.type;
-			BannerItem = ModContent.ItemType<PricksterBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
-		}
+        public override void SetDefaults()
+        {
+            NPC.width = 58;
+            NPC.height = 52;
+            NPC.damage = 75;
+            NPC.defense = 35;
+            NPC.lifeMax = 220;
+            NPC.HitSound = SoundID.NPCHit24;
+            NPC.DeathSound = SoundID.NPCDeath27;
+            NPC.value = 500f; ; // amount of money dropped
+            NPC.knockBackResist = 0f;
+            NPC.aiStyle = -1; // custom ai
+            NPC.noTileCollide = false;
+            AIType = NPCID.GiantTortoise;
+            AnimationType = NPCID.GiantTortoise;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<PricksterBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+        }
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-		{
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A tortois descuised as a pile of scharrarite ready to attack when disturbed.")
-			});
-		}
+                new FlavorTextBestiaryInfoElement("A tortois descuised as a pile of scharrarite ready to attack when disturbed.")
+            });
+        }
 
-		public override void HitEffect(int hitDirection, double damage) {
-			int num = NPC.life > 0 ? 1 : 5;
-			for (int k = 0; k < num; k++) {
-				Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<SacchariteCrystals>());
-			}
-		}
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            int num = NPC.life > 0 ? 1 : 5;
+            for (int k = 0; k < num; k++)
+            {
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<SacchariteCrystals>());
+            }
+        }
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
-			{
-				return 0.05f;
-			}
-			return 0f;
-		}
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+            {
+                return 0.05f;
+            }
+            return 0f;
+        }
 
-		public override int SpawnNPC(int tileX, int tileY) // when the NPC is spawned
+        public override int SpawnNPC(int tileX, int tileY) // when the NPC is spawned
         {
             return base.SpawnNPC(tileX, tileY); // set to either 2x3 size or 3x2 size anywhere not inside of a block
         }
 
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
         {
-			if (noticed == false)
+            if (noticed == false)
             {
-				targetedPlayer = player;
-				AI_State = State_Notice;
-				noticed = true;
-			}
+                targetedPlayer = player;
+                AI_State = State_Notice;
+                noticed = true;
+            }
         }
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-			if (noticed == false)
+            if (noticed == false)
             {
-				targetedPlayer = Main.player[NPC.FindClosestPlayer()];
-				AI_State = State_Notice;
-				noticed = true;
-			}
-		}
+                targetedPlayer = Main.player[NPC.FindClosestPlayer()];
+                AI_State = State_Notice;
+                noticed = true;
+            }
+        }
 
-		/*public override void ModifyNPCLoot(NPCLoot npcLoot)
+        /*public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.AdhesiveBandage, 1, 1, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Saccharite>(), 5, 13, 1));
 		}*/
 
-		public override void ModifyNPCLoot(NPCLoot npcLoot)
-		{
-			npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
-		}
-
-		public override void AI()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-			if (AI_State != State_Asleep)
-			{
-				if (NPC.position.X > targetedPlayer.position.X)
-				{
-					NPC.direction = 1;
-				}
-				else
-				{
-					NPC.direction = -1;
-				}
-			}
-
-			if (AI_State == State_Asleep)
-			{
-				// do nothing :)
-			}
-
-			// In this state, a player has been targeted
-			else if (AI_State == State_Notice)
-			{
-				if (targetedPlayer.Distance(NPC.Center) < 500f)
-				{
-					NPC.velocity = new Vector2(0f, 0f);
-					AI_State = State_Walk;
-				}
-			}
-			
-			else if (AI_State == State_Walk) // walk in this case is a short hop
-            {
-				AI_Timer++;
-				if (NPC.velocity.Y == 0)
-                {
-					NPC.rotation = 0f;
-                }
-
-				if (numHops == maxHops && NPC.velocity.Y == 0) // hops 3 times then goes to bounce state
-                {
-					AI_State = State_Bounce;
-					numHops = 0;
-					AI_Timer = 0;
-                }
-				else if (NPC.velocity.Y == 0 && AI_Timer % 100 == 0) // if on ground and after 100 ticks
-                {
-					NPC.velocity += new Vector2(-NPC.direction * 4, -5f);
-					numHops++;
-                }
-
-				if (NPC.velocity.Y == 0)
-				{
-					NPC.velocity.X = 0;
-				}
-			}
-			
-			else if (AI_State == State_Bounce)
-            {
-				AI_Timer++;
-
-				if (numBounces >= maxBounces && (NPC.velocity == new Vector2(0f, 0f) && launched == true))
-                {
-					NPC.HealEffect(numBounces);
-					ResetValuesAfterBounce();
-				}
-
-				if (NPC.velocity.Y != 0 && (NPC.collideX == false && NPC.collideY == false)) // if in air
-				{
-					NPC.rotation += directionBeforeBounce + NPC.velocity.X / (AI_Timer * 0.5f); // SPINNIES!!
-				}
-				else if (NPC.velocity.Y == 0) // if on ground
-				{
-					if (AI_Timer % 100 == 0)
-					{
-						if (Above(NPC.position.ToTileCoordinates().Y + 1 /*adjust for height ig idfk*/, targetedPlayer.position.ToTileCoordinates().Y) != false) // if player is not below NPC
-						{
-							if (NPC.position.X > targetedPlayer.position.X)
-							{
-								directionBeforeBounce = 1;
-							}
-							else
-							{
-								directionBeforeBounce = -1;
-							}
-							NPC.velocity += new Vector2(-NPC.direction * Math.Abs(NPC.position.ToTileCoordinates().X - targetedPlayer.position.ToTileCoordinates().X) / 2f, Math.Abs(NPC.position.ToTileCoordinates().Y - targetedPlayer.position.ToTileCoordinates().Y)); // hopefully go flying towards the player
-							launched = true;
-						}
-						else
-						{
-							if (NPC.position.X > targetedPlayer.position.X)
-							{
-								directionBeforeBounce = 1;
-							}
-							else
-							{
-								directionBeforeBounce = -1;
-							}
-							NPC.velocity += new Vector2(-NPC.direction * Math.Abs(NPC.position.X - targetedPlayer.position.X) * 0.03f, 5f); // hopefully go flying towards the player
-							launched = true;
-						}
-					}
-				}
-				if (NPC.collideX && numBounces < maxBounces && NPC.velocity.X != 0 && NPC.velocity.Y != 0)
-                {
-					NPC.velocity.X = NPC.velocity.X * directionBeforeBounce;
-					numBounces++;
-                }
-
-				if ((NPC.velocity.Y == 0 && NPC.velocity.X != 0) || (numBounces < maxBounces && NPC.velocity == new Vector2(0f, 0f) && launched == true)) // we dont want the thing on a slip n slide!
-                {
-					ResetValuesAfterBounce();
-                }
-
-				if (NPC.collideY && numBounces < maxBounces && NPC.velocity.Y != 0)
-                {
-					NPC.velocity.Y = -NPC.velocity.Y;
-					numBounces++;
-                }
-            }
-		}
-
-		private bool Above(float val1, float val2)
-        {
-			return val1 > val2;
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
         }
 
-		private void ResetValuesAfterBounce()
+        public override void AI()
         {
-			NPC.velocity = new Vector2(0, 0);
-			AI_State = State_Walk;
-			numBounces = 0;
-			AI_Timer = 0;
-			launched = false;
-			NPC.rotation = 0f;
-		}
-		
-		private const int Frame_Asleep = 0;
-		private const int Frame_Notice_1 = 1;
-		private const int Frame_Notice_2 = 2;
-		private const int Frame_Walk_1 = 3;
-		private const int Frame_Walk_2 = 4;
-		private const int Frame_Bounce = 5;
+            if (AI_State != State_Asleep)
+            {
+                if (NPC.position.X > targetedPlayer.position.X)
+                {
+                    NPC.direction = 1;
+                }
+                else
+                {
+                    NPC.direction = -1;
+                }
+            }
+
+            if (AI_State == State_Asleep)
+            {
+                // do nothing :)
+            }
+
+            // In this state, a player has been targeted
+            else if (AI_State == State_Notice)
+            {
+                if (targetedPlayer.Distance(NPC.Center) < 500f)
+                {
+                    NPC.velocity = new Vector2(0f, 0f);
+                    AI_State = State_Walk;
+                }
+            }
+
+            else if (AI_State == State_Walk) // walk in this case is a short hop
+            {
+                AI_Timer++;
+                if (NPC.velocity.Y == 0)
+                {
+                    NPC.rotation = 0f;
+                }
+
+                if (numHops == maxHops && NPC.velocity.Y == 0) // hops 3 times then goes to bounce state
+                {
+                    AI_State = State_Bounce;
+                    numHops = 0;
+                    AI_Timer = 0;
+                }
+                else if (NPC.velocity.Y == 0 && AI_Timer % 100 == 0) // if on ground and after 100 ticks
+                {
+                    NPC.velocity += new Vector2(-NPC.direction * 4, -5f);
+                    numHops++;
+                }
+
+                if (NPC.velocity.Y == 0)
+                {
+                    NPC.velocity.X = 0;
+                }
+            }
+
+            else if (AI_State == State_Bounce)
+            {
+                AI_Timer++;
+
+                if (numBounces >= maxBounces && (NPC.velocity == new Vector2(0f, 0f) && launched == true))
+                {
+                    NPC.HealEffect(numBounces);
+                    ResetValuesAfterBounce();
+                }
+
+                if (NPC.velocity.Y != 0 && (NPC.collideX == false && NPC.collideY == false)) // if in air
+                {
+                    NPC.rotation += directionBeforeBounce + NPC.velocity.X / (AI_Timer * 0.5f); // SPINNIES!!
+                }
+                else if (NPC.velocity.Y == 0) // if on ground
+                {
+                    if (AI_Timer % 100 == 0)
+                    {
+                        if (Above(NPC.position.ToTileCoordinates().Y + 1 /*adjust for height ig idfk*/, targetedPlayer.position.ToTileCoordinates().Y) != false) // if player is not below NPC
+                        {
+                            if (NPC.position.X > targetedPlayer.position.X)
+                            {
+                                directionBeforeBounce = 1;
+                            }
+                            else
+                            {
+                                directionBeforeBounce = -1;
+                            }
+                            NPC.velocity += new Vector2(-NPC.direction * Math.Abs(NPC.position.ToTileCoordinates().X - targetedPlayer.position.ToTileCoordinates().X) / 2f, Math.Abs(NPC.position.ToTileCoordinates().Y - targetedPlayer.position.ToTileCoordinates().Y)); // hopefully go flying towards the player
+                            launched = true;
+                        }
+                        else
+                        {
+                            if (NPC.position.X > targetedPlayer.position.X)
+                            {
+                                directionBeforeBounce = 1;
+                            }
+                            else
+                            {
+                                directionBeforeBounce = -1;
+                            }
+                            NPC.velocity += new Vector2(-NPC.direction * Math.Abs(NPC.position.X - targetedPlayer.position.X) * 0.03f, 5f); // hopefully go flying towards the player
+                            launched = true;
+                        }
+                    }
+                }
+                if (NPC.collideX && numBounces < maxBounces && NPC.velocity.X != 0 && NPC.velocity.Y != 0)
+                {
+                    NPC.velocity.X = NPC.velocity.X * directionBeforeBounce;
+                    numBounces++;
+                }
+
+                if ((NPC.velocity.Y == 0 && NPC.velocity.X != 0) || (numBounces < maxBounces && NPC.velocity == new Vector2(0f, 0f) && launched == true)) // we dont want the thing on a slip n slide!
+                {
+                    ResetValuesAfterBounce();
+                }
+
+                if (NPC.collideY && numBounces < maxBounces && NPC.velocity.Y != 0)
+                {
+                    NPC.velocity.Y = -NPC.velocity.Y;
+                    numBounces++;
+                }
+            }
+        }
+
+        private bool Above(float val1, float val2)
+        {
+            return val1 > val2;
+        }
+
+        private void ResetValuesAfterBounce()
+        {
+            NPC.velocity = new Vector2(0, 0);
+            AI_State = State_Walk;
+            numBounces = 0;
+            AI_Timer = 0;
+            launched = false;
+            NPC.rotation = 0f;
+        }
+
+        private const int Frame_Asleep = 0;
+        private const int Frame_Notice_1 = 1;
+        private const int Frame_Notice_2 = 2;
+        private const int Frame_Walk_1 = 3;
+        private const int Frame_Walk_2 = 4;
+        private const int Frame_Bounce = 5;
 
         public override void FindFrame(int frameHeight)
         {
-			NPC.frame = new Rectangle(0, 0, 58, 52);
-			NPC.spriteDirection = NPC.direction;
+            NPC.frame = new Rectangle(0, 0, 58, 52);
+            NPC.spriteDirection = NPC.direction;
 
-			if (AI_State == State_Asleep)
+            if (AI_State == State_Asleep)
             {
-				NPC.frame.Y = Frame_Asleep * frameHeight;
+                NPC.frame.Y = Frame_Asleep * frameHeight;
             }
-			else if (AI_State == State_Notice)
+            else if (AI_State == State_Notice)
             {
-				NPC.frameCounter++;
-				if (NPC.frameCounter < 5) {
-					NPC.frame.Y = Frame_Notice_1 * frameHeight;
-				}
-				else if (NPC.frameCounter < 10) {
-					NPC.frame.Y = Frame_Notice_2 * frameHeight;
-				}
-				else {
-					NPC.frameCounter = 0;
-				}
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 5)
+                {
+                    NPC.frame.Y = Frame_Notice_1 * frameHeight;
+                }
+                else if (NPC.frameCounter < 10)
+                {
+                    NPC.frame.Y = Frame_Notice_2 * frameHeight;
+                }
+                else
+                {
+                    NPC.frameCounter = 0;
+                }
             }
-			else if (AI_State == State_Bounce)
+            else if (AI_State == State_Bounce)
             {
-				NPC.frame.Y = Frame_Bounce * frameHeight;
+                NPC.frame.Y = Frame_Bounce * frameHeight;
             }
-			else if (AI_State == State_Walk)
+            else if (AI_State == State_Walk)
             {
-				NPC.frameCounter++;
-				if (NPC.frameCounter < 10) {
-					NPC.frame.Y = Frame_Walk_1 * frameHeight;
-				}
-				else if (NPC.frameCounter < 20) {
-					NPC.frame.Y = Frame_Walk_2 * frameHeight;
-				}
-				else {
-					NPC.frameCounter = 0;
-				}
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 10)
+                {
+                    NPC.frame.Y = Frame_Walk_1 * frameHeight;
+                }
+                else if (NPC.frameCounter < 20)
+                {
+                    NPC.frame.Y = Frame_Walk_2 * frameHeight;
+                }
+                else
+                {
+                    NPC.frameCounter = 0;
+                }
             }
         }
     }
