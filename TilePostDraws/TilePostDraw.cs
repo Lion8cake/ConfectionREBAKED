@@ -12,15 +12,15 @@ using Terraria.ModLoader;
 
 namespace test
 {
-    internal class Moss : ModSystem
-    {
+	internal class Moss : ModSystem
+	{
 		Texture2D tex;
 
-        public override void Load()
-        {
+		public override void Load()
+		{
 			tex = ModContent.Request<Texture2D>("test/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 		}
-        private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
+		private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
 		{
 			firstTileX = (int)((screenPosition.X - offSet.X) / 16f - 1f);
 			lastTileX = (int)((screenPosition.X + (float)Main.screenWidth + offSet.X) / 16f) + 2;
@@ -50,12 +50,12 @@ namespace test
 			}
 		}
 		public override void PostDrawTiles()
-        {
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
-            int num3;
-            int num4;
-            int num5;
-            int num6;
+		{
+			Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+			int num3;
+			int num4;
+			int num5;
+			int num6;
 			Vector2 screenPosition = Main.Camera.UnscaledPosition;
 			Vector2 screenOffset = Vector2.Zero;
 			//Vector2 screenOffset = new((float)Main.offScreenRange, (float)Main.offScreenRange);
@@ -65,8 +65,8 @@ namespace test
 			}
 			this.GetScreenDrawArea(screenPosition, screenOffset + (Main.Camera.UnscaledPosition - Main.Camera.ScaledPosition), out num3, out num4, out num5, out num6);
 			for (int tileX = num3 - 2; tileX < num4 + 2; tileX++)
-            {
-                for (int tileY = num5; tileY < num6 + 4; tileY++)
+			{
+				for (int tileY = num5; tileY < num6 + 4; tileY++)
 				{
 					if (IsMoss(tileX, tileY))
 					{
@@ -141,9 +141,9 @@ namespace test
 						Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(8f, 8f), GetMossTile_FromAdjacency(adjacency, mossAdjacency), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
 					}
 				}
-            }
-            Main.spriteBatch.End();
-        }
+			}
+			Main.spriteBatch.End();
+		}
 
 		Rectangle GetMossTile_FromAdjacency(BitsByte adj, BitsByte mossAdjacency)
 		{
@@ -261,7 +261,7 @@ namespace test
 		{
 
 			Tile tile = Main.tile[i, j];
-			return tile.HasTile && tile.TileType == TileID.ArgonMoss;
+			return tile.HasTile && tile.TileType == Mod.Find<ModTile>("CreamMoss").Type;
 		}
 		bool HasTile(int i, int j)
 		{
