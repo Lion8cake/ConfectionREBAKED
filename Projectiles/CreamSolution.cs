@@ -1,4 +1,4 @@
-using AltLibrary.Common.AltBiomes;
+using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;

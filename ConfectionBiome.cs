@@ -42,7 +42,7 @@ namespace TheConfectionRebirth
             BakeTileChild(ModContent.TileType<PurpleFairyFloss>(), TileID.RainCloud, new(true, true, true));
             BakeTileChild(ModContent.TileType<BlueFairyFloss>(), TileID.SnowCloud, new(true, true, true));
 
-            /*WallContext = new WallContext()
+            WallContext = new WallContext()
                 .AddReplacement<Walls.CreamstoneWall>(28, 1, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 188, 189, 190, 191, 192, 193, 194, 195, 61, 185, 212, 213, 214, 215, 3, 200, 201, 202, 203, 83)
                 .AddReplacement<Walls.CreamGrassWall>(63, 65, 66, 68, 69, 70, 81)
                 .AddReplacement<Walls.CookieWall>(59, 171, 170, 196, 198, 199, 16, 2)
@@ -50,7 +50,7 @@ namespace TheConfectionRebirth
                 .AddReplacement<Walls.HardenedCreamsandWall>(197, 220, 221, 222)
                 .AddReplacement(40, (ushort)ModContent.WallType<Walls.CreamWall>())
                 .AddReplacement(71, (ushort)ModContent.WallType<Walls.BlueIceWall>())
-                .AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());*/
+                .AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());
         }
 
         public override Dictionary<int, int> SpecialConversion => new()
