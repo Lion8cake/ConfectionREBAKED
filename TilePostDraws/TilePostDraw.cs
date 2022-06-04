@@ -10,7 +10,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace test
+namespace TheConfectionRebirth.TilePostDraws
 {
 	internal class Moss : ModSystem
 	{
@@ -18,7 +18,7 @@ namespace test
 
 		public override void Load()
 		{
-			tex = ModContent.Request<Texture2D>("test/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			tex = ModContent.Request<Texture2D>("TheConfectionRebirth/TilePostDraws/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 		}
 		private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
 		{
