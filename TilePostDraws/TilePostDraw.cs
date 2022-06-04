@@ -217,73 +217,167 @@ namespace TheConfectionRebirth.TilePostDraws
 				return GetMossTile(11, 0);
 			}
 
+			//inner "X"
+
+			if (AdjFilled(adj, TopLeftFalse, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRightFalse))
+			{
+				return GetMossTile(12, 0);
+			}
+			if (AdjFilled(adj, TopLeft, Top, TopRightFalse, Left, Right, BottomLeftFalse, Bottom, BottomRight))
+			{
+				return GetMossTile(13, 0);
+			}
+
+			//2 wide to 1 wide (flat 2 wide)
+			if (AdjFilled(adj, Left, Right, BottomLeft, Bottom, BottomRight, Top, TopLeftFalse, TopRightFalse))
+			{
+				return GetMossTile(14, 0);
+			}
+			if (AdjFilled(adj, Left, Right, TopLeft, Top, TopRight, Bottom, BottomLeftFalse, BottomRightFalse))
+			{
+				return GetMossTile(15, 0);
+			}
+			if (AdjFilled(adj, Top, Bottom, TopRight, Right, BottomRight, Left, TopLeftFalse, BottomLeftFalse))
+			{
+				return GetMossTile(16, 0);
+			}
+			if (AdjFilled(adj, TopLeft, Left, BottomLeft, Top, Bottom, Right, TopRightFalse, BottomRightFalse))
+			{
+				return GetMossTile(17, 0);
+			}
+
+			//2 wide to 1 wide (corner 2 wide)
+			if (AdjFilled(adj, Left, Right, Bottom, BottomRight, TopFalse))
+			{
+				return GetMossTile(18, 0);
+			}
+			if (AdjFilled(adj, LeftFalse, Right, Bottom, BottomRight, Top))
+			{
+				return GetMossTile(19, 0);
+			}
+			if (AdjFilled(adj, Left, Right, Bottom, BottomRight, Top, TopLeftFalse))
+			{
+				return GetMossTile(20, 0);
+			}
+
+
+			if (AdjFilled(adj, Left, Right, Bottom, BottomLeft, TopFalse))
+			{
+				return GetMossTile(21, 0);
+			}
+			if (AdjFilled(adj, Left, RightFalse, Bottom, BottomLeft, Top))
+			{
+				return GetMossTile(22, 0);
+			}
+			if (AdjFilled(adj, Left, Right, Bottom, BottomLeft, Top, TopRightFalse))
+			{
+				return GetMossTile(23, 0);
+			}
+
+
+			if (AdjFilled(adj, Left, Right, Top, TopRight, BottomFalse))
+			{
+				return GetMossTile(24, 0);
+			}
+			if (AdjFilled(adj, LeftFalse, Right, Top, TopRight, Bottom))
+			{
+				return GetMossTile(25, 0);
+			}
+			if (AdjFilled(adj, Left, Right, Top, TopRight, Bottom, BottomLeftFalse))
+			{
+				return GetMossTile(26, 0);
+			}
+
+
+			if (AdjFilled(adj, Left, Right, Top, TopLeft, BottomFalse))
+			{
+				return GetMossTile(27, 0);
+			}
+			if (AdjFilled(adj, Left, RightFalse, Top, TopLeft, Bottom))
+			{
+				return GetMossTile(28, 0);
+			}
+			if (AdjFilled(adj, Left, Right, Top, TopLeft, Bottom, BottomRightFalse))
+			{
+				return GetMossTile(29, 0);
+			}
+
 			//1 wide connectors
 			if (AdjFilled(adj, TopFalse, Left, BottomFalse, Right))
 			{
-				return GetMossTile(8, 3);
+				return GetMossTile(30, 0);
 			}
 			if (AdjFilled(adj, Top, LeftFalse, Bottom, RightFalse))
 			{
-				return GetMossTile(9, 3);
+				return GetMossTile(31, 0);
 			}
 
 
 			if (AdjFilled(adj, Top, Left, BottomFalse, RightFalse))
 			{
-				return GetMossTile(10, 3);
+				return GetMossTile(32, 0);
 			}
 			if (AdjFilled(adj, Top, LeftFalse, BottomFalse, Right))
 			{
-				return GetMossTile(11, 3);
+				return GetMossTile(33, 0);
 			}
 			if (AdjFilled(adj, TopFalse, Left, Bottom, RightFalse))
 			{
-				return GetMossTile(12, 3);
+				return GetMossTile(34, 0);
 			}
 			if (AdjFilled(adj, TopFalse, LeftFalse, Bottom, Right))
 			{
-				return GetMossTile(13, 3);
+				return GetMossTile(35, 0);
 			}
-			
-			//2 wide to 1 wide
-			if (AdjFilled(adj, Left, Right, BottomLeft, Bottom, BottomRight, Top))
+
+			//1 wide cross
+
+			if (AdjFilled(adj, Top, Left, Bottom, RightFalse, TopLeftFalse, BottomLeftFalse))
 			{
-				return GetMossTile(12, 0);
+				return GetMossTile(36, 0);
 			}
-			if (AdjFilled(adj, Left, Right, TopLeft, Top, TopRight, Bottom))
+			if (AdjFilled(adj, Top, LeftFalse, Bottom, Right, TopRightFalse, BottomRightFalse))
 			{
-				return GetMossTile(13, 0);
+				return GetMossTile(37, 0);
 			}
-			if (AdjFilled(adj, Top, Bottom, TopRight, Right, BottomRight, Left))
+			if (AdjFilled(adj, TopFalse, Left, Bottom, Right, BottomLeftFalse, BottomRightFalse))
 			{
-				return GetMossTile(14, 0);
+				return GetMossTile(38, 0);
 			}
-			if (AdjFilled(adj, TopLeft, Left, BottomLeft, Top, Bottom, Right))
+			if (AdjFilled(adj, Top, Left, BottomFalse, Right, TopLeftFalse, TopRightFalse))
 			{
-				return GetMossTile(15, 0);
+				return GetMossTile(39, 0);
+			}
+			if (AdjFilled(adj, Top, Left, Bottom, Right, TopLeftFalse, TopRightFalse, BottomLeftFalse, BottomRightFalse))
+			{
+				return GetMossTile(40, 0);
 			}
 
 			//Dots
 
 			if (AdjFilled(adj, TopFalse, LeftFalse, BottomFalse, Right))
 			{
-				return GetMossTile(14, 3);
+				return GetMossTile(41, 0);
 			}
 			if (AdjFilled(adj, TopFalse, Left, BottomFalse, RightFalse))
 			{
-				return GetMossTile(15, 3);
+				return GetMossTile(42, 0);
 			}
 			if (AdjFilled(adj, TopFalse, LeftFalse, Bottom, RightFalse))
 			{
-				return GetMossTile(16, 3);
+				return GetMossTile(43, 0);
 			}
 			if (AdjFilled(adj, Top, LeftFalse, BottomFalse, RightFalse))
 			{
-				return GetMossTile(17, 3);
+				return GetMossTile(44, 0);
 			}
 			if (AdjFilled(adj, TopFalse, LeftFalse, BottomFalse, RightFalse))
 			{
-				return GetMossTile(18, 3);
+				return GetMossTile(45, 0);
+			}
+			if (AdjFilled(adj, Top, Left, Bottom, Right))
+			{
+				return GetMossTile(46, 0);
 			}
 
 			return GetMossTile(0, 0);
