@@ -122,10 +122,8 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ItemID.AdhesiveBandage, 100, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Saccharite>(), 1, 5, 12));
         }
 
         public override void AI()

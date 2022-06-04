@@ -67,7 +67,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A Cat Poptart that roams the confection with its giant cookie cannon. 50% cat, 50% poptart, 100% full of Rainbow lazers")
+                new FlavorTextBestiaryInfoElement("A Pastry cat that roams the confection with its giant cookie cannon. 50% cat, 50% pastry, 100% full of Rainbow lazers")
             });
         }
         public override void AI()
