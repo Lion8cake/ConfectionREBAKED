@@ -15,12 +15,20 @@ namespace TheConfectionRebirth.TilePostDraws
 	internal class Moss : ModSystem
 	{
 		Texture2D tex;
-
+		Dictionary<byte, int> MossAdjacencyRules;
 		public override void Load()
 		{
 			tex = ModContent.Request<Texture2D>("TheConfectionRebirth/TilePostDraws/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			MossAdjacencyRules = new();
+			MassAdjBake();
 		}
-		private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
+        public override void Unload()
+        {
+			tex = null;
+			MossAdjacencyRules = null;
+
+		}
+        private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
 		{
 			firstTileX = (int)((screenPosition.X - offSet.X) / 16f - 1f);
 			lastTileX = (int)((screenPosition.X + (float)Main.screenWidth + offSet.X) / 16f) + 2;
@@ -138,165 +146,148 @@ namespace TheConfectionRebirth.TilePostDraws
 						}
 						Vector2 normalTilePosition = new Vector2((float)(tileX * 16 - (int)screenPosition.X) - (16 - 16f) / 2f, (float)(tileY * 16 - (int)screenPosition.Y + 0)) + screenOffset;
 
-						Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(8f, 8f), GetMossTile_FromAdjacency(adjacency, mossAdjacency), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+						Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(8f, 8f), GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
 					}
 				}
 			}
 			Main.spriteBatch.End();
 		}
 
-		Rectangle GetMossTile_FromAdjacency(BitsByte adj, BitsByte mossAdjacency)
+		const byte TopLeft = 0;
+		const byte Top = 1;
+		const byte TopRight = 2;
+		const byte Left = 3;
+		const byte Right = 4;
+		const byte BottomLeft = 5;
+		const byte Bottom = 6;
+		const byte BottomRight = 7;
+
+		const byte TopLeftFalse = 8;
+		const byte TopFalse = 9;
+		const byte TopRightFalse = 10;
+		const byte LeftFalse = 11;
+		const byte RightFalse = 12;
+		const byte BottomLeftFalse = 13;
+		const byte BottomFalse = 14;
+		const byte BottomRightFalse = 15;
+		Rectangle GetMossTile_FromAdjacency(BitsByte adj, BitsByte mossAdjacency, Tile tile)
 		{
-			const byte TopLeft = 0;
-			const byte Top = 1;
-			const byte TopRight = 2;
-			const byte Left = 3;
-			const byte Right = 4;
-			const byte BottomLeft = 5;
-			const byte Bottom = 6;
-			const byte BottomRight = 7;
+			bool succeed = MossAdjacencyRules.TryGetValue(adj, out int Base);
 
-			const byte TopLeftFalse = 8;
-			const byte TopFalse = 9;
-			const byte TopRightFalse = 10;
-			const byte LeftFalse = 11;
-			const byte RightFalse = 12;
-			const byte BottomLeftFalse = 13;
-			const byte BottomFalse = 14;
-			const byte BottomRightFalse = 15;
+			return GetMossTile(Base, tile.TileFrameNumber);
+		}
 
-			//outer
-			if (AdjFilled(adj, Top, Bottom, TopRight, Right, BottomRight, LeftFalse))
-			{
-				return GetMossTile(0, 0);
-			}
-			if (AdjFilled(adj, Left, Right, BottomLeft, Bottom, BottomRight, TopFalse))
-			{
-				return GetMossTile(1, 0);
-			}
-			if (AdjFilled(adj, TopLeft, Left, BottomLeft, Top, Bottom, RightFalse))
-			{
-				return GetMossTile(2, 0);
-			}
-			if (AdjFilled(adj, Left, Right, TopLeft, Top, TopRight, BottomFalse))
-			{
-				return GetMossTile(3, 0);
-			}
-			if (AdjFilled(adj, Bottom, Right, BottomRight, TopFalse, LeftFalse))
-			{
-				return GetMossTile(4, 0);
-			}
-			if (AdjFilled(adj, Bottom, Left, BottomLeft, TopFalse, RightFalse))
-			{
-				return GetMossTile(5, 0);
-			}
-			if (AdjFilled(adj, Top, Right, TopRight, BottomFalse, LeftFalse))
-			{
-				return GetMossTile(6, 0);
-			}
-			if (AdjFilled(adj, Top, Left, TopLeft, BottomFalse, RightFalse))
-			{
-				return GetMossTile(7, 0);
-			}
+		void MassAdjBake()
+		{
+
+			AdjBake(0, Top, Bottom, TopRight, Right, BottomRight, LeftFalse);
+			AdjBake(1, Left, Right, BottomLeft, Bottom, BottomRight, TopFalse);
+			AdjBake(2, TopLeft, Left, BottomLeft, Top, Bottom, RightFalse);
+			AdjBake(3, Left, Right, TopLeft, Top, TopRight, BottomFalse);
+			AdjBake(4, Bottom, Right, BottomRight, TopFalse, LeftFalse);
+			AdjBake(5, Bottom, Left, BottomLeft, TopFalse, RightFalse);
+			AdjBake(6, Top, Right, TopRight, BottomFalse, LeftFalse);
+			AdjBake(7, Top, Left, TopLeft, BottomFalse, RightFalse);
 
 			//inner corners
-			if (AdjFilled(adj, TopLeftFalse, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight))
-			{
-				return GetMossTile(8, 0);
-			}
-			if (AdjFilled(adj, TopLeft, Top, TopRightFalse, Left, Right, BottomLeft, Bottom, BottomRight))
-			{
-				return GetMossTile(9, 0);
-			}
-			if (AdjFilled(adj, TopLeft, Top, TopRight, Left, Right, BottomLeftFalse, Bottom, BottomRight))
-			{
-				return GetMossTile(10, 0);
-			}
-			if (AdjFilled(adj, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRightFalse))
-			{
-				return GetMossTile(11, 0);
-			}
+			AdjBake(8, TopLeftFalse, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight);
+			AdjBake(9, TopLeft, Top, TopRightFalse, Left, Right, BottomLeft, Bottom, BottomRight);
+			AdjBake(10, TopLeft, Top, TopRight, Left, Right, BottomLeftFalse, Bottom, BottomRight);
+			AdjBake(11, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRightFalse);
+
+			//inner "X"
+
+			AdjBake(12, TopLeftFalse, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRightFalse);
+			AdjBake(13, TopLeft, Top, TopRightFalse, Left, Right, BottomLeftFalse, Bottom, BottomRight);
+
+			//2 wide to 1 wide (flat 2 wide)
+			AdjBake(14, Left, Right, BottomLeft, Bottom, BottomRight, Top, TopLeftFalse, TopRightFalse);
+			AdjBake(15, Left, Right, TopLeft, Top, TopRight, Bottom, BottomLeftFalse, BottomRightFalse);
+			AdjBake(16, Top, Bottom, TopRight, Right, BottomRight, Left, TopLeftFalse, BottomLeftFalse);
+			AdjBake(17, TopLeft, Left, BottomLeft, Top, Bottom, Right, TopRightFalse, BottomRightFalse);
+
+			//2 wide to 1 wide (corner 2 wide)
+			AdjBake(18, Left, Right, Bottom, BottomRight, TopFalse);
+			AdjBake(19, LeftFalse, Right, Bottom, BottomRight, Top);
+			AdjBake(20, Left, Right, Bottom, BottomRight, Top, TopLeftFalse);
+
+
+			AdjBake(21, Left, Right, Bottom, BottomLeft, TopFalse);
+			AdjBake(22, Left, RightFalse, Bottom, BottomLeft, Top);
+			AdjBake(23, Left, Right, Bottom, BottomLeft, Top, TopRightFalse);
+
+
+			AdjBake(24, Left, Right, Top, TopRight, BottomFalse);
+			AdjBake(25, LeftFalse, Right, Top, TopRight, Bottom);
+			AdjBake(26, Left, Right, Top, TopRight, Bottom, BottomLeftFalse);
+
+
+			AdjBake(27, Left, Right, Top, TopLeft, BottomFalse);
+			AdjBake(28, Left, RightFalse, Top, TopLeft, Bottom);
+			AdjBake(29, Left, Right, Top, TopLeft, Bottom, BottomRightFalse);
 
 			//1 wide connectors
-			if (AdjFilled(adj, TopFalse, Left, BottomFalse, Right))
-			{
-				return GetMossTile(8, 3);
-			}
-			if (AdjFilled(adj, Top, LeftFalse, Bottom, RightFalse))
-			{
-				return GetMossTile(9, 3);
-			}
+			AdjBake(30, TopFalse, Left, BottomFalse, Right);
+			AdjBake(31, Top, LeftFalse, Bottom, RightFalse);
 
 
-			if (AdjFilled(adj, Top, Left, BottomFalse, RightFalse))
-			{
-				return GetMossTile(10, 3);
-			}
-			if (AdjFilled(adj, Top, LeftFalse, BottomFalse, Right))
-			{
-				return GetMossTile(11, 3);
-			}
-			if (AdjFilled(adj, TopFalse, Left, Bottom, RightFalse))
-			{
-				return GetMossTile(12, 3);
-			}
-			if (AdjFilled(adj, TopFalse, LeftFalse, Bottom, Right))
-			{
-				return GetMossTile(13, 3);
-			}
-			
-			//2 wide to 1 wide
-			if (AdjFilled(adj, Left, Right, BottomLeft, Bottom, BottomRight, Top))
-			{
-				return GetMossTile(12, 0);
-			}
-			if (AdjFilled(adj, Left, Right, TopLeft, Top, TopRight, Bottom))
-			{
-				return GetMossTile(13, 0);
-			}
-			if (AdjFilled(adj, Top, Bottom, TopRight, Right, BottomRight, Left))
-			{
-				return GetMossTile(14, 0);
-			}
-			if (AdjFilled(adj, TopLeft, Left, BottomLeft, Top, Bottom, Right))
-			{
-				return GetMossTile(15, 0);
-			}
+			AdjBake(32, Top, Left, BottomFalse, RightFalse);
+			AdjBake(33, Top, LeftFalse, BottomFalse, Right);
+			AdjBake(34, TopFalse, Left, Bottom, RightFalse);
+			AdjBake(35, TopFalse, LeftFalse, Bottom, Right);
+
+			//1 wide cross
+
+			AdjBake(36, Top, Left, Bottom, RightFalse, TopLeftFalse, BottomLeftFalse);
+			AdjBake(37, Top, LeftFalse, Bottom, Right, TopRightFalse, BottomRightFalse);
+			AdjBake(38, TopFalse, Left, Bottom, Right, BottomLeftFalse, BottomRightFalse);
+			AdjBake(39, Top, Left, BottomFalse, Right, TopLeftFalse, TopRightFalse);
+			AdjBake(40, Top, Left, Bottom, Right, TopLeftFalse, TopRightFalse, BottomLeftFalse, BottomRightFalse);
 
 			//Dots
 
-			if (AdjFilled(adj, TopFalse, LeftFalse, BottomFalse, Right))
-			{
-				return GetMossTile(14, 3);
-			}
-			if (AdjFilled(adj, TopFalse, Left, BottomFalse, RightFalse))
-			{
-				return GetMossTile(15, 3);
-			}
-			if (AdjFilled(adj, TopFalse, LeftFalse, Bottom, RightFalse))
-			{
-				return GetMossTile(16, 3);
-			}
-			if (AdjFilled(adj, Top, LeftFalse, BottomFalse, RightFalse))
-			{
-				return GetMossTile(17, 3);
-			}
-			if (AdjFilled(adj, TopFalse, LeftFalse, BottomFalse, RightFalse))
-			{
-				return GetMossTile(18, 3);
-			}
-
-			return GetMossTile(0, 0);
+			AdjBake(41, TopFalse, LeftFalse, BottomFalse, Right);
+			AdjBake(42, TopFalse, Left, BottomFalse, RightFalse);
+			AdjBake(43, TopFalse, LeftFalse, Bottom, RightFalse);
+			AdjBake(44, Top, LeftFalse, BottomFalse, RightFalse);
+			AdjBake(45, TopFalse, LeftFalse, BottomFalse, RightFalse);
+			AdjBake(46, Top, Left, Bottom, Right);
 		}
 
-		bool AdjFilled(BitsByte adj, params byte[] adjRule)
+		void AdjBake(int value, params byte[] adjRule)
 		{
+			BitsByte bakedByte = new();
+			List<byte> IgnoreBytes = new();
+
 			for (int x = 0; x < adjRule.Length; x++)
 			{
-				if (adj[adjRule[x] % 8] == (adjRule[x] / 8 == 1))
-					return false;
+				int index = adjRule[x] % 8;
+				if (adjRule[x] / 8 == 0)
+					bakedByte[index] = true;
 			}
-			return true;
+
+			for (byte i = 0; i < 8; i++)
+			{
+				bool ignored = true;
+				for (int x = 0; x < adjRule.Length; x++)
+				{
+					int index = adjRule[x] % 8;
+					if (index == i)
+						ignored = false;
+				}
+				if (ignored)
+					IgnoreBytes.Add(i);
+			}
+
+			int maxPermutations = (int)Math.Pow(2, IgnoreBytes.Count);
+			for (BitsByte permutations = 0; permutations < maxPermutations; permutations++) {
+				for (int x = 0; x < IgnoreBytes.Count; x++)
+				{
+					bakedByte[IgnoreBytes[x]] = permutations[x];
+				}
+				MossAdjacencyRules.TryAdd(bakedByte, value);
+			}
+			
 		}
 		bool IsMoss(int i, int j)
 		{
