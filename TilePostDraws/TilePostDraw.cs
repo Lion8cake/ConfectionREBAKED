@@ -79,35 +79,35 @@ namespace TheConfectionRebirth.TilePostDraws
 					if (IsMoss(tileX, tileY))
 					{
 						BitsByte adjacency = new();
-						if (HasTile(tileX - 1, tileY - 1))
+						if (Conencted(tileX, tileY, -1, -1))
 						{
 							adjacency[0] = true;
 						}
-						if (HasTile(tileX, tileY - 1))
+						if (Conencted(tileX, tileY, 0, -1))
 						{
 							adjacency[1] = true;
 						}
-						if (HasTile(tileX + 1, tileY - 1))
+						if (Conencted(tileX, tileY, 1, -1))
 						{
 							adjacency[2] = true;
 						}
-						if (HasTile(tileX - 1, tileY))
+						if (Conencted(tileX, tileY, -1, 0))
 						{
 							adjacency[3] = true;
 						}
-						if (HasTile(tileX + 1, tileY))
+						if (Conencted(tileX, tileY, 1, 0))
 						{
 							adjacency[4] = true;
 						}
-						if (HasTile(tileX - 1, tileY + 1))
+						if (Conencted(tileX, tileY, -1, 1))
 						{
 							adjacency[5] = true;
 						}
-						if (HasTile(tileX, tileY + 1))
+						if (Conencted(tileX, tileY, 0, 1))
 						{
 							adjacency[6] = true;
 						}
-						if (HasTile(tileX + 1, tileY + 1))
+						if (Conencted(tileX, tileY, 1, 1))
 						{
 							adjacency[7] = true;
 						}
@@ -295,11 +295,62 @@ namespace TheConfectionRebirth.TilePostDraws
 			Tile tile = Main.tile[i, j];
 			return tile.HasTile && tile.TileType == Mod.Find<ModTile>("CreamMoss").Type;
 		}
-		bool HasTile(int i, int j)
+		bool Conencted(int x, int y, int dx, int dy)
 		{
+			Tile tile = Main.tile[x, y];
+			switch (tile.Slope)
+			{
+				case SlopeType.SlopeDownLeft:
+					if (dx != -1 && dy != 1)
+						return false;
+					break;
+				case SlopeType.SlopeDownRight:
+					if (dx != 1 && dy != 1)
+						return false;
+					break;
+				case SlopeType.SlopeUpLeft:
+					if (dx != -1 && dy != -1)
+						return false;
+					break;
+				case SlopeType.SlopeUpRight:
+					if (dx != 1 && dy != -1)
+						return false;
+					break;
+			}
+			if (tile.IsHalfBlock && dy != 1)
+			{
+				return false;
+			}
 
-			Tile tile = Main.tile[i, j];
-			return tile.HasTile && Main.tileSolid[tile.TileType];
+			Tile tile2 = Main.tile[x + dx, y + dy];
+			if(!tile2.HasTile || !Main.tileSolid[tile2.TileType])
+				return false;
+
+			switch (tile2.Slope)
+			{
+				case SlopeType.SlopeDownLeft:
+					if (dx != 1 && dy != -1)
+						return false;
+					break;
+				case SlopeType.SlopeDownRight:
+					if (dx != -1 && dy != -1)
+						return false;
+					break;
+				case SlopeType.SlopeUpLeft:
+					if (dx != 1 && dy != 1)
+						return false;
+					break;
+				case SlopeType.SlopeUpRight:
+					if (dx != -1 && dy != 1)
+						return false;
+					break;
+			}
+			if (tile2.IsHalfBlock && dy != -1)
+			{
+				return false;
+			}
+			return true;
+
 		}
 		Rectangle GetMossTile(int x, int y)
 		{
