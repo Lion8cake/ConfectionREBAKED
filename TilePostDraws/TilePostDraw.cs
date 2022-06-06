@@ -144,13 +144,75 @@ namespace TheConfectionRebirth.TilePostDraws
 						{
 							mossAdjacency[7] = true;
 						}
-						Vector2 normalTilePosition = new Vector2((float)(tileX * 16 - (int)screenPosition.X) - (16 - 16f) / 2f, (float)(tileY * 16 - (int)screenPosition.Y + 0)) + screenOffset;
-
-						Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(8f, 8f), GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+						Vector2 normalTilePosition = new Vector2((float)(tileX * 16 - (int)screenPosition.X) - (16 - 16f) / 2f, (float)(tileY * 16 - (int)screenPosition.Y + 0)) + screenOffset + new Vector2(8f, 8f);
+						Tile tile = Main.tile[tileX, tileY];
+						if (tile.IsHalfBlock)
+						{
+							Rectangle MossRect = GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]);
+							Vector2 vector = normalTilePosition + new Vector2(0, 8);
+							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y, MossRect.Width, 12), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+							vector.Y += 12;
+							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y + 22, MossRect.Width, 9), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+						}
+						else if (tile.Slope == SlopeType.Solid)
+							Main.spriteBatch.Draw(tex, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+						else
+							DrawMoss(tile.Slope, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]));
 					}
 				}
 			}
 			Main.spriteBatch.End();
+		}
+
+		public void DrawMoss(SlopeType slope, Vector2 normalTilePosition, Rectangle MossTile, int tileFrameX = 0, int addFrX = 0, int tileFrameY = 0, int addFrY = 0) {
+			int width = 2;
+			for (int i = 0; i < 16; i++)
+			{
+				int yDrawDisp = 0;
+				int yRectDisp = 0;
+				int yRectDispEnd = 32;
+				int disp = i * 2 - 8;
+				if (disp < 0)
+					disp = 0;
+				else if (disp > 16)
+					disp = 16;
+				switch (slope)
+				{
+					case SlopeType.SlopeDownLeft:
+						yDrawDisp = disp;
+						yRectDisp = 0;
+						yRectDispEnd = 26 - yDrawDisp;
+						break;
+					case SlopeType.SlopeDownRight:
+						yDrawDisp = 14 - disp;
+						yRectDisp = 0;
+						yRectDispEnd = 24 - yDrawDisp;
+						break;
+					case SlopeType.SlopeUpLeft:
+						yDrawDisp = 11;
+						yRectDisp = 11 + disp;
+						yRectDispEnd = 21 - disp;
+						break;
+					default:
+						yDrawDisp = 11;
+						yRectDisp = 21 - disp;
+						yRectDispEnd = 11 + disp;
+						break;
+				}
+				Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(i * 2, yDrawDisp), new Rectangle?(new Rectangle(MossTile.X + i * 2, MossTile.Y + yRectDisp, 2, yRectDispEnd)), Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+			}
+			switch (slope)
+			{
+				case SlopeType.SlopeDownLeft:
+				case SlopeType.SlopeDownRight:
+					Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(0, 24), new Rectangle?(new Rectangle(MossTile.X, MossTile.Y + 24, MossTile.Width, 8)), Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+					break;
+				default:
+					Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(0, 0), new Rectangle?(new Rectangle(MossTile.X, MossTile.Y, MossTile.Width, 12)), Color.White, 0f, new Vector2(16, 16), 1.1f, SpriteEffects.None, 0f);
+					break;
+			}
+			//int num7 = (slope <= 2) ? 28 : 0;
+			//Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(0f, (float)num7), new Rectangle?(new Rectangle(MossTile.X, MossTile.Y + num7, MossTile.Width, MossTile.Height * 2 / 16)), Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
 		}
 
 		const byte TopLeft = 0;
