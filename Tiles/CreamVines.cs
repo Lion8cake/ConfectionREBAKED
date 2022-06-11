@@ -35,10 +35,12 @@ namespace TheConfectionRebirth.Tiles
             {
                 type = tileAbove.TileType;
             }
+
             if (type == ModContent.TileType<CreamGrass>() || type == Type)
             {
                 return true;
             }
+
             WorldGen.KillTile(i, j);
             return true;
         }
@@ -46,34 +48,34 @@ namespace TheConfectionRebirth.Tiles
         public override void RandomUpdate(int i, int j)
         {
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
-            if (!WorldGen.genRand.NextBool(15) || tileBelow.HasTile)
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
             {
-                return;
-            }
-            bool placeVine = false;
-            int yTest = j;
-            while (yTest > j - 10)
-            {
-                Tile testTile = Framing.GetTileSafely(i, yTest);
-                if (testTile.BottomSlope)
+                bool placeVine = false;
+                int yTest = j;
+                while (yTest > j - 10)
                 {
+                    Tile testTile = Framing.GetTileSafely(i, yTest);
+                    if (testTile.BottomSlope)
+                    {
+                        break;
+                    }
+                    else if (!testTile.HasTile || testTile.TileType != ModContent.TileType<CreamGrass>())
+                    {
+                        yTest--;
+                        continue;
+                    }
+                    placeVine = true;
                     break;
                 }
-                if (!testTile.HasTile || testTile.TileType != ModContent.TileType<CreamGrass>())
+                if (placeVine)
                 {
-                    yTest--;
-                    continue;
-                }
-                placeVine = true;
-                break;
-            }
-            if (placeVine)
-            {
-                tileBelow.TileType = Type;
-                WorldGen.SquareTileFrame(i, j + 1);
-                if (Main.netMode == 2)
-                {
-                    NetMessage.SendTileSquare(-1, i, j + 1, 3);
+                    tileBelow.TileType = Type;
+                    tileBelow.HasTile = true;
+                    WorldGen.SquareTileFrame(i, j + 1, true);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
+                    }
                 }
             }
         }

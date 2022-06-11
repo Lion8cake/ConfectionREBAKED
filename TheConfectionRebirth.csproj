@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AltLibrary">
-      <HintPath>..\..\ModReader\various totally secret dlls\AltLibrary@1.0.2.2.dll</HintPath>
+      <HintPath>..\..\ModReader\AltLibrary\AltLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

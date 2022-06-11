@@ -4,6 +4,7 @@ namespace TheConfectionRebirth.Backgrounds
 {
     public class ConfectionSandSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
     {
+        // Use this to keep far Backgrounds like the mountains.
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
             for (int i = 0; i < fades.Length; i++)

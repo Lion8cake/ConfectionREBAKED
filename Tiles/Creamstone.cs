@@ -37,52 +37,32 @@ namespace TheConfectionRebirth.Tiles
             MinPick = 65;
         }
 
-        /*private bool SpawnRocks(int i, int j)
-	{
-		if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
+        private bool SpawnRocks(int i, int j)
 		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamstoneStalagmites>(), mute: true);
-			return true;
+			if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(2) == 0)
+			{
+				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+				return true;
+			}
+			if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(20) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+				return true;
+			}
+			return false;
 		}
-		if (Main.tile[i, j + 1].type == 0 && Main.tile[i, j + 2].type == 0 && Main.rand.Next(4) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamstoneStalacmites>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(6) == 0)
-		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamstoneStalagmites2>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(4) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamstoneStalacmites2>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(2) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(20) == 0)
-		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		return false;
-	}
 	
-	public override void RandomUpdate(int i, int j)
-	{
-		if (Main.rand.Next(8) == 0)
-		   {
-			    bool spawned = false;
-			    if (!spawned)
-			    {
-				    spawned = SpawnRocks(i, j);
-			    }
-		    }
-	    }*/
+		public override void RandomUpdate(int i, int j)
+		{
+			if (Main.rand.Next(8) == 0)
+			{
+				bool spawned = false;
+				if (!spawned)
+				{
+					spawned = SpawnRocks(i, j);
+				}
+			}
+		}
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

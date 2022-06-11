@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
@@ -22,31 +23,44 @@ namespace TheConfectionRebirth.Tiles
             num = fail ? 1 : 3;
         }
 
-        /*private bool SpawnSaccharite(int i, int j)
-	{
-		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(2) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(2) == 0)
-		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		return false;
-	}
-	
-	public override void RandomUpdate(int i, int j)
-	{
-		if (Main.rand.Next(20) == 0)
-		   {
-			    bool spawned = false;
-			    if (!spawned)
-			    {
-				    spawned = SpawnSaccharite(i, j);
-			    }
-		    }
-	    }*/
+        public override void RandomUpdate(int i, int j)
+        {
+            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
+            {
+                bool placeSaccharite = false;
+                int yTest = j;
+                while (yTest > j - 10)
+                {
+                    Tile testTile = Framing.GetTileSafely(i, yTest);
+                    if (testTile.BottomSlope)
+                    {
+                        break;
+                    }
+                    placeSaccharite = true;
+                    break;
+                }
+                if (placeSaccharite)
+                {
+                    tileBelow.TileType = Type;
+                    tileBelow.HasTile = true;
+                    WorldGen.SquareTileFrame(i, j + 1, true);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
+                    }
+                }
+                if (placeSaccharite)
+                {
+                    tileBelow.TileType = Type;
+                    tileBelow.HasTile = true;
+                    WorldGen.SquareTileFrame(i, j + 1, true);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
+                    }
+                }
+            }
+        }
     }
 }

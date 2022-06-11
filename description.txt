@@ -10,6 +10,24 @@ Even though the 1.3 version is discontinued we would still recomend you use the 
 ===========================================
 Change log
 ===========================================
+======
+0.11.2
+======
+-Fixed Souls of Delight not dropping
+-Fixed Saccharite not spawning
+-Fixed Cream vines not growing past 1 tile
+-Changed Confection Biome Biome name to Confection Biome Surface
+-Changed Confection Ice Cave Bestiary name to Confection Ice due to regular surface confection bestiary being unused
+-Updated to lastest tmodloader version
+
+======
+0.11.1
+======
+-Fixed Altlib support
+
+======
+0.11.0
+======
 -Readded Prickster 
 -Readded Dudley
 -Fixed trees
