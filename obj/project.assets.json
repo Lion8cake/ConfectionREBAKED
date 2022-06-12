@@ -31,19 +31,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lion8\\.nuget\\packages\\": {}
+    "C:\\Users\\palma\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
+      "projectUniqueName": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
       "projectName": "TheConfectionRebirth",
-      "projectPath": "C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
-      "packagesPath": "C:\\Users\\Lion8\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lion8\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\obj\\",
+      "projectPath": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\TheConfectionRebirth.csproj",
+      "packagesPath": "C:\\Users\\palma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\palma\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TheConfectionRebirth\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lion8\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\palma\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -89,7 +89,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
