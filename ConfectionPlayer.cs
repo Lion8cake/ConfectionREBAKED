@@ -40,7 +40,7 @@ namespace TheConfectionRebirth
         {
             if (damageSource.SourceCustomReason == "DimensionSplit")
             {
-                WeightedRandom<string> deathmessage = new WeightedRandom<string>();
+                WeightedRandom<string> deathmessage = new();
                 deathmessage.Add(Player.name + " got lost in a rift.");
                 deathmessage.Add(Player.name + " was split like a banana.");
                 deathmessage.Add(Player.name + " tried to banana all the time.");
@@ -81,11 +81,7 @@ namespace TheConfectionRebirth
             {
                 if (!attempt.veryrare && !attempt.legendary && attempt.rare)
                 {
-                    itemDrop = ModContent.ItemType<Items.Placeable.BananaSplitCrate>();
-                }
-                if (!attempt.veryrare && !attempt.legendary && attempt.rare && Main.hardMode)
-                {
-                    itemDrop = ModContent.ItemType<Items.Placeable.ConfectionCrate>();
+                    itemDrop = !Main.hardMode ? ModContent.ItemType<Items.Placeable.BananaSplitCrate>() : ModContent.ItemType<Items.Placeable.ConfectionCrate>();
                 }
             }
         }
