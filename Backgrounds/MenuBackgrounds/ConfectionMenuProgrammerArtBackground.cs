@@ -1,12 +1,9 @@
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
-namespace TheConfectionRebirth.Backgrounds
+namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 {
-    public class ConfectionSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
+    public class ConfectionMenuProgrammerArtBackground : ModSurfaceBackgroundStyle
     {
-        internal const int backgroundVariatonsTotal = 3;
-
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
             for (int i = 0; i < fades.Length; i++)
@@ -32,17 +29,17 @@ namespace TheConfectionRebirth.Backgrounds
 
         public override int ChooseFarTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuProgrammerArtFar");
         }
 
         public override int ChooseMiddleTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceMid");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuProgrammerArtMid");
         }
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuProgrammerArtClose");
         }
     }
 }

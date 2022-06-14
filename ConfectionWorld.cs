@@ -11,12 +11,10 @@ namespace TheConfectionRebirth
 
         public override void Load()
         {
-            ConfectionSurfaceBG = 0;
         }
 
         public override void Unload()
         {
-            ConfectionSurfaceBG = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)

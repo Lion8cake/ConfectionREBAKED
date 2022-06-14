@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
+using TheConfectionRebirth.Backgrounds.MenuBackgrounds;
 
 namespace TheConfectionRebirth
 {

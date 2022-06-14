@@ -2,7 +2,7 @@ Mods: {
 	TheConfectionRebirth: 
 	{
 		BiomeName: {
-			ConfectionBiome: The Confection
+			ConfectionBiomeSurface: The Confection
 			ConfectionUndergroundBiome: Confection Underground
 			IceConfectionSurfaceBiome: Confection Snow
 			IceConfectionUndergroundBiome: Confection Ice

@@ -90,11 +90,15 @@ namespace TheConfectionRebirth
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceMid").Value;
                     }
                     else if (ConfectionWorld.ConfectionSurfaceBG == 1)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Mid").Value;
+                    }
+                    else if (ConfectionWorld.ConfectionSurfaceBG == 2)
+                    {
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Mid").Value;
                     }
                 }
                 return value;
@@ -116,11 +120,15 @@ namespace TheConfectionRebirth
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar").Value;
                     }
                     if (ConfectionWorld.ConfectionSurfaceBG == 1)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far").Value;
+                    }
+                    if (ConfectionWorld.ConfectionSurfaceBG == 2)
+                    {
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far").Value;
                     }
                 }
                 return value;
@@ -151,11 +159,15 @@ namespace TheConfectionRebirth
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose").Value;
                     }
                     if (ConfectionWorld.ConfectionSurfaceBG == 1)
                     {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/Background_104").Value;
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Close").Value;
+                    }
+                    if (ConfectionWorld.ConfectionSurfaceBG == 2)
+                    {
+                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Close").Value;
                     }
                 }
                 return value;

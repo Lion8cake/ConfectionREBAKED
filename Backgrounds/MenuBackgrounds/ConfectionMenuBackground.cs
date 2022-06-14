@@ -1,6 +1,6 @@
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Backgrounds
+namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 {
     public class ConfectionMenuBackground : ModSurfaceBackgroundStyle
     {
@@ -29,17 +29,17 @@ namespace TheConfectionRebirth.Backgrounds
 
         public override int ChooseFarTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionMenuFar");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuFar");
         }
 
         public override int ChooseMiddleTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionMenuMid");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuMid");
         }
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionMenuClose");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuClose");
         }
     }
 }

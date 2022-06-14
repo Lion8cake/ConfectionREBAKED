@@ -10,7 +10,7 @@ public class ConfectionBiomeSurface : ModBiome
 {
     public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("TheConfectionRebirth/CreamWaterStyle");
 
-    public override SceneEffectPriority Priority => SceneEffectPriority.BiomeLow;
+    public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
     public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle
     {
@@ -148,10 +148,6 @@ public class ConfectionBiomeSurface : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        bool b1 = ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120;
-
-        bool b2 = Math.Abs(player.position.ToTileCoordinates().X - Main.maxTilesX / 2) < Main.maxTilesX / 6;
-
-        return b1 && b2;
+        return ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120;
     }
 }
