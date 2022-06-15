@@ -365,7 +365,9 @@ namespace TheConfectionRebirth.TilePostDraws
 		{
 			Tile tile = Main.tile[i, j];
 			if (tile.HasTile && MossColor.TryGetValue(tile.TileType, out Color rv))
-				return rv;
+			{
+				return rv * 1.5f;
+			}
 			return null;
 		}
 		bool Conencted(int x, int y, int dx, int dy)
