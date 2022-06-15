@@ -1,15 +1,69 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using AltLibrary;
+using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Systems;
+using AltLibrary.Common.Hooks;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class CreamMoss : ModTile
+	public class GreenCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.DarkGreen;
+		public override int tileParent => TileID.GreenMoss;
+	}
+
+	public class BrownCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.Brown;
+		public override int tileParent => TileID.BrownMoss;
+	}
+
+	public class RedCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.DarkRed;
+		public override int tileParent => TileID.RedMoss;
+	}
+	public class BlueCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.DarkBlue;
+		public override int tileParent => TileID.BlueMoss;
+	}
+	public class PurpleCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.Purple;
+		public override int tileParent => TileID.PurpleMoss;
+	}
+	public class LavaCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.OrangeRed;
+		public override int tileParent => TileID.LavaMoss;
+	}
+	public class KryptonCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.Lime;
+		public override int tileParent => TileID.KryptonMoss;
+	}
+	public class XenomCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.LightBlue;
+		public override int tileParent => TileID.XenonMoss;
+	}
+	public class ArgonCreamMoss : CreamMoss
+	{
+		public override Color mossColor => Color.MediumOrchid;
+		public override int tileParent => TileID.ArgonMoss;
+	}
+	public abstract class CreamMoss : ModTile
     {
         public override string Texture => "TheConfectionRebirth/Tiles/Creamstone";
-        
+
+		public virtual Color mossColor => Color.White;
+		public virtual int tileParent => 0;
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
@@ -33,9 +87,16 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<CreamDust>();
             ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
-            AddMapEntry(new Color(188, 168, 120));
-
             HitSound = SoundID.Tink;
+            AddMapEntry(mossColor);
+
+		foreach(KeyValuePair<int, Color> entry in TilePostDraws.Moss.MossColor)
+		{
+			Main.tileMerge[Type][entry.Key] = true;
+			Main.tileMerge[entry.Key][Type] = true;
+		}
+		TilePostDraws.Moss.MossColor.Add(Type, mossColor);
+		ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
             MinPick = 65;
         }
 
