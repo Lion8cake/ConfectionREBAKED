@@ -16,16 +16,19 @@ namespace TheConfectionRebirth.TilePostDraws
 	{
 		Texture2D tex;
 		Dictionary<byte, int> MossAdjacencyRules;
+		Dictionary<int, bool> IsMoss;
 		public override void Load()
 		{
 			tex = ModContent.Request<Texture2D>("TheConfectionRebirth/TilePostDraws/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			MossAdjacencyRules = new();
+			IsMoss = new();
 			MassAdjBake();
 		}
         public override void Unload()
         {
 			tex = null;
 			MossAdjacencyRules = null;
+			IsMoss = null;
 
 		}
         private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
