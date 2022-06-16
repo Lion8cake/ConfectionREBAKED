@@ -14,18 +14,21 @@ namespace TheConfectionRebirth.TilePostDraws
 {
 	internal class Moss : ModSystem
 	{
-		Texture2D tex;
-		Dictionary<byte, int> MossAdjacencyRules;
+		static Texture2D tex;
+		static Dictionary<byte, int> MossAdjacencyRules;
+		public static Dictionary<int, Color> MossColor;
 		public override void Load()
 		{
 			tex = ModContent.Request<Texture2D>("TheConfectionRebirth/TilePostDraws/ConfectionMoss", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			MossAdjacencyRules = new();
+			MossColor = new();
 			MassAdjBake();
 		}
         public override void Unload()
         {
 			tex = null;
 			MossAdjacencyRules = null;
+			MossColor = null;
 
 		}
         private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
@@ -76,7 +79,8 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				for (int tileY = num5; tileY < num6 + 4; tileY++)
 				{
-					if (IsMoss(tileX, tileY))
+					Color? mossColor = GetMossData(tileX, tileY);
+					if (mossColor != null)
 					{
 						BitsByte adjacency = new();
 						if (Conencted(tileX, tileY, -1, -1))
@@ -150,21 +154,21 @@ namespace TheConfectionRebirth.TilePostDraws
 						{
 							Rectangle MossRect = GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]);
 							Vector2 vector = normalTilePosition + new Vector2(0, 8);
-							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y, MossRect.Width, 12), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y, MossRect.Width, 12), mossColor.Value, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
 							vector.Y += 12;
-							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y + 22, MossRect.Width, 9), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+							Main.spriteBatch.Draw(tex, vector, new(MossRect.X, MossRect.Y + 22, MossRect.Width, 9), mossColor.Value, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
 						}
 						else if (tile.Slope == SlopeType.Solid)
-							Main.spriteBatch.Draw(tex, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), Color.White, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
+							Main.spriteBatch.Draw(tex, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), mossColor.Value, 0, new Vector2(16, 16), 1, SpriteEffects.None, 0);
 						else
-							DrawMoss(tile.Slope, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]));
+							DrawMoss(tile.Slope, normalTilePosition, GetMossTile_FromAdjacency(adjacency, mossAdjacency, Main.tile[tileX, tileY]), mossColor.Value);
 					}
 				}
 			}
 			Main.spriteBatch.End();
 		}
 
-		public void DrawMoss(SlopeType slope, Vector2 normalTilePosition, Rectangle MossTile, int tileFrameX = 0, int addFrX = 0, int tileFrameY = 0, int addFrY = 0) {
+		public void DrawMoss(SlopeType slope, Vector2 normalTilePosition, Rectangle MossTile, Color mossColor, int tileFrameX = 0, int addFrX = 0, int tileFrameY = 0, int addFrY = 0) {
 			const int Bottom_DrawFull = 24;
 			const int Bottom_DrawFullRemaining = 32 - Bottom_DrawFull;
 			const int Top_DrawFull = 10;
@@ -200,7 +204,7 @@ namespace TheConfectionRebirth.TilePostDraws
 						yRectDispEnd = disp + 8;
 						break;
 				}
-				Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(i * 2, yDrawDisp), new Rectangle((int)(MossTile.X + i * 2f), MossTile.Y + yRectDisp, 2, yRectDispEnd), Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 1f);
+				Main.spriteBatch.Draw(tex, normalTilePosition + new Vector2(i * 2, yDrawDisp), new Rectangle((int)(MossTile.X + i * 2f), MossTile.Y + yRectDisp, 2, yRectDispEnd), mossColor, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 1f);
 			}
 			switch (slope)
 			{
@@ -354,7 +358,17 @@ namespace TheConfectionRebirth.TilePostDraws
 		{
 
 			Tile tile = Main.tile[i, j];
-			return tile.HasTile && tile.TileType == Mod.Find<ModTile>("CreamMoss").Type;
+			return tile.HasTile && MossColor.TryGetValue(tile.TileType, out Color _);
+		}
+
+		Color? GetMossData(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			if (tile.HasTile && MossColor.TryGetValue(tile.TileType, out Color rv))
+			{
+				return rv * 1.5f;
+			}
+			return null;
 		}
 		bool Conencted(int x, int y, int dx, int dy)
 		{
