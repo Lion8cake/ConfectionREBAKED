@@ -19,7 +19,8 @@ namespace TheConfectionRebirth.Tiles
             Main.tileBrick[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            TileID.Sets.Grass[Type] = false;
+            TileID.Sets.Grass[Type] = true;
+            TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             AddMapEntry(new Color(235, 207, 150));
             //SoundType = 0;
