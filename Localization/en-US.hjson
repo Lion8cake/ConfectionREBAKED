@@ -28,5 +28,25 @@ Mods: {
 			{1} right click extra-cookie knockback
 			'''
 		}
+		
+		ItemName: {
+			SweetStaff: "Sweet Staff"
+		}
+
+		ItemDescription: {
+			SweetStaff: "Summons roller cookies to fight for you"
+		}
+
+		BuffName: {
+			RollerCookieSummonBuff: "Roller Cookie"
+		}
+
+		BuffDescription: {
+			SweetStaff: "The roller cookie will fight for you"
+		}
+
+		ProjectileName: {
+			RollerCookieSummonProj: "Roller Cookie"
+		}
 	}
 }
