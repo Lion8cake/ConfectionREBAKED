@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using static TheConfectionRebirth.SummonersShineCompat.MinionPowerCollection;
 using static TheConfectionRebirth.Util.FloodFindFuncs;
 
 using static TheConfectionRebirth.SummonersShineCompat;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 {
@@ -19,9 +20,19 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
     {
         public override int Damage => 45;
         public override float Knockback => 3;
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                //.AddIngredient(ModContent.ItemType<ChocolateChunk>(), 1)
+                .AddIngredient(ModContent.ItemType<CookieDough>(), 10)
+                .AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12)
+                .AddIngredient(ItemID.SoulofSight, 20)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
         internal override bool SummonersShine_GetMinionPower(SummonersShineCompat.MinionPowerCollection minionPower)
         {
-            minionPower.AddMinionPower(5);
+            minionPower.AddMinionPower(10);
             return true;
         }
 
@@ -565,17 +576,18 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
+            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()) && Main.rand.NextBool(2))
             {
-                Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Main.rand.NextVector2CircularEdge(3, 8), ModContent.ProjectileType<MiniRollerCookieSummonersShine>(), Projectile.damage, Projectile.SummonersShine_GetMinionPower(0), Projectile.owner);
+                float mp = Projectile.SummonersShine_GetMinionPower(0);
+                Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Main.rand.NextVector2CircularEdge(3, 8), ModContent.ProjectileType<MiniRollerCookieSummonersShine>(), Projectile.damage, mp, Projectile.owner);
                 projectile.localNPCImmunity[target.whoAmI] = 300;
             }
         }
         public override void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer)
         {
             ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.castingSpecialAbilityTime, 0);
-            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energy, 0);
-            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energyRegenRateMult, 0);
+            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energy, 0f);
+            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energyRegenRateMult, 0f);
         }
 
         public override void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner)
