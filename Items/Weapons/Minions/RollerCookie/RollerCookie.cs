@@ -237,7 +237,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 }
                 else
                 {
-                    if (Collision.CanHitLine(Projectile.Center, 0, 0, Projectile.Center + new Vector2(0, 56), 0, 0))
+                    if (Collision.CanHitLine(Projectile.Center, 0, 0, Projectile.Center + new Vector2(0, 112), 0, 0))
                     {
                         targetPos = target.Center;
                         targetPos.Y = Projectile.Center.Y;
@@ -585,9 +585,9 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         }
         public override void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer)
         {
-            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.castingSpecialAbilityTime, 0);
-            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energy, 0f);
-            ModSupport_SetVariable_ProjData(projectile.whoAmI, ProjectileDataVariableType.energyRegenRateMult, 0f);
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.castingSpecialAbilityTime, 0);
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energy, 0f);
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energyRegenRateMult, 0f);
         }
 
         public override void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner)
