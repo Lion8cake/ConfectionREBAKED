@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -707,7 +707,7 @@ namespace TheConfectionRebirth
 		/// <summary>
 		/// Sets a variable in the projectile's ReworkMinionProjectile
 		/// </summary>
-		/// <param name="ProjectileID">The Projectile's WhoAmI </param>
+		/// <param name="Projectile">The Projectile </param>
 		/// <param name="ProjectileFuncsVariableType">The variable to change<br />
 		/// ProjectileCrit - Expects int<br />
 		/// MinionASMod - Expects float. Default is 1<br />
@@ -722,14 +722,14 @@ namespace TheConfectionRebirth
 		/// PrefixMinionPower - Expects float<br />
 		/// </param>
 		/// <param name="value">The new value</param>
-		internal static void ModSupport_SetVariable_ProjFuncs(int ProjectileID, ProjectileFuncsVariableType ProjectileFuncsVariableType, object value)
+		internal static void ModSupport_SetVariable_ProjFuncs(Projectile Projectile, ProjectileFuncsVariableType ProjectileFuncsVariableType, object value)
 		{
-			SummonersShine.Call(4, ProjectileID, ProjectileFuncsVariableType, value);
+			SummonersShine.Call(4, Projectile, ProjectileFuncsVariableType, value);
 		}
 		/// <summary>
 		/// Returns a variable in the projectile's ReworkMinionProjectile
 		/// </summary>
-		/// <param name="ProjectileID">The Projectile's WhoAmI </param>
+		/// <param name="Projectile">The Projectile </param>
 		/// <param name="ProjectileFuncsVariableType">The variable to change<br />
 		/// ProjectileCrit - Expects int<br />
 		/// MinionASMod - Expects float. Default is 1<br />
@@ -743,15 +743,15 @@ namespace TheConfectionRebirth
 		/// ArmorIgnoredPerc - Expects float. Default is 0.<br />
 		/// PrefixMinionPower - Expects float<br />
 		/// </param>
-		internal static object ModSupport_GetVariable_ProjFuncs(int ProjectileID, ProjectileFuncsVariableType ProjectileFuncsVariableType)
+		internal static object ModSupport_GetVariable_ProjFuncs(Projectile Projectile, ProjectileFuncsVariableType ProjectileFuncsVariableType)
 		{
-			return SummonersShine.Call(6, ProjectileID, ProjectileFuncsVariableType);
+			return SummonersShine.Call(6, Projectile, ProjectileFuncsVariableType);
 		}
 
 		/// <summary>
 		/// Sets a variable in the projectile's MinionProjectileData
 		/// </summary>
-		/// <param name="ProjectileID">The Projectile's WhoAmI </param>
+		/// <param name="Projectile">The Projectile </param>
 		/// <param name="ProjectileDataVariableType">The variable to change<br />
 		/// castingSpecialAbilityType - Expects int<br />
 		/// energyRegenRateMult - Expects float<br />
@@ -779,15 +779,15 @@ namespace TheConfectionRebirth
 		/// alphaOverride - Expects int<br />
 		/// isTeleportFrame - Expects bool<br />
 		/// </param>
-		internal static void ModSupport_SetVariable_ProjData(int ProjectileID, ProjectileDataVariableType ProjectileDataVariableType, object value)
+		internal static void ModSupport_SetVariable_ProjData(Projectile Projectile, ProjectileDataVariableType ProjectileDataVariableType, object value)
 		{
-			SummonersShine.Call(5, ProjectileID, ProjectileDataVariableType, value);
+			SummonersShine.Call(5, Projectile, ProjectileDataVariableType, value);
 		}
 
 		/// <summary>
 		/// Returns a variable in the projectile's MinionProjectileData
 		/// </summary>
-		/// <param name="ProjectileID">The Projectile's WhoAmI </param>
+		/// <param name="Projectile">The Projectile </param>
 		/// <param name="ProjectileDataVariableType">The variable to change<br />
 		/// castingSpecialAbilityType - Expects int<br />
 		/// energyRegenRateMult - Expects float<br />
@@ -816,14 +816,14 @@ namespace TheConfectionRebirth
 		/// isTeleportFrame - Expects bool<br />
 		/// <param name="value">The new value</param>
 		/// </param>
-		internal static object ModSupport_GetVariable_ProjData(int ProjectileID, ProjectileDataVariableType ProjectileDataVariableType)
+		internal static object ModSupport_GetVariable_ProjData(Projectile Projectile, ProjectileDataVariableType ProjectileDataVariableType)
 		{
-			return SummonersShine.Call(7, ProjectileID, ProjectileDataVariableType);
+			return SummonersShine.Call(7, Projectile, ProjectileDataVariableType);
 		}
 		/// <summary>
 		/// Returns a variable in the player's ReworkMinion_Player
 		/// </summary>
-		/// <param name="PlayerID">The Player's WhoAmI </param>
+		/// <param name="Player">The Player</param>
 		/// <param name="PlayerFuncsVariableType">The variable to change<br />
 		/// minionPower - Expects float<br />
 		/// energyRestoreRate - Expects float<br />
@@ -832,14 +832,14 @@ namespace TheConfectionRebirth
 		/// minionASNonPrimaryWeapon - Expects float<br />
 		/// <param name="value">The new value</param>
 		/// </param>
-		internal static void ModSupport_SetVariable_PlayerFuncs(int PlayerID, PlayerFuncsVariableType PlayerFuncsVariableType, object value)
+		internal static void ModSupport_SetVariable_PlayerFuncs(Player Player, PlayerFuncsVariableType PlayerFuncsVariableType, object value)
 		{
-			SummonersShine.Call(8, PlayerID, PlayerFuncsVariableType, value);
+			SummonersShine.Call(8, Player, PlayerFuncsVariableType, value);
 		}
 		/// <summary>
 		/// Returns a variable in the player's ReworkMinion_Player
 		/// </summary>
-		/// <param name="PlayerID">The Player's WhoAmI </param>
+		/// <param name="Player">The Player</param>
 		/// <param name="PlayerFuncsVariableType">The variable to change<br />
 		/// minionPower - Expects float<br />
 		/// energyRestoreRate - Expects float<br />
@@ -847,9 +847,9 @@ namespace TheConfectionRebirth
 		/// minionASRetreating - Expects float<br />
 		/// minionASNonPrimaryWeapon - Expects float<br />
 		/// </param>
-		internal static object ModSupport_GetVariable_PlayerFuncs(int PlayerID, PlayerFuncsVariableType PlayerFuncsVariableType)
+		internal static object ModSupport_GetVariable_PlayerFuncs(Player Player, PlayerFuncsVariableType PlayerFuncsVariableType)
 		{
-			return SummonersShine.Call(9, PlayerID, PlayerFuncsVariableType);
+			return SummonersShine.Call(9, Player, PlayerFuncsVariableType);
 		}
 		internal enum ItemFuncsVariableType
 		{
