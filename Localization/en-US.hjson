@@ -13,5 +13,20 @@ Mods: {
 		TownNPCMood: {
 			ConfectionBiomeSurface: The Confection
 		}
+		
+		SummonSpecial: {
+			SweetStaff:
+			'''
+			Press right click to summon more roller-cookies with every attack!
+			{1} extra-cookie knockback
+			'''
+		}
+
+		SummonSpecialCompressed: {
+			SweetStaff:
+			'''
+			{1} right click extra-cookie knockback
+			'''
+		}
 	}
 }
