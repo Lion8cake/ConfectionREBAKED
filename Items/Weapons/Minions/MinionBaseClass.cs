@@ -23,6 +23,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
         public virtual float Knockback => 0.01f;
         public virtual int Crit => 0;
         public virtual int UseTime => 32;
+        public virtual int ManaCost => 10;
 
         public virtual int SummonersShine_MaxEnergy => 0;
 
@@ -60,6 +61,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
             Item.damage = Damage;
             Item.knockBack = Knockback;
             Item.crit = Crit;
+            Item.mana = ManaCost;
             Item.useTime = UseTime;
             Item.useAnimation = UseTime;
             Item.buffType = BuffType<T>();
@@ -117,6 +119,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
 
         //note - this is treated as static. Do not use the "this" parameter.
         public abstract void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer);
+        public abstract void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner);
         public override void SetStaticDefaults()
         {
             // Denotes that this projectile is a pet or minion
@@ -127,6 +130,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
             if (SummonersShine != null)
             {
                 ProjectileOnCreate_SetMinionOnSpecialAbilityUsed(Projectile.type, SummonersShine_OnSpecialAbilityUsed);
+                ProjectileOnCreate_SetMinionTerminateSpecialAbility(Projectile.type, SummonersShine_TerminateSpecialAbility);
             }
         }
         public override void SetDefaults()
