@@ -351,18 +351,25 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         const int LEFTWALL = 1;
         const int RIGHTWALL = 2;
         const int CEIL = 3;
-
         void SwitchAdhering() { WallClimbState = SwitchAdhering(Projectile, WallClimbState); }
         public static int SwitchAdhering(Projectile Projectile, int WallClimbState)
         {
             Vector2 tileCollisionChange = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            float xDiff = tileCollisionChange.X - Projectile.velocity.X;
+            float yDiff = tileCollisionChange.Y - Projectile.velocity.Y;
+            if (xDiff == 0 || yDiff == 0)
+            {
+                Vector4 slopeCollisionChange = Collision.SlopeCollision(Projectile.position + tileCollisionChange, tileCollisionChange, Projectile.width, Projectile.height);
+                tileCollisionChange.X = slopeCollisionChange.Z;
+                tileCollisionChange.Y = slopeCollisionChange.W;
+                xDiff = tileCollisionChange.X - Projectile.velocity.X;
+                yDiff = tileCollisionChange.Y - Projectile.velocity.Y;
+            }
             int newState = WallClimbState;
             switch (WallClimbState)
             {
                 case GROUND:
                     {
-
-                        float xDiff = tileCollisionChange.X - Projectile.velocity.X;
                         if (xDiff > 0)
                             newState = LEFTWALL;
                         else if (xDiff < 0)
@@ -372,7 +379,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 case LEFTWALL:
                 case RIGHTWALL:
                     {
-                        float xDiff = tileCollisionChange.X - Projectile.velocity.X;
                         if (xDiff == 0 && !Collision.SolidCollision(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height))
                         {
                             Projectile.position += tileCollisionChange;
@@ -383,7 +389,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                         }
                         else
                         {
-                            float yDiff = tileCollisionChange.Y - Projectile.velocity.Y;
                             if (yDiff > 0)
                                 newState = CEIL;
                             else if (yDiff < 0)
@@ -418,7 +423,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 case CEIL:
                     {
 
-                        float yDiff = tileCollisionChange.Y - Projectile.velocity.Y;
                         if (yDiff == 0 && !Collision.SolidCollision(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height))
                         {
                             Projectile.position += tileCollisionChange;
@@ -429,7 +433,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                         }
                         else
                         {
-                            float xDiff = tileCollisionChange.X - Projectile.velocity.X;
                             if (xDiff > 0)
                                 newState = LEFTWALL;
                             else if (xDiff < 0)
@@ -450,10 +453,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         {
             Vector2[] points =
             {
-                new Vector2(4, -4),
-                new Vector2(-4, -4),
-                new Vector2(4, 4),
-                new Vector2(-4, 4),
+                new Vector2(5, -5),
+                new Vector2(-5, -5),
+                new Vector2(5, 5),
+                new Vector2(-5, 5),
             };
             for(int x = 0; x < 4; x++)
             {
