@@ -56,10 +56,16 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
             if (Projectile.ai[1] == 0)
             {
-                Projectile.ai[1] = Math.Sign(Projectile.velocity.X);
+                if (Projectile.velocity.Y == 0)
+                {
+                    Projectile.ai[1] = Math.Sign(Projectile.velocity.X);
+                    if (Projectile.ai[1] == 0)
+                    {
+                        Projectile.ai[1] = 1;
+                    }
+                }
             }
-
-            if (Projectile.velocity.Y == 0) {
+            else {
                 Projectile.velocity.X = Projectile.ai[1] * 4;
             }
 
