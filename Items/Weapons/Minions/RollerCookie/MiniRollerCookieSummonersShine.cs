@@ -75,7 +75,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             if (Projectile.ai[0] == 0)
                 Projectile.velocity.Y += normalGravity;
             else
-                Projectile.velocity.Y = Math.Max(2, Projectile.velocity.Y) + 0.3f;
+                Projectile.velocity.Y = Math.Max(10, Projectile.velocity.Y) + 0.3f;
 
             RollerCookieSummonProj.Adhere(Projectile, (int)Projectile.ai[0]);
 
