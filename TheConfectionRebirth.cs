@@ -7,6 +7,7 @@ using System;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
+using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth
 {
@@ -65,11 +66,6 @@ namespace TheConfectionRebirth
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
         }
 
-        public override void PostSetupContent()
-        {
-            SummonersShineThoughtBubble.PostSetupContent();
-        }
-
         public override void Unload()
         {
             ModifyLimits -= TheConfectionRebirth_ModifyLimits;
@@ -78,6 +74,11 @@ namespace TheConfectionRebirth
             Limits2 = null;
             ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
             Limits3 = null;
+        }
+
+        public override void PostSetupContent()
+        {
+            SummonersShineThoughtBubble.PostSetupContent();
         }
 
         // middle
