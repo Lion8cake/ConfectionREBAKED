@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +39,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
+        }
+        public override bool? CanCutTiles()
         {
             return false;
         }
