@@ -65,6 +65,11 @@ namespace TheConfectionRebirth
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
         }
 
+        public override void PostSetupContent()
+        {
+            SummonersShineThoughtBubble.PostSetupContent();
+        }
+
         public override void Unload()
         {
             ModifyLimits -= TheConfectionRebirth_ModifyLimits;
