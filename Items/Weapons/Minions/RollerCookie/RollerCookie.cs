@@ -116,7 +116,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             set
             {
 
-                Projectile.ai[1] = State + value * wallLatchTimePlusOne;
+                Projectile.ai[1] = WallLatchDuration + value * wallLatchTimePlusOne;
             }
         }
         int WallLatchDuration
@@ -127,7 +127,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             }
             set
             {
-                Projectile.ai[1] = Projectile.ai[1] - State + value;
+                Projectile.ai[1] = Projectile.ai[1] - WallLatchDuration + value;
             }
         }
 
@@ -388,6 +388,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
             if (WallClimbState != 0)
                 WallLatchDuration = 30;
+            else if(WallLatchDuration > 0)
+                WallLatchDuration--;
         }
         public static int SwitchAdhering(Projectile Projectile, int WallClimbState, bool floorSticky)
         {
