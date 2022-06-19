@@ -249,7 +249,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                                 WallClimbState = GROUND;
                                 float timeTaken = mag / shotSpeed;
                                 Projectile.velocity = dist * shotSpeed / mag;
-                                Projectile.velocity.Y -= timeTaken / 2 * normalGravity;
+                                Projectile.velocity.Y -= timeTaken * 0.7f * normalGravity;
                             }
                         }
                     }
