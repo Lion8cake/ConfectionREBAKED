@@ -206,7 +206,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                     State = RETREATING;
                 else if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     State = NORMAL;
-                rollOnGround = State != RETREATING && !Collision.CanHitLine(target.Center, 0, 0, target.Center + new Vector2(0, 480), 0, 0);
+                rollOnGround = State != RETREATING && !Collision.CanHitLine(target.Center, 0, 0, target.Center + new Vector2(0, 640), 0, 0);
 
             }
             if (State == RETREATING)
