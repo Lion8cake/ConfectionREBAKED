@@ -190,6 +190,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
             //brain
             bool rollOnGround;
+            bool unRetreated = false;
             if (target.Center.DistanceSQ(Projectile.Center) > maxDistTeleport)
                 Projectile.Center = RollerCookie_GetIdlePos_Floating(owner);
             if (target == owner)
@@ -202,11 +203,14 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             }
             else
             {
+                bool retreating = State == RETREATING;
                 if (State == NORMAL && (!Projectile.CanHitWithOwnBody(target) || !Collision.CanHitLine(target.Center, 0, 0, Projectile.Center, 0, 0)))
                     State = RETREATING;
                 else if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     State = NORMAL;
                 rollOnGround = State != RETREATING && !Collision.CanHitLine(target.Center, 0, 0, target.Center + new Vector2(0, 640), 0, 0);
+                if(retreating && State != RETREATING)
+                    unRetreated = true;
 
             }
             if (State == RETREATING)
@@ -241,7 +245,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 {
                     if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     {
-                        if (Projectile.velocity.Y == 0)
+                        if (unRetreated || Projectile.velocity.Y == 0)
                         {
                             float mag = dist.Length();
                             if (mag > 0)
