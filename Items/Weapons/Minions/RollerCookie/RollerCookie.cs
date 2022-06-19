@@ -13,6 +13,8 @@ using static TheConfectionRebirth.Util.FloodFindFuncs;
 
 using static TheConfectionRebirth.SummonersShineCompat;
 using TheConfectionRebirth.Items.Placeable;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 {
@@ -64,6 +66,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         {
             Main.projFrames[Projectile.type] = 6;
             base.SetStaticDefaults();
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 24; // The length of old position to be recorded
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
         }
         public override void SetDefaults()
         {
@@ -77,6 +81,25 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             DrawOffsetX = -2;
             DrawOriginOffsetY = -2;
             Projectile.extraUpdates = 3;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.instance.LoadProjectile(Projectile.type);
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+
+            // Redraw the projectile with the color not influenced by light
+            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
+            int speedCount = (int)(Projectile.velocity.Length() * 4);
+            speedCount = Math.Min(Projectile.oldPos.Length, speedCount);
+            Rectangle frame = texture.Frame(1, 6, 0, Projectile.frame);
+            for (int k = 0; k < speedCount; k += 2)
+            {
+                Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((speedCount - k) / (float)speedCount);
+                Main.EntitySpriteDraw(texture, drawPos, frame, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+
+            return true;
         }
 
         //ai0 guide
