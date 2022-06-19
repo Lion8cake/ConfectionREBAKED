@@ -635,7 +635,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
             {
                 Vector2 cdVec2 = (Vector2)ModSupport_GetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition);
-                if (cdVec2.Y == 0)
+                if (cdVec2.Y <= 0)
                 {
                     cdVec2.Y = 30;
                     float mp = Projectile.SummonersShine_GetMinionPower(0);
