@@ -42,7 +42,7 @@ Mods: {
 		}
 
 		BuffDescription: {
-			SweetStaff: "The roller cookie will fight for you"
+			RollerCookieSummonBuff: "The roller cookie will fight for you"
 		}
 
 		ProjectileName: {
