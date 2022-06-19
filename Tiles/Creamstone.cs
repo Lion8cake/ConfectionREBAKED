@@ -37,29 +37,33 @@ namespace TheConfectionRebirth.Tiles
             MinPick = 65;
         }
 
-        private bool SpawnRocks(int i, int j)
+        private bool Saccharite(int i, int j)
 		{
-			if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(2) == 0)
-			{
-				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-				return true;
-			}
-			if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(20) == 0)
-			{
-				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-				return true;
-			}
-			return false;
-		}
+            if (j > Main.rockLayer)
+            {
+                if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(2) == 0)
+                {
+                    WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+                    return true;
+                }
+                if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(20) == 0)
+                {
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
 	
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.rand.Next(8) == 0)
+			if (Main.rand.Next(12) == 0)
 			{
 				bool spawned = false;
 				if (!spawned)
 				{
-					spawned = SpawnRocks(i, j);
+					spawned = Saccharite(i, j);
 				}
 			}
 		}

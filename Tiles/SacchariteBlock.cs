@@ -16,6 +16,7 @@ namespace TheConfectionRebirth.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
             AddMapEntry(new Color(32, 174, 221));
             DustType = ModContent.DustType<SacchariteCrystals>();
+            HitSound = SoundID.Item27;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -26,38 +27,41 @@ namespace TheConfectionRebirth.Tiles
         public override void RandomUpdate(int i, int j)
         {
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
-            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
+            if (j > Main.rockLayer)
             {
-                bool placeSaccharite = false;
-                int yTest = j;
-                while (yTest > j - 10)
+                if (WorldGen.genRand.NextBool(20) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
                 {
-                    Tile testTile = Framing.GetTileSafely(i, yTest);
-                    if (testTile.BottomSlope)
+                    bool placeSaccharite = false;
+                    int yTest = j;
+                    while (yTest > j - 10)
                     {
+                        Tile testTile = Framing.GetTileSafely(i, yTest);
+                        if (testTile.BottomSlope)
+                        {
+                            break;
+                        }
+                        placeSaccharite = true;
                         break;
                     }
-                    placeSaccharite = true;
-                    break;
-                }
-                if (placeSaccharite)
-                {
-                    tileBelow.TileType = Type;
-                    tileBelow.HasTile = true;
-                    WorldGen.SquareTileFrame(i, j + 1, true);
-                    if (Main.netMode == NetmodeID.Server)
+                    if (placeSaccharite)
                     {
-                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
+                        tileBelow.TileType = Type;
+                        tileBelow.HasTile = true;
+                        WorldGen.SquareTileFrame(i, j + 1, true);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
+                        }
                     }
-                }
-                if (placeSaccharite)
-                {
-                    tileBelow.TileType = Type;
-                    tileBelow.HasTile = true;
-                    WorldGen.SquareTileFrame(i, j + 1, true);
-                    if (Main.netMode == NetmodeID.Server)
+                    if (placeSaccharite)
                     {
-                        NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
+                        tileBelow.TileType = Type;
+                        tileBelow.HasTile = true;
+                        WorldGen.SquareTileFrame(i, j + 1, true);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
+                        }
                     }
                 }
             }

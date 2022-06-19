@@ -26,6 +26,7 @@ namespace TheConfectionRebirth
             BiomeIce = ModContent.TileType<BlueIce>();
             BiomeSandstone = ModContent.TileType<Tiles.Creamsandstone>();
             BiomeHardenedSand = ModContent.TileType<Tiles.HardenedCreamsand>();
+            HammerType = ModContent.ItemType<GrandSlammer>();
             MechDropItemType = ModContent.ItemType<Items.Placeable.NeapoliniteBar>();
             BiomeChestItem = ModContent.ItemType<PopRocket>();
             BiomeChestTile = ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
@@ -34,7 +35,7 @@ namespace TheConfectionRebirth
             MimicKeyType = ModContent.ItemType<KeyofDelight>();
             MimicType = ModContent.NPCType<BigMimicConfection>();
             DisplayName.SetDefault("Confection");
-            Description.SetDefault("A land of where every thing looks like candy but don't be decived this is just a distraction.");
+            Description.SetDefault("A land of where every thing looks like candy, tasty chocolate or dangours sprinkles.");
 
             BakeTileChild(ModContent.TileType<CookieBlock>(), TileID.Dirt, new(true, true, true));
             BakeTileChild(ModContent.TileType<CreamBlock>(), TileID.SnowBlock, new(true, true, true));

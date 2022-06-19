@@ -111,9 +111,21 @@ namespace TheConfectionRebirth.NPCs
                     if (x == NPC.whoAmI)
                         continue;
                     NPC test = Main.npc[x];
-                    if (test.active && !test.friendly && !test.boss && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
-                        npcsToTeleportCandidates.Add(test);
-
+                    if (!Main.expertMode)
+                    {
+                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 3500 && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
+                            npcsToTeleportCandidates.Add(test);
+                    }
+                    if (Main.expertMode)
+                    {
+                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 7000 && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
+                            npcsToTeleportCandidates.Add(test);
+                    }
+                    if (Main.masterMode)
+                    {
+                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 10500 && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
+                            npcsToTeleportCandidates.Add(test);
+                    }
                 }
                 List<NPC> npcsToTeleport = new();
                 for (int i = 0; i < 4; i++)

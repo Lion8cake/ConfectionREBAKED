@@ -51,8 +51,11 @@ public class ConfectionBiomeSurface : ModBiome
             {
                 return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
             }
-
-            return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+            if (Main.LocalPlayer.ZoneSkyHeight || Main.LocalPlayer.ZoneOverworldHeight)
+            {
+                return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+            }
+            return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
         }
     }
 

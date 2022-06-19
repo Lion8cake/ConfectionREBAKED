@@ -1,20 +1,24 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Gores
 {
     public class CreamDroplet : ModGore
     {
-        /*public override void OnSpawn(Gore gore) {
-			gore.numFrames = 15;
-			gore.behindTiles = true;
-			gore.timeLeft = Gore.goreTime * 3;
-		}*/
+        public override void OnSpawn(Gore gore, IEntitySource source)
+        {
+            gore.numFrames = 15;
+            gore.behindTiles = true;
+            gore.timeLeft = Gore.goreTime * 3;
+        }
 
         public override bool Update(Gore gore)
         {
-            gore.alpha = gore.position.Y < Main.worldSurface * 16.0 + 8.0
+            gore.alpha = gore.position.Y < (Main.worldSurface * 16.0) + 8.0
                 ? 0
                 : 100;
 
@@ -24,27 +28,30 @@ namespace TheConfectionRebirth.Gores
             {
                 int tileX = (int)(gore.position.X / 16f);
                 int tileY = (int)(gore.position.Y / 16f) - 1;
-                if (WorldGen.InWorld(tileX, tileY, 0) && !Main.tile[tileX, tileY].HasTile)
+                if (WorldGen.InWorld(tileX, tileY) && !Main.tile[tileX, tileY].HasTile)
                 {
                     gore.active = false;
                 }
+
                 if (gore.frame == 0 || gore.frame == 1 || gore.frame == 2)
                 {
                     frameDuration = 24 + Main.rand.Next(256);
                 }
+
                 if (gore.frame == 3)
                 {
                     frameDuration = 24 + Main.rand.Next(96);
                 }
+
                 if (gore.frameCounter >= frameDuration)
                 {
                     gore.frameCounter = 0;
                     gore.frame += 1;
                     if (gore.frame == 5)
                     {
-                        //int droplet = Gore.NewGore(IEntityWithGlobals, gore.position, gore.velocity, gore.type, 1f);
-                        //Main.gore[droplet].frame = 9;
-                        //Main.gore[droplet].velocity *= 0f;
+                        int droplet = Gore.NewGore(new EntitySource_Misc(nameof(CreamDroplet)), gore.position, gore.velocity, gore.type);
+                        Main.gore[droplet].frame = 9;
+                        Main.gore[droplet].velocity *= 0f;
                     }
                 }
             }
@@ -69,15 +76,18 @@ namespace TheConfectionRebirth.Gores
                 {
                     gore.velocity.Y = 0.5f;
                 }
+
                 if (gore.velocity.Y > 12f)
                 {
                     gore.velocity.Y = 12f;
                 }
+
                 if (gore.frameCounter >= frameDuration)
                 {
                     gore.frameCounter = 0;
                     gore.frame += 1;
                 }
+
                 if (gore.frame > 9)
                 {
                     gore.frame = 7;
@@ -91,6 +101,7 @@ namespace TheConfectionRebirth.Gores
                     gore.frameCounter = 0;
                     gore.frame += 1;
                 }
+
                 gore.velocity *= 0f;
                 if (gore.frame > 14)
                 {
@@ -99,14 +110,14 @@ namespace TheConfectionRebirth.Gores
             }
 
             Vector2 oldVelocity = gore.velocity;
-            gore.velocity = Collision.TileCollision(gore.position, gore.velocity, 16, 14, false, false, 1);
+            gore.velocity = Collision.TileCollision(gore.position, gore.velocity, 16, 14);
             if (gore.velocity != oldVelocity)
             {
                 if (gore.frame < 10)
                 {
                     gore.frame = 10;
                     gore.frameCounter = 0;
-                    //SoundEngine.PlaySound(SoundID.Drip, (int)gore.position.X + 8, (int)gore.position.Y + 8, Main.rand.Next(2));
+                    SoundEngine.PlaySound(SoundID.Drip, gore.position + new Vector2(8, 8));
                 }
             }
             else if (Collision.WetCollision(gore.position + gore.velocity, 16, 14))
@@ -115,14 +126,15 @@ namespace TheConfectionRebirth.Gores
                 {
                     gore.frame = 10;
                     gore.frameCounter = 0;
-                    //SoundEngine.PlaySound(SoundID.Drip, (int)gore.position.X + 8, (int)gore.position.Y + 8, 2);
+                    SoundEngine.PlaySound(SoundID.Drip, gore.position + new Vector2(8, 8));
                 }
+
                 int tileX = (int)(gore.position.X + 8f) / 16;
                 int tileY = (int)(gore.position.Y + 14f) / 16;
-                if (Main.tile[tileX, tileY] != null && Main.tile[tileX, tileY].LiquidType > 0)
+                if (Main.tile[tileX, tileY] != null && Main.tile[tileX, tileY].LiquidAmount > 0)
                 {
                     gore.velocity *= 0f;
-                    gore.position.Y = tileY * 16 - Main.tile[tileX, tileY].LiquidType / 16;
+                    gore.position.Y = (tileY * 16) - (Main.tile[tileX, tileY].LiquidAmount / 16);
                 }
             }
 

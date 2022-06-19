@@ -4,6 +4,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.Items
 {
@@ -12,7 +13,7 @@ namespace TheConfectionRebirth.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Delight");
-            Tooltip.SetDefault("'The essence of delight creatures'");
+            Tooltip.SetDefault("'The essence of delightful creatures'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
 
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
@@ -31,6 +32,16 @@ namespace TheConfectionRebirth.Items
             Item.value = 1000;
             Item.rare = ItemRarityID.Orange;
             Item.maxStack = 999;
+        }
+
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(Item.Center, Color.LightYellow.ToVector3() * 0.55f * Main.essScale);
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
         }
 
         public override void AddRecipes() // thanks to foxyboy55 for this fix
