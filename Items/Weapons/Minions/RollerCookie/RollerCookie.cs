@@ -317,7 +317,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                         targetDist = target.Center - Projectile.Center;
                         if (Projectile.Hitbox.Intersects(target.Hitbox))
                         {
-                            AttackCooldown = 180;
+                            AttackCooldown = Main.rand.Next(130, 181);
                         }
                     }
                     else
