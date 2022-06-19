@@ -96,10 +96,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             Projectile.rotation += Projectile.velocity.Length() * flipDirection * rotationPerBlock;
             if (Projectile.ai[0] == 0)
             {
-                if (skipUpdate > 0)
-                    Projectile.velocity.Y = Math.Max(2, Projectile.velocity.Y) + 0.3f;
-                else
-                    Projectile.velocity.Y += normalGravity;
+                Projectile.velocity.Y += normalGravity;
             }
             else
                 Projectile.velocity.Y = Math.Max(8, Projectile.velocity.Y) + 0.3f;
