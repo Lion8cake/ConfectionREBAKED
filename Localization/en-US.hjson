@@ -47,6 +47,7 @@ Mods: {
 
 		ProjectileName: {
 			RollerCookieSummonProj: "Roller Cookie"
+			MiniRollerCookieSummonersShine: "Extra Cookie"
 		}
 	}
 }
