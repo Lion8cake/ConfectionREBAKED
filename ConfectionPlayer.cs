@@ -123,6 +123,7 @@ namespace TheConfectionRebirth
         public void DeleteBuff(Player player) {
             player.DelBuff(FindBuff(player, out byte _));
         }
+        //1-indexed
         public int FindBuff(Player player, out byte rank)
         {
             for (int i = 0; i < Player.MaxBuffs; i++)
@@ -271,7 +272,7 @@ namespace TheConfectionRebirth
         {
             if (item.CountsAsClass(DamageClass.Magic))
             {
-                this.VanillaValorDamageDealt += manaConsumed;
+                ManaConsumed += manaConsumed;
                 Timer.Add(new(manaConsumed, 180, TimerDataType.MagicManaRegeneration));
             }
         }
