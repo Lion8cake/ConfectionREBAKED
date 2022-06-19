@@ -104,6 +104,33 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 Projectile.ai[0] = State + value * 2;
             }
         }
+
+        const int wallLatchTime = 30;
+        const int wallLatchTimePlusOne = wallLatchTime + 1;
+        int AttackCooldown
+        {
+            get
+            {
+                return ((int)Projectile.ai[1]) / wallLatchTimePlusOne;
+            }
+            set
+            {
+
+                Projectile.ai[1] = State + value * wallLatchTimePlusOne;
+            }
+        }
+        int WallLatchDuration
+        {
+            get
+            {
+                return ((int)Projectile.ai[1]) % wallLatchTimePlusOne;
+            }
+            set
+            {
+                Projectile.ai[1] = Projectile.ai[1] - State + value;
+            }
+        }
+
         public override void MinionAI(Player owner)
         {
             const int NORMAL = 0;
@@ -120,11 +147,15 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
             {
                 Projectile.IncrementSpecialAbilityTimer(1200);
+                Vector2 cdVec2 = (Vector2)ModSupport_GetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition);
+                if (cdVec2.Y > 0)
+                    cdVec2.Y--;
+                ModSupport_SetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition, cdVec2);
             }
 
             int targetID = -1;
             if (Projectile.Center.DistanceSQ(owner.Center) < maxDistUnlatch)
-                Projectile.Minion_FindTargetInRange(1400, ref targetID, true);
+                Projectile.Minion_FindTargetInRange(1400, ref targetID, false);
             Entity target;
             if (targetID == -1)
                 target = owner;
@@ -148,7 +179,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             }
             else
             {
-                if (State == NORMAL && !Projectile.CanHitWithOwnBody(target))
+                if (State == NORMAL && (!Projectile.CanHitWithOwnBody(target) || !Collision.CanHitLine(target.Center, 0, 0, Projectile.Center, 0, 0)))
                     State = RETREATING;
                 else if(!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     State = NORMAL;
@@ -198,18 +229,15 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                                 Projectile.velocity.Y -= timeTaken / 2 * normalGravity;
                             }
                         }
-                        Projectile.ai[1] = 0;
                     }
+                    AttackCooldown = 0;
                 }
-                else
-                {
-                    if (Projectile.ai[1] > 0)
-                        Projectile.ai[1]--;
-                }
+                else if (AttackCooldown > 0)
+                    AttackCooldown--;
             }
             else
             {
-                Projectile.ai[1] = 0;
+                AttackCooldown = 0;
                 Projectile.friendly = false;
             }
             //movement
@@ -237,7 +265,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 }
                 else
                 {
-                    if (Collision.CanHitLine(Projectile.Center, 0, 0, Projectile.Center + new Vector2(0, 112), 0, 0))
+                    if (Collision.CanHitLine(Projectile.Center, 0, 0, Projectile.Center + new Vector2(0, 160), 0, 0))
                     {
                         targetPos = target.Center;
                         targetPos.Y = Projectile.Center.Y;
@@ -284,12 +312,12 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 else
                 {
                     Vector2 targetDist;
-                    if (Projectile.ai[1] == 0)
+                    if (AttackCooldown == 0)
                     {
                         targetDist = target.Center - Projectile.Center;
                         if (Projectile.Hitbox.Intersects(target.Hitbox))
                         {
-                            Projectile.ai[1] = 180;
+                            AttackCooldown = 180;
                         }
                     }
                     else
@@ -331,7 +359,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 SwitchAdhering();
             }
             else
+            {
+                WallLatchDuration = 0;
                 Adhere();
+            }
 
             //effects
 
@@ -351,8 +382,14 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
         const int LEFTWALL = 1;
         const int RIGHTWALL = 2;
         const int CEIL = 3;
-        void SwitchAdhering() { WallClimbState = SwitchAdhering(Projectile, WallClimbState); }
-        public static int SwitchAdhering(Projectile Projectile, int WallClimbState)
+        void SwitchAdhering() {
+            
+            WallClimbState = SwitchAdhering(Projectile, WallClimbState, WallLatchDuration > 0);
+
+            if (WallClimbState != 0)
+                WallLatchDuration = 30;
+        }
+        public static int SwitchAdhering(Projectile Projectile, int WallClimbState, bool floorSticky)
         {
             Vector2 tileCollisionChange = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             float xDiff = tileCollisionChange.X - Projectile.velocity.X;
@@ -374,6 +411,15 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                             newState = LEFTWALL;
                         else if (xDiff < 0)
                             newState = RIGHTWALL;
+
+                        else if (floorSticky && yDiff == 0 && !Collision.SolidCollision(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height))
+                        {
+                            Projectile.position += tileCollisionChange;
+                            if (Projectile.velocity.X > 0)
+                                newState = LEFTWALL;
+                            else if (Projectile.velocity.X < 0)
+                                newState = RIGHTWALL;
+                        }
                     }
                     break;
                 case LEFTWALL:
@@ -384,7 +430,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                             Projectile.position += tileCollisionChange;
                             if (Projectile.velocity.Y > 0)
                                 newState = CEIL;
-                            else
+                            else if (Projectile.velocity.Y < 0)
                                 newState = GROUND;
                         }
                         else
@@ -394,27 +440,30 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                             else if (yDiff < 0)
                                 newState = GROUND;
                         }
+                    }
+                    if (newState == WallClimbState)
+                    {
                         if (Projectile.velocity.Y < 0)
                         {
-                            if (CheckSlope(SlopeType.SlopeUpRight, Projectile.TopRight))
+                            if (CheckSlope(SlopeType.SlopeUpRight, Projectile.TopRight + tileCollisionChange))
                             {
-                                Projectile.velocity.X = Projectile.velocity.Y;
+                                Projectile.velocity.X += Projectile.velocity.Y;
                             }
-                            else if (CheckSlope(SlopeType.SlopeUpLeft, Projectile.TopLeft))
+                            else if (CheckSlope(SlopeType.SlopeUpLeft, Projectile.TopLeft + tileCollisionChange))
                             {
-                                Projectile.velocity.X = -Projectile.velocity.Y;
+                                Projectile.velocity.X += -Projectile.velocity.Y;
                             }
                         }
                         else if (Projectile.velocity.Y > 0)
                         {
-                            if (CheckSlope(SlopeType.SlopeDownLeft, Projectile.BottomLeft))
+                            if (CheckSlope(SlopeType.SlopeDownLeft, Projectile.BottomLeft + tileCollisionChange))
                             {
-                                Projectile.velocity.X = Projectile.velocity.Y;
+                                Projectile.velocity.X += Projectile.velocity.Y;
                                 newState = WallClimbState;
                             }
-                            else if (CheckSlope(SlopeType.SlopeDownRight, Projectile.BottomRight))
+                            else if (CheckSlope(SlopeType.SlopeDownRight, Projectile.BottomRight + tileCollisionChange))
                             {
-                                Projectile.velocity.X = -Projectile.velocity.Y;
+                                Projectile.velocity.X += -Projectile.velocity.Y;
                                 newState = WallClimbState;
                             }
                         }
@@ -422,7 +471,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                     break;
                 case CEIL:
                     {
-
                         if (yDiff == 0 && !Collision.SolidCollision(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height))
                         {
                             Projectile.position += tileCollisionChange;
@@ -437,6 +485,9 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                                 newState = LEFTWALL;
                             else if (xDiff < 0)
                                 newState = RIGHTWALL;
+                        }
+                        if (newState == WallClimbState)
+                        {
                         }
                     }
                     break;
@@ -579,11 +630,17 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()) && Main.rand.NextBool(2))
+            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
             {
-                float mp = Projectile.SummonersShine_GetMinionPower(0);
-                Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Main.rand.NextVector2CircularEdge(3, 8), ModContent.ProjectileType<MiniRollerCookieSummonersShine>(), Projectile.damage, mp, Projectile.owner);
-                projectile.localNPCImmunity[target.whoAmI] = 300;
+                Vector2 cdVec2 = (Vector2)ModSupport_GetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition);
+                if (cdVec2.Y == 0)
+                {
+                    cdVec2.Y = 30;
+                    float mp = Projectile.SummonersShine_GetMinionPower(0);
+                    Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Main.rand.NextVector2CircularEdge(3, 8), ModContent.ProjectileType<MiniRollerCookieSummonersShine>(), Projectile.damage, mp, Projectile.owner);
+                    projectile.localNPCImmunity[target.whoAmI] = 300;
+                    ModSupport_SetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition, cdVec2);
+                }
             }
         }
         public override void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer)
@@ -591,6 +648,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.castingSpecialAbilityTime, 0);
             ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energy, 0f);
             ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energyRegenRateMult, 0f);
+            ModSupport_SetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition, Vector2.Zero);
         }
 
         public override void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner)
