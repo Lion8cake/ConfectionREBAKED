@@ -97,6 +97,10 @@ namespace TheConfectionRebirth
                     player.DelBuff(pos);
                 player.AddBuff(BuffIDs[rank], time);
             }
+            else if (rank == buffRank - 1)
+            {
+                player.buffTime[pos] = time;
+            }
 
         }
 
