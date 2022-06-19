@@ -80,6 +80,7 @@ namespace TheConfectionRebirth
 
         int[] BuffIDs;
         Dictionary<int, byte> IsBuff;
+        int lastRank = -1;
         public StackableBuffData(params int[] buffs) {
             BuffIDs = buffs;
             IsBuff = new();
@@ -89,7 +90,7 @@ namespace TheConfectionRebirth
             }
         }
 
-        public void AscendBuff(Player player, int rank, int time) {
+        public void AscendBuff(Player player, int rank, int time, bool refresh = true) {
             int pos = FindBuff(player, out byte buffRank);
             if (rank >= buffRank)
             {
@@ -97,15 +98,19 @@ namespace TheConfectionRebirth
                     player.AddBuff(BuffIDs[rank], time);
                 else
                 {
-                    player.buffTime[pos] = time;
+                    player.buffTime[pos] = 2;
                     player.buffType[pos] = BuffIDs[rank];
                 }
             }
             else if (rank == buffRank - 1)
             {
-                player.buffTime[pos] = time;
+                if (refresh)
+                    player.buffTime[pos] = 2;
             }
+            else if(lastRank == buffRank - 1)
+                player.buffTime[pos] = time;
 
+            lastRank = rank;
         }
 
         public void DeleteBuff(Player player) {
@@ -221,9 +226,11 @@ namespace TheConfectionRebirth
             if (NeapoliniteSummonerSet)
             {
                 neapoliniteSummonTimer++;
-                byte rank = (byte)(neapoliniteSummonTimer / (8 * 60) - 1);
-                if (rank != 255) //max byte
-                    StackableBuffData.SwirlySwarm.AscendBuff(Player, rank, 8 * 60);
+                float progress = (neapoliniteSummonTimer / (8 * 60));
+                int rank = (int)progress;
+                int timer = rank == 5 ? 2 : (int)(8 * 60 * (1 - progress % 1));
+                if (rank != 0) //max byte
+                    StackableBuffData.SwirlySwarm.AscendBuff(Player, rank - 1, timer, rank == 5);
                 if (neapoliniteSummonTimer >= 2400)
                 {
                     neapoliniteSummonTimer = 2400;
