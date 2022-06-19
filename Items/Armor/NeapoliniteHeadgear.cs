@@ -23,5 +23,21 @@ namespace TheConfectionRebirth.Items.Armor
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 4;
         }
+        public override bool IsArmorSet(Item head, Item body, Item legs)
+        {
+            return body.type == ModContent.ItemType<NeapoliniteConeMail>() && legs.type == ModContent.ItemType<NeapoliniteGreaves>();
+        }
+
+        public override void UpdateArmorSet(Player player)
+        {
+            player.setBonus = "For every 50 mana consumed in the past 3 seconds, summon an additional strawberry per attack. Caps at 5 strawberries.";
+            ConfectionPlayer playerFuncs = player.GetModPlayer<ConfectionPlayer>();
+            playerFuncs.NeapoliniteMagicSet = true;
+            int rank = playerFuncs.ManaConsumed / 50;
+            if (rank > 5)
+                rank = 5;
+            if (rank > 0)
+                StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
+        }
     }
 }
