@@ -93,9 +93,13 @@ namespace TheConfectionRebirth
             int pos = FindBuff(player, out byte buffRank);
             if (rank >= buffRank)
             {
-                if (pos != -1)
-                    player.DelBuff(pos);
-                player.AddBuff(BuffIDs[rank], time);
+                if (pos == -1)
+                    player.AddBuff(BuffIDs[rank], time);
+                else
+                {
+                    player.buffTime[pos] = time;
+                    player.buffType[pos] = BuffIDs[rank];
+                }
             }
             else if (rank == buffRank - 1)
             {
