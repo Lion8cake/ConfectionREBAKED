@@ -1,3 +1,4 @@
+using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -33,36 +34,17 @@ namespace TheConfectionRebirth.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = "Every 10mph you go damage is increased by 4% and critical strike chance is increased by 2% which will last for 5 seconds. This stacks up to 5 times";
-            if (player.velocity.X >= 2.2f && !player.HasBuff(ModContent.BuffType<ChocolateChargeII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()) || -player.velocity.X >= 2.2f && !player.HasBuff(ModContent.BuffType<ChocolateChargeII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()))
+            int rank;
+            float len = player.velocity.Length();
+            if (len >= 11f)
+                rank = 4;
+            else
             {
-                player.AddBuff(ModContent.BuffType<ChocolateChargeI>(), 300);
+                float speed = len / 2.2f;
+                rank = (int)(speed - 1);
             }
-            if (player.velocity.X >= 4.4f && !player.HasBuff(ModContent.BuffType<ChocolateChargeIII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()) || -player.velocity.X >= 4.4f && !player.HasBuff(ModContent.BuffType<ChocolateChargeIII>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()))
-            {
-                player.AddBuff(ModContent.BuffType<ChocolateChargeII>(), 300);
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeI>());
-            }
-            if (player.velocity.X >= 6.6f && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()) || -player.velocity.X >= 6.6f && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()) && !player.HasBuff(ModContent.BuffType<ChocolateChargeIV>()))
-            {
-                player.AddBuff(ModContent.BuffType<ChocolateChargeIII>(), 300);
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeI>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeII>());
-            }
-            if (player.velocity.X >= 8.8f && !player.HasBuff(ModContent.BuffType<ChocolateChargeV>()) || -player.velocity.X >= 8.8f && !player.HasBuff(ModContent.BuffType<ChocolateChargeV > ()))
-            {
-                player.AddBuff(ModContent.BuffType<ChocolateChargeIV>(), 300);
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeI>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeII>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeIII>());
-            }
-            if (player.velocity.X >= 11f || -player.velocity.X >= 11f)
-            {
-                player.AddBuff(ModContent.BuffType<ChocolateChargeV>(), 300);
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeI>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeII>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeIII>());
-                player.ClearBuff(ModContent.BuffType<ChocolateChargeIV>());
-            }
+            if (rank >= 0)
+                StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
         }
     }
 }
