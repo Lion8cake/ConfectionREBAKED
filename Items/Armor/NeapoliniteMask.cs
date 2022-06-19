@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System;
 
 namespace TheConfectionRebirth.Items.Armor
 {
@@ -42,36 +43,11 @@ namespace TheConfectionRebirth.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = "Every 80 damage delt will increase critical strick chance by 2% for 5 seconds, once 10% critical strick chance has been reached defence is ignored for 5 seconds";
-            if (player.velocity.X >= 2.2f && !player.HasBuff(ModContent.BuffType<VanillaValorII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorV>()) || -player.velocity.X >= 2.2f && !player.HasBuff(ModContent.BuffType<VanillaValorII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorV>()))
-            {
-                player.AddBuff(ModContent.BuffType<VanillaValorI>(), 300);
-            }
-            if (player.velocity.X >= 4.4f && !player.HasBuff(ModContent.BuffType<VanillaValorIII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorV>()) || -player.velocity.X >= 4.4f && !player.HasBuff(ModContent.BuffType<VanillaValorIII>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorV>()))
-            {
-                player.AddBuff(ModContent.BuffType<VanillaValorII>(), 300);
-                player.ClearBuff(ModContent.BuffType<VanillaValorI>());
-            }
-            if (player.velocity.X >= 6.6f && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorV>()) || -player.velocity.X >= 6.6f && !player.HasBuff(ModContent.BuffType<VanillaValorV>()) && !player.HasBuff(ModContent.BuffType<VanillaValorIV>()))
-            {
-                player.AddBuff(ModContent.BuffType<VanillaValorIII>(), 300);
-                player.ClearBuff(ModContent.BuffType<VanillaValorI>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorII>());
-            }
-            if (player.velocity.X >= 8.8f && !player.HasBuff(ModContent.BuffType<VanillaValorV>()) || -player.velocity.X >= 8.8f && !player.HasBuff(ModContent.BuffType<VanillaValorV>()))
-            {
-                player.AddBuff(ModContent.BuffType<VanillaValorIV>(), 300);
-                player.ClearBuff(ModContent.BuffType<VanillaValorI>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorII>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorIII>());
-            }
-            if (player.velocity.X >= 11f || -player.velocity.X >= 11f)
-            {
-                player.AddBuff(ModContent.BuffType<VanillaValorV>(), 300);
-                player.ClearBuff(ModContent.BuffType<VanillaValorI>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorII>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorIII>());
-                player.ClearBuff(ModContent.BuffType<VanillaValorIV>());
-            }
+            
+            int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
+            int rank = Math.Min(damage, 400) / 80 - 1;
+            if (rank >= 0)
+                StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
         }
     }
 }
