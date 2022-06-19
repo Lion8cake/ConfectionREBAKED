@@ -6,9 +6,28 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using TheConfectionRebirth.Util;
 
 namespace TheConfectionRebirth
 {
+    public struct MeleeDamageTimerData
+    {
+        public uint endTime;
+        public int damage;
+
+        public MeleeDamageTimerData(int damage, uint duration)
+        {
+            endTime = Main.GameUpdateCount + duration;
+            this.damage = damage;
+        }
+        public static bool Comparer(MeleeDamageTimerData first, MeleeDamageTimerData second) {
+
+            //overflow checks
+            if (Main.GameUpdateCount > first.endTime && Main.GameUpdateCount < second.endTime) return true;
+            if (Main.GameUpdateCount > second.endTime && Main.GameUpdateCount < first.endTime) return false;
+            return first.endTime <= second.endTime;
+        }
+    }
     public class StackableBuffData
     {
         public static StackableBuffData SwirlySwarm;
@@ -84,7 +103,7 @@ namespace TheConfectionRebirth
         public void DeleteBuff(Player player) {
             player.DelBuff(FindBuff(player, out byte _));
         }
-        int FindBuff(Player player, out byte rank)
+        public int FindBuff(Player player, out byte rank)
         {
             for (int i = 0; i < Player.MaxBuffs; i++)
             {
@@ -116,6 +135,14 @@ namespace TheConfectionRebirth
 
         public float neapoliniteSummonTimer;
 
+        public BinaryHeap<MeleeDamageTimerData> damageTimer;
+        public int VanillaValorDamageDealt;
+
+        public override void OnEnterWorld(Player player)
+        {
+            damageTimer = new(MeleeDamageTimerData.Comparer);
+            VanillaValorDamageDealt = 0;
+        }
         public override void ResetEffects()
         {
             RollerCookiePet = false;
@@ -198,6 +225,42 @@ namespace TheConfectionRebirth
                     neapoliniteSummonTimer = 0;
                 }
             }
+            while (damageTimer.items.Count > 0 && damageTimer.items[0].endTime == Main.GameUpdateCount)
+            {
+                MeleeDamageTimerData top = damageTimer.Pop();
+                VanillaValorDamageDealt -= top.damage;
+            }
+            //Main.NewText(VanillaValorDamageDealt);
+        }
+
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (item.DamageType.CountsAsClass(DamageClass.Melee))
+                AddDamage(damage);
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (proj.DamageType.CountsAsClass(DamageClass.Melee))
+                AddDamage(damage);
+        }
+
+        public override void OnHitPvp(Item item, Player target, int damage, bool crit)
+        {
+            if (item.DamageType.CountsAsClass(DamageClass.Melee))
+                AddDamage(damage);
+        }
+
+        public override void OnHitPvpWithProj(Projectile proj, Player target, int damage, bool crit)
+        {
+            if (proj.DamageType.CountsAsClass(DamageClass.Melee))
+                AddDamage(damage);
+        }
+
+        void AddDamage(int damage)
+        {
+            this.VanillaValorDamageDealt += damage;
+            damageTimer.Add(new(damage, 300));
         }
 
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
