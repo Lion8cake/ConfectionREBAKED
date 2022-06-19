@@ -10,17 +10,24 @@ using TheConfectionRebirth.Util;
 
 namespace TheConfectionRebirth
 {
-    public struct MeleeDamageTimerData
+    public enum TimerDataType
+    {
+        MeleeDamage,
+        MagicManaRegeneration,
+    }
+    public struct TimerData
     {
         public uint endTime;
-        public int damage;
+        public int value;
+        public TimerDataType type;
 
-        public MeleeDamageTimerData(int damage, uint duration)
+        public TimerData(int value, uint duration, TimerDataType type)
         {
+            this.type = type;
             endTime = Main.GameUpdateCount + duration;
-            this.damage = damage;
+            this.value = value;
         }
-        public static bool Comparer(MeleeDamageTimerData first, MeleeDamageTimerData second) {
+        public static bool Comparer(TimerData first, TimerData second) {
 
             //overflow checks
             if (Main.GameUpdateCount > first.endTime && Main.GameUpdateCount < second.endTime) return true;
@@ -142,19 +149,22 @@ namespace TheConfectionRebirth
         public bool MeawzerPet;
         public bool DudlingPet;
         public bool FoxPet;
+        public bool NeapoliniteMagicSet;
         public bool NeapoliniteSummonerSet;
 
         public Projectile DimensionalWarp;
 
         public float neapoliniteSummonTimer;
 
-        public BinaryHeap<MeleeDamageTimerData> damageTimer;
+        public BinaryHeap<TimerData> Timer;
         public int VanillaValorDamageDealt;
+        public int ManaConsumed;
 
         public override void OnEnterWorld(Player player)
         {
-            damageTimer = new(MeleeDamageTimerData.Comparer);
+            Timer = new(TimerData.Comparer);
             VanillaValorDamageDealt = 0;
+            ManaConsumed = 0;
         }
         public override void ResetEffects()
         {
@@ -168,6 +178,7 @@ namespace TheConfectionRebirth
             MeawzerPet = false;
             DudlingPet = false;
             FoxPet = false;
+            NeapoliniteMagicSet = false;
             NeapoliniteSummonerSet = false;
         }
 
@@ -240,12 +251,29 @@ namespace TheConfectionRebirth
                     neapoliniteSummonTimer = 0;
                 }
             }
-            while (damageTimer.items.Count > 0 && damageTimer.items[0].endTime == Main.GameUpdateCount)
+            while (Timer.items.Count > 0 && Timer.items[0].endTime == Main.GameUpdateCount)
             {
-                MeleeDamageTimerData top = damageTimer.Pop();
-                VanillaValorDamageDealt -= top.damage;
+                TimerData top = Timer.Pop();
+                switch (top.type)
+                {
+                    case TimerDataType.MeleeDamage:
+                        VanillaValorDamageDealt -= top.value;
+                        break;
+                    case TimerDataType.MagicManaRegeneration:
+                        ManaConsumed -= top.value;
+                        break;
+                }
             }
             //Main.NewText(VanillaValorDamageDealt);
+        }
+
+        public override void OnConsumeMana(Item item, int manaConsumed)
+        {
+            if (item.CountsAsClass(DamageClass.Magic))
+            {
+                this.VanillaValorDamageDealt += manaConsumed;
+                Timer.Add(new(manaConsumed, 180, TimerDataType.MagicManaRegeneration));
+            }
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -275,7 +303,7 @@ namespace TheConfectionRebirth
         void AddDamage(int damage)
         {
             this.VanillaValorDamageDealt += damage;
-            damageTimer.Add(new(damage, 300));
+            Timer.Add(new(damage, 300, TimerDataType.MeleeDamage));
         }
 
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
