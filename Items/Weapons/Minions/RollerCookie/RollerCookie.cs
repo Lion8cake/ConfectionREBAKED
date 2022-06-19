@@ -181,10 +181,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             {
                 if (State == NORMAL && (!Projectile.CanHitWithOwnBody(target) || !Collision.CanHitLine(target.Center, 0, 0, Projectile.Center, 0, 0)))
                     State = RETREATING;
-                else if(!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+                else if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                     State = NORMAL;
                 rollOnGround = State != RETREATING && !Collision.CanHitLine(target.Center, 0, 0, target.Center + new Vector2(0, 480), 0, 0);
-                
+
             }
             if (State == RETREATING)
                 Projectile.tileCollide = false;
@@ -443,33 +443,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                                 newState = GROUND;
                         }
                     }
-                    if (newState == WallClimbState)
-                    {
-                        if (Projectile.velocity.Y < 0)
-                        {
-                            if (CheckSlope(SlopeType.SlopeUpRight, Projectile.TopRight + tileCollisionChange))
-                            {
-                                Projectile.velocity.X += Projectile.velocity.Y;
-                            }
-                            else if (CheckSlope(SlopeType.SlopeUpLeft, Projectile.TopLeft + tileCollisionChange))
-                            {
-                                Projectile.velocity.X += -Projectile.velocity.Y;
-                            }
-                        }
-                        else if (Projectile.velocity.Y > 0)
-                        {
-                            if (CheckSlope(SlopeType.SlopeDownLeft, Projectile.BottomLeft + tileCollisionChange))
-                            {
-                                Projectile.velocity.X += Projectile.velocity.Y;
-                                newState = WallClimbState;
-                            }
-                            else if (CheckSlope(SlopeType.SlopeDownRight, Projectile.BottomRight + tileCollisionChange))
-                            {
-                                Projectile.velocity.X += -Projectile.velocity.Y;
-                                newState = WallClimbState;
-                            }
-                        }
-                    }
                     break;
                 case CEIL:
                     {
@@ -487,9 +460,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                                 newState = LEFTWALL;
                             else if (xDiff < 0)
                                 newState = RIGHTWALL;
-                        }
-                        if (newState == WallClimbState)
-                        {
                         }
                     }
                     break;
