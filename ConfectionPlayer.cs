@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -8,6 +9,95 @@ using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 
 namespace TheConfectionRebirth
 {
+    public class StackableBuffData
+    {
+        public static StackableBuffData SwirlySwarm;
+        public static StackableBuffData ChocolateCharge;
+        public static StackableBuffData StrawberryStrike;
+        public static StackableBuffData VanillaValor;
+
+        public class StackableBuffData_Loader : ILoadable
+        {
+            public void Load(Mod mod)
+            {
+            }
+
+            public void Unload()
+            {
+                SwirlySwarm = null;
+                ChocolateCharge = null;
+                StrawberryStrike = null;
+                VanillaValor = null;
+            }
+        }
+
+        public static void PostSetupContent()
+        {
+            SwirlySwarm = new(
+                ModContent.BuffType<SwirlySwarmI>(),
+                ModContent.BuffType<SwirlySwarmII>(),
+                ModContent.BuffType<SwirlySwarmIII>(),
+                ModContent.BuffType<SwirlySwarmIV>(),
+                ModContent.BuffType<SwirlySwarmV>());
+            ChocolateCharge = new(
+                ModContent.BuffType<ChocolateChargeI>(),
+                ModContent.BuffType<ChocolateChargeII>(),
+                ModContent.BuffType<ChocolateChargeIII>(),
+                ModContent.BuffType<ChocolateChargeIV>(),
+                ModContent.BuffType<ChocolateChargeV>());
+            StrawberryStrike = new(
+                ModContent.BuffType<StrawberryStrikeI>(),
+                ModContent.BuffType<StrawberryStrikeII>(),
+                ModContent.BuffType<StrawberryStrikeIII>(),
+                ModContent.BuffType<StrawberryStrikeIV>(),
+                ModContent.BuffType<StrawberryStrikeV>());
+            VanillaValor = new(
+                ModContent.BuffType<VanillaValorI>(),
+                ModContent.BuffType<VanillaValorII>(),
+                ModContent.BuffType<VanillaValorIII>(),
+                ModContent.BuffType<VanillaValorIV>(),
+                ModContent.BuffType<VanillaValorV>());
+        }
+
+        int[] BuffIDs;
+        Dictionary<int, byte> IsBuff;
+        public StackableBuffData(params int[] buffs) {
+            BuffIDs = buffs;
+            IsBuff = new();
+            for (byte x = 0; x < buffs.Length; x++)
+            {
+                IsBuff.Add(buffs[x], (byte)(x + 1));
+            }
+        }
+
+        public void AscendBuff(Player player, int rank, int time) {
+            int pos = FindBuff(player, out byte buffRank);
+            if (rank >= buffRank)
+            {
+                if (pos != -1)
+                    player.DelBuff(pos);
+                player.AddBuff(BuffIDs[rank], time);
+            }
+
+        }
+
+        public void DeleteBuff(Player player) {
+            player.DelBuff(FindBuff(player, out byte _));
+        }
+        int FindBuff(Player player, out byte rank)
+        {
+            for (int i = 0; i < Player.MaxBuffs; i++)
+            {
+                if (player.buffTime[i] >= 1 && IsBuff.TryGetValue(player.buffType[i], out byte rankTemp))
+                {
+                    rank = rankTemp;
+                    return i;
+                }
+            }
+            rank = 0;
+            return -1;
+        }
+    }
     public class ConfectionPlayer : ModPlayer
     {
         public bool RollerCookiePet;
@@ -96,36 +186,9 @@ namespace TheConfectionRebirth
             if (NeapoliniteSummonerSet)
             {
                 neapoliniteSummonTimer++;
-                if (neapoliniteSummonTimer >= 8 * 60)
-                {
-                    Player.AddBuff(ModContent.BuffType<SwirlySwarmI>(), 300);
-                }
-                if (neapoliniteSummonTimer >= 16 * 60)
-                {
-                    Player.AddBuff(ModContent.BuffType<SwirlySwarmII>(), 300);
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmI>());
-                }
-                if (neapoliniteSummonTimer >= 24 * 60)
-                {
-                    Player.AddBuff(ModContent.BuffType<SwirlySwarmIII>(), 300);
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmI>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmII>());
-                }
-                if (neapoliniteSummonTimer >= 32 * 60)
-                {
-                    Player.AddBuff(ModContent.BuffType<SwirlySwarmIV>(), 300);
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmI>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmII>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmIII>());
-                }
-                if (neapoliniteSummonTimer >= 40 * 60)
-                {
-                    Player.AddBuff(ModContent.BuffType<SwirlySwarmV>(), 300);
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmI>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmII>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmIII>());
-                    Player.ClearBuff(ModContent.BuffType<SwirlySwarmIV>());
-                }
+                byte rank = (byte)(neapoliniteSummonTimer / (8 * 60) - 1);
+                if (rank != 255) //max byte
+                    StackableBuffData.SwirlySwarm.AscendBuff(Player, rank, 8 * 60);
                 if (neapoliniteSummonTimer >= 2400)
                 {
                     neapoliniteSummonTimer = 2400;
