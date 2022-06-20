@@ -30,7 +30,7 @@ Mods: {
 		SummonSpecial: {
 			SweetStaff:
 			'''
-			Press {$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} to summon more roller-cookies with every attack!
+			{$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} to summon more roller-cookies with every attack!
 			{1} extra-cookie knockback
 			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
 			'''
