@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
+using TheConfectionRebirth.NPCs.Meowzer.Gores;
 
 namespace TheConfectionRebirth.NPCs.Meowzer
 {
@@ -423,7 +424,14 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             else if (owner.ModNPC is Meowzer m)
                 NPC.position = m.NPC.Center + new Vector2(owner.spriteDirection == -1 ? 10f : -20f, -55f);
         }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) { Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("MeowzerTail").Type); }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) { Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), ModContent.GoreType<MeowzerTail>()); }
         public override bool CheckActive() => false;
     }
+
+    namespace Gores
+    {
+        public class MeowzerTail : ModGore { }
+    }
 }
+
+
