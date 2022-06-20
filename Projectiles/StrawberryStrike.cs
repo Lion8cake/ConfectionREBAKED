@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -22,23 +23,29 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 10000000;
+			Projectile.alpha = 255;
         }
 
 		public override void AI()
 		{
-			float maxDetectRadius = 400f;
-			float projSpeed = 5f;
-
-			Projectile.rotation = 0.45f;
+			const int unfadeTime = 30;
+			const float maxDetectRadius = 16 * 40;
+			const float projSpeed = 5f;
+			const float maxAmount = 0.1f;
 
 			NPC closestNPC = FindClosestNPC(maxDetectRadius);
-			if (closestNPC == null)
-				return;
+			if (closestNPC != null)
+			{
+				Vector2 disp = (closestNPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * projSpeed;
 
-			Projectile.velocity = (closestNPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * projSpeed;
+				Projectile.velocity = Projectile.velocity.RotatedBy(Utils.AngleLerp(0, disp.ToRotation() - Projectile.velocity.ToRotation(), maxAmount));
+			}
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + 0.45f;
+			Projectile.alpha = 255 - (255 * (int)Projectile.localAI[0] / unfadeTime);
+			Projectile.localAI[0] = Math.Min(Projectile.localAI[0] + 1, unfadeTime);
 
-			if (!Main.player[Projectile.owner].HasBuff(ModContent.BuffType<StrawberryStrikeI>()) && !Main.player[Projectile.owner].HasBuff(ModContent.BuffType<StrawberryStrikeII>()) && !Main.player[Projectile.owner].HasBuff(ModContent.BuffType<StrawberryStrikeIII>()) && !Main.player[Projectile.owner].HasBuff(ModContent.BuffType<StrawberryStrikeIV>()) && !Main.player[Projectile.owner].HasBuff(ModContent.BuffType<StrawberryStrikeV>()))
+			if (StackableBuffData.StrawberryStrike.FindBuff(Main.player[Projectile.owner], out byte _) == -1)
             {
 				Projectile.Kill();
             }
