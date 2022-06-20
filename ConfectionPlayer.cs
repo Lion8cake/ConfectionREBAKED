@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -235,15 +236,15 @@ namespace TheConfectionRebirth
                 }
             }
         }
-
+        const int oneStageNeapolioniteSummoner = 8 * 60;
         public override void PostUpdate()
         {
             if (NeapoliniteSummonerSet)
             {
                 neapoliniteSummonTimer++;
-                float progress = (neapoliniteSummonTimer / (8 * 60));
+                float progress = (neapoliniteSummonTimer / (oneStageNeapolioniteSummoner));
                 int rank = (int)progress;
-                int timer = rank == 5 ? 2 : (int)(8 * 60 * (1 - progress % 1));
+                int timer = rank == 5 ? 2 : (int)(oneStageNeapolioniteSummoner * (1 - progress % 1));
                 if (rank != 0) //max byte
                     StackableBuffData.SwirlySwarm.AscendBuff(Player, rank - 1, timer, rank == 5);
                 if (neapoliniteSummonTimer >= 2400)
@@ -315,7 +316,7 @@ namespace TheConfectionRebirth
 
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
-            neapoliniteSummonTimer = 0;
+            neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - oneStageNeapolioniteSummoner * 2, 0);
         }
     }
 }
