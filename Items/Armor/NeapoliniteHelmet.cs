@@ -43,8 +43,7 @@ namespace TheConfectionRebirth.Items.Armor
                 float speed = len / 2.2f;
                 rank = (int)(speed - 1);
             }
-            if (rank >= 0)
-                StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
+            StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
         }
     }
 }
