@@ -13,12 +13,24 @@ Mods: {
 		TownNPCMood: {
 			ConfectionBiomeSurface: The Confection
 		}
+
+		Summon: {
+			RequiresEnergy_end:
+				'''
+				requires {0} seconds to charge and recharge
+				'''
+			RequiresEnergy:
+				'''
+				Special Ability {$Mods.TheConfectionRebirth.Summon.RequiresEnergy_end}
+				'''
+		}
 		
 		SummonSpecial: {
 			SweetStaff:
 			'''
 			Press right click to summon more roller-cookies with every attack!
 			{1} extra-cookie knockback
+			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
 			'''
 		}
 
