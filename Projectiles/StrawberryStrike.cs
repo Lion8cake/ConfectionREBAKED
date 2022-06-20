@@ -24,9 +24,19 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.penetrate = 1;
             Projectile.timeLeft = 10000000;
 			Projectile.alpha = 255;
+			Projectile.tileCollide = false;
         }
+        public override bool? CanCutTiles()
+        {
+			return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+			lightColor = Color.White;
+			return true;
 
-		public override void AI()
+		}
+        public override void AI()
 		{
 			const int unfadeTime = 30;
 			const float maxDetectRadius = 16 * 40;
