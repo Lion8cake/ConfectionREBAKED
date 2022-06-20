@@ -47,7 +47,7 @@ Mods: {
 			SweetStaff: "Sweet Staff"
 		}
 
-		ItemDescription: {
+		ItemTooltip: {
 			SweetStaff: "Summons roller cookies to fight for you"
 		}
 
