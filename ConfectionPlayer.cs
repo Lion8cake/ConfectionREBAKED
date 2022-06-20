@@ -104,7 +104,7 @@ namespace TheConfectionRebirth
             int refreshTime = refresh ? 2 : time;
             if (rank == -1)
             {
-                if (lastRank == buffRank - 1)
+                if (lastRank != -1 && lastRank == buffRank - 1)
                     player.buffTime[pos] = time;
                 lastRank = rank;
                 return;
