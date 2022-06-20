@@ -92,10 +92,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             int speedCount = (int)(Projectile.velocity.Length() * 4);
             speedCount = Math.Min(Projectile.oldPos.Length, speedCount);
             Rectangle frame = texture.Frame(1, 6, 0, Projectile.frame);
+            float trailAlpha = Projectile.localAI[0] * 0.5f;
             for (int k = 0; k < speedCount; k += 2)
             {
                 Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Projectile.GetAlpha(lightColor) * ((speedCount - k) / (float)speedCount);
+                Color color = Projectile.GetAlpha(lightColor) * ((speedCount - k) / (float)speedCount) * trailAlpha;
                 Main.EntitySpriteDraw(texture, drawPos, frame, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
 
@@ -165,6 +166,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             const int maxDistTeleport = (16 * 150) * (16 * 150);
 
             const float normalGravity = 0.05f;
+
+            float trailTargetAlpha = 1;
 
 
             if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
@@ -327,10 +330,15 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 Vector2 dist = targetPos - Projectile.Center;
                 if (target == owner)
                 {
-                    if (dist.LengthSquared() > 300)
+                    float lenSqr = dist.LengthSquared();
+                    if (lenSqr > 300)
                     {
                         dist.Normalize();
                         Projectile.velocity += dist / 2;
+                    }
+                    if (lenSqr < 3200)
+                    {
+                        trailTargetAlpha = lenSqr / 3200;
                     }
                     else if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                         State = NORMAL;
@@ -404,6 +412,9 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 Projectile.Center = owner.Center;
                 Projectile.velocity = Vector2.Zero;
             }
+
+            //trail alpha
+            Projectile.localAI[0] = MathHelper.Lerp(Projectile.localAI[0], trailTargetAlpha, 0.05f);
         }
         const int GROUND = 0;
         const int LEFTWALL = 1;
