@@ -23,12 +23,14 @@ Mods: {
 				'''
 				Special Ability {$Mods.TheConfectionRebirth.Summon.RequiresEnergy_end}
 				'''
+			RightClickSpecial: "<right> special"
+			RightclickSpecialUncompressed: "Press <right>"
 		}
 		
 		SummonSpecial: {
 			SweetStaff:
 			'''
-			Press right click to summon more roller-cookies with every attack!
+			Press {$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} to summon more roller-cookies with every attack!
 			{1} extra-cookie knockback
 			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
 			'''
@@ -37,7 +39,7 @@ Mods: {
 		SummonSpecialCompressed: {
 			SweetStaff:
 			'''
-			{1} right click extra-cookie knockback
+			{1} {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} extra-cookie knockback
 			'''
 		}
 		
