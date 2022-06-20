@@ -101,19 +101,27 @@ namespace TheConfectionRebirth
 
         public void AscendBuff(Player player, int rank, int time, bool refresh = true) {
             int pos = FindBuff(player, out byte buffRank);
+            int refreshTime = refresh ? 2 : time;
+            if (rank == -1)
+            {
+                if (lastRank == buffRank - 1)
+                    player.buffTime[pos] = time;
+                lastRank = rank;
+                return;
+            }
             if (rank >= buffRank)
             {
                 if (pos == -1)
-                    player.AddBuff(BuffIDs[rank], time);
+                    player.AddBuff(BuffIDs[rank], refreshTime);
                 else
                 {
-                    player.buffTime[pos] = 2;
+                    player.buffTime[pos] = refreshTime;
                     player.buffType[pos] = BuffIDs[rank];
                 }
             }
             else if (rank == buffRank - 1)
             {
-                if (refresh)
+                if (refresh || player.buffTime[pos] == 1)
                     player.buffTime[pos] = 2;
             }
             else if(lastRank == buffRank - 1)
@@ -123,7 +131,10 @@ namespace TheConfectionRebirth
         }
 
         public void DeleteBuff(Player player) {
-            player.DelBuff(FindBuff(player, out byte _));
+            int buffPos = FindBuff(player, out byte _);
+            if (buffPos == -1)
+                return;
+            player.DelBuff(buffPos);
         }
         //1-indexed
         public int FindBuff(Player player, out byte rank)
@@ -244,9 +255,8 @@ namespace TheConfectionRebirth
                 neapoliniteSummonTimer++;
                 float progress = (neapoliniteSummonTimer / (oneStageNeapolioniteSummoner));
                 int rank = (int)progress;
-                int timer = rank == 5 ? 2 : (int)(oneStageNeapolioniteSummoner * (1 - progress % 1));
-                if (rank != 0) //max byte
-                    StackableBuffData.SwirlySwarm.AscendBuff(Player, rank - 1, timer, rank == 5);
+                int timer = (int)(oneStageNeapolioniteSummoner - neapoliniteSummonTimer % oneStageNeapolioniteSummoner);
+                StackableBuffData.SwirlySwarm.AscendBuff(Player, rank - 1, timer, rank == 5);
                 if (neapoliniteSummonTimer >= 2400)
                 {
                     neapoliniteSummonTimer = 2400;
@@ -314,9 +324,10 @@ namespace TheConfectionRebirth
             Timer.Add(new(damage, 300, TimerDataType.MeleeDamage));
         }
 
-        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
         {
-            neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - oneStageNeapolioniteSummoner * 2, 0);
+            StackableBuffData.SwirlySwarm.DeleteBuff(Player);
+            neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - (neapoliniteSummonTimer % oneStageNeapolioniteSummoner) - oneStageNeapolioniteSummoner * 2, 0);
         }
     }
 }
