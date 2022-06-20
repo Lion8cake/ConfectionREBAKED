@@ -46,8 +46,7 @@ namespace TheConfectionRebirth.Items.Armor
             
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
             int rank = Math.Min(damage, 400) / 80 - 1;
-            if (rank >= 0)
-                StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
+            StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
         }
     }
 }
