@@ -79,6 +79,7 @@ namespace TheConfectionRebirth
         public override void PostSetupContent()
         {
             SummonersShineThoughtBubble.PostSetupContent();
+            StackableBuffData.PostSetupContent();
         }
 
         // middle
