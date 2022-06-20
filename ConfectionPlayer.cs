@@ -14,6 +14,7 @@ namespace TheConfectionRebirth
     {
         MeleeDamage,
         MagicManaRegeneration,
+        StrawberryStrikeDelay,
     }
     public struct TimerData
     {
@@ -160,12 +161,14 @@ namespace TheConfectionRebirth
         public BinaryHeap<TimerData> Timer;
         public int VanillaValorDamageDealt;
         public int ManaConsumed;
+        public bool StrawberryStrikeOnCooldown;
 
         public override void OnEnterWorld(Player player)
         {
             Timer = new(TimerData.Comparer);
             VanillaValorDamageDealt = 0;
             ManaConsumed = 0;
+            StrawberryStrikeOnCooldown = false;
         }
         public override void ResetEffects()
         {
@@ -262,6 +265,9 @@ namespace TheConfectionRebirth
                         break;
                     case TimerDataType.MagicManaRegeneration:
                         ManaConsumed -= top.value;
+                        break;
+                    case TimerDataType.StrawberryStrikeDelay:
+                        StrawberryStrikeOnCooldown = false;
                         break;
                 }
             }
