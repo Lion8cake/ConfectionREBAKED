@@ -10,6 +10,7 @@ using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Tiles;
+using Terraria;
 
 namespace TheConfectionRebirth
 {
@@ -52,6 +53,17 @@ namespace TheConfectionRebirth
                 .AddReplacement(40, (ushort)ModContent.WallType<Walls.CreamWall>())
                 .AddReplacement(71, (ushort)ModContent.WallType<Walls.BlueIceWall>())
                 .AddReplacement(73, (ushort)ModContent.WallType<Walls.PinkFairyFlossWall>());
+        }
+
+        public override int GetAltBlock(int BaseBlock, int posX, int posY)
+        {
+            int grass = ModContent.TileType<CreamGrass>();
+            Tile tile = Main.tile[posX, posY];
+            if (tile.TileType == 59 && (Main.tile[posX - 1, posY].TileType == grass || Main.tile[posX + 1, posY].TileType == grass || Main.tile[posX, posY - 1].TileType == grass || Main.tile[posX, posY + 1].TileType == grass))
+            {
+                return ModContent.TileType<CookieBlock>();
+            }
+            return base.GetAltBlock(BaseBlock, posX, posY);
         }
 
         public override Dictionary<int, int> SpecialConversion => new()
