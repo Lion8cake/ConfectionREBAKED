@@ -36,8 +36,7 @@ namespace TheConfectionRebirth.Items.Armor
             int rank = playerFuncs.ManaConsumed / 50;
             if (rank > 5)
                 rank = 5;
-            if (rank > 0)
-                StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
+            StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
         }
     }
 }
