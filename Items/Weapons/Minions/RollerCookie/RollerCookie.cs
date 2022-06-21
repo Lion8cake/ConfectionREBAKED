@@ -646,7 +646,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
                 if (cdVec2.Y <= 0)
                 {
                     cdVec2.Y = 30;
-                    float mp = Projectile.SummonersShine_GetMinionPower(0);
+                    float mp = Projectile.SummonersShine_GetMinionPower(0) * Projectile.knockBack;
                     Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Main.rand.NextVector2CircularEdge(3, 8), ModContent.ProjectileType<MiniRollerCookieSummonersShine>(), Projectile.damage, mp, Projectile.owner);
                     projectile.localNPCImmunity[target.whoAmI] = 300;
                     ModSupport_SetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition, cdVec2);
