@@ -266,6 +266,8 @@ namespace TheConfectionRebirth
                     neapoliniteSummonTimer = 0;
                 }
             }
+            if(Timer == null)
+                Timer = new(TimerData.Comparer);
             while (Timer.items.Count > 0 && Timer.items[0].endTime == Main.GameUpdateCount)
             {
                 TimerData top = Timer.Pop();
