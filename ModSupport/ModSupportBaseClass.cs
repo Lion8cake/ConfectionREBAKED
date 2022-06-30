@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.ModSupport
 
         public abstract void OnHook(Mod Mod);
 
-        public ModSupport()
+        public ModSupportBaseClass()
         {
             Hook();
         }
