@@ -32,10 +32,6 @@ namespace TheConfectionRebirth.Tiles
 			return ModContent.TileType<Tree.CreamSnowSapling>();
 		}*/
 
-        public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-        {
-        }
-
         public override Asset<Texture2D> GetBranchTextures()
         {
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamSnowTree_Branches");
@@ -49,6 +45,10 @@ namespace TheConfectionRebirth.Tiles
         public override int DropWood()
         {
             return ModContent.ItemType<Items.Placeable.CreamWood>();
+        }
+
+        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+        {
         }
     }
 }

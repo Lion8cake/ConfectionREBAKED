@@ -70,25 +70,25 @@ namespace TheConfectionRebirth.Items.Placeable
             AddAndReplace<OrangeIce>(ItemID.PinkIceBlock);
         }
 
-        private void AddAndReplace<TConf>(int hall) where TConf : ModItem
+        private static void AddAndReplace<TConf>(int hall) where TConf : ModItem
         {
-            Recipe recipe = Mod.CreateRecipe(hall);
+            Recipe recipe = Recipe.Create(hall);
             recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
-            recipe = Mod.CreateRecipe(ContentInstance<TConf>.Instance.Type);
+            recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
             recipe.AddIngredient(hall);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
         }
 
-        private void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
+        private static void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
         {
-            Recipe recipe = Mod.CreateRecipe(ContentInstance<THall>.Instance.Type);
+            Recipe recipe = Recipe.Create(ContentInstance<THall>.Instance.Type);
             recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
-            recipe = Mod.CreateRecipe(ContentInstance<TConf>.Instance.Type);
+            recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
             recipe.AddIngredient(ContentInstance<THall>.Instance.Type);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
