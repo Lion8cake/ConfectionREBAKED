@@ -80,6 +80,7 @@ namespace TheConfectionRebirth
         {
             SummonersShineThoughtBubble.PostSetupContent();
             StackableBuffData.PostSetupContent();
+            ModSupport.ModSupportBaseClass.HookAll();
         }
 
         // middle
