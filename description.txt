@@ -6,52 +6,63 @@ The Confection Uses Alternate Libraries mod to be able to be compatible with oth
 This is still a version of confection which is in active delopment so if there is any bugs you have found please report in our discord.
 
 Even though the 1.3 version is discontinued we would still recomend you use the 1.3 version.
+As of this version of the confection the confection should now be completable.
 
 ===========================================
 Change log
 ===========================================
-======
-0.11.2
-======
--Fixed Souls of Delight not dropping
--Fixed Saccharite not spawning
--Fixed Cream vines not growing past 1 tile
--Changed Confection Biome Biome name to Confection Biome Surface
--Changed Confection Ice Cave Bestiary name to Confection Ice due to regular surface confection bestiary being unused
--Updated to lastest tmodloader version
-
-======
-0.11.1
-======
--Fixed Altlib support
-
-======
-0.11.0
-======
--Readded Prickster 
--Readded Dudley
--Fixed trees
--Added Pink Prickley cactus sprite
--Added Ocean Palm tree texture
--Added Ice screamer AI
--Added Ice screamer snow alt
+-Fixed Mounts
+-Nerfed C-cret mount
+-Nerfed Pixie stick
+-Buffed Rollercycle
+-Added Rollercycle Jumping sprite
+-Added Rollercycle Trail effect
+-Fixed confection biome not working in the outer thirds of the world
+-Fixed Confection soundtracks being to quite
+-Added Nighttime texture to Confection menu
+-Added Alternating backgrounds in each world (Broken)
+-Added 3 New backgrounds
+-Fixed Grandslammer not dropping
+-Fixed Wild Willy gores not letting the npc die correctly
+-Fixed cream droplets displaying their sprite sheet
+-Added Saccharite Breaking sound
+-Removed Saccharite's ability to spawn on the surface
+-Nerfed Saccharite Growing speed
+-Added Different mosses that will grow on creamstone (can currently only be gotten through worldgen)
+-Fixed Normal confection music playing overtop of the underground music
+-Fixed Kazoo sounds not working
+-Fixed Souls of delight and spite not glowing
+-Fixed Souls of delight and spite Not having a glowmask
+-Fixed Soul of spites decription that contained a random capitol letter
+-Fixed Soul of delight to match the 1.3 version
+-Fixed Ice-Screamers being able to teleport mini-bosses such as biome mimics
+-Fixed Sweethook
+-Fixed Neapolinite Cone Mail texture
+-Updated Creamstone's texture to fit more like stone
+-Fixed banana spilt crate being caught in hardmode
+-Fixed Crafting recipes for mechanical eye and skull
+-Reworked Neapolinite armour
+-Fixed Neapolinite armour not being craftable
+-Fixed Neapolinite armour not supplying buffs for each armour piece
+-Readded and reworked the Sweet staff and roller cookie summon
+-Added Summoner's shine compatability
 
 ===========================================
 Credit - Programmers
 ===========================================
 Lion8cake - Main dev 
-Cace - For the very tricky tile spreading code, the RoD alt and much cleaner biome code
-Ghasttear1 - For the menu UI
+Cace - For Altlib and 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
+Yreorel - For much of the reworks for different items as well as maaking the Icescreamer AI
+FoxXD_ - For Altlib, cream fox pet, old biome chest, old biome generation and cleaning up part of confection's bad code
+Ghasttear1 - For the 1.3 menu UI
 foxyboy55 - many bug fixes an a few texture changes
 CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
-Yreorel - For the updated AI for the Ice screamer NPC
-FoxXD_ - for cream fox pet and old biome chest and old biome generation, cleaning up part of confection's bad code
-SnickerBobble - Original concept creator of the Confection
 
 ===========================================
 Credit - Artists
 ===========================================
+SnickerBobble - Original concept creator of the Confection
 Delicios Satern - Music
 mddznyan - Creating textures for some items and the new logo
 Snacks - Several 1.4 textures including the furniture toilets, saccharite furniture sprites and Cosmic cookie cannon

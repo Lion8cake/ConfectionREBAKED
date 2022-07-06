@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -23,6 +25,20 @@ namespace TheConfectionRebirth.Items.Armor
             Item.value = 10000;
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 13;
+        }
+
+        /*public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+        }*/
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 24).AddTile(TileID.MythrilAnvil).Register();
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetCritChance(DamageClass.Generic) += 0.05f;
         }
     }
 }

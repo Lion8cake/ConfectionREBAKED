@@ -48,5 +48,16 @@ namespace TheConfectionRebirth.Items.Armor
             int rank = Math.Min(damage, 400) / 80 - 1;
             StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.07f;
+            player.GetAttackSpeed(DamageClass.Melee) += 0.051f;
+        }
     }
 }

@@ -45,5 +45,16 @@ namespace TheConfectionRebirth.Items.Armor
             }
             StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetCritChance(DamageClass.Ranged) += 0.04f;
+            player.GetDamage(DamageClass.Ranged) += 0.1f;
+        }
     }
 }

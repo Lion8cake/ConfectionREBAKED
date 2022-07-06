@@ -298,25 +298,25 @@ namespace TheConfectionRebirth
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (item.DamageType.CountsAsClass(DamageClass.Melee))
+            if (item.CountsAsClass(DamageClass.Melee))
                 AddDamage(damage);
         }
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (proj.DamageType.CountsAsClass(DamageClass.Melee))
+            if (proj.CountsAsClass(DamageClass.Melee))
                 AddDamage(damage);
         }
 
         public override void OnHitPvp(Item item, Player target, int damage, bool crit)
         {
-            if (item.DamageType.CountsAsClass(DamageClass.Melee))
-                AddDamage(damage);
+            if (item.CountsAsClass(DamageClass.Melee))
+            AddDamage(damage);
         }
 
         public override void OnHitPvpWithProj(Projectile proj, Player target, int damage, bool crit)
         {
-            if (proj.DamageType.CountsAsClass(DamageClass.Melee))
+            if (proj.CountsAsClass(DamageClass.Melee))
                 AddDamage(damage);
         }
 

@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Biomes
         }
     }
 
-    public class ConfectionTileCounter : ALBiomeTileCountModifier
+    /*public class ConfectionTileCounter : ALBiomeTileCountModifier
     {
         public override int GetTileCount(ReadOnlySpan<int> TileCounts)
         {
@@ -46,5 +46,5 @@ namespace TheConfectionRebirth.Biomes
         {
             ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount = TileCount;
         }
-    }
+    }*/
 }

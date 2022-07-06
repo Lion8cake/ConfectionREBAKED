@@ -38,5 +38,16 @@ namespace TheConfectionRebirth.Items.Armor
                 rank = 5;
             StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.06f;
+            player.statManaMax2 += 80;
+        }
     }
 }

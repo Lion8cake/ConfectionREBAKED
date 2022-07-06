@@ -49,6 +49,7 @@ namespace TheConfectionRebirth.Items.Placeable
             AddAndReplace<Saccharite>(ItemID.CrystalShard);
             AddAndReplace<Sprinkles>(ItemID.PixieDust);
             AddAndReplace<SoulofDelight>(ItemID.SoulofLight);
+			AddAndReplace<KeyofDelight>(ItemID.LightKey);
             AddAndReplace<CookieDough>(ItemID.UnicornHorn);
             AddAndReplace<NeapoliniteBar>(ItemID.HallowedBar);
             AddAndReplace<HallowedOre, NeapoliniteOre>();

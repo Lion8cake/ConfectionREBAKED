@@ -23,5 +23,16 @@ namespace TheConfectionRebirth.Items.Armor
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 8;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 18).AddTile(TileID.MythrilAnvil).Register();
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.moveSpeed += 0.07f;
+            player.GetDamage(DamageClass.Generic) += 0.05f;
+        }
     }
 }

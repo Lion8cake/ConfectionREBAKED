@@ -11,6 +11,7 @@ namespace TheConfectionRebirth.NPCs
 {
     public class NpcDrops : GlobalNPC
     {
+
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.type == NPCID.Gastropod)
@@ -20,18 +21,18 @@ namespace TheConfectionRebirth.NPCs
             if (npc.lifeMax >= 1)
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
+                npcLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
+                npcLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
             }
-            if (npc.lifeMax >= 1)
-            {
-                npcLoot.RemoveWhere(
-                    rule => rule is ItemDropWithConditionRule drop
-                        && drop.itemId == ItemID.SoulofNight
-                        && drop.condition is Conditions.SoulOfNight
-                );
+        }
 
-                //npcLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
-                //npcLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
-            }
+        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+        {
+            globalLoot.RemoveWhere(
+                rule => rule is ItemDropWithConditionRule drop
+                    && drop.itemId == ItemID.SoulofNight
+                    && drop.condition is Conditions.SoulOfNight
+            );
         }
 
         //Putting this here because the confection doesn't need another global npc file cloging up space 
