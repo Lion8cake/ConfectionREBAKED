@@ -16,46 +16,28 @@ namespace TheConfectionRebirth
         private static MethodInfo Limits = null;
 
         private static event ILContext.Manipulator ModifyLimits
-        {
-            add
-            {
-                HookEndpointManager.Modify(Limits, value);
-            }
-            remove
-            {
-                HookEndpointManager.Unmodify(Limits, value);
-            }
-        }
+		{
+			add => HookEndpointManager.Modify(Limits, value);
+			remove => HookEndpointManager.Unmodify(Limits, value);
+		}
 
-        private static MethodInfo Limits2 = null;
+		private static MethodInfo Limits2 = null;
 
         private static event ILContext.Manipulator ModifyLimits2
-        {
-            add
-            {
-                HookEndpointManager.Modify(Limits2, value);
-            }
-            remove
-            {
-                HookEndpointManager.Unmodify(Limits2, value);
-            }
-        }
+		{
+			add => HookEndpointManager.Modify(Limits2, value);
+			remove => HookEndpointManager.Unmodify(Limits2, value);
+		}
 
-        private static MethodInfo Limits3 = null;
+		private static MethodInfo Limits3 = null;
 
         private static event ILContext.Manipulator ModifyLimits3
-        {
-            add
-            {
-                HookEndpointManager.Modify(Limits3, value);
-            }
-            remove
-            {
-                HookEndpointManager.Unmodify(Limits3, value);
-            }
-        }
+		{
+			add => HookEndpointManager.Modify(Limits3, value);
+			remove => HookEndpointManager.Unmodify(Limits3, value);
+		}
 
-        public override void Load()
+		public override void Load()
         {
             if (ModLoader.TryGetMod("Wikithis", out Mod wikithis))
                 wikithis.Call("AddModURL", this, "terrariamods.fandom.com$Confection_Rebaked");
@@ -71,11 +53,14 @@ namespace TheConfectionRebirth
 
         public override void Unload()
         {
-            ModifyLimits -= TheConfectionRebirth_ModifyLimits;
+            if (Limits != null)
+                ModifyLimits -= TheConfectionRebirth_ModifyLimits;
             Limits = null;
-            ModifyLimits2 -= TheConfectionRebirth_ModifyLimits2;
+            if (Limits2 != null)
+                ModifyLimits2 -= TheConfectionRebirth_ModifyLimits2;
             Limits2 = null;
-            ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
+            if (Limits3 != null)
+                ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
             Limits3 = null;
         }
 
