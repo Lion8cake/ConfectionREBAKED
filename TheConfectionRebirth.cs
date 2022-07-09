@@ -57,6 +57,9 @@ namespace TheConfectionRebirth
 
         public override void Load()
         {
+            if (ModLoader.TryGetMod("Wikithis", out Mod wikithis))
+                wikithis.Call("AddModURL", this, "terrariamods.fandom.com$Confection_Rebaked");
+
             var UIMods = typeof(Main).Assembly.GetType("Terraria.ModLoader." + nameof(SurfaceBackgroundStylesLoader));
             Limits = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawMiddleTexture));
             ModifyLimits += TheConfectionRebirth_ModifyLimits;
