@@ -27,8 +27,18 @@ namespace TheConfectionRebirth.ModSupport
         public static void HookAll()
         {
             new CalamityModSupport();
+            //new AvalonTestingSupport();
         }
     }
+
+    /*internal class AvalonTestingSupport : ModSupportBaseClass
+    {
+        public override string ModName => "AvalonTesting";
+        public override void OnHook(Mod Mod)
+        {
+        }
+    }*/
+
     internal class CalamityModSupport : ModSupportBaseClass
     {
         public override string ModName => "CalamityMod";

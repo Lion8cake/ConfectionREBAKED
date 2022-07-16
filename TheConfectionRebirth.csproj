@@ -14,5 +14,8 @@
     <Reference Include="AltLibrary">
       <HintPath>..\..\ModReader\AltLibrary\AltLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="AvalonTesting">
+      <HintPath>..\..\ModReader\AvalonTesting\AvalonTesting.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

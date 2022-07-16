@@ -338,3 +338,7 @@ C:\Users\palma\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRe
 C:\Users\palma\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\palma\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.dll
 C:\Users\palma\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.xml
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.dll
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.xml
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\AvalonTesting.dll
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheConfectionRebirth\bin\Debug\net6.0\AvalonTesting.pdb
