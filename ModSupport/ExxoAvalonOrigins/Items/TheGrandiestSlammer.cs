@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Items.ExxoAvalonOrigins;
+namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Items;
 
 class TheGrandiestSlammer : ModItem
 {

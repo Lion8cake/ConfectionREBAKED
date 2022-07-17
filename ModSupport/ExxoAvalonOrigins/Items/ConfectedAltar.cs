@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria;
 
 
-namespace TheConfectionRebirth.Items.ExxoAvalonOrigins;
+namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Items;
 
 class ConfectedAltar : ModItem
 {
@@ -26,7 +26,7 @@ class ConfectedAltar : ModItem
         Item.useTurn = true;
         Item.autoReuse = true;
         Item.consumable = true;
-        Item.createTile = ModContent.TileType<Tiles.ExxoAvalonOrigins.ConfectedAltar>();
+        Item.createTile = ModContent.TileType<ModSupport.ExxoAvalonOrigins.Tiles.ConfectedAltar>();
         Item.rare = ItemRarityID.Pink;
         Item.width = 30;
         Item.useTime = 20;

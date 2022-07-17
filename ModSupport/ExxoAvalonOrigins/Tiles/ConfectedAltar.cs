@@ -11,7 +11,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace TheConfectionRebirth.Tiles.ExxoAvalonOrigins;
+namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Tiles;
 
 public class ConfectedAltar : ModTile
 {
