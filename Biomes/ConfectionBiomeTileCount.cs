@@ -22,7 +22,16 @@ namespace TheConfectionRebirth.Biomes
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
 
-            desertOverlaytileCount = tileCounts[ModContent.TileType<Creamsand>()]
+            /*desertOverlaytileCount = tileCounts[ModContent.TileType<Creamsand>()]
+                + tileCounts[ModContent.TileType<HardenedCreamsand>()]
+                + tileCounts[ModContent.TileType<Creamsandstone>()];*/
+
+            confectionBlockCount = tileCounts[ModContent.TileType<CookieBlock>()]
+                + tileCounts[ModContent.TileType<Creamstone>()]
+                + tileCounts[ModContent.TileType<CreamGrass>()]
+                + tileCounts[ModContent.TileType<CreamBlock>()]
+                + tileCounts[ModContent.TileType<BlueIce>()]
+                + tileCounts[ModContent.TileType<Creamsand>()]
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
         }
