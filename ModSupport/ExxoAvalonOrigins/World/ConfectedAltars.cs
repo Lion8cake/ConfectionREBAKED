@@ -22,10 +22,10 @@ class HallowedAltars
             int k = Main.rand.Next(100, Main.maxTilesX - 100);
             int l = Main.rand.Next((int)Main.rockLayer, Main.maxTilesY - 150);
             if (Main.tile[k, l].HasTile && (Main.tile[k - 1, l].HasTile && !Main.tile[k - 1, l].IsHalfBlock && Main.tile[k - 1, l].Slope == SlopeType.Solid) &&
-                (Main.tile[k + 1, l].HasTile && !Main.tile[k + 1, l].IsHalfBlock && Main.tile[k + 1, l].Slope == SlopeType.Solid) && 
+                (Main.tile[k + 1, l].HasTile && !Main.tile[k + 1, l].IsHalfBlock && Main.tile[k + 1, l].Slope == SlopeType.Solid) &&
                 Main.tile[k, l - 1].TileType != TileID.Containers && Main.tile[k, l - 1].TileType != TileID.Containers2 &&
                 (Main.tile[k, l].TileType == ModContent.TileType<Creamstone>() || Main.tile[k, l].TileType == ModContent.TileType<Creamsand>() ||
-                Main.tile[k, l].TileType == ModContent.TileType<HardenedCreamsand>() || Main.tile[k, l].TileType == ModContent.TileType<Creamsandstone>() ||
+                Main.tile[k, l].TileType == ModContent.TileType<Creamsandstone>() || Main.tile[k, l].TileType == ModContent.TileType<HardenedCreamsand>() ||
                 Main.tile[k, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l].TileType == ModContent.TileType<BlueIce>()) &&
                 l < Main.maxTilesY - 200 && Main.rand.NextBool(2))
             {

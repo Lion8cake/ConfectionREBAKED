@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.ModSupport
         {
             void ILoadable.Load(Mod mod)
             {
-                ThoughtBubble = Request<Texture2D>("TheConfectionRebirth/ModSupport/BubbleData", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                ThoughtBubble = Request<Texture2D>("TheConfectionRebirth/ModSupport/SummonerShine/BubbleData", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             }
 
             void ILoadable.Unload()

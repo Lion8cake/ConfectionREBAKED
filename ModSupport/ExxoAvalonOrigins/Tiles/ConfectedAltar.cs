@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
@@ -42,17 +43,18 @@ public class ConfectedAltar : ModTile
         Main.tileHammer[Type] = true;
         Main.tileLighted[Type] = true;
         Main.tileFrameImportant[Type] = true;
-        DustType = DustID.HallowedWeapons;
+        DustType = 164;
         TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
         TileID.Sets.InteractibleByNPCs[Type] = true;
+        HitSound = new SoundStyle("AvalonTesting/Sounds/Item/HallowedAltarHit");
     }
 
     public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
     {
         float brightness = Main.rand.Next(-5, 6) * 0.0025f;
-        r = 1f + brightness;
-        g = 0.9f + (brightness * 2f);
-        b = 0f;
+        r = 2.4f + brightness;
+        g = 0.85f + (brightness * 2f);
+        b = 1.58f;
     }
 
     public override bool CanExplode(int i, int j)
@@ -83,7 +85,7 @@ public class ConfectedAltar : ModTile
     {
         if (Main.rand.Next(60) == 1)
         {
-            int num162 = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.HallowedWeapons, 0f, 0f, 0, default,
+            int num162 = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 164, 0f, 0f, 0, default,
                 1.5f);
             Main.dust[num162].noGravity = true;
             Main.dust[num162].velocity *= 1f;
