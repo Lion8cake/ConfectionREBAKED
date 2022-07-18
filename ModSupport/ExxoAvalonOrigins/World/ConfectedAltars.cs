@@ -11,7 +11,7 @@ using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.World;
 
-class HallowedAltars
+class ConfectedAltars
 {
     public static void Generate()
     {
