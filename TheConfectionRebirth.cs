@@ -112,7 +112,7 @@ namespace TheConfectionRebirth
             c.Emit(OpCodes.Ldloc, 1);
             c.EmitDelegate<Action<ModSurfaceBackgroundStyle>>((style) =>
             {
-                if (style == null)
+                if (style == null || style is not IBackground)
                     return;
 
                 int slot = style.Slot;
