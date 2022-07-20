@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
@@ -6,7 +7,10 @@ using ReLogic.Content;
 using System;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth
@@ -51,7 +55,7 @@ namespace TheConfectionRebirth
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
         }
 
-        public override void Unload()
+		public override void Unload()
         {
             if (Limits != null)
                 ModifyLimits -= TheConfectionRebirth_ModifyLimits;
@@ -104,10 +108,40 @@ namespace TheConfectionRebirth
             });
         }
 
-        // far
+        // far and super far
         private void TheConfectionRebirth_ModifyLimits2(ILContext il)
         {
             ILCursor c = new(il);
+
+            if (!c.TryGotoNext(i => i.MatchLdloc(3),
+                i => i.MatchLdcR4(0)))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Action<ModSurfaceBackgroundStyle>>((style) =>
+            {
+                if (style == null)
+                    return;
+
+                int slot = style.Slot;
+                float alpha = Main.bgAlphaFarBackLayer[slot];
+				if (alpha > 0f)
+				{
+					for (int i = 0; i < (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance); i++)
+					{
+                        Texture2D texture = ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/4lb/Background_219").Value;
+
+                        Main.spriteBatch.Draw(texture,
+							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) * 0.8f % Main.screenWidth
+								+ (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) * i,
+								(int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) - 240),
+							new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
+							(Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0f, default(Vector2),
+							(float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0, 0f);
+					}
+				}
+			});
+
             if (!c.TryGotoNext(i => i.MatchCallvirt(typeof(Asset<Texture2D>).GetMethod("get_Value"))))
                 return;
 
