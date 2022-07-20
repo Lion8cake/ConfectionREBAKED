@@ -84,6 +84,9 @@ namespace TheConfectionRebirth
             {
                 if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseMiddleTexture())
                 {
+                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
                         return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceMid").Value;
@@ -114,6 +117,9 @@ namespace TheConfectionRebirth
             {
                 if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseFarTexture())
                 {
+                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
                         return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar").Value;
@@ -139,7 +145,7 @@ namespace TheConfectionRebirth
                 return;
 
             c.Index++;
-            c.Emit(OpCodes.Ldloc, 4);
+            c.Emit(OpCodes.Ldloc, 3);
             c.Emit(OpCodes.Ldloc, 1);
             c.Emit(OpCodes.Ldloc, 2);
             c.Emit(OpCodes.Ldsfld, typeof(Main).GetField("bgScale", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static));
@@ -153,6 +159,9 @@ namespace TheConfectionRebirth
                 double bgParallax2 = bgParallax;
                 if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseCloseTexture(ref scale2, ref bgParallax2, ref a2, ref b2))
                 {
+                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+
                     if (ConfectionWorld.ConfectionSurfaceBG == 0)
                     {
                         return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose").Value;

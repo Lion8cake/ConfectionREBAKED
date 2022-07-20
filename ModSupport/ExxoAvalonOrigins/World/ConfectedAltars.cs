@@ -1,5 +1,4 @@
 using System;
-using AvalonTesting.Tiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AvalonTesting.Systems;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -10,6 +9,11 @@ namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Items;
 
 class WorldgenHelper : ModItem
 {
+    public override bool IsLoadingEnabled(Mod mod)
+    {
+        return ModLoader.TryGetMod("AvalonTesting", out _);
+    }
+
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("WorldGen Helper");

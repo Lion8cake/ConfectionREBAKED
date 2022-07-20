@@ -14,6 +14,11 @@ namespace TheConfectionRebirth.ModSupport.ExxoAvalonOrigins;
 
 public class AvalonWorld : ModSystem
 {
+    public override bool IsLoadingEnabled(Mod mod)
+    {
+        return ModLoader.TryGetMod("AvalonTesting", out _);
+    }
+
     /*public static void GenerateHallowedOre()
     {
         Main.rand ??= new UnifiedRandom((int)DateTime.Now.Ticks);

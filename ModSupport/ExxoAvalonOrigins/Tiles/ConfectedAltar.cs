@@ -1,6 +1,6 @@
-﻿using AvalonTesting;
-using AvalonTesting.Systems;
-using AvalonTesting.Tiles.Ores;
+﻿//using AvalonTesting;
+//using AvalonTesting.Systems;
+//using AvalonTesting.Tiles.Ores;
 using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
@@ -62,7 +62,7 @@ public class ConfectedAltar : ModTile
         return false;
     }
 
-    public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+    /*public override bool CanKillTile(int i, int j, ref bool blockDamaged)
     {
         if (!ModContent.GetInstance<AvalonTestingWorld>().SuperHardmode && !Main.hardMode)
         {
@@ -91,12 +91,6 @@ public class ConfectedAltar : ModTile
             Main.dust[num162].velocity *= 1f;
         }
     }
-
-    /*public static void SmashHallowAltar(int i, int j)
-    {
-        ModLoader.TryGetMod("AvalonTesting", out Mod mod);
-        mod.GetType().Assembly.GetType("AvalonTesting.Tiles.HallowedAltar").GetMethod("SmashHallowAltar", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { i, j });
-    }*/
 
     public static void SmashConfectionAltar(int i, int j)
     {
@@ -228,5 +222,5 @@ public class ConfectedAltar : ModTile
         }
 
         ModContent.GetInstance<ExxoWorldGen>().HallowedAltarCount++;
-    }
+    }*/
 }

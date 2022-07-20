@@ -6,4 +6,3 @@ includeSource = true
 includePDB = true
 modReferences = AltLibrary
 sortAfter = AltLibrary
-weakReferences = AvalonTesting
