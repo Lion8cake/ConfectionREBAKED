@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.ModSupport;
 
@@ -17,6 +18,8 @@ namespace TheConfectionRebirth
 {
     public class TheConfectionRebirth : Mod
     {
+        internal const int bgVarAmount = 3;
+
         private static MethodInfo Limits = null;
 
         private static event ILContext.Manipulator ModifyLimits
@@ -83,26 +86,15 @@ namespace TheConfectionRebirth
                 return;
 
             c.Index++;
-            c.Emit(OpCodes.Ldloc, 4);
-            c.EmitDelegate<Func<Texture2D, int, Texture2D>>((value, textureSlot) =>
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<Texture2D, ModSurfaceBackgroundStyle, Texture2D>>((value, style) =>
             {
-                if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseMiddleTexture())
+                if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
 
-                    if (ConfectionWorld.ConfectionSurfaceBG == 0)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceMid").Value;
-                    }
-                    else if (ConfectionWorld.ConfectionSurfaceBG == 1)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Mid").Value;
-                    }
-                    else if (ConfectionWorld.ConfectionSurfaceBG == 2)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Mid").Value;
-                    }
+                    return (style as IBackground).GetMidTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
                 }
                 return value;
             });
@@ -129,7 +121,7 @@ namespace TheConfectionRebirth
 				{
 					for (int i = 0; i < (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance); i++)
 					{
-                        Texture2D texture = ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/4lb/Background_219").Value;
+                        Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
 
                         Main.spriteBatch.Draw(texture,
 							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) * 0.8f % Main.screenWidth
@@ -146,26 +138,15 @@ namespace TheConfectionRebirth
                 return;
 
             c.Index++;
-            c.Emit(OpCodes.Ldloc, 4);
-            c.EmitDelegate<Func<Texture2D, int, Texture2D>>((value, textureSlot) =>
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<Texture2D, ModSurfaceBackgroundStyle, Texture2D>>((value, style) =>
             {
-                if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseFarTexture())
+                if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
 
-                    if (ConfectionWorld.ConfectionSurfaceBG == 0)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar").Value;
-                    }
-                    if (ConfectionWorld.ConfectionSurfaceBG == 1)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far").Value;
-                    }
-                    if (ConfectionWorld.ConfectionSurfaceBG == 2)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far").Value;
-                    }
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
                 }
                 return value;
             });
@@ -179,35 +160,15 @@ namespace TheConfectionRebirth
                 return;
 
             c.Index++;
-            c.Emit(OpCodes.Ldloc, 3);
-            c.Emit(OpCodes.Ldloc, 1);
-            c.Emit(OpCodes.Ldloc, 2);
-            c.Emit(OpCodes.Ldsfld, typeof(Main).GetField("bgScale", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static));
-            c.Emit(OpCodes.Ldsfld, typeof(Main).GetField(nameof(Main.instance)));
-            c.Emit(OpCodes.Ldfld, typeof(Main).GetField("bgParallax", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance));
-            c.EmitDelegate<Func<Texture2D, int, float, float, float, double, Texture2D>>((value, textureSlot, a, b, scale, bgParallax) =>
+            c.Emit(OpCodes.Ldloc, 0);
+            c.EmitDelegate<Func<Texture2D, ModSurfaceBackgroundStyle, Texture2D>>((value, style) =>
             {
-                float a2 = a;
-                float b2 = b;
-                float scale2 = scale;
-                double bgParallax2 = bgParallax;
-                if (textureSlot == ModContent.Find<ModSurfaceBackgroundStyle>("TheConfectionRebirth/ConfectionSurfaceBackgroundStyle").ChooseCloseTexture(ref scale2, ref bgParallax2, ref a2, ref b2))
+                if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(3);
+                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
 
-                    if (ConfectionWorld.ConfectionSurfaceBG == 0)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose").Value;
-                    }
-                    if (ConfectionWorld.ConfectionSurfaceBG == 1)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Close").Value;
-                    }
-                    if (ConfectionWorld.ConfectionSurfaceBG == 2)
-                    {
-                        return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Close").Value;
-                    }
+                    return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
                 }
                 return value;
             });

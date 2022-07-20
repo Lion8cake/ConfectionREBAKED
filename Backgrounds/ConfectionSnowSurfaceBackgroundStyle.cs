@@ -1,8 +1,10 @@
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Backgrounds
 {
-    public class ConfectionSnowSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
+    public class ConfectionSnowSurfaceBackgroundStyle : ModSurfaceBackgroundStyle, IBackground
     {
         // Use this to keep far Backgrounds like the mountains.
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
@@ -42,5 +44,25 @@ namespace TheConfectionRebirth.Backgrounds
         {
             return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceClose");
         }
-    }
+
+		public Asset<Texture2D> GetFarTexture(int i)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Asset<Texture2D> GetCloseTexture(int i)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Asset<Texture2D> GetMidTexture(int i)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Asset<Texture2D> GetUltraFarTexture(int i)
+		{
+			throw new System.NotImplementedException();
+		}
+	}
 }

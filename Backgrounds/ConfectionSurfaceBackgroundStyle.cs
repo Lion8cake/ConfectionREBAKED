@@ -1,9 +1,11 @@
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 
 namespace TheConfectionRebirth.Backgrounds
 {
-    public class ConfectionSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
+    public class ConfectionSurfaceBackgroundStyle : ModSurfaceBackgroundStyle, IBackground
     {
         internal const int backgroundVariatonsTotal = 3;
 
@@ -43,6 +45,26 @@ namespace TheConfectionRebirth.Backgrounds
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
             return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurface3Close");
+        }
+
+        public Asset<Texture2D> GetFarTexture(int i)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Asset<Texture2D> GetCloseTexture(int i)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Asset<Texture2D> GetMidTexture(int i)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Asset<Texture2D> GetUltraFarTexture(int i)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
