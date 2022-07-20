@@ -91,10 +91,10 @@ namespace TheConfectionRebirth
             {
                 if (style is IBackground)
                 {
-                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
+                    if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
+						ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
 
-                    return (style as IBackground).GetMidTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
+                    return (style as IBackground).GetMidTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value;
                 }
                 return value;
             });
@@ -120,8 +120,11 @@ namespace TheConfectionRebirth
 				if (alpha > 0f)
 				{
 					for (int i = 0; i < (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance); i++)
-					{
-                        Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
+                    {
+                        if (ConfectionWorld.ConfectionSurfaceBG[3] == -1)
+                            ConfectionWorld.ConfectionSurfaceBG[3] = Main.rand.Next(bgVarAmount);
+
+                        Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG[3]).Value;
 
                         Main.spriteBatch.Draw(texture,
 							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) * 0.8f % Main.screenWidth
@@ -143,10 +146,10 @@ namespace TheConfectionRebirth
             {
                 if (style is IBackground)
                 {
-                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
+                    if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
+						ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
 
-                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value;
                 }
                 return value;
             });
@@ -165,10 +168,10 @@ namespace TheConfectionRebirth
             {
                 if (style is IBackground)
                 {
-                    if (ConfectionWorld.ConfectionSurfaceBG == -1)
-                        ConfectionWorld.ConfectionSurfaceBG = Main.rand.Next(bgVarAmount);
+                    if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
+						ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
 
-                    return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG).Value;
+                    return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value;
                 }
                 return value;
             });

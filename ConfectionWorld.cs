@@ -7,42 +7,34 @@ namespace TheConfectionRebirth
 {
     public class ConfectionWorld : ModSystem
     {
-        internal static int ConfectionSurfaceBG = -1;
-        internal static bool ConfectionSurfaceBGInit = false;
-
-        public override void OnWorldLoad()
-        {
-            if (!ConfectionSurfaceBGInit)
-            {
-                ConfectionSurfaceBG = Main.rand.Next(Backgrounds.ConfectionSurfaceBackgroundStyle.backgroundVariatonsTotal);
-                ConfectionSurfaceBGInit = true;
-            }
-        }
+        internal static int[] ConfectionSurfaceBG = new int[4] { -1, -1, -1, -1};
 
         public override void SaveWorldData(TagCompound tag)
         {
             tag[nameof(ConfectionSurfaceBG)] = ConfectionSurfaceBG;
-            tag[nameof(ConfectionSurfaceBGInit)] = ConfectionSurfaceBGInit;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             if (tag.ContainsKey(nameof(ConfectionSurfaceBG)))
-                ConfectionSurfaceBG = tag.GetInt(nameof(ConfectionSurfaceBG));
-            if (tag.ContainsKey(nameof(ConfectionSurfaceBGInit)))
-                ConfectionSurfaceBGInit = tag.GetBool(nameof(ConfectionSurfaceBGInit));
+                ConfectionSurfaceBG = tag.GetIntArray(nameof(ConfectionSurfaceBG));
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(ConfectionSurfaceBG);
-            writer.Write(ConfectionSurfaceBGInit);
+			writer.Write(ConfectionSurfaceBG[0]);
+            writer.Write(ConfectionSurfaceBG[1]);
+            writer.Write(ConfectionSurfaceBG[2]);
+            writer.Write(ConfectionSurfaceBG[3]);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
-            ConfectionSurfaceBG = reader.ReadInt32();
-            ConfectionSurfaceBGInit = reader.ReadBoolean();
+            ConfectionSurfaceBG = new int[4];
+			ConfectionSurfaceBG[0] = reader.ReadInt32();
+            ConfectionSurfaceBG[1] = reader.ReadInt32();
+            ConfectionSurfaceBG[2] = reader.ReadInt32();
+            ConfectionSurfaceBG[3] = reader.ReadInt32();
         }
     }
 }
