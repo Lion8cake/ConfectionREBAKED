@@ -98,6 +98,44 @@ namespace TheConfectionRebirth
                 }
                 return value;
             });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundWidth)),
+                i => i.MatchLdloc(4),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value.Width;
+                }
+                return v;
+            });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundHeight)),
+                i => i.MatchLdloc(4),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value.Height;
+                }
+                return v;
+            });
         }
 
         // far and super far
@@ -153,6 +191,44 @@ namespace TheConfectionRebirth
                 }
                 return value;
             });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundWidth)),
+                i => i.MatchLdloc(4),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value.Width;
+                }
+                return v;
+            });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundHeight)),
+                i => i.MatchLdloc(4),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 1);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value.Height;
+                }
+                return v;
+            });
         }
 
         // close
@@ -174,6 +250,44 @@ namespace TheConfectionRebirth
                     return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value;
                 }
                 return value;
+            });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundWidth)),
+                i => i.MatchLdloc(3),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 0);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value.Width;
+                }
+                return v;
+            });
+
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdsfld<Main>(nameof(Main.backgroundHeight)),
+                i => i.MatchLdloc(3),
+                i => i.MatchLdelemI4()))
+                return;
+
+            c.Emit(OpCodes.Ldloc, 0);
+            c.EmitDelegate<Func<int, ModSurfaceBackgroundStyle, int>>((v, style) =>
+            {
+                if (style is IBackground)
+                {
+                    if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
+                        ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
+
+                    return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value.Height;
+                }
+                return v;
             });
         }
     }
