@@ -49,22 +49,38 @@ namespace TheConfectionRebirth.Backgrounds
 
         public Asset<Texture2D> GetFarTexture(int i)
         {
-            throw new System.NotImplementedException();
+            if (i == 0)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far");
+            else if (i == 1)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
         }
 
         public Asset<Texture2D> GetCloseTexture(int i)
         {
-            throw new System.NotImplementedException();
+            if (i == 0)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Close");
+            else if (i == 1)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Close");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Close");
         }
 
         public Asset<Texture2D> GetMidTexture(int i)
         {
-            throw new System.NotImplementedException();
+            if (i == 0)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Mid");
+            else if (i == 1)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Mid");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Mid");
         }
 
         public Asset<Texture2D> GetUltraFarTexture(int i)
         {
-            throw new System.NotImplementedException();
+            if (i == 0)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far");
+            else if (i == 1)
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
         }
     }
 }

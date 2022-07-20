@@ -47,22 +47,22 @@ namespace TheConfectionRebirth.Backgrounds
 
         public Asset<Texture2D> GetFarTexture(int i)
         {
-            throw new System.NotImplementedException();
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceFar");
         }
 
         public Asset<Texture2D> GetCloseTexture(int i)
         {
-            throw new System.NotImplementedException();
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceClse");
         }
 
         public Asset<Texture2D> GetMidTexture(int i)
         {
-            throw new System.NotImplementedException();
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceMid0");
         }
 
         public Asset<Texture2D> GetUltraFarTexture(int i)
         {
-            throw new System.NotImplementedException();
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceFar");
         }
     }
 }
