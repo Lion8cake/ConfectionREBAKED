@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+/*using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -34,4 +34,4 @@ class ConfectedAltar : ModItem
         Item.useAnimation = 20;
         Item.height = 30;
     }
-}
+}*/

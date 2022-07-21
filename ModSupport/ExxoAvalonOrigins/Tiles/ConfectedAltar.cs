@@ -1,4 +1,4 @@
-﻿//using AvalonTesting;
+﻿/*//using AvalonTesting;
 //using AvalonTesting.Systems;
 //using AvalonTesting.Tiles.Ores;
 using Microsoft.Xna.Framework;
@@ -28,7 +28,7 @@ public class ConfectedAltar : ModTile
         }
     }*/
 
-    public override bool IsLoadingEnabled(Mod mod)
+    /*public override bool IsLoadingEnabled(Mod mod)
     {
         return ModLoader.TryGetMod("AvalonTesting", out avalon);
     }
@@ -223,4 +223,4 @@ public class ConfectedAltar : ModTile
 
         ModContent.GetInstance<ExxoWorldGen>().HallowedAltarCount++;
     }*/
-}
+//}

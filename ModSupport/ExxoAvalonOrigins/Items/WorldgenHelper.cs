@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -36,4 +36,4 @@ class WorldgenHelper : ModItem
         World.ConfectedAltars.Generate();
         return true;
     }
-}
+}*/

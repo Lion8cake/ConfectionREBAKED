@@ -1,4 +1,4 @@
-using Terraria;
+/*using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Tiles;
@@ -29,4 +29,4 @@ public class AvalonGlobalTile : GlobalTile
 
         return base.Slope(i, j, type);
     }
-}
+}*/
