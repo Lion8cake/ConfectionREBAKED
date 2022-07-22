@@ -6,10 +6,10 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Projectiles
 {
-	public class ExampleSpearProjectile : ModProjectile
+	public class CookiePikelet : ModProjectile
 	{
-		protected virtual float HoldoutRangeMin => 24f;
-		protected virtual float HoldoutRangeMax => 96f;
+		protected virtual float HoldoutRangeMin => 98f;
+		protected virtual float HoldoutRangeMax => 180f;
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Spear");

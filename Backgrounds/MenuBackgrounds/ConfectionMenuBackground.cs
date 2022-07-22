@@ -52,7 +52,7 @@ namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 
         public Asset<Texture2D> GetCloseTexture(int i)
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenuClose");
         }
 
         public Asset<Texture2D> GetMidTexture(int i)
@@ -62,7 +62,7 @@ namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 
         public Asset<Texture2D> GetUltraFarTexture(int i)
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceUltraFar");
         }
     }
 }
