@@ -30,7 +30,7 @@ namespace TheConfectionRebirth
 
         public override void NetReceive(BinaryReader reader)
         {
-            ConfectionSurfaceBG = new int[4];
+            ConfectionSurfaceBG = new int[4] { -1, -1, -1, -1 };
 			ConfectionSurfaceBG[0] = reader.ReadInt32();
             ConfectionSurfaceBG[1] = reader.ReadInt32();
             ConfectionSurfaceBG[2] = reader.ReadInt32();
