@@ -11,18 +11,18 @@ namespace TheConfectionRebirth
 
         public override void SaveWorldData(TagCompound tag)
         {
-            tag[nameof(ConfectionSurfaceBG)] = ConfectionSurfaceBG;
+            tag[nameof(ConfectionSurfaceBG) + "2"] = ConfectionSurfaceBG;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            if (tag.ContainsKey(nameof(ConfectionSurfaceBG)))
-                ConfectionSurfaceBG = tag.GetIntArray(nameof(ConfectionSurfaceBG));
+            if (tag.ContainsKey(nameof(ConfectionSurfaceBG) + "2"))
+                ConfectionSurfaceBG = tag.GetIntArray(nameof(ConfectionSurfaceBG) + "2");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-writer.Write(false)
+writer.Write(false);
 			writer.Write(ConfectionSurfaceBG[0]);
             writer.Write(ConfectionSurfaceBG[1]);
             writer.Write(ConfectionSurfaceBG[2]);
