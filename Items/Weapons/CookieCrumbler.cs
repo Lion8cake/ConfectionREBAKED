@@ -8,6 +8,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Cookie Pike-let");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -25,7 +26,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.rare = ItemRarityID.Purple;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("KillerCookie").Type;
+            Item.shoot = Mod.Find<ModProjectile>("CookiePikelet").Type;
             Item.shootSpeed = 10f;
         }
     }

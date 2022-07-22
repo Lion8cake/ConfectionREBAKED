@@ -31,6 +31,20 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.rare = 5;
             Item.shoot = Mod.Find<ModProjectile>("BakersDozen").Type;
             Item.shootSpeed = 16f;
+            Item.maxStack = 13;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            int stack = Item.stack;
+            bool canuse = true;
+            for (int m = 0; m < 1000; m++)
+            {
+                if (Main.projectile[m].active && Main.projectile[m].owner == Main.myPlayer && Main.projectile[m].type == Item.shoot)
+                    stack -= 1;
+            }
+            if (stack <= 0) canuse = false;
+            return canuse;
         }
 
         public override void AddRecipes()

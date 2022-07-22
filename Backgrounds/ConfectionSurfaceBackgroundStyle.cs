@@ -34,23 +34,23 @@ namespace TheConfectionRebirth.Backgrounds
 
         public override int ChooseFarTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceFar");
         }
 
         public override int ChooseMiddleTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurface3Mid");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceMid");
         }
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurface3Close");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose");
         }
 
         public Asset<Texture2D> GetFarTexture(int i)
         {
             if (i == 0)
-                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far");
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
             else if (i == 1)
                 return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far");
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
@@ -59,7 +59,7 @@ namespace TheConfectionRebirth.Backgrounds
         public Asset<Texture2D> GetCloseTexture(int i)
         {
             if (i == 0)
-                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Close");
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Close");
             else if (i == 1)
                 return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Close");
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Close");
@@ -68,7 +68,7 @@ namespace TheConfectionRebirth.Backgrounds
         public Asset<Texture2D> GetMidTexture(int i)
         {
             if (i == 0)
-                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Mid");
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Mid");
             else if (i == 1)
                 return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Mid");
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Mid");
@@ -77,10 +77,10 @@ namespace TheConfectionRebirth.Backgrounds
         public Asset<Texture2D> GetUltraFarTexture(int i)
         {
             if (i == 0)
-                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface1Far");
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3UltraFar");
             else if (i == 1)
-                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far");
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3Far");
+                return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2UltraFar");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface3UltraFar");
         }
     }
 }

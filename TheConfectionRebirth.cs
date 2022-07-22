@@ -167,7 +167,7 @@ namespace TheConfectionRebirth
                         Main.spriteBatch.Draw(texture,
 							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) * 0.8f % Main.screenWidth
 								+ (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) * i,
-								(int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) - 240),
+								(int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) - 20),
 							new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
 							(Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0f, default(Vector2),
 							(float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0, 0f);
