@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Projectiles
 	public class CookiePikelet : ModProjectile
 	{
 		protected virtual float HoldoutRangeMin => 98f;
-		protected virtual float HoldoutRangeMax => 180f;
+		protected virtual float HoldoutRangeMax => 200f;
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Spear");

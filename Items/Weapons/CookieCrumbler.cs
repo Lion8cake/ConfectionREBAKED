@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 40;
+            Item.damage = 20;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 18;
             Item.useTime = 24;
@@ -27,6 +27,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.scale = 1f;
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(silver: 460);
+            Item.crit = 23;
 
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;

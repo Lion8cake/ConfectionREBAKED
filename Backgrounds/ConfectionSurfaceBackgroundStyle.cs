@@ -7,7 +7,7 @@ namespace TheConfectionRebirth.Backgrounds
 {
     public class ConfectionSurfaceBackgroundStyle : ModSurfaceBackgroundStyle, IBackground
     {
-        internal const int backgroundVariatonsTotal = 3;
+        internal const int backgroundVariatonsTotal = 4;
 
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {

@@ -19,7 +19,7 @@ namespace TheConfectionRebirth
 {
     public class TheConfectionRebirth : Mod
     {
-        internal const int bgVarAmount = 3;
+        internal const int bgVarAmount = 4;
 
         private static MethodInfo Limits = null;
 
