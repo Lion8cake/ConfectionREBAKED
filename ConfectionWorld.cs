@@ -22,6 +22,7 @@ namespace TheConfectionRebirth
 
         public override void NetSend(BinaryWriter writer)
         {
+writer.Write(false)
 			writer.Write(ConfectionSurfaceBG[0]);
             writer.Write(ConfectionSurfaceBG[1]);
             writer.Write(ConfectionSurfaceBG[2]);
@@ -31,6 +32,9 @@ namespace TheConfectionRebirth
         public override void NetReceive(BinaryReader reader)
         {
             ConfectionSurfaceBG = new int[4] { -1, -1, -1, -1 };
+bool bl = reader.ReadBoolean();
+if (!bl)
+	return;
 			ConfectionSurfaceBG[0] = reader.ReadInt32();
             ConfectionSurfaceBG[1] = reader.ReadInt32();
             ConfectionSurfaceBG[2] = reader.ReadInt32();
