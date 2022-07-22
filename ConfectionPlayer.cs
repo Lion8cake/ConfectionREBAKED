@@ -198,7 +198,7 @@ namespace TheConfectionRebirth
             NeapoliniteSummonerSet = false;
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
             if (damageSource.SourceCustomReason == "DimensionSplit")
             {
@@ -210,29 +210,8 @@ namespace TheConfectionRebirth
                 damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
                 return true;
             }
-            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
-        }
-
-        //The is a debug that says what background the world has
-        /*public override void OnEnterWorld(Player player)
-        {
-            if (ConfectionWorld.ConfectionSurfaceBG == -1)
-            {
-                Main.NewText("The world's background didn't update");
-            }
-            if (ConfectionWorld.ConfectionSurfaceBG == 0)
-            {
-                Main.NewText("This world has background 1");
-            }
-            if (ConfectionWorld.ConfectionSurfaceBG == 1)
-            {
-                Main.NewText("This world has background 2");
-            }
-            if (ConfectionWorld.ConfectionSurfaceBG == 2)
-            {
-                Main.NewText("This world has background 3");
-            }
-        }*/
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
+		}
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.ModSupport;
@@ -56,7 +57,29 @@ namespace TheConfectionRebirth
             ModifyLimits2 += TheConfectionRebirth_ModifyLimits2;
             Limits3 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawCloseBackground));
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
+
+			On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
         }
+
+		private void WorldGen_RandomizeBackgroundBasedOnPlayer(On.Terraria.WorldGen.orig_RandomizeBackgroundBasedOnPlayer orig, UnifiedRandom random, Player player)
+		{
+            if (ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120)
+			{
+                int[] rand = new int[bgVarAmount + 1] { Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount) };
+                for (int i = 0; i < bgVarAmount; i++)
+				{
+                    while (ConfectionWorld.ConfectionSurfaceBG[i] == rand[i])
+                        rand[i] = Main.rand.Next(bgVarAmount);
+				}
+                ConfectionWorld.ConfectionSurfaceBG = rand;
+
+                int style = WorldGen.hallowBG;
+                typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(WorldGen.BackgroundsCache, new object[] { 7, bgVarAmount });
+                WorldGen.hallowBG = style;
+			}
+
+            orig(random, player);
+		}
 
 		public override void Unload()
         {
@@ -165,8 +188,8 @@ namespace TheConfectionRebirth
                         Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG[3]).Value;
 
                         Main.spriteBatch.Draw(texture,
-							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) * 0.8f
-								+ (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) * i,
+							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance)
+                                + (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) * i,
 								(int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) - 20),
 							new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
 							(Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0f, default(Vector2),
@@ -246,7 +269,6 @@ namespace TheConfectionRebirth
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
 						ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-
                     return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value;
                 }
                 return value;
@@ -284,6 +306,10 @@ namespace TheConfectionRebirth
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
+
+                    Texture2D texture2 = TextureAssets.MagicPixel.Value;
+                    Color color = Color.Black * WorldGen.BackgroundsCache.GetFlashPower(7);
+                    Main.spriteBatch.Draw(texture2, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value.Height;
                 }
