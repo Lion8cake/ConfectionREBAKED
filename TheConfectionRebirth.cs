@@ -65,7 +65,7 @@ namespace TheConfectionRebirth
 		{
             if (ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120)
 			{
-                int[] rand = new int[bgVarAmount + 1] { Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount) };
+                int[] rand = new int[4] { Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount), Main.rand.Next(bgVarAmount) };
                 for (int i = 0; i < bgVarAmount; i++)
 				{
                     while (ConfectionWorld.ConfectionSurfaceBG[i] == rand[i])
