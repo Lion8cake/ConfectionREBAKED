@@ -185,18 +185,22 @@ namespace TheConfectionRebirth
                         if (ConfectionWorld.ConfectionSurfaceBG[3] == -1)
                             ConfectionWorld.ConfectionSurfaceBG[3] = Main.rand.Next(bgVarAmount);
 
+                        float bgParallax = 0.1f;
                         Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG[3]).Value;
+                        Color ColorOfSurfaceBackgroundsModified = (Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        int bgWidthScaled = (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance);
+                        float bgScale = (float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        int bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (bgWidthScaled / 2));
 
                         Main.spriteBatch.Draw(texture,
-							new Vector2((int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance)
-                                + (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) * i,
-								(int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance) - 20),
+							new Vector2(bgStartX + bgWidthScaled * i, bgTopY - 20),
 							new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
-							(Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0f, default(Vector2),
-							(float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null), 0, 0f);
-					}
-				}
-			});
+							ColorOfSurfaceBackgroundsModified, 0f, default,
+							bgScale, 0, 0f);
+                    }
+                }
+            });
 
             if (!c.TryGotoNext(i => i.MatchCallvirt(typeof(Asset<Texture2D>).GetMethod("get_Value"))))
                 return;
