@@ -13,6 +13,7 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.NPCs.Meowzer.Gores;
+using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth.NPCs.Meowzer
 {
@@ -303,6 +304,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PastryBlock>(), 1, 10, 15));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToastyToaster>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PastryTart>(), 95, 1));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
