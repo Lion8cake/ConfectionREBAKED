@@ -1,51 +1,88 @@
+using TheConfectionRebirth.Dusts;
 using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Dusts;
+using Terraria.Audio;
 
 namespace TheConfectionRebirth.Projectiles
 {
     public class TrueSucrosaBolt : ModProjectile
     {
         public override void SetDefaults()
+		{
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.aiStyle = 27;
+			Projectile.penetrate = 1;
+			Projectile.light = 0.2f;
+			Projectile.alpha = 0;
+			Projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Melee;
+		}
+		
+		public override Color? GetAlpha(Color lightColor)
+		{
+			if (this.Projectile.localAI[1] >= 15f)
+			{
+				return new Color(255, 255, 255, this.Projectile.alpha);
+			}
+			if (this.Projectile.localAI[1] < 5f)
+			{
+				return Color.Transparent;
+			}
+			int num7 = (int)((this.Projectile.localAI[1] - 5f) / 10f * 255f);
+			return new Color(num7, num7, num7, num7);
+		}
+		
+		public override void AI()
         {
-            Projectile.width = 20;
-            Projectile.height = 40;
-            Projectile.friendly = true;
-            Projectile.penetrate = -1;
-            // projectile.hostile = false;                   
-            Projectile.tileCollide = true;
-            Projectile.ignoreWater = true;
-        }
-
-        public override void AI()
-        {
-            Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
-            Projectile.localAI[0] += 1f;
-            Projectile.alpha = (int)Projectile.localAI[0] * 2;
-
-            if (Projectile.localAI[0] > 130f)
-            {
-                Projectile.Kill();
-            }
-
-        }
-
+			if (Projectile.localAI[1] > 5f)
+			{
+				int num208 = Main.rand.Next(3);
+				if (num208 == 0)
+				{
+					num208 = 15;
+				}
+				else if (num208 == 1)
+				{
+					num208 = 57;
+				}
+				else if (num208 == 2)
+				{
+					num208 = 58;
+				}
+				int num209 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<NeapoliniteCrumbs>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+				Dust dust = Main.dust[num209];
+				dust.velocity *= 0.1f;
+			}
+		}
+		
         public override void Kill(int timeLeft)
         {
-            for (int k = 0; k < 5; k++)
-            {
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<NeapoliniteCrumbs>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
-            }
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            Projectile.ai[0] += 0.1f;
-            Projectile.velocity *= 0.75f;
-        }
+			for (int num394 = 4; num394 < 24; num394++)
+			{
+				float num395 = Projectile.oldVelocity.X * (30f / (float)num394);
+				float num396 = Projectile.oldVelocity.Y * (30f / (float)num394);
+				int num397 = Main.rand.Next(3);
+				if (num397 == 0)
+				{
+					num397 = 15;
+				}
+				else if (num397 == 1)
+				{
+					num397 = 57;
+				}
+				else
+				{
+					num397 = 58;
+				}
+				int num398 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<NeapoliniteCrumbs>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+				Main.dust[num398].velocity *= 1.5f;
+				Main.dust[num398].noGravity = true;
+			}
+		}
     }
 }

@@ -1,42 +1,52 @@
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
-    public class TrueSucrosa : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("True Sucrosa");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-        }
+	public class TrueSucrosa : ModItem
+	{
+		public override void SetStaticDefaults() 
+		{
+			DisplayName.SetDefault("True Sucrosa");
+		}
 
-        public override void SetDefaults()
-        {
-            Item.damage = 85;
-            Item.DamageType = DamageClass.Melee;
-            Item.width = 40;
-            Item.height = 40;
-            Item.useTime = 25;
-            Item.useAnimation = 30;
-            Item.useStyle = 1;
-            Item.knockBack = 6;
-            Item.value = Item.sellPrice(silver: 1000);
-            Item.rare = ItemRarityID.Yellow;
-            Item.UseSound = SoundID.Item1;
-            // item.autoReuse = false;
-            Item.shoot = Mod.Find<ModProjectile>("TrueSucrosaBolt").Type;
-            Item.shootSpeed = 10f;
-        }
+		public override void SetDefaults() 
+		{
+			Item.damage = 64;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 40;
+			Item.height = 40;
+			Item.useTime = 25;
+			Item.useAnimation = 15;
+			Item.useStyle = 1;
+			Item.knockBack = 6;
+			Item.value = Item.sellPrice(silver: 1000);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;
+			Item.shoot = ModContent.ProjectileType<TrueSucrosaBolt>();
+			Item.shootSpeed = 8f;
+		}
 
-        public override void AddRecipes() // thanks to foxyboy55 for this fix
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Weapons.Sucrosa>(), 1).AddIngredient(ItemID.BrokenHeroSword, 1).AddTile(TileID.MythrilAnvil).Register();
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Weapons.TrueDeathsRaze>(), 1).AddIngredient(this, 1).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.TerraBlade);
-            CreateRecipe(1).AddIngredient(675, 1).AddIngredient(this, 1).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.TerraBlade);
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Weapons.TrueDeathsRaze>(), 1).AddIngredient(674, 1).AddTile(TileID.MythrilAnvil).ReplaceResult(ItemID.TerraBlade);
-        }
-    }
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			int numberProjectiles = 2 + Main.rand.Next(2);
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedByRandom(MathHelper.ToRadians(25));
+
+				int spirit = Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+			}
+			return false; 
+		}
+
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Weapons.Sucrosa>()).AddIngredient(ItemID.ChlorophyteBar, 24).AddTile(TileID.MythrilAnvil).Register();
+		}
+	}
 }

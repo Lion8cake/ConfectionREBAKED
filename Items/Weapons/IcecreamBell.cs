@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.mana = 4;
             Item.width = 40;
             Item.height = 40;
-            Item.useTime = 10;
+            Item.useTime = 30;
             Item.useAnimation = 25;
             Item.useStyle = 1;
             Item.noMelee = true;

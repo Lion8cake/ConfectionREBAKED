@@ -37,7 +37,7 @@ namespace TheConfectionRebirth.Backgrounds
 
         public override int ChooseMiddleTexture()
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceMid0");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceMid");
         }
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
@@ -57,12 +57,12 @@ namespace TheConfectionRebirth.Backgrounds
 
 		public Asset<Texture2D> GetMidTexture(int i)
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceMid0");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceMid");
         }
 
 		public Asset<Texture2D> GetUltraFarTexture(int i)
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceFar");
+            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSnowSurfaceUltraFar");
         }
 	}
 }

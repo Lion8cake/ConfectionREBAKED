@@ -12,12 +12,23 @@ Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
--Added Pastry Tart
--Added Confection Torch
--Added Cherimoya
--Added Shaking to Confection Trees
--Added 4 layered Backgrounds 
--Added Alternating Backgrounds (Create new worlds or use the world globe to see all backgrounds)
+-Removed Death's raze, soul of spite and True Death's raze
+-Updated True Sucrosa
+-Nerfed True Sucrosa's damage
+-Fixed True Sucrosa's recipe
+-Nerfed Icecream Bell
+-Fixed Neapolinite Repeater
+-Fixed Pop rocket
+-Fixed Spear of Cavendes
+-Readded all weapons apart from the summon weapons from the 1.3 version
+-Added Confection Pylon
+-Fixed Pylons working in confection biome
+-Changed the Snow confection background to work well with 4 layers
+-Changed Sugar water to use its own projectile and not the cream solution projectile
+-Changed how 4 layered backgrounds work
+-Fixed Confection music being to gritty
+-Changed Cream of Kickn'
+-Changed Crema of Kickn' description to match the changes
 
 ===========================================
 Credit - Programmers
@@ -41,4 +52,5 @@ Snacks - Several 1.4 textures including the furniture toilets, saccharite furnit
 DakotaSpine - The amazing New background for the confection
 Neobind - Textures for a few things
 Miguel Noturn0 - Confection Tree icons
+
 And to all the people that helped me out with coding problems and other issues, thank you!

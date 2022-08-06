@@ -21,18 +21,7 @@ namespace TheConfectionRebirth.NPCs
             if (npc.lifeMax >= 1)
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
-                npcLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
-                npcLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
             }
-        }
-
-        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
-        {
-            globalLoot.RemoveWhere(
-                rule => rule is ItemDropWithConditionRule drop
-                    && drop.itemId == ItemID.SoulofNight
-                    && drop.condition is Conditions.SoulOfNight
-            );
         }
 
         //Putting this here because the confection doesn't need another global npc file cloging up space 
@@ -58,51 +47,6 @@ namespace TheConfectionRebirth.NPCs
         }
     }
 }
-
-public class SoulOfNightCorruption : IItemDropRuleCondition, IProvideItemConditionDescription
-{
-    public bool CanDrop(DropAttemptInfo info)
-    {
-        if (Conditions.SoulOfWhateverConditionCanDrop(info))
-        {
-            return info.player.ZoneCorrupt;
-        }
-        return false;
-    }
-
-    public bool CanShowItemDropInUI()
-    {
-        return false;
-    }
-
-    public string GetConditionDescription()
-    {
-        return "Lion forgot to write something here, im sorry for the lack of brain cells he has";
-    }
-}
-
-public class SoulOfSpite : IItemDropRuleCondition, IProvideItemConditionDescription
-{
-    public bool CanDrop(DropAttemptInfo info)
-    {
-        if (Conditions.SoulOfWhateverConditionCanDrop(info))
-        {
-            return info.player.ZoneCrimson;
-        }
-        return false;
-    }
-
-    public bool CanShowItemDropInUI()
-    {
-        return false;
-    }
-
-    public string GetConditionDescription()
-    {
-        return "Lion forgot to write something here, im sorry for the lack of brain cells he has";
-    }
-}
-
 public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
 {
     public bool CanDrop(DropAttemptInfo info)

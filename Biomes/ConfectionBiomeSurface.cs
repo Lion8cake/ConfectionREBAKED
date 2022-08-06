@@ -59,32 +59,32 @@ public class ConfectionBiomeSurface : ModBiome
         }
     }
 
-    public override string BestiaryIcon
+    public override string MapBackground
     {
         get
         {
             if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns)
             {
-                return "Biomes/BestiaryIcon2";
+                return "Biomes/ConfectionUndergroundMapBackground";
             }
             if (Main.LocalPlayer.ZoneSnow)
             {
-                return "Biomes/BestiaryIcon3";
+                return "Biomes/ConfectionIceBiomeMapBackground";
             }
-            if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns || Main.LocalPlayer.ZoneSnow)
+            if (Main.LocalPlayer.ZoneNormalUnderground && Main.LocalPlayer.ZoneSnow || Main.LocalPlayer.ZoneNormalCaverns && Main.LocalPlayer.ZoneSnow)
             {
-                return "Biomes/BestiaryIcon4";
+                return "Biomes/ConfectionUndergroundIceMapBackground";
             }
             if (Main.LocalPlayer.ZoneDesert)
             {
-                return "Biomes/BestiaryIcon5";
+                return "Biomes/ConfectionDesertBiomeMapBackground";
             }
-            if (Main.LocalPlayer.ZoneNormalUnderground || Main.LocalPlayer.ZoneNormalCaverns || Main.LocalPlayer.ZoneDesert)
+            if (Main.LocalPlayer.ZoneNormalUnderground && Main.LocalPlayer.ZoneDesert || Main.LocalPlayer.ZoneNormalCaverns && Main.LocalPlayer.ZoneDesert)
             {
-                return "Biomes/BestiaryIcon6";
+                return "Biomes/ConfectionUndergroundDesertMapBackground";
             }
 
-            return "Biomes/BestiaryIcon1";
+            return "Biomes/ConfectionBiomeMapBackground";
         }
     }
 

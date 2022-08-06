@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 4;
             Item.rare = ItemRarityID.Pink;
-            Item.UseSound = SoundID.Item11;
+            Item.UseSound = SoundID.Item31;
             Item.autoReuse = true;
             Item.shoot = 10;
             Item.shootSpeed = 16f;

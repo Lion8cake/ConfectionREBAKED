@@ -6,7 +6,9 @@ namespace TheConfectionRebirth.Projectiles
 {
     public class SpearofCavendesProj : ModProjectile
     {
-        public override void SetStaticDefaults()
+		protected virtual float HoldoutRangeMin => 98f;
+		protected virtual float HoldoutRangeMax => 200f;
+		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spear of Cavendes");
         }
@@ -23,56 +25,48 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.hide = true;
             Projectile.ownerHitCheck = true;
             Projectile.DamageType = DamageClass.Melee;
-            // projectile.tileCollide = false;
+            Projectile.tileCollide = false;
             Projectile.friendly = true;
         }
 
-        public float movementFactor
-        {
-            get => Projectile.ai[0];
-            set => Projectile.ai[0] = value;
-        }
+		public override bool PreAI()
+		{
+			Player player = Main.player[Projectile.owner];
+			int duration = player.itemAnimationMax;
 
-        public override void AI()
-        {
-            Player projOwner = Main.player[Projectile.owner];
-            Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-            Projectile.direction = projOwner.direction;
-            projOwner.heldProj = Projectile.whoAmI;
-            projOwner.itemTime = projOwner.itemAnimation;
-            Projectile.position.X = ownerMountedCenter.X - Projectile.width / 2;
-            Projectile.position.Y = ownerMountedCenter.Y - Projectile.height / 2;
+			player.heldProj = Projectile.whoAmI;
 
-            if (!projOwner.frozen)
-            {
-                if (movementFactor == 0f)
-                {
-                    movementFactor = 3f;
-                    Projectile.netUpdate = true;
-                }
-                if (projOwner.itemAnimation < projOwner.itemAnimationMax / 3)
-                {
-                    movementFactor -= 2.4f;
-                }
-                else
-                {
-                    movementFactor += 1.5f;
-                }
-            }
+			if (Projectile.timeLeft > duration)
+			{
+				Projectile.timeLeft = duration;
+			}
 
-            Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.velocity = Vector2.Normalize(Projectile.velocity);
 
-            if (projOwner.itemAnimation == 0)
-            {
-                Projectile.Kill();
-            }
+			float halfDuration = duration * 0.5f;
+			float progress;
 
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+			if (Projectile.timeLeft < halfDuration)
+			{
+				progress = Projectile.timeLeft / halfDuration;
+			}
+			else
+			{
+				progress = (duration - Projectile.timeLeft) / halfDuration;
+			}
 
-            if (Projectile.spriteDirection == -1)
-            {
-                Projectile.rotation -= MathHelper.ToRadians(90f);
-            }
-        }
-    }
+			Projectile.Center = player.MountedCenter + Vector2.SmoothStep(Projectile.velocity * HoldoutRangeMin, Projectile.velocity * HoldoutRangeMax, progress);
+
+			if (Projectile.spriteDirection == -1)
+			{
+				Projectile.rotation += MathHelper.ToRadians(45f);
+			}
+			else
+			{
+				Projectile.rotation += MathHelper.ToRadians(135f);
+			}
+
+			return false;
+		}
+	}
 }
