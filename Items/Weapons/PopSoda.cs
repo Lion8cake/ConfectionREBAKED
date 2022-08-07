@@ -25,9 +25,8 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<PopSodaProjectile>();
 			Item.width = 18;
 			Item.height = 20;
-			Item.maxStack = 1;
 			Item.knockBack = 3f;
-			Item.stack = 99;
+			Item.maxStack = 99;
 			Item.UseSound = SoundID.Item1;
 			Item.useAnimation = 15;
 			Item.useTime = 15;
