@@ -96,7 +96,7 @@ namespace TheConfectionRebirth.NPCs
         {
             int num184 = (int)(NPC.Center.X / 16f);
             int num185 = (int)(NPC.Center.Y / 16f);
-            if (NPC.life > NPC.lifeMax * 0.15f && Main.rand.NextBool(60))
+            if (NPC.life > NPC.lifeMax * 0.15f && ++NPC.ai[1] >= 60f * 15f)
             {
                 Player player = Main.player[NPC.target];
                 Point playerPos = new((int)(player.Center.X / 16), (int)(player.Center.Y / 16));

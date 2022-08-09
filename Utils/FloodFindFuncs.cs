@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Util
                 for (int i = 0; i < 4; i++)
                 {
                     float lenSqr = LenSqr(nextSet[i], start);
-                    if (!closedSet.TryGetValue(nextSet[i], out bool _) && Collision.IsClearSpotTest(nextSet[i].ToVector2() * 16, 1, 1, 1, true, true))
+                    if (!closedSet.TryGetValue(nextSet[i], out _) && Collision.IsClearSpotTest(nextSet[i].ToVector2() * 16, 1, 1, 1, true, true))
                     {
                         if (lenSqr >= minDistance * minDistance)
                             rv.Add(new(nextSet[i].X, nextSet[i].Y));
@@ -47,7 +47,7 @@ namespace TheConfectionRebirth.Util
 
         static float LenSqr(Point point1, Point point2)
         {
-            Point dist = (point1 - point2);
+            Point dist = point1 - point2;
             return dist.X * dist.X + dist.Y * dist.Y;
         }
     }
