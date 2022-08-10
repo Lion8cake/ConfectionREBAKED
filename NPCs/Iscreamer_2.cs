@@ -130,6 +130,7 @@ namespace TheConfectionRebirth.NPCs
                 }
                 npcsToTeleport.ForEach(i => Teleport(i, floodFindResults));
 
+NPC.ai[1] = 0f;
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
             }
         }
