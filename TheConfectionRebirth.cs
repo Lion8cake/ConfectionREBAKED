@@ -9,6 +9,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
@@ -69,14 +70,22 @@ namespace TheConfectionRebirth
                 for (int i = 0; i < bgVarAmount; i++)
 				{
                     while (ConfectionWorld.ConfectionSurfaceBG[i] == rand[i])
+                    {
                         rand[i] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                    }
 				}
                 ConfectionWorld.ConfectionSurfaceBG = rand;
 
                 int style = WorldGen.hallowBG;
                 typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(WorldGen.BackgroundsCache, new object[] { 7, bgVarAmount });
                 WorldGen.hallowBG = style;
-			}
+
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.WorldData);
+
+            }
 
             orig(random, player);
 		}
@@ -115,7 +124,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
-						ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+                    {
+                        ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetMidTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value;
                 }
@@ -134,7 +149,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value.Width;
                 }
@@ -153,7 +174,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[1]).Value.Height;
                 }
@@ -183,10 +210,19 @@ namespace TheConfectionRebirth
 					for (int i = 0; i < (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance); i++)
                     {
                         if (ConfectionWorld.ConfectionSurfaceBG[3] == -1)
+                        {
                             ConfectionWorld.ConfectionSurfaceBG[3] = Main.rand.Next(bgVarAmount);
+                            if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                                ConfectionWorld.Secret = true;
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         float bgParallax = 0.1f;
                         Texture2D texture = (style as IBackground).GetUltraFarTexture(ConfectionWorld.ConfectionSurfaceBG[3]).Value;
+                        if (texture is null)
+                            return;
+
                         Color ColorOfSurfaceBackgroundsModified = (Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
                         int bgWidthScaled = (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
                         int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance);
@@ -212,7 +248,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
-						ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+                    {
+                        ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value;
                 }
@@ -231,7 +273,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value.Width;
                 }
@@ -250,7 +298,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[2]).Value.Height;
                 }
@@ -272,7 +326,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
-						ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
+                    {
+                        ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
                     return (style as IBackground).GetCloseTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value;
                 }
                 return value;
@@ -290,8 +350,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value.Width;
                 }
                 return v;
@@ -309,8 +374,13 @@ namespace TheConfectionRebirth
                 if (style is IBackground)
                 {
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
+                    {
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-
+                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            ConfectionWorld.Secret = true;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
                     Texture2D texture2 = TextureAssets.MagicPixel.Value;
                     Color color = Color.Black * WorldGen.BackgroundsCache.GetFlashPower(7);
                     Main.spriteBatch.Draw(texture2, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);

@@ -7,38 +7,37 @@ namespace TheConfectionRebirth
 {
     public class ConfectionWorld : ModSystem
     {
-        internal static int[] ConfectionSurfaceBG = new int[4] { -1, -1, -1, -1};
+        internal static int[] ConfectionSurfaceBG = new int[TheConfectionRebirth.bgVarAmount] { -1, -1, -1, -1};
+        internal static bool Secret = false;
 
         public override void SaveWorldData(TagCompound tag)
         {
             tag[nameof(ConfectionSurfaceBG) + "2"] = ConfectionSurfaceBG;
+            tag[nameof(Secret)] = Secret;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             if (tag.ContainsKey(nameof(ConfectionSurfaceBG) + "2"))
                 ConfectionSurfaceBG = tag.GetIntArray(nameof(ConfectionSurfaceBG) + "2");
+            Secret = tag.ContainsKey(nameof(Secret)) && tag.GetBool(nameof(Secret));
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-writer.Write(false);
-			writer.Write(ConfectionSurfaceBG[0]);
-            writer.Write(ConfectionSurfaceBG[1]);
-            writer.Write(ConfectionSurfaceBG[2]);
-            writer.Write(ConfectionSurfaceBG[3]);
+            writer.Write(TheConfectionRebirth.bgVarAmount);
+            for (int i = 0; i < TheConfectionRebirth.bgVarAmount; i++)
+                writer.Write(ConfectionSurfaceBG[i]);
+            writer.Write(Secret);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
-            ConfectionSurfaceBG = new int[4] { -1, -1, -1, -1 };
-bool bl = reader.ReadBoolean();
-if (!bl)
-	return;
-			ConfectionSurfaceBG[0] = reader.ReadInt32();
-            ConfectionSurfaceBG[1] = reader.ReadInt32();
-            ConfectionSurfaceBG[2] = reader.ReadInt32();
-            ConfectionSurfaceBG[3] = reader.ReadInt32();
+            int bgVar = reader.ReadInt32();
+            ConfectionSurfaceBG = new int[TheConfectionRebirth.bgVarAmount] { -1, -1, -1, -1 };
+            for (int i = 0; i < bgVar; i++)
+                ConfectionSurfaceBG[i] = reader.ReadInt32();
+            Secret = reader.ReadBoolean();
         }
     }
 }
