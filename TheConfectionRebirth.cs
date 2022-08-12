@@ -59,8 +59,50 @@ namespace TheConfectionRebirth
             Limits3 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawCloseBackground));
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
 
-			On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
+            float[] _flashPower = (float[])typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(WorldGen.BackgroundsCache);
+            int[] _variations = (int[])typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(WorldGen.BackgroundsCache);
+            float[] newFlashPower = new float[_flashPower.Length + bgVarAmount];
+            int[] newVariations = new int[_variations.Length + bgVarAmount];
+            _cacheIndexes = new int[bgVarAmount];
+            for (int i = 0; i < newFlashPower.Length; i++)
+			{
+                if (i >= _flashPower.Length)
+				{
+                    newFlashPower[i] = 0f;
+                    newVariations[i] = 0;
+					_cacheIndexes[i - _flashPower.Length] = i;
+                    continue;
+				}
+
+                newFlashPower[i] = _flashPower[i];
+                newVariations[i] = _variations[i];
+			}
+            typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(WorldGen.BackgroundsCache, newFlashPower);
+            typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(WorldGen.BackgroundsCache, newVariations);
+
+			On.Terraria.GameContent.BackgroundChangeFlashInfo.UpdateCache += BackgroundChangeFlashInfo_UpdateCache;
+            On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
+
+			On.Terraria.Main.DrawSurfaceBG_BackMountainsStep1 += Main_DrawSurfaceBG_BackMountainsStep1;
         }
+
+        private static double _backgroundTopMagicNumberCache;
+        private static int _pushBGTopHackCache;
+		private static void Main_DrawSurfaceBG_BackMountainsStep1(On.Terraria.Main.orig_DrawSurfaceBG_BackMountainsStep1 orig, Main self, double backgroundTopMagicNumber, float bgGlobalScaleMultiplier, int pushBGTopHack)
+		{
+            _backgroundTopMagicNumberCache = backgroundTopMagicNumber;
+            _pushBGTopHackCache = pushBGTopHack;
+            orig(self, backgroundTopMagicNumber, bgGlobalScaleMultiplier, pushBGTopHack);
+		}
+
+		private static int[] _cacheIndexes;
+		private static void BackgroundChangeFlashInfo_UpdateCache(On.Terraria.GameContent.BackgroundChangeFlashInfo.orig_UpdateCache orig, BackgroundChangeFlashInfo self)
+		{
+            orig(self);
+
+            for (int i = 0; i < bgVarAmount; i++)
+                typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(self, new object[] { _cacheIndexes[i], ConfectionWorld.ConfectionSurfaceBG[i] });
+		}
 
 		private void WorldGen_RandomizeBackgroundBasedOnPlayer(On.Terraria.WorldGen.orig_RandomizeBackgroundBasedOnPlayer orig, UnifiedRandom random, Player player)
 		{
@@ -75,16 +117,13 @@ namespace TheConfectionRebirth
                         if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
                             ConfectionWorld.Secret = true;
                     }
-				}
-                ConfectionWorld.ConfectionSurfaceBG = rand;
 
-                int style = WorldGen.hallowBG;
-                typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(WorldGen.BackgroundsCache, new object[] { 7, bgVarAmount });
-                WorldGen.hallowBG = style;
+                    ConfectionWorld.ConfectionSurfaceBG[i] = rand[i];
+                    typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(WorldGen.BackgroundsCache, new object[] { _cacheIndexes[i], rand[i] });
+                }
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.WorldData);
-
             }
 
             orig(random, player);
@@ -101,6 +140,10 @@ namespace TheConfectionRebirth
             if (Limits3 != null)
                 ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
             Limits3 = null;
+
+            _backgroundTopMagicNumberCache = 0;
+            _pushBGTopHackCache = 0;
+            _cacheIndexes = null;
         }
 
         public override void PostSetupContent()
@@ -224,9 +267,12 @@ namespace TheConfectionRebirth
                             return;
 
                         Color ColorOfSurfaceBackgroundsModified = (Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        float scAdj = (float)typeof(Main).GetField("scAdj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Main.instance);
                         int bgWidthScaled = (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-                        int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance);
-                        float bgScale = (float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        //int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance);
+                        int bgTopY = !Main.gameMenu ? (int)(_backgroundTopMagicNumberCache * 1300.0 + 1005.0 + (int)scAdj + _pushBGTopHackCache + 40) : 75 + _pushBGTopHackCache;
+                        
+        float bgScale = (float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
                         int bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (bgWidthScaled / 2));
 
                         Main.spriteBatch.Draw(texture,
@@ -382,7 +428,7 @@ namespace TheConfectionRebirth
                             NetMessage.SendData(MessageID.WorldData);
                     }
                     Texture2D texture2 = TextureAssets.MagicPixel.Value;
-                    Color color = Color.Black * WorldGen.BackgroundsCache.GetFlashPower(7);
+                    Color color = Color.Black * WorldGen.BackgroundsCache.GetFlashPower(_cacheIndexes[0]);
                     Main.spriteBatch.Draw(texture2, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
 
                     return (style as IBackground).GetFarTexture(ConfectionWorld.ConfectionSurfaceBG[0]).Value.Height;
