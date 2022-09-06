@@ -16,15 +16,15 @@ namespace TheConfectionRebirth.Tiles.Pylon
 {
 	public class ConfectionPylonTile : ModPylon
 	{
-		public const int CrystalHorizontalFrameCount = 2;
 		public const int CrystalVerticalFrameCount = 8;
-		public const int CrystalFrameHeight = 64;
 
 		public Asset<Texture2D> crystalTexture;
+		public Asset<Texture2D> crystalHighlightTexture;
 		public Asset<Texture2D> mapIcon;
 
 		public override void Load() {
 			crystalTexture = ModContent.Request<Texture2D>(Texture + "_Crystal");
+			crystalHighlightTexture = ModContent.Request<Texture2D>(Texture + "_CrystalHighlight");
 			mapIcon = ModContent.Request<Texture2D>(Texture + "_MapIcon");
 		}
 
@@ -78,8 +78,9 @@ namespace TheConfectionRebirth.Tiles.Pylon
 			return ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120;
 		}
 
-		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
-			DefaultDrawPylonCrystal(spriteBatch, i, j, crystalTexture, Color.White, CrystalFrameHeight, CrystalHorizontalFrameCount, CrystalVerticalFrameCount);
+		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			DefaultDrawPylonCrystal(spriteBatch, i, j, crystalTexture, crystalHighlightTexture, new Vector2(0f, -12f), Color.White * 0.1f, Color.White, 1, CrystalVerticalFrameCount);
 		}
 
 		public override void DrawMapIcon(ref MapOverlayDrawContext context, ref string mouseOverText, TeleportPylonInfo pylonInfo, bool isNearPylon, Color drawColor, float deselectedScale, float selectedScale) {

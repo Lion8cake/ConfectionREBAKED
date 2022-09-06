@@ -67,7 +67,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             }
         }
 
-        public virtual void OnCatchNPC(Player player, Item item)
+        /*public virtual void OnCatchNPC(Player player, Item item)
         {
             item.stack = 1;
 
@@ -79,7 +79,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             {
                 return;
             }
-        }
+        }*/
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {

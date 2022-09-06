@@ -12,6 +12,16 @@ Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
+0.14.1 The Iscreamer Patch
+===========================================
+-Fixed timing with Iscreamers being way to fast and annoying
+-Fixed Iscreamers being able to teleport target dummies
+-Added rare confection background
+-Fixed stackability of the Popsoda
+
+===========================================
+0.14.0
+===========================================
 -Removed Death's raze, soul of spite and True Death's raze
 -Updated True Sucrosa
 -Nerfed True Sucrosa's damage

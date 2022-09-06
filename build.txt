@@ -1,6 +1,6 @@
 displayName = Confection REBAKED (Hallow Alternative)
 author = Lion8cake, Snickerbobble, Fox, Cace, Delicious Saturn
-version = 0.14.0
+version = 0.14.1
 homepage = https://terrariamods.fandom.com/wiki/Confection_Rebaked
 includeSource = true
 includePDB = true

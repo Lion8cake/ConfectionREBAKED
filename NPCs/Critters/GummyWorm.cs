@@ -47,7 +47,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             return true;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        /*public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -61,7 +61,7 @@ namespace TheConfectionRebirth.NPCs.Critters
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
                 }
             }
-        }
+        }*/
 
         public virtual void OnCatchNPC(Player player, Item item)
         {
