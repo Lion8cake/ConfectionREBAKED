@@ -12,15 +12,15 @@ namespace TheConfectionRebirth.Items.Accessories
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(67, 7f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(67, 10f, 2.5f);
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 20;
-            Item.value = 10000;
-            Item.rare = ItemRarityID.Green;
+            Item.value = 400000;
+            Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
         }
 
@@ -32,6 +32,15 @@ namespace TheConfectionRebirth.Items.Accessories
             maxCanAscendMultiplier = 1f;
             maxAscentMultiplier = 3f;
             constantAscend = 0.135f;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 100);
+            recipe.AddIngredient(ItemID.SoulofFlight, 20);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }

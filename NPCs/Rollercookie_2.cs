@@ -8,6 +8,7 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Pets.RollerCookiePet;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -59,7 +60,7 @@ namespace TheConfectionRebirth.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CookieDough>(), maximumDropped: 2));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChocolateChunk>(), 100));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChocolateChunk>(), 100));
             npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ModContent.ItemType<CookieMask>(), ModContent.ItemType<CookieShirt>(), ModContent.ItemType<CookiePants>()));
         }
 

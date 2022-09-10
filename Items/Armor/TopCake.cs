@@ -17,6 +17,8 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void SetStaticDefaults()
         {
+            ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
     }

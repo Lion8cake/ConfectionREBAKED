@@ -29,6 +29,9 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneEmerald").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
+            Main.tileStone[Type] = true;
+            TileID.Sets.Conversion.Stone[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
             ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
             AddMapEntry(new Color(188, 168, 120));

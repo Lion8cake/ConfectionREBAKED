@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -13,6 +14,9 @@ namespace TheConfectionRebirth.NPCs
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.CreamBeans>());
                 shop.item[nextSlot].shopCustomPrice = 2000;
                 nextSlot++;
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Pets.CreamyFoxPet.CreamFoxPetItem>());
+                shop.item[nextSlot].shopCustomPrice = 1000000;
+                nextSlot++;
             }
             else if (type == NPCID.Steampunker && Main.hardMode)
             {
@@ -22,7 +26,7 @@ namespace TheConfectionRebirth.NPCs
             }
             else if (type == NPCID.Wizard)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Weapons.Kazoo>());
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Kazoo>());
                 shop.item[nextSlot].shopCustomPrice = 10000;
                 nextSlot++;
             }

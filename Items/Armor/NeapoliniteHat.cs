@@ -32,7 +32,8 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 8 seconds since you were last hit your whip speed is increased by 10% for the first 3 times before giving 10% critical stike chance on the 4th time and 10% damage on the 5th.";
+            player.setBonus = "Every 8 seconds since you were last hit your whip speed is increased by 10%" 
+                + "\nfor the first 3 times before giving 10% critical stike chance on the 4th time and 10% damage on the 5th.";
             player.GetModPlayer<ConfectionPlayer>().NeapoliniteSummonerSet = true;
         }
 

@@ -33,7 +33,8 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 10mph you go damage is increased by 4% and critical strike chance is increased by 2% which will last for 5 seconds. This stacks up to 5 times";
+            player.setBonus = "Every 10mph you go damage is increased by 4% and critical strike chance" 
+                + "\nis increased by 2% which will last for 5 seconds. This stacks up to 5 times";
             int rank;
             float len = player.velocity.Length();
             if (len >= 11f)

@@ -225,6 +225,10 @@ namespace TheConfectionRebirth
                     itemDrop = !Main.hardMode ? ModContent.ItemType<Items.Placeable.BananaSplitCrate>() : ModContent.ItemType<Items.Placeable.ConfectionCrate>();
                 }
             }
+            if (inWater && inConfectionSurfaceBiome && Main.hardMode && Main.rand.Next(50) == 0)
+            {
+                itemDrop = ModContent.ItemType<Items.Weapons.Minions.GummyFish.GummyStaff>();
+            }
         }
         const int oneStageNeapolioniteSummoner = 8 * 60;
         public override void PostUpdate()

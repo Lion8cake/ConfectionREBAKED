@@ -30,7 +30,8 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "For every 50 mana consumed in the past 3 seconds, summon an additional strawberry per attack. Caps at 5 strawberries.";
+            player.setBonus = "For every 50 mana consumed in the past 3 seconds," 
+                + "\nsummon an additional strawberry per attack. Caps at 5 strawberries.";
             ConfectionPlayer playerFuncs = player.GetModPlayer<ConfectionPlayer>();
             playerFuncs.NeapoliniteMagicSet = true;
             int rank = playerFuncs.ManaConsumed / 50;

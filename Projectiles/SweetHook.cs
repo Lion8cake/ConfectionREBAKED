@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Projectiles
 		public override void GrappleTargetPoint(Player player, ref float grappleX, ref float grappleY)
 		{
 			Vector2 dirToPlayer = Projectile.DirectionTo(player.Center);
-			float hangDist = 50f;
+			float hangDist = 10f;
 			grappleX += dirToPlayer.X * hangDist;
 			grappleY += dirToPlayer.Y * hangDist;
 		}

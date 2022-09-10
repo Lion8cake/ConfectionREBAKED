@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 20;
+            Item.damage = 40;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 18;
             Item.useTime = 24;

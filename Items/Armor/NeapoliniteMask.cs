@@ -42,7 +42,9 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 80 damage delt will increase critical strick chance by 2% for 5 seconds, once 10% critical strick chance has been reached defence is ignored for 5 seconds";
+            player.setBonus = "Every 80 damage delt will increase critical strick chance by 2%" 
+                + "\nfor 5 seconds, once 10% critical strick chance has been reached defence is" 
+                + "\nignored for 5 seconds";
             
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
             int rank = Math.Min(damage, 400) / 80 - 1;

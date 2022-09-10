@@ -12,15 +12,15 @@ namespace TheConfectionRebirth.Items.Accessories
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(145, 14f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(145, 15f, 2.5f);
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 20;
-            Item.value = 10000;
-            Item.rare = ItemRarityID.Green;
+            Item.value = 400000;
+            Item.rare = ItemRarityID.Yellow;
             Item.accessory = true;
         }
 

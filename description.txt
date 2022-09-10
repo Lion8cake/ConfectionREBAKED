@@ -6,39 +6,30 @@ The Confection Uses Alternate Libraries mod to be able to be compatible with oth
 This is still a version of confection which is in active delopment so if there is any bugs you have found please report in our discord.
 
 Even though the 1.3 version is discontinued we would still recomend you use the 1.3 version.
-As of this version of the confection the confection should now be completable.
 
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
-0.14.1 The Iscreamer Patch
-===========================================
--Fixed timing with Iscreamers being way to fast and annoying
--Fixed Iscreamers being able to teleport target dummies
--Added rare confection background
--Fixed stackability of the Popsoda
-
-===========================================
-0.14.0
-===========================================
--Removed Death's raze, soul of spite and True Death's raze
--Updated True Sucrosa
--Nerfed True Sucrosa's damage
--Fixed True Sucrosa's recipe
--Nerfed Icecream Bell
--Fixed Neapolinite Repeater
--Fixed Pop rocket
--Fixed Spear of Cavendes
--Readded all weapons apart from the summon weapons from the 1.3 version
--Added Confection Pylon
--Fixed Pylons working in confection biome
--Changed the Snow confection background to work well with 4 layers
--Changed Sugar water to use its own projectile and not the cream solution projectile
--Changed how 4 layered backgrounds work
--Fixed Confection music being to gritty
--Changed Cream of Kickn'
--Changed Crema of Kickn' description to match the changes
+Reworked Sweet tooth
+Fixed ores not generating in creamstone
+Buffed the Cookie Pike-let
+Fixed sweet hook's hitbox
+Fixed banners not giving buffs to their respective npc
+Fixed neapolinite set bonus description not using mutiple lines
+Fixed all wings having incorect acceleration, rarity, sell price and craftability
+Fixed cookie wheel sprite sheet and not hiding the players legs
+Fixed gummy set sprite sheet
+Fixed hair not showing under some hats
+Readded item sprites to banners
+Changed file position of the kazoo (wont effect anything in-game)
+Readded Heavenly bag (thanks all for the support)
+Readded quest fish (quests yet to come)
+Fixed being able to see pink lines under swaying confection trees while at max zoom
+Readded pets
+Readded summons
+Fixed glowing of birdnana light pet from a red color to a yellow color
+Added Gastropod summon animation
 
 ===========================================
 Credit - Programmers
@@ -48,9 +39,10 @@ Cace - For Altlib and 1.3 the very tricky tile spreading code, the RoD alt and m
 Yreorel - For much of the reworks for different items as well as maaking the Icescreamer AI
 FoxXD_ - For Altlib, cream fox pet, old biome chest, old biome generation, cleaning up part of confection's bad code and Adding Alternating and 4 layered backgrounds
 Ghasttear1 - For the 1.3 menu UI
-foxyboy55 - many bug fixes an a few texture changes
+DavidF-Dev - Otherworldly music switcher that he allowed for us to use
 CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
+foxyboy55 - many bug fixes an a few texture changes
 
 ===========================================
 Credit - Artists

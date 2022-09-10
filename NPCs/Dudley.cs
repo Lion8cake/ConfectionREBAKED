@@ -1,10 +1,12 @@
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Pets.DudlingPet;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -40,6 +42,11 @@ namespace TheConfectionRebirth.NPCs
 
                 new FlavorTextBestiaryInfoElement("A Small chocolate pile that moves slowly around the underground confection desert. It will not seek harm on anyone but if it is touched it will hurt the attacker.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TaffyApple>(), 10));
         }
 
         public override void HitEffect(int hitDirection, double damage)
