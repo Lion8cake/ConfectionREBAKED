@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -13,7 +15,7 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.height = 38;
             Projectile.friendly = true;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 10;
+            Projectile.timeLeft = 600;
             Projectile.ai[0] = 0;
         }
 
@@ -34,28 +36,46 @@ namespace TheConfectionRebirth.Projectiles
             
             Player test = Main.player[Projectile.owner];
             float x1 = Projectile.position.X;
-            float y1 = Projectile.position.Y;
             float x2 = Projectile.position.X + Projectile.width;
+            float y1 = Projectile.position.Y;
             float y2 = Projectile.position.Y + Projectile.height;
+
+            NPC found = null;
+            float dist = warpRad;
+            for (int x = 0; x < Main.maxNPCs; x++)
+            {
+                NPC target = Main.npc[x];
+                Vector2 diff = target.Center - Projectile.Center;
+                float giveDist = MathF.Max(target.width, target.height);
+                float detect = giveDist + dist;
+                float len = diff.LengthSquared();
+
+                if (target.boss == false && len < detect * detect)
+                {
+                    found = target;
+                    dist = MathF.Sqrt(len);
+                }
+            }
+            if (found != null)
+            {
+                Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
+                found.position.X = warppoint.position.X;
+                found.position.Y = warppoint.position.Y;
+                Projectile.ai[0] = 1;
+                Projectile.Kill();
+                return;
+            }
+
             if (test != null && test.active && test.position.X + test.width > x1 && test.position.X < x2 && test.position.Y + test.height > y1 && test.position.Y < y2)
             {
-                OnHitPlayer(test)
+                OnHitPlayer(test);
             }
         }
 
-        const float warpRad = 144;
-        public override bool CanHitNPC(NPC target, int damage, float knockback, bool crit)
+        const float warpRad = 16;
+
+        public override bool? CanHitNPC(NPC target)
         {
-            Vector2 diff = target.Center - Projectile.Center;
-            float detectRad = warpRad + MathF.Max(target.width, target.height);
-            if(target.boss == false && diff.X > -detectRad && diff.X < detectRad && diff.Y > -detectRad && diff.Y < detectRad && diff.LengthSquared() < detectRad * detectRad)
-            {
-                Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
-                target.position.X = warppoint.position.X;
-                target.position.Y = warppoint.position.Y;
-                Projectile.ai[0] = 1;
-                Projectile.Kill();
-            }
             return false;
         }
         void OnHitPlayer(Player target)
@@ -87,6 +107,7 @@ namespace TheConfectionRebirth.Projectiles
                         owner.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((owner.statLifeMax2 + owner.statDefense) * (owner.endurance + 1) / 7), 0);
                     }
                     owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
+                    return true;
                 }
                 owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
             }
