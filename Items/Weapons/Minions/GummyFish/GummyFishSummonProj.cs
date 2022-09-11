@@ -6,18 +6,18 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Weapons.Minions.GummyFish
 {
-    public class GummyFishSummonProj : ModProjectile
+    public class GummyFishSummonProj : MinionBaseClass<GummyFishSummonBuff>
 	{
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[Projectile.type] = 4;
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-			Main.projPet[Projectile.type] = true;
-			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			base.SetStaticDefaults();
 		}
 
-		public sealed override void SetDefaults() {
+		public sealed override void SetDefaults()
+		{
+			base.SetDefaults();
 			Projectile.width = 18;
 			Projectile.height = 28;
 			Projectile.tileCollide = false;
@@ -35,7 +35,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.GummyFish
 			return true;
 		}
 
-		public override void AI() {
+		public override void MinionAI(Player owner) {
 			Player player = Main.player[Projectile.owner];
 			
 			Projectile.rotation = Projectile.velocity.X * 0.05f;
@@ -156,5 +156,15 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.GummyFish
 				}
 			}
 		}
+
+        public override void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public override void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
