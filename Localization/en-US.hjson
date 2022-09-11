@@ -45,23 +45,28 @@ Mods: {
 		
 		ItemName: {
 			SweetStaff: "Sweet Staff"
+			GummyStaff: "Gummy Staff"
 		}
 
 		ItemTooltip: {
 			SweetStaff: "Summons roller cookies to fight for you"
+			GummyStaff: "Summons a Flying gummy fish to fight for you"
 		}
 
 		BuffName: {
 			RollerCookieSummonBuff: "Roller Cookie"
+			GummyFishSummonBuff: "Flying Gummy Fish"
 		}
 
 		BuffDescription: {
 			RollerCookieSummonBuff: "The roller cookie will fight for you"
+			GummyFishSummonBuff: "Flying gummy fish will fly after your enemies."
 		}
 
 		ProjectileName: {
 			RollerCookieSummonProj: "Roller Cookie"
 			MiniRollerCookieSummonersShine: "Extra Cookie"
+			GummyFishSummonProj: "Gummy Fish"
 		}
 	}
 }
