@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TheConfectionRebirth.Util;
 using static TheConfectionRebirth.SummonersShineCompat;
 
@@ -121,6 +122,13 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             Projectile.minionSlots = 0;
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            lightColor = Color.White;
+            lightColor.A = 220;
+            return true;
+        }
+
         public static void ForceMinionPostAI(Projectile self)
         {
             Lighting.AddLight(self.Center, 2f, 0.5f, 0.25f);
@@ -146,11 +154,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             }
         }
 
-        public void Attack(Vector2 displacement, Vector2 direction)
+        public void Attack(Vector2 displacement, Vector2 direction, int target)
         {
             displacement.X = -displacement.X;
             direction.X = -direction.X;
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ProjectileID.CrystalStorm, Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ModContent.ProjectileType<DuchessPrincessRockCandy>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target, Main.rand.Next(7));
         }
 
         public void IdlePosition()
@@ -191,7 +199,9 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 int target = -1; Projectile.Minion_FindTargetInRange(1400, ref target, false);
                 if (target != -1)
                 {
-                    Attack(new(-8, 0), new(-8, 0));
+                    Attack(new(-8, 0), new(-8, 0), target);
+                    Attack(new(-8, 0), new(-6, 3), target);
+                    Attack(new(-8, 0), new(-3, -3), target);
                     Projectile.ai[0] = 39;
                 }
             }
@@ -199,7 +209,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 if (Projectile.ai[0] == 20)
                 {
                     int target = -1; Projectile.Minion_FindTargetInRange(1400, ref target, false);
-                    if (target != -1) Attack(new(8, 0), new(8, 0));
+                    if (target != -1) Attack(new(8, 0), new(8, 0), target);
                 }
                 Projectile.ai[0] -= 1;
             }
