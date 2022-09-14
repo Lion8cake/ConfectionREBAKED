@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Utils
 {
@@ -15,6 +16,26 @@ namespace TheConfectionRebirth.Utils
         public float prefixMinionPower;
         public float kb;
         public Projectile projectile;
+    }
+
+    public class ConfectionPlayerMinionScaler : ModPlayer
+    {
+        List<MinionAutoScaler> minions;
+        public override void PreUpdate()
+        {
+            minions.ForEach(m => m.Scale());
+        }
+
+        public T GetAutoScaler<T>() where T : MinionAutoScaler, new()
+        {
+            T rv = minions.Find(i => i as T != null) as T;
+            if (rv == null)
+            {
+                rv = new T();
+                minions.Add(rv);
+            }
+            return rv;
+        }
     }
     public abstract class MinionAutoScaler
     {
