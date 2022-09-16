@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
         public override int UseStyleID => 4;
     }
-    internal class DuchessPrincessSummonBuff : MinionBuffBaseClass<DuchessCrystal>
+    internal class DuchessPrincessSummonBuff : MinionBuffBaseClass<DuchessPrincess>
     {
     }
 
@@ -34,6 +34,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
         {
             base.SetStaticDefaults();
             Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
@@ -49,6 +50,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             {
                 DuchessPrincessAutoScaler scaler = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayerMinionScaler>().GetAutoScaler<DuchessPrincessAutoScaler>();
                 scaler.Remove_From(Projectile);
+                if (scaler.From.Count == 0 && scaler.Directed.Count > 0)
+                    scaler.Directed[0].Kill();
                 scaler.Scale();
             }
         }
@@ -187,13 +190,13 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             {
                 Projectile.velocity = diff + player.velocity;
             }
-            else if(len < 400)
+            else if(len < 160)
             {
                 Projectile.velocity = diff * 4 / len + player.velocity;
             }
             else
             {
-                Projectile.velocity = diff / 10 + player.velocity;
+                Projectile.velocity = diff / 40 + player.velocity;
             }
             Projectile.direction = player.direction;
             Projectile.spriteDirection = player.direction;
