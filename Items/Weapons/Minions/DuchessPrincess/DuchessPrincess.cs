@@ -50,8 +50,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             {
                 DuchessPrincessAutoScaler scaler = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayerMinionScaler>().GetAutoScaler<DuchessPrincessAutoScaler>();
                 scaler.Remove_From(Projectile);
-                if (scaler.From.Count == 0 && scaler.Directed.Count > 0)
-                    scaler.Directed[0].Kill();
                 scaler.Scale();
             }
         }
