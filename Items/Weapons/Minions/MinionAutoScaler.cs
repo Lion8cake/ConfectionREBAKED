@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +33,10 @@ namespace TheConfectionRebirth.Util
             minions.Clear();
         }
 
+        public override void PreUpdate()
+        {
+            minions.ForEach(x => x.Scale());
+        }
         public T GetAutoScaler<T>() where T : MinionAutoScaler, new()
         {
             T rv = minions.Find(i => i as T != null) as T;
