@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,23 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
     {
         public override int Damage => 27;
         public override float Knockback => 6;
+        internal override bool SummonersShine_GetMinionPower(SummonersShineCompat.MinionPowerCollection minionPower)
+        {
+            minionPower.AddMinionPower(1);
+            return true;
+        }
+
+        public override int SummonersShine_MaxEnergy => 600;
+
+        internal override List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, Item item, List<Projectile> valid)
+        {
+            return valid;
+        }
+
+        internal override Entity SummonersShine_SpecialAbilityFindTarget(Player player, Vector2 mousePos)
+        {
+            return Main.player[Main.myPlayer];
+        }
 
         public override int UseStyleID => 4;
     }
@@ -112,6 +129,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
             if (SummonersShine != null)
             {
+                ProjectileOnCreate_SetMaxEnergy(Projectile.type, 600);
                 ProjectileOnCreate_SetMinionPostAIPostRelativeVelocity(Projectile.type, ForceMinionPostAI);
             }
         }
@@ -144,6 +162,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             {
                 ForceMinionPostAI(Projectile);
             }
+            else if(Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<DuchessPrincessItem>()))
+            {
+                Projectile.IncrementSpecialAbilityTimer(600);
+            }
         }
 
         public override void Kill(int timeLeft)
@@ -162,7 +184,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 displacement.X = -displacement.X;
                 direction.X = -direction.X;
             }
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ModContent.ProjectileType<DuchessPrincessRockCandy>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target, Main.rand.Next(7));
+            int ai1 = Main.rand.Next(7);
+            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<DuchessPrincessItem>()))
+                ai1 += 7;
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ModContent.ProjectileType<DuchessPrincessRockCandy>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target, ai1);
         }
 
         public void IdlePosition()
@@ -290,6 +315,10 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
         public override void SummonersShine_OnSpecialAbilityUsed(Projectile projectile, Entity target, int SpecialType, bool FromServer)
         {
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.castingSpecialAbilityTime, 0);
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energy, 0f);
+            ModSupport_SetVariable_ProjData(projectile, ProjectileDataVariableType.energyRegenRateMult, 0f);
+            ModSupport_SetVariable_ProjData(Projectile, ProjectileDataVariableType.specialCastPosition, Vector2.Zero);
         }
 
         public override void SummonersShine_TerminateSpecialAbility(Projectile projectile, Player owner)

@@ -34,9 +34,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
         internal virtual Entity SummonersShine_SpecialAbilityFindTarget(Player player, Vector2 mousePos) { return null; }
         //note - this is treated as static. Do not use the "this" parameter.
         internal virtual List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, Item item, List<Projectile> valid) { return valid; }
-        public override void SetStaticDefaults()
+        public sealed override void SetStaticDefaults()
         {
             ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+            ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
+            ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 
             //Always check
             if (SummonersShine != null)
@@ -67,7 +69,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
             Item.buffType = BuffType<T>();
             Item.shoot = ProjectileType<U>();
         }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        public sealed override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (player.altFunctionUse != 2)
             {
@@ -77,7 +79,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
                 player.SpawnMinionOnCursor(Item.GetSource_FromThis(), player.whoAmI, type, Item.damage, knockback);
             }
         }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public sealed override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             return false;
         }
@@ -92,13 +94,13 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
     public abstract class MinionBuffBaseClass<T> : ModBuff
         where T : ModProjectile
     {
-        public override void SetStaticDefaults()
+        public sealed override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }
 
-        public override void Update(Player player, ref int buffIndex)
+        public sealed override void Update(Player player, ref int buffIndex)
         {
             if (player.ownedProjectileCounts[ProjectileType<T>()] > 0)
             {
