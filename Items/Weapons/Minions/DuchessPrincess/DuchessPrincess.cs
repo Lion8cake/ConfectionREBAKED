@@ -179,6 +179,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
         public void Attack(Vector2 displacement, Vector2 direction, int target)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             if (Projectile.spriteDirection == -1)
             {
                 displacement.X = -displacement.X;
