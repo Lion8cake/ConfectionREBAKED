@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +42,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
     public class DuchessPrincessAutoScaler : MinionAutoScaler
     {
-        public override float DamagePerMinion => 0.5f;
-        public override float InitialDamageMod => 0.5f;
+        public override float DamagePerMinion => 0.3f;
+        public override float InitialDamageMod => 0.7f;
     }
     internal class DuchessCrystal : MinionBaseClass<DuchessPrincessSummonBuff>
     {
