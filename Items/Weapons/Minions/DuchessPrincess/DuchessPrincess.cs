@@ -25,7 +25,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
     public class DuchessPrincessAutoScaler : MinionAutoScaler
     {
-        
+        public override float DamagePerMinion => 0.5f;
+        public override float InitialDamageMod => 0.5f;
     }
     internal class DuchessCrystal : MinionBaseClass<DuchessPrincessSummonBuff>
     {
@@ -125,7 +126,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
         public override bool PreDraw(ref Color lightColor)
         {
             lightColor = Color.White;
-            lightColor.A = 220;
             return true;
         }
 
@@ -156,8 +156,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
         public void Attack(Vector2 displacement, Vector2 direction, int target)
         {
-            displacement.X = -displacement.X;
-            direction.X = -direction.X;
+            if (Projectile.spriteDirection == -1)
+            {
+                displacement.X = -displacement.X;
+                direction.X = -direction.X;
+            }
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ModContent.ProjectileType<DuchessPrincessRockCandy>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target, Main.rand.Next(7));
         }
 
@@ -180,13 +183,17 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             }
             Vector2 diff = pos - Projectile.Center;
             float len = diff.Length();
-            if (len < 4)
+            if (len < 4 || len > 1600)
             {
                 Projectile.velocity = diff + player.velocity;
             }
-            else
+            else if(len < 400)
             {
                 Projectile.velocity = diff * 4 / len + player.velocity;
+            }
+            else
+            {
+                Projectile.velocity = diff / 10 + player.velocity;
             }
             Projectile.direction = player.direction;
             Projectile.spriteDirection = player.direction;

@@ -68,32 +68,39 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
         }
         public override bool PreDraw(ref Color lightColor)
         {
+
+            float alphaRatio = 1;
+            if (Projectile.timeLeft < 120)
+            {
+                alphaRatio = (Projectile.timeLeft / 120f);
+            }
             switch (Projectile.ai[1])
             {
                 case 0:
-                    lightColor = Color.Green;
+                    lightColor = new(100, 255, 100);
                     break;
                 case 1:
-                    lightColor = Color.LightBlue;
+                    lightColor = new(150, 200, 255);
                     break;
                 case 2:
                     lightColor = Color.PaleVioletRed;
                     break;
                 case 3:
-                    lightColor = Color.Turquoise;
+                    lightColor = new(200, 200, 100);
                     break;
                 case 4:
-                    lightColor = Color.LightYellow;
+                    lightColor = new(200, 200, 50);
                     break;
                 case 5:
-                    lightColor = Color.Pink;
+                    lightColor = new(255, 50, 100);
                     break;
                 case 6:
-                    lightColor = Color.LimeGreen;
+                    lightColor = new(150, 255, 100);
                     break;
             }
+            lightColor.A = 150;
 
-            lightColor.A = 10;
+            lightColor *= alphaRatio;
 
 
             Main.instance.LoadProjectile(Projectile.type);
