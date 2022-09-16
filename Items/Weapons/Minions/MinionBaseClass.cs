@@ -181,6 +181,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
             {
                 Projectile.timeLeft = 2;
             }
+            else
+                return;
             MinionAI(Main.player[Projectile.owner]);
         }
 
