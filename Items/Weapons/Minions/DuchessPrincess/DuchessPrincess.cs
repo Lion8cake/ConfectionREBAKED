@@ -60,7 +60,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 DuchessPrincessAutoScaler scaler = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayerMinionScaler>().GetAutoScaler<DuchessPrincessAutoScaler>();
                 if (Projectile.localAI[0] == 0)
                 {
-                    Projectile.localAI[0] = 1;
+                    Projectile.localAI[0] = Main.rand.Next(7, 13);
                     scaler.Add_From(Projectile);
                 }
                 if (scaler.Directed.Count == 0)
@@ -79,7 +79,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             }
 
             Projectile.frameCounter += 1;
-            Projectile.frameCounter %= 10;
+            Projectile.frameCounter %= (int)Projectile.localAI[0];
             if (Projectile.frameCounter != 0)
                 return;
             Projectile.frame += 1;
