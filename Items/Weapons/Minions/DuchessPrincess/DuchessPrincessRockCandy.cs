@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             Projectile.friendly = true;
             Projectile.timeLeft = 600;
             Projectile.penetrate = -1;
-            Projectile.localNPCHitCooldown = 60;
+            Projectile.localNPCHitCooldown = 200;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = false;
         }
@@ -54,7 +54,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 if (npc.CanBeChasedBy(Projectile) || npc.CanBeChasedBy(player))
                 {
                     float disttest = (npc.Center - Projectile.Center).LengthSquared();
-                    if (disttest > dist && disttest < 16 * 40 * 16 * 40)
+                    if (disttest > dist && disttest < 16 * 40 * 16 * 40 && (Projectile.ai[0] == x || Main.rand.Next(1, 3) < 3))
                     {
                         Projectile.ai[0] = x;
                         dist = disttest;
@@ -75,7 +75,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                     Projectile.timeLeft = (int)(Projectile.timeLeft * Projectile.SummonersShine_GetMinionPower(0));
             }
             if (Projectile.ai[0] == -1)
+            {
+                if (Projectile.ai[1] >= 7)
+                    ChangeTarget();
                 return;
+            }
             NPC target = Main.npc[(int)Projectile.ai[0]];
             if (!target.active)
             {
@@ -94,7 +98,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             float dotNum = Vector2.Dot(Projectile.velocity, disp);
             Vector2 dot = disp * dotNum;
             Projectile.velocity -= dot;
-            float correction = Projectile.ai[1] >= 7 ? 0.95f : 0.995f;
+            float correction = Projectile.ai[1] >= 7 ? 0.98f : 0.995f;
             Projectile.velocity *= correction;
             Projectile.velocity += dot;
 
