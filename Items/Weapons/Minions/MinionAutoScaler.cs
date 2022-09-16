@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Util
 {
-    public class MiniMinionStat
+    public struct MiniMinionStat
     {
         public float speed;
         public float damage;
@@ -16,6 +16,24 @@ namespace TheConfectionRebirth.Util
         public float prefixMinionPower;
         public float kb;
         public Projectile projectile;
+
+        public MiniMinionStat(Projectile proj)
+        {
+            projectile = proj;
+            damage = proj.originalDamage;
+            kb = proj.knockBack;
+            if (SummonersShineCompat.SummonersShine != null)
+            {
+                speed = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.MinionASMod);
+                crit = (int)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.ProjectileCrit);
+                prefixMinionPower = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.PrefixMinionPower);
+            }
+            else {
+                speed = 0;
+                crit = 0;
+                prefixMinionPower = 0;
+            }
+        }
     }
 
     public class ConfectionPlayerMinionScaler : ModPlayer
@@ -100,16 +118,7 @@ namespace TheConfectionRebirth.Util
 
         public void Add_From(Projectile proj)
         {
-            MiniMinionStat stat = new MiniMinionStat();
-            stat.projectile = proj;
-            stat.damage = proj.originalDamage;
-            stat.kb = proj.knockBack;
-            if (SummonersShineCompat.SummonersShine != null)
-            {
-                stat.speed = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.MinionASMod);
-                stat.crit = (int)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.ProjectileCrit);
-                stat.prefixMinionPower = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.PrefixMinionPower);
-            }
+            MiniMinionStat stat = new MiniMinionStat(proj);
             From.Add(stat);
         }
 
