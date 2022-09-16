@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -54,7 +54,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 if (npc.CanBeChasedBy(Projectile) || npc.CanBeChasedBy(player))
                 {
                     float disttest = (npc.Center - Projectile.Center).LengthSquared();
-                    if (disttest > dist && disttest < 16 * 20 * 16 * 20)
+                    if (disttest > dist && disttest < 16 * 40 * 16 * 40)
                     {
                         Projectile.ai[0] = x;
                         dist = disttest;
