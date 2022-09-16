@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess;
 using TheConfectionRebirth.Items.Weapons.Minions.RollerCookie;
 using static Terraria.ModLoader.ModContent;
 
@@ -53,7 +54,10 @@ namespace TheConfectionRebirth.ModSupport
                 //returns image. base images off bubble.png scaled 2x.
                 disp = 0;
             }
-            if(disp != -1)
+            else if(ItemType == ItemType<DuchessPrincessItem>())
+                disp = 1;
+
+            if (disp != -1)
                 return new(ThoughtBubble, new(Frame * 40, 40 * disp, 40, 40));
             return null;
         }
