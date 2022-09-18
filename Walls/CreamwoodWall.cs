@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Walls
             Main.wallHouse[Type] = true;
             ItemDrop = ModContent.ItemType<Items.Placeable.CreamwoodWall>();
             DustType = ModContent.DustType<CreamwoodDust>();
-            AddMapEntry(new Color(74, 61, 43));
+            AddMapEntry(new Color(61, 39, 27));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

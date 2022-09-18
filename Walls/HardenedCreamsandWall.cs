@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
-            AddMapEntry(new Color(74, 61, 43));
+            AddMapEntry(new Color(35, 21, 19));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

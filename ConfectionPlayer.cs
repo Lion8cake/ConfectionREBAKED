@@ -8,6 +8,10 @@ using Terraria.Utilities;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using TheConfectionRebirth.Util;
+using TheConfectionRebirth.Items.Weapons;
+using System.Reflection.Metadata;
+using Terraria;
+using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth
 {
@@ -313,6 +317,16 @@ namespace TheConfectionRebirth
         {
             StackableBuffData.SwirlySwarm.DeleteBuff(Player);
             neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - (neapoliniteSummonTimer % oneStageNeapolioniteSummoner) - oneStageNeapolioniteSummoner * 2, 0);
+        }
+
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        {
+            if (Player.HeldItem.type == ModContent.ItemType<NeapoliniteJoustingLance>() && Player.ownedProjectileCounts[ModContent.ProjectileType<NeapoliniteJoustingLanceProjectile>()] == 1)
+            {
+                Player.channel = false;
+                Player.itemAnimation = 0;
+                Player.itemAnimationMax = 0;
+            }
         }
     }
 }

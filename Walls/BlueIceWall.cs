@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<OrangeIceDust>();
-            AddMapEntry(new Color(74, 61, 43));
+            AddMapEntry(new Color(118, 72, 51));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

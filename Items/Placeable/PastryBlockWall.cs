@@ -27,7 +27,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<PastryBlock>()).Register();
+            CreateRecipe(4).AddIngredient(ModContent.ItemType<PastryBlock>()).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

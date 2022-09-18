@@ -15,7 +15,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
         {
             Item.width = 26;
             Item.height = 22;
-            Item.maxStack = 99;
+            Item.maxStack = 999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(2).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(2).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 1).Register();
         }
     }
 }

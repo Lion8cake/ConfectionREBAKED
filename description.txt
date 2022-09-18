@@ -3,33 +3,32 @@ Confection REBAKED (Alternate Hallowed mod)
 ===========================================
 The Confection Uses Alternate Libraries mod to be able to be compatible with other alternate biome mods
 
-This is still a version of confection which is in active delopment so if there is any bugs you have found please report in our discord.
-
-Even though the 1.3 version is discontinued we would still recomend you use the 1.3 version.
+You are 100% able to port 1.3 confection worlds to 1.4 tmodloader ALTHOUGH your world will turn to being hallowed as registration for worlds being confection or not are different in 1.4 due to altlib.
 
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
-Reworked Sweet tooth
-Fixed ores not generating in creamstone
-Buffed the Cookie Pike-let
-Fixed sweet hook's hitbox
-Fixed banners not giving buffs to their respective npc
-Fixed neapolinite set bonus description not using mutiple lines
-Fixed all wings having incorect acceleration, rarity, sell price and craftability
-Fixed cookie wheel sprite sheet and not hiding the players legs
-Fixed gummy set sprite sheet
-Fixed hair not showing under some hats
-Readded item sprites to banners
-Changed file position of the kazoo (wont effect anything in-game)
-Readded Heavenly bag (thanks all for the support)
-Readded quest fish (quests yet to come)
-Fixed being able to see pink lines under swaying confection trees while at max zoom
-Readded pets
-Readded summons
-Fixed glowing of birdnana light pet from a red color to a yellow color
-Added Gastropod summon animation
+Added Saccharite lash
+Readded all other old 1.3 tmodloader items
+Changed backgrounds slightly
+Fixed Creamstone filled gems and allows them to generate
+Fixed Sherbert wall not being rainbow
+Changed creamstone wall
+Added Cracking Confection Wall
+Added Confectionary Crystal Wall
+Added Lined Confection Gem Wall
+Added melting Confection Wall
+Changed map colours for some walls
+Added Artifical walls
+Fixed Saccharite to grow on Orange Ice
+Added Ancient Neapolinite headgear
+Added Ancient Neapolinite Hat
+Added Ancient Neapolinite Helmet
+Added Ancient Cosmic Cookie Cannon
+Added Soul of delight in a bottle
+Added Confection Mimic banner
+Added Neapolinite Jousting Lance
 
 ===========================================
 Credit - Programmers

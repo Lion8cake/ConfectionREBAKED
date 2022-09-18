@@ -27,7 +27,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<SherbetBricks>()).Register();
+            CreateRecipe(4).AddIngredient(ModContent.ItemType<SherbetBricks>()).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

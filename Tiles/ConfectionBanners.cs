@@ -120,6 +120,9 @@ namespace TheConfectionRebirth.Tiles
                 case 27:
                     item = "CherryBomber";
                     break;
+                case 28:
+                    item = "ConfectionMimic";
+                    break;
                 default:
                     return;
 
@@ -219,6 +222,9 @@ namespace TheConfectionRebirth.Tiles
                         break;
                     case 27:
                         type = "CherryBomber";
+                        break;
+                    case 28:
+                        type = "BigMimicConfection";
                         break;
                     default:
                         return;

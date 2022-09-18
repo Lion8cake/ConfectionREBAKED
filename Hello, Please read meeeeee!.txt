@@ -7,9 +7,9 @@ Thanks fox for the warning
 
 - Lion8cake
 
-THIS VERSION IS UNSTABLE 
-PLEASE TAKE NOTE OF THAT 
+This version as of 0.16.0 is now stable
+Thanks for your support
 
-this is the Fithteenth snapshot of the confection for tmod 1.4 :)
+this is the Sixteenth snapshot of the confection for tmod 1.4 :)
 
 -Lion8cake

@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<CreamstoneBrick>()).Register();
+            CreateRecipe(4).AddIngredient(ModContent.ItemType<CreamstoneBrick>()).AddTile(TileID.WorkBenches).Register();
         }
     }
 }
