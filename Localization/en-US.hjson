@@ -34,12 +34,22 @@ Mods: {
 			{1}x extra-cookie knockback
 			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
 			'''
+			DuchessPrincessItem:
+			'''
+			{$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} for your Candy Fairy to shoot Super Candies which change targets every time they hit an enemy! 
+			{1}x super candy duration
+			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
+			'''
 		}
 
 		SummonSpecialCompressed: {
 			SweetStaff:
 			'''
 			{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} extra-cookie knockback
+			'''
+			DuchessPrincessItem:
+			'''
+			{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} super candy duration
 			'''
 		}
 		

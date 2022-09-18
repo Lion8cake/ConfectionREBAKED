@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 
@@ -18,7 +19,7 @@ namespace TheConfectionRebirth
 	/// <summary>
 	/// Central file used for mod.Call wrappers.
 	/// </summary>
-
+	
 	internal class SummonersShineCompat : ModSystem
 	{
 		internal static readonly Version apiVersion = new Version(0, 0, 1);
@@ -130,7 +131,7 @@ namespace TheConfectionRebirth
 		public delegate Tuple<bool, float, float> GetPinPositions(List<Projectile> Valid, int BuffType, int ItemType);
 
 		/// <summary>
-		/// Call this in <see cref="ModBuff.SetStaticDefaults"/>. Overrides the buff minion energy display data, allowing you to display arbitrary data<br />
+		/// Call this in <see cref="ModBuff.SetStaticDefaults"/>. Allows you to assign multiple minions to a singular buff<br />
 		/// Return false in Item1 if you want to skip drawing altogether.
 		/// </summary>
 		/// <param name="BuffType">The Buff Type</param>
@@ -472,6 +473,21 @@ namespace TheConfectionRebirth
 		}
 
 		internal delegate Tuple<int, float, bool, int> OnHitNPCHook(Projectile projectile, Entity target, int damage, float knockback, bool crit, int hitDirection);
+
+		/// <summary>
+		/// Call this in <see cref="ModProjectile.SetStaticDefaults"/>. Sets the MinionModifyColor hook of all copies of the projectile upon creation.<br />
+		/// Modifies the color before drawing. I highly suggest you use PreDraw instead.
+		/// </summary>
+		/// <param name="ProjectileType">The Projectile Type of the projectile</param>
+		/// <param name="MinionModifyColor">
+		/// The function to run<br />
+		/// delegate Color MinionModifyColorHook(Projectile projectile, Color lightColor)
+		/// </param>
+		internal static void ProjectileOnCreate_SetMinionModifyColor(int ProjectileType, Func<Projectile, Color, Color> MinionModifyColor)
+		{
+			SummonersShine.Call(1, ProjectileType, 27, MinionModifyColor);
+		}
+
 		/// <summary>
 		/// Call this in <see cref="ModProjectile.SetStaticDefaults"/>. Sets the MinionCustomPreDraw hook of all copies of the projectile upon creation.<br />
 		/// This is just a tModLoader PreDraw hook
@@ -1490,11 +1506,11 @@ namespace TheConfectionRebirth
 		{
 			return (bool)SummonersShineCompat.SummonersShine.Call(10, 9, projectile, MaxTicks, DefaultEnergyRegenMult);
 		}
-
+		
 		/// <summary>
-		/// Increments the special ability timer, automatically resetting CastingSpecialAbilityTime, EnergyRegenRateMult, and calling MinionTerminateSpecialAbility if MaxTicks is reached.
-		/// </summary>
-		/// <param name="SourceItemID">The projectile's source item</param>
+		 /// Increments the special ability timer, automatically resetting CastingSpecialAbilityTime, EnergyRegenRateMult, and calling MinionTerminateSpecialAbility if MaxTicks is reached.
+		 /// </summary>
+		 /// <param name="SourceItemID">The projectile's source item</param>
 		public static void OverrideSourceItem(this Projectile projectile, int sourceItemID)
 		{
 			SummonersShine.Call(10, 11, projectile, sourceItemID);
@@ -1514,8 +1530,7 @@ namespace TheConfectionRebirth
 		/// Tuple.Item2: All minions' special power recharge progress fraction (ranges from 0-1)
 		/// </summary>
 		/// <param name="itemID">The projectile's source item</param>
-		public static Tuple<List<Projectile>, List<float>> GetPlayerMinionCollectionData(this Player player, int itemID)
-		{
+		public static Tuple<List<Projectile>, List<float>> GetPlayerMinionCollectionData(this Player player, int itemID) {
 
 			return (Tuple<List<Projectile>, List<float>>)SummonersShine.Call(10, 14, player, itemID);
 		}
@@ -1525,7 +1540,7 @@ namespace TheConfectionRebirth
 		/// </summary>
 		/// <param name="owner">The item's owner</param>
 		public static void ForciblyUseSpecialAbility(this Item item, Player owner)
-		{
+        {
 			SummonersShine.Call(10, 15, item, owner);
 		}
 
@@ -1538,6 +1553,11 @@ namespace TheConfectionRebirth
 		public static void ForciblyDisplayFinishedCooldown(this Player player, int itemID, bool playerHasMultipleMinions, bool golden)
 		{
 			SummonersShine.Call(10, 18, player, itemID, playerHasMultipleMinions, golden);
+		}
+
+		public static IEntitySource GetRespawnMinionEntitySource(this Projectile minion)
+		{
+			return (IEntitySource)SummonersShine.Call(10, 19, minion);
 		}
 	}
 }

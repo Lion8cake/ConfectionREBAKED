@@ -231,7 +231,7 @@ namespace TheConfectionRebirth
             }
             if (inWater && inConfectionSurfaceBiome && Main.hardMode && Main.rand.Next(50) == 0)
             {
-                itemDrop = ModContent.ItemType<Items.Weapons.Minions.GummyFish.GummyStaff>();
+                itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.DuchessPrincessItem>();
             }
         }
         const int oneStageNeapolioniteSummoner = 8 * 60;
