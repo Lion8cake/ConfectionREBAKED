@@ -12,9 +12,9 @@ using static TheConfectionRebirth.SummonersShineCompat;
 
 namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 {
-    internal class DuchessPrincessItem : MinionWeaponBaseClass<DuchessPrincessSummonBuff, DuchessCrystal>
+    internal class GummyStaff : MinionWeaponBaseClass<DuchessPrincessSummonBuff, DuchessCrystal>
     {
-        public override int Damage => 27;
+        public override int Damage => 17;
         public override float Knockback => 6;
         internal override bool SummonersShine_GetMinionPower(SummonersShineCompat.MinionPowerCollection minionPower)
         {
@@ -162,7 +162,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
             {
                 ForceMinionPostAI(Projectile);
             }
-            else if(Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<DuchessPrincessItem>()))
+            else if(Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<GummyStaff>()))
             {
                 Projectile.IncrementSpecialAbilityTimer(600);
             }
@@ -187,7 +187,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
                 direction.X = -direction.X;
             }
             int ai1 = Main.rand.Next(7);
-            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<DuchessPrincessItem>()))
+            if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<GummyStaff>()))
                 ai1 += 7;
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + displacement, direction, ModContent.ProjectileType<DuchessPrincessRockCandy>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target, ai1);
         }

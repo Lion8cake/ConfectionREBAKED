@@ -2,8 +2,8 @@
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Archived;
 using TheConfectionRebirth.Items.Weapons;
-using AltLibrary.Content.Items;
 
 namespace TheConfectionRebirth
 {
@@ -44,6 +44,19 @@ namespace TheConfectionRebirth
                 .AddIngredient(ItemID.BrokenHeroSword)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+
+            Recipe recipe3 = Recipe.Create(ItemID.SoulofNight);
+            recipe3.AddIngredient(ModContent.ItemType<SoulofSpite>())
+            .Register();
+            Recipe recipe4 = Recipe.Create(ItemID.NightsEdge);
+            recipe4.AddIngredient(ModContent.ItemType<DeathsRaze>())
+            .Register();
+            Recipe recipe5 = Recipe.Create(ItemID.TrueNightsEdge);
+            recipe5.AddIngredient(ModContent.ItemType<TrueDeathsRaze>())
+            .Register();
+            Recipe recipe6 = Recipe.Create(ItemID.NightKey);
+            recipe6.AddIngredient(ModContent.ItemType<KeyofSpite>())
+            .Register();
         }
     }
 }

@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using static TheConfectionRebirth.SummonersShineCompat;
 using static TheConfectionRebirth.SummonersShineCompat.MinionPowerCollection;
+using TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess;
 
 namespace TheConfectionRebirth.Items.Weapons.Minions
 {

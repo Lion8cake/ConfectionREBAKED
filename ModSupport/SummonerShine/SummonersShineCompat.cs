@@ -892,6 +892,7 @@ namespace TheConfectionRebirth
 			minionCDType,
 			drawBehindType,
 			ArmorIgnoredPerc,
+			PrefixMinionPower,
 		}
 
 		internal enum ProjectileDataVariableType

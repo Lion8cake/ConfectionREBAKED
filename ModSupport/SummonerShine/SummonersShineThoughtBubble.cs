@@ -54,7 +54,7 @@ namespace TheConfectionRebirth.ModSupport
                 //returns image. base images off bubble.png scaled 2x.
                 disp = 0;
             }
-            else if(ItemType == ItemType<DuchessPrincessItem>())
+            else if(ItemType == ItemType<GummyStaff>())
                 disp = 1;
 
             if (disp != -1)

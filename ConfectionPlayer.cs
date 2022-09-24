@@ -231,7 +231,7 @@ namespace TheConfectionRebirth
             }
             if (inWater && inConfectionSurfaceBiome && Main.hardMode && Main.rand.Next(50) == 0)
             {
-                itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.DuchessPrincessItem>();
+                itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.GummyStaff>();
             }
         }
         const int oneStageNeapolioniteSummoner = 8 * 60;
@@ -321,7 +321,7 @@ namespace TheConfectionRebirth
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (Player.HeldItem.type == ModContent.ItemType<NeapoliniteJoustingLance>() && Player.ownedProjectileCounts[ModContent.ProjectileType<NeapoliniteJoustingLanceProjectile>()] == 1)
+            if (Player.HeldItem.type == ModContent.ItemType<NeapoliniteJoustingLance>() && Player.ownedProjectileCounts[ModContent.ProjectileType<NeapoliniteJoustingLanceProjectile>()] >= 1)
             {
                 Player.channel = false;
                 Player.itemAnimation = 0;

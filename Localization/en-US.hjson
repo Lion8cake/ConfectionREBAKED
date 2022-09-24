@@ -55,32 +55,27 @@ Mods: {
 		
 		ItemName: {
 			SweetStaff: "Sweet Staff"
-			GummyStaff: "Gummy Staff"
-			DuchessPrincessItem: "Fairy Tooth"
+			GummyStaff: "Fairy Tooth"
 		}
 
 		ItemTooltip: {
 			SweetStaff: "Summons roller cookies to fight for you"
-			GummyStaff: "Summons a Flying gummy fish to fight for you"
-			DuchessPrincessItem: "Summons a Candy Fairy to protect you"
+			GummyStaff: "Summons a Candy Fairy to protect you"
 		}
 
 		BuffName: {
 			RollerCookieSummonBuff: "Roller Cookie"
-			GummyFishSummonBuff: "Flying Gummy Fish"
 			DuchessPrincessSummonBuff: "Candy Fairy"
 		}
 
 		BuffDescription: {
 			RollerCookieSummonBuff: "The roller cookie will fight for you"
-			GummyFishSummonBuff: "Flying gummy fish will fly after your enemies."
 			DuchessPrincessSummonBuff: "The Candy Fairy will instill diabetes in your enemies!"
 		}
 
 		ProjectileName: {
 			RollerCookieSummonProj: "Roller Cookie"
 			MiniRollerCookieSummonersShine: "Extra Cookie"
-			GummyFishSummonProj: "Gummy Fish"
 			DuchessPrincess: "Candy Fairy"
 		}
 	}

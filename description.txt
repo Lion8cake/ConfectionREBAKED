@@ -9,6 +9,15 @@ Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
+0.16.1
+======
+Added Fairy Tooth replacing gummy staff
+Fixed stop use bypass when hit with Neapolinite Jousting Lance
+Added recipes for old crimson items
+Removed unused stuff relating to the Saccharite Lash
+======
+0.16.0
+======
 Added Saccharite lash
 Readded all other old 1.3 tmodloader items
 Changed backgrounds slightly
