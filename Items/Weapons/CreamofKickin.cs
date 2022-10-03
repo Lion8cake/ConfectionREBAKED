@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using AltLibrary.Content.Items;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -42,7 +41,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			recipe.AddIngredient(ModContent.ItemType<Items.CreamPuff>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.CanofMeat>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 7);
-			recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 7);
+			recipe.AddIngredient(ItemID.SoulofNight, 7);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

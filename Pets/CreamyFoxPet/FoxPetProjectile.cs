@@ -21,9 +21,7 @@ namespace TheConfectionRebirth.Pets.CreamyFoxPet
 
 		public override bool PreAI() {
 			Player player = Main.player[Projectile.owner];
-
 			player.puppy = false;
-
 			return true;
 		}
 
@@ -33,6 +31,10 @@ namespace TheConfectionRebirth.Pets.CreamyFoxPet
 			if (!player.dead && player.HasBuff(ModContent.BuffType<FoxPet>())) {
 				Projectile.timeLeft = 2;
 			}
+		}
+
+		public override void PostAI()
+		{
 		}
 	}
 }
