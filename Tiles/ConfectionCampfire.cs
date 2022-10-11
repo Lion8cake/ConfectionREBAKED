@@ -9,6 +9,7 @@ using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles
 {
+    //Keep in mind this is my first time making an example of some of my own code so some of my explinations might sound weird
     public class ConfectionCampfire : ModTile
     {
         public int Timer;
@@ -24,7 +25,7 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLighted[Type] = true;
 
             DustType = ModContent.DustType<Dusts.ChipDust>();
-            AdjTiles = new int[] { TileID.Campfire };
+            AdjTiles = new int[] { TileID.Campfire }; //This sets the tile to be a campfire so some things like dst seed rain put out is already done
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.StyleHorizontal = true;
@@ -37,7 +38,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.HasOutlines[Type] = true;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Campfire");
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(254, 121, 2), name);
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)
@@ -48,30 +49,26 @@ namespace TheConfectionRebirth.Tiles
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            if (Main.tile[i, j].TileFrameY < 288 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 125)
+            if (Main.tile[i, j].TileFrameX < 52 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 125)
             {
-                player.AddBuff(BuffID.Campfire, 60);
-                Main.buffNoTimeDisplay[BuffID.Campfire] = true;
+                player.AddBuff(BuffID.Campfire, 5); //Gives the player the campfire buff when around the campfire in a 125x125 area around the campfires centre
+                Main.buffNoTimeDisplay[BuffID.Campfire] = true; //Stops the buff giving the time left when its given to the player
             }
 
-            if (Main.tile[i, j].TileFrameY < 288 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 3 && player.HeldItem.type == ItemID.MarshmallowonaStick)
+            if (Main.tile[i, j].TileFrameX < 52 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 3 && player.HeldItem.type == ItemID.MarshmallowonaStick)
             {
-                Timer++;
-                if (Main.rand.NextBool(5))
-                {
-                    Timer++;
-                }
+                Timer++; //A timer for a few seconds when holding a marshmellow on a stick over the campfire
                 if (Timer > 2200)
                 {
-                    player.HeldItem.TurnToAir();
-                    player.QuickSpawnItem(Entity.GetSource_None(), ItemID.CookedMarshmallow, 1);
-                    Timer = 0;
+                    player.HeldItem.TurnToAir(); //Deletes the Marshmellow on a stick
+                    player.QuickSpawnItem(Entity.GetSource_None(), ItemID.CookedMarshmallow, 1); //Gives the player a cooked marshmellow
+                    Timer = 0; //Resets the timer
                 }
             }
 
-            if (Main.rand.NextBool(5))
+            if (Main.tile[i, j].TileFrameX < 52 && Main.rand.NextBool(5))
             {
-                int num162 = Dust.NewDust(new Vector2(i * 16, j * 16), 0, 0, DustID.Smoke, 0, -2f, 128, default, 1f);
+                int num162 = Dust.NewDust(new Vector2(i * 16, j * 16), 0, -16, DustID.Smoke, 0, -2f, 128, default, 1f); //This spawns the smoke above the campfire, its not perfect but its better than not having any smoke at all
                 Main.dust[num162].noGravity = true;
             }
         }
@@ -79,7 +76,7 @@ namespace TheConfectionRebirth.Tiles
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frame = Main.tileFrame[TileID.Campfire];
-            frameCounter = Main.tileFrameCounter[TileID.Campfire];
+            frameCounter = Main.tileFrameCounter[TileID.Campfire];  //Animates the campfire tile
         }
 
         public override void MouseOver(int i, int j)
@@ -87,7 +84,7 @@ namespace TheConfectionRebirth.Tiles
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ConfectionCampfire>();
+            player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ConfectionCampfire>(); 
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
@@ -99,74 +96,39 @@ namespace TheConfectionRebirth.Tiles
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 1.45f;
-            g = 2.41f;
-            b = 2.47f;
+            if (Main.tile[i, j].TileFrameX < 52) //Only gives the on state (the sprites on the left side) light
+            {
+                r = 1.45f;
+                g = 2.41f;
+                b = 2.47f;
+            }
         }
 
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
+            //This code allows for the tile to have a glowmask while also having a outline
+            //The animated tile in ExampleMod replace the regular texture and adds both the glowmask and regular texture which means adding a highlight is very difficult to do
             Tile tile = Main.tile[i, j];
-            Texture2D texture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/ConfectionCampfire").Value;
-            Texture2D glowTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/ConfectionCampfire_Glow").Value;
-
-            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-
-            int height = tile.TileFrameY % AnimationFrameHeight == 36 ? 16 : 16;
 
             int frameYOffset = Main.tileFrame[Type] * AnimationFrameHeight;
+            
+            int xPos = Main.tile[i, j].TileFrameX;
+            int yPos = Main.tile[i, j].TileFrameY + frameYOffset;
 
-            spriteBatch.Draw(
-                texture,
-                new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
-                new Rectangle(tile.TileFrameX, tile.TileFrameY + frameYOffset, 16, height),
-                Lighting.GetColor(i, j), 0f, default, 1f, SpriteEffects.None, 0f);
-
-            spriteBatch.Draw(
-                glowTexture,
-                new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
-                new Rectangle(tile.TileFrameX, tile.TileFrameY + frameYOffset, 16, height),
-                Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-            return false;
+            Texture2D glowmask = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/ConfectionCampfire_Glow").Value; 
+            Vector2 zero = (Vector2)(Main.drawToScreen ? Vector2.Zero : new Vector2((float)Main.offScreenRange));
+            Vector2 drawOffset = new Vector2((float)(i * 16) - Main.screenPosition.X, (float)(j * 16) - Main.screenPosition.Y) + zero;
+            Main.spriteBatch.Draw(glowmask, drawOffset, (Rectangle?)new Rectangle(xPos, yPos, 18, 18), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
         public override void HitWire(int i, int j)
         {
-            int x = i - Main.tile[i, j].TileFrameX / 18 % 3;
-            int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
-            for (int l = x; l < x + 3; l++)
-            {
-                for (int m = y; m < y + 2; m++)
-                {
-                    if (Main.tile[l, m].HasTile && Main.tile[l, m].TileType == Type)
-                    {
-                        if (Main.tile[l, m].TileFrameY < 36)
-                        {
-                            Main.tile[l, m].TileFrameY += 36;
-                        }
-                        else
-                        {
-                            Main.tile[l, m].TileFrameY -= 36;
-                        }
-                    }
-                }
-            }
-            if (Wiring.running)
-            {
-                Wiring.SkipWire(x, y);
-                Wiring.SkipWire(x, y + 1);
-                Wiring.SkipWire(x, y + 2);
-                Wiring.SkipWire(x + 1, y);
-                Wiring.SkipWire(x + 1, y + 1);
-                Wiring.SkipWire(x + 1, y + 2);
-            }
-            NetMessage.SendTileSquare(-1, x, y + 1, 3);
+            ConfectionHitWire.HitWire(Type, i, j, 3, 2); //See ConfectionHitWire to see how hitwire works with the campfire and other tiles like water fountains
         }
 
         public override bool RightClick(int i, int j)
         {
-            HitWire(i, j);
+            HitWire(i, j); //makes when you right click it redirects to HitWire for the rest of the code
             return true;
         }
     }
