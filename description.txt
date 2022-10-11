@@ -5,45 +5,27 @@ The Confection Uses Alternate Libraries mod to be able to be compatible with oth
 
 You are 100% able to port 1.3 confection worlds to 1.4 tmodloader ALTHOUGH your world will turn to being hallowed as registration for worlds being confection or not are different in 1.4 due to altlib.
 
+If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
-0.16.1
-======
-Added Fairy Tooth replacing gummy staff
-Fixed stop use bypass when hit with Neapolinite Jousting Lance
-Added recipes for old crimson items
-Removed unused stuff relating to the Saccharite Lash
-======
-0.16.0
-======
-Added Saccharite lash
-Readded all other old 1.3 tmodloader items
-Changed backgrounds slightly
-Fixed Creamstone filled gems and allows them to generate
-Fixed Sherbert wall not being rainbow
-Changed creamstone wall
-Added Cracking Confection Wall
-Added Confectionary Crystal Wall
-Added Lined Confection Gem Wall
-Added melting Confection Wall
-Changed map colours for some walls
-Added Artifical walls
-Fixed Saccharite to grow on Orange Ice
-Added Ancient Neapolinite headgear
-Added Ancient Neapolinite Hat
-Added Ancient Neapolinite Helmet
-Added Ancient Cosmic Cookie Cannon
-Added Soul of delight in a bottle
-Added Confection Mimic banner
-Added Neapolinite Jousting Lance
+Added potted confection cedar
+Added potted confection tree
+Added potted confection bamboo
+Added potted confection palm
+Added Confection Campfire
+Added Sherbet Campfire
+(Bonus) Added comments on how to make a modded campfire in ConfectionCampfire.cs
+Fixed Spawning conditions of Confection NPCs being able to spawn during events
+Made the sky turn pink while in the confection (trial)
+Resprited creamy fox
 
 ===========================================
 Credit - Programmers
 ===========================================
 Lion8cake - Main dev 
-Cace - For Altlib and 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
+Cace - For Altlib, 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
 Yreorel - For much of the reworks for different items as well as maaking the Icescreamer AI
 FoxXD_ - For Altlib, cream fox pet, old biome chest, old biome generation, cleaning up part of confection's bad code and Adding Alternating and 4 layered backgrounds
 Ghasttear1 - For the 1.3 menu UI
