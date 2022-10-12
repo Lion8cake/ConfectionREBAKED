@@ -9,7 +9,7 @@ using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class TrueDeathsRaze : ModItem
+	public class TrueDeathsRaze : ModItem, IArchived
 	{
 		public override void SetStaticDefaults()
 		{
@@ -32,5 +32,7 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.shoot = Mod.Find<ModProjectile>("TrueIchorBolt").Type;
 			Item.shootSpeed = 10f;
 		}
+
+		public int ArchivatesTo() => ItemID.TrueNightsEdge;
 	}
 }

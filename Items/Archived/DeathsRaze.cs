@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class DeathsRaze : ModItem
+	public class DeathsRaze : ModItem, IArchived
 	{
 		public override void SetStaticDefaults()
 		{
@@ -25,5 +25,7 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 		}
+
+		public int ArchivatesTo() => ItemID.NightsEdge;
 	}
 }

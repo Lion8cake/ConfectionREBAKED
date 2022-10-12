@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-    public class KeyofSpite : ModItem
+    public class KeyofSpite : ModItem, IArchived
     {
         public override void SetStaticDefaults()
         {
@@ -19,5 +19,7 @@ namespace TheConfectionRebirth.Items.Archived
             Item.height = 12;
             Item.maxStack = 99;
         }
+
+        public int ArchivatesTo() => ItemID.NightKey;
     }
 }

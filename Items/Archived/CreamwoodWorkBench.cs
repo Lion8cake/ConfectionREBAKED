@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-    public class CreamwoodWorkBench : ModItem
+    public class CreamwoodWorkBench : ModItem, IArchived
     {
         public override void SetStaticDefaults()
         {
@@ -24,5 +24,7 @@ namespace TheConfectionRebirth.Items.Archived
             Item.value = 0;
             Item.createTile = Mod.Find<ModTile>("CreamwoodWorkbench").Type;
         }
+
+        public int ArchivatesTo() => Mod.Find<ModItem>("CreamwoodWorkbench").Type;
     }
 }

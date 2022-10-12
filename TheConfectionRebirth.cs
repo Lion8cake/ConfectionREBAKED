@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Archived;
 using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth
@@ -84,9 +85,21 @@ namespace TheConfectionRebirth
             On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
 
 			On.Terraria.Main.DrawSurfaceBG_BackMountainsStep1 += Main_DrawSurfaceBG_BackMountainsStep1;
+			On.Terraria.Item.SetDefaults_int_bool += Item_SetDefaults_int_bool;
         }
 
-        private static double _backgroundTopMagicNumberCache;
+		private void Item_SetDefaults_int_bool(On.Terraria.Item.orig_SetDefaults_int_bool orig, Item self, int Type, bool noMatCheck)
+		{
+            orig(self, Type, noMatCheck);
+            if (self.ModItem is IArchived archivedItem)
+            {
+                self.TurnToAir();
+                self.netID = self.type = archivedItem.ArchivatesTo(self);
+                self.CloneDefaults(self.type);
+            }
+        }
+
+		private static double _backgroundTopMagicNumberCache;
         private static int _pushBGTopHackCache;
 		private static void Main_DrawSurfaceBG_BackMountainsStep1(On.Terraria.Main.orig_DrawSurfaceBG_BackMountainsStep1 orig, Main self, double backgroundTopMagicNumber, float bgGlobalScaleMultiplier, int pushBGTopHack)
 		{

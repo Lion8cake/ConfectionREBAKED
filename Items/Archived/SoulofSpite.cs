@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class SoulofSpite : ModItem
+	public class SoulofSpite : ModItem, IArchived
 	{
 		public override void SetStaticDefaults()
 		{
@@ -34,37 +34,7 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 		}
+
+		public int ArchivatesTo() => ItemID.SoulofNight;
 	}
-	/*public class SoulofSpiteDrop : GlobalNPC
-	{
-		public override bool IsLoadingEnabled(Mod mod) => AltLibrary._steamId == 76561198831015363;
-
-		public override void ModifyGlobalLoot(GlobalLoot globalLoot)
-		{
-			globalLoot.RemoveWhere(
-				rule => rule is ItemDropWithConditionRule drop
-					&& drop.itemId == ItemID.SoulofNight
-					&& drop.condition is Conditions.SoulOfNight
-			);
-			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfNight(), ItemID.SoulofNight));
-			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>()));
-		}
-
-		private class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription
-		{
-			public bool CanDrop(DropAttemptInfo info) => Conditions.SoulOfWhateverConditionCanDrop(info) && info.player.ZoneCorrupt;
-
-			public bool CanShowItemDropInUI() => false;
-
-			public string GetConditionDescription() => null;
-		}
-		private class SoulOfSpite : IItemDropRuleCondition, IProvideItemConditionDescription
-		{
-			public bool CanDrop(DropAttemptInfo info) => Conditions.SoulOfWhateverConditionCanDrop(info) && info.player.ZoneCrimson;
-
-			public bool CanShowItemDropInUI() => false;
-
-			public string GetConditionDescription() => null;
-		}
-	}*/
 }
