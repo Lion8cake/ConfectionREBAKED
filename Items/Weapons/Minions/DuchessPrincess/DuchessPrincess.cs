@@ -16,6 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
     {
         public override int Damage => 17;
         public override float Knockback => 6;
+        public override int Value => Item.buyPrice(0, 8, 0, 0);
         internal override bool SummonersShine_GetMinionPower(SummonersShineCompat.MinionPowerCollection minionPower)
         {
             minionPower.AddMinionPower(1);
