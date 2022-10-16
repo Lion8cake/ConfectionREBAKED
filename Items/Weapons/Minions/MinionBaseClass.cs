@@ -25,6 +25,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
         public virtual int Crit => 0;
         public virtual int UseTime => 32;
         public virtual int ManaCost => 10;
+        public virtual int Value => 0;
 
         public virtual int SummonersShine_MaxEnergy => 0;
 
@@ -69,6 +70,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
             Item.useAnimation = UseTime;
             Item.buffType = BuffType<T>();
             Item.shoot = ProjectileType<U>();
+            Item.value = Value;
         }
         public sealed override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
