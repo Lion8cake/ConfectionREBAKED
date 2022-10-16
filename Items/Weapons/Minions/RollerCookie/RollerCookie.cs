@@ -22,6 +22,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
     {
         public override int Damage => 45;
         public override float Knockback => 3;
+        public override int Value => Item.buyPrice(0, 2, 0, 0);
         public override void AddRecipes()
         {
             CreateRecipe()
