@@ -85,12 +85,15 @@ namespace TheConfectionRebirth.Items.Placeable
 
         private static void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
         {
-            Recipe recipe = Recipe.Create(ContentInstance<THall>.Instance.Type);
-            recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
+            int ht = ContentInstance<THall>.Instance.Type;
+            int ct = ContentInstance<TConf>.Instance.Type;
+
+            Recipe recipe = Recipe.Create(ht);
+            recipe.AddIngredient(ct);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
-            recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
-            recipe.AddIngredient(ContentInstance<THall>.Instance.Type);
+            recipe = Recipe.Create(ct);
+            recipe.AddIngredient(ht);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
             recipe.Register();
         }
