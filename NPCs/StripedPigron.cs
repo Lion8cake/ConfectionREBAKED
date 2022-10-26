@@ -40,7 +40,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("This eluesive dragon-pig hybrid has excellent stealth capabilities despite its rotund figure. It is uncertain how they came to exsist.")
+                new FlavorTextBestiaryInfoElement("This elusive dragon-pig hybrid has excellent stealth capabilities despite its rotund figure. It is uncertain how they came to exsist.")
             });
         }
 
