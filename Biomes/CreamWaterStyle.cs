@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Biomes
 
         public override Color BiomeHairColor()
         {
-            return Color.White;
+            return new(186, 154, 119);
         }
 
         public override byte GetRainVariant()

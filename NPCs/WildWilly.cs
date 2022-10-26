@@ -44,7 +44,7 @@ namespace TheConfectionRebirth.NPCs
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A zombie infected with the confection. 'do you have a golden ticket?'")
+                new FlavorTextBestiaryInfoElement("A zombie infected with the confection. 'Do you have a golden ticket?'")
             });
         }
 

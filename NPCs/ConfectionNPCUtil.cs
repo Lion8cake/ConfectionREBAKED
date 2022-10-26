@@ -14,7 +14,13 @@ namespace TheConfectionRebirth.NPCs
         public static Vector2 DrawOrigin(Texture2D tex) => new Vector2(tex.Width / 2, tex.Height / 2);
         public static Rectangle DrawFrame(Texture2D tex, int x = 0, int y = 0) => new Rectangle(x, y, tex.Width, tex.Height);
         public static SpriteEffects FlipTex(int direction, bool left = false) => direction == (left ? -1 : 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-    }
+		public static void DrawNPC(NPC NPC, Texture2D texture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, bool left = false)
+		{
+            Vector2 pos = NPC.Center - screenPos;
+            pos.Y += NPC.gfxOffY - 6f;
+            spriteBatch.Draw(texture, pos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() * 0.5f, NPC.scale, FlipTex(NPC.direction, left), 0f);
+		}
+	}
     public struct Utilities
     {
         public static int Round(float f) => (int)Math.Round(f);

@@ -4,6 +4,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -32,8 +33,8 @@ namespace TheConfectionRebirth.NPCs
             NPC.aiStyle = 103;
             AIType = NPCID.SandShark;
             AnimationType = NPCID.SandShark;
-            //banner = npc.type;
-            //bannerItem = ModContent.ItemType<FoaminFloatBanner>();
+            Banner = Type;
+            BannerItem = ModContent.ItemType<CreamSwollowerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
 
@@ -49,7 +50,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneSandstorm && spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.ZoneSandstorm && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 0.5f;
             }

@@ -1,6 +1,18 @@
 Mods: {
 	TheConfectionRebirth: 
 	{
+		AltBiomeName: {
+			ConfectionBiome: Confection
+		}
+
+		AltBiomeDescription: {
+			ConfectionBiome: A land of where every thing looks like candy, tasty chocolate or dangours sprinkles.
+		}
+
+		NPCName: {
+			BirthdayCookie: Birthday Cookie
+		}
+
 		BiomeName: {
 			ConfectionBiomeSurface: The Confection
 			ConfectionUndergroundBiome: Confection Underground

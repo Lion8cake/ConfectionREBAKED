@@ -1,8 +1,12 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -15,11 +19,25 @@ using TheConfectionRebirth.Items.Weapons;
 namespace TheConfectionRebirth.NPCs
 {
     public class Iscreamer : ModNPC
-    {
+	{
+		private enum Variation : byte
+		{
+			None = 0,
+			Normal = 1,
+			Snow = 2
+		}
 
-        private float degrees;
+		private Variation variation;
 
-        public override void SetStaticDefaults()
+		private float degrees;
+
+		private static Asset<Texture2D> SnowTexture;
+
+		public override void Load() => SnowTexture = ModContent.Request<Texture2D>(Texture + "_Snow");
+
+		public override void Unload() => SnowTexture = null;
+
+		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iscreamer");
             Main.npcFrameCount[NPC.type] = 4;
@@ -43,6 +61,7 @@ namespace TheConfectionRebirth.NPCs
 			Banner = NPC.type;
             BannerItem = ModContent.ItemType<IscreamerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+			variation = Variation.None;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -76,23 +95,51 @@ namespace TheConfectionRebirth.NPCs
         int speed = 10;
         int maxFrames = 3;
         int frame;
-        public override void FindFrame(int frameHeight)
-        {
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= speed)
-            {
-                frame++;
-                NPC.frameCounter = 0;
-            }
+		public override void FindFrame(int frameHeight)
+		{
+			NPC.frameCounter++;
+			if (NPC.frameCounter >= speed)
+			{
+				frame++;
+				NPC.frameCounter = 0;
+			}
 
-            if (frame > maxFrames)
-                frame = 0;
+			if (frame > maxFrames)
+				frame = 0;
 
-            NPC.frame.Y = frame * frameHeight;
-            NPC.spriteDirection = NPC.direction;
-        }
+			NPC.frame.Y = frame * frameHeight;
+			NPC.spriteDirection = NPC.direction;
+		}
 
-        public override void AI()
+		public override bool PreAI()
+		{
+			if (variation == Variation.None)
+			{
+				variation = Variation.Normal;
+				if (Main.SceneMetrics.EnoughTilesForSnow)
+					variation = Variation.Snow;
+
+				if (Main.netMode == NetmodeID.Server)
+					NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+			}
+
+			return true;
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			if (NPC.IsABestiaryIconDummy)
+				return true;
+
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+			if (variation is Variation.Snow)
+				texture = SnowTexture.Value;
+
+			DS.DrawNPC(NPC, texture, spriteBatch, screenPos, drawColor);
+			return false;
+		}
+
+		public override void AI()
         {
             int num184 = (int)(NPC.Center.X / 16f);
             int num185 = (int)(NPC.Center.Y / 16f);
@@ -191,18 +238,24 @@ namespace TheConfectionRebirth.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BearClaw>(), 100));
-            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 5000, 4000));
+
+			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<DimensionSplit>(), 100));
+			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsNotUp())).OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 0.2f;
             }
             return 0f;
         }
-    }
+
+		public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
+
+		public override void ReceiveExtraAI(BinaryReader reader) => variation = (Variation)reader.ReadByte();
+	}
 }
 
 /*else if (aiStyle == 22)

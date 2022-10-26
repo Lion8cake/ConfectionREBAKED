@@ -8,7 +8,6 @@ using System;
 using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -19,8 +18,33 @@ using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth
 {
-    public class TheConfectionRebirth : Mod
+	public class TheConfectionRebirth : Mod
     {
+        private struct DateTimeMatch
+		{
+            private readonly bool value;
+
+            public DateTimeMatch(DateTime time, params DateTime[] matchFor)
+			{
+                value = false;
+                foreach (var d in matchFor)
+				{
+                    if (time.Day.Equals(d.Day) && time.Month.Equals(d.Month))
+					{
+                        value = true;
+                        break;
+					}
+				}
+			}
+
+            public bool ToBoolean() => value;
+		}
+
+        private delegate void BackgroundChangeFlashInfo_UpdateVariation(BackgroundChangeFlashInfo self, int areaId, int newVariationValue);
+        private static BackgroundChangeFlashInfo_UpdateVariation backgroundChangeFlashInfo_UpdateVariation;
+        private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752);
+        public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11)).ToBoolean();
+
         internal const int bgVarAmount = 4;
 
         private static MethodInfo Limits = null;
@@ -49,10 +73,24 @@ namespace TheConfectionRebirth
 
 		public override void Load()
         {
+            backgroundChangeFlashInfo_UpdateVariation = typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate<BackgroundChangeFlashInfo_UpdateVariation>();
+
+            Fields = new dynamic[]
+            {
+                typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).GetField("scAdj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance),
+                typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).Assembly.GetType("Terraria.ModLoader." + nameof(SurfaceBackgroundStylesLoader)),
+                typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic),
+            };
+
             if (ModLoader.TryGetMod("Wikithis", out Mod wikithis))
                 wikithis.Call("AddModURL", this, "terrariamods.fandom.com$Confection_Rebaked");
 
-            var UIMods = typeof(Main).Assembly.GetType("Terraria.ModLoader." + nameof(SurfaceBackgroundStylesLoader));
+            Type UIMods = Fields[5];
             Limits = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawMiddleTexture));
             ModifyLimits += TheConfectionRebirth_ModifyLimits;
             Limits2 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawFarTexture));
@@ -60,8 +98,8 @@ namespace TheConfectionRebirth
             Limits3 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawCloseBackground));
             ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
 
-            float[] _flashPower = (float[])typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(WorldGen.BackgroundsCache);
-            int[] _variations = (int[])typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(WorldGen.BackgroundsCache);
+            float[] _flashPower = (float[])Fields[6].GetValue(WorldGen.BackgroundsCache);
+            int[] _variations = (int[])Fields[7].GetValue(WorldGen.BackgroundsCache);
             float[] newFlashPower = new float[_flashPower.Length + bgVarAmount];
             int[] newVariations = new int[_variations.Length + bgVarAmount];
             _cacheIndexes = new int[bgVarAmount];
@@ -78,8 +116,8 @@ namespace TheConfectionRebirth
                 newFlashPower[i] = _flashPower[i];
                 newVariations[i] = _variations[i];
 			}
-            typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(WorldGen.BackgroundsCache, newFlashPower);
-            typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(WorldGen.BackgroundsCache, newVariations);
+			Fields[6].SetValue(WorldGen.BackgroundsCache, newFlashPower);
+			Fields[7].SetValue(WorldGen.BackgroundsCache, newVariations);
 
 			On.Terraria.GameContent.BackgroundChangeFlashInfo.UpdateCache += BackgroundChangeFlashInfo_UpdateCache;
             On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
@@ -114,7 +152,7 @@ namespace TheConfectionRebirth
             orig(self);
 
             for (int i = 0; i < bgVarAmount; i++)
-                typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(self, new object[] { _cacheIndexes[i], ConfectionWorld.ConfectionSurfaceBG[i] });
+                backgroundChangeFlashInfo_UpdateVariation(self, _cacheIndexes[i], ConfectionWorld.ConfectionSurfaceBG[i]);
 		}
 
 		private void WorldGen_RandomizeBackgroundBasedOnPlayer(On.Terraria.WorldGen.orig_RandomizeBackgroundBasedOnPlayer orig, UnifiedRandom random, Player player)
@@ -127,12 +165,12 @@ namespace TheConfectionRebirth
                     while (ConfectionWorld.ConfectionSurfaceBG[i] == rand[i])
                     {
                         rand[i] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                     }
 
                     ConfectionWorld.ConfectionSurfaceBG[i] = rand[i];
-                    typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(WorldGen.BackgroundsCache, new object[] { _cacheIndexes[i], rand[i] });
+                    backgroundChangeFlashInfo_UpdateVariation(WorldGen.BackgroundsCache, _cacheIndexes[i], rand[i]);
                 }
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -157,6 +195,8 @@ namespace TheConfectionRebirth
             _backgroundTopMagicNumberCache = 0;
             _pushBGTopHackCache = 0;
             _cacheIndexes = null;
+            backgroundChangeFlashInfo_UpdateVariation = null;
+            Fields = null;
         }
 
         public override void PostSetupContent()
@@ -182,7 +222,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -207,7 +247,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -232,7 +272,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[1] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[1] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -244,6 +284,7 @@ namespace TheConfectionRebirth
             });
         }
 
+        private static dynamic[] Fields;
         // far and super far
         private void TheConfectionRebirth_ModifyLimits2(ILContext il)
         {
@@ -263,12 +304,12 @@ namespace TheConfectionRebirth
                 float alpha = Main.bgAlphaFarBackLayer[slot];
 				if (alpha > 0f)
 				{
-					for (int i = 0; i < (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance); i++)
+					for (int i = 0; i < (int)Fields[0].GetValue(Main.instance); i++)
                     {
                         if (ConfectionWorld.ConfectionSurfaceBG[3] == -1)
                         {
                             ConfectionWorld.ConfectionSurfaceBG[3] = Main.rand.Next(bgVarAmount);
-                            if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                            if (SecretChance)
                                 ConfectionWorld.Secret = true;
                             if (Main.netMode == NetmodeID.MultiplayerClient)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -279,13 +320,12 @@ namespace TheConfectionRebirth
                         if (texture is null)
                             return;
 
-                        Color ColorOfSurfaceBackgroundsModified = (Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-                        float scAdj = (float)typeof(Main).GetField("scAdj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Main.instance);
-                        int bgWidthScaled = (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-                        //int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(Main.instance);
+                        Color ColorOfSurfaceBackgroundsModified = (Color)Fields[1];
+                        float scAdj = (float)Fields[3].GetValue(Main.instance);
+                        int bgWidthScaled = (int)Fields[2];
                         int bgTopY = !Main.gameMenu ? (int)(_backgroundTopMagicNumberCache * 1300.0 + 1005.0 + (int)scAdj + _pushBGTopHackCache + 40) : 75 + _pushBGTopHackCache;
                         
-        float bgScale = (float)typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+                        float bgScale = (float)Fields[4];
                         int bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (bgWidthScaled / 2));
 
                         Main.spriteBatch.Draw(texture,
@@ -309,7 +349,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -334,7 +374,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -359,7 +399,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[2] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[2] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -387,7 +427,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -411,7 +451,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);
@@ -435,7 +475,7 @@ namespace TheConfectionRebirth
                     if (ConfectionWorld.ConfectionSurfaceBG[0] == -1)
                     {
                         ConfectionWorld.ConfectionSurfaceBG[0] = Main.rand.Next(bgVarAmount);
-                        if (Main.rand.Next(1000000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752))
+                        if (SecretChance)
                             ConfectionWorld.Secret = true;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                             NetMessage.SendData(MessageID.WorldData);

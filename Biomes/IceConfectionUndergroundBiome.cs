@@ -1,19 +1,26 @@
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Biomes
 {
     public class IceConfectionUndergroundBiome : ModBiome
     {
-        public override string BestiaryIcon => "Biomes/BestiaryIcon4";
+        public override string BestiaryIcon => "TheConfectionRebirth/Biomes/BestiaryIcon4";
 
-        public override string BackgroundPath => "Biomes/ConfectionUndergroundIceMapBackground";
+        public override string BackgroundPath => "TheConfectionRebirth/Biomes/ConfectionUndergroundIceMapBackground";
 
         public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
+
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Confection Ice");
         }
+
+        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && player.ZoneSnow && (player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight);
     }
 }

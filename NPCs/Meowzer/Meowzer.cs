@@ -207,7 +207,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
                 recoil[2] = val2.X;
                 recoil[3] = val2.Y;
                 Vector2 firePos = NPC.Center + new Vector2((NPC.spriteDirection == -1 ? 20f : 0f), -45f);
-                Projectile.NewProjectile(new EntitySource_Misc(""), firePos, val2 *= 0.5f, ModContent.ProjectileType<MeowzerBeam>(), Utilities.DL(125), 2.5f);
+                Projectile.NewProjectile(NPC.GetSource_FromAI("Fire"), firePos, val2 *= 0.5f, ModContent.ProjectileType<MeowzerBeam>(), Utilities.DL(125), 2.5f);
                 lockOn[3] = 1;
                 lockOn[0] = 0;
                 recoil[1] = 1;

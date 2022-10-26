@@ -16,27 +16,58 @@ namespace TheConfectionRebirth
 {
     internal class ConfectionBiome : AltBiome
     {
-        public override Color NameColor => new(210, 196, 145);
-
         public override void SetStaticDefaults()
         {
             BiomeType = BiomeType.Hallow;
-            BiomeGrass = ModContent.TileType<CreamGrass>();
-            BiomeStone = ModContent.TileType<Tiles.Creamstone>();
-            BiomeSand = ModContent.TileType<Tiles.Creamsand>();
-            BiomeIce = ModContent.TileType<BlueIce>();
-            BiomeSandstone = ModContent.TileType<Tiles.Creamsandstone>();
-            BiomeHardenedSand = ModContent.TileType<Tiles.HardenedCreamsand>();
-            HammerType = ModContent.ItemType<GrandSlammer>();
-            MechDropItemType = ModContent.ItemType<Items.Placeable.NeapoliniteBar>();
-            BiomeChestItem = ModContent.ItemType<PopRocket>();
-            BiomeChestTile = ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
-            BiomeChestTileStyle = 1;
-            BiomeMowedGrass = ModContent.TileType<CreamGrassMowed>();
-            MimicKeyType = ModContent.ItemType<KeyofDelight>();
-            MimicType = ModContent.NPCType<BigMimicConfection>();
-            DisplayName.SetDefault("Confection");
-            Description.SetDefault("A land of where every thing looks like candy, tasty chocolate or dangours sprinkles.");
+
+            Properties = new()
+            {
+                WorldIcon = "TheConfectionRebirth/Assets/WorldIcons/Confection",
+                IconSmall = "TheConfectionRebirth/Biomes/BestiaryIcon1",
+                BiomeNameColor = new(210, 196, 145)
+            };
+
+            Converting = new()
+            {
+                BiomeGrass = ModContent.TileType<CreamGrass>(),
+                BiomeStone = ModContent.TileType<Tiles.Creamstone>(),
+                BiomeSand = ModContent.TileType<Tiles.Creamsand>(),
+                BiomeIce = ModContent.TileType<BlueIce>(),
+                BiomeSandstone = ModContent.TileType<Tiles.Creamsandstone>(),
+                BiomeHardenedSand = ModContent.TileType<Tiles.HardenedCreamsand>(),
+                HammerType = ModContent.ItemType<GrandSlammer>(),
+                MechDropItemType = ModContent.ItemType<Items.Placeable.NeapoliniteBar>(),
+                BiomeChestItem = ModContent.ItemType<PopRocket>(),
+                BiomeChestTile = ModContent.TileType<Tiles.ConfectionBiomeChestTile>(),
+                BiomeChestStyle = 1,
+                BiomeMowedGrass = ModContent.TileType<CreamGrassMowed>(),
+                MimicKeyType = ModContent.ItemType<KeyofDelight>(),
+                MimicType = ModContent.NPCType<BigMimicConfection>(),
+
+                Spreades = new()
+                {
+                    ModContent.TileType<CreamGrass>(),
+                    ModContent.TileType<Tiles.Creamstone>(),
+                    ModContent.TileType<Tiles.Creamsand>(),
+                    ModContent.TileType<BlueIce>(),
+                    ModContent.TileType<Tiles.Creamsandstone>(),
+                    ModContent.TileType<Tiles.HardenedCreamsand>()
+                },
+                SpecialConversion = new()
+                {
+                    [TileID.Dirt] = ModContent.TileType<Tiles.CookieBlock>(),
+                    [TileID.SnowBlock] = ModContent.TileType<Tiles.CreamBlock>(),
+                    [TileID.Cloud] = ModContent.TileType<Tiles.PinkFairyFloss>(),
+                    [TileID.RainCloud] = ModContent.TileType<Tiles.PurpleFairyFloss>(),
+                    [TileID.SnowCloud] = ModContent.TileType<Tiles.BlueFairyFloss>(),
+                    [TileID.Amethyst] = ModContent.TileType<Tiles.CreamstoneAmethyst>(),
+                    [TileID.Diamond] = ModContent.TileType<Tiles.CreamstoneDiamond>(),
+                    [TileID.Emerald] = ModContent.TileType<Tiles.CreamstoneEmerald>(),
+                    [TileID.Ruby] = ModContent.TileType<Tiles.CreamstoneRuby>(),
+                    [TileID.Sapphire] = ModContent.TileType<Tiles.CreamstoneSaphire>(),
+                    [TileID.Topaz] = ModContent.TileType<Tiles.CreamstoneTopaz>()
+                }
+            };
 
             BakeTileChild(ModContent.TileType<CookieBlock>(), TileID.Dirt, new(true, true, true));
             BakeTileChild(ModContent.TileType<CreamBlock>(), TileID.SnowBlock, new(true, true, true));
@@ -75,26 +106,5 @@ namespace TheConfectionRebirth
             }
             return base.GetAltBlock(BaseBlock, posX, posY);
         }
-
-        public override Dictionary<int, int> SpecialConversion => new()
-        {
-            [TileID.Dirt] = ModContent.TileType<Tiles.CookieBlock>(),
-            [TileID.SnowBlock] = ModContent.TileType<Tiles.CreamBlock>(),
-            [TileID.Cloud] = ModContent.TileType<Tiles.PinkFairyFloss>(),
-            [TileID.RainCloud] = ModContent.TileType<Tiles.PurpleFairyFloss>(),
-            [TileID.SnowCloud] = ModContent.TileType<Tiles.BlueFairyFloss>(),
-            [TileID.Amethyst] = ModContent.TileType<Tiles.CreamstoneAmethyst>(),
-            [TileID.Diamond] = ModContent.TileType<Tiles.CreamstoneDiamond>(),
-            [TileID.Emerald] = ModContent.TileType<Tiles.CreamstoneEmerald>(),
-            [TileID.Ruby] = ModContent.TileType<Tiles.CreamstoneRuby>(),
-            [TileID.Sapphire] = ModContent.TileType<Tiles.CreamstoneSaphire>(),
-            [TileID.Topaz] = ModContent.TileType<Tiles.CreamstoneTopaz>()
-        };
-
-        public override List<int> SpreadingTiles => new() { ModContent.TileType<CreamGrass>(), ModContent.TileType<Tiles.Creamstone>(), ModContent.TileType<Tiles.Creamsand>(), ModContent.TileType<BlueIce>(), ModContent.TileType<Tiles.Creamsandstone>(), ModContent.TileType<Tiles.HardenedCreamsand>() };
-
-        public override string WorldIcon => "TheConfectionRebirth/Assets/WorldIcons/Confection";
-
-        public override string IconSmall => "TheConfectionRebirth/Biomes/BestiaryIcon1";
     }
 }

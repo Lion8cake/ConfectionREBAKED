@@ -1,4 +1,9 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System.IO;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -12,6 +17,21 @@ namespace TheConfectionRebirth.NPCs
 
     public class ParfaitSlime : ModNPC
     {
+        private enum Variation : byte
+        {
+            None = 0,
+            Normal = 1,
+            Snow = 2
+        }
+
+        private Variation variation;
+
+        private static Asset<Texture2D> SnowTexture;
+
+		public override void Load() => SnowTexture = ModContent.Request<Texture2D>(Texture + "_Snow");
+
+		public override void Unload() => SnowTexture = null;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Parfait Slime");
@@ -35,6 +55,7 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ParfaitSlimeBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+            variation = Variation.None;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -45,14 +66,46 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+		public override bool PreAI()
+        {
+            if (variation == Variation.None)
+            {
+                variation = Variation.Normal;
+                if (Main.SceneMetrics.EnoughTilesForSnow)
+                    variation = Variation.Snow;
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            }
+
+            return true;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
+
+            Texture2D texture = TextureAssets.Npc[Type].Value;
+            if (variation is Variation.Snow)
+                texture = SnowTexture.Value;
+
+            Rectangle f = NPC.frame;
+            f.Y /= 49;
+            f.Y *= texture.Height / Main.npcFrameCount[Type];
+            spriteBatch.Draw(texture, NPC.Center - screenPos - new Vector2(0f, 4f), f, drawColor, NPC.rotation, f.Size() * 0.5f, NPC.scale, 0, 0f);
+            return false;
+        }
+
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.SlimeStaff, 10000, 7000));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 1.0f;
             }
@@ -74,5 +127,9 @@ namespace TheConfectionRebirth.NPCs
                 }
             }
         }
+
+        public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
+
+        public override void ReceiveExtraAI(BinaryReader reader) => variation = (Variation)reader.ReadByte();
     }
 }
