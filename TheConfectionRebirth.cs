@@ -42,7 +42,7 @@ namespace TheConfectionRebirth
 
         private delegate void BackgroundChangeFlashInfo_UpdateVariation(BackgroundChangeFlashInfo self, int areaId, int newVariationValue);
         private static BackgroundChangeFlashInfo_UpdateVariation backgroundChangeFlashInfo_UpdateVariation;
-        private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.Next(7752);
+        private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.NextFloat(3f);
         public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11)).ToBoolean();
 
         internal const int bgVarAmount = 4;
