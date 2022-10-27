@@ -10,24 +10,28 @@ Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Change log
 ===========================================
-Added potted confection cedar
-Added potted confection tree
-Added potted confection bamboo
-Added potted confection palm
-Added Confection Campfire
-Added Sherbet Campfire
-(Bonus) Added comments on how to make a modded campfire in ConfectionCampfire.cs
-Fixed Spawning conditions of Confection NPCs being able to spawn during events
-Made the sky turn pink while in the confection (trial)
-Resprited creamy fox
+All archived items now actually get replaced with whatever they got replaced. (for example, Soul of Spite will automatically get converted to Soul of Night)
+Fixed Iscreamers having 0.02% (0.025% in Expert) to drop Dimensional Split. Now its 0.2% and 0.25% in Expert.
+Updated homepage to be https://terrariamods.wiki.gg/wiki/Confection_Rebaked instead.
+Made Secret Confection background slightly more common. (by ~10x)
+Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
+Meowzer now has 5% to drop Toasty Toaster instead of 100%.
+Fixed all Confection's biomes in bestiary being "unknown".
+Fixed a typo in Striped Pigron's bestiary entry.
+Variations of some enemies now single entity.
+Parfait Slime now can drop Slime Staff.
+Fixed 1 pixel in Rollercookie's sprite.
+Ultra far background now less laggy.
+Cream Swallower now has banner.
+Increased version number.
 
 ===========================================
 Credit - Programmers
 ===========================================
 Lion8cake - Main dev 
+BasicallyIAmFox - For Altlib, cream fox pet, old biome chest, old biome generation, cleaning up part of confection's bad code and Adding Alternating and 4 layered backgrounds
 Cace - For Altlib, 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
-Yreorel - For much of the reworks for different items as well as maaking the Icescreamer AI
-FoxXD_ - For Altlib, cream fox pet, old biome chest, old biome generation, cleaning up part of confection's bad code and Adding Alternating and 4 layered backgrounds
+Yreorel - For much of the reworks for different items as well as making the Icescreamer AI
 Ghasttear1 - For the 1.3 menu UI
 DavidF-Dev - Otherworldly music switcher that he allowed for us to use
 CastledKing2341 - For the awesome and very polished Meowzer NPC

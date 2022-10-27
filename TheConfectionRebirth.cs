@@ -88,7 +88,7 @@ namespace TheConfectionRebirth
             };
 
             if (ModLoader.TryGetMod("Wikithis", out Mod wikithis))
-                wikithis.Call("AddModURL", this, "terrariamods.fandom.com$Confection_Rebaked");
+                wikithis.Call("AddModURL", this, "terrariamods.wiki.gg$Confection_Rebaked");
 
             Type UIMods = Fields[5];
             Limits = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawMiddleTexture));

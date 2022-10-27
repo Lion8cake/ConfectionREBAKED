@@ -22,6 +22,6 @@ namespace TheConfectionRebirth.Biomes
             DisplayName.SetDefault("Confection Desert");
         }
 
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && player.ZoneDesert;
+        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && player.ZoneDesert && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneSkyHeight);
     }
 }
