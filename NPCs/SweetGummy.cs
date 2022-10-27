@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
@@ -23,18 +24,23 @@ namespace TheConfectionRebirth.NPCs
             Green,
             Red,
             Blue,
-            Yellow
+            Yellow,
+            Amber,
+            Diamond,
+            Onyx,
+            Pink,
+            Purple
 		}
 
         private Variation variation;
 
-        private static Asset<Texture2D>[] VariationTextures = new Asset<Texture2D>[3];
+        private static Asset<Texture2D>[] VariationTextures = new Asset<Texture2D>[8];
 
 		public override void Load()
         {
-            VariationTextures[0] = ModContent.Request<Texture2D>(Texture + "_Red");
-            VariationTextures[1] = ModContent.Request<Texture2D>(Texture + "_Blue");
-            VariationTextures[2] = ModContent.Request<Texture2D>(Texture + "_Yellow");
+            var a = Enum.GetValues<Variation>()[2..];
+            for (int i = 0; i < a.Length; i++)
+                VariationTextures[i] = ModContent.Request<Texture2D>(Texture + '_' + a[i].ToString());
         }
 
 		public override void Unload() => VariationTextures = null;
@@ -69,7 +75,7 @@ namespace TheConfectionRebirth.NPCs
         {
             if (variation == Variation.None)
             {
-                variation = (Variation)Main.rand.Next(1, 5);
+                variation = Main.rand.Next(Enum.GetValues<Variation>()[1..]);
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -108,7 +114,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 0.31f;
             }

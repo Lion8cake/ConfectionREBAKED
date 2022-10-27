@@ -21,6 +21,6 @@ namespace TheConfectionRebirth.Biomes
             DisplayName.SetDefault("Confection Ice");
         }
 
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && player.ZoneSnow && (player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight);
+        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionUndergroundBiome>().IsBiomeActive(player) && player.ZoneSnow;
     }
 }

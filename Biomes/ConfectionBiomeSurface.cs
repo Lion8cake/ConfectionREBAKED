@@ -31,5 +31,5 @@ public class ConfectionBiomeSurface : ModBiome
         DisplayName.SetDefault("The Confection");
     }
 
-	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120;
+	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneSkyHeight);
 }

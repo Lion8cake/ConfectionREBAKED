@@ -60,7 +60,7 @@ namespace TheConfectionRebirth.NPCs
 			AIType = NPCID.FloatyGross;
 			Banner = NPC.type;
             BannerItem = ModContent.ItemType<IscreamerBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type, ModContent.GetInstance<IceConfectionUndergroundBiome>().Type };
 			variation = Variation.None;
         }
 
@@ -245,7 +245,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.ZoneRockLayerHeight && (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) || spawnInfo.Player.InModBiome(ModContent.GetInstance<IceConfectionUndergroundBiome>())) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 0.2f;
             }

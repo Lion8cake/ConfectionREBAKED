@@ -24,6 +24,6 @@ namespace TheConfectionRebirth.Biomes
             DisplayName.SetDefault("The Confection Underground");
         }
 
-		public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && (player.ZoneRockLayerHeight || player.ZoneUnderworldHeight) && !player.ZoneDesert && !player.ZoneSnow;
+		public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && (player.ZoneRockLayerHeight || player.ZoneUnderworldHeight);
 	}
 }

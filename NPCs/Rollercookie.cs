@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
@@ -21,23 +22,26 @@ namespace TheConfectionRebirth.NPCs
     {
         private enum Variation : byte
         {
-            None = 0,
-            Normal = 1,
-            Snow = 2,
-            Birthday = 3
+            None,
+            Normal,
+            Halloween,
+            Christmas,
+            Easter,
+            Birthday
         }
 
         private Variation variation;
+        private static int[] fax;
 
 		private class CookieVariationDrop : IItemDropRuleCondition
 		{
-            private readonly Variation variation;
-            private readonly string d;
+			private readonly Variation variation;
+			private readonly string d;
 
-            public CookieVariationDrop(Variation variation, string desc = null)
+			public CookieVariationDrop(Variation variation, string desc = null)
 			{
-                this.variation = variation;
-                d = desc;
+				this.variation = variation;
+				d = desc;
 			}
 
 			public bool CanDrop(DropAttemptInfo info) => !info.IsInSimulation && info.npc is not null && info.npc.ModNPC is Rollercookie c && c.variation == variation;
@@ -47,16 +51,13 @@ namespace TheConfectionRebirth.NPCs
 			public string GetConditionDescription() => d;
 		}
 
-        private static Asset<Texture2D> BirthdayCookieTexture;
-        private static Asset<Texture2D> SantaCookieTexture;
-
-        public override void Load()
+		public override void Load()
 		{
-            BirthdayCookieTexture = ModContent.Request<Texture2D>(Texture + "_Birthday");
-            SantaCookieTexture = ModContent.Request<Texture2D>(Texture + "_Santa");
-        }
+            fax = new int[Main.maxNPCs];
+			Array.Fill(fax, -1);
+		}
 
-		public override void Unload() => BirthdayCookieTexture = SantaCookieTexture = null;
+		public override void Unload() => fax = null;
 
 		public override void SetStaticDefaults()
         {
@@ -97,9 +98,13 @@ namespace TheConfectionRebirth.NPCs
             if (variation == Variation.None)
 			{
                 variation = Variation.Normal;
-                if (Main.SceneMetrics.EnoughTilesForSnow)
-                    variation = Variation.Snow;
-                if (Main.rand.NextFloat() < 0.002f || TheConfectionRebirth.OurFavoriteDay && Main.rand.NextFloat() < 0.05f)
+                if (Main.halloween)
+                    variation = Variation.Halloween;
+                if (Main.xMas)
+                    variation = Variation.Christmas;
+                if (false && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 24 && DateTime.Now.Month.Equals(4))
+                    variation = Variation.Easter;
+                if (Main.rand.NextFloat() < 0.002f || TheConfectionRebirth.OurFavoriteDay && Main.rand.NextFloat() < 0.075f)
                     variation = Variation.Birthday;
 
                 if (Main.netMode == NetmodeID.Server)
@@ -119,26 +124,47 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CookieDough>(), maximumDropped: 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChocolateChunk>(), 100));
 
-            LeadingConditionRule rule = new(new CookieVariationDrop(Variation.Normal));
-            rule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ModContent.ItemType<CookieMask>(), ModContent.ItemType<CookieShirt>(), ModContent.ItemType<CookiePants>()));
-            rule.OnFailedConditions(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<TopCake>(), ModContent.ItemType<BirthdaySuit>(), ModContent.ItemType<RightTrousers>()));
+            LeadingConditionRule rule = new(new CookieVariationDrop(Variation.Birthday));
+            rule.OnFailedConditions(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ModContent.ItemType<CookieMask>(), ModContent.ItemType<CookieShirt>(), ModContent.ItemType<CookiePants>()));
+            rule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<TopCake>(), ModContent.ItemType<BirthdaySuit>(), ModContent.ItemType<RightTrousers>()));
             npcLoot.Add(rule);
         }
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.IsABestiaryIconDummy)
+            {
+                Vector2 pos = NPC.Center - screenPos;
+                Rectangle frame = new(0, 0, 66, 64);
+                pos.Y += NPC.gfxOffY - 6f;
+                spriteBatch.Draw(TextureAssets.Npc[Type].Value, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
                 return true;
+			}
 
-            Texture2D texture = TextureAssets.Npc[Type].Value;
-            if (variation is Variation.Snow)
-                texture = SantaCookieTexture.Value;
-            else if (variation is Variation.Birthday)
-                texture = BirthdayCookieTexture.Value;
-
-            DS.DrawNPC(NPC, texture, spriteBatch, screenPos, drawColor);
+            DS.DrawNPC(NPC, TextureAssets.Npc[Type].Value, spriteBatch, screenPos, drawColor);
             return false;
 		}
+
+		public override void FindFrame(int frameHeight)
+        {
+            if (fax[NPC.whoAmI] == -1)
+            {
+                int x = 0;
+                if (variation == Variation.Normal)
+                    x = Main.rand.Next(9) * 66;
+                else if (variation == Variation.Halloween)
+                    x = 264 + Main.rand.Next(3) * 66;
+                else if (variation == Variation.Christmas)
+                    x = Main.rand.Next(3) * 66;
+                else if (variation == Variation.Birthday)
+                    x = 198;
+                else if (variation == Variation.Easter)
+                    x = 132;
+                fax[NPC.whoAmI] = x;
+            }
+
+            NPC.frame = new(fax[NPC.whoAmI], variation == Variation.Normal ? 0 : 64, 66, 64);
+        }
 
 		public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
 
@@ -146,7 +172,7 @@ namespace TheConfectionRebirth.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {
                 return 0.1f;
             }
@@ -174,6 +200,8 @@ namespace TheConfectionRebirth.NPCs
                     Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("RollercookieGore1").Type);
                     Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("RollercookieGore2").Type);
                 }
+
+                fax[NPC.whoAmI] = -1;
             }
         }
 

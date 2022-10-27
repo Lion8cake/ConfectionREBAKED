@@ -24,6 +24,6 @@ namespace TheConfectionRebirth.Biomes
             DisplayName.SetDefault("Confection Cave Desert");
         }
 
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && player.ZoneUndergroundDesert;
+        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && player.ZoneUndergroundDesert;
     }
 }
