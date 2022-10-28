@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -14,7 +16,19 @@ namespace TheConfectionRebirth.NPCs
     {
         private Player player;
 
-        public override void SetStaticDefaults()
+        private sbyte Index;
+
+		public override void Load()
+        {
+            VariationManager<Sprinkler>.AddGroup("Normal", ModContent.Request<Texture2D>(Texture));
+            /*VariationManager<Sprinkler>.AddGroup("Corn", ModContent.Request<Texture2D>(Texture + "_Corn"), () => Main.halloween);
+            VariationManager<Sprinkler>.AddGroup("Eye", ModContent.Request<Texture2D>(Texture + "_Eye"), () => Main.halloween);
+            VariationManager<Sprinkler>.AddGroup("Gift", ModContent.Request<Texture2D>(Texture + "_Gift"), () => Main.xMas);*/
+        }
+
+		public override void Unload() => VariationManager<Sprinkler>.Clear();
+
+		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sprinkler");
             Main.npcFrameCount[NPC.type] = 2;
@@ -44,6 +58,7 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            Index = -1;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -64,7 +79,10 @@ namespace TheConfectionRebirth.NPCs
             if (NPC.life <= 0)
             {
                 Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
-                NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
+                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
+                (Main.npc[index].ModNPC as Sprinkling).Index = Index;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
             }
         }
 
@@ -77,7 +95,20 @@ namespace TheConfectionRebirth.NPCs
             return 0f;
         }
 
-        public override void AI()
+		public override bool PreAI()
+        {
+            if (Index == -1)
+            {
+                Index = (sbyte)VariationManager<Sprinkler>.GetRandomGroup().Index;
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            }
+
+            return true;
+        }
+
+		public override void AI()
         {
             Target();
             NPC.ai[1] -= 1f;
@@ -109,5 +140,17 @@ namespace TheConfectionRebirth.NPCs
             return (float)Math.Sqrt(mag.X * mag.X + mag.Y * mag.Y);
         }
 
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
+
+            DS.DrawNPC(NPC, VariationManager<Sprinkler>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
+            return false;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) => writer.Write(Index);
+
+        public override void ReceiveExtraAI(BinaryReader reader) => Index = reader.ReadSByte();
     }
 }

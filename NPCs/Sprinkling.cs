@@ -1,4 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -12,6 +15,17 @@ namespace TheConfectionRebirth.NPCs
 {
     public class Sprinkling : ModNPC
     {
+        internal sbyte Index;
+
+        public override void Load()
+        {
+            VariationManager<Sprinkling>.AddGroup("Normal", ModContent.Request<Texture2D>(Texture));
+            /*VariationManager<Sprinkling>.AddGroup("Corn", ModContent.Request<Texture2D>(Texture + "_Corn"), () => Main.halloween);
+            VariationManager<Sprinkling>.AddGroup("Eye", ModContent.Request<Texture2D>(Texture + "_Eye"), () => Main.halloween);
+            VariationManager<Sprinkling>.AddGroup("Gift", ModContent.Request<Texture2D>(Texture + "_Gift"), () => Main.xMas);*/
+        }
+
+        public override void Unload() => VariationManager<Sprinkler>.Clear();
 
         public override void SetStaticDefaults()
         {
@@ -37,6 +51,20 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            Index = -1;
+        }
+
+        public override bool PreAI()
+        {
+            if (Index == -1)
+            {
+                Index = (sbyte)VariationManager<Sprinkling>.GetRandomGroup().Index;
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            }
+
+            return true;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -71,5 +99,18 @@ namespace TheConfectionRebirth.NPCs
                 }
             }
         }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
+
+            DS.DrawNPC(NPC, VariationManager<Sprinkling>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
+            return false;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) => writer.Write(Index);
+
+        public override void ReceiveExtraAI(BinaryReader reader) => Index = reader.ReadSByte();
     }
 }

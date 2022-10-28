@@ -17,7 +17,10 @@ Made Secret Confection background slightly more common. (by ~10x)
 Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
 Fixed all Confection's biomes in bestiary being "unknown".
+Fixed typos in Neapolinite Mask set bonus tooltip.
+Fixed typo in Neapolinite Hat set bonus tooltip.
 Fixed a typo in Striped Pigron's bestiary entry.
+Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
 Parfait Slime now can drop Slime Staff.
 Fixed 1 pixel in Rollercookie's sprite.
