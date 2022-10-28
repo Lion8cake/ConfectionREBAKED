@@ -18,32 +18,24 @@ namespace TheConfectionRebirth.NPCs
 {
     public class SweetGummy : ModNPC
     {
-        private enum Variation : byte
-		{
-            None,
-            Green,
-            Red,
-            Blue,
-            Yellow,
-            Amber,
-            Diamond,
-            Onyx,
-            Pink,
-            Purple
-		}
-
-        private Variation variation;
-
-        private static Asset<Texture2D>[] VariationTextures = new Asset<Texture2D>[8];
+        private VariationGroup group;
 
 		public override void Load()
         {
-            var a = Enum.GetValues<Variation>()[2..];
+            string[] a = { "Green", "Red", "Blue", "Yellow", "Amber", "Pink", "Onyx", "Diamond", "Purple" };
             for (int i = 0; i < a.Length; i++)
-                VariationTextures[i] = ModContent.Request<Texture2D>(Texture + '_' + a[i].ToString());
+            {
+                if (a[i] == "Green")
+                {
+                    VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture));
+                    continue;
+				}
+
+                VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture + '_' + a[i]));
+            }
         }
 
-		public override void Unload() => VariationTextures = null;
+		public override void Unload() => VariationManager<SweetGummy>.Clear();
 
 		public override void SetStaticDefaults()
         {
@@ -69,13 +61,14 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SweetGummyBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
+            group = VariationGroup.Empty;
         }
 
         public override bool PreAI()
         {
-            if (variation == Variation.None)
+            if (group == VariationGroup.Empty)
             {
-                variation = Main.rand.Next(Enum.GetValues<Variation>()[1..]);
+                group = VariationManager<SweetGummy>.GetRandomGroup();
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -89,11 +82,7 @@ namespace TheConfectionRebirth.NPCs
             if (NPC.IsABestiaryIconDummy)
                 return true;
 
-            Texture2D texture = TextureAssets.Npc[Type].Value;
-            if (variation is >= Variation.Red)
-                texture = VariationTextures[(byte)variation - 2].Value;
-
-            DS.DrawNPC(NPC, texture, spriteBatch, screenPos, drawColor);
+            DS.DrawNPC(NPC, group.Get().Value, spriteBatch, screenPos, drawColor);
             return false;
         }
 
@@ -141,8 +130,8 @@ namespace TheConfectionRebirth.NPCs
             }
         }
 
-        public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
+        public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)group.Index);
 
-        public override void ReceiveExtraAI(BinaryReader reader) => variation = (Variation)reader.ReadByte();
+        public override void ReceiveExtraAI(BinaryReader reader) => group = VariationManager<SweetGummy>.GetByIndex(reader.ReadByte());
     }
 }

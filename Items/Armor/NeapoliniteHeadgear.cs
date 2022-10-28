@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Items.Armor
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("6% Increased Magic Damage"
-                    + "\nIncreased Max manna by 80");
+                    + "\nIncreased Max Mana by 80");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
