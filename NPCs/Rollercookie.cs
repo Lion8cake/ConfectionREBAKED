@@ -27,7 +27,9 @@ namespace TheConfectionRebirth.NPCs
             Halloween,
             Christmas,
             Easter,
-            Birthday
+            Birthday,
+            Fox,
+            Blueberry,
         }
 
         private Variation variation;
@@ -106,6 +108,10 @@ namespace TheConfectionRebirth.NPCs
                     variation = Variation.Easter;
                 if (Main.rand.NextFloat() < 0.002f || TheConfectionRebirth.OurFavoriteDay && Main.rand.NextFloat() < 0.075f)
                     variation = Variation.Birthday;
+                if (Main.rand.NextFloat() < 0.001f || TheConfectionRebirth.OurFavoriteDay && Main.rand.NextFloat() < 0.0375f)
+                    variation = Variation.Birthday;
+                if (DateTime.Now.Day.Equals(11) && DateTime.Now.Month.Equals(12))
+                    variation = Main.rand.NextBool() ? Variation.Blueberry : Variation.Fox;
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -160,6 +166,10 @@ namespace TheConfectionRebirth.NPCs
                     x = 198;
                 else if (variation == Variation.Easter)
                     x = 132;
+                else if (variation == Variation.Blueberry)
+                    x = 528;
+                else if (variation == Variation.Fox)
+                    x = 462;
                 fax[NPC.whoAmI] = x;
             }
 
