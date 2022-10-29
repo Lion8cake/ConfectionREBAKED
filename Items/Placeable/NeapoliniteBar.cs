@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             Item.width = 20;
             Item.height = 20;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 20000;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;

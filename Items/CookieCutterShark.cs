@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cookie Cutter Shark");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
+            SacrificeTotal = 2;
         }
 
         public override void SetDefaults()

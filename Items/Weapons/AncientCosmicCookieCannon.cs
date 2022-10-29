@@ -12,12 +12,12 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Ancient Cosmic Cookie Cannon");
             Tooltip.SetDefault("'But wait? Doesn't it shoot cosmic brownies instead?'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 60;
+            Item.damage = 50;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 40;
             Item.height = 20;
@@ -37,7 +37,11 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddIngredient(ItemID.StarCannon, 1).AddTile(TileID.DemonAltar).Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12)
+                .AddIngredient(ItemID.StarCannon)
+                .AddTile(TileID.DemonAltar)
+                .Register();
         }
 
         public override Vector2? HoldoutOffset()

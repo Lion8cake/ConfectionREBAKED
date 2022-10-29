@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
+using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -16,7 +18,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.consumable = true;
             Item.height = 30;
 
-            Item.shoot = Mod.Find<ModProjectile>("SacchariteDartPro").Type;
+            Item.shoot = ModContent.ProjectileType<SacchariteDartPro>();
             Item.shootSpeed = 22f;
             Item.knockBack = 4;
             Item.value = 10;
@@ -28,13 +30,14 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Saccharite Dart");
             Tooltip.SetDefault("Homes onto enemies");
+            SacrificeTotal = 99;
         }
 
         public override void AddRecipes()
         {
-            Recipe recipe = CreateRecipe(100);
-            recipe.AddIngredient(null, "Saccharite", 1);
-            recipe.Register();
+            CreateRecipe(100)
+                .AddIngredient<Saccharite>()
+                .Register();
         }
     }
 }

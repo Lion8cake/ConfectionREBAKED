@@ -11,16 +11,39 @@ namespace TheConfectionRebirth.NPCs
 {
     public class NpcDrops : GlobalNPC
     {
+        public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
+        {
+            public bool CanDrop(DropAttemptInfo info)
+            {
+                if (Conditions.SoulOfWhateverConditionCanDrop(info))
+                {
+                    return info.player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>());
+                }
+                return false;
+            }
 
-        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+            public bool CanShowItemDropInUI()
+            {
+                return false;
+            }
+
+            public string GetConditionDescription()
+            {
+                return "";
+            }
+        }
+
+
+        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+        {
+            globalLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
+        }
+
+		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.type == NPCID.Gastropod)
             {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 5, 15, 25));
-            }
-            if (npc.lifeMax >= 1)
-            {
-                npcLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
             }
         }
 
@@ -45,26 +68,5 @@ namespace TheConfectionRebirth.NPCs
                 damage = (int)(npc.defense * 0.5f) + 3;
             }
         }
-    }
-}
-public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
-{
-    public bool CanDrop(DropAttemptInfo info)
-    {
-        if (Conditions.SoulOfWhateverConditionCanDrop(info))
-        {
-            return info.player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>());
-        }
-        return false;
-    }
-
-    public bool CanShowItemDropInUI()
-    {
-        return false;
-    }
-
-    public string GetConditionDescription()
-    {
-        return "Lion forgot to write something here, im sorry for the lack of brain cells he has";
     }
 }

@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Items
 
 			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Once pastry is hot, fillings and frosting can cause burns'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+			SacrificeTotal = 5;
 
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 
@@ -28,8 +28,6 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override void SetDefaults() {
-
-
 			Item.DefaultToFood(22, 22, BuffID.WellFed2, 72000);
 			Item.value = Item.buyPrice(0, 3);
 			Item.rare = ItemRarityID.Orange;

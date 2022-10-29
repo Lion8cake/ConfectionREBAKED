@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

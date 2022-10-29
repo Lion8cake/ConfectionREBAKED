@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,11 +12,12 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             DisplayName.SetDefault("Banana Split Crate");
             Tooltip.SetDefault("Right Click to open");
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.width = 34;
             Item.height = 34;
@@ -33,70 +35,59 @@ namespace TheConfectionRebirth.Items.Placeable
             return true;
         }
 
-        public override void RightClick(Player player)
-        {
-            var entitySource = player.GetSource_OpenItem(Type);
+		public override void ModifyItemLoot(ItemLoot itemLoot)
+		{
+            // adapted from ItemDropDatabase.TML.cs cuz lazy
+            IItemDropRule bc_goldCoin = ItemDropRule.NotScalingWithLuck(ItemID.GoldCoin, 4, 5, 13);
 
-            if (Main.rand.NextBool(4))
+            var oresTier1 = new IItemDropRule[]
             {
-                player.QuickSpawnItem(entitySource, ItemID.GoldCoin, Main.rand.Next(5, 13));
-            }
-
-            if (Main.rand.NextBool(7))
+                ItemDropRule.NotScalingWithLuck(ItemID.CopperOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.TinOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.IronOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.LeadOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.SilverOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.TungstenOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.GoldOre, 1, 30, 49),
+                ItemDropRule.NotScalingWithLuck(ItemID.PlatinumOre, 1, 30, 49)
+            };
+            var barsTier1 = new IItemDropRule[]
             {
-                int oreType = Main.rand.Next(new int[] {
-                    ItemID.CopperOre,
-                    ItemID.TinOre,
-                    ItemID.IronOre,
-                    ItemID.LeadOre,
-                    ItemID.SilverOre,
-                    ItemID.TungstenOre,
-                    ItemID.GoldOre,
-                    ItemID.PlatinumOre,
-                });
-
-                player.QuickSpawnItem(entitySource, oreType, Main.rand.Next(30, 50));
-            }
-
-            if (Main.rand.NextBool(4))
+                ItemDropRule.NotScalingWithLuck(ItemID.IronBar, 1, 10, 20),
+                ItemDropRule.NotScalingWithLuck(ItemID.LeadBar, 1, 10, 20),
+                ItemDropRule.NotScalingWithLuck(ItemID.SilverBar, 1, 10, 20),
+                ItemDropRule.NotScalingWithLuck(ItemID.TungstenBar, 1, 10, 20),
+                ItemDropRule.NotScalingWithLuck(ItemID.GoldBar, 1, 10, 20),
+                ItemDropRule.NotScalingWithLuck(ItemID.PlatinumBar, 1, 10, 20)
+            };
+            var potions = new IItemDropRule[]
             {
-                int barType = Main.rand.Next(new int[] {
-                    ItemID.IronBar,
-                    ItemID.LeadBar,
-                    ItemID.SilverBar,
-                    ItemID.TungstenBar,
-                    ItemID.GoldBar,
-                    ItemID.PlatinumBar,
-                });
-
-                player.QuickSpawnItem(entitySource, barType, Main.rand.Next(10, 21));
-            }
-
-            if (Main.rand.NextBool(4))
+                ItemDropRule.NotScalingWithLuck(ItemID.ObsidianSkinPotion, 1, 2, 4),
+                ItemDropRule.NotScalingWithLuck(ItemID.SpelunkerPotion, 1, 2, 4),
+                ItemDropRule.NotScalingWithLuck(ItemID.HunterPotion, 1, 2, 4),
+                ItemDropRule.NotScalingWithLuck(ItemID.GravitationPotion, 1, 2, 4),
+                ItemDropRule.NotScalingWithLuck(ItemID.MiningPotion, 1, 2, 4),
+                ItemDropRule.NotScalingWithLuck(ItemID.HeartreachPotion, 1, 2, 4)
+            };
+            var extraPotions = new IItemDropRule[]
             {
-                int potionType = Main.rand.Next(new int[] {
-                    ItemID.ObsidianSkinPotion,
-                    ItemID.SpelunkerPotion,
-                    ItemID.HunterPotion,
-                    ItemID.GravitationPotion,
-                    ItemID.MiningPotion,
-                    ItemID.HeartreachPotion,
-                });
-
-                player.QuickSpawnItem(entitySource, potionType, Main.rand.Next(2, 5));
-            }
-
-            if (Main.rand.NextBool(2))
+                ItemDropRule.NotScalingWithLuck(ItemID.HealingPotion, 1, 5, 17),
+                ItemDropRule.NotScalingWithLuck(ItemID.ManaPotion, 1, 5, 17)
+            };
+            var extraBait = new IItemDropRule[]
             {
-                int resourcePotionType = Main.rand.NextBool() ? ItemID.HealingPotion : ItemID.ManaPotion;
-                player.QuickSpawnItem(entitySource, resourcePotionType, Main.rand.Next(5, 18));
-            }
+                ItemDropRule.NotScalingWithLuck(ItemID.MasterBait, 3, 2, 6),
+                ItemDropRule.NotScalingWithLuck(ItemID.JourneymanBait, 1, 2, 6)
+            };
 
-            if (Main.rand.NextBool(2))
-            {
-                int baitType = Main.rand.NextBool() ? ItemID.JourneymanBait : ItemID.MasterBait;
-                player.QuickSpawnItem(entitySource, baitType, Main.rand.Next(2, 7));
-            }
+            IItemDropRule[] hallowed = new IItemDropRule[] {
+                bc_goldCoin,
+                ItemDropRule.SequentialRulesNotScalingWithLuck(1, new OneFromRulesRule(5, oresTier1), new OneFromRulesRule(3, 2, barsTier1)),
+                new OneFromRulesRule(3, potions),
+            };
+            itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(hallowed));
+            itemLoot.Add(new OneFromRulesRule(2, extraPotions));
+            itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, extraBait));
         }
     }
 }

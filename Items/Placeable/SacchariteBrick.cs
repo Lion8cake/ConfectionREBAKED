@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             Item.width = 12;
             Item.height = 12;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 2).Register();
+            CreateRecipe(5).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 2).Register();
         }
     }
 }

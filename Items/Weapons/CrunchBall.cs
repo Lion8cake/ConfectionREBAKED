@@ -3,6 +3,7 @@ using TheConfectionRebirth.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -12,6 +13,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		{
 			DisplayName.SetDefault("Crunch Ball");
 			Tooltip.SetDefault("Launches a large Rock Candy ball.");
+			SacrificeTotal = 1;
 		}
 	
 		public override void SetDefaults()
@@ -35,12 +37,12 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 	
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 30);
-			recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 15);
-			recipe.AddIngredient(ItemID.SpellTome, 1);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			CreateRecipe()
+				.AddIngredient<Saccharite>(30)
+				.AddIngredient<SoulofDelight>(15)
+				.AddIngredient(ItemID.SpellTome)
+				.AddTile(TileID.Bookcases)
+				.Register();
 		}
 	}
 }

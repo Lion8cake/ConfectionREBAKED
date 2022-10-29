@@ -17,13 +17,22 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 150000;
             Item.rare = ItemRarityID.LightRed;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(this, 1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ItemID.Blinkroot, 1).AddIngredient(ItemID.Fireblossom, 1).AddTile(TileID.AlchemyTable).ReplaceResult(ItemID.TeleportationPotion);
-            CreateRecipe(1).AddIngredient(this, 2).AddTile(96).ReplaceResult(ItemID.CookedFish);
+            CreateRecipe()
+                .AddIngredient(this, 1)
+                .AddIngredient(ItemID.BottledWater, 1)
+                .AddIngredient(ItemID.Blinkroot, 1)
+                .AddIngredient(ItemID.Fireblossom, 1)
+                .AddTile(TileID.AlchemyTable)
+                .ReplaceResult(ItemID.TeleportationPotion);
+            CreateRecipe()
+                .AddIngredient(this, 2)
+                .AddTile(96)
+                .ReplaceResult(ItemID.CookedFish);
         }
     }
 }

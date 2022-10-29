@@ -39,13 +39,11 @@ namespace TheConfectionRebirth.NPCs
                 shop.item[nextSlot].shopCustomPrice = 2000;
                 nextSlot++;
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Pets.CreamyFoxPet.CreamFoxPetItem>());
-                shop.item[nextSlot].shopCustomPrice = 1000000;
                 nextSlot++;
             }
             else if (type == NPCID.Steampunker && Main.hardMode)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.CreamSolution>());
-                shop.item[nextSlot].shopCustomPrice = 500;
                 nextSlot++;
             }
             else if (type == NPCID.Wizard)

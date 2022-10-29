@@ -38,6 +38,7 @@ namespace TheConfectionRebirth.NPCs
 				}
 
 				VariationGroup group = new(groupName, condition, asset);
+				group.Index = groups.Count;
 				groups.Add(groupName, group);
 				groups2.Add(group);
 				groups3.Add(groupName);
@@ -48,8 +49,6 @@ namespace TheConfectionRebirth.NPCs
 				groups2?[groups3.FindIndex((x) => x.Equals(groupName))].Add(asset);
 			}
 		}
-
-		public static void AddVar(string groupName, Asset<Texture2D> asset) => groups?[groupName].Add(asset);
 
 		public static (VariationGroup group, string groupName, Asset<Texture2D> asset) GetRandom()
 		{
@@ -110,7 +109,7 @@ namespace TheConfectionRebirth.NPCs
 		private Asset<Texture2D> assets;
 		private readonly Func<bool> condition;
 
-		public int Index { get; private set; }
+		public int Index { get; internal set; }
 
 		public static readonly VariationGroup Empty = default;
 

@@ -8,6 +8,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Cunks of Chocolate bounce around after impact.");
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults() {
@@ -26,11 +27,11 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe(25);
-			recipe.AddIngredient(40, 25);
-			recipe.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			CreateRecipe(25)
+				.AddIngredient(ItemID.WoodenArrow, 25)
+				.AddIngredient(ModContent.ItemType<CookieDough>(), 2)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

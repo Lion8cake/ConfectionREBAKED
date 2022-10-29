@@ -13,6 +13,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		    DisplayName.SetDefault("Cream of Kickin'");
 			Tooltip.SetDefault("Apon using <right> a cookie will shoot instantly but with less damage."
 			    + "\nApon using <left> a ball of meat will shoot with increased damage and a spin attack.");
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults() {
@@ -37,13 +38,13 @@ namespace TheConfectionRebirth.Items.Weapons
 		
 		public override void AddRecipes() 
 		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.CreamPuff>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.CanofMeat>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 7);
-			recipe.AddIngredient(ItemID.SoulofNight, 7);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.CreamPuff>(), 1)
+				.AddIngredient(ModContent.ItemType<Items.CanofMeat>(), 1)
+				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 7)
+				.AddIngredient(ItemID.SoulofNight, 7)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 		
 		public override bool AltFunctionUse(Player player) {

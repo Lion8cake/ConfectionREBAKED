@@ -12,7 +12,18 @@ public class ConfectionBiomeSurface : ModBiome
 
     public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
-	public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSurfaceBackgroundStyle>();
+	public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle
+	{
+		get
+		{
+			if (Main.LocalPlayer.ZoneDesert)
+				return ModContent.GetInstance<SandConfectionSurfaceBiome>().SurfaceBackgroundStyle;
+			else if (Main.LocalPlayer.ZoneSnow)
+				return ModContent.GetInstance<IceConfectionSurfaceBiome>().SurfaceBackgroundStyle;
+
+			return ModContent.GetInstance<ConfectionSurfaceBackgroundStyle>();
+		}
+	}
 
 	public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<ConfectionUGBackgroundStyle>();
 

@@ -8,18 +8,32 @@ You are 100% able to port 1.3 confection worlds to 1.4 tmodloader ALTHOUGH your 
 If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
-Change log
+Changelog
 ===========================================
 All archived items now actually get replaced with whatever they got replaced. (for example, Soul of Spite will automatically get converted to Soul of Night)
 Fixed Iscreamers having 0.02% (0.025% in Expert) to drop Dimensional Split. Now its 0.2% and 0.25% in Expert.
+Added Gummy Worm-whip. Sprite credit goes to splig. (the whip is unobtainable as now tho)
 Updated homepage to be https://terrariamods.wiki.gg/wiki/Confection_Rebaked instead.
 Made Secret Confection background slightly more common. (by ~10x)
 Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
 Fixed all Confection's biomes in bestiary being "unknown".
+Added all Rollercookie sprite variations from forums.
+Added all Sweet Gummy sprite variations from forums.
+Made Saccharite Bullet researchable in Journey Mode.
+Made Cream of Kickin' researchable in Journey Mode.
+Made Saccharite Arrow researchable in Journey Mode.
+Added all Iscreamer sprite variations from forums.
 Fixed typos in Neapolinite Mask set bonus tooltip.
+Made Saccharite Dart researchable in Journey Mode.
+Made True Sucrosa researchable in  Journey Mode.
+Made Candlelighter researchable in Journey Mode.
 Fixed typo in Neapolinite Hat set bonus tooltip.
 Fixed a typo in Striped Pigron's bestiary entry.
+Made Sugar Water researchable in Journey Mode.
+Made Crunch Ball researchable in Journey Mode.
+Made Soda Potion researchable in Journey Mode.
+Made Chip Arrow researchable in Journey Mode.
 Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
 Parfait Slime now can drop Slime Staff.
@@ -27,6 +41,7 @@ Fixed 1 pixel in Rollercookie's sprite.
 Ultra far background now less laggy.
 Cream Swallower now has banner.
 Increased version number.
+Fixed Sweet Tooth rarity.
 
 ===========================================
 Credit - Programmers
@@ -51,5 +66,6 @@ Snacks - Several 1.4 textures including the furniture toilets, saccharite furnit
 DakotaSpine - The amazing New background for the confection
 Neobind - Textures for a few things
 Miguel Noturn0 - Confection Tree icons
+splig - for Gummy Worm-whip sprite
 
 And to all the people that helped me out with coding problems and other issues, thank you!

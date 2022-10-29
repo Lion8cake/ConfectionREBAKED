@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items
         {
             DisplayName.SetDefault("Cream Puff");
             Tooltip.SetDefault("'Sometimes carried by creatures in the dessert desert'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 4500;
             Item.rare = ItemRarityID.Green;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
         }
     }
 }

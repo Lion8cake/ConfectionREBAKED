@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Cream Spray");
             Tooltip.SetDefault("Shoots a Spray of Cream");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

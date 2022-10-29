@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -13,7 +14,7 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Neapolinite Repeater");
             Tooltip.SetDefault("Every arrow 2 more are shot out.");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -31,7 +32,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.rare = ItemRarityID.LightRed;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = true;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
         }
@@ -49,7 +50,10 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<NeapoliniteBar>(12)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

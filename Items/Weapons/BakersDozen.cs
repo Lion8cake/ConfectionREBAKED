@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Baker's Dozen");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -49,7 +49,12 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 15).AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 20).AddIngredient(ItemID.SoulofMight, 20).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 15)
+                .AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 20)
+                .AddIngredient(ItemID.SoulofMight, 20)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

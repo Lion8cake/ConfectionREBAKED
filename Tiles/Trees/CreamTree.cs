@@ -121,7 +121,7 @@ namespace TheConfectionRebirth.Tiles
                 NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type5);
                 return true;
             }
-            else if (WorldGen.genRand.Next(15) == 0)
+            else if (WorldGen.genRand.Next(12) == 0)
             {
                 Item.NewItem(Type: (WorldGen.genRand.Next(2) != 0) ? ModContent.ItemType<Cherimoya>() : 4297, source: WorldGen.GetItemSource_FromTreeShake(x, y), X: x * 16, Y: y * 16, Width: 16, Height: 16);
                 return true;

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -10,7 +11,7 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sucrosa");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -21,7 +22,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 40;
             Item.useTime = 25;
             Item.useAnimation = 30;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(silver: 460);
             Item.rare = ItemRarityID.Pink;
@@ -31,7 +32,10 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<NeapoliniteBar>(12)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

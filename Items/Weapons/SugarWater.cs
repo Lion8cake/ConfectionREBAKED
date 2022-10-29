@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
@@ -12,13 +13,14 @@ namespace TheConfectionRebirth.Items.Weapons
 		{
 			DisplayName.SetDefault("Sugar Water");
 			Tooltip.SetDefault("Spreads the confection to some blocks");
+			SacrificeTotal = 99;
 		}
 	
 		public override void SetDefaults()
 		{
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.shootSpeed = 14f;
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.damage = 20;
 			Item.shoot = ModContent.ProjectileType<SugarWaterBottle>();
 			Item.width = 18;
@@ -35,12 +37,12 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 		
 		public override void AddRecipes() 
-			{
-				Recipe recipe = CreateRecipe(10);
-				recipe.AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 3);
-				recipe.AddIngredient(ModContent.ItemType<Items.Placeable.CreamBeans>(), 1);
-				recipe.AddIngredient(ItemID.BottledWater, 10);
-				recipe.Register();
-			}
+		{
+			CreateRecipe(10)
+				.AddIngredient<Sprinkles>(3)
+				.AddIngredient<CreamBeans>()
+				.AddIngredient(ItemID.BottledWater, 10)
+				.Register();
+		}
 	}
 }

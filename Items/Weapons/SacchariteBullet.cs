@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -8,6 +9,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Shatters into pecies apon impact.");
+			SacrificeTotal = 99;
 		}
 
 		public override void SetDefaults() {
@@ -26,11 +28,11 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe(25);
-			recipe.AddIngredient(ItemID.MusketBall, 25);
-			recipe.AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			CreateRecipe(25)
+				.AddIngredient(ItemID.MusketBall, 25)
+				.AddIngredient<Saccharite>()
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

@@ -6,6 +6,11 @@ namespace TheConfectionRebirth.Items.Placeable
 {
 	public class ConfectionPylon : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			SacrificeTotal = 1;
+		}
+
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<ConfectionPylonTile>());
 

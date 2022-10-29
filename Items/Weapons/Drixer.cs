@@ -40,7 +40,13 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 18).AddIngredient(ItemID.SoulofSight, 1).AddIngredient(ItemID.SoulofMight, 1).AddIngredient(ItemID.SoulofFright, 1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<NeapoliniteBar>(18)
+                .AddIngredient(ItemID.SoulofSight)
+                .AddIngredient(ItemID.SoulofMight)
+                .AddIngredient(ItemID.SoulofFright)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

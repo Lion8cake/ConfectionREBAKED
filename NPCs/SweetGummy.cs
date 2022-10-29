@@ -18,7 +18,7 @@ namespace TheConfectionRebirth.NPCs
 {
     public class SweetGummy : ModNPC
     {
-        private VariationGroup group;
+        private sbyte Index;
 
 		public override void Load()
         {
@@ -61,14 +61,14 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SweetGummyBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
-            group = VariationGroup.Empty;
+            Index = -1;
         }
 
         public override bool PreAI()
         {
-            if (group == VariationGroup.Empty)
+            if (Index == -1)
             {
-                group = VariationManager<SweetGummy>.GetRandomGroup();
+                Index = (sbyte)VariationManager<SweetGummy>.GetRandomGroup().Index;
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -82,7 +82,7 @@ namespace TheConfectionRebirth.NPCs
             if (NPC.IsABestiaryIconDummy)
                 return true;
 
-            DS.DrawNPC(NPC, group.Get().Value, spriteBatch, screenPos, drawColor);
+            DS.DrawNPC(NPC, VariationManager<SweetGummy>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
             return false;
         }
 
@@ -130,8 +130,8 @@ namespace TheConfectionRebirth.NPCs
             }
         }
 
-        public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)group.Index);
+        public override void SendExtraAI(BinaryWriter writer) => writer.Write(Index);
 
-        public override void ReceiveExtraAI(BinaryReader reader) => group = VariationManager<SweetGummy>.GetByIndex(reader.ReadByte());
+        public override void ReceiveExtraAI(BinaryReader reader) => Index = reader.ReadSByte();
     }
 }

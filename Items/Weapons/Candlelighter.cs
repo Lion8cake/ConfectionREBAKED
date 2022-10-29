@@ -12,6 +12,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("'Yes, it's the tricky kind'\nUses gel as ammo\nEnemys will always be on fire unless they fall into water.");
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -61,12 +62,12 @@ namespace TheConfectionRebirth.Items.Weapons
 		
 		public override void AddRecipes() 
 		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12);
-			recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-			recipe.AddIngredient(ItemID.SoulofSight, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12)
+				.AddIngredient(ItemID.IllegalGunParts)
+				.AddIngredient(ItemID.SoulofSight, 20)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 }

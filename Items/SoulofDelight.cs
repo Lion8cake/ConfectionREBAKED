@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Items
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Items
             Item.height = refItem.height;
             Item.value = 1000;
             Item.rare = ItemRarityID.Orange;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
 
         public override void PostUpdate()
@@ -46,16 +46,27 @@ namespace TheConfectionRebirth.Items
 
         public override void AddRecipes() // thanks to foxyboy55 for this fix
         {
+            Recipe.Create(ItemID.MechanicalEye)
+                .AddIngredient(ItemID.Lens, 3)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
+                .AddIngredient<SoulofDelight>(6)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
 
-            CreateRecipe(1).AddIngredient(38, 3).AddIngredient(22, 5).AddIngredient(null, "SoulofDelight", 6).AddTile(134).ReplaceResult(544);
+            Recipe.Create(ItemID.MechanicalSkull)
+                .AddIngredient(ItemID.Bone, 30)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
+                .AddIngredient<SoulofDelight>(3)
+                .AddIngredient(ItemID.SoulofNight, 3)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
 
-            CreateRecipe(1).AddIngredient(38, 3).AddIngredient(704, 5).AddIngredient(null, "SoulofDelight", 6).AddTile(134).ReplaceResult(544);
-
-            CreateRecipe(1).AddIngredient(154, 30).AddIngredient(22, 5).AddIngredient(null, "SoulofDelight", 3).AddIngredient(521, 3).AddTile(134).ReplaceResult(557);
-
-            CreateRecipe(1).AddIngredient(154, 30).AddIngredient(704, 5).AddIngredient(null, "SoulofDelight", 3).AddIngredient(521, 3).AddTile(134).ReplaceResult(557);
-
-            CreateRecipe(1).AddIngredient(117, 20).AddIngredient(null, "Sprinkles", 10).AddIngredient(null, "SoulofDelight", 10).AddTile(134).ReplaceResult(2750);
+            Recipe.Create(ItemID.MeteorStaff)
+                .AddIngredient(ItemID.MeteoriteBar, 20)
+                .AddIngredient<Sprinkles>(10)
+                .AddIngredient<SoulofDelight>(10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

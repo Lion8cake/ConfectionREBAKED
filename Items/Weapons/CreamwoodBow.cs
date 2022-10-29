@@ -8,7 +8,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -25,14 +25,17 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.rare = ItemRarityID.White;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = true;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 16f;
             Item.useAmmo = AmmoID.Arrow;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 10).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

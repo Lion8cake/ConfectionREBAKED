@@ -15,7 +15,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
         {
             Item.width = 26;
             Item.height = 22;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;

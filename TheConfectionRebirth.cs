@@ -42,8 +42,8 @@ namespace TheConfectionRebirth
 
         private delegate void BackgroundChangeFlashInfo_UpdateVariation(BackgroundChangeFlashInfo self, int areaId, int newVariationValue);
         private static BackgroundChangeFlashInfo_UpdateVariation backgroundChangeFlashInfo_UpdateVariation;
-        private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 + Main.rand.NextFloat(3f);
-        public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11)).ToBoolean();
+        private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 * Main.rand.NextFloat(3f);
+        public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11), new DateTime(2022, 10, 2), new DateTime(2022, 5, 16)).ToBoolean();
 
         internal const int bgVarAmount = 4;
 
@@ -78,7 +78,7 @@ namespace TheConfectionRebirth
             Fields = new dynamic[]
             {
                 typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
-                typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
                 typeof(Main).GetField("scAdj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance),
                 typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
@@ -320,7 +320,7 @@ namespace TheConfectionRebirth
                         if (texture is null)
                             return;
 
-                        Color ColorOfSurfaceBackgroundsModified = (Color)Fields[1];
+                        Color ColorOfSurfaceBackgroundsModified = (Color)Fields[1].GetValue(null);
                         float scAdj = (float)Fields[3].GetValue(Main.instance);
                         int bgWidthScaled = (int)Fields[2];
                         int bgTopY = !Main.gameMenu ? (int)(_backgroundTopMagicNumberCache * 1300.0 + 1005.0 + (int)scAdj + _pushBGTopHackCache + 40) : 75 + _pushBGTopHackCache;

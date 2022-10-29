@@ -11,6 +11,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		{
 			DisplayName.SetDefault("Cherry Bomb");
 			Tooltip.SetDefault("After detonation cherry shards with come out and explode.");
+			SacrificeTotal = 99;
 		}
 	
 		public override void SetDefaults()
@@ -22,7 +23,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			item.consumable = true;
 			item.useStyle = 1;
 			item.rare = ItemRarityID.Orange;
-			item.maxStack = 99;
+			item.maxStack = 9999;
 			item.UseSound = SoundID.Item1;
 			item.useAnimation = 44;
 			item.useTime = 44;

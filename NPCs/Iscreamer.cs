@@ -20,22 +20,22 @@ namespace TheConfectionRebirth.NPCs
 {
     public class Iscreamer : ModNPC
 	{
-		private enum Variation : byte
-		{
-			None = 0,
-			Normal = 1,
-			Snow = 2
-		}
-
-		private Variation variation;
+		private sbyte Index;
 
 		private float degrees;
 
-		private static Asset<Texture2D> SnowTexture;
+		public override void Load()
+		{
+			VariationManager<Iscreamer>.AddGroup("Strawberry", ModContent.Request<Texture2D>(Texture));
+			VariationManager<Iscreamer>.AddGroup("Cream", ModContent.Request<Texture2D>(Texture + "_Cream"));
+			VariationManager<Iscreamer>.AddGroup("Chocolate", ModContent.Request<Texture2D>(Texture + "_Chocolate"));
+			VariationManager<Iscreamer>.AddGroup("Mint", ModContent.Request<Texture2D>(Texture + "_Mint"));
+			VariationManager<Iscreamer>.AddGroup("Orange", ModContent.Request<Texture2D>(Texture + "_Orange"));
+			VariationManager<Iscreamer>.AddGroup("Blueberry", ModContent.Request<Texture2D>(Texture + "_Blueberry"));
+			VariationManager<Iscreamer>.AddGroup("Snow", ModContent.Request<Texture2D>(Texture + "_Snow"), () => Main.SceneMetrics.EnoughTilesForSnow);
+		}
 
-		public override void Load() => SnowTexture = ModContent.Request<Texture2D>(Texture + "_Snow");
-
-		public override void Unload() => SnowTexture = null;
+		public override void Unload() => VariationManager<Iscreamer>.Clear();
 
 		public override void SetStaticDefaults()
         {
@@ -61,7 +61,7 @@ namespace TheConfectionRebirth.NPCs
 			Banner = NPC.type;
             BannerItem = ModContent.ItemType<IscreamerBanner>();
             SpawnModBiomes = new int[] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type, ModContent.GetInstance<IceConfectionUndergroundBiome>().Type };
-			variation = Variation.None;
+			Index = -1;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -92,8 +92,8 @@ namespace TheConfectionRebirth.NPCs
             }
         }
 
-        int speed = 10;
-        int maxFrames = 3;
+        const int speed = 10;
+        const int maxFrames = 3;
         int frame;
 		public override void FindFrame(int frameHeight)
 		{
@@ -113,12 +113,9 @@ namespace TheConfectionRebirth.NPCs
 
 		public override bool PreAI()
 		{
-			if (variation == Variation.None)
+			if (Index == -1)
 			{
-				variation = Variation.Normal;
-				if (Main.SceneMetrics.EnoughTilesForSnow)
-					variation = Variation.Snow;
-
+				Index = (sbyte)VariationManager<Iscreamer>.GetRandomGroup().Index;
 				if (Main.netMode == NetmodeID.Server)
 					NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
 			}
@@ -131,11 +128,7 @@ namespace TheConfectionRebirth.NPCs
 			if (NPC.IsABestiaryIconDummy)
 				return true;
 
-			Texture2D texture = TextureAssets.Npc[Type].Value;
-			if (variation is Variation.Snow)
-				texture = SnowTexture.Value;
-
-			DS.DrawNPC(NPC, texture, spriteBatch, screenPos, drawColor);
+			DS.DrawNPC(NPC, VariationManager<Iscreamer>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
 			return false;
 		}
 
@@ -252,9 +245,9 @@ namespace TheConfectionRebirth.NPCs
             return 0f;
         }
 
-		public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
+		public override void SendExtraAI(BinaryWriter writer) => writer.Write(Index);
 
-		public override void ReceiveExtraAI(BinaryReader reader) => variation = (Variation)reader.ReadByte();
+		public override void ReceiveExtraAI(BinaryReader reader) => Index = reader.ReadSByte();
 	}
 }
 

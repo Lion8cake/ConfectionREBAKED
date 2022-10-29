@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Pets.CreamyFoxPet
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DogWhistle);
-
+			Item.value = Item.buyPrice(platinum: 1);
 			Item.shoot = ModContent.ProjectileType<FoxPetProjectile>();
 			Item.buffType = ModContent.BuffType<FoxPet>();
 		}

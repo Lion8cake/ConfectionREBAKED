@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Cleanses the evil");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Items
             Item.shootSpeed = 4f;
             Item.width = 16;
             Item.height = 24;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.UseSound = SoundID.Item1;
             Item.useAnimation = 15;

@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
@@ -11,7 +12,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class SacchariteLash : ModItem
 	{
 		public override void SetStaticDefaults() {
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 			Tooltip.SetDefault("Your summons will focus stuck enemies"
 				+ "\nShatters into pieces");
 		}
@@ -25,7 +26,10 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe()
+				.AddIngredient<NeapoliniteBar>(12)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 
 		public override bool MeleePrefix() {

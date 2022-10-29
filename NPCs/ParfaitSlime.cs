@@ -87,12 +87,15 @@ namespace TheConfectionRebirth.NPCs
                 return true;
 
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            if (variation is Variation.Snow)
-                texture = SnowTexture.Value;
-
             Rectangle f = NPC.frame;
-            f.Y /= 49;
-            f.Y *= texture.Height / Main.npcFrameCount[Type];
+            if (variation is Variation.Snow)
+            {
+                texture = SnowTexture.Value;
+                f.Width = 44;
+                f.Height = 34;
+                f.Y = (f.Y / 48) * 34;
+            }
+
             spriteBatch.Draw(texture, NPC.Center - screenPos - new Vector2(0f, 4f), f, drawColor, NPC.rotation, f.Size() * 0.5f, NPC.scale, 0, 0f);
             return false;
         }

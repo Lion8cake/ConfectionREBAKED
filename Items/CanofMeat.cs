@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items
         {
             DisplayName.SetDefault("Can of Meat"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
             Tooltip.SetDefault("'Sometimes carried by creatures in the bloody desert'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 4500;
             Item.rare = ItemRarityID.Green;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
         }
     }
 }

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ID;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -12,35 +13,28 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault(Language.GetTextValue("Build momentum to increase attack power"));
-
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
         {
-
             Item.DefaultToSpear(ModContent.ProjectileType<Projectiles.NeapoliniteJoustingLanceProjectile>(), 1f, 24);
 
             Item.DamageType = DamageClass.MeleeNoSpeed;
-
             Item.SetWeaponValues(80, 12f, 0);
-
             Item.SetShopValues(ItemRarityColor.LightRed4, Item.buyPrice(0, 6));
-
             Item.channel = true;
-
-            //Item.StopAnimationOnHurt = true;
-            //^^^ This is not yet implemented for the current tmod version, uncomment on october 1st
+            Item.StopAnimationOnHurt = true;
         }
 
-        public override bool MeleePrefix()
-		{
-			return true;
-		}
+		public override bool MeleePrefix() => true;
 
 		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<NeapoliniteBar>(12)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

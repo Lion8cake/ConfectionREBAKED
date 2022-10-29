@@ -13,6 +13,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		{
 			DisplayName.SetDefault("Soda Potion");
 			Tooltip.SetDefault("A fizzy beberage that contains a weird looking orange substance");
+			SacrificeTotal = 99;
 		}
 	
 		public override void SetDefaults()

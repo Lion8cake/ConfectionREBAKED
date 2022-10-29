@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("30% Not to consume ammo");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -37,7 +37,14 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ItemID.ClockworkAssaultRifle, 1).AddIngredient(ItemID.IllegalGunParts, 1).AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 15).AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 20).AddIngredient(ItemID.SoulofMight, 20).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.ClockworkAssaultRifle)
+                .AddIngredient(ItemID.IllegalGunParts)
+                .AddIngredient<SoulofDelight>(15)
+                .AddIngredient<Sprinkles>(20)
+                .AddIngredient(ItemID.SoulofMight, 20)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

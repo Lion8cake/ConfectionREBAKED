@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Items
         {
             DisplayName.SetDefault("C-cret Ticket");
             Tooltip.SetDefault("Summons a Foamin' Float to float on");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

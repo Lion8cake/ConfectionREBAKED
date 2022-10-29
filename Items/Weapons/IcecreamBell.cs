@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
@@ -12,7 +13,7 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Do you scream, for Ice-cream?");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -35,14 +36,17 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.shootSpeed = 7.5f;
         }
 
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-4f, 4f);
-        }
+		public override Vector2? HoldoutOffset() => new Vector2(-4f, 4f);
 
-        public override void AddRecipes()
+		public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 50).AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 12).AddIngredient(ItemID.SoulofSight, 20).AddIngredient(ItemID.Bell, 1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<Saccharite>(50)
+                .AddIngredient<SoulofDelight>(12)
+                .AddIngredient(ItemID.SoulofSight, 20)
+                .AddIngredient(ItemID.Bell)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

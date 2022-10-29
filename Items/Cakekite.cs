@@ -8,7 +8,7 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            SacrificeTotal = 3;
         }
 
         public override void SetDefaults()
@@ -17,13 +17,23 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 50000;
             Item.rare = 3;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(this, 1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ItemID.Shiverthorn, 1).AddIngredient(ItemID.Moonglow, 1).AddIngredient(ItemID.Waterleaf, 1).AddTile(TileID.AlchemyTable).ReplaceResult(ItemID.LifeforcePotion);
-            CreateRecipe(1).AddIngredient(this, 2).AddTile(96).ReplaceResult(ItemID.CookedFish);
+            CreateRecipe()
+                .AddIngredient(this)
+                .AddIngredient(ItemID.BottledWater)
+                .AddIngredient(ItemID.Shiverthorn)
+                .AddIngredient(ItemID.Moonglow)
+                .AddIngredient(ItemID.Waterleaf)
+                .AddTile(TileID.AlchemyTable)
+                .ReplaceResult(ItemID.LifeforcePotion);
+            CreateRecipe()
+                .AddIngredient(this, 2)
+                .AddTile(TileID.CookingPots)
+                .ReplaceResult(ItemID.CookedFish);
         }
     }
 }

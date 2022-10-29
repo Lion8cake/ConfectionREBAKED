@@ -8,7 +8,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -21,7 +21,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.useAnimation = 10;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.Lime;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = false;
             Item.shoot = 11;

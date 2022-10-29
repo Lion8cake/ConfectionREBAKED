@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
@@ -14,7 +15,7 @@ namespace TheConfectionRebirth.Items.Weapons
             ItemID.Sets.Yoyo[Item.type] = true;
             ItemID.Sets.GamepadExtraRange[Item.type] = 15;
             ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -41,7 +42,12 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(3278).AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 15).AddIngredient(ModContent.ItemType<SoulofDelight>(), 10).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.WoodYoyo)
+                .AddIngredient(ModContent.ItemType<Saccharite>(), 15)
+                .AddIngredient(ModContent.ItemType<SoulofDelight>(), 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items
         {
             DisplayName.SetDefault("Cherry Shells");
             Tooltip.SetDefault("'Surprisingly explosive'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 7500;
             Item.rare = 1;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             DisplayName.SetDefault("Cream Beam");
             Item.staff[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 25;
             Item.useTime = 14;
             Item.useAnimation = 14;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 8f;
             Item.value = Item.sellPrice(silver: 400);
@@ -37,7 +37,14 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ItemID.SoulofSight, 20).AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 10).AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 60).AddIngredient(ModContent.ItemType<Items.CookieDough>(), 6).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 60).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.SoulofSight, 20)
+                .AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 10)
+                .AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 60)
+                .AddIngredient(ModContent.ItemType<Items.CookieDough>(), 6)
+                .AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 60)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

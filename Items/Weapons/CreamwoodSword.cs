@@ -1,6 +1,7 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -15,7 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 40;
             Item.useTime = 15;
             Item.useAnimation = 20;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = 100;
             Item.UseSound = SoundID.Item1;
@@ -24,12 +25,15 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 7).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe()
+                .AddIngredient<CreamWood>(7)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

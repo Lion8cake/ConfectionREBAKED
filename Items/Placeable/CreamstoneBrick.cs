@@ -9,14 +9,14 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
         {
             Item.width = 12;
             Item.height = 12;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -28,8 +28,14 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.Creamstone>(), 1).AddIngredient(ModContent.ItemType<Items.Placeable.Creamsand>(), 1).AddTile(TileID.Furnaces).Register();
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamstoneBrickWall>(), 4).Register();
+            CreateRecipe(5)
+                .AddIngredient<Creamstone>(2)
+                .AddIngredient<Creamsand>()
+                .AddTile(TileID.Furnaces)
+                .Register();
+            CreateRecipe()
+                .AddIngredient<CreamstoneBrickWall>(4)
+                .Register();
         }
     }
 }

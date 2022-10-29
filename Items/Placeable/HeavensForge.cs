@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             Item.width = 50;
             Item.height = 26;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -29,6 +29,7 @@ namespace TheConfectionRebirth.Items.Placeable
             DisplayName.SetDefault("Heavenly Forge");
             Tooltip.SetDefault("Allows you to convert hallowed materials into their confection alternatives and vice versa\n" +
                 "'A forge created from the both the lands of rainbows and candy'");
+            SacrificeTotal = 1;
         }
 
         public override void AddRecipes()

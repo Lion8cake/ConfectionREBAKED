@@ -1,6 +1,7 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Mounts;
 
 namespace TheConfectionRebirth.Items
@@ -11,7 +12,7 @@ namespace TheConfectionRebirth.Items
         {
             DisplayName.SetDefault("Driver's Permint");
             Tooltip.SetDefault("Summons a Rollercycle to ride on");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -30,7 +31,15 @@ namespace TheConfectionRebirth.Items
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "KeyofDelight", 1).AddIngredient(null, "NeapoliniteBar", 30).AddIngredient(null, "Sprinkles", 80).AddIngredient(null, "CookieDough", 20).AddIngredient(null, "Saccharite", 100).AddIngredient(null, "SoulofDelight", 30).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe()
+                .AddIngredient<KeyofDelight>()
+                .AddIngredient<NeapoliniteBar>(30)
+                .AddIngredient<Sprinkles>(80)
+                .AddIngredient<CookieDough>(20)
+                .AddIngredient<Saccharite>(100)
+                .AddIngredient<SoulofDelight>(30)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

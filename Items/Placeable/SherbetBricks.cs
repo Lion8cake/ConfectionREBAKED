@@ -9,14 +9,14 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sherbet Brick");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
         {
             Item.width = 32;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.noUseGraphic = true;

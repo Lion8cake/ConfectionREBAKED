@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Backgrounds;
 
 namespace TheConfectionRebirth.Biomes
 {
@@ -14,7 +15,9 @@ namespace TheConfectionRebirth.Biomes
 
         public override string MapBackground => BackgroundPath;
 
-        public override void SetStaticDefaults()
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSnowSurfaceBackgroundStyle>();
+
+		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Confection Ice Surface");
         }

@@ -8,6 +8,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("3 cherry shards come out and explodes after impact.");
+			SacrificeTotal = 99;
 		}
 
 		public override void SetDefaults() {
@@ -15,7 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			item.ranged = true;
 			item.width = 8;
 			item.height = 8;
-			item.maxStack = 999;
+			item.maxStack = 9999;
 			item.consumable = true; 
 			item.knockBack = 1.5f;
 			item.value = 80;
