@@ -16,11 +16,6 @@ namespace TheConfectionRebirth.Biomes
 
         public override string MapBackground => BackgroundPath;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Confection Ice");
-        }
-
         public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionUndergroundBiome>().IsBiomeActive(player) && player.ZoneSnow;
     }
 }

@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 10000000;
+            Projectile.timeLeft = 2;
 			Projectile.alpha = 255;
 			Projectile.tileCollide = false;
         }
@@ -42,6 +42,8 @@ namespace TheConfectionRebirth.Projectiles
 			const float maxDetectRadius = 16 * 40;
 			const float projSpeed = 5f;
 			const float maxAmount = 0.1f;
+
+			Projectile.timeLeft = 2;
 
 			NPC closestNPC = FindClosestNPC(maxDetectRadius);
 			if (closestNPC != null)

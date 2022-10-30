@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,15 +23,16 @@ namespace TheConfectionRebirth.Items
 
         public override void AddRecipes()
         {
-            CreateRecipe()
+            Recipe.Create(ItemID.LovePotion)
                 .AddIngredient(this)
                 .AddIngredient(ItemID.BottledWater)
                 .AddIngredient(ItemID.Shiverthorn)
-                .AddTile(TileID.AlchemyTable).ReplaceResult(ItemID.LovePotion);
-            CreateRecipe()
+                .AddTile(TileID.AlchemyTable)
+                .Register();
+            Recipe.Create(ItemID.CookedFish)
                 .AddIngredient(this, 2)
                 .AddTile(TileID.CookingPots)
-                .ReplaceResult(ItemID.CookedFish);
+                .Register();
         }
     }
 }

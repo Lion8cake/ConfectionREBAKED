@@ -11,11 +11,6 @@ namespace TheConfectionRebirth.Projectiles
 	
 	public class CherryShard : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Cherry Shard");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(30);

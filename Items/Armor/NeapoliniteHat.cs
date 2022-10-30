@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 
@@ -11,8 +12,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("8% Increased Summoner Damage"
-                    + "\nIncreased Max number of minions by 3");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -32,8 +31,7 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 8 seconds since you were last hit your whip speed is increased by 10%" 
-                + "\nfor the first 3 times before giving 10% critical strike chance on the 4th time and 10% damage on the 5th.";
+            player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteHat");
             player.GetModPlayer<ConfectionPlayer>().NeapoliniteSummonerSet = true;
         }
 
@@ -45,9 +43,7 @@ namespace TheConfectionRebirth.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Summon) += 0.08f;
-            player.maxMinions++;
-            player.maxMinions++;
-            player.maxMinions++;
+            player.maxMinions += 3;
         }
     }
 }

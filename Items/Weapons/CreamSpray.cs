@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Spray");
-            Tooltip.SetDefault("Shoots a Spray of Cream");
             SacrificeTotal = 1;
         }
 

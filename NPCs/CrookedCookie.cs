@@ -10,11 +10,6 @@ namespace TheConfectionRebirth.NPCs
 {
     public class CrookedCookie : ModNPC
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Crooked Cookie");
-        }
-
         public override void SetDefaults()
         {
             NPC.width = 18;
@@ -39,7 +34,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A smaller rarer version of the rolller cookie that hits like a truck. This cookie is created through the cream sandwitch's spells.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CrookedCookie")
             });
         }
 

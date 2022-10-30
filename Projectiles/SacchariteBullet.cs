@@ -42,16 +42,9 @@ namespace TheConfectionRebirth.Projectiles
 			{
 				return;
 			}
-			int choice = Main.rand.Next(1);
-			if (choice == 0)
+			for (int i = 0; i < 2; i++)
 			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<RockCandyShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-			}
-			
-			int num = Main.rand.Next(1);
-			if (num == 0)
-			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<RockCandyShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new EntitySource_Misc("Rock candy shard from saccharite bullet"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<RockCandyShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

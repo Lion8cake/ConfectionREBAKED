@@ -34,7 +34,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             ContainerName.SetDefault("Saccharite Chest");
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Chest");
             AddMapEntry(new Color(32, 174, 221), name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

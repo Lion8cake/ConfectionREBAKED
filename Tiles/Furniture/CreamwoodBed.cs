@@ -34,7 +34,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Creamwood Bed");
             AddMapEntry(new Color(106, 65, 51), name);
         }
 

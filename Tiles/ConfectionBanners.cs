@@ -26,7 +26,6 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.addTile(Type);
             DustType = -1;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Banner");
             AddMapEntry(new Color(13, 88, 130), name);
         }
 

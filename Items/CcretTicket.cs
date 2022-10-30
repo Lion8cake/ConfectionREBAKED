@@ -9,8 +9,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("C-cret Ticket");
-            Tooltip.SetDefault("Summons a Foamin' Float to float on");
             SacrificeTotal = 1;
         }
 

@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class SacchariteArrow : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Shatters apon impact.");
 			SacrificeTotal = 99;
 		}
 

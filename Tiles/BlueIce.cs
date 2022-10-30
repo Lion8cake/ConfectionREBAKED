@@ -11,18 +11,18 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("HallowedOre").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamWood").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamBlock").Type] = true;
-            Main.tileMerge[Type][161] = true;
-            Main.tileMerge[Type][163] = true;
-            Main.tileMerge[Type][164] = true;
-            Main.tileMerge[Type][200] = true;
-            Main.tileMerge[Type][147] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HallowedOre").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, 161] = true;
+            TheConfectionRebirth.tileMerge[Type, 163] = true;
+            TheConfectionRebirth.tileMerge[Type, 164] = true;
+            TheConfectionRebirth.tileMerge[Type, 200] = true;
+            TheConfectionRebirth.tileMerge[Type, 147] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             TileID.Sets.Ices[Type] = true;

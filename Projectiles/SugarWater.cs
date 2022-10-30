@@ -9,11 +9,6 @@ namespace TheConfectionRebirth.Projectiles
     {
         public ref float Progress => ref Projectile.ai[0];
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Confection Water");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 6;

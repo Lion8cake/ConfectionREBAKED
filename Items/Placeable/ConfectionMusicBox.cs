@@ -8,8 +8,6 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Music Box (Confection)");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
             MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection"), ModContent.ItemType<Items.Placeable.ConfectionMusicBox>(), ModContent.TileType<Tiles.ConfectionMusicBox>());

@@ -15,7 +15,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dudley");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -41,7 +40,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A Small chocolate pile that moves slowly around the underground confection desert. It will not seek harm on anyone but if it is touched it will hurt the attacker.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Dudley")
             });
         }
 

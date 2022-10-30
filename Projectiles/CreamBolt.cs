@@ -1,16 +1,12 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Projectiles
 {
     public class CreamBolt : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Cream Bolt");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 4;
@@ -49,7 +45,7 @@ namespace TheConfectionRebirth.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.type != 488)
+            if (target.type != NPCID.TargetDummy)
             {
                 Projectile.damage = (int)(Projectile.damage * 1.1);
             }

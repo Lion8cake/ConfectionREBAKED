@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("30% Not to consume ammo");
             SacrificeTotal = 1;
         }
 

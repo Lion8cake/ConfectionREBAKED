@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Fires 4 Icy-Rockets after your enemys.");
             SacrificeTotal = 1;
         }
 

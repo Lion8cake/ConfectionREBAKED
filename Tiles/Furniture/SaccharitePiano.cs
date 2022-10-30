@@ -20,7 +20,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Piano");
             AddMapEntry(new Color(32, 174, 221), name);
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<SacchariteCrystals>();

@@ -12,11 +12,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class SugarWaterBottle : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Bottle");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
@@ -53,7 +48,7 @@ namespace TheConfectionRebirth.Projectiles
 					obj.velocity.X *= 1.5f;
 					obj.velocity *= 3f;
 				}
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<SugarWater>(), 24, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new EntitySource_Misc("Sugar water from the bottle"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<SugarWater>(), 24, 1f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

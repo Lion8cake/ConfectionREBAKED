@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +14,7 @@ namespace TheConfectionRebirth.Items.Armor
             Item.height = 18;
             Item.rare = ItemRarityID.White;
             Item.vanity = true;
+            Item.value = Item.sellPrice(silver: 40);
         }
 
         public override void SetStaticDefaults()

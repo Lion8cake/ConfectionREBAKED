@@ -11,11 +11,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class PopSodaProjectile : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Soda Potion");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;

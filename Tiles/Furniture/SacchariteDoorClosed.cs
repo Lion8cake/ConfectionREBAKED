@@ -32,7 +32,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             OpenDoorID = ModContent.TileType<SacchariteDoorOpen>();
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Door");
             AddMapEntry(new Color(32, 174, 221), name);
 
             TileObjectData.newTile.Width = 1;

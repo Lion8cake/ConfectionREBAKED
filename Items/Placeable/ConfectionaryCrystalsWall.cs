@@ -27,7 +27,11 @@ namespace TheConfectionRebirth.Items.Placeable
         }
         public override void AddRecipes()
         {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<Creamstone>()).AddCondition(Recipe.Condition.InGraveyardBiome).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(4)
+                .AddIngredient(ModContent.ItemType<Creamstone>())
+                .AddCondition(Recipe.Condition.InGraveyardBiome)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

@@ -5,11 +5,6 @@ namespace TheConfectionRebirth.Items.Archived
 {
     public class CreamwoodWorkBench : ModItem, IArchived
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Creamwood Work Bench");
-        }
-
         public override void SetDefaults()
         {
             Item.width = 26;

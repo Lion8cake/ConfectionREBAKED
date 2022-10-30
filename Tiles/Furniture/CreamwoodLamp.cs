@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(106, 65, 51), Language.GetText("MapObject.FloorLamp"));
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
 
             if (!Main.dedServ)
             {

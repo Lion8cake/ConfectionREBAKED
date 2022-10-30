@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vanilla Valor (I)");
-            Description.SetDefault("2% increased Critical strike chance");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

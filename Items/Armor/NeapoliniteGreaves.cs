@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("5% Increased Damage"
-                    + "\n7% Increased Movement Speed");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

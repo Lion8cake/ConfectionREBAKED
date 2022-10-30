@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(5)
+            CreateRecipe()
                 .AddIngredient<Creamstone>(2)
                 .AddIngredient<Creamsand>()
                 .AddTile(TileID.Furnaces)

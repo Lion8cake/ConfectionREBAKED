@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Items
             Item.useTime = 15;
             Item.useAnimation = 20;
             Item.useStyle = 1;
-            Item.value = 10000;
+            Item.value = Item.buyPrice(gold: 1);
             Item.UseSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Items/KazooSound")
             {
                 Volume = 0.9f,

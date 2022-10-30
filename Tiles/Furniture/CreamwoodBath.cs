@@ -26,9 +26,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Creamwood Bath");
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
 
 

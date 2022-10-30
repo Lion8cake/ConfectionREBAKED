@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Pets.MeawzerPet
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			Tooltip.SetDefault("Summons a Meawzer Pet");
 		}
 
 		public override void SetDefaults()

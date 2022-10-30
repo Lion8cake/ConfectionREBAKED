@@ -15,12 +15,11 @@ namespace TheConfectionRebirth.Tiles
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 975;
             Main.tileMergeDirt[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hallowed Ore");
             AddMapEntry(new Color(180, 180, 204), name);
 
             DustType = 84;

@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = 2000;
+            Item.value = Item.buyPrice(gold: 3);
             Item.rare = ItemRarityID.Blue;
             Item.createTile = Mod.Find<ModTile>("PottedConfectionPalm").Type;
         }

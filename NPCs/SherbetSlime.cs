@@ -14,7 +14,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sherbet Slime");
             Main.npcFrameCount[NPC.type] = 2;
         }
 
@@ -43,7 +42,7 @@ namespace TheConfectionRebirth.NPCs
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
 
-                new FlavorTextBestiaryInfoElement("A lump of icecream that comes to life when it rains.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SherbetSlime")
             });
         }
 

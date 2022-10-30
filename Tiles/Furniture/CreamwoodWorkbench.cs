@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Work Bench");
+            //name.SetDefault("Work Bench");
             AddMapEntry(new Color(106, 65, 51), name);
         }
 

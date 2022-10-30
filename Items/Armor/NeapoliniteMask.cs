@@ -2,27 +2,16 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 using System;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth.Items.Armor
 {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
     public class NeapoliniteMask : ModItem
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("7% Increased Melee Damage"
-                    + "\nIncreased Melee Speed");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -42,10 +31,7 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 80 damage dealt will increase critical strike chance by 2%" 
-                + "\nfor 5 seconds, once 10% critical strike chance has been reached defense is" 
-                + "\nignored for 5 seconds";
-            
+            player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteMask");
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
             int rank = Math.Min(damage, 400) / 80 - 1;
             StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);

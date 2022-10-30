@@ -14,8 +14,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Strawberry Strike (IV)");
-            Description.SetDefault("Summons four attacking strawberries");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
@@ -24,10 +22,10 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<StrawberryStrike>()] < 4)
             {
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike IV 1"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike IV 2"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike IV 3"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike IV 4"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
             }
         }
     }

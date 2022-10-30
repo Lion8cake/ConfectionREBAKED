@@ -30,7 +30,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             CloseDoorID = ModContent.TileType<SacchariteDoorClosed>();
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Door");
             AddMapEntry(new Color(32, 174, 221), name);
 
             TileObjectData.newTile.Width = 2;

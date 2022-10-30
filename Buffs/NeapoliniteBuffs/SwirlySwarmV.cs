@@ -14,8 +14,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swirly Swarm (V)");
-            Description.SetDefault("30% increased whip speed, 10% increased summoner critical strike chance and damage.");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

@@ -5,11 +5,6 @@ namespace TheConfectionRebirth.Projectiles
 {
     public class BearClaw : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Bear Claw");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 20;

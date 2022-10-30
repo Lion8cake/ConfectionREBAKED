@@ -13,7 +13,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hunger");
             Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -40,7 +39,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A mimic type creature that possesed a smore and will try to kill anyone that the cream sandwitch commands. This confection was created through the cream sandwitch's spells.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Hunger")
             });
         }
 

@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Candle");
+            //name.SetDefault("Candle");
             AdjTiles = new int[] { TileID.Torches };
             AddMapEntry(new Color(106, 65, 51), name);
             TileID.Sets.DisableSmartCursor[Type] = true;

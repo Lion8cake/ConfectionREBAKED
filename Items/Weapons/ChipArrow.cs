@@ -7,7 +7,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class ChipArrow : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Cunks of Chocolate bounce around after impact.");
 			SacrificeTotal = 1;
 		}
 

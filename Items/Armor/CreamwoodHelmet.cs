@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Armor
@@ -17,7 +18,7 @@ namespace TheConfectionRebirth.Items.Armor
         {
             Item.width = 18;
             Item.height = 18;
-            Item.value = 10000;
+            Item.value = 0;
             Item.rare = ItemRarityID.White;
             Item.defense = 2;
         }
@@ -29,7 +30,7 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "1 Defence";
+            player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.CreamwoodHelmet");
             player.statDefense += 1;
         }
     }

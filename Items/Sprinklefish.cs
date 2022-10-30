@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items
@@ -7,7 +8,7 @@ namespace TheConfectionRebirth.Items
 	public class Sprinklefish : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sprinklefish");
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults() {
@@ -28,8 +29,8 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
-			description = "Remember those piles of sprinkles in the confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!";
-			catchLocation = "Caught anywhere in the Confection Surface";
+			description = Language.GetTextValue("Mods.TheConfectionRebirth.ItemAnglerChat.Sprinklefish");
+			catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.Common.CaughtInConfectionSF");
 		}
 	}
 }

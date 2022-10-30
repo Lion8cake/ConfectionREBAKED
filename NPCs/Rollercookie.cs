@@ -62,11 +62,6 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void Unload() => fax = null;
 
-		public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Roller Cookie");
-        }
-
         public override void SetDefaults()
         {
             NPC.width = 44;
@@ -92,7 +87,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A cookie brought to life in the magical biome that was created from the spirits of light and night")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Rollercookie")
             });
         }
 

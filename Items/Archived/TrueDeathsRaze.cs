@@ -11,11 +11,6 @@ namespace TheConfectionRebirth.Items.Archived
 {
 	public class TrueDeathsRaze : ModItem, IArchived
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("True Death's Raze");
-		}
-
 		public override void SetDefaults()
 		{
 			Item.damage = 85;
@@ -29,7 +24,7 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.value = 500000;
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item1;
-			Item.shoot = Mod.Find<ModProjectile>("TrueIchorBolt").Type;
+			//Item.shoot = Mod.Find<ModProjectile>("TrueIchorBolt").Type;
 			Item.shootSpeed = 10f;
 		}
 

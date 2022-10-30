@@ -11,8 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sugar Water");
-			Tooltip.SetDefault("Spreads the confection to some blocks");
 			SacrificeTotal = 99;
 		}
 	

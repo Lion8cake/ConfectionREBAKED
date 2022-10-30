@@ -30,7 +30,6 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sprinkler");
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -65,7 +64,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A pile of evil sprinkles that will try prevent anyone from getting rid of their home land.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Sprinkler")
             });
         }
 

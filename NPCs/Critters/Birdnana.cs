@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Birdnana");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bird];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -34,7 +33,7 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Is it a bird or is it a banana?")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Birdnana")
             });
         }
 
@@ -92,10 +91,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class BirdnanaItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Birdnana");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

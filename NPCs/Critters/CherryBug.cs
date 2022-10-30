@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cherry Bug");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Firefly];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -36,7 +35,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A specific bug used in making cherry jam or to add cherry flavoring to any food.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CherryBug")
             });
         }
 
@@ -92,10 +91,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class CherryBugItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Cherry Bug");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

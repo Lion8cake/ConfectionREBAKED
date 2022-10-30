@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Creamsand Witch");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -35,14 +34,6 @@ namespace TheConfectionRebirth.NPCs
             NPC.aiStyle = 22;
             AIType = NPCID.FloatyGross;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
-        }
-
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-
-                new FlavorTextBestiaryInfoElement("A witch that uses her sugary powers do defeat anyone that get near her home land of the confection desert.")
-            });
         }
 
         public override void FindFrame(int frameHeight)

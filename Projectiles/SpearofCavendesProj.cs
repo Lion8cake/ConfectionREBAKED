@@ -8,10 +8,6 @@ namespace TheConfectionRebirth.Projectiles
     {
 		protected virtual float HoldoutRangeMin => 98f;
 		protected virtual float HoldoutRangeMax => 200f;
-		public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Spear of Cavendes");
-        }
 
         public override void SetDefaults()
         {

@@ -39,11 +39,21 @@ namespace TheConfectionRebirth
 
             public bool ToBoolean() => value;
 		}
+        public class TileTest
+        {
+            public bool this[int tile1, int tile2]
+			{
+				get => Main.tileMerge[tile1][tile2] || Main.tileMerge[tile2][tile1];
+				set => ConfectionUtils.Merge(tile1, tile2);
+			}
+        }
 
         private delegate void BackgroundChangeFlashInfo_UpdateVariation(BackgroundChangeFlashInfo self, int areaId, int newVariationValue);
+        private static TileTest v = new();
         private static BackgroundChangeFlashInfo_UpdateVariation backgroundChangeFlashInfo_UpdateVariation;
         private static bool SecretChance => Main.rand.Next(100000000 + Main.rand.Next(5002254)) < 7752 * Main.rand.NextFloat(3f);
         public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11), new DateTime(2022, 10, 2), new DateTime(2022, 5, 16)).ToBoolean();
+        public static TileTest tileMerge => v;
 
         internal const int bgVarAmount = 4;
 
@@ -74,7 +84,7 @@ namespace TheConfectionRebirth
 		public override void Load()
         {
             backgroundChangeFlashInfo_UpdateVariation = typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate<BackgroundChangeFlashInfo_UpdateVariation>();
-
+        
             Fields = new dynamic[]
             {
                 typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
@@ -197,6 +207,7 @@ namespace TheConfectionRebirth
             _cacheIndexes = null;
             backgroundChangeFlashInfo_UpdateVariation = null;
             Fields = null;
+            v = null;
         }
 
         public override void PostSetupContent()

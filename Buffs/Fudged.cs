@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fudged");
-            Description.SetDefault("Super Sticky");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;

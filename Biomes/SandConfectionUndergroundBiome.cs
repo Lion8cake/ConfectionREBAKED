@@ -19,11 +19,6 @@ namespace TheConfectionRebirth.Biomes
 
         public override string MapBackground => BackgroundPath;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Confection Cave Desert");
-        }
-
         public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && player.ZoneUndergroundDesert;
     }
 }

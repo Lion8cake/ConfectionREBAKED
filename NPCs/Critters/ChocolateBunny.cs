@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Bunny");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bunny];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -34,7 +33,7 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A bunny made of pure chocolate hops around in the confection.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.ChocolateBunny")
             });
         }
 
@@ -93,12 +92,9 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class ChocolateBunnyItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Chocolate Bunny");
-        }
+		public override void SetStaticDefaults() => SacrificeTotal = 5;
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             Item.useStyle = 1;
             Item.autoReuse = true;

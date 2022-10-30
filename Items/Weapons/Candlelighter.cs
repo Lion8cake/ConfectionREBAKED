@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Yes, it's the tricky kind'\nUses gel as ammo\nEnemys will always be on fire unless they fall into water.");
 			SacrificeTotal = 1;
 		}
 
@@ -45,16 +44,15 @@ namespace TheConfectionRebirth.Items.Weapons
 			return player.itemAnimation >= player.itemAnimationMax - 4;
 		}
 
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 54f; 
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 54f;
 			if (Collision.CanHit(position, 6, 6, position + muzzleOffset, 6, 6))
 			{
 				position += muzzleOffset;
 			}
-			return true;
-        }
+		}
+
         public override Vector2? HoldoutOffset()
 		{
 			return new Vector2(0, -2);

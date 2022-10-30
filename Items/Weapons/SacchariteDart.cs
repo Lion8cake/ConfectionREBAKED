@@ -22,14 +22,12 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.shootSpeed = 22f;
             Item.knockBack = 4;
             Item.value = 10;
-            Item.rare = 3;
+            Item.rare = ItemRarityID.Orange;
             Item.ammo = 283;
         }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Saccharite Dart");
-            Tooltip.SetDefault("Homes onto enemies");
             SacrificeTotal = 99;
         }
 

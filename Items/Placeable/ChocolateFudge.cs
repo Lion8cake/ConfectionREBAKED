@@ -8,8 +8,7 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Fudge");
-            Tooltip.SetDefault("A honey like chocolate block");
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()

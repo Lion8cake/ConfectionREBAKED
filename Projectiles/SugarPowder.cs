@@ -1,3 +1,4 @@
+using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -9,11 +10,6 @@ namespace TheConfectionRebirth.Projectiles
     public class SugarPowder : ModProjectile
     {
         public ref float Progress => ref Projectile.ai[0];
-
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Sugar Powder");
-        }
 
         public override void SetDefaults()
         {
@@ -83,60 +79,7 @@ namespace TheConfectionRebirth.Projectiles
 
         private static void Convert(int i, int j, int size = 4)
         {
-            for (int k = i - size; k <= i + size; k++)
-            {
-                for (int l = j - size; l <= j + size; l++)
-                {
-                    if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt((size * size) + (size * size)))
-                    {
-                        int type = Main.tile[k, l].TileType;
-                        int wall = Main.tile[k, l].WallType;
-
-                        if (Main.tile[k, l].TileType == TileID.Ebonstone)
-                        {
-                            Main.tile[k, l].TileType = TileID.Stone;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.Crimstone)
-                        {
-                            Main.tile[k, l].TileType = TileID.Stone;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.CorruptGrass)
-                        {
-                            Main.tile[k, l].TileType = TileID.Grass;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.CrimsonGrass)
-                        {
-                            Main.tile[k, l].TileType = TileID.Grass;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.Crimsand)
-                        {
-                            Main.tile[k, l].TileType = TileID.Sand;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.Ebonsand)
-                        {
-                            Main.tile[k, l].TileType = TileID.Sand;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                        else if (Main.tile[k, l].TileType == TileID.Crimsand)
-                        {
-                            Main.tile[k, l].TileType = TileID.Sand;
-                            WorldGen.SquareTileFrame(k, l, true);
-                            NetMessage.SendTileSquare(-1, k, l, 1);
-                        }
-                    }
-                }
-            }
+			ALConvert.Convert<ConfectionBiome>(i, j, size);
         }
 
         /*public override void AI() {

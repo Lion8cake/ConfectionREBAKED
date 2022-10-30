@@ -9,7 +9,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Strong enough to destroy Demon Altars");
             SacrificeTotal = 1;
         }
 

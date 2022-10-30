@@ -9,7 +9,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Great for impersonating Confection Creators'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

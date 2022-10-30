@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Not to be confused with a Paxel'");
             SacrificeTotal = 1;
         }
 

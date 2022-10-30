@@ -10,11 +10,6 @@ namespace TheConfectionRebirth.NPCs
 {
     public class MintJr : ModNPC
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Mint Jr");
-        }
-
         public override void SetDefaults()
         {
             NPC.width = 18;
@@ -39,7 +34,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A giant mint jr that floats after anyone that the cream sandwitch commands. They are created through the cream sandwitch's powers.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.MintJr")
             });
         }
 

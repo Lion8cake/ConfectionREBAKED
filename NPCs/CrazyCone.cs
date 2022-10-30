@@ -14,7 +14,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crazy Cone");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
@@ -48,7 +47,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("This Drill was turned to life by the saccharite shards in the confection and would defend it with its life.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CrazyCone")
             });
         }
 

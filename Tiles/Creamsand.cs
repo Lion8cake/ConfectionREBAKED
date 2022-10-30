@@ -17,11 +17,11 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSand[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamWood").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamsandstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsandstone").Type] = true;
             TileID.Sets.TouchDamageSands[Type] = 15;
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;

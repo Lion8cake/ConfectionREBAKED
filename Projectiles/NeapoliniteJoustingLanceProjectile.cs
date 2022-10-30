@@ -12,12 +12,9 @@ namespace TheConfectionRebirth.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Neapolinite Jousting Lance");
-
 			ProjectileID.Sets.DismountsPlayersOnHit[Type] = true;
 
-			//ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
-			//yet another thing to uncomment on October 1st
+			ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
 		}
 
 		public override void SetDefaults()

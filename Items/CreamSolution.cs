@@ -9,9 +9,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Solution");
-            Tooltip.SetDefault("Used by the Clentaminator"
-                + "\nSpreads the Confection");
             SacrificeTotal = 99;
         }
 

@@ -7,8 +7,6 @@ public class GastropodSummonBuff : ModBuff
 {
 	public override void SetStaticDefaults()
 	{
-		DisplayName.SetDefault("Mini Gastropod");
-		Description.SetDefault("The Mini Gastropod will shoot pink lazers at your enemies.");
 		Main.buffNoTimeDisplay[Type] = true;
 		Main.buffNoSave[Type] = true;
 	}

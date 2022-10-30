@@ -15,7 +15,6 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gummy Worm-whip");
 			SacrificeTotal = 1;
 		}
 

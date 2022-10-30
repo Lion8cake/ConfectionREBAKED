@@ -66,7 +66,6 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Icecream Gal");
             Main.npcFrameCount[NPC.type] = 16;
         }
 
@@ -100,7 +99,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A lost child in search of her family but don't trust her as she won't be so nice to you.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.TheConfectionRebirth.IcecreamGal")
             });
         }
 

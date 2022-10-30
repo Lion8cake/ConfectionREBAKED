@@ -12,10 +12,10 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
             ItemDrop = ModContent.ItemType<Items.Placeable.CreamWood>();
             AddMapEntry(new Color(153, 97, 60));
         }

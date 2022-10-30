@@ -35,12 +35,20 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.crit = 15;
 			Item.channel = true;
 		}
-		
+
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			if (type == ModContent.ProjectileType<CreamofKickinCookie>())
+			{
+				damage = (int)(damage / 2.5f);
+			}
+		}
+
 		public override void AddRecipes() 
 		{
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Items.CreamPuff>(), 1)
-				.AddIngredient(ModContent.ItemType<Items.CanofMeat>(), 1)
+				.AddIngredient(ItemID.DarkShard, 1)
 				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 7)
 				.AddIngredient(ItemID.SoulofNight, 7)
 				.AddTile(TileID.MythrilAnvil)
@@ -53,34 +61,10 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override bool CanUseItem(Player player) {
 			if (player.altFunctionUse == 2) {
-			Item.noMelee = true;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useAnimation = 40;
-			Item.useTime = 40;
-			Item.knockBack = 4f;
-			Item.damage = 18;
-			Item.noUseGraphic = true;
-			Item.shoot = ModContent.ProjectileType<CreamofKickinCookie>();
-			Item.shootSpeed = 15.1f;
-		    Item.UseSound = SoundID.Item1;
-		    Item.DamageType = DamageClass.Melee;
-		    Item.crit = 15;
-		    Item.channel = true;
+				Item.shoot = ModContent.ProjectileType<CreamofKickinCookie>();
 			}
 			else {
-			Item.noMelee = true;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useAnimation = 40;
-			Item.useTime = 40;
-			Item.knockBack = 4f;
-			Item.damage = 45;
-			Item.noUseGraphic = true;
-			Item.shoot = ModContent.ProjectileType<CreamofKickinMeatball>();
-			Item.shootSpeed = 15.1f;
-		    Item.UseSound = SoundID.Item1;
-		    Item.DamageType = DamageClass.Melee;
-		    Item.crit = 15;
-		    Item.channel = true;
+				Item.shoot = ModContent.ProjectileType<CreamofKickinMeatball>();
 			}
 			return base.CanUseItem(player);
 		}

@@ -14,8 +14,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Strawberry Strike (V)");
-            Description.SetDefault("Summons five attacking strawberries");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
@@ -24,11 +22,11 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<StrawberryStrike>()] < 5)
             {
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike V 1"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike V 2"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike V 3"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike V 4"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike V 5"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
             }
         }
     }

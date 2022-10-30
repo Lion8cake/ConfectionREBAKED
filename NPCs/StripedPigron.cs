@@ -13,7 +13,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Striped Pigron");
             Main.npcFrameCount[NPC.type] = 14;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
@@ -46,7 +45,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("This elusive dragon-pig hybrid has excellent stealth capabilities despite its rotund figure. It is uncertain how they came to exsist.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.StripedPigron")
             });
         }
 

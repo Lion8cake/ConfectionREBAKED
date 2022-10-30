@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Projectiles
             {
                 int num129 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<ChipDust>(), 0f, Projectile.velocity.Y / 2f, 0, default(Color), 1f);
                 Dust dust = Main.dust[num129];
-                dust.velocity.X = dust.velocity.X * 0.4f;
+                dust.velocity.X *= 0.4f;
             }
 
             Projectile.tileCollide = true;

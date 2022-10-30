@@ -27,7 +27,6 @@ namespace TheConfectionRebirth.Items.Banners
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Swallower Banner");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
     }

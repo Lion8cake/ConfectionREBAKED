@@ -15,7 +15,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wild Willy");
             Main.npcFrameCount[NPC.type] = 3;
         }
 
@@ -44,7 +43,7 @@ namespace TheConfectionRebirth.NPCs
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A zombie infected with the confection. 'Do you have a golden ticket?'")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.WildWilly")
             });
         }
 

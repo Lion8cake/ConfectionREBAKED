@@ -20,7 +20,6 @@ namespace TheConfectionRebirth.Tiles
             AnimationFrameHeight = 36;
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Chocolate Frog Cage");
             AddMapEntry(new Color(122, 217, 232), name);
         }
 
@@ -45,7 +44,7 @@ namespace TheConfectionRebirth.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Frog Cage");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

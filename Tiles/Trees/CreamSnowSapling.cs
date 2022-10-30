@@ -37,7 +37,6 @@ namespace TheConfectionRebirth.Tiles.Trees
             TileObjectData.addTile(Type);
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Cream Sapling");
             AddMapEntry(new Color(200, 200, 200), name);
 
             TileID.Sets.TreeSapling[Type] = true;

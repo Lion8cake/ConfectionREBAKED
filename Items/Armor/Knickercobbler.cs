@@ -10,9 +10,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Knickercobbler");
-            Tooltip.SetDefault("'Great for impersonating Confection Creators'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

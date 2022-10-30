@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cookie Dough");
-            Tooltip.SetDefault("Don't consume it, it may contain raw eggs.");
             SacrificeTotal = 5;
         }
 
@@ -31,8 +29,8 @@ namespace TheConfectionRebirth.Items
                 .AddIngredient(ItemID.FallenStar, 1)
                 .AddIngredient<Saccharite>(3)
                 .AddIngredient<CookieDough>()
-                .AddTile(TileID.Bottles);
-                //.Register();
+                .AddTile(TileID.Bottles)
+                .Register();
         }
     }
 }

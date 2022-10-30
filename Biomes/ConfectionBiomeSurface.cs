@@ -37,10 +37,5 @@ public class ConfectionBiomeSurface : ModBiome
 
 	public override Color? BackgroundColor => base.BackgroundColor;
 
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("The Confection");
-    }
-
 	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneSkyHeight);
 }

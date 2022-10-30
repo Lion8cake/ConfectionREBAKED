@@ -6,8 +6,6 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Impact");
-            Tooltip.SetDefault("'L. Cake'");
             SacrificeTotal = 1;
         }
 

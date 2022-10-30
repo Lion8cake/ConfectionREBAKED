@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault(Language.GetTextValue("Build momentum to increase attack power"));
 			SacrificeTotal = 1;
         }
 

@@ -19,7 +19,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileFrameImportant[Type] = true;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Painting");
             AddMapEntry(new Color(120, 85, 60), name);
         }
 

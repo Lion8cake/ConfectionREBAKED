@@ -8,9 +8,6 @@ namespace TheConfectionRebirth.Pets.BirdnanaLightPet
 	public class BirdnanaLightPetBuff : ModBuff
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shiny Birdnana");
-			Description.SetDefault("Wait how does a bird glow?");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;
 		}

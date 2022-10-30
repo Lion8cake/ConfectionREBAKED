@@ -11,11 +11,6 @@ namespace TheConfectionRebirth.Projectiles
 
 	public class ChocolateChip : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Chocolate Chip");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(24);

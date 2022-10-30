@@ -10,11 +10,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class RockCandy : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rock Candy");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.width = 30;
@@ -42,9 +37,9 @@ namespace TheConfectionRebirth.Projectiles
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					double offsetAngle = startAngle + deltaAngle * (double)(i + i * i) / 2.0 + (double)(32f * (float)i);
-					Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, (float)(Math.Sin(offsetAngle) * 5.0), (float)(Math.Cos(offsetAngle) * 5.0), ModContent.ProjectileType<RockCandyShard>(), (int)((double)Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
-					Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, (float)((0.0 - Math.Sin(offsetAngle)) * 5.0), (float)((0.0 - Math.Cos(offsetAngle)) * 5.0), ModContent.ProjectileType<RockCandyShard>(), (int)((double)Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
+					double offsetAngle = startAngle + deltaAngle * (i + i * i) / 2.0 + (double)(32f * i);
+					Projectile.NewProjectile(new EntitySource_Misc("Rock candy shard from rock candy"), Projectile.Center.X, Projectile.Center.Y, (float)(Math.Sin(offsetAngle) * 5.0), (float)(Math.Cos(offsetAngle) * 5.0), ModContent.ProjectileType<RockCandyShard>(), (int)(Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
+					Projectile.NewProjectile(new EntitySource_Misc("Rock candy shard from rock candy"), Projectile.Center.X, Projectile.Center.Y, (float)((0.0 - Math.Sin(offsetAngle)) * 5.0), (float)((0.0 - Math.Cos(offsetAngle)) * 5.0), ModContent.ProjectileType<RockCandyShard>(), (int)(Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
 				}
 			}
 		}

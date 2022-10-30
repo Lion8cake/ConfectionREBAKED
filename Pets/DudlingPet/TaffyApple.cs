@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Pets.DudlingPet
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			Tooltip.SetDefault("Summons a Dudling");
 		}
 
 		public override void SetDefaults()

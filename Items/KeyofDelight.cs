@@ -8,8 +8,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Key of Delight");
-            Tooltip.SetDefault("'Charged with the essence of many souls'");
             SacrificeTotal = 1;
         }
 

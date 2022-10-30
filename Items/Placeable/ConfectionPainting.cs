@@ -6,8 +6,6 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Deserted Land");
-            Tooltip.SetDefault("'S. Bobble'");
             SacrificeTotal = 1;
         }
 

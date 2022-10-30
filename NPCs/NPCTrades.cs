@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -11,32 +12,29 @@ namespace TheConfectionRebirth.NPCs
         {
             if (type == NPCID.Dryad && Main.hardMode)
             {
-                if (type == NPCID.Dryad && Main.moonPhase == 0 && Main.hardMode || type == NPCID.Dryad && Main.moonPhase == 1 && Main.hardMode)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.PottedConfectionCedar>());
-                    shop.item[nextSlot].shopCustomPrice = 30000;
-                    nextSlot++;
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CreamgrassWall>());
+                nextSlot++;
+
+                int pot = ModContent.ItemType<PottedConfectionCedar>();
+                switch (Main.moonPhase)
+				{
+                    case 2:
+                    case 3:
+                        pot = ModContent.ItemType<PottedConfectionTree>();
+                        break;
+                    case 4:
+                    case 6:
+                        pot = ModContent.ItemType<PottedConfectionPalm>();
+                        break;
+                    case 7:
+                    case 8:
+                        pot = ModContent.ItemType<PottedConfectionBamboo>();
+                        break;
                 }
-                if (type == NPCID.Dryad && Main.moonPhase == 2 && Main.hardMode || type == NPCID.Dryad && Main.moonPhase == 3 && Main.hardMode)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.PottedConfectionTree>());
-                    shop.item[nextSlot].shopCustomPrice = 30000;
-                    nextSlot++;
-                }
-                if (type == NPCID.Dryad && Main.moonPhase == 4 && Main.hardMode || type == NPCID.Dryad && Main.moonPhase == 5 && Main.hardMode)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.PottedConfectionPalm>());
-                    shop.item[nextSlot].shopCustomPrice = 30000;
-                    nextSlot++;
-                }
-                if (type == NPCID.Dryad && Main.moonPhase == 6 && Main.hardMode || type == NPCID.Dryad && Main.moonPhase == 7 && Main.hardMode)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.PottedConfectionBamboo>());
-                    shop.item[nextSlot].shopCustomPrice = 30000;
-                    nextSlot++;
-                }
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.CreamBeans>());
-                shop.item[nextSlot].shopCustomPrice = 2000;
+                shop.item[nextSlot].SetDefaults(pot);
+                nextSlot++;
+
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CreamBeans>());
                 nextSlot++;
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Pets.CreamyFoxPet.CreamFoxPetItem>());
                 nextSlot++;
@@ -49,7 +47,6 @@ namespace TheConfectionRebirth.NPCs
             else if (type == NPCID.Wizard)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Kazoo>());
-                shop.item[nextSlot].shopCustomPrice = 10000;
                 nextSlot++;
             }
         }

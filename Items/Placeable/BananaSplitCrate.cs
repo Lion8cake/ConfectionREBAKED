@@ -10,8 +10,8 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Banana Split Crate");
-            Tooltip.SetDefault("Right Click to open");
+            ItemID.Sets.IsFishingCrate[Type] = true;
+
             SacrificeTotal = 5;
         }
 
@@ -26,7 +26,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.placeStyle = 0;
             Item.useAnimation = 10;
             Item.useTime = 10;
-            Item.value = 50000;
+            Item.value = Item.sellPrice(gold: 1);
             Item.useStyle = 1;
         }
 

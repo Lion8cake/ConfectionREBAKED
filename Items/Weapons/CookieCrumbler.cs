@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cookie Pike-let");
             SacrificeTotal = 1;
         }
 

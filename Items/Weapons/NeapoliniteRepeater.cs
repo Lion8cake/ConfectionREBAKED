@@ -12,8 +12,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Neapolinite Repeater");
-            Tooltip.SetDefault("Every arrow 2 more are shot out.");
             SacrificeTotal = 1;
         }
 

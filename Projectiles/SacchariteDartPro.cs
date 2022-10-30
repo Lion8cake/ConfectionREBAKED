@@ -59,15 +59,6 @@ namespace TheConfectionRebirth.Projectiles
                 Projectile.velocity.X = (Projectile.velocity.X * 10f + NewPosX) / 11f;
                 Projectile.velocity.Y = (Projectile.velocity.Y * 10f + NewPosY) / 11f;
             }
-
         }
-		
-		public override void Kill(int timeLeft)
-		{
-			if (Main.myPlayer != Projectile.owner)
-			{
-				return;
-			}
-		}
     }
 }

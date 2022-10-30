@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = false;
             Main.tileLighted[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
             ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
             AddMapEntry(new Color(32, 174, 221));
             DustType = ModContent.DustType<SacchariteCrystals>();

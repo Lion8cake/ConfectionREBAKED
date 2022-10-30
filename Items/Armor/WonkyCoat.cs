@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Wonky Coat");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

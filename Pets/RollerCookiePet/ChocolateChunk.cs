@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Pets.RollerCookiePet
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			Tooltip.SetDefault("Spawns a little Rollercookie to roll around with you!");
 		}
 
 		public override void SetDefaults()

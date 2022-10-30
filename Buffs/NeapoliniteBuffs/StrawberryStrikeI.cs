@@ -14,8 +14,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vanilla Valor (I)");
-            Description.SetDefault("Summons an attacking strawberry");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
@@ -24,7 +22,7 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<StrawberryStrike>()] < 1)
             {
-                Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_Misc("Strawberry Strike I"), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StrawberryStrike>(), 50, 8f, player.whoAmI);
             }
         }
     }

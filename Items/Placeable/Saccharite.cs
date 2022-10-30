@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.SacchariteBlock>();
             Item.rare = ItemRarityID.Blue;
-            Item.value = 8000;
+            Item.value = Item.sellPrice(silver: 8);
         }
     }
 }

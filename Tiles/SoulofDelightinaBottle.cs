@@ -21,7 +21,6 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Soul of Delight in a Bottle");
             AddMapEntry(new Color(215, 188, 106), name);
         }
 
@@ -68,8 +67,6 @@ namespace TheConfectionRebirth.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Delight in a bottle");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

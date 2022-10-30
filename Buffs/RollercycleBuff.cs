@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rollercycle Mount");
-            Description.SetDefault("'What a sweet ride!'");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
         }

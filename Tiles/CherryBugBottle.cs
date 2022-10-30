@@ -21,7 +21,6 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Cherry Bug in a Bottle");
             AddMapEntry(new Color(60, 26, 44), name);
         }
 
@@ -68,8 +67,6 @@ namespace TheConfectionRebirth.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cherry Bug in a Bottle");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

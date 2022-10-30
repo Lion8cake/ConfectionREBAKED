@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Do you scream, for Ice-cream?");
             SacrificeTotal = 1;
         }
 

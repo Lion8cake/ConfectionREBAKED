@@ -12,9 +12,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Neapolinite Cone Mail");
-            Tooltip.SetDefault("5% Increased Critical Strike Chance");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

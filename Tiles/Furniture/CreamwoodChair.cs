@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             DustType = ModContent.DustType<ChipDust>();
             AdjTiles = new int[] { TileID.Chairs };
 
-            AddMapEntry(new Color(106, 65, 51), Language.GetText("MapObject.Chair"));
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };

@@ -10,18 +10,18 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.CookieBlock>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.CreamGrass>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.HallowedOre>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.NeapoliniteOre>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.CreamstoneBrick>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.CreamWood>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<Tiles.CreamBlock>()] = true;
-            Main.tileMerge[Type][161] = true;
-            Main.tileMerge[Type][163] = true;
-            Main.tileMerge[Type][164] = true;
-            Main.tileMerge[Type][200] = true;
-            Main.tileMerge[Type][147] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.CookieBlock>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.CreamGrass>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.HallowedOre>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.NeapoliniteOre>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.CreamstoneBrick>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.CreamWood>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Tiles.CreamBlock>()] = true;
+            TheConfectionRebirth.tileMerge[Type, 161] = true;
+            TheConfectionRebirth.tileMerge[Type, 163] = true;
+            TheConfectionRebirth.tileMerge[Type, 164] = true;
+            TheConfectionRebirth.tileMerge[Type, 200] = true;
+            TheConfectionRebirth.tileMerge[Type, 147] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<Dusts.FudgeDust>();

@@ -11,8 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crunch Ball");
-			Tooltip.SetDefault("Launches a large Rock Candy ball.");
 			SacrificeTotal = 1;
 		}
 	

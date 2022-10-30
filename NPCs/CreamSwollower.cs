@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Swallower");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
@@ -49,7 +48,7 @@ namespace TheConfectionRebirth.NPCs
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Sandstorm,
 
-                new FlavorTextBestiaryInfoElement("In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CreamSwollower")
             });
         }
 

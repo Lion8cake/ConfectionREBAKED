@@ -10,9 +10,6 @@ namespace TheConfectionRebirth.Items
 	public class Cherimoya : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cherimoya");
-
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));

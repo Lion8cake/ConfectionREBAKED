@@ -26,7 +26,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             TileID.Sets.CanBeSatOnForPlayers[Type] = true;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Sofa");
             AddMapEntry(new Color(32, 174, 221), name);
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;

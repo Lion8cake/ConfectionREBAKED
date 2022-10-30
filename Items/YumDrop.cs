@@ -1,4 +1,4 @@
-using Terraria.GameContent.Creative;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("YumDrop");
             SacrificeTotal = 25;
         }
 
@@ -16,7 +15,7 @@ namespace TheConfectionRebirth.Items
         {
             Item.width = 10;
             Item.height = 12;
-            Item.value = 15000;
+            Item.value = Item.sellPrice(silver: 1);
             Item.rare = ItemRarityID.White;
             Item.maxStack = 9999;
         }

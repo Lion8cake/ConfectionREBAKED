@@ -1,15 +1,19 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
     public class BakersDozen : ModItem
     {
+        private int uses;
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baker's Dozen");
             SacrificeTotal = 1;
         }
 
@@ -47,7 +51,14 @@ namespace TheConfectionRebirth.Items.Weapons
             return canuse;
         }
 
-        public override void AddRecipes()
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+            int index = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+            Main.projectile[index].frame = uses++ % 4;
+			return false;
+		}
+
+		public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 15)
@@ -56,5 +67,18 @@ namespace TheConfectionRebirth.Items.Weapons
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
-    }
+
+		public override void SaveData(TagCompound tag) => tag[nameof(uses)] = uses;
+
+		public override void LoadData(TagCompound tag) => uses = tag.GetInt(nameof(uses));
+
+		public override ModItem Clone(Item newEntity)
+		{
+            var bakersDozen = (BakersDozen)base.Clone(newEntity);
+            bakersDozen.uses = uses;
+			return bakersDozen;
+		}
+
+		protected override bool CloneNewInstances => true;
+	}
 }

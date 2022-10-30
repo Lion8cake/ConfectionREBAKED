@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ID;
+using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth.Items
 {
@@ -9,8 +11,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Confection Key");
-            Tooltip.SetDefault("Unlocks a Confection Chest in the dungeon");
             SacrificeTotal = 1;
         }
 
@@ -21,5 +21,19 @@ namespace TheConfectionRebirth.Items
             Item.maxStack = 9999;
             Item.rare = ItemRarityID.Yellow;
         }
-    }
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+            if (!NPC.downedPlantBoss)
+                return;
+
+            try
+            {
+                tooltips[tooltips.FindIndex(x => x.Mod is "Terraria" && x.Name.Equals("Tooltip0"))].Text = Language.GetTextValue("LegacyTooltip.59");
+            }
+            catch
+			{
+			}
+		}
+	}
 }

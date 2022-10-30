@@ -26,7 +26,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Clock");
             AddMapEntry(new Color(32, 174, 221), name);
         }
 

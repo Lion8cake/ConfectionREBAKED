@@ -2,6 +2,7 @@ using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 
@@ -12,8 +13,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("10% Increased Ranged Damage"
-                    + "\n4% Increased Ranged Critical Strike Chance");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -33,8 +32,7 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Every 10mph you go damage is increased by 4% and critical strike chance" 
-                + "\nis increased by 2% which will last for 5 seconds. This stacks up to 5 times";
+            player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteHelmet");
             int rank;
             float len = player.velocity.Length();
             if (len >= 11f)

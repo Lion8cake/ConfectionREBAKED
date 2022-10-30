@@ -13,8 +13,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			SacrificeTotal = 1;
-			Tooltip.SetDefault("Your summons will focus stuck enemies"
-				+ "\nShatters into pieces");
 		}
 
 		public override void SetDefaults() {

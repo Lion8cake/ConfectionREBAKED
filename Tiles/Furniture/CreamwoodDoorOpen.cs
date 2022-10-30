@@ -30,7 +30,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             CloseDoorID = ModContent.TileType<CreamwoodDoorClosed>();
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Creamwood Door");
+            //name.SetDefault("Creamwood Door");
             AddMapEntry(new Color(106, 65, 51), name);
 
             TileObjectData.newTile.Width = 2;

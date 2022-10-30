@@ -37,8 +37,10 @@ namespace TheConfectionRebirth.NPCs
 					groupsThatForNormal.Add(groupName);
 				}
 
-				VariationGroup group = new(groupName, condition, asset);
-				group.Index = groups.Count;
+				VariationGroup group = new(groupName, condition, asset)
+				{
+					Index = groups.Count
+				};
 				groups.Add(groupName, group);
 				groups2.Add(group);
 				groups3.Add(groupName);

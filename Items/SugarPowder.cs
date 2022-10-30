@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Cleanses the evil");
             SacrificeTotal = 99;
         }
 

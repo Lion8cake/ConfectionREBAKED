@@ -39,7 +39,6 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sweet Gummy");
             Main.npcFrameCount[NPC.type] = 16;
         }
 
@@ -90,7 +89,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A mummy infected by the confection turning into a gummy bear. How sweet?")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SweetGummy")
             });
         }
 

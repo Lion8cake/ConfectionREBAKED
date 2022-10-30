@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Cookie Cannon");
-            Tooltip.SetDefault("'But wait? Doesn't it shoot cosmic brownies instead?'");
             SacrificeTotal = 1;
         }
 

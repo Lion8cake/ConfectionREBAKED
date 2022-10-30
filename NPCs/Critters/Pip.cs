@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pip");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bird];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -34,7 +33,7 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A small marshmellow bird found within the confection, a mutated peep that grew wings and flies.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Pip")
             });
         }
 
@@ -92,10 +91,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class PipItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Pip");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

@@ -12,7 +12,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Frog");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Frog];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -34,7 +33,7 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A popular treat amongst kids although these frogs are not for eating.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.ChocolateFrog")
             });
         }
 
@@ -93,10 +92,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class ChocolateFrogItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Chocolate Frog");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

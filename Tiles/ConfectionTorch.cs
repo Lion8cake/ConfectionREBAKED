@@ -51,8 +51,6 @@ namespace TheConfectionRebirth.Tiles
 
             ModTranslation name = CreateMapEntryName();
 
-            name.SetDefault("Torch");
-
             AddMapEntry(new Color(200, 200, 200), name);
 
             if (!Main.dedServ)

@@ -29,8 +29,8 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void AddRecipes()
         {
             CreateRecipe(5)
+                .AddIngredient(ItemID.StoneBlock, 5)
                 .AddIngredient<NeapoliniteOre>()
-                .AddIngredient<Creamstone>()
                 .AddTile(TileID.Furnaces)
                 .Register();
         }

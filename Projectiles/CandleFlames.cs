@@ -8,11 +8,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class CandleFlames : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Candle Flames"); 
-		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 6;
@@ -61,12 +56,12 @@ namespace TheConfectionRebirth.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			target.AddBuff(BuffID.OnFire, 240000000);
+			target.AddBuff(BuffID.OnFire3, 1200);
         }
 
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			target.AddBuff(BuffID.OnFire, 240000000, false);
+			target.AddBuff(BuffID.OnFire3, 1200, false);
 		}
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)

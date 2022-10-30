@@ -11,10 +11,10 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamWood").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             ItemDrop = ModContent.ItemType<Items.Placeable.PastryBlock>();

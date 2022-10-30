@@ -16,11 +16,6 @@ namespace TheConfectionRebirth.NPCs
 
         private Player player;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Foamin' Float");
-        }
-
         public override void SetDefaults()
         {
             NPC.width = 40;
@@ -45,7 +40,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A floating cloud of root beer is a odd sight to see in the underground confection although will shoot streems of root beer at anyone it finds.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.FoaminFloat")
             });
         }
 

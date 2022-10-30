@@ -22,7 +22,6 @@ namespace TheConfectionRebirth.Tiles
             AnimationFrameHeight = 54;
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Chocolate Bunny Cage");
             AddMapEntry(new Color(122, 217, 232), name);
         }
 
@@ -47,7 +46,7 @@ namespace TheConfectionRebirth.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Bunny Cage");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gummy Worm");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Worm];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -33,7 +32,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
 
-                new FlavorTextBestiaryInfoElement("Digging into the ground, gummy worms look for food to satisfy their hunger. Not to be confused with Gummy Wyrm.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GummyWorm")
             });
         }
 
@@ -89,10 +88,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class GummyWormItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Gummy Worm");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

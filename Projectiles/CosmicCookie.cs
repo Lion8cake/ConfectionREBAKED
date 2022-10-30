@@ -122,7 +122,7 @@ namespace TheConfectionRebirth.Projectiles
                 v.Y *= -1f;
             v.Y += 100f;
             Vector2 velocity = v.SafeNormalize(Vector2.UnitY) * 6f;
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis("Cosmic cookie slash"), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit)
@@ -132,7 +132,7 @@ namespace TheConfectionRebirth.Projectiles
                 v.Y *= -1f;
             v.Y += 100f;
             Vector2 velocity = v.SafeNormalize(Vector2.UnitY) * 6f;
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis("Cosmic cookie slash"), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
         }
 
         //Make the projectile shoot out cookie star dusts

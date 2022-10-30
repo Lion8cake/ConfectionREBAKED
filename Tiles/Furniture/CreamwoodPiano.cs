@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Piano");
+            //name.SetDefault("Piano");
             AddMapEntry(new Color(106, 65, 51), name);
             TileID.Sets.DisableSmartCursor[Type] = true;
         }

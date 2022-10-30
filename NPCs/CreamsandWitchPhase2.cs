@@ -17,7 +17,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Creamsand Witch");
             Main.npcFrameCount[NPC.type] = 16;
         }
 
@@ -44,7 +43,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A witch that uses her sugary powers do defeat anyone that get near her home land of the confection desert.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CreamsandWitch")
             });
         }
 

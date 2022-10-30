@@ -12,6 +12,7 @@ using TheConfectionRebirth.Items.Weapons;
 using System.Reflection.Metadata;
 using Terraria;
 using TheConfectionRebirth.Projectiles;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth
 {
@@ -169,6 +170,7 @@ namespace TheConfectionRebirth
         public bool FoxPet;
         public bool NeapoliniteMagicSet;
         public bool NeapoliniteSummonerSet;
+        public bool cookiePet;
 
         public Projectile DimensionalWarp;
 
@@ -200,6 +202,7 @@ namespace TheConfectionRebirth
             FoxPet = false;
             NeapoliniteMagicSet = false;
             NeapoliniteSummonerSet = false;
+            cookiePet = false;
         }
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
@@ -207,10 +210,10 @@ namespace TheConfectionRebirth
             if (damageSource.SourceCustomReason == "DimensionSplit")
             {
                 WeightedRandom<string> deathmessage = new();
-                deathmessage.Add(Player.name + " got lost in a rift.");
-                deathmessage.Add(Player.name + " was split like a banana.");
-                deathmessage.Add(Player.name + " tried to banana all the time.");
-                deathmessage.Add(Player.name + " got split between dimensions.");
+                deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionalSplit.0", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionalSplit.1", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionalSplit.2", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionalSplit.3", Player.name));
                 damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
                 return true;
             }

@@ -37,7 +37,6 @@ namespace TheConfectionRebirth.Tiles
             AnimationFrameHeight = 36;
             TileID.Sets.HasOutlines[Type] = true;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Campfire");
             AddMapEntry(new Color(254, 121, 2), name);
         }
 

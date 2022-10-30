@@ -10,10 +10,6 @@ namespace TheConfectionRebirth.Items
 	public class PastryTart : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pastry Tart");
-
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Once pastry is hot, fillings and frosting can cause burns'");
-
 			SacrificeTotal = 5;
 
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));

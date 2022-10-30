@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Tiles
             // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(186, 134, 75), Language.GetText("MapObject.MetalBar"));
+            AddMapEntry(new Color(186, 134, 75), CreateMapEntryName());
         }
 
         /*public override bool Drop(int i, int j)

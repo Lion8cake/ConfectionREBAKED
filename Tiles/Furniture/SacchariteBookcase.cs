@@ -21,7 +21,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Bookcase");
             AdjTiles = new int[] { 101 };
             AddMapEntry(new Color(32, 174, 221), name);
             DustType = ModContent.DustType<SacchariteCrystals>();

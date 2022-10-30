@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Projectiles
     {
         public override void SetDefaults()
         {
-            Projectile.Name = "Dimensional Warp";
             Projectile.width = 32;
             Projectile.height = 38;
             Projectile.friendly = true;

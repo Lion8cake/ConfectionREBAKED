@@ -33,14 +33,10 @@ namespace TheConfectionRebirth.Tiles
             AdjTiles = new int[] { TileID.Containers };
             ChestDrop = ModContent.ItemType<Items.Placeable.ConfectionBiomeChestItem>();
 
-            ContainerName.SetDefault("Confection Chest");
-
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Confection Chest");
             AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked");
-            name.SetDefault("Locked Confection Chest");
             AddMapEntry(new Color(0, 141, 63), name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

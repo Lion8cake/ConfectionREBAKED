@@ -11,50 +11,119 @@ Discord: https://discord.gg/JwEKrVhjA6
 Changelog
 ===========================================
 All archived items now actually get replaced with whatever they got replaced. (for example, Soul of Spite will automatically get converted to Soul of Night)
+Now you can uncraft Confectionary Crystals Walls, Melting Confection Walls, Cracked Confection Walls and Lined Confection Walls back into Creamstone.
+Renamed Chocolate Bunny, Chocolate Frog, Gummy Worm Cage into Chocolate Bunny, Chocolate Frog, Gummy Worm Terrarium correspodently.
+Neapolinite Brick now requires 5 Stone Blocks and 1 Neapolinite Ore instead of 1 Creamstone and 1 Neapolinite Ore to craft.
+Confection Key tooltip now will be "It has been cursed by a powerful Jungle creature" if Plantera isn't defeated in world.
+Hallowed Brick now requires 5 Stone Blocks and 1 Hallowed Ore instead of 1 Pearlstone and 1 Hallowed Ore to craft.
 Fixed Iscreamers having 0.02% (0.025% in Expert) to drop Dimensional Split. Now its 0.2% and 0.25% in Expert.
+Saccharite Blocks now require 5 Stone Blocks, 1 Saccharite and an Adamantite/Titanium Forge to craft.
+Renamed Blue, Pink, Purple Fairy Floss into Blue, Pink, Purple Fairy Floss Block correspondently.
+Localized most hardcoded stuff. Now, you officially can translate Confection to other languages!
+Now Candlelighter inflicts `Hellfire` for 20 seconds, instead of `On Fire!` for 4mil seconds.
 Added Gummy Worm-whip. Sprite credit goes to splig. (the whip is unobtainable as now tho)
 Updated homepage to be https://terrariamods.wiki.gg/wiki/Confection_Rebaked instead.
+Now Banana Split Crate and Confection Crate internally do count as fishing crates.
+Now Cream of Kickin' properly affected by damage prefixes/modifiers.
+Made Baker's Dozen projectile variations visible for other players.
+Increased the max stack size of nearly all stackable items to 9999.
 Made Secret Confection background slightly more common. (by ~10x)
+Renamed Confection Biome Chest Item into Confection Biome Chest.
 Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
+Made Chocolate Bunny Cage (item) researchable in Journey Mode.
+Made Chocolate Frog Cage (item) researchable in Journey Mode.
+Creamstone Brick now cost 2 creamstone to craft instead of 1.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
 Fixed all Confection's biomes in bestiary being "unknown".
 Fixed sell values for Creamwood/Saccharite furniture sets.
+Made Gummy Worm Cage (item) researchable in Journey Mode.
+Made Chocolate Bunny (item) researchable in Journey Mode.
+Renamed Hardened Creamsand into Hardened Creamsand Block.
+Made Chocolate Frog (item) researchable in Journey Mode.
+Renamed Saccharite Workbench into Saccharite Work Bench.
+Fixed Strawberry Strike buff being named Vanilla Valor.
+Cream Solution now costs 15 silver coins instead of 25.
+Renamed Creamwood Workbench into Creamwood Work Bench.
+Made Saccharite Bat Fish researchable in Journey Mode.
+Cherimoya and Star Fruit now drop slightly more often.
 Added all Rollercookie sprite variations from forums.
 Made Banana Split Crate researchable in Journey Mode.
+Made Grumble Bee (item) researchable in Journey Mode.
+Made Grumble Bee (item) researchable in Journey Mode.
+Made Dimensional Split researchable in Journey Mode.
 Added all Sweet Gummy sprite variations from forums.
 Made Saccharite Bullet researchable in Journey Mode.
 Made The Deserted Land researchable in Journey Mode.
+Crafting confection bricks now give 5 instead of 2.
 Made Confection Crate researchable in Journey Mode.
 Made Confection Pylon researchable in Journey Mode.
 Made Cream of Kickin' researchable in Journey Mode.
 Made Saccharite Arrow researchable in Journey Mode.
+Made Birdnana (item) researchable in Journey Mode.
 Added all Iscreamer sprite variations from forums.
 Fixed typos in Neapolinite Mask set bonus tooltip.
+Made Birdnana (item) researchable in Journey Mode.
 Made Saccharite Dart researchable in Journey Mode.
+Made Chocolate Fudge researchable in Journey Mode.
 Made Heavenly Forge researchable in Journey Mode.
+Renamed Creamsandstone into Creamsandstone Block.
 Made True Sucrosa researchable in  Journey Mode.
 Made Candlelighter researchable in Journey Mode.
 Fixed typo in Neapolinite Hat set bonus tooltip.
 Fixed a typo in Striped Pigron's bestiary entry.
+Made Sprinklefish researchable in Journey Mode.
 Made Sugar Water researchable in Journey Mode.
 Made Crunch Ball researchable in Journey Mode.
 Made Soda Potion researchable in Journey Mode.
+Fixed typo in Crooked Cookie's bestiary entry.
+Cream Grass Wall now can be bought from Dryad.
+Fixed typo in Parfait Slime's bestiary entry.
+Made Pip (item) researchable in Journey Mode.
+Renamed Sherbet Wall into Sherbet Brick Wall.
 Made Chip Arrow researchable in Journey Mode.
 Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
+Nerfed YumDrop's sell price to be 1 silver.
+Fixed typo in Gastropod Staff buff tooltip.
+Fixed typos in Prickster's bestiary entry.
+Fixed Potted Confection Bamboo sell price.
+Fixed Candlelighter not having any offset.
+Fixed typo in Saccharite Bullet's tooltip.
+Fixed Potted Confection Cedar sell price.
+Fixed typo in Iscreamer's bestiary entry.
 Made Impact researchable in Journey Mode.
+Fixed typo in Creamwood Helmet set bonus.
+Renamed Creamstone into Creamstone Block.
+Fixed Potted Confection Palm sell price.
 Fixed Cream Swallower bestiary portrait.
+Fixed typo in Pastry Staff buff tooltip.
+Fixed Potted Confection Tree sell price.
 Fixed Striped Pigron bestiary portrait.
 Parfait Slime now can drop Slime Staff.
 Fixed 1 pixel in Rollercookie's sprite.
+Renamed Creamsand into Creamsand Block.
+Fixed typo in Meowzer's bestiary entry.
+Fixed typo in Candlelighter's tooltip.
 Fixed 1 pixel in Parfait Slime sprite.
+Fixed banners not having any tooltips.
 Ultra far background now less laggy.
 Fixed Sugar Ghoul bestiary portrait.
+Fixed typo in Pop Rocket's tooltip.
 Fixed Crazy Cone bestiary portrait.
+Nerfed Creamwood Breastplate price.
 Taffy Apple now drops more rare.
+Now Sherbet Bricks cost nothing.
 Cream Swallower now has banner.
+Nerfed Creamwood Greaves price.
+Nerfed Creamwood Helmet price.
+Renamed YumDrop into Yumdrop.
+Removed Meety Mummy Banner.
+Improved mod compatibility.
 Increased version number.
 Fixed Sweet Tooth rarity.
+Added The Cookiest Block.
+Removed True Ichor Bolt.
+Removed Can of Meat.
 Added Brownie.
 
 ===========================================

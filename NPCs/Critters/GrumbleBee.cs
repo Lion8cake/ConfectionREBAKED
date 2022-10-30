@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grumble Bee");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.GoldButterfly];
             Main.npcCatchable[NPC.type] = true;
         }
@@ -31,7 +30,7 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A passive bee that flies around in the confection, picking pollon from the confections flowers.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GrumbleBee")
             });
         }
 
@@ -87,10 +86,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class GrumbleBeeItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Grumble Bee");
-        }
+        public override void SetStaticDefaults() => SacrificeTotal = 5;
 
         public override void SetDefaults()
         {

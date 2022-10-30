@@ -30,7 +30,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(32, 174, 221), Language.GetText("MapObject.FloorLamp"));
+            AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
 
             DustType = ModContent.DustType<SacchariteCrystals>();
 

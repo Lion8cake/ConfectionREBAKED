@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items
@@ -9,7 +10,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cookie Cutter Shark");
             SacrificeTotal = 2;
         }
 
@@ -35,8 +35,8 @@ namespace TheConfectionRebirth.Items
 
         public override void AnglerQuestChat(ref string description, ref string catchLocation)
         {
-            description = "There's a living cookie cutter down in the deep Confection! Go and bring it back for me so I can make some living cookies!";
-            catchLocation = "Caught anywhere in the Confection";
+            description = Language.GetTextValue("Mods.TheConfectionRebirth.ItemAnglerChat.CookieCutterShark");
+            catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.Common.CaughtInConfection");
         }
     }
 }

@@ -9,14 +9,8 @@ using Terraria.DataStructures;
 
 namespace TheConfectionRebirth.Projectiles
 {
-
 	public class CherryGrenade : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Cherry Grenade");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(30);
@@ -55,35 +49,10 @@ namespace TheConfectionRebirth.Projectiles
 			{
 				return;
 			}
-			int choice = Main.rand.Next(1);
-			if (choice == 0)
+
+			for (int i = 0; i < 5; i++)
 			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-			}
-			
-			int num = Main.rand.Next(1);
-			if (num == 0)
-			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-			}
-			
-			int num2 = Main.rand.Next(1);
-			if (num2 == 0)
-			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-			}
-			{
-				int num3 = Main.rand.Next(1);
-				if (num3 == 0)
-				{
-					Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-				}
-				
-				int num4 = Main.rand.Next(1);
-				if (num4 == 0)
-				{
-					Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-				}
+				Projectile.NewProjectile(new EntitySource_Misc("Cherry shard from cherry bomb"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

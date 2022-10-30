@@ -25,8 +25,8 @@ namespace TheConfectionRebirth.Projectiles
 
         public override void AI()
         {
-            Projectile.localAI[0] += 1f;
-            Projectile.alpha = (int)Projectile.localAI[0] * 2;
+            Projectile.ai[0] += 1f;
+            Projectile.alpha = (int)Projectile.ai[0] * 2;
 
             if (Projectile.localAI[0] > 130f)
             {

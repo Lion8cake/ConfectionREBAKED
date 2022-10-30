@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Bookcase");
+            //name.SetDefault("Bookcase");
             AdjTiles = new int[] { 101 };
             AddMapEntry(new Color(106, 65, 51), name);
         }

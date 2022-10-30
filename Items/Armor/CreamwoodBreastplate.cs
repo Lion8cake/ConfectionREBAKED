@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Armor
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Creamwood Breastplate");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -19,7 +18,7 @@ namespace TheConfectionRebirth.Items.Armor
         {
             Item.width = 18;
             Item.height = 18;
-            Item.value = 10000;
+            Item.value = 0;
             Item.rare = ItemRarityID.White;
             Item.defense = 3;
         }

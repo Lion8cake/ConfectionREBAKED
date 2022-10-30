@@ -25,5 +25,28 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.Creamstone>();
         }
-    }
+
+		public override void AddRecipes()
+		{
+            CreateRecipe()
+                .AddIngredient<ConfectionaryCrystalsWall>(4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<MeltingConfectionWall>(4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<CrackedConfectionWall>(4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<LinedConfectionGemWall>(4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
+	}
 }

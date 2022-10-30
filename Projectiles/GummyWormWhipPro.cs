@@ -16,7 +16,6 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gummy Worm-whip");
 			ProjectileID.Sets.IsAWhip[Type] = true;
 		}
 

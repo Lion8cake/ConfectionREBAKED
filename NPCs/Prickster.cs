@@ -18,7 +18,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prickster");
             Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -76,7 +75,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A tortois descuised as a pile of scharrarite ready to attack when disturbed.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Prickster")
             });
         }
 

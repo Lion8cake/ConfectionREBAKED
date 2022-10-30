@@ -13,8 +13,6 @@ namespace TheConfectionRebirth.Pets.BirdnanaLightPet
 		public ref float AIDashCharge => ref Projectile.ai[1];
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shiny Birdnana");
-
 			Main.projFrames[Projectile.type] = 4;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = true;

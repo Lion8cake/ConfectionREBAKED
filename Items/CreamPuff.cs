@@ -8,8 +8,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Puff");
-            Tooltip.SetDefault("'Sometimes carried by creatures in the dessert desert'");
             SacrificeTotal = 1;
         }
 

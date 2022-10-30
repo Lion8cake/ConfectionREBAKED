@@ -21,7 +21,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             AdjTiles = new int[] { 172 };
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Sink");
+            //name.SetDefault("Sink");
             AddMapEntry(new Color(106, 65, 51), name);
             TileID.Sets.DisableSmartCursor[Type] = true;
         }

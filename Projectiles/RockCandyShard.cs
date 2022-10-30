@@ -5,11 +5,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class RockCandyShard : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rock Candy");
-		}
-	
 		public override void SetDefaults()
 		{
 			Projectile.width = 8;

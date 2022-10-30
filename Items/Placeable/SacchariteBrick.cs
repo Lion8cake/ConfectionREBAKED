@@ -9,7 +9,6 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Saccharite Block");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
@@ -29,7 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(5).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 2).Register();
+            CreateRecipe(5).AddIngredient(ItemID.StoneBlock, 5).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 1).AddTile(TileID.AdamantiteForge).Register();
         }
     }
 }

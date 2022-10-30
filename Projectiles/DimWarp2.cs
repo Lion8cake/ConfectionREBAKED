@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Projectiles
     {
         public override void SetDefaults()
         {
-            Projectile.Name = "Dimensional Warp";
             Projectile.width = 32;
             Projectile.height = 38;
             Projectile.friendly = true;
@@ -88,7 +87,8 @@ namespace TheConfectionRebirth.Projectiles
                 {
                     target.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((target.statLifeMax2 + target.statDefense) * (target.endurance + 1) / 7), 0);
                 }
-                target.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
+                if (Projectile.ai[1] != 1)
+                    target.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 Projectile.ai[0] = 1;
                 Projectile.Kill();
             //}
@@ -106,7 +106,8 @@ namespace TheConfectionRebirth.Projectiles
                     {
                         owner.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((owner.statLifeMax2 + owner.statDefense) * (owner.endurance + 1) / 7), 0);
                     }
-                    owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
+                    if (Projectile.ai[1] != 1)
+                        owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                     return true;
                 }
                 owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();

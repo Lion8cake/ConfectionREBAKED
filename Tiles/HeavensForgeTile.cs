@@ -19,7 +19,6 @@ namespace TheConfectionRebirth.Tiles
             AnimationFrameHeight = 54;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Heavenly Forge");
             AddMapEntry(new Color(179, 146, 113), name);
         }
 

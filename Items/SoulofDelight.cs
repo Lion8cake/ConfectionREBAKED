@@ -12,8 +12,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of Delight");
-            Tooltip.SetDefault("'The essence of delightful creatures'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
 
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
@@ -25,11 +23,11 @@ namespace TheConfectionRebirth.Items
 
         public override void SetDefaults()
         {
-            Item refItem = new Item();
+            Item refItem = new();
             refItem.SetDefaults(ItemID.SoulofLight);
             Item.width = refItem.width;
             Item.height = refItem.height;
-            Item.value = 1000;
+            Item.value = Item.sellPrice(silver: 2);
             Item.rare = ItemRarityID.Orange;
             Item.maxStack = 9999;
         }

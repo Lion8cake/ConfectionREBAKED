@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.Gastropod
 	public class GastropodStaff : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Summons a Mini Gastropod to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}

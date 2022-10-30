@@ -19,6 +19,7 @@ namespace TheConfectionRebirth.Items.Armor
             Item.height = 18;
             Item.vanity = true;
             Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(silver: 40);
         }
     }
 }

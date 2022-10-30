@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Driver's Permint");
-            Tooltip.SetDefault("Summons a Rollercycle to ride on");
             SacrificeTotal = 1;
         }
 

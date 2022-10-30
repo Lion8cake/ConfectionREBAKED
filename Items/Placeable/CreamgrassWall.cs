@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +21,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 7;
+            Item.value = Item.sellPrice(copper: 50);
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.GraveyardWalls.CreamGrassWallArtificial>();

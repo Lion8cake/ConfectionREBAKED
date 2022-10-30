@@ -14,8 +14,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swirly Swarm (III)");
-            Description.SetDefault("30% increased whip speed");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

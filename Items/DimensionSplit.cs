@@ -7,12 +7,11 @@ using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items
 {
-    class DimensionSplit : ModItem
+	class DimensionSplit : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dimensional Split");
-            Tooltip.SetDefault("When used places a portal and when clicked on a npc teleports it to the first portal");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

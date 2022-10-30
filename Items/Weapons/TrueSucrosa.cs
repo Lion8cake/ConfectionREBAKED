@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("True Sucrosa");
 			SacrificeTotal = 1;
 		}
 

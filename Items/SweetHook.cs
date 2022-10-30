@@ -7,7 +7,6 @@ namespace TheConfectionRebirth.Items
 {
     public class SweetHook : ModItem
     {
-
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;

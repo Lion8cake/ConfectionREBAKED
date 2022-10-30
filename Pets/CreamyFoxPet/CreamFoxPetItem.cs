@@ -10,9 +10,6 @@ namespace TheConfectionRebirth.Pets.CreamyFoxPet
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			DisplayName.SetDefault("Fox Cookie");
-			Tooltip.SetDefault("Summons a Creamy Fox"
-				+"\nGreat for impersonating Devs");
 		}
 
 		public override void SetDefaults() {

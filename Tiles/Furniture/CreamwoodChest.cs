@@ -31,10 +31,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AdjTiles = new int[] { TileID.Containers };
             ChestDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodChest>();
 
-            ContainerName.SetDefault("Creamwood Chest");
+            //ContainerName.SetDefault("Creamwood Chest");
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Creamwood Chest");
             AddMapEntry(new Color(106, 65, 51), name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

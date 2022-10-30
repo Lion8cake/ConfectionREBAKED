@@ -34,8 +34,6 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         Vector2[] tailSeg = new Vector2[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Meowzer");
-
             var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 CustomTexturePath = "TheConfectionRebirth/NPCs/Meowzer/Meowzer_Bestiary",
@@ -70,7 +68,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
 
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A Pastry cat that roams the confection with its giant cookie cannon. 50% cat, 50% pastry, 100% full of Rainbow lazers")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Meowzer")
             });
         }
         public override void AI()
@@ -322,7 +320,6 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         int[] alpha = new int[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Meowzer Beam");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -390,8 +387,6 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         bool scaleStat;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Meowzer Tail");
-
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Hide = true

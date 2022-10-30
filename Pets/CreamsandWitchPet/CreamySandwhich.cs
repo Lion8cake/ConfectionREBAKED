@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Pets.CreamsandWitchPet
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			DisplayName.SetDefault("Creamy Sandwich");
-			Tooltip.SetDefault("Summons a little Creamsand Witch");
 		}
 
 		public override void SetDefaults()

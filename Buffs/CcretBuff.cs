@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Foamin' Float Mount");
-            Description.SetDefault("'Your Floating on a Foamin' Float'");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
         }

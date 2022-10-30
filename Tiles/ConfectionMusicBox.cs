@@ -19,7 +19,6 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.addTile(Type);
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Music Box");
             AddMapEntry(new Color(133, 87, 50), name);
         }
 

@@ -34,7 +34,6 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Parfait Slime");
             Main.npcFrameCount[NPC.type] = 2;
         }
 
@@ -62,7 +61,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("These slimes disguised as cakes look delicous although don't let it distract you from who they really are.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.ParfaitSlime")
             });
         }
 

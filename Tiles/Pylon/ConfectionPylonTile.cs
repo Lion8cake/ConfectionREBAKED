@@ -48,7 +48,6 @@ namespace TheConfectionRebirth.Tiles.Pylon
 			AddToArray(ref TileID.Sets.CountsAsPylon);
 
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Confection Pylon");
 			AddMapEntry(new Color(217, 53, 122), name);
 		}
 

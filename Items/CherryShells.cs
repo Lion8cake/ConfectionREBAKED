@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cherry Shells");
-            Tooltip.SetDefault("'Surprisingly explosive'");
             SacrificeTotal = 5;
         }
 

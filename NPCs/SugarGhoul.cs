@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sugar Ghoul");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
@@ -40,7 +39,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A ghoul found in the depths of the desert tainted by the confection will hunt down anyone it sees.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SugarGhoul")
             });
         }
 

@@ -6,11 +6,6 @@ namespace TheConfectionRebirth.Items.Archived
 {
 	public class DeathsRaze : ModItem, IArchived
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Death's Raze");		
-		}
-
 		public override void SetDefaults()
 		{
 			Item.damage = 45;

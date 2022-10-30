@@ -11,7 +11,8 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class CherryBurstArrow : ModProjectile
 	{
-		public override void SetDefaults() {
+		public override void SetDefaults()
+		{
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.friendly = true;
@@ -20,47 +21,38 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.timeLeft = 600;
 		}
 
-		public override void AI() {
+		public override void AI()
+		{
 			Projectile.ai[0] += 1f;
 			Projectile.direction = Projectile.spriteDirection = Projectile.velocity.X > 0f ? 1 : -1;
 			Projectile.rotation = Projectile.velocity.ToRotation();
-			if (Projectile.velocity.Y > 16f) {
+			if (Projectile.velocity.Y > 16f)
+			{
 				Projectile.velocity.Y = 16f;
 			}
-			if (Projectile.spriteDirection == -1) {
+			if (Projectile.spriteDirection == -1)
+			{
 				Projectile.rotation += MathHelper.Pi;
 			}
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 		}
-		
+
 		public override void Kill(int timeLeft)
-	{
-		SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-		if (Main.myPlayer != Projectile.owner)
 		{
-			return;
+			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+			if (Main.myPlayer != Projectile.owner)
+			{
+				return;
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				Projectile.NewProjectile(new EntitySource_Misc("Cherry shard from cherry burst arrow"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
+			}
 		}
-		int choice = Main.rand.Next(1);
-		if (choice == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-		
-		int num = Main.rand.Next(1);
-		if (num == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-		
-		int num2 = Main.rand.Next(1);
-		if (num2 == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-	}
 	}
 }

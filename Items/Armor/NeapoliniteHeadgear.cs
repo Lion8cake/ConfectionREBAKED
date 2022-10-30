@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Armor
@@ -10,8 +11,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("6% Increased Magic Damage"
-                    + "\nIncreased Max Mana by 80");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,8 +29,7 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "For every 50 mana consumed in the past 3 seconds," 
-                + "\nsummon an additional strawberry per attack. Caps at 5 strawberries.";
+            player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteHeadgear");
             ConfectionPlayer playerFuncs = player.GetModPlayer<ConfectionPlayer>();
             playerFuncs.NeapoliniteMagicSet = true;
             int rank = playerFuncs.ManaConsumed / 50;

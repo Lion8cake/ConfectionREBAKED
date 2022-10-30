@@ -11,11 +11,6 @@ namespace TheConfectionRebirth.Projectiles
 	{
         private const string ChainTexture = "TheConfectionRebirth/Projectiles/CreamofKickinCookieChain";
 
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Cookie");
-		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 22;

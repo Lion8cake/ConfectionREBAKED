@@ -39,7 +39,6 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Iscreamer");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -68,7 +67,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Ghostly screams echo from confections underground, these creatures use their ghostly powers to teleport to any unsuspecting victom.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Iscreamer")
             });
         }
 

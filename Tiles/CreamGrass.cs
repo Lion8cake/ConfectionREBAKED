@@ -10,10 +10,10 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrass").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CookieBlock").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("Creamstone").Type] = true;
-            Main.tileMerge[Type][Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBrick[Type] = true;

@@ -29,7 +29,6 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sprinkling");
             Main.npcFrameCount[NPC.type] = 10;
         }
 
@@ -71,7 +70,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Sprinkles cursed with the soul power of flight will still try and kill anyone from taking over the confection.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.Sprinkling")
             });
         }
 

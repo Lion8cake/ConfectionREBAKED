@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Gummy Shirt");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -21,6 +19,7 @@ namespace TheConfectionRebirth.Items.Armor
             Item.height = 18;
             Item.vanity = true;
             Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(silver: 40);
         }
     }
 }

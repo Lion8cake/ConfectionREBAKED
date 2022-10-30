@@ -7,8 +7,6 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chocolate Charge (IV)");
-            Description.SetDefault("16% increased ranged damage and 8% increased Critical strike chance");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

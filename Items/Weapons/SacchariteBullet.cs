@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class SacchariteBullet : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Shatters into pecies apon impact.");
 			SacrificeTotal = 99;
 		}
 

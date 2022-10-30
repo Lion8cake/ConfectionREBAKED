@@ -8,7 +8,6 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sherbet Brick");
             SacrificeTotal = 100;
         }
 
@@ -23,7 +22,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useAnimation = 15;
             Item.useTime = 10;
             Item.useStyle = 1;
-            Item.value = Item.buyPrice(0, 0, 15);
+            Item.value = Item.buyPrice(0, 0, 0);
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.SherbetBricks>();
         }

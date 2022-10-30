@@ -9,9 +9,6 @@ namespace TheConfectionRebirth.Pets.BirdnanaLightPet
 	public class MagicalKazoo : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magical Kazoo");
-			Tooltip.SetDefault("Summons a shiny Birdnana");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

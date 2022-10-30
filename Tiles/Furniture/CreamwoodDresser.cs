@@ -34,10 +34,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Creamwood Dresser");
+            //name.SetDefault("Creamwood Dresser");
             AddMapEntry(new Color(106, 65, 51), name);
             AdjTiles = new int[] { TileID.Dressers };
-            ContainerName.SetDefault("Creamwood Dresser");
+            //ContainerName.SetDefault("Creamwood Dresser");
             DresserDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>();
             TileID.Sets.DisableSmartCursor[Type] = true;
         }

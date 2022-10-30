@@ -35,10 +35,8 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Dresser");
             AddMapEntry(new Color(32, 174, 221), name);
             AdjTiles = new int[] { TileID.Dressers };
-            ContainerName.SetDefault("Saccharite Dresser");
             DresserDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>();
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<SacchariteCrystals>();

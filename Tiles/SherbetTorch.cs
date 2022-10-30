@@ -54,8 +54,6 @@ namespace TheConfectionRebirth.Tiles
             //Etc
             ModTranslation name = CreateMapEntryName();
 
-            name.SetDefault("Torch");
-
             AddMapEntry(new Color(200, 200, 200), name);
 
             // Assets

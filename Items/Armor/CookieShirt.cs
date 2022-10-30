@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Armor
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Cookie Shirt");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

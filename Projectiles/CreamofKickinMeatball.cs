@@ -13,11 +13,6 @@ namespace TheConfectionRebirth.Projectiles
 	{
         private const string ChainTexture = "TheConfectionRebirth/Projectiles/CreamofKickinMeatballChain";
 
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Meatball");
-		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 22;

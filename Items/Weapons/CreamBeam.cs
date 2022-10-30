@@ -10,7 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cream Beam");
             Item.staff[Item.type] = true;
             SacrificeTotal = 1;
         }

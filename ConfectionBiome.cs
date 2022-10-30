@@ -49,6 +49,7 @@ namespace TheConfectionRebirth
             BakeTileChild(ModContent.TileType<CreamstoneRuby>(), TileID.Ruby, new(true, true, true));
             BakeTileChild(ModContent.TileType<CreamstoneSaphire>(), TileID.Sapphire, new(true, true, true));
             BakeTileChild(ModContent.TileType<CreamstoneTopaz>(), TileID.Topaz, new(true, true, true));
+            //BakeTileChild(ModContent.TileType<CookiestCookieBlock>(), TileID.DirtiestBlock, new(true, true, true));
 
             WallContext = new WallContext()
                 .AddReplacement<Walls.CreamstoneWall>(28, 1, 54, 55, 61, 3, 83) //Normal

@@ -19,6 +19,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.maxStack = 9999;
             Item.useStyle = 1;
             Item.useAnimation = 15;
+            Item.value = Item.buyPrice(silver: 20);
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.useTurn = true;

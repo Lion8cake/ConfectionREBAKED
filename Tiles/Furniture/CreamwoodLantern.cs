@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.StyleWrapLimit = 36; ;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Lantern");
+            //name.SetDefault("Lantern");
             TileID.Sets.DisableSmartCursor[Type] = true;
             if (!Main.dedServ)
             {

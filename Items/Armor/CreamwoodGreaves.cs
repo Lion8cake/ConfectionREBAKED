@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Items.Armor
         {
             Item.width = 18;
             Item.height = 18;
-            Item.value = 10000;
+            Item.value = 0;
             Item.rare = ItemRarityID.White;
             Item.defense = 2;
         }

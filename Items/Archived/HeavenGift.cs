@@ -18,7 +18,7 @@ namespace TheConfectionRebirth.Items.Archived
 		public override void SetDefaults() {
 			Item.width = 20;
 			Item.height = 20;
-			Item.sellPrice(platinum: 1);
+			Item.value = Item.sellPrice(platinum: 1);
 			Item.rare = ItemRarityID.Green;
 		}
 	}

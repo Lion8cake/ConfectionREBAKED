@@ -8,11 +8,6 @@ namespace TheConfectionRebirth.Projectiles
     {
         public override string Texture => "TheConfectionRebirth/Projectiles/CreamBolt";
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Spray");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 32;

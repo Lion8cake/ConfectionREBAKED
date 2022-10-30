@@ -14,7 +14,6 @@ namespace TheConfectionRebirth.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Confection Mimic");
             Main.npcFrameCount[NPC.type] = 14;
         }
 
@@ -39,7 +38,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Mimics that are engolthed by the Confection turn into a Monsterest cake. A certain key can bring them to life.")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.BigMimicConfection")
             });
         }
 
