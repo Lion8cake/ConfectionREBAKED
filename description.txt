@@ -18,6 +18,7 @@ Made Secret Confection background slightly more common. (by ~10x)
 Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
 Fixed all Confection's biomes in bestiary being "unknown".
+Fixed sell values for Creamwood/Saccharite furniture sets.
 Added all Rollercookie sprite variations from forums.
 Made Banana Split Crate researchable in Journey Mode.
 Added all Sweet Gummy sprite variations from forums.
@@ -42,10 +43,14 @@ Made Chip Arrow researchable in Journey Mode.
 Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
 Made Impact researchable in Journey Mode.
+Fixed Cream Swallower bestiary portrait.
+Fixed Striped Pigron bestiary portrait.
 Parfait Slime now can drop Slime Staff.
 Fixed 1 pixel in Rollercookie's sprite.
 Fixed 1 pixel in Parfait Slime sprite.
 Ultra far background now less laggy.
+Fixed Sugar Ghoul bestiary portrait.
+Fixed Crazy Cone bestiary portrait.
 Taffy Apple now drops more rare.
 Cream Swallower now has banner.
 Increased version number.

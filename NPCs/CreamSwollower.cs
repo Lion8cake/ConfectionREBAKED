@@ -14,6 +14,11 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Cream Swallower");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(40f, 7.5f),
+                PortraitPositionXOverride = 0f
+            });
         }
 
         public override void SetDefaults()

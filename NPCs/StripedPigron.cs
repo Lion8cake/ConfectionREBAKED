@@ -15,6 +15,12 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Striped Pigron");
             Main.npcFrameCount[NPC.type] = 14;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(10f, 5f),
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = -12f
+            });
         }
 
         public override void SetDefaults()

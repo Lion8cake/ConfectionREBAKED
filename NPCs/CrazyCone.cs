@@ -16,6 +16,13 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Crazy Cone");
             Main.npcFrameCount[NPC.type] = 6;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new Vector2(10f, 6f),
+                Velocity = 1f,
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = 2f
+            });
         }
 
         public override void SetDefaults()

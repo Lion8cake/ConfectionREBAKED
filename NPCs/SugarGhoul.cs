@@ -13,6 +13,10 @@ namespace TheConfectionRebirth.NPCs
         {
             DisplayName.SetDefault("Sugar Ghoul");
             Main.npcFrameCount[NPC.type] = 8;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Velocity = 1f
+            });
         }
 
         public override void SetDefaults()
