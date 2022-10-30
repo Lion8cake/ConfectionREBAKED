@@ -26,7 +26,7 @@ Mods: {
 			WildAiryBlue: Wild Airy Blue
 
 			# Archived
-			HeavensGift: Heaven's Gift
+			HeavenGift: Heaven's Gift
 
 			# Armor
 			AdmiralHat: Admiral Hat
@@ -299,6 +299,14 @@ Mods: {
 		}
 
 		ItemTooltip: {
+			# Archived
+			HeavenGift:
+				'''
+				An old legacy item ment for the 1.3 version of the Confection.
+				Thank you all who have supported the confection in the past, thank you just thanks!
+				Sell this to any npc to get a platinum coin.
+				'''
+
 			# Armor
 			AncientNeapoliniteHat: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteHat}"
 			AncientNeapoliniteHeadgear: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteHeadgear}"
