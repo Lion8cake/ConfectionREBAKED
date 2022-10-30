@@ -49,7 +49,6 @@ Cherimoya and Star Fruit now drop slightly more often.
 Added all Rollercookie sprite variations from forums.
 Made Banana Split Crate researchable in Journey Mode.
 Made Grumble Bee (item) researchable in Journey Mode.
-Made Grumble Bee (item) researchable in Journey Mode.
 Made Dimensional Split researchable in Journey Mode.
 Added all Sweet Gummy sprite variations from forums.
 Made Saccharite Bullet researchable in Journey Mode.
@@ -120,10 +119,12 @@ Renamed YumDrop into Yumdrop.
 Removed Meety Mummy Banner.
 Improved mod compatibility.
 Increased version number.
+Added The Cookiest Block.
 Fixed Sweet Tooth rarity.
 Added The Cookiest Block.
 Removed True Ichor Bolt.
 Removed Can of Meat.
+Added Lickity Split.
 Added Brownie.
 
 ===========================================
