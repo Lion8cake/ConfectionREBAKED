@@ -35,8 +35,6 @@ namespace TheConfectionRebirth
             BiomeMowedGrass = ModContent.TileType<CreamGrassMowed>();
             MimicKeyType = ModContent.ItemType<KeyofDelight>();
             MimicType = ModContent.NPCType<BigMimicConfection>();
-            DisplayName.SetDefault("Confection");
-            Description.SetDefault("A land of where every thing looks like candy, tasty chocolate or dangours sprinkles.");
 
             BakeTileChild(ModContent.TileType<CookieBlock>(), TileID.Dirt, new(true, true, true));
             BakeTileChild(ModContent.TileType<CreamBlock>(), TileID.SnowBlock, new(true, true, true));

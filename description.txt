@@ -21,6 +21,7 @@ Saccharite Blocks now require 5 Stone Blocks, 1 Saccharite and an Adamantite/Tit
 Renamed Blue, Pink, Purple Fairy Floss into Blue, Pink, Purple Fairy Floss Block correspondently.
 Localized most hardcoded stuff. Now, you officially can translate Confection to other languages!
 Now Candlelighter inflicts `Hellfire` for 20 seconds, instead of `On Fire!` for 4mil seconds.
+Now you can't use Dimensional Split to teleport NPCs those have more than 1000 max health. 
 Added Gummy Worm-whip. Sprite credit goes to splig. (the whip is unobtainable as now tho)
 Updated homepage to be https://terrariamods.wiki.gg/wiki/Confection_Rebaked instead.
 Now Banana Split Crate and Confection Crate internally do count as fishing crates.
@@ -110,6 +111,7 @@ Fixed Sugar Ghoul bestiary portrait.
 Fixed typo in Pop Rocket's tooltip.
 Fixed Crazy Cone bestiary portrait.
 Nerfed Creamwood Breastplate price.
+Fixed bug with Dimensional Split.
 Taffy Apple now drops more rare.
 Now Sherbet Bricks cost nothing.
 Cream Swallower now has banner.

@@ -256,7 +256,7 @@ Mods: {
 			CookieDough: Cookie Dough
 			CreamPuff: Cream Puff
 			CreamSolution: Cream Solution
-			DimensionalSplit: Dimensional Split
+			DimensionSplit: Dimensional Split
 			LickitySplit: Lickity Split
 			DriversPermint: Driver's Permint
 			Kazoo: Kazoo
@@ -426,20 +426,21 @@ Mods: {
 				'Programmer Art'
 				'''
 			CcretTicket: Summons a Foamin' Float to float on
-			CherryShells: 'Surprisingly explosive'
+			CherryShells: "'Surprisingly explosive'"
 			ConfectionBiomeKey: Unlocks a Confection Chest in the dungeon
 			CookieDough: Don't consume it, may contain raw eggs.
-			CreamPuff: 'Sometimes carried by creatures in the dessert desert'
+			CreamPuff: "'Sometimes carried by creatures in the dessert desert'"
 			CreamSolution:
 				'''
 				Used by the Clentaminator
 				Spreads the Confection
 				'''
-			DimensionalSplit:
+			DimensionSplit:
 				'''
 				When used, places a portal.
 				When clicked on a npc, teleports it to the first portal.
 				'''
+			LickitySplit: "{$Mods.TheConfectionRebirth.ItemTooltip.DimensionSplit}"
 			DriversPermint: Summons a Rollercycle to ride on
 			KeyofDelight: "'Charged with the essence of many souls'"
 			PastryTart:

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Projectiles
@@ -49,7 +50,7 @@ namespace TheConfectionRebirth.Projectiles
                 float detect = giveDist + dist;
                 float len = diff.LengthSquared();
 
-                if (target.boss == false && len < detect * detect)
+                if (target.boss == false && target.lifeMax < 1000 && target.type != NPCID.TargetDummy && len < detect * detect)
                 {
                     found = target;
                     dist = MathF.Sqrt(len);

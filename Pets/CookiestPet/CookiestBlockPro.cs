@@ -474,9 +474,9 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 								Projectile.velocity.Y = Projectile.velocity.Y * 2f;
 							}
 						}
-						if (Projectile.localAI[2] == 0f)
+						if (Projectile.localAI[1] == 0f)
 						{
-							Projectile.localAI[2] = 1f;
+							Projectile.localAI[1] = 1f;
 							for (int l = 0; l < 6; l++)
 							{
 								Dust dust3 = Main.dust[Dust.NewDust(Projectile.position + Projectile.velocity, 16, 16, ModContent.DustType<Dusts.CreamwoodDust>(), 0f, 0f, 0, default(Color), 0.8f)];
@@ -488,7 +488,7 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 					}
 					else if (true)
 					{
-						Projectile.localAI[2] = 0f;
+						Projectile.localAI[1] = 0f;
 					}
 					if (Projectile.velocity.X > num33)
 					{

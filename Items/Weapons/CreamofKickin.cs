@@ -10,9 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class CreamofKickin : ModItem
 	{
 		public override void SetStaticDefaults() {
-		    DisplayName.SetDefault("Cream of Kickin'");
-			Tooltip.SetDefault("Apon using <right> a cookie will shoot instantly but with less damage."
-			    + "\nApon using <left> a ball of meat will shoot with increased damage and a spin attack.");
 			SacrificeTotal = 1;
 		}
 

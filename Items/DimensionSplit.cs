@@ -9,6 +9,8 @@ namespace TheConfectionRebirth.Items
 {
 	class DimensionSplit : ModItem
     {
+        public virtual float ai1 => 0f;
+
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
@@ -34,11 +36,11 @@ namespace TheConfectionRebirth.Items
             int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
             if (modPlayer.DimensionalWarp == null && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
             {
-                Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI, ai1: ai1);
             }
-            else if (modPlayer.DimensionalWarp != null)
+            else if (modPlayer.DimensionalWarp != null && player.ownedProjectileCounts[ModContent.ProjectileType<DimWarp2>()] == 0)
             {
-                Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<DimWarp2>(), 1, knockback, player.whoAmI, ai1: ai1);
             }
             return false;
         }
