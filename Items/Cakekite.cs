@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items
             Item.width = 10;
             Item.height = 12;
             Item.value = 50000;
-            Item.rare = 3;
+            Item.rare = ItemRarityID.Orange;
             Item.maxStack = 9999;
         }
 

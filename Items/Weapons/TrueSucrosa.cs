@@ -18,35 +18,21 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useAnimation = 18;
-			Item.useTime = 18;
+			Item.useAnimation = 25;
+			Item.useTime = 25;
 			Item.autoReuse = true;
-			Item.shoot = ModContent.ProjectileType<TrueSucrosaSwing>();
-			Item.shootSpeed = 11f;
-			Item.knockBack = 4.5f;
-			Item.width = 30;
-			Item.height = 30;
-			Item.damage = 85;
+			Item.shoot = ModContent.ProjectileType<TrueSucrosaBolt>();
+			Item.shootSpeed = 8f;
+			Item.knockBack = 6f;
+			Item.width = 40;
+			Item.height = 40;
+			Item.damage = 69;
 			Item.scale = 1f;
 			Item.UseSound = SoundID.Item1;
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.DamageType = DamageClass.Melee;
-			Item.noMelee = true;
-			//Item.shootsEveryUse = true;
 		}
-
-		/*public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-		{
-			int numberProjectiles = 2 + Main.rand.Next(2);
-			for (int i = 0; i < numberProjectiles; i++)
-			{
-				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedByRandom(MathHelper.ToRadians(25));
-
-				int spirit = Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
-			}
-			return false; 
-		}*/
 
 		public override void AddRecipes()
 		{

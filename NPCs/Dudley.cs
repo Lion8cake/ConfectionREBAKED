@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Pets.DudlingPet;
 
@@ -46,7 +47,8 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TaffyApple>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TaffyApple>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brownie>(), 125));
         }
 
         public override void HitEffect(int hitDirection, double damage)

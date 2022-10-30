@@ -19,13 +19,18 @@ Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
 Fixed all Confection's biomes in bestiary being "unknown".
 Added all Rollercookie sprite variations from forums.
+Made Banana Split Crate researchable in Journey Mode.
 Added all Sweet Gummy sprite variations from forums.
 Made Saccharite Bullet researchable in Journey Mode.
+Made The Deserted Land researchable in Journey Mode.
+Made Confection Crate researchable in Journey Mode.
+Made Confection Pylon researchable in Journey Mode.
 Made Cream of Kickin' researchable in Journey Mode.
 Made Saccharite Arrow researchable in Journey Mode.
 Added all Iscreamer sprite variations from forums.
 Fixed typos in Neapolinite Mask set bonus tooltip.
 Made Saccharite Dart researchable in Journey Mode.
+Made Heavenly Forge researchable in Journey Mode.
 Made True Sucrosa researchable in  Journey Mode.
 Made Candlelighter researchable in Journey Mode.
 Fixed typo in Neapolinite Hat set bonus tooltip.
@@ -36,12 +41,16 @@ Made Soda Potion researchable in Journey Mode.
 Made Chip Arrow researchable in Journey Mode.
 Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
+Made Impact researchable in Journey Mode.
 Parfait Slime now can drop Slime Staff.
 Fixed 1 pixel in Rollercookie's sprite.
+Fixed 1 pixel in Parfait Slime sprite.
 Ultra far background now less laggy.
+Taffy Apple now drops more rare.
 Cream Swallower now has banner.
 Increased version number.
 Fixed Sweet Tooth rarity.
+Added Brownie.
 
 ===========================================
 Credit - Programmers

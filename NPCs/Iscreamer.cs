@@ -234,7 +234,9 @@ namespace TheConfectionRebirth.NPCs
 
 			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<DimensionSplit>(), 100));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsNotUp())).OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
-        }
+
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brownie>(), 150));
+		}
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {

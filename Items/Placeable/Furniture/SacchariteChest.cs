@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = 2000;
+            Item.value = Terraria.Item.sellPrice(silver: 1);
             Item.createTile = Mod.Find<ModTile>("SacchariteChest").Type;
         }
 

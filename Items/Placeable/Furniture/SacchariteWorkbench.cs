@@ -21,7 +21,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = 1;
             Item.consumable = true;
-            Item.value = 0;
+            Item.value = Terraria.Item.sellPrice(copper: 30);
             Item.createTile = Mod.Find<ModTile>("SacchariteWorkbench").Type;
         }
 

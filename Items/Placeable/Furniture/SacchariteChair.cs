@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = 150;
+            Item.value = 0;
             Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteChair>();
         }
 
