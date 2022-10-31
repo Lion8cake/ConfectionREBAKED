@@ -49,8 +49,8 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CcretTicket>(), 10));
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<WonkyHat>(), ModContent.ItemType<WonkyCoat>(), ModContent.ItemType<WonkyTrousers>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CcretTicket>(), 50));
+            npcLoot.Add(ItemDropRule.FewFromOptions(2, 40, ModContent.ItemType<WonkyHat>(), ModContent.ItemType<WonkyCoat>(), ModContent.ItemType<WonkyTrousers>()));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

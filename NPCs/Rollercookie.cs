@@ -128,7 +128,7 @@ namespace TheConfectionRebirth.NPCs
 
             LeadingConditionRule rule = new(new CookieVariationDrop(Variation.Birthday));
             rule.OnFailedConditions(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ModContent.ItemType<CookieMask>(), ModContent.ItemType<CookieShirt>(), ModContent.ItemType<CookiePants>()));
-            rule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<TopCake>(), ModContent.ItemType<BirthdaySuit>(), ModContent.ItemType<RightTrousers>()));
+            rule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(2, ModContent.ItemType<TopCake>(), ModContent.ItemType<BirthdaySuit>(), ModContent.ItemType<RightTrousers>()));
             npcLoot.Add(rule);
         }
 

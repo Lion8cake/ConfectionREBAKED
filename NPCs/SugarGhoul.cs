@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -52,7 +54,13 @@ namespace TheConfectionRebirth.NPCs
             return 0f;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 15));
+            npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
+        }
+
+		public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {

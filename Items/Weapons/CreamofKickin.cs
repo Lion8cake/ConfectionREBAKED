@@ -4,10 +4,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Archived;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
-	public class CreamofKickin : ModItem
+	public class CreamofKickin : ModItem, IArchived
 	{
 		public override void SetStaticDefaults() {
 			SacrificeTotal = 1;
@@ -44,9 +45,9 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void AddRecipes() 
 		{
 			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<Items.CreamPuff>(), 1)
+				.AddIngredient(ItemID.SoulofLight, 1)
 				.AddIngredient(ItemID.DarkShard, 1)
-				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 7)
+				.AddIngredient(ModContent.ItemType<SoulofDelight>(), 7)
 				.AddIngredient(ItemID.SoulofNight, 7)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
@@ -64,6 +65,11 @@ namespace TheConfectionRebirth.Items.Weapons
 				Item.shoot = ModContent.ProjectileType<CreamofKickinMeatball>();
 			}
 			return base.CanUseItem(player);
+		}
+
+		public int ArchivatesTo()
+		{
+			return ItemID.DaoofPow;
 		}
 	}
 }

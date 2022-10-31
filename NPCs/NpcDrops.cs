@@ -43,7 +43,7 @@ namespace TheConfectionRebirth.NPCs
         {
             if (npc.type == NPCID.Gastropod)
             {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 5, 15, 25));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 2, 15, 25));
             }
         }
 

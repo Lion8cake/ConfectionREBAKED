@@ -32,6 +32,7 @@ Made Secret Confection background slightly more common. (by ~10x)
 Renamed Confection Biome Chest Item into Confection Biome Chest.
 Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
 Made Chocolate Bunny Cage (item) researchable in Journey Mode.
+Drastically decreased droprate of C-cret Ticket and Wonky set.
 Made Chocolate Frog Cage (item) researchable in Journey Mode.
 Creamstone Brick now cost 2 creamstone to craft instead of 1.
 Meowzer now has 5% to drop Toasty Toaster instead of 100%.
@@ -40,6 +41,7 @@ Fixed sell values for Creamwood/Saccharite furniture sets.
 Made Gummy Worm Cage (item) researchable in Journey Mode.
 Made Chocolate Bunny (item) researchable in Journey Mode.
 Renamed Hardened Creamsand into Hardened Creamsand Block.
+Increased amount of Pastry Blocks that Meowzer can drop.
 Made Chocolate Frog (item) researchable in Journey Mode.
 Renamed Saccharite Workbench into Saccharite Work Bench.
 Fixed Strawberry Strike buff being named Vanilla Valor.
@@ -85,10 +87,13 @@ Fixed a typo in Neapolinite Headgear tooltip.
 Variations of some enemies now single entity.
 Nerfed YumDrop's sell price to be 1 silver.
 Fixed typo in Gastropod Staff buff tooltip.
+Shell Blocks now drop slightly more common.
 Fixed typos in Prickster's bestiary entry.
 Fixed Potted Confection Bamboo sell price.
 Fixed Candlelighter not having any offset.
 Fixed typo in Saccharite Bullet's tooltip.
+Pastry Blocks now drop slightly more rare.
+Cream Swallower now actually drops stuff.
 Fixed Potted Confection Cedar sell price.
 Renamed Orange Ice into Orange Ice Block.
 Fixed typo in Iscreamer's bestiary entry.
@@ -107,6 +112,7 @@ Fixed typo in Meowzer's bestiary entry.
 Fixed typo in Candlelighter's tooltip.
 Fixed 1 pixel in Parfait Slime sprite.
 Fixed banners not having any tooltips.
+Updated Striped Pigron's loot table.
 Ultra far background now less laggy.
 Fixed Sugar Ghoul bestiary portrait.
 Fixed typo in Pop Rocket's tooltip.
@@ -123,11 +129,13 @@ Removed Meety Mummy Banner.
 Improved mod compatibility.
 Increased version number.
 Added The Cookiest Block.
+Removed Cream of Kickin'.
 Fixed Sweet Tooth rarity.
 Added The Cookiest Block.
 Removed True Ichor Bolt.
 Removed Can of Meat.
 Added Lickity Split.
+Removed Cream Puff.
 Added Brownie.
 
 ===========================================

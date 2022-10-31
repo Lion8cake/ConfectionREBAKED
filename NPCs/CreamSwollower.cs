@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -52,7 +54,15 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.SharkFin, 8, 1, 1));
+            npcLoot.Add(ItemDropRule.Food(ItemID.Nachos, 30, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 25, 1, 1));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.WindyEnoughForKiteDrops(), ItemID.KiteSandShark, 25, 1, 1, 1));
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.ZoneSandstorm && spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
             {

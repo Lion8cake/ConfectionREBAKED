@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Programmer Art'");
-
 			SacrificeTotal = 5;
 
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));

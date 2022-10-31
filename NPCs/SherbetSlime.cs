@@ -48,6 +48,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 1, 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SherbetBricks>(), 1, 30, 60));
         }
 

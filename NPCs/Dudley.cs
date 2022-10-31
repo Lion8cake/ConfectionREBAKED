@@ -47,7 +47,7 @@ namespace TheConfectionRebirth.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TaffyApple>(), 50));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brownie>(), 125));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 125));
         }
 
         public override void HitEffect(int hitDirection, double damage)

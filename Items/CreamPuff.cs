@@ -1,10 +1,11 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Archived;
 
 namespace TheConfectionRebirth.Items
 {
-    public class CreamPuff : ModItem
+    public class CreamPuff : ModItem, IArchived
     {
         public override void SetStaticDefaults()
         {
@@ -19,5 +20,10 @@ namespace TheConfectionRebirth.Items
             Item.rare = ItemRarityID.Green;
             Item.maxStack = 9999;
         }
-    }
+
+		public int ArchivatesTo()
+		{
+            return ItemID.LightShard;
+		}
+	}
 }

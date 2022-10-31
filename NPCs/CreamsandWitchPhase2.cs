@@ -65,7 +65,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brownie>(), 150));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
         }
 
         public override void HitEffect(int hitDirection, double damage)

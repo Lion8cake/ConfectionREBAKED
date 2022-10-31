@@ -51,7 +51,11 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.Bacon, 3));
+            npcLoot.Add(ItemDropRule.Food(ItemID.Bacon, 15, 1, 1));
+            npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 10, 1, 1, new Conditions.DontStarveIsUp(), 1));
+            npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp(), 1));
+            npcLoot.Add(new ItemDropWithConditionRule(ItemID.KitePigron, 25, 1, 1, new Conditions.WindyEnoughForKiteDrops(), 1));
+            npcLoot.Add(ItemDropRule.Common(ItemID.PigronMinecart, 100, 1, 1));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

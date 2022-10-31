@@ -216,7 +216,6 @@ Mods: {
 			CookieCrumbler: Cookie Pike-let
 			CosmicCookieCannon: Cosmic Cookie Cannon
 			CreamBeam: Cream Beam
-			CreamofKickin: Cream of Kickin'
 			CreamSpray: Cream Spray
 			CreamwoodBow: Creamwood Bow
 			CreamwoodHammer: Creamwood Hammer
@@ -254,7 +253,6 @@ Mods: {
 			CookieCarp: Cookie Carp
 			CookieCutterShark: Cookie Cutter Shark
 			CookieDough: Cookie Dough
-			CreamPuff: Cream Puff
 			CreamSolution: Cream Solution
 			DimensionSplit: Dimensional Split
 			LickitySplit: Lickity Split
@@ -401,11 +399,6 @@ Mods: {
 			CherryGrenade: After detonation cherry shards with come out and explode.
 			ChipArrow: Cunks of Chocolate bounce around after impact.
 			CosmicCookieCannon: "'But wait? Doesn't it shoot cosmic brownies instead?'"
-			CreamofKickin:
-				'''
-				Apon using <right> a cookie will shoot instantly but with less damage.
-			    Apon using <left> a ball of meat will shoot with increased damage and a spin attack.
-				'''
 			CreamSpray: Shoots a spray of cream
 			CrunchBall: Launches a large Rock Candy ball
 			Drixer: "'Not to be confused with a Drax'"
@@ -437,7 +430,6 @@ Mods: {
 			CherryShells: "'Surprisingly explosive'"
 			ConfectionBiomeKey: Unlocks a Confection Chest in the dungeon
 			CookieDough: Don't consume it, may contain raw eggs.
-			CreamPuff: "'Sometimes carried by creatures in the dessert desert'"
 			CreamSolution:
 				'''
 				Used by the Clentaminator

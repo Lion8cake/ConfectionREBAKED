@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -102,6 +103,7 @@ namespace TheConfectionRebirth.NPCs
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.SlimeStaff, 10000, 7000));
         }
 
