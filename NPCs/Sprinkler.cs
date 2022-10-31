@@ -194,7 +194,7 @@ namespace TheConfectionRebirth.NPCs
             texture = Assets[index][0].Value;
             frame.Y %= front.Height;
 
-            spriteBatch.Draw(texture, pos - new Vector2(frame.Y / texture.Height * 2f, 0f), new(0, 0, 42, 24), drawColor, NPC.rotation, new(21, 12), NPC.scale, DS.FlipTex(NPC.direction), 0f);
+            spriteBatch.Draw(texture, pos + new Vector2(frame.Y / texture.Height * 2f, 0f), new(0, 0, 42, 24), drawColor, NPC.rotation, new(21, 12), NPC.scale, DS.FlipTex(NPC.direction), 0f);
             spriteBatch.Draw(front, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
             return false;
         }
