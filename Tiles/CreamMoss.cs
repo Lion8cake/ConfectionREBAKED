@@ -98,8 +98,7 @@ namespace TheConfectionRebirth.Tiles
 
 			foreach(KeyValuePair<int, Color> entry in TilePostDraws.Moss.MossColor)
 			{
-				Main.tileMerge[Type][entry.Key] = true;
-				Main.tileMerge[entry.Key][Type] = true;
+				TileMerge(Type, entry.Key);
 			}
 			TilePostDraws.Moss.MossColor.Add(Type, mossColor);
 			ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
