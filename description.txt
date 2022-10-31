@@ -90,6 +90,7 @@ Fixed Potted Confection Bamboo sell price.
 Fixed Candlelighter not having any offset.
 Fixed typo in Saccharite Bullet's tooltip.
 Fixed Potted Confection Cedar sell price.
+Renamed Orange Ice into Orange Ice Block.
 Fixed typo in Iscreamer's bestiary entry.
 Made Impact researchable in Journey Mode.
 Fixed typo in Creamwood Helmet set bonus.

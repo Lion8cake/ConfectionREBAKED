@@ -162,9 +162,6 @@ namespace TheConfectionRebirth.Tiles
                     case 7:
                         type = "CrazyCone";
                         break;
-                    case 8:
-                        type = "MeetyMummy";
-                        break;
                     case 9:
                         type = "MintJr";
                         break;
