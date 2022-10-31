@@ -112,6 +112,7 @@ Fixed typo in Meowzer's bestiary entry.
 Fixed typo in Candlelighter's tooltip.
 Fixed 1 pixel in Parfait Slime sprite.
 Fixed banners not having any tooltips.
+Made Birthday set slightly more rare.
 Updated Striped Pigron's loot table.
 Ultra far background now less laggy.
 Fixed Sugar Ghoul bestiary portrait.
