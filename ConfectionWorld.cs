@@ -8,6 +8,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
@@ -20,6 +21,17 @@ namespace TheConfectionRebirth
         internal static bool Secret;
         public static int ConfTileCount { get; set; }
         public static float ConfTileInfo => ConfTileCount / 100;
+		public static bool IsEaster => DateTime.Now.Day >= 2 && DateTime.Now.Day <= 24 && DateTime.Now.Month.Equals(4);
+		public static float DifficultyScale
+		{
+			get
+			{
+				float d = Main.expertMode ? 2f : (Main.masterMode ? 3f : 1f);
+				if (Main.expertMode)
+					d = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>().StrengthMultiplierToGiveNPCs;
+				return d;
+			}
+		}
 
 		public override void Load() => On.Terraria.Main.SetBackColor += Main_SetBackColor;
 

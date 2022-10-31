@@ -13,6 +13,11 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.GoldButterfly];
             Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(0, 6f),
+                Velocity = 0.05f
+            });
         }
 
         public override void SetDefaults()

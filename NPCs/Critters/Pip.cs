@@ -14,6 +14,13 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bird];
             Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(0, -8f),
+                Velocity = 0.05f,
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = -32f,
+            });
         }
 
         public override void SetDefaults()

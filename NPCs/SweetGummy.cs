@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,13 +14,16 @@ using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
 {
-    public class SweetGummy : ModNPC
+	public class SweetGummy : ModNPC
     {
         private sbyte Index;
 
 		public override void Load()
         {
-            string[] a = { "Green", "Red", "Blue", "Yellow", "Amber", "Pink", "Onyx", "Diamond", "Purple" };
+            string[] a = { "Green", "Red", "Blue", "Yellow", "Amber", "Pink", "Onyx", "Diamond", "Purple", "Skeleton", "Bunny", "Headless" };
+            Func<bool>[] b = new Func<bool>[a.Length];
+            b[9] = b[10] = b[11] = () => Main.halloween;
+
             for (int i = 0; i < a.Length; i++)
             {
                 if (a[i] == "Green")
@@ -31,7 +32,7 @@ namespace TheConfectionRebirth.NPCs
                     continue;
 				}
 
-                VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture + '_' + a[i]));
+                VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture + '_' + a[i]), b[i]);
             }
         }
 
@@ -40,6 +41,10 @@ namespace TheConfectionRebirth.NPCs
 		public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 16;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Velocity = 0.5f
+            });
         }
 
         public override void SetDefaults()
@@ -67,7 +72,7 @@ namespace TheConfectionRebirth.NPCs
         {
             if (Index == -1)
             {
-                Index = (sbyte)VariationManager<SweetGummy>.GetRandomGroup().Index;
+                Index = VariationManager<SweetGummy>.GetRandomGroup().Index;
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);

@@ -16,6 +16,7 @@ namespace TheConfectionRebirth.NPCs
 		private static List<VariationGroup> groups2 = new();
 		private static List<string> groups3 = new();
 		private static List<string> groupsThatForNormal = new();
+		public static int Count => groups.Count;
 
 		public static void AddGroup(string groupName, Asset<Texture2D> asset, Func<bool> condition = null)
 		{
@@ -26,7 +27,7 @@ namespace TheConfectionRebirth.NPCs
 				groups3 = new();
 			}
 
-			if (groups?.ContainsKey(groupName) == false)
+			if (groups?.ContainsKey(groupName) == false && !groups.Any(x => x.Value.Index == Count))
 			{
 				if (condition == null)
 				{
@@ -39,16 +40,18 @@ namespace TheConfectionRebirth.NPCs
 
 				VariationGroup group = new(groupName, condition, asset)
 				{
-					Index = groups.Count
+					Index = (sbyte)Count
 				};
+				if (group.Index == -1)
+					throw new NotFiniteNumberException($"Too many variations have been added to {typeof(T).Name}!");
 				groups.Add(groupName, group);
 				groups2.Add(group);
 				groups3.Add(groupName);
 			}
-			else if (asset != null)
+			else if (asset != null && groups3.Contains(groupName))
 			{
 				groups?[groupName].Add(asset);
-				groups2?[groups3.FindIndex((x) => x.Equals(groupName))].Add(asset);
+				groups2?[groups3.IndexOf(groupName)].Add(asset);
 			}
 		}
 
@@ -60,7 +63,7 @@ namespace TheConfectionRebirth.NPCs
 				normalGroups.Add(groups[g]);
 			if (normalGroups.Count == 0)
 				throw new InvalidOperationException();
-			else if (normalGroups.Count == groups.Count)
+			else if (normalGroups.Count == Count)
 				goto skip;
 
 			foreach (var g in groups)
@@ -111,7 +114,7 @@ namespace TheConfectionRebirth.NPCs
 		private Asset<Texture2D> assets;
 		private readonly Func<bool> condition;
 
-		public int Index { get; internal set; }
+		public sbyte Index { get; internal set; }
 
 		public static readonly VariationGroup Empty = default;
 

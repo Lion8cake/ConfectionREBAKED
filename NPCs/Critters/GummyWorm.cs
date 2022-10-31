@@ -13,6 +13,11 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Worm];
             Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Velocity = 1f,
+                Position = new(1, 2)
+            });
         }
 
         public override void SetDefaults()

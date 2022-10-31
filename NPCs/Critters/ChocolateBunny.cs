@@ -14,6 +14,10 @@ namespace TheConfectionRebirth.NPCs.Critters
         {
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bunny];
             Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Velocity = 1f
+            });
         }
 
         public override void SetDefaults()

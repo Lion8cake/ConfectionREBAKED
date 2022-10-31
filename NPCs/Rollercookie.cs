@@ -62,7 +62,7 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void Unload() => fax = null;
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             NPC.width = 44;
             NPC.height = 44;
@@ -100,7 +100,7 @@ namespace TheConfectionRebirth.NPCs
                     variation = Variation.Halloween;
                 if (Main.xMas)
                     variation = Variation.Christmas;
-                if (DateTime.Now.Day >= 2 && DateTime.Now.Day <= 24 && DateTime.Now.Month.Equals(4))
+                if (ConfectionWorld.IsEaster)
                     variation = Variation.Easter;
                 if (Main.rand.NextFloat() < 0.002f || TheConfectionRebirth.OurFavoriteDay && Main.rand.NextFloat() < 0.075f)
                     variation = Variation.Birthday;

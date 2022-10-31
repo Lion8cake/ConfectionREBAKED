@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,15 +20,48 @@ namespace TheConfectionRebirth.NPCs
 
         private sbyte Index;
 
-		public override void Load()
+        public static Asset<Texture2D>[][] Assets;
+
+        public override void Load()
         {
-            VariationManager<Sprinkler>.AddGroup("Normal", ModContent.Request<Texture2D>(Texture));
-            /*VariationManager<Sprinkler>.AddGroup("Corn", ModContent.Request<Texture2D>(Texture + "_Corn"), () => Main.halloween);
-            VariationManager<Sprinkler>.AddGroup("Eye", ModContent.Request<Texture2D>(Texture + "_Eye"), () => Main.halloween);
-            VariationManager<Sprinkler>.AddGroup("Gift", ModContent.Request<Texture2D>(Texture + "_Gift"), () => Main.xMas);*/
+            Asset<Texture2D> wtf = ModContent.Request<Texture2D>(Texture);
+            VariationManager<Sprinkler>.AddGroup("Normal", wtf);
+            VariationManager<Sprinkler>.AddGroup("Corn", wtf, () => false && Main.halloween);
+            VariationManager<Sprinkler>.AddGroup("Eye", wtf, () => Main.halloween);
+            VariationManager<Sprinkler>.AddGroup("Gift", wtf, () => Main.xMas);
+
+            if (Main.dedServ)
+                return;
+
+            Assets = new Asset<Texture2D>[VariationManager<Sprinkling>.Count][];
+            for (int i = 0; i < Assets.GetLength(0); i++)
+            {
+                Assets[i] = new Asset<Texture2D>[3];
+                for (int j = 0; j < 3; j++)
+                {
+                    Assets[i][j] = ModContent.Request<Texture2D>($"TheConfectionRebirth/NPCs/Sprinkler/Sprinkling_{i}_{j}");
+                }
+            }
+
+            if (Main.dedServ)
+                return;
+
+            Assets = new Asset<Texture2D>[VariationManager<Sprinkling>.Count][];
+            for (int i = 0; i < Assets.GetLength(0); i++)
+            {
+                Assets[i] = new Asset<Texture2D>[2];
+                for (int j = 0; j < 2; j++)
+                {
+                    Assets[i][j] = ModContent.Request<Texture2D>($"TheConfectionRebirth/NPCs/Sprinkler/Sprinkler_{i}_{j}");
+                }
+            }
         }
 
-		public override void Unload() => VariationManager<Sprinkler>.Clear();
+		public override void Unload()
+		{
+			VariationManager<Sprinkler>.Clear();
+            Assets = null;
+		}
 
 		public override void SetStaticDefaults()
         {
@@ -98,7 +133,7 @@ namespace TheConfectionRebirth.NPCs
         {
             if (Index == -1)
             {
-                Index = (sbyte)VariationManager<Sprinkler>.GetRandomGroup().Index;
+                Index = VariationManager<Sprinkler>.GetRandomGroup().Index;
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -141,10 +176,26 @@ namespace TheConfectionRebirth.NPCs
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D texture = TextureAssets.Npc[Type].Value;
+            Rectangle frame = NPC.frame;
+            Vector2 pos = NPC.Center - screenPos;
+            pos.Y += NPC.gfxOffY - 4f;
             if (NPC.IsABestiaryIconDummy)
+            {
+                spriteBatch.Draw(texture, pos, frame, drawColor, NPC.rotation, NPC.frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
                 return true;
+            }
 
-            DS.DrawNPC(NPC, VariationManager<Sprinkler>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
+            int index = Utils.Clamp(Index, 0, 4);
+            if (index == 4)
+                index = 0;
+
+            Texture2D front = Assets[index][1].Value;
+            texture = Assets[index][0].Value;
+            frame.Y %= front.Height;
+
+            spriteBatch.Draw(texture, pos - new Vector2(frame.Y / texture.Height * 2f, 0f), new(0, 0, 42, 24), drawColor, NPC.rotation, new(21, 12), NPC.scale, DS.FlipTex(NPC.direction), 0f);
+            spriteBatch.Draw(front, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
             return false;
         }
 

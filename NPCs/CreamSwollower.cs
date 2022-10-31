@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.NPCs
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
-                Position = new(40f, 7.5f),
+                Position = new(35f, 10f),
                 PortraitPositionXOverride = 0f
             });
         }

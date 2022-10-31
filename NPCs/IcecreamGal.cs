@@ -67,6 +67,10 @@ namespace TheConfectionRebirth.NPCs
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 16;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Velocity = 0.5f
+            });
         }
 
         public override void SetDefaults()

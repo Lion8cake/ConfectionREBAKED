@@ -16,7 +16,16 @@ namespace TheConfectionRebirth.NPCs
 
         private Player player;
 
-        public override void SetDefaults()
+		public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(0f, 6f),
+                PortraitPositionYOverride = 0f
+            });
+        }
+
+		public override void SetDefaults()
         {
             NPC.width = 40;
             NPC.height = 40;

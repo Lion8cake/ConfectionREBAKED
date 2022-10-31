@@ -140,31 +140,22 @@ namespace TheConfectionRebirth.NPCs
                 Player player = Main.player[NPC.target];
                 Point playerPos = new((int)(player.Center.X / 16), (int)(player.Center.Y / 16));
                 List<Tuple<int, int>> floodFindResults = Util.FloodFindFuncs.FloodFind(playerPos, 16, 25);
-                if (floodFindResults.Count == 0)
+				NPC.ai[3] = 0f;
+				if (floodFindResults.Count == 0)
                     return;
 
                 Teleport(NPC, floodFindResults);
                 List<NPC> npcsToTeleportCandidates = new();
+				const float sqrtMin = 1400f * 1400f;
+				float d = ConfectionWorld.DifficultyScale;
+				int maddy = (int)(3500 * d);
                 for (int x = 0; x < Main.npc.Length; x++)
                 {
                     if (x == NPC.whoAmI)
                         continue;
                     NPC test = Main.npc[x];
-                    if (!Main.expertMode)
-                    {
-                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 3500 && test.type != NPCID.TargetDummy && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
-                            npcsToTeleportCandidates.Add(test);
-                    }
-                    if (Main.expertMode)
-                    {
-                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 7000 && test.type != NPCID.TargetDummy && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
-                            npcsToTeleportCandidates.Add(test);
-                    }
-                    if (Main.masterMode)
-                    {
-                        if (test.active && !test.friendly && !test.boss && test.lifeMax < 10500 && test.type != NPCID.TargetDummy && test.Center.DistanceSQ(NPC.Center) < 1400 * 1400)
-                            npcsToTeleportCandidates.Add(test);
-                    }
+                    if (test.active && !test.friendly && !test.boss && test.lifeMax < maddy && test.type != NPCID.TargetDummy && test.Center.DistanceSQ(NPC.Center) < sqrtMin)
+						npcsToTeleportCandidates.Add(test);
                 }
                 List<NPC> npcsToTeleport = new();
                 for (int i = 0; i < 4; i++)
@@ -176,7 +167,6 @@ namespace TheConfectionRebirth.NPCs
                 }
                 npcsToTeleport.ForEach(i => Teleport(i, floodFindResults));
 
-                NPC.ai[3] = 0f;
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
             }
         }

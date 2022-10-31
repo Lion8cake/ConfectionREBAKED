@@ -10,7 +10,15 @@ namespace TheConfectionRebirth.NPCs
 {
     public class MintJr : ModNPC
     {
-        public override void SetDefaults()
+		public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            {
+                Position = new(0, 8f)
+            });
+        }
+
+		public override void SetDefaults()
         {
             NPC.width = 18;
             NPC.height = 18;
