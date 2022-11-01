@@ -33,20 +33,7 @@ namespace TheConfectionRebirth.NPCs
             if (Main.dedServ)
                 return;
 
-            Assets = new Asset<Texture2D>[VariationManager<Sprinkling>.Count][];
-            for (int i = 0; i < Assets.GetLength(0); i++)
-            {
-                Assets[i] = new Asset<Texture2D>[3];
-                for (int j = 0; j < 3; j++)
-                {
-                    Assets[i][j] = ModContent.Request<Texture2D>($"TheConfectionRebirth/NPCs/Sprinkler/Sprinkling_{i}_{j}");
-                }
-            }
-
-            if (Main.dedServ)
-                return;
-
-            Assets = new Asset<Texture2D>[VariationManager<Sprinkling>.Count][];
+            Assets = new Asset<Texture2D>[VariationManager<Sprinkler>.Count][];
             for (int i = 0; i < Assets.GetLength(0); i++)
             {
                 Assets[i] = new Asset<Texture2D>[2];
@@ -192,7 +179,6 @@ namespace TheConfectionRebirth.NPCs
 
             Texture2D front = Assets[index][1].Value;
             texture = Assets[index][0].Value;
-            frame.Y %= front.Height;
 
             spriteBatch.Draw(texture, pos + new Vector2(frame.Y / texture.Height * 2f, 0f), new(0, 0, 42, 24), drawColor, NPC.rotation, new(21, 12), NPC.scale, DS.FlipTex(NPC.direction), 0f);
             spriteBatch.Draw(front, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
