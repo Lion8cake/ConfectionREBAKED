@@ -1,4 +1,9 @@
 ===========================================
+Beta v0.18.1
+===========================================
+Fixed issue whenever game tries to draw Sprinkler.
+
+===========================================
 Beta v0.18.0
 ===========================================
 All archived items now actually get replaced with whatever they got replaced. (for example, Soul of Spite will automatically get converted to Soul of Night)
