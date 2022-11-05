@@ -55,7 +55,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.AnyInvasionActive())
             {
                 return 0.1f;
             }
@@ -65,8 +65,7 @@ namespace TheConfectionRebirth.NPCs
         public override void AI()
         {
             Target();
-            NPC.ai[1] -= 1f;
-            if (NPC.ai[1] <= 0f)
+            if (player != null && Collision.CanHit(NPC, player) && --NPC.ai[1] <= 0f)
             {
                 Shoot();
             }
@@ -74,11 +73,15 @@ namespace TheConfectionRebirth.NPCs
 
         private void Target()
         {
-            player = Main.player[NPC.target];
+            NPC.TargetClosest();
+            player = NPC.target == -1 ? null : Main.player[NPC.target];
         }
 
         private void Shoot()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
             int type = Mod.Find<ModProjectile>("CreamySprayEvil").Type;
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = Magnitude(velocity);
@@ -86,6 +89,7 @@ namespace TheConfectionRebirth.NPCs
             {
                 velocity *= 5f / magnitude;
             }
+            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, type, NPC.damage, 2f);
             NPC.ai[1] = 200f;
         }
 

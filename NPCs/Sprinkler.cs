@@ -110,7 +110,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.AnyInvasionActive())
             {
                 return 1f;
             }
@@ -143,6 +143,9 @@ namespace TheConfectionRebirth.NPCs
 
         private void Shoot()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
             int type = Mod.Find<ModProjectile>("SprinklingBall").Type;
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = MathF.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);

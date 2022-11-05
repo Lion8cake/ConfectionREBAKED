@@ -1,4 +1,15 @@
 ===========================================
+Beta v0.18.2
+===========================================
+Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
+Fixed Confection NPCs being able to spawn during event moons.
+Fixed Sprinkler not being able to shoot Sprinkling Balls.
+Fixed Foamin' Float not being able to shoot Cream Spray.
+Fixed ultra far background sometimes being weird.
+Fixed Sprinkler being too high off the ground.
+Slight changes in localization for biomes.
+
+===========================================
 Beta v0.18.1
 ===========================================
 Fixed issue whenever game tries to draw Sprinkler.
