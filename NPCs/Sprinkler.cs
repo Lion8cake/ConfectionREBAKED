@@ -132,18 +132,13 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void AI()
         {
-            Target();
-            if (player != null && Collision.CanHit(NPC, player) && --NPC.ai[1] <= 0f)
-            {
-                Shoot();
-            }
-        }
-
-        private void Target()
-        {
             NPC.TargetClosest(false);
-
             player = NPC.target == -1 ? null : Main.player[NPC.target];
+
+            if (player == null || !Collision.CanHit(NPC, player) || --NPC.ai[1] > 0f)
+                return;
+
+            Shoot();
         }
 
         private void Shoot()
