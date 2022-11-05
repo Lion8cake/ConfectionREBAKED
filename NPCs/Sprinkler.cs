@@ -163,25 +163,21 @@ namespace TheConfectionRebirth.NPCs
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[Type].Value;
+            Texture2D texture;
             Rectangle frame = NPC.frame;
             Vector2 pos = NPC.Center - screenPos;
-            pos.Y += NPC.gfxOffY - 4f;
-            if (NPC.IsABestiaryIconDummy)
-            {
-                spriteBatch.Draw(texture, pos, frame, drawColor, NPC.rotation, NPC.frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
-                return true;
-            }
+            pos.Y += NPC.gfxOffY + 4f;
 
             int index = Utils.Clamp(Index, 0, 4);
             if (index == 4)
                 index = 0;
 
+            int frameOff = (NPC.frame.Y != 0).ToInt() * 2;
             Texture2D front = Assets[index][1].Value;
             texture = Assets[index][0].Value;
 
-            spriteBatch.Draw(texture, pos + new Vector2(frame.Y / texture.Height * 2f, 0f), new(0, 0, 42, 24), drawColor, NPC.rotation, new(21, 12), NPC.scale, DS.FlipTex(NPC.direction), 0f);
-            spriteBatch.Draw(front, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, DS.FlipTex(NPC.direction), 0f);
+            spriteBatch.Draw(texture, pos + new Vector2(0f, frameOff), new(0, 0, 42, 24), drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, 0, 0f);
+            spriteBatch.Draw(front, pos, frame, drawColor, NPC.rotation, frame.Size() * 0.5f, NPC.scale, 0, 0f);
             return false;
         }
 
