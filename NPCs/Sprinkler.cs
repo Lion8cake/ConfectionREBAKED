@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
+using static Humanizer.On;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -20,7 +21,7 @@ namespace TheConfectionRebirth.NPCs
 
         private sbyte Index;
 
-        public static Asset<Texture2D>[][] Assets;
+        public static Asset<Texture2D>[][] Assets = null;
 
         public override void Load()
         {
@@ -54,7 +55,7 @@ namespace TheConfectionRebirth.NPCs
         {
             Main.npcFrameCount[NPC.type] = 2;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };
@@ -132,8 +133,7 @@ namespace TheConfectionRebirth.NPCs
 		public override void AI()
         {
             Target();
-            NPC.ai[1] -= 1f;
-            if (NPC.ai[1] <= 0f)
+            if (Collision.CanHit(NPC, player) && --NPC.ai[1] <= 0f)
             {
                 Shoot();
             }
@@ -148,20 +148,19 @@ namespace TheConfectionRebirth.NPCs
         {
             int type = Mod.Find<ModProjectile>("SprinklingBall").Type;
             Vector2 velocity = player.Center - NPC.Center;
-            float magnitude = Magnitude(velocity);
+            float magnitude = MathF.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);
             if (magnitude > 0f)
             {
                 velocity *= 5f / magnitude;
             }
+
+            int ind = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, type, NPC.damage, 2f);
+            Main.projectile[ind].frame = Index;
+
             NPC.ai[1] = 200f;
         }
 
-        private float Magnitude(Vector2 mag)
-        {
-            return (float)Math.Sqrt(mag.X * mag.X + mag.Y * mag.Y);
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture;
             Rectangle frame = NPC.frame;
