@@ -61,7 +61,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			target.AddBuff(BuffID.OnFire3, 1200, false);
+			target.AddBuff(BuffID.OnFire3, 999999999, false);
 		}
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)

@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Projectiles
 {
-	
 	public class CherryShard : ModProjectile
 	{
 		public override void SetDefaults()
