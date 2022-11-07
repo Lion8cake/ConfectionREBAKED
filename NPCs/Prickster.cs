@@ -81,7 +81,7 @@ namespace TheConfectionRebirth.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+			if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) && !spawnInfo.AnyInvasionActive())
 			{
 				return 0.05f;
 			}
@@ -112,12 +112,6 @@ namespace TheConfectionRebirth.NPCs
                 noticed = true;
             }
         }
-
-        /*public override void ModifyNPCLoot(NPCLoot npcLoot)
-		{
-			npcLoot.Add(ItemDropRule.Common(ItemID.AdhesiveBandage, 1, 1, 100));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Saccharite>(), 5, 13, 1));
-		}*/
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -245,7 +239,7 @@ namespace TheConfectionRebirth.NPCs
             }
         }
 
-        private bool Above(float val1, float val2)
+        private static bool Above(float val1, float val2)
         {
             return val1 > val2;
         }

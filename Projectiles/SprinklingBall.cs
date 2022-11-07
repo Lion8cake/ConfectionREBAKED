@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -6,7 +7,12 @@ namespace TheConfectionRebirth.Projectiles
 {
     public class SprinklingBall : ModProjectile
     {
-        public override void SetDefaults()
+		public override void SetStaticDefaults()
+		{
+            Main.projFrames[Type] = 4;
+		}
+
+		public override void SetDefaults()
         {
             Projectile.width = 18;
             Projectile.height = 18;
@@ -60,5 +66,5 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.ai[0] += 0.1f;
             Projectile.velocity *= 0.75f;
         }
-    }
+	}
 }

@@ -195,6 +195,9 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             }
             void Fire()
             {
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    return;
+
                 Vector2 val = lastSeen;
                 Vector2 val2 = val - NPC.Center;
                 float num2 = 10f;
@@ -231,7 +234,7 @@ namespace TheConfectionRebirth.NPCs.Meowzer
         Player Target()
         {
             NPC.TargetClosest(true);
-            return Main.player[NPC.target];
+            return NPC.target == -1 ? null : Main.player[NPC.target];
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -422,8 +425,14 @@ namespace TheConfectionRebirth.NPCs.Meowzer
             else if (owner.ModNPC is Meowzer m)
                 NPC.position = m.NPC.Center + new Vector2(owner.spriteDirection == -1 ? 10f : -20f, -55f);
         }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) { Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), ModContent.GoreType<MeowzerTail>()); }
-        public override bool CheckActive() => false;
+		public override void OnKill()
+		{
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), ModContent.GoreType<MeowzerTail>());
+        }
+		public override bool CheckActive() => false;
     }
 
     namespace Gores

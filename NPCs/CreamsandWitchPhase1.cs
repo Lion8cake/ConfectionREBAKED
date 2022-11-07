@@ -50,6 +50,8 @@ namespace TheConfectionRebirth.NPCs
                 int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<CrookedCookie>(), 0, NPC.whoAmI);
                 Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
                 Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.SyncNPC, number: i);
             }
             NPC.ai[0] += 2f;
             if (Main.rand.NextBool(1000) && NPC.CountNPCS(ModContent.NPCType<MintJr>()) < 25)
@@ -58,6 +60,8 @@ namespace TheConfectionRebirth.NPCs
                 int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MintJr>(), 0, NPC.whoAmI);
                 Main.npc[i].velocity.X = Main.rand.NextFloat(-0.4f, 0.4f);
                 Main.npc[i].velocity.Y = Main.rand.NextFloat(-0.5f, -0.05f);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.SyncNPC, number: i);
             }
         }
 

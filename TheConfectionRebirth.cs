@@ -89,9 +89,9 @@ namespace TheConfectionRebirth
             {
                 typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
                 typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),
-                typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).GetField("bgWidthScaled", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(Main).GetField("scAdj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance),
-                typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null),
+                typeof(Main).GetField("bgScale", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),
                 typeof(Main).Assembly.GetType("Terraria.ModLoader." + nameof(SurfaceBackgroundStylesLoader)),
                 typeof(BackgroundChangeFlashInfo).GetField("_flashPower", BindingFlags.Instance | BindingFlags.NonPublic),
                 typeof(BackgroundChangeFlashInfo).GetField("_variations", BindingFlags.Instance | BindingFlags.NonPublic),
@@ -333,10 +333,10 @@ namespace TheConfectionRebirth
 
                         Color ColorOfSurfaceBackgroundsModified = (Color)Fields[1].GetValue(null);
                         float scAdj = (float)Fields[3].GetValue(Main.instance);
-                        int bgWidthScaled = (int)Fields[2];
+                        int bgWidthScaled = (int)Fields[2].GetValue(null);
                         int bgTopY = !Main.gameMenu ? (int)(_backgroundTopMagicNumberCache * 1300.0 + 1005.0 + (int)scAdj + _pushBGTopHackCache + 40) : 75 + _pushBGTopHackCache;
                         
-                        float bgScale = (float)Fields[4];
+                        float bgScale = (float)Fields[4].GetValue(null);
                         int bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (bgWidthScaled / 2));
 
                         Main.spriteBatch.Draw(texture,
