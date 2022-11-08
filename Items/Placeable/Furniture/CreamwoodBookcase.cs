@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(copper: 60);
-            Item.createTile = Mod.Find<ModTile>("CreamwoodBookcase").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.CreamwoodBookcase>();
         }
 
         public override void AddRecipes()

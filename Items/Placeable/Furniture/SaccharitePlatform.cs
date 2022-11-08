@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = Mod.Find<ModTile>("SaccharitePlatform").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SaccharitePlatform>();
         }
 
         public override void AddRecipes()

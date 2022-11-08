@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 4);
-            Item.createTile = Mod.Find<ModTile>("CreamwoodBed").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.CreamwoodBed>();
         }
 
         public override void AddRecipes()

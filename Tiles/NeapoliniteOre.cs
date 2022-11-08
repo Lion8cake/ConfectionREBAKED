@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Tiles
             Main.tileShine[Type] = 975;
             Main.tileMergeDirt[Type] = true;
             TheConfectionRebirth.tileMerge[Type, (TileID.Stone)] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<NeapoliniteDust>();

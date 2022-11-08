@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -23,7 +24,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.useTurn = true;
-            Item.createTile = Mod.Find<ModTile>("CreamGrass").Type;
+            Item.createTile = ModContent.TileType<CreamGrass>();
             Item.consumable = true;
         }
 

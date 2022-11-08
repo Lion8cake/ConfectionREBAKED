@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
+using TheConfectionRebirth.Projectiles;
 using static Humanizer.On;
 
 namespace TheConfectionRebirth.NPCs
@@ -146,7 +147,7 @@ namespace TheConfectionRebirth.NPCs
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            int type = Mod.Find<ModProjectile>("SprinklingBall").Type;
+            int type = ModContent.ProjectileType<SprinklingBall>();
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = MathF.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);
             if (magnitude > 0f)

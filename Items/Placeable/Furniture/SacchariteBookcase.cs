@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(copper: 60);
-            Item.createTile = Mod.Find<ModTile>("SacchariteBookcase").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteBookcase>();
         }
 
         public override void AddRecipes()

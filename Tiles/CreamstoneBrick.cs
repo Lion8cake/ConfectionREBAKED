@@ -12,9 +12,9 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CookieBlock>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<CreamDust>();

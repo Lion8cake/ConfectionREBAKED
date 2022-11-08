@@ -21,6 +21,8 @@ namespace TheConfectionRebirth.Items
 			};
 
 			ItemID.Sets.IsFood[Type] = true;
+
+			new ShimmeringManager();
 		}
 
 		public override void SetDefaults()

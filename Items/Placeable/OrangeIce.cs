@@ -25,5 +25,13 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.BlueIce>();
         }
-    }
+
+		public override void AddRecipes()
+		{
+            Recipe.Create(ItemID.IceTorch, 3)
+                .AddIngredient(ItemID.Torch, 3)
+                .AddIngredient(Type)
+                .Register();
+		}
+	}
 }

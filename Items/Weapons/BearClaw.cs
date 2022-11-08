@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 38;
             Item.value = Item.buyPrice(0, 10);
             Item.rare = 4;
-            Item.shoot = Mod.Find<ModProjectile>("BearClaw").Type;
+            Item.shoot = ModContent.ProjectileType<Projectiles.BearClaw>();
             Item.shootSpeed = 16f;
         }
 
