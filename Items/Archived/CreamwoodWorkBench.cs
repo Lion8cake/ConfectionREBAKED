@@ -1,6 +1,5 @@
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles.Furniture;
 
 namespace TheConfectionRebirth.Items.Archived
 {
@@ -18,9 +17,9 @@ namespace TheConfectionRebirth.Items.Archived
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = ModContent.TileType<CreamwoodWorkbench>();
+            Item.createTile = Mod.Find<ModTile>("CreamwoodWorkbench").Type;
         }
 
-        public int ArchivatesTo() => ModContent.ItemType<Placeable.Furniture.CreamwoodWorkbench>();
+        public int ArchivatesTo() => Mod.Find<ModItem>("CreamwoodWorkbench").Type;
     }
 }

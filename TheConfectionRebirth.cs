@@ -13,7 +13,6 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Archived;
 using TheConfectionRebirth.ModSupport;
 
@@ -80,24 +79,10 @@ namespace TheConfectionRebirth
 		{
 			add => HookEndpointManager.Modify(Limits3, value);
 			remove => HookEndpointManager.Unmodify(Limits3, value);
-        }
+		}
 
-        private static MethodInfo item_CanShimmer = null;
-        private delegate bool orig_ItemCanShimmer(Item item);
-        private delegate bool ItemCanShimmer(orig_ItemCanShimmer orig, Item self);
-
-        private static event ItemCanShimmer Item_CanShimmer
+		public override void Load()
         {
-            add => HookEndpointManager.Add(item_CanShimmer, value);
-            remove => HookEndpointManager.Remove(item_CanShimmer, value);
-        }
-
-        public override void Load()
-        {
-            item_CanShimmer = typeof(Item).GetMethod("CanShimmer", BindingFlags.Instance | BindingFlags.Public);
-			Item_CanShimmer += TheConfectionRebirth_Item_CanShimmer;
-			On.Terraria.Item.GetShimmered += Item_GetShimmered;
-
             backgroundChangeFlashInfo_UpdateVariation = typeof(BackgroundChangeFlashInfo).GetMethod("UpdateVariation", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate<BackgroundChangeFlashInfo_UpdateVariation>();
         
             Fields = new dynamic[]
@@ -116,12 +101,12 @@ namespace TheConfectionRebirth
                 wikithis.Call("AddModURL", this, "terrariamods.wiki.gg$Confection_Rebaked");
 
             Type UIMods = Fields[5];
-            /*Limits = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawMiddleTexture));
+            Limits = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawMiddleTexture));
             ModifyLimits += TheConfectionRebirth_ModifyLimits;
             Limits2 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawFarTexture));
             ModifyLimits2 += TheConfectionRebirth_ModifyLimits2;
             Limits3 = UIMods.GetMethod(nameof(SurfaceBackgroundStylesLoader.DrawCloseBackground));
-            ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;*/
+            ModifyLimits3 += TheConfectionRebirth_ModifyLimits3;
 
             float[] _flashPower = (float[])Fields[6].GetValue(WorldGen.BackgroundsCache);
             int[] _variations = (int[])Fields[7].GetValue(WorldGen.BackgroundsCache);
@@ -148,32 +133,12 @@ namespace TheConfectionRebirth
             On.Terraria.WorldGen.RandomizeBackgroundBasedOnPlayer += WorldGen_RandomizeBackgroundBasedOnPlayer;
 
 			On.Terraria.Main.DrawSurfaceBG_BackMountainsStep1 += Main_DrawSurfaceBG_BackMountainsStep1;
-			On.Terraria.Item.SetDefaults_int_bool_ItemVariant += Item_SetDefaults_int_bool_ItemVariant;
+			On.Terraria.Item.SetDefaults_int_bool += Item_SetDefaults_int_bool;
         }
 
-		private bool TheConfectionRebirth_Item_CanShimmer(orig_ItemCanShimmer orig, Item self)
+		private void Item_SetDefaults_int_bool(On.Terraria.Item.orig_SetDefaults_int_bool orig, Item self, int Type, bool noMatCheck)
 		{
-            return self.type == ModContent.ItemType<DimensionSplit>() && NPC.downedMoonlord | orig(self);
-		}
-
-		private void Item_GetShimmered(On.Terraria.Item.orig_GetShimmered orig, Item self)
-        {
-            int shimmerEquivalentType = GetShimmerEquivalentType(self);
-            if (shimmerEquivalentType == ModContent.ItemType<DimensionSplit>() && NPC.downedMoonlord)
-            {
-                int num2 = self.stack;
-                self.SetDefaults(ModContent.ItemType<LickitySplit>());
-                self.stack = num2;
-                self.shimmered = true;
-            }
-            orig(self);
-		}
-
-		private static int GetShimmerEquivalentType(Item item) => ItemID.Sets.ShimmerCountsAsItem[item.type] != -1 ? ItemID.Sets.ShimmerCountsAsItem[item.type] : item.type;
-
-		private void Item_SetDefaults_int_bool_ItemVariant(On.Terraria.Item.orig_SetDefaults_int_bool_ItemVariant orig, Item self, int Type, bool noMatCheck, Terraria.GameContent.Items.ItemVariant variant)
-        {
-            orig(self, Type, noMatCheck, variant);
+            orig(self, Type, noMatCheck);
             if (self.ModItem is IArchived archivedItem)
             {
                 self.TurnToAir();
@@ -228,17 +193,14 @@ namespace TheConfectionRebirth
 		public override void Unload()
         {
             if (Limits != null)
-                //ModifyLimits -= TheConfectionRebirth_ModifyLimits;
+                ModifyLimits -= TheConfectionRebirth_ModifyLimits;
             Limits = null;
             if (Limits2 != null)
-                //ModifyLimits2 -= TheConfectionRebirth_ModifyLimits2;
+                ModifyLimits2 -= TheConfectionRebirth_ModifyLimits2;
             Limits2 = null;
             if (Limits3 != null)
-                //ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
+                ModifyLimits3 -= TheConfectionRebirth_ModifyLimits3;
             Limits3 = null;
-
-            Item_CanShimmer -= TheConfectionRebirth_Item_CanShimmer;
-            item_CanShimmer = null;
 
             _backgroundTopMagicNumberCache = 0;
             _pushBGTopHackCache = 0;

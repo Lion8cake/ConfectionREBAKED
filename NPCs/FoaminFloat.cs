@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -83,7 +82,7 @@ namespace TheConfectionRebirth.NPCs
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            int type = ModContent.ProjectileType<CreamySprayEvil>();
+            int type = Mod.Find<ModProjectile>("CreamySprayEvil").Type;
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = Magnitude(velocity);
             if (magnitude > 0f)

@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.value = 500000;
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item1;
-			//Item.shoot = ModContent.ProjectileType<TrueIchorBolt>();
+			//Item.shoot = Mod.Find<ModProjectile>("TrueIchorBolt").Type;
 			Item.shootSpeed = 10f;
 		}
 

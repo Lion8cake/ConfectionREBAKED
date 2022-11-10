@@ -7,9 +7,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Projectiles;
 
 
 /*
@@ -111,7 +109,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<SoulofDelight>(),
+            npcLoot.Add(new CommonDrop(Mod.Find<ModItem>("SoulofDelight").Type,
                 amountDroppedMinimum: 3,
                 amountDroppedMaximum: 5,
                 chanceNumerator: 1,
@@ -244,7 +242,7 @@ namespace TheConfectionRebirth.NPCs
                         spawnSource: NPC.GetSource_None(),
                         position: NPC.Center - Vector2.One * 5f,
                         velocity: Vector2.Zero,
-                        Type: ModContent.ProjectileType<IcecreamStar>(),
+                        Type: Mod.Find<ModProjectile>("IcecreamStar").Type,
                         Damage: starDamage,
                         KnockBack: starKnockBack
                     );

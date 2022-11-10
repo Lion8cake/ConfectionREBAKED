@@ -53,7 +53,7 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				lastTileY = Main.maxTilesY - 4;
 			}
-			if (Main.sectionManager.AnyUnfinishedSections)
+			if (Main.sectionManager.FrameSectionsLeft > 0)
 			{
 				TimeLogger.DetailedDrawReset();
 				WorldGen.SectionTileFrameWithCheck(firstTileX, firstTileY, lastTileX, lastTileY);

@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items
         {
             Item.CloneDefaults(ItemID.IlluminantHook);
             Item.shootSpeed = 18f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.SweetHook>();
+            Item.shoot = Mod.Find<ModProjectile>("SweetHook").Type;
         }
     }
 }
