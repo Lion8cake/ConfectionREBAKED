@@ -2,12 +2,18 @@
 Beta v0.18.2
 ===========================================
 Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
+Fixed Underground Confection Music Box being named Confection U G Music Box.
+Now you can craft Desert Torches using Hardened Creamsand and Torches.
 Fixed Confection NPCs being able to spawn during event moons.
+Now you can craft Ice Torches using Orange Ice and Torches.
 Fixed Sprinkler not being able to shoot Sprinkling Balls.
 Fixed Foamin' Float not being able to shoot Cream Spray.
 Fixed ultra far background sometimes being weird.
 Fixed Sprinkler being too high off the ground.
 Slight changes in localization for biomes.
+Made True Sucrosa true melee.
+Added Sucrosa sword AoE.
+Added True Sucrosa AoE.
 
 ===========================================
 Beta v0.18.1
