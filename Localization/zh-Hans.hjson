@@ -1,3 +1,8 @@
+# Special vocabularies:
+# Confection -> 甜食之地 / 甜食
+# Sprinkle -> 七彩米
+# Saccharite -> 糖晶
+# Neapolinite -> 那不勒斯 (在1.3汉化者版本译为'三色矿')
 Mods: {
 	TheConfectionRebirth: 
 	{
@@ -61,33 +66,33 @@ Mods: {
 			WonkyTrousers: 古怪西裤
 
 			# Banners
-			BirdnanaBanner: "{$Mods.TheConfectionRebirth.NPCName.Birdnana} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CherryBomberBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBomber} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CherryBugBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBug} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.NPCName.BigMimicConfection} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CrazyConeBanner: "{$Mods.TheConfectionRebirth.NPCName.CrazyCone} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamSwollower} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.CrookedCookie} {$Mods.TheConfectionRebirth.Common.Banner}"
-			DudleyBanner: "{$Mods.TheConfectionRebirth.NPCName.Dudley} {$Mods.TheConfectionRebirth.Common.Banner}"
-			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.NPCName.FoaminFloat} {$Mods.TheConfectionRebirth.Common.Banner}"
-			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.NPCName.GummyWyrm} {$Mods.TheConfectionRebirth.Common.Banner}"
-			HungerBanner: "{$Mods.TheConfectionRebirth.NPCName.Hunger} {$Mods.TheConfectionRebirth.Common.Banner}"
-			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.NPCName.IcecreamGal} {$Mods.TheConfectionRebirth.Common.Banner}"
-			IscreamerBanner: "{$Mods.TheConfectionRebirth.NPCName.Iscreamer} {$Mods.TheConfectionRebirth.Common.Banner}"
-			MeowzerBanner: "{$Mods.TheConfectionRebirth.NPCName.Meowzer} {$Mods.TheConfectionRebirth.Common.Banner}"
-			MintJrBanner: "{$Mods.TheConfectionRebirth.NPCName.MintJr} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.ParfaitSlime} {$Mods.TheConfectionRebirth.Common.Banner}"
-			PipBanner: "{$Mods.TheConfectionRebirth.NPCName.Pip} {$Mods.TheConfectionRebirth.Common.Banner}"
-			PricksterBanner: "{$Mods.TheConfectionRebirth.NPCName.Prickster} {$Mods.TheConfectionRebirth.Common.Banner}"
-			RollerCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.Rollercookie} {$Mods.TheConfectionRebirth.Common.Banner}"
-			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.SherbetSlime} {$Mods.TheConfectionRebirth.Common.Banner}"
-			SprinklingBanner: "{$Mods.TheConfectionRebirth.NPCName.Sprinkling} {$Mods.TheConfectionRebirth.Common.Banner}"
-			StripedPigronBanner: "{$Mods.TheConfectionRebirth.NPCName.StripedPigron} {$Mods.TheConfectionRebirth.Common.Banner}"
-			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.NPCName.TheUnfirm} {$Mods.TheConfectionRebirth.Common.Banner}"
-			WildWillyBanner: "{$Mods.TheConfectionRebirth.NPCName.WildWilly} {$Mods.TheConfectionRebirth.Common.Banner}"
+			BirdnanaBanner: "{$Mods.TheConfectionRebirth.NPCName.Birdnana}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBomberBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBomber}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBugBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBug}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.NPCName.BigMimicConfection}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrazyConeBanner: "{$Mods.TheConfectionRebirth.NPCName.CrazyCone}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamSwollower}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.CrookedCookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			DudleyBanner: "{$Mods.TheConfectionRebirth.NPCName.Dudley}{$Mods.TheConfectionRebirth.Common.Banner}"
+			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.NPCName.FoaminFloat}{$Mods.TheConfectionRebirth.Common.Banner}"
+			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.NPCName.GummyWyrm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			HungerBanner: "{$Mods.TheConfectionRebirth.NPCName.Hunger}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.NPCName.IcecreamGal}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IscreamerBanner: "{$Mods.TheConfectionRebirth.NPCName.Iscreamer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MeowzerBanner: "{$Mods.TheConfectionRebirth.NPCName.Meowzer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MintJrBanner: "{$Mods.TheConfectionRebirth.NPCName.MintJr}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.ParfaitSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PipBanner: "{$Mods.TheConfectionRebirth.NPCName.Pip}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PricksterBanner: "{$Mods.TheConfectionRebirth.NPCName.Prickster}{$Mods.TheConfectionRebirth.Common.Banner}"
+			RollerCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.Rollercookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.SherbetSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SprinklingBanner: "{$Mods.TheConfectionRebirth.NPCName.Sprinkling}{$Mods.TheConfectionRebirth.Common.Banner}"
+			StripedPigronBanner: "{$Mods.TheConfectionRebirth.NPCName.StripedPigron}{$Mods.TheConfectionRebirth.Common.Banner}"
+			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.NPCName.TheUnfirm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			WildWillyBanner: "{$Mods.TheConfectionRebirth.NPCName.WildWilly}{$Mods.TheConfectionRebirth.Common.Banner}"
 
 			# Furniture
 			CreamwoodBath: 奶油木浴缸
@@ -240,7 +245,7 @@ Mods: {
 			SugarWater: 糖水
 			SweetTooth: 曲奇连弩
 			Trifle: 松糕步枪
-			TrueSucrosa: 原版苏克罗萨剑
+			TrueSucrosa: 真·苏克罗萨剑
 			YoyoCookie: 曲奇悠悠球
 
 			# Misc/common items
@@ -251,7 +256,7 @@ Mods: {
 			CherryShells: 樱桃壳
 			ConfectionBiomeKey: 甜食钥匙
 			CookieCarp: 饼干鲤鱼
-			CookieCutterShark: 曲奇切刃鲨
+			CookieCutterShark: 曲奇模具鲨
 			CookieDough: 曲奇生面团
 			CreamSolution: 奶油溶液
 			DimensionSplit: 维度之痕
@@ -263,8 +268,8 @@ Mods: {
 			PixieStick: 精灵扫帚
 			SacchariteBatFish: 糖晶蝙蝠鱼
 			SoulofDelight: 欢愉之魂
-			Sprinklefish: 糖粒鱼
-			Sprinkles: 糖粒
+			Sprinklefish: 七彩米鱼
+			Sprinkles: 七彩米
 			SugarFish: 糖鱼
 			SugarPowder: 糖粉
 			SweetHook: 糖果钩
@@ -416,7 +421,7 @@ Mods: {
 			SacchariteLash:
 				'''
 				你的召唤物将集中攻击敌人
-				Shatters into pieces
+				攻击将碎裂出糖晶碎片
 				'''
 			SugarWater: 使多个方块蔓延甜食之地
 			Trifle: 有30%的几率不消耗弹药
@@ -425,9 +430,9 @@ Mods: {
 			Brownie:
 				'''
 				{$CommonItemTooltip.MediumStats}
-				“程序员画作”
+				“程序员之作”
 				'''
-			CcretTicket: 召唤一只漂浮的泡芙坐骑
+			CcretTicket: 召唤一只漂浮的泡沫坐骑
 			CherryShells: "“拥有惊人的爆破性”"
 			ConfectionBiomeKey: "能打开地牢中的{$Mods.TheConfectionRebirth.ItemName.ConfectionBiomeChestItem}"
 			CookieDough: 禁止食用，可能含有生鸡蛋
@@ -551,7 +556,7 @@ Mods: {
 			# Misc
 			CcretBuff: 漂浮泡沫坐骑
 			Fudged: 粘着
-			GoneBananas: 要疯掉了
+			GoneBananas: 快疯了
 			PixieStickBuff: 精灵扫帚坐骑
 			RollercycleBuff: 滚滚曲奇坐骑
 		}
@@ -632,7 +637,7 @@ Mods: {
 			ChocolateChip: 巧克力片
 			CookiePikelet: "{$Mods.TheConfectionRebirth.ItemName.CookieCrumbler}"
 			CosmicCookie: 宇宙曲奇
-			CreamBolt: Cream Bolt
+			CreamBolt: 奶油射线
 			CreamofKickinCookie: 曲奇
 			CreamofKickinMeatball: 肉丸
 			CreamsandProjectile: "{$Mods.TheConfectionRebirth.ItemName.Creamsand}"
@@ -794,8 +799,8 @@ Mods: {
 			Prickster: 这个伪装成糖晶的乌龟会在受到惊扰时扑向攻击者。
 			Rollercookie: 一块在由光与暗之灵创造的神奇土地中被赐予生命的曲奇。
 			SherbetSlime: 下雨时会活过来的一团冰淇淋。
-			Sprinkler: 一堆邪恶的糖粒，他们会阻止任何试图接近他们的家园的生物。
-			Sprinkling: 一团被飞翔之魂诅咒的糖粒，他们会阻止任何试图进入甜食之地的生物。
+			Sprinkler: 一堆邪恶的七彩米，他们会阻止任何试图接近他们的家园的生物。
+			Sprinkling: 一团被飞翔之魂诅咒的七彩米，他们会阻止任何试图进入甜食之地的生物。
 			StripedPigron: "{$CommonBestiaryFlavor.Pigron}"
 			SugarGhoul: 被甜食所污染的食尸鬼游荡在甜食沙漠下黑暗的洞穴里，追捕它所看到的任何受害者
 			SweetGummy: 被糖果感染的木乃伊变成了软糖熊。它能有多甜？
@@ -805,14 +810,14 @@ Mods: {
 		ItemAnglerChat: {
 			CookieCutterShark: 甜食之地的深处有一个活生生的曲奇模具！去给我把它带回来，这样我就可以做些活的曲奇了！
 			SacchariteBatFish: 我以为甜点之地是唯一一个蝙蝠不与周围环境共存的地方，但事实证明感染了甜点的蝙蝠变成了鱼！这些蝙蝠鱼上的糖晶散发着蓝色的光。 去拿一个，让我试试够不够甜！
-			Sprinklefish: 还记得甜点中那些成堆的糖粒吗？事实证明，有时其中一些会长出鳍并游走。我想吃糖粒了，快去给我抓一个！
+			Sprinklefish: 还记得甜点中那些成堆的七彩米吗？事实证明，有时其中一些会长出鳍并游走。看着就香，快去给我抓一个！
 		}
 
 		PlayerDeathReason: {
 			DimensionSplit: {
 				0: "{0}迷失在了裂缝中。"
 				1: "{0}像香蕉一样裂开了。"
-				2: "{0} tried to banana all the time."
+				2: "{0}脑子里一团香蕉"
 				3: "{0}在维度之间被分割了。"
 			}
 		}
