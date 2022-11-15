@@ -107,7 +107,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.Player.ZoneOldOneArmy && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex && !spawnInfo.Invasion)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionSurfaceBiome>()) && !spawnInfo.AnyInvasionActive())
             {
                 return 0.31f;
             }

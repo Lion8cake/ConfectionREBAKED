@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.Tiles
             num = fail ? 1 : 3;
         }
 
-        public override void NearbyEffects(int i, int j, bool closer)
+		public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
             if ((int)Vector2.Distance(player.Center / 16f, new Vector2(i, j)) <= 1)

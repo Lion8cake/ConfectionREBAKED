@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
 
@@ -19,6 +20,12 @@ namespace TheConfectionRebirth
 			{
 				Merge(ModContent.TileType<CookiestCookieBlock>(), tile2);
 			}
+		}
+
+		public static bool AnyInvasionActive(this NPCSpawnInfo spawnInfo)
+		{
+			return spawnInfo.Player.ZoneTowerNebula || spawnInfo.Player.ZoneTowerSolar || spawnInfo.Player.ZoneTowerStardust || spawnInfo.Player.ZoneTowerVortex ||
+				spawnInfo.Invasion || spawnInfo.Player.ZoneOldOneArmy || Main.pumpkinMoon || Main.snowMoon;
 		}
 	}
 }

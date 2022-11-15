@@ -45,7 +45,7 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void Unload()
 		{
-			VariationManager<Sprinkler>.Clear();
+			VariationManager<Sprinkling>.Clear();
             Assets = null;
 		}
 
