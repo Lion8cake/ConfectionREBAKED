@@ -4,8 +4,12 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class CanofMeat : ModItem, IArchived
+	public class CanofMeat : ModItem
 	{
+		public override void SetStaticDefaults() {
+			ItemID.Sets.Deprecated[Type] = true;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.width = 10;
@@ -13,11 +17,6 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.value = 4500;
 			Item.rare = ItemRarityID.Green;
 			Item.maxStack = 9999;
-		}
-
-		public int ArchivatesTo()
-		{
-			return ItemID.DarkShard;
 		}
 	}
 }

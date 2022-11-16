@@ -8,8 +8,11 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class SoulofSpite : ModItem, IArchived
-	{
+	public class SoulofSpite : ModItem {
+		public override void SetStaticDefaults() {
+			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
+		}
+
 		public override void SetDefaults()
 		{
 			Item refItem = new();
@@ -20,7 +23,5 @@ namespace TheConfectionRebirth.Items.Archived
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 		}
-
-		public int ArchivatesTo() => ItemID.SoulofNight;
 	}
 }

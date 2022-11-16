@@ -9,8 +9,11 @@ using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class TrueDeathsRaze : ModItem, IArchived
-	{
+	public class TrueDeathsRaze : ModItem {
+		public override void SetStaticDefaults() {
+			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.damage = 85;
@@ -27,7 +30,5 @@ namespace TheConfectionRebirth.Items.Archived
 			//Item.shoot = Mod.Find<ModProjectile>("TrueIchorBolt").Type;
 			Item.shootSpeed = 10f;
 		}
-
-		public int ArchivatesTo() => ItemID.TrueNightsEdge;
 	}
 }

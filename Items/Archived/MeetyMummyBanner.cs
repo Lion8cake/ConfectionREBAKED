@@ -6,9 +6,10 @@ using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-	public class MeetyMummyBanner : ModItem, IArchived
-	{
-		public int ArchivatesTo() => ItemID.BloodMummyBanner;
+	public class MeetyMummyBanner : ModItem {
+		public override void SetStaticDefaults() {
+			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
+		}
 
 		public override void SetDefaults()
 		{
