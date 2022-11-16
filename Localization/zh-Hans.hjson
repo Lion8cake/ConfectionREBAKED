@@ -61,6 +61,7 @@ Mods: {
 			NeapoliniteMask: 那不勒斯面具
 			RightTrousers: 太合适的裤子
 			TopCake: 顶尖蛋糕
+			Unicookie: 曲奇滑轮
 			WonkyCoat: 古怪大衣
 			WonkyHat: 古怪帽
 			WonkyTrousers: 古怪西裤
@@ -98,6 +99,7 @@ Mods: {
 			CreamwoodBath: 奶油木浴缸
 			CreamwoodBed: 奶油木床
 			CreamwoodBookcase: 奶油木书架
+			CreamwoodChandelier: 奶油木吊灯
 			CreamwoodCandelabra: 奶油木烛台
 			CreamwoodCandle: 奶油木蜡烛
 			CreamwoodChair: 奶油木椅
@@ -117,6 +119,7 @@ Mods: {
 			SacchariteBath: 糖晶浴缸
 			SacchariteBed: 糖晶床
 			SacchariteBookcase: 糖晶书架
+			SacchariteChandelier: 糖晶吊灯
 			SacchariteCandelabra: 糖晶烛台
 			SacchariteCandle: 糖晶蜡烛
 			SacchariteChair: 糖晶椅
@@ -202,7 +205,7 @@ Mods: {
 			SherbetTorch: 果子露火把
 			SherbetWall: 果子露砖墙
 			YumBlock: 美味块
-			YumWall: 美味墙
+			YumBlockWall: 美味墙
 
 			# Weapons.Minions
 			GummyStaff: 牙仙
