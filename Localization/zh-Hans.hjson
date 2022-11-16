@@ -41,10 +41,10 @@ Mods: {
 			BirthdaySuit: 生日装
 			CakeDress: 蛋糕裙
 			ConeHead: 甜筒头套
-			CookieCorset: 饼干紧身衣
-			CookieMask: 饼干面具
-			CookiePants: 饼干裤
-			CookieShirt: 饼干衬衫
+			CookieCorset: 曲奇紧身衣
+			CookieMask: 曲奇面具
+			CookiePants: 曲奇裤
+			CookieShirt: 曲奇衬衫
 			CreamHat: 奶油帽
 			CreamwoodBreastplate: 奶油木板甲
 			CreamwoodGreaves: 奶油木护胫
@@ -258,7 +258,7 @@ Mods: {
 			Cherimoya: 毛叶番荔枝
 			CherryShells: 樱桃壳
 			ConfectionBiomeKey: 甜食钥匙
-			CookieCarp: 饼干鲤鱼
+			CookieCarp: 曲奇鲤鱼
 			CookieCutterShark: 曲奇模具鲨
 			CookieDough: 曲奇生面团
 			CreamSolution: 奶油溶液
@@ -493,7 +493,7 @@ Mods: {
 			CreamsandWitchPhase1: 奶油沙女巫
 			CreamsandWitchPhase2: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}"
 			CreamSwollower: 奶油吞食鲨
-			CrookedCookie: 歪歪饼干
+			CrookedCookie: 歪歪曲奇
 			Dudley: 爬行软糖
 			FoaminFloat: 漂浮泡沫
 			Hunger: 饥饿夹心饼
@@ -503,7 +503,7 @@ Mods: {
 			ParfaitSlime: 芭菲史莱姆
 			Prickster: 戳刺兽
 			Rollercookie: 滚滚曲奇
-			BirthdayCookie: 生日饼干
+			BirthdayCookie: 生日曲奇
 			SherbetSlime: 冰冻果子露史莱姆
 			Sprinkler: 邪恶七彩米
 			Sprinkling: 飞翔七彩米
@@ -788,10 +788,10 @@ Mods: {
 			# Enemies
 			Meowzer: 一只糕点猫，带着它巨大的饼干炮在甜食之地游荡。由50%的猫，50%的糕点，和100%的彩虹激光构成。
 			BigMimicConfection: 被甜食之地同化的模仿者会变成一个最具威胁的蛋糕。一个特定的钥匙可以使它们活过来。
-			CrazyCone: 这个钻头被甜食之地中的糖晶碎片赐予生命，并将用它的生命来保卫它。
+			CrazyCone: 这个钻头被甜食之地中的糖晶碎片赐予生命，并将不遗余力地保卫它。
 			CreamsandWitch: 这个女巫使用糖果力量抵御任何接近她的家乡——甜食沙漠的敌人。
 			CreamSwollower: 在古代，一条咸水河曾经流经沙漠。这些强大的生物为了在现在干燥的沙地上生存而进化。
-			CrookedCookie: 一个较小的稀有版本的滚滚曲奇，力量如同卡车。这种饼干是通过奶油夹心饼干的法术创造的。
+			CrookedCookie: 一个较小的稀有版本的滚滚曲奇，力量如同卡车。这种曲奇是通过奶油沙女巫的法术创造的。
 			Dudley: 一个小的巧克力堆，在地下糖果沙漠中缓慢移动。它不会对任何人造成伤害，但如果它被激怒，就会反击攻击者。
 			FoaminFloat: 这是在地下甜点中一团奇怪的漂浮根汁啤酒云，它会向它发现的任何人喷射成股的根汁啤酒。
 			Hunger: 一个伪装成夹心饼干的生物，它追杀奶油沙女巫下令杀死的任何人。这种甜点是通过奶油沙女巫的咒语创造的。
