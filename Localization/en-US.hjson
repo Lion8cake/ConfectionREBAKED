@@ -56,6 +56,7 @@ Mods: {
 			NeapoliniteMask: Neapolinite Mask
 			RightTrousers: Right Trousers
 			TopCake: Top Cake
+			Unicookie: Unicookie
 			WonkyCoat: Wonky Coat
 			WonkyHat: Wonky Hat
 			WonkyTrousers: Wonky Trousers
@@ -93,6 +94,7 @@ Mods: {
 			CreamwoodBath: Creamwood Bath
 			CreamwoodBed: Creamwood Bed
 			CreamwoodBookcase: Creamwood Bookcase
+			CreamwoodChandelier: Creamwood Chandelier
 			CreamwoodCandelabra: Creamwood Candelabra
 			CreamwoodCandle: Creamwood Candle
 			CreamwoodChair: Creamwood Chair
@@ -112,6 +114,7 @@ Mods: {
 			SacchariteBath: Saccharite Bath
 			SacchariteBed: Saccharite Bed
 			SacchariteBookcase: Saccharite Bookcase
+			SacchariteChandelier: Saccharite Chandelier
 			SacchariteCandelabra: Saccharite Candelabra
 			SacchariteCandle: Saccharite Candle
 			SacchariteChair: Saccharite Chair
@@ -197,7 +200,7 @@ Mods: {
 			SherbetTorch: Sherbet Torch
 			SherbetWall: Sherbet Brick Wall
 			YumBlock: Yum Block
-			YumWall: Yum Wall
+			YumBlockWall: Yum Wall
 
 			# Weapons.Minions
 			GummyStaff: Fairy Tooth
