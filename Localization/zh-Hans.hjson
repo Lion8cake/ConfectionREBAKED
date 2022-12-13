@@ -224,7 +224,7 @@ Mods: {
 			CookieCrumbler: 曲奇松饼矛
 			CosmicCookieCannon: 宇宙曲奇炮
 			CreamBeam: 奶油射线
-			CreamSpray: 奶油喷雾
+			# CreamSpray: 奶油喷雾
 			CreamwoodBow: 奶油木弓
 			CreamwoodHammer: 奶油木锤
 			CreamwoodSword: 奶油木剑
@@ -408,7 +408,7 @@ Mods: {
 			CherryGrenade: 爆炸时会爆裂出3颗樱桃爆弹
 			ChipArrow: 命中时会射出反弹的巧克力碎片
 			CosmicCookieCannon: "“等会，它为啥不发射宇宙软糖糕？”"
-			CreamSpray: 射出奶油水花
+			# CreamSpray: 射出奶油水花
 			CrunchBall: 发射一个大型冰糖球
 			Drixer: "“不要和斧钻混淆”"
 			GrandSlammer: 强大到足以摧毁恶魔祭坛
