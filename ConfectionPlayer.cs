@@ -13,6 +13,7 @@ using System.Reflection.Metadata;
 using Terraria;
 using TheConfectionRebirth.Projectiles;
 using Terraria.Localization;
+using Terraria.Audio;
 
 namespace TheConfectionRebirth
 {
@@ -321,5 +322,48 @@ namespace TheConfectionRebirth
             StackableBuffData.SwirlySwarm.DeleteBuff(Player);
             neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - (neapoliniteSummonTimer % oneStageNeapolioniteSummoner) - oneStageNeapolioniteSummoner * 2, 0);
         }
+
+        /*public override void PostItemCheck()
+        {
+            Player player = Main.LocalPlayer;
+
+            Vector2 vector = new Vector2(position.X + (float)width * 0.5f, position.Y + (float)height * 0.5f);
+            float num = (float)Main.mouseX + Main.screenPosition.X - vector.X;
+            float num2 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
+            float num3 = (float)Math.Sqrt(num * num + num2 * num2);
+            float num4 = (float)Main.screenHeight / Main.GameViewMatrix.Zoom.Y;
+            num3 /= num4 / 2f;
+            if (num3 > 1f)
+            {
+                num3 = 1f;
+            }
+            musicDist = num3;
+            if (player.HeldItem.type == ModContent.ItemType<Items.Kazoo>())
+            {
+                Vector2 vector2 = new Vector2(position.X + (float)width * 0.5f, position.Y + (float)height * 0.5f);
+                float num5 = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+                float num6 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
+                float num7 = (float)Math.Sqrt(num5 * num5 + num6 * num6);
+                float num8 = (float)Main.screenHeight / Main.GameViewMatrix.Zoom.Y;
+                num7 /= num8 / 2f;
+                if (num7 > 1f)
+                {
+                    num7 = 1f;
+                }
+                num7 = num7 * 2f - 1f;
+                if (num7 < -1f)
+                {
+                    num7 = -1f;
+                }
+                if (num7 > 1f)
+                {
+                    num7 = 1f;
+                }
+                num7 = (float)Math.Round(num7 * (float)musicNotes);
+                num7 = (Main.musicPitch = num7 / (float)musicNotes);
+                SoundEngine.PlaySound(type, position);
+                NetMessage.SendData(58, -1, -1, null, whoAmI, num7);
+            }
+        }*/
     }
 }

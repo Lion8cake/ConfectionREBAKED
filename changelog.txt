@@ -8,6 +8,21 @@ Fixed Foamin' Float not being able to shoot Cream Spray.
 Fixed ultra far background sometimes being weird.
 Fixed Sprinkler being too high off the ground.
 Slight changes in localization for biomes.
+Fixed desert torches not being craftable from confected sand
+Fixed ice torches not being craftable from orange ice
+Fixed name for the underground music box
+Removed the old archived items
+Updated some textures to match 1.4.4.9's texture changes
+Completely changed the kazoo and magic kazoo
+Fixed biome loading in confection not working underground
+Fixed map backgrounds not changing off the regular confection background
+Removed unused pigron sound
+Updated sounds for crunch ball
+Updated sounds for ice screamer
+Changed creamy spray to icing spray
+
+Added Chinese Transaltion by Cyril
+Added Russian Translation by AstralGel
 
 ===========================================
 Beta v0.18.1

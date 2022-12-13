@@ -247,6 +247,7 @@ Mods: {
 			YoyoCookie: The Crumbler
 
 			# Misc/common items
+			BananawarpPeel: Bananawarp Peel
 			Brownie: Brownie
 			Cakekite: Cakekite
 			CcretTicket: C-cret Ticket
@@ -424,6 +425,7 @@ Mods: {
 			Trifle: 30% chance to save ammo
 
 			# Misc/common items
+			BananawarpPeel: Places a portal at the break location, 2 are needed in order for it to work
 			Brownie:
 				'''
 				{$CommonItemTooltip.MediumStats}

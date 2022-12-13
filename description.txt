@@ -5,12 +5,35 @@ The Confection Uses Alternate Libraries mod to be able to be compatible with oth
 
 You are 100% able to port 1.3 confection worlds to 1.4 tmodloader ALTHOUGH your world will turn to being hallowed as registration for worlds being confection or not are different in 1.4 due to altlib.
 
+This mod supported Chinese and Russian translations
+
 If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Changelog
 ===========================================
-Fixed issue with drawing the sprinklings
+Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
+Fixed Confection NPCs being able to spawn during event moons.
+Fixed Sprinkler not being able to shoot Sprinkling Balls.
+Fixed Foamin' Float not being able to shoot Cream Spray.
+Fixed ultra far background sometimes being weird.
+Fixed Sprinkler being too high off the ground.
+Slight changes in localization for biomes.
+Fixed desert torches not being craftable from confected sand
+Fixed ice torches not being craftable from orange ice
+Fixed name for the underground music box
+Removed the old archived items
+Updated some textures to match 1.4.4.9's texture changes
+Completely changed the kazoo and magic kazoo
+Fixed biome loading in confection not working underground
+Fixed map backgrounds not changing off the regular confection background
+Removed unused pigron sound
+Updated sounds for crunch ball
+Updated sounds for ice screamer
+Changed creamy spray to icing spray
+
+Added Chinese Transaltion by Cyril
+Added Russian Translation by AstralGel
 
 ===========================================
 Credit - Programmers
@@ -34,8 +57,15 @@ Delicios Satern - Music
 mddznyan - Creating textures for some items and the new logo
 Snacks - Several 1.4 textures including the furniture toilets, saccharite furniture sprites and Cosmic cookie cannon
 DakotaSpine - The amazing New background for the confection
+AstralGel - For all the sounds used from the 0.18.2 update and above
 Neobind - Textures for a few things
 Miguel Noturn0 - Confection Tree icons
 splig - for Gummy Worm-whip sprite
+
+===========================================
+Credit - Translators
+===========================================
+Cyril - for Chinese translation
+AstralGel - for Russian translation
 
 And to all the people that helped me out with coding problems and other issues, thank you!

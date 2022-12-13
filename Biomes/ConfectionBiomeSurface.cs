@@ -25,17 +25,52 @@ public class ConfectionBiomeSurface : ModBiome
 		}
 	}
 
-	public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<ConfectionUGBackgroundStyle>();
+	public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle
+    {
+		get
+		{
+			if (Main.LocalPlayer.ZoneSnow)
+				return ModContent.GetInstance<IceConfectionSurfaceBiome>().UndergroundBackgroundStyle;
 
-	public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+			return ModContent.GetInstance<Backgrounds.IceConfectionUndergroundBiome>();
+		}
+	}
+
+	public override int Music
+	{
+		get
+		{
+			if (Main.LocalPlayer.ZoneRockLayerHeight)
+				return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
+
+			return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+		}
+	}
 
 	public override string MapBackground => BackgroundPath;
 
-	public override string BackgroundPath => "TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground";
+	public override string BackgroundPath
+    {
+		get
+		{
+			if (Main.LocalPlayer.ZoneRockLayerHeight && !Main.LocalPlayer.ZoneSnow && !Main.LocalPlayer.ZoneDesert)
+				return "TheConfectionRebirth/Biomes/ConfectionUndergroundMapBackground";
+			else if (Main.LocalPlayer.ZoneSnow && !Main.LocalPlayer.ZoneRockLayerHeight)
+				return "TheConfectionRebirth/Biomes/ConfectionIceBiomeMapBackground";
+			else if (Main.LocalPlayer.ZoneRockLayerHeight && Main.LocalPlayer.ZoneSnow)
+				return "TheConfectionRebirth/Biomes/ConfectionUndergroundIceMapBackground";
+			else if (Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneRockLayerHeight)
+				return "TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground";
+			else if (Main.LocalPlayer.ZoneRockLayerHeight && Main.LocalPlayer.ZoneDesert)
+				return "TheConfectionRebirth/Biomes/ConfectionUndergroundDesertMapBackground";
+
+			return "TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground";
+		}
+	}
 
 	public override string BestiaryIcon => "TheConfectionRebirth/Biomes/BestiaryIcon1";
 
 	public override Color? BackgroundColor => base.BackgroundColor;
 
-	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneSkyHeight);
+	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
 }

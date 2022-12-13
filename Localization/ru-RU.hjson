@@ -1,0 +1,881 @@
+Mods: {
+	TheConfectionRebirth: 
+	{
+		Common: {
+			Impersonate: "'Отлично подходит, чтобы впечетлить разработчиков Сладости! '"
+			Banner: " Знамя"
+			Banner2: "Игроки по близости получают бонус против:"
+
+			CaughtInConfection: Поймано где угодно Сладости
+			CaughtInConfectionSF: Поймано где угодно на Поверхности Сладости
+			CaughtInConfectionUG: Поймано где угодно В Пещерах Сладости
+
+			R1: I
+			R2: II
+			R3: III
+			R4: IV
+			R5: V
+		}
+
+		ItemName: {
+			# Accessories
+			CookieWings: Крылья из печенья
+			CreamWings: Кремовые крылья
+			SacchariteWings: Сахаритовые крылья
+			SprinkleWings: Крылья из посыпки
+			WildAiryBlue: Воздушная сладость 
+			# Archived
+			HeavenGift: Райский дар
+
+			# Armor
+			AdmiralHat: Шляпа Адмирала
+			AncientNeapoliniteHat: Древняя Неаполинитовая Шапка
+			AncientNeapoliniteHeadgear: Древный Неаполинитовый Головной убор
+			AncientNeapoliniteHelmet: Древний Неаполинитовый Шлем
+			BirthdaySuit: Костюм Дня Рождения
+			CakeDress: Тортовое Платье
+			ConeHead: Конусообразная Головка
+			CookieCorset: Корсет Из Печенья
+			CookieMask: Маска Из Печенья
+			CookiePants: Штаны Из Печенья
+			CookieShirt: Рубашка Из Печенья
+			CreamHat: Кремовая Шляпка
+			CreamwoodBreastplate: Нагрудник Из Кремового Дерева
+			CreamwoodGreaves: Поножи Из Кремового Дерева
+			CreamwoodHelmet: Шлем Из Кремового Дерева
+			GummyMask: Мармеладная Маска
+			GummyPants: Мармеладные Штаны
+			GummyShirt: Мармеладная Футболка
+			Knickercobbler: Никеркобблер
+			NeapoliniteConeMail: Неаполинитовая Конусная Кольчуга
+			NeapoliniteGreaves: Неаполинитовые Поножи
+			NeapoliniteHat: Неаполинитовая Шапка
+			NeapoliniteHeadgear: Неаполинитовый Головной убор
+			NeapoliniteHelmet: Неаполинитовый Шлем
+			NeapoliniteMask: Неаполинитовая Маска
+			RightTrousers: Правильные Брюки
+			TopCake: Блузка Из Торта
+			Unicookie: Единорг-Печенье
+			WonkyCoat: Шаткое Пальто
+			WonkyHat: Шаткая Шляпа
+			WonkyTrousers: Шаткие Брюки
+			# Banners
+			BirdnanaBanner: "{$Mods.TheConfectionRebirth.NPCName.Birdnana}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBomberBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBomber}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBugBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBug}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.NPCName.BigMimicConfection}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrazyConeBanner: "{$Mods.TheConfectionRebirth.NPCName.CrazyCone}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamSwollower}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.CrookedCookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			DudleyBanner: "{$Mods.TheConfectionRebirth.NPCName.Dudley}{$Mods.TheConfectionRebirth.Common.Banner}"
+			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.NPCName.FoaminFloat}{$Mods.TheConfectionRebirth.Common.Banner}"
+			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.NPCName.GummyWyrm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			HungerBanner: "{$Mods.TheConfectionRebirth.NPCName.Hunger}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.NPCName.IcecreamGal}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IscreamerBanner: "{$Mods.TheConfectionRebirth.NPCName.Iscreamer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MeowzerBanner: "{$Mods.TheConfectionRebirth.NPCName.Meowzer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MintJrBanner: "{$Mods.TheConfectionRebirth.NPCName.MintJr}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.ParfaitSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PipBanner: "{$Mods.TheConfectionRebirth.NPCName.Pip}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PricksterBanner: "{$Mods.TheConfectionRebirth.NPCName.Prickster}{$Mods.TheConfectionRebirth.Common.Banner}"
+			RollerCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.Rollercookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.SherbetSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SprinklingBanner: "{$Mods.TheConfectionRebirth.NPCName.Sprinkling}{$Mods.TheConfectionRebirth.Common.Banner}"
+			StripedPigronBanner: "{$Mods.TheConfectionRebirth.NPCName.StripedPigron}{$Mods.TheConfectionRebirth.Common.Banner}"
+			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.NPCName.TheUnfirm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			WildWillyBanner: "{$Mods.TheConfectionRebirth.NPCName.WildWilly}{$Mods.TheConfectionRebirth.Common.Banner}"
+
+			# Furniture
+			CreamwoodBath: Кремодеревянная Ванна
+			CreamwoodBed: Кремодеревянная Кровать
+			CreamwoodBookcase: Кремодеревянный Книжный Шкаф
+			CreamwoodChandelier: Кремодеревянная Люстра
+			CreamwoodCandelabra: Кремодеревянный Каньделябр
+			CreamwoodCandle: Кремодеревянная Свеча
+			CreamwoodChair: Кремодеревянный Стул
+			CreamwoodChest: Кремодеревянный Сундук
+			CreamwoodClock: Кремодеревянные Часы
+			CreamwoodDoor: Кремодеревянная Дверь
+			CreamwoodDresser: Кремодеревянный Комод
+			CreamwoodLamp: Кремодеревянная Лапма
+			CreamwoodLantern: Кремодеревянный Фонарь
+			CreamwoodPiano: Кремодеревянное Пианино
+			CreamwoodPlatform: Кремодеревянная Платформа
+			CreamwoodSink: Кремодеревянная Раковина
+			CreamwoodSofa: Кремодеревянный Диван
+			CreamwoodTable: Кремодеревянный Стол
+			CreamwoodToilet: Кремодеревянный Туалет
+			CreamwoodWorkbench: Кремодеревянный Верстак
+			SacchariteBath: Сахарит-Ванна
+			SacchariteBed: Сахарит-Кровать
+			SacchariteBookcase: Сахарит-Книжный Шкаф
+			SacchariteChandelier: Сахарит-Люстра
+			SacchariteCandelabra: Сахарит-Каньделябр
+			SacchariteCandle: Сахарит-Свеча
+			SacchariteChair: Сахарит-Стул
+			SacchariteChest: Сахарит-Сундук
+			SacchariteClock: Сахарит-Часы
+			SacchariteDoor: Сахарит-Дверь
+			SacchariteDresser: Сахарит-Комод
+			SacchariteLamp: Сахарит-Лапма
+			SacchariteLantern: Сахарит-Фонарь
+			SaccharitePiano: Сахарит-Пианино
+			SaccharitePlatform: Сахарит-Платформа
+			SacchariteSink: Сахарит-Раковина
+			SacchariteSofa: Сахарит-Диван
+			SacchariteTable: Сахарит-Стол
+			SacchariteToilet: Сахарит-Туалет
+			SacchariteWorkbench: Сахарит-Верстак
+
+			# Placeable
+			BananaSplitCrate: Банана-Сплитовый Ящик
+			BlueFairyFloss: Блок Синей Волшебной Нити
+			BlueFairyFlossWall: Голубая Волшебная Стена Из Нити
+			ChocolateFudge: Блок Шоколадной Помадки
+			ConfectionCrate: Ящик Сладости
+			ConfectionaryCrystalsWall: Стена Из Кондитерских Кристалов
+			ConfectionBiomeChestItem: Сундук Сладости
+			ConfectionCampfire: Костёр Сладости
+			ConfectionMusicBox: Музыкальная Шкатулка (Сладость)
+			ConfectionPainting: Земли Десерта
+			ConfectionPylon: Пилон Сладости
+			ConfectionTorch: Факел Сладости
+			ConfectionUIMusicBox: Музыкальная Шкатулка (Подземная Сладость)
+			ConfectionWaterFountain: Фантан С Водой из Сладости
+			CookieBlock: Блок Печенья
+			CookieWall: Стена Печенья
+			CrackedConfectionWall: Треснувшая Cтена Сладости
+			CreamBeans: Кремовые Бобы
+			CreamBlock: Кремовый Блок
+			CreamgrassWall: Стена Из Кремовой Травы
+			Creamsand: Кремо-Песочный Блок
+			Creamsandstone: Блок Из Кремового Песчаника
+			CreamsandstoneWall: Стена Из Кремового Песчаника
+			Creamstone: Блок Кремстоуна
+			CreamstoneBrick: Кремстоуновый Кирпич
+			CreamstoneBrickWall: Кирпичная Стена Из Кремстоуна
+			CreamstoneWall: Кремстоуновая Стена
+			CreamWall: Кремовая Стена
+			CreamWood: Кремо Дерево
+			CreamwoodFence: Кремодеревянный Забор
+			CreamwoodWall: Кремодеревянная Стена
+			HallowedBrick: Святой Кирпич
+			HallowedBrickWall: Стена Из Святого Кирпича
+			HallowedOre: Святая руда
+			HardenedCreamsand: Блок Из Затвердевшего Кремового Песка
+			HardenedCreamsandWall: Стена Из Затвердевшего Кремового Песка
+			HeavensForge: Райская Кузьня
+			Impact2: Удар
+			LinedConfectionGemWall: Сладкая Драгоценная Стена
+			MeltingConfectionWall: Плавленая Стена Сладости
+			NeapoliniteBar:Ннеаполинитовый Слиток
+			NeapoliniteBrick: Неаполинитовый Кирпич
+			NeapoliniteBrickWall: Неаполинитовая Кирпичная Стена
+			NeapoliniteOre: Неаполинитовая Руда
+			OrangeIce: Блок Оранжевого Льда
+			OrangeIceWall: Стена Из Оранжевого Льда 
+			PastryBlock: Кондитерский Блок
+			PastryBlockWall: Стена Из Кондитерских Блоков
+			PinkFairyFloss: Блок Розовой Волшебной Нити
+			PinkFairyFlossWall: Розовая Волшебная Стена Из Нити
+			PipBlock: Пип-Блок
+			PottedConfectionBamboo: Кондитерский Бамбук В Горшке
+			PottedConfectionCedar: Кондитерский Кедр В Горшке
+			PottedConfectionPalm: Кондитерская Пальма В Горшке
+			PottedConfectionTree: Кондитерское Дерево В Горшке
+			PurpleFairyFloss: Блок Пурпурной Волшебной Нити
+			PurpleFairyFlossWall: Фиолетовая Волшебная Стена Из Нити
+			Saccharite: Сахарит
+			SacchariteBlockWall: Стена Из Сахаритовых Блоков
+			SacchariteBrick: Сахаритовый Блок
+			ShellBlock: Блок Ракушки
+			ShellBlockWall: Стена Из Ракушечных Блоков
+			SherbetBricks: Щербетовый Кирпич
+			SherbetCampfire: Щербетовый Костер
+			SherbetTorch: Щербетовый Факел
+			SherbetWall: Щербетовая Кирпичная Стена
+			YumBlock: Вкусный Блок
+			YumBlockWall: Вкусная Стена
+
+			# Weapons.Minions
+			GummyStaff: Зуб Феи
+			GastropodStaff: Брюхоногий Посох
+			PastryStaff: Кондитерский Посох
+			SweetStaff: Сладкий Посох
+			
+			# Weapons
+			AncientCosmicCookieCannon: Древняя Космическая Пушка Для Печенья
+			BakersDozen: Чертова Дюжина
+			BearClaw: Медвежий Коготь
+			Candlelighter: Аколит
+			CherryBurstArrow: Вишневая Стрела
+			CherryGrenade: Вишневая Бомба
+			ChipArrow: Чип Стрела
+			CookieCrumbler: Печенье Щука-Пусти
+			CosmicCookieCannon: Космическая Пушка Для Печенья
+			CreamBeam: Кремовый Луч
+			CreamSpray: Ледяной Спрей
+			CreamwoodBow: Кремовый Лук
+			CreamwoodHammer: Кремовый Молот
+			CreamwoodSword: Меч Из Кремового Дерева
+			CrunchBall: Хрустящий Мяч
+			Drixer: Дриксер
+			GrandSlammer: Великий Шлёпатель
+			# Gummy Worm-whip is WIP weapon, name might change later!
+			GummyWormWhip: Мармелад-Хлыст
+			IcecreamBell: Колокол Мороженого
+			NeapoliniteJoustingLance: Неаполинитовое Рыцарское Копье
+			NeapoliniteRepeater: Неаполититовый Арбалет
+			Pix: Пикс
+			PopRocket: Поп Ракета
+			PopSoda: Содовое Зелье
+			SacchariteArrow: Сахаритовая Стрела
+			SacchariteBullet: Сахаритовая Пуля
+			SacchariteDart: Сахаритовый Дротик
+			SacchariteLash: Сахаритовая Плеть
+			SpearofCavendes: Копье Кавендеса
+			Sucrosa: Сахароза
+			SugarWater: Сахарная вода
+			SweetTooth: Сладкоежка
+			Trifle: Мелочь
+			TrueSucrosa: Истинная Сахароза
+			YoyoCookie: Крамблер
+
+			# Misc/common items
+			Brownie: Брауни
+			Cakekite: Тортикайт
+			CcretTicket: Билет C-cret
+			Cherimoya: Черимойя
+			CherryShells: Вишневые Ракушки
+			ConfectionBiomeKey: Ключ Сладисти
+			CookieCarp: Печенье Карп
+			CookieCutterShark: Акула-Резак Для Печенья
+			CookieDough: Тесто Для Печенья
+			CreamSolution: Кремовый Раствор
+			DimensionSplit: Пространственное Разделение
+			LickitySplit: Ликити Сплит
+			DriversPermint: Водительское Удостоверение
+			Kazoo: Казу
+			KeyofDelight: Ключ Восторга
+			PastryTart: Пирожное Тарт
+			PixieStick: Пикси Палка
+			SacchariteBatFish: Сахаритовая Летучая Мышь
+			SoulofDelight: Эссенция Восторга
+			Sprinklefish: Спринклфиш
+			Sprinkles: Посыпка
+			SugarFish: Сахарная Рыба
+			SugarPowder: Сахарная Пудра
+			SweetHook: Сладкий Крюк
+			YumDrop: Вкусняшка
+
+			# Critters
+			BirdnanaItem: "{$Mods.TheConfectionRebirth.NPCName.Birdnana}"
+			CherryBugItem: "{$Mods.TheConfectionRebirth.NPCName.CherryBug}"
+			ChocolateBunnyItem: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny}"
+			ChocolateFrogItem: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog}"
+			GrumbleBeeItem: "{$Mods.TheConfectionRebirth.NPCName.GrumbleBee}"
+			GummyWormItem: "{$Mods.TheConfectionRebirth.NPCName.GummyWorm}"
+			PipItem: "{$Mods.TheConfectionRebirth.NPCName.Pip}"
+
+			# Pets
+			MagicalKazoo: Волшебное Казу
+			CookiestBlock: Наипеченечный Блок
+			CreamySandwhich: Сливочный Сэндвич
+			CreamFoxPetItem: Печенька Фокс
+			TaffyApple: Таффи Эппл
+			ToastyToaster: Поджаренный тостер
+			ChocolateChunk: Шоколадный Кусок
+
+			# Tiles
+			CherryBugBottleItem: Вишневый Жук В Бутылке
+			ChocolateBunnyCageItem: Шоколадный Кролик В Террариуме
+			ChocolateFrogCageItem: Шоколадная Жаба В Террариуме
+			GummyWormCageItem: Террариум С Мармеладными Червями
+			SoulofDelightinaBottleItem: Душа Наслаждения В Бутылке
+		}
+
+		ItemTooltip: {
+			# Archived
+			HeavenGift:
+				'''
+				Старый устаревший предмет для Confection версии 1.3..
+				Спасибо всем, кто поддержал кондитерскую в прошлом, спасибо вам просто спасибо!
+				Продайте это любому NPC, чтобы получить платиновую монету.
+				'''
+
+			# Armor
+			AncientNeapoliniteHat: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteHat}"
+			AncientNeapoliniteHeadgear: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteHeadgear}"
+			AncientNeapoliniteHelmet: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteHelmet}"
+			AncientNeapoliniteMask: "{$Mods.TheConfectionRebirth.SetBonus.NeapoliniteMask}"
+			ConeHead: "{$Mods.TheConfectionRebirth.Common.Impersonate}"
+			Knickercobbler: "{$Mods.TheConfectionRebirth.Common.Impersonate}"
+			NeapoliniteConeMail: 5% повышение шанса критического удара
+			NeapoliniteGreaves:
+				'''
+				5% увеличение урона
+				7% увеличение скорости передвижения
+				'''
+			NeapoliniteHat:
+				'''
+				8% увеличение урона призывателя
+				Увеличивает максимальное количество миньонов на 3
+				'''
+			NeapoliniteHeadgear:
+				'''
+				6% увеличение магического урона
+				Увеличивает максимальную ману на 80
+				'''
+			NeapoliniteHelmet:
+				'''
+				10% увеличение урона в дальнем бою
+				4% повышение шанса критического удара в дальнем бою
+				'''
+			NeapoliniteMask:
+				'''
+				7% увеличение урона в ближнем бою
+				Увеличивает скорость ближнего боя на 5%
+				'''
+			Unicookie: "{$Mods.TheConfectionRebirth.Common.Impersonate}"
+
+			# Banner
+			BirdnanaBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Birdnana}"
+			CherryBomberBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CherryBomber}"
+			CherryBugBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CherryBug}"
+			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.ChocolateBunny}"
+			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.ChocolateFrog}"
+			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.BigMimicConfection}"
+			CrazyConeBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CrazyCone}"
+			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}"
+			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CreamSwollower}"
+			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.CrookedCookie}"
+			DudleyBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Dudley}"
+			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.FoaminFloat}"
+			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.GummyWyrm}"
+			HungerBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Hunger}"
+			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.IcecreamGal}"
+			IscreamerBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Iscreamer}"
+			MeowzerBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Meowzer}"
+			MintJrBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.MintJr}"
+			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.ParfaitSlime}"
+			PipBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Pip}"
+			PricksterBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Prickster}"
+			RollerCookieBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Rollercookie}"
+			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.SherbetSlime}"
+			SprinklingBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.Sprinkling}"
+			StripedPigronBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.StripedPigron}"
+			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.TheUnfirm}"
+			WildWillyBanner: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCName.WildWilly}"
+
+			# Placeable
+			BananaSplitCrate: "{$CommonItemTooltip.RightClickToOpen}"
+			ChocolateFudge: Мед, как шоколадный блок
+			ConfectionCrate: "{$CommonItemTooltip.RightClickToOpen}"
+			ConfectionPainting: "'С. Баббл'"
+			HeavensForge:
+				'''
+				Позволяет преобразовывать священные материалы в альтернативные сладости и наоборот.
+				'Кузница, созданая из земель радуги и конфет.'
+				'''
+			Impact2: "'Л. Кейк'"
+
+			# Weapons.Minions
+			GummyStaff: Призывает конфетную фею, чтобы защитить вас
+			GastropodStaff: Призывает мини-брюхоногого моллюска, который будет сражаться за вас.
+			PastryStaff: Призывает Маленького Мяузера, который будет сражаться за вас.
+			SweetStaff: Призывает роликовые куки, чтобы они сражались за вас
+			# Weapons
+			AncientCosmicCookieCannon: "{$Mods.TheConfectionRebirth.ItemTooltip.CosmicCookieCannon}"
+			Candlelighter:
+				'''
+				'Да, Нынче тяжелое бремя'
+				Использует гель в качестве боеприпасов
+				Враги всегда будут в огне, если только они не упадут в воду.
+				'''
+			CherryBurstArrow: 3 осколка вишни выходят и взрываются после удара.
+			CherryGrenade: После детонации осколки вишни вылетают и взрываются.
+			ChipArrow: Кусочки шоколада подпрыгивают после удара.
+			CosmicCookieCannon: "'Сладко жить не запретишь!'"
+			CreamSpray: 'А попа не слипнится?'
+			CrunchBall: Запускает большой шар каменной конфеты
+			Drixer: "'Не путать с Драксом'"
+			GrandSlammer: Достаточно силен, чтобы разрушить Алтари Демонов
+			IcecreamBell: Вы кричите, для мороженого?
+			NeapoliniteJoustingLance: "{$ItemTooltip.HallowJoustingLance}"
+			NeapoliniteRepeater: Каждая стрела выпускает еще 2
+			Pix: "'Не путать с Паксельом'"
+			PopRocket: Выпускает 4 ледяных ракеты вслед вашим врагам.
+			PopSoda: Газированный напиток, содержащий странное оранжевое вещество.
+			SacchariteArrow: Разбивается при ударе
+			SacchariteBullet: Разлетается на куски при ударе
+			SacchariteDart: Наводится на врагов
+			SacchariteLash:
+				'''
+				Ваш призыв сфокусирует застрявших врагов
+				Разбивается на куски
+				'''
+			SugarWater: Распределяет Сладость на несколько блоков
+			Trifle: 30% шанс сэкономить патроны
+
+			# Misc/common items
+			Brownie:
+				'''
+				{$CommonItemTooltip.MediumStats}
+				'Programmer Art'
+				'''
+			CcretTicket: Призывает пенный поплавок, на котором можно плавать.
+			CherryShells: "'КИБОРГ_УБИЙЦА'"
+			ConfectionBiomeKey: Открывает сундук Сладости в данже.
+			CookieDough: Не употребляйте его, может содержать сырые яйца.
+			CreamSolution:
+				'''
+				Используется Очистителем
+				Распростронет Сладость
+				'''
+			DimensionSplit:
+				'''
+				При использовании размещает портал.
+				При нажатии на NPC телепортирует его к первому порталу.
+				'''
+			LickitySplit: "{$Mods.TheConfectionRebirth.ItemTooltip.DimensionSplit}"
+			DriversPermint: Призывает роллерцикл для катания
+			KeyofDelight: "'Заряжен сущностью многих душ'"
+			PastryTart:
+				'''
+				{$CommonItemTooltip.MediumStats}
+				'У вас тоже мечты пропали?'
+				'''
+			PixieStick: Наши люди в булочную на такси не ездят
+			SoulofDelight: 'Сущность восхитительных существ'
+			SugarPowder: Очищает зло
+
+			# Pets
+			MagicalKazoo: Призывает блестящую Берднану
+			CookiestBlock: "'Теперь на 50 % больше файлов cookie!'"
+			CreamySandwhich: Призывает маленькую кремовую ведьму
+			CreamFoxPetItem:
+				'''
+				Призывает сливочного лиса
+				{$Mods.TheConfectionRebirth.Common.Impersonate}
+				'''
+			TaffyApple: Призывает дудлинга
+			ToastyToaster: Призывает питомца Мяузера
+			ChocolateChunk: Создает маленькое печенье Rollercookie, которое будет кататься с вами!
+		}
+		
+		NPCName: {
+			# Critters
+			Birdnana: Берднана
+			CherryBug: Вишневый жук
+			ChocolateBunny: Шоколадный кролик
+			ChocolateFrog: Шоколадная лягушка
+			GrumbleBee: Ворчливая пчела
+			GummyWorm: Липкий червь
+			Pip: Пип
+		
+			# Enemies
+			Meowzer: Мяузер
+			MeowzerTail: Хвост Мяузера
+			BigMimicConfection: Мимик Сладости
+			CrazyCone: Сумасшедший конус
+			CreamsandWitchPhase1: Кремовая ведьма
+			CreamsandWitchPhase2: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}"
+			CreamSwollower: Глотатель сливок
+			CrookedCookie: Кривое печенье
+			Dudley: Дадли
+			FoaminFloat: Пенящийся поплавок
+			Hunger: Голод
+			IcecreamGal: Мороженое гал
+			Iscreamer: Искример
+			MintJr: Минт младший
+			ParfaitSlime: Парфе слайм
+			Prickster: Прикстер
+			Rollercookie: Роллеркуки
+			BirthdayCookie: Печенье ко дню рождения
+			SherbetSlime: Щербет слайм
+			Sprinkler: Разбрызгиватель
+			Sprinkling: Окропление
+			StripedPigron: Полосатый Пигрон
+			SugarGhoul: Сахарный гуль (вадим)
+			SweetGummy: Сладкий мармелад
+			TheUnfirm: Нетвердый
+			WildWilly: Дикий Вилли
+		}
+
+		BuffName: {
+			# Weapons.Minions
+			DuchessPrincessSummonBuff: Конфетная фея
+			GastropodSummonBuff: Мини брюхоногие моллюски
+			MeawzerSummonBuff: Маленький Мяузер
+			RollerCookieSummonBuff: Роликовое печенье
+
+			# Pets
+			BirdnanaLightPetBuff: Shiny Birdnana
+			CookiestBlockBuff: "{$Mods.TheConfectionRebirth.ItemName.CookiestBlock}"
+			CreamsandWitchPet: Little Creamsand Witch
+			FoxPet: Привлекательный аромат
+			DudlingPet: Дудлинг
+			MeawzerPet: Мяузер
+			RollerCookiePet: Роликовое печенье
+			
+			# Neapolinite Buffs
+			ChocolateCharge: Шоколадный заряд
+			StrawberryStrike: Клубничный Удар
+			SwirlySwarm: Вихревой рой
+			VanillaValor: Ванильная доблесть
+			ChocolateChargeI: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R1})"
+			ChocolateChargeII: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R2})"
+			ChocolateChargeIII: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R3})"
+			ChocolateChargeIV: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R4})"
+			ChocolateChargeV: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R5})"
+			StrawberryStrikeI: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R1})"
+			StrawberryStrikeII: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R2})"
+			StrawberryStrikeIII: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R3})"
+			StrawberryStrikeIV: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R4})"
+			StrawberryStrikeV: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R5})"
+			SwirlySwarmI: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R1})"
+			SwirlySwarmII: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R2})"
+			SwirlySwarmIII: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R3})"
+			SwirlySwarmIV: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R4})"
+			SwirlySwarmV: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R5})"
+			VanillaValorI: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R1})"
+			VanillaValorII: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R2})"
+			VanillaValorIII: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R3})"
+			VanillaValorIV: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R4})"
+			VanillaValorV: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R5})"
+
+			# Misc
+			CcretBuff: Поплавковое крепление Foamin '
+			Fudged: Обманут
+			GoneBananas: Бананы
+			PixieStickBuff: Крепление пикси-палки
+			RollercycleBuff: Крепление на роликах
+		}
+
+		BuffDescription: {
+			# Weapons.Minions
+			DuchessPrincessSummonBuff: Конфетная фея заразит ваших врагов диабетом!
+			GastropodSummonBuff: Мини-брюхоногий моллюск будет стрелять в ваших врагов розовыми лазерами.
+			MeawzerSummonBuff: The little Meawzers will shoot rainbow lasers at your enemies.
+			RollerCookieSummonBuff: Роликовое печенье будет сражаться за вас.
+
+			# Pets
+			BirdnanaLightPetBuff: '''"Асюся, к ноге"'''
+			CookiestBlockBuff: Вы можете сказать по всем дополнительным печенькам
+			FoxPet: '''"Лиса следует за вами!"'''
+
+			# Neapolinite Buffs
+			ChocolateChargeI: На 4% больше урона в дальнем бою и на 2% больше шанса критического удара
+			ChocolateChargeII: На 8% больше урона в дальнем бою и на 4% больше шанса критического удара
+			ChocolateChargeIII: На 12% больше урона в дальнем бою и на 6% больше шанса критического удара
+			ChocolateChargeIV: На 16% больше урона в дальнем бою и на 8% больше шанса критического удара
+			ChocolateChargeV: На 20% больше урона в дальнем бою и на 10% больше шанса критического удара
+			StrawberryStrikeI: Призывает атакующую клубнику
+			StrawberryStrikeII: Призывает двух атакующих клубничок
+			StrawberryStrikeIII: Призывает трех атакующих клубничок
+			StrawberryStrikeIV: Призывает четыре атакующих клубнички
+			StrawberryStrikeV: Призывает пять атакующих клубничок
+			SwirlySwarmI: 10% увеличение скорости кнута
+			SwirlySwarmII: 20% увеличение скорости кнута
+			SwirlySwarmIII: 30% увеличение скорости хлыста
+			SwirlySwarmIV: 30% увеличение скорости хлыста и 10% увеличение шанса критического удара призывателя
+			SwirlySwarmV: 30% увеличение скорости хлыста, 10% увеличение шанса критического удара призывателя и урона
+			VanillaValorI: 2% повышение шанса критического удара
+			VanillaValorII: 4% повышение шанса критического удара
+			VanillaValorIII: 6% повышение шанса критического удара
+			VanillaValorIV: 8% повышение шанса критического удара
+			VanillaValorV: 10% увеличение шанса критического удара, и все атаки ближнего боя игнорируют защиту
+
+			# Misc
+			CcretBuff: "'Ваше плавание на пенном поплавке'"
+			Fudged: Липкий
+			GoneBananas: че по доте?
+			PixieStickBuff: Выглядит как дерево, на вкус как шоколад
+			RollercycleBuff: "'«Какая милая поездка!»'"
+		}
+
+		ProjectileName: {
+			# Weapons.Minions
+			DuchessPrincess: конфетная фея
+			DuchessPrincessRockCandy: Рок конфеты
+			GastropodSummonPinkLazer: Розовый лазер
+			GastropodSummonProj: Мини брюхоногие моллюски
+			MeawzerSummonLazer: Радужный лазер
+			MeawzerSummonProj: Мяузер
+			RollerCookieSummonProj: Роликовое печенье
+			MiniRollerCookieSummonersShine: Дополнительное печенье
+
+			# Enemies
+			MeowzerBeam: Мяузер Луч
+			# Pets
+			BirdnanaLightPetProjectile: "{$Mods.TheConfectionRebirth.BuffName.BirdnanaLightPetBuff}"
+			CookiestBlockPro: "{$Mods.TheConfectionRebirth.BuffName.CookiestBlockBuff}"
+			CreamsandWitchPetProjectile: "{$Mods.TheConfectionRebirth.BuffName.CreamsandWitchPetBuff}"
+			FoxPetProjectile: Лиса
+			DudlingPetProjectile: "{$Mods.TheConfectionRebirth.BuffName.DudlingPet}"
+			MeawzerPetProjectile: "{$Mods.TheConfectionRebirth.BuffName.MeawzerPet}"
+			RollerCookiePetProjectile: "{$Mods.TheConfectionRebirth.BuffName.RollerCookiePet}"
+
+			# Misc
+			BakersDozen: "{$Mods.TheConfectionRebirth.ItemName.BakersDozen}"
+			BearClaw: "{$Mods.TheConfectionRebirth.ItemName.BearClaw}"
+			CandleFlames: Пламя свечи
+			CherryBurstArrow: "{$Mods.TheConfectionRebirth.ItemName.CherryBurstArrow}"
+			CherryGrenade: "{$Mods.TheConfectionRebirth.ItemName.CherryGrenade}"
+			CherryShard: Вишневый осколок
+			ChipArrow: "{$Mods.TheConfectionRebirth.ItemName.ChipArrow}"
+			ChocolateChip: Шоколадная плитка
+			CookiePikelet: "{$Mods.TheConfectionRebirth.ItemName.CookieCrumbler}"
+			CosmicCookie: Космическое печенье
+			CreamBolt: Крем Болт
+			CreamofKickinCookie: Печенье
+			CreamofKickinMeatball: Фрикаделька
+			CreamsandProjectile: "{$Mods.TheConfectionRebirth.ItemName.Creamsand}"
+			CreamSolution: "{$Mods.TheConfectionRebirth.ItemName.CreamSolution}"
+			CreamySpray: Спрей
+			CreamySprayEvil: "{$Mods.TheConfectionRebirth.ProjectileName.CreamySpray}"
+			DimWarp: Пространственная деформация
+			DimWarp2: "{$Mods.TheConfectionRebirth.ProjectileName.DimWarp}"
+			Drixer: "{$Mods.TheConfectionRebirth.ItemName.Drixer}"
+			GummyWormWhipPro: "{$Mods.TheConfectionRebirth.ItemName.GummyWormWhip}"
+			IcecreamBell: "{$Mods.TheConfectionRebirth.ItemName.IcecreamBell}"
+			IcecreamStar: Звезда мороженого
+			NeapoliniteJoustingLanceProjectile: "{$Mods.TheConfectionRebirth.ItemName.NeapoliniteJoustingLance}"
+			PopRocket: "{$Mods.TheConfectionRebirth.ItemName.PopRocket}"
+			PopSodaProjectile: "{$Mods.TheConfectionRebirth.ItemName.PopSoda}"
+			RockCandy: Каменные конфеты
+			RockCandyShard: "{$Mods.TheConfectionRebirth.ProjectileName.RockCandy}"
+			RollercycleTrail: Роллерцикл
+			SacchariteArrow: "{$Mods.TheConfectionRebirth.ItemName.SacchariteArrow}"
+			SacchariteBullet: "{$Mods.TheConfectionRebirth.ItemName.SacchariteBullet}"
+			SacchariteDartPro: "{$Mods.TheConfectionRebirth.ItemName.SacchariteDart}"
+			SacchariteLash: "{$Mods.TheConfectionRebirth.ItemName.SacchariteLash}"
+			SpearofCavendesBannana: Банан
+			SpearofCavendesProj: "{$Mods.TheConfectionRebirth.ItemName.SpearofCavendes}"
+			SprinklingBall: Поливной мяч
+			StrawberryStrike: Клубника
+			SugarPowder: "{$Mods.TheConfectionRebirth.ItemName.SugarPowder}"
+			SugarWater: "{$Mods.TheConfectionRebirth.ItemName.SugarWater}"
+			SugarWaterBottle: "{$Mods.TheConfectionRebirth.ItemName.SugarWater}"
+			SweetHook: "{$Mods.TheConfectionRebirth.ItemName.SweetHook}"
+			TrueSucrosa: "{$Mods.TheConfectionRebirth.ItemName.TrueSucrosa}"
+			YoyoCookieYoyo: "{$Mods.TheConfectionRebirth.ItemName.YoyoCookie}"
+		}
+
+		Containers: {
+			CreamwoodChest: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodChest}"
+			CreamwoodDresser: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodDresser}"
+			SacchariteChest: "{$Mods.TheConfectionRebirth.ItemName.SacchariteChest}"
+			SacchariteDresser: "{$Mods.TheConfectionRebirth.ItemName.SacchariteDresser}"
+			ConfectionChest: "{$Mods.TheConfectionRebirth.ItemName.ConfectionBiomeChestItem}"
+		}
+
+		MapObject: {
+			ConfectionBanners: "{$MapObject.Banner}"
+			CreamwoodBath: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodBath}"
+			CreamwoodBed: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodBed}"
+			CreamwoodBookcase: "{$ItemName.Bookcase}"
+			CreamwoodCandel: "{$ItemName.Candelabra}"
+			CreamwoodCandle: "{$ItemName.Candle}"
+			CreamwoodChair: "{$MapObject.Chair}"
+			CreamwoodChandelier: "{$MapObject.Chandelier}"
+			CreamwoodChest: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodChest}"
+			CreamwoodClock: "{$ItemName.GrandfatherClock}"
+			CreamwoodDoorClosed: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodDoor}"
+			CreamwoodDoorOpen: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodDoor}"
+			CreamwoodDresser: "{$Mods.TheConfectionRebirth.ItemName.CreamwoodDresser}"
+			CreamwoodLamp: "{$MapObject.FloorLamp}"
+			CreamwoodLantern: "{$MapObject.Lantern}"
+			CreamwoodPiano: "{$ItemName.Piano}"
+			CreamwoodSink: "{$ItemName.Sink}"
+			CreamwoodSofa: "{$ItemName.Sofa}"
+			CreamwoodTable: "{$MapObject.Table}"
+			CreamwoodToilet: "{$MapObject.Toilet}"
+			CreamwoodWorkbench: "{$ItemName.WorkBench}"
+			SacchariteBath: "{$Mods.TheConfectionRebirth.ItemName.SacchariteBath}"
+			SacchariteBed: "{$Mods.TheConfectionRebirth.ItemName.SacchariteBed}"
+			SacchariteBookcase: "{$ItemName.Bookcase}"
+			SacchariteCandel: "{$ItemName.Candelabra}"
+			SacchariteCandle: "{$ItemName.Candle}"
+			SacchariteChair: "{$MapObject.Chair}"
+			SacchariteChandelier: "{$MapObject.Chandelier}"
+			SacchariteChest: "{$Mods.TheConfectionRebirth.ItemName.SacchariteChest}"
+			SacchariteClock: "{$ItemName.GrandfatherClock}"
+			SacchariteDoorClosed: "{$Mods.TheConfectionRebirth.ItemName.SacchariteDoor}"
+			SacchariteDoorOpen: "{$Mods.TheConfectionRebirth.ItemName.SacchariteDoor}"
+			SacchariteDresser: "{$Mods.TheConfectionRebirth.ItemName.SacchariteDresser}"
+			SacchariteLamp: "{$MapObject.FloorLamp}"
+			SacchariteLantern: "{$MapObject.Lantern}"
+			SaccharitePiano: "{$ItemName.Piano}"
+			SacchariteSink: "{$ItemName.Sink}"
+			SacchariteSofa: "{$ItemName.Sofa}"
+			SacchariteTable: "{$MapObject.Table}"
+			SacchariteToilet: "{$MapObject.Toilet}"
+			SacchariteWorkbench: "{$ItemName.WorkBench}"
+
+			ConfectionPylonTile: "{$MapObject.TeleportationPylon}"
+			CherryBugBottle: "{$Mods.TheConfectionRebirth.ItemName.CherryBugBottleItem}"
+			ChocolateBunnyCage: "{$Mods.TheConfectionRebirth.ItemName.ChocolateBunnyCageItem}"
+			ChocolateFrogCage: "{$Mods.TheConfectionRebirth.ItemName.ChocolateFrogCageItem}"
+			GummyWormCage: "{$Mods.TheConfectionRebirth.ItemName.GummyWormCageItem}"
+
+			ConfectionBiomeChestTile: "{$Mods.TheConfectionRebirth.ItemName.ConfectionBiomeChestItem}"
+			ConfectionBiomeChestTile_Locked: "Locked {$Mods.TheConfectionRebirth.ItemName.ConfectionBiomeChestItem}"
+			ConfectionCampfire: "{$ItemName.Campfire}"
+			ConfectionMusicBox: Музыкальная шкатулка
+			ConfectionUGMusicBox: "{$Mods.TheConfectionRebirth.MapObject.ConfectionMusicBox}"
+			ConfectionTorch: "{$ItemName.Torch}"
+			HallowedOre: "{$Mods.TheConfectionRebirth.ItemName.HallowedOre}"
+			HeavensForgeTile: "{$Mods.TheConfectionRebirth.ItemName.HeavensForge}"
+			Impact2: "{$MapObject.Painting}"
+			NeapoliniteBar: "{$MapObject.MetalBar}"
+			NeapoliniteOre: "{$Mods.TheConfectionRebirth.ItemName.NeapoliniteOre}"
+			SherbetCampfire: "{$ItemName.Campfire}"
+			SherbetTorch: "{$ItemName.Torch}"
+			SoulofDelightinaBottle: "{$Mods.TheConfectionRebirth.ItemName.SoulofDelightinaBottleItem}"
+
+			CreamSapling: Кремовый саженец
+			CreamSnowSapling: "{$Mods.TheConfectionRebirth.MapObject.CreamSapling}"
+		}
+
+		SetBonus: {
+			CreamwoodHelmet: 1 защита
+			NeapoliniteHat:
+				'''
+				Каждые 8 секунд с момента последнего удара скорость вашего хлыста увеличивается на 10%.
+				в первые 3 раза, прежде чем дать 10% шанс критического удара в 4-й раз и 10% урона в 5-й.
+				'''
+			NeapoliniteHeadgear:
+				'''
+				За каждые 50 маны, израсходованные за последние 3 секунды,
+				вызывает дополнительную клубнику за атаку.
+				Лимит до 5 клубничек.
+				'''
+			NeapoliniteHelmet:
+				'''
+				Каждые 10 миль в час урон увеличивается на 4%, а вероятность критического удара 
+				увеличивается на 2% и длится 5 секунд.
+				Суммируется до 5 раз
+				'''
+			NeapoliniteMask:
+				'''
+				Каждые 80 нанесенного урона повышают вероятность критического удара на 2%.
+				на 5 секунд, при достижении 10% шанса критического удара защита
+				игнорируется в течение 5 секунд
+				'''
+		}
+
+		Bestiary: {
+			# Critters
+			Birdnana: Это птица или банан? (Это арсюша)
+			CherryBug:Особый жук, используемый для приготовления вишневого варенья или для добавления вишневого ароматизатора в любую еду.
+			ChocolateBunny: Кролик из чистого шоколада прыгает по Сладости.
+			ChocolateFrog: Популярное лакомство среди детей, хотя эти лягушки не для еды.
+			GrumbleBee:Пассивная пчела, которая летает в кондитерских изделиях, собирая пыльцу с цветов кондитерских изделий.
+			GummyWorm: Закапываясь в землю, мармеладные черви ищут пищу, чтобы утолить голод. Не путать с Гамми Вирмом.
+			Pip: Маленькая зефирная птичка, найденная внутри кондитерского изделия, мутировавший писк, у которого выросли крылья и мухи.
+
+			# Enemies
+			Meowzer: Кошка-кондитер, которая бродит по кондитерской со своей гигантской пушкой для печенья. 50% кот, 50% выпечка, 100% радужные лазеры.
+			BigMimicConfection: Мимики, поглощенные Конфекцией, превращаются в чудовищный торт. Определенный ключ может оживить их.
+			CrazyCone: Это сверло было превращено в жизнь осколками сахарита в кондитерском изделии и будет защищать его ценой своей жизни.
+			CreamsandWitch:Ведьма, которая использует свои сладкие способности, чтобы победить любого, кто приблизится к ее родине кондитерского десерта.
+			CreamSwollower:В древности через пустыню протекала соленая река. Эти могущественные существа эволюционировали, чтобы выжить в уже высохшем песке.
+			CrookedCookie: Уменьшенная, более редкая версия роллера, которая бьет как грузовик. Это печенье создается с помощью заклинаний кремовой бутербродной ведьмы.
+			Dudley: Небольшая кучка шоколада, которая медленно перемещается по подземной кондитерской пустыне. Он никому не причинит вреда, но если до него дотронуться, он причинит вред нападающему.
+			FoaminFloat:Парящее облако корневого пива — странное зрелище в подземной кондитерской, хотя оно стреляет потоками корневого пива в любого, кого найдет.
+			Hunger: Существо мимического типа, обладающее смором и пытающееся убить любого, кем командует сэндвич со сливками. Это кондитерское изделие было создано с помощью заклинаний бутербродов с кремом.
+			IcecreamGal: Потерянный ребенок в поисках своей семьи, но не доверяйте ей, так как она не будет так мила с вами.
+			Iscreamer: Призрачные крики эхом отдаются подземными кондитерскими изделиями, эти существа используют свои призрачные силы, чтобы телепортироваться к любой ничего не подозревающей жертве.
+			MintJr:Гигантский мятный младенец, который плывет за каждым, кому командует сэндвич со сливками. Они создаются благодаря силе бутербродов со сливками.
+			ParfaitSlime: Эти слизи, замаскированные под пирожные, выглядят восхитительно, но не позволяйте этому отвлекать вас от того, кто они на самом деле.
+			Prickster: Черепаха, замаскированная под груду сахарита, готовая атаковать, если ее потревожить.
+			Rollercookie: Печенье, ожившее в волшебном биоме, созданном из духов света и ночи.
+			SherbetSlime: Кусочек мороженого, который оживает, когда идет дождь.
+			Sprinkler:Куча злых брызг, которые попытаются помешать кому-либо избавиться от родной земли.
+			Sprinkling: Брызги, проклятые силой души полета, все равно попытаются убить любого, кто завладеет кондитерским изделием.
+			StripedPigron: "{$CommonBestiaryFlavor.Pigron}"
+			SugarGhoul: Упырь, найденный в глубинах пустыни, зараженный кондитерским изделием, выследит любого, кого увидит. вадимка лох и бедняга
+			SweetGummy: Мумия, зараженная кондитерским изделием, превращается в мармеладного мишку. Как мило?
+			WildWilly: Зомби, зараженный кондитерским изделием. — У тебя есть золотой билет?
+		}
+
+		ItemAnglerChat: {
+			CookieCutterShark: В глубине Конфекшн есть живая формочка для печенья! Иди и принеси его мне, чтобы я мог приготовить живое печенье!
+			SacchariteBatFish: Я думаю, что кондитерское изделие - единственное место, где летучие мыши не сосуществуют с окружающей их средой, но оказывается, летучие мыши, зараженные кондитерским изделием, превращаются в РЫБ! Эти рыбы светятся синим цветом от кристаллов сахарита. Иди возьми один, чтобы я мог видеть, сладкий ли он!
+			Sprinklefish: Помните эти груды посыпки в кондитерских изделиях? Оказывается, иногда у некоторых из этих брызг вырастают плавники и они уплывают. Иди поймай меня, чтобы я мог съесть его!
+		}
+
+		PlayerDeathReason: {
+			DimensionSplit: {
+				0: "{0} заблудился в разломе."
+				1: "{0} был разделен как банан."
+				2: "{0} пытался банан все время."
+				3: "{0} получил разделение между измерениями."
+			}
+		}
+
+		AltBiomeName: {
+			ConfectionBiome: Сладость
+		}
+
+		AltBiomeDescription: {
+			ConfectionBiome:Земля, где все выглядит как конфетка, вкусный шоколад или опасная посыпка.
+		}
+
+		BiomeName: {
+			ConfectionBiomeSurface: Сладость
+			ConfectionUndergroundBiome: Подземная Сладость
+			IceConfectionSurfaceBiome: Сладкий снег
+			IceConfectionUndergroundBiome: Сладкий лёд
+			SandConfectionSurfaceBiome: Школадная пустыня
+			SandConfectionUndergroundBiome: Пещеры под шоколадной пустыней
+		}
+		
+		TownNPCMood: {
+			ConfectionBiomeSurface: Сладость
+		}
+
+		Summon: {
+			RequiresEnergy_end:
+				'''
+				нужно {0} секунд для зарядки и перезарядки
+				'''
+			RequiresEnergy:
+				'''
+				Особая способность {$Mods.TheConfectionRebirth.Summon.RequiresEnergy_end}
+				'''
+			RightClickSpecial: "<right> special"
+			RightclickSpecialUncompressed: "Press <right>"
+		}
+		
+		SummonSpecial: {
+			SweetStaff:
+			'''
+			{$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} призывать больше роллеров с каждой атакой!
+			{1}x extra-cookie knockback
+			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
+			'''
+			GummyStaff:
+			'''
+			{$Mods.TheConfectionRebirth.Summon.RightclickSpecialUncompressed} чтобы ваша конфетная фея стреляла суперконфетами, которые меняют цель каждый раз, когда попадают во врага!
+			{1}x супер конфеты продолжительность
+			{$Mods.TheConfectionRebirth.Summon.RequiresEnergy}
+			'''
+		}
+
+		SummonSpecialCompressed: {
+			SweetStaff:
+			'''
+			{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} дополнительное отбрасывание печеньки
+			'''
+			GummyStaff:
+			'''
+			{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} супер конфеты продолжительность
+			'''
+		}
+	}
+}
