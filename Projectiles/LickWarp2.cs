@@ -5,11 +5,10 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Projectiles
 {
-    class DimWarp2 : ModProjectile
+    class LickWarp2 : ModProjectile
     {
         public override void SetDefaults()
         {
-            Projectile.Name = "Dimensional Warp";
             Projectile.width = 32;
             Projectile.height = 38;
             Projectile.friendly = true;
@@ -52,11 +51,6 @@ namespace TheConfectionRebirth.Projectiles
                 Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
                 target.Teleport(warppoint.position, 1);
                 target.HealEffect(1);
-                if (target.HasBuff(ModContent.BuffType<Buffs.GoneBananas>()))
-                {
-                    target.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((target.statLifeMax2 + target.statDefense) * (target.endurance + 1) / 7), 0);
-                }
-                target.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 Projectile.ai[0] = 1;
                 Projectile.Kill();
             }
@@ -70,11 +64,6 @@ namespace TheConfectionRebirth.Projectiles
                 {
                     owner.Teleport(owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.position, 1);
                     owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
-                    if (owner.HasBuff(ModContent.BuffType<Buffs.GoneBananas>()))
-                    {
-                        owner.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((owner.statLifeMax2 + owner.statDefense) * (owner.endurance + 1) / 7), 0);
-                    }
-                    owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 }
                 owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
             }

@@ -174,6 +174,7 @@ namespace TheConfectionRebirth
         public bool cookiePet;
 
         public Projectile DimensionalWarp;
+        public Projectile BananawarpPeelWarp;
 
         public float neapoliniteSummonTimer;
 

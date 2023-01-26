@@ -222,8 +222,7 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BearClaw>(), 100));
 
-			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<DimensionSplit>(), 100));
-			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsNotUp())).OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
+			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<BananawarpPeel>(), 10));
 
 			npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
 		}
