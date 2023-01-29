@@ -1,4 +1,14 @@
 ===========================================
+Beta v0.18.3
+===========================================
+Fixed Summoner's Shine compatability
+Completely reworked the Dimensional split and Lickety Split
+Added banana warp peel
+Added 1.4.4 Sword AoE effect to Sucrosa and true sucrosa (Experimental)
+Made True Sucrosa True Melee (Experimental)
+Added polishing to the code by Hariq
+
+===========================================
 Beta v0.18.2
 ===========================================
 Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
