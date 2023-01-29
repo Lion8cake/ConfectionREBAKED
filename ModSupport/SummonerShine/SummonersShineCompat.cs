@@ -924,7 +924,8 @@ namespace TheConfectionRebirth
 			minionCDType,
 			drawBehindType,
 			ArmorIgnoredPerc,
-		}
+            prefixMinionPower,
+        }
 
 		internal enum ProjectileDataVariableType
 		{
@@ -938,7 +939,7 @@ namespace TheConfectionRebirth
 			specialCastPosition,
 			cancelSpecialNextFrame,
 			minionFlickeringThreshold,
-			prefixMinionPower,
+			DEPRECIATED,
 			minionTrackingAcceleration,
 			minionTrackingImperfection,
 			trackingState,
