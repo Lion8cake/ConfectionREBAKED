@@ -9,11 +9,7 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults()
 		{
-<<<<<<< HEAD
 			Item.ResearchUnlockCount = 99;
-=======
-			SacrificeTotal = 99;
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 		}
 	
 		public override void SetDefaults()

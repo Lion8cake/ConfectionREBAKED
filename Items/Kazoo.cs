@@ -21,16 +21,7 @@ namespace TheConfectionRebirth.Items
             Item.useAnimation = 20;
             Item.useStyle = 2;
             Item.value = Item.buyPrice(gold: 1);
-<<<<<<< Updated upstream
-            Item.UseSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Items/KazooSound")
-            {
-                Volume = 1f,
-                PitchVariance = 0f,
-                MaxInstances = 0,
-            };
-=======
 			Item.UseSound = null;
->>>>>>> Stashed changes
             Item.autoReuse = true;
         }
 

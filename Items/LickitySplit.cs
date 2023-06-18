@@ -9,18 +9,9 @@ namespace TheConfectionRebirth.Items
 {
 	class LickitySplit : ModItem
     {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-		public override float ai1 => 1f;
-=======
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-=======
-        public override void SetStaticDefaults()
-        {
-            SacrificeTotal = 1;
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
         }
         public override void SetDefaults()
         {
@@ -51,9 +42,5 @@ namespace TheConfectionRebirth.Items
             }
             return false;
         }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
     }
 }

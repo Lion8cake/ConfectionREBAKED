@@ -26,7 +26,7 @@ namespace TheConfectionRebirth.Tiles
             Tile right = Main.tile[i + 1, j];
             if (WorldGen.genRand.Next(3) == 0 && (up.TileType == ModContent.TileType<CreamGrass>() || down.TileType == ModContent.TileType<CreamGrass>() || left.TileType == ModContent.TileType<CreamGrass>() || right.TileType == ModContent.TileType<CreamGrass>()))
             {
-                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false, 0);
+                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false);
             }
         }
 

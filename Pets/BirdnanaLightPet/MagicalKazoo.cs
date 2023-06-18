@@ -26,19 +26,7 @@ namespace TheConfectionRebirth.Pets.BirdnanaLightPet
 			Item.noMelee = true;
 			Item.value = Item.sellPrice(0, 5, 50);
 			Item.buffType = ModContent.BuffType<BirdnanaLightPetBuff>();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 			Item.UseSound = null;
->>>>>>> Stashed changes
-=======
-			Item.UseSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Items/KazooSound")
-			{
-				Volume = 1f,
-				PitchVariance = 0f,
-				MaxInstances = 0,
-			};
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 		}
 
 		public override void AddRecipes()

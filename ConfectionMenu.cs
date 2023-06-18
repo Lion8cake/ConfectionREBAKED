@@ -5,16 +5,6 @@ using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Backgrounds.MenuBackgrounds;
 using Terraria;
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-namespace TheConfectionRebirth
-{
-    public class ConfectionMenu : ModMenu
-    {
-        private const string menuAssetPath = "TheConfectionRebirth/Assets";
-
-        public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{menuAssetPath}/Logo");
-=======
 namespace TheConfectionRebirth {
 	public class ConfectionMenu : ModMenu {
 
@@ -24,28 +14,9 @@ namespace TheConfectionRebirth {
 		private bool Background3 = false;
 
 		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Logo");
->>>>>>> Stashed changes
-=======
-namespace TheConfectionRebirth {
-	public class ConfectionMenu : ModMenu {
-		private const string menuAssetPath = "TheConfectionRebirth/Assets";
-
-		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{menuAssetPath}/Logo");
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 
 		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        public override ModSurfaceBackgroundStyle MenuBackgroundStyle
-        {
-            get
-            {
-                if (Main.dayTime)
-                {
-                    return ModContent.GetInstance<ConfectionMenuBackground>();
-                }
-=======
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle {
 			get {
 				if (Main.time < 100 && Main.dayTime) {
@@ -89,17 +60,6 @@ namespace TheConfectionRebirth {
 				return ModContent.GetInstance<ConfectionMenuBackground>();
 			}
 		}
->>>>>>> Stashed changes
-=======
-		public override ModSurfaceBackgroundStyle MenuBackgroundStyle {
-			get {
-				if (Main.dayTime) {
-					return ModContent.GetInstance<ConfectionMenuBackground>();
-				}
-				return ModContent.GetInstance<ConfectionMenuBackgroundNight>();
-			}
-		}
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 
 		public override string DisplayName => "Confection Menu";
 	}

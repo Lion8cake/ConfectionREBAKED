@@ -23,17 +23,8 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             AddMapEntry(new Color(235, 207, 150));
-<<<<<<< Updated upstream
-            //SoundType = 0;
-            //SoundStyle = 2;
-            ItemDrop = Mod.Find<ModItem>("CookieBlock").Type;
-        }
-=======
-			//SoundType = 0;
-			//SoundStyle = 2;
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
 		}
->>>>>>> Stashed changes
 
         private bool SpawnGrass(int i, int j)
         {

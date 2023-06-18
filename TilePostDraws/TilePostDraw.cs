@@ -54,15 +54,7 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				lastTileY = Main.maxTilesY - 4;
 			}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-			if (Main.sectionManager.AnyUnfinishedSections)
-=======
 			if (Main.sectionManager.AnyUnfinishedSections) //may break idk //Update: it did, and heavily
->>>>>>> Stashed changes
-=======
-			if (Main.sectionManager.FrameSectionsLeft > 0)
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 			{
 				TimeLogger.DetailedDrawReset();
 				WorldGen.SectionTileFrameWithCheck(firstTileX, firstTileY, lastTileX, lastTileY);

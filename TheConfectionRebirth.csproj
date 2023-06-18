@@ -11,17 +11,8 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-    <Reference Include="AltLibrary">
-<<<<<<< HEAD
-      <HintPath>..\AltLibrary\bin\Debug\net6.0\AltLibrary.dll</HintPath>
-=======
     <Reference Include="ThoriumMod">
       <HintPath>..\..\..\..\..\..\ThoriumMod\ThoriumMod.dll</HintPath>
->>>>>>> Stashed changes
-=======
-      <HintPath>..\..\ModReader\AltLibrary\AltLibrary.dll</HintPath>
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
     </Reference>
   </ItemGroup>
 </Project>

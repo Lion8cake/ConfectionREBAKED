@@ -215,17 +215,8 @@ namespace TheConfectionRebirth.NPCs
                 Vector2 northPosClose = npc.Center + new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
                 Vector2 southPosClose = npc.Center - new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
             }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        }
-=======
 			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Custom/IceScreamerShriek"), npc.position);
 		}
->>>>>>> Stashed changes
-=======
-			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Custom/IceScreamerShriek"));
-		}
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

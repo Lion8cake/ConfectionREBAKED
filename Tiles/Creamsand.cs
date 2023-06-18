@@ -17,29 +17,12 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSand[Type] = true;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamstoneBrick>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<HardenedCreamsand>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamsandstone>()] = true;
-            TileID.Sets.isDesertBiomeSand[Type] = true;
-            TileID.Sets.Suffocate[Type] = true;
-=======
-=======
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsandstone").Type] = true;
-<<<<<<< HEAD
 			TileID.Sets.Suffocate[Type] = true;
->>>>>>> Stashed changes
-=======
-            TileID.Sets.TouchDamageSands[Type] = 15;
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.Falling[Type] = true;

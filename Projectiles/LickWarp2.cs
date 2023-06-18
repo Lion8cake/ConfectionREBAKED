@@ -32,11 +32,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
         }
 		
-<<<<<<< HEAD
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-=======
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
         {
             if (target.boss == false && target.lifeMax < 1000 && target.type != NPCID.TargetDummy)
             {
@@ -48,11 +44,7 @@ namespace TheConfectionRebirth.Projectiles
                 Projectile.Kill();
             }
         }
-<<<<<<< HEAD
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
-=======
-        public override void OnHitPlayer(Player target, int damage, bool crit)
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
         {
             if (Main.player[Main.myPlayer] == target)
             {

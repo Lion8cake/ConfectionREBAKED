@@ -44,11 +44,6 @@ namespace TheConfectionRebirth.Items
             }
             return false;
         }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 
         public override void AddRecipes()
         {
@@ -65,30 +60,17 @@ namespace TheConfectionRebirth.Items
                 .AddIngredient(ModContent.ItemType<CookieDough>(), 2)
                 .AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 6)
                 .AddIngredient(ItemID.SoulofLight, 8)
-<<<<<<< HEAD
-				.AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld)
+                .AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld)
 				.AddTile(TileID.Anvils)
-=======
-                .AddCondition(NetworkText.FromKey("CelebrationMK10"), r => Main.tenthAnniversaryWorld)
-                .AddTile(TileID.Anvils)
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
                 .Register();
             CreateRecipe(1)
                 .AddIngredient(ModContent.ItemType<BananawarpPeel>())
                 .AddIngredient(ModContent.ItemType<CookieDough>(), 2)
                 .AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 6)
                 .AddIngredient(ModContent.ItemType<SoulofDelight>(), 8)
-<<<<<<< HEAD
                 .AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
->>>>>>> Stashed changes
-=======
-                .AddCondition(NetworkText.FromKey("CelebrationMK10"), r => Main.tenthAnniversaryWorld)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
     }
 }
