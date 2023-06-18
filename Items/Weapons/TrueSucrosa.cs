@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -31,7 +31,6 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.DamageType = DamageClass.Melee;
 			Item.shoot = ModContent.ProjectileType<Projectiles.TrueSucrosaSlash>();
-			Item.shootsEveryUse = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{

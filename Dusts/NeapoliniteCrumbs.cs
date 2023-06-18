@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Dusts
             Lighting.AddLight(dust.position, light, light, light);
             if (dust.scale < 0.5f)
             {
-                // dust.active = false;
+                dust.active = false;
             }
             return false;
         }

@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 38;
             Item.value = 600000;
             Item.rare = 5;
-            Item.shoot = ModContent.ProjectileType<Projectiles.BakersDozen>();
+            Item.shoot = Mod.Find<ModProjectile>("BakersDozen").Type;
             Item.shootSpeed = 16f;
             Item.maxStack = 13;
         }

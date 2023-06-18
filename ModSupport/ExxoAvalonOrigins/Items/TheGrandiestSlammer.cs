@@ -1,4 +1,4 @@
-/*using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,14 +10,14 @@ class TheGrandiestSlammer : ModItem
     public Mod avalon;
     public override bool IsLoadingEnabled(Mod mod)
     {
-        return ModLoader.TryGetMod("AvalonTesting", out avalon);
+        return ModLoader.TryGetMod("Avalon", out avalon);
     }
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Grandiest Slammer");
-        Tooltip.SetDefault("Strong enough to destroy Confected Altars");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Grandiest Slammer");
+        // Tooltip.SetDefault("Strong enough to destroy Confected Altars");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -38,4 +38,4 @@ class TheGrandiestSlammer : ModItem
         Item.height = 30;
         Item.UseSound = SoundID.Item1;
     }
-}*/
+}

@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Walls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<SherbetDust>();
-			ItemDrop = ModContent.ItemType<Items.Placeable.SherbetWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.SherbetWall>());
 			AddMapEntry(new Color(98, 39, 32));
 		}
 

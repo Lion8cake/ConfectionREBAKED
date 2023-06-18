@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.ShellBlockWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.ShellBlockWall>());
             DustType = ModContent.DustType<ShellBlockDust>();
             AddMapEntry(new Color(127, 81, 107));
         }

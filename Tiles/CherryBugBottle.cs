@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,7 +21,7 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.addTile(Type);
             TileID.Sets.SwaysInWindBasic[Type] = true;
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(60, 26, 44), name);
         }
 
@@ -55,11 +56,6 @@ namespace TheConfectionRebirth.Tiles
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frame = Main.tileFrame[TileID.FireflyinaBottle];
-        }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<CherryBugBottleItem>());
         }
     }
 

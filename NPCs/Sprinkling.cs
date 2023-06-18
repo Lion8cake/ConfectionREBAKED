@@ -77,7 +77,7 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Pixie;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
             Index = -1;
         }
 
@@ -109,7 +109,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ItemID.Megaphone, 100));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

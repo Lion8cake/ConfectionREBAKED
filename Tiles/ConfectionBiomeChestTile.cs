@@ -31,13 +31,12 @@ namespace TheConfectionRebirth.Tiles
 
             DustType = ModContent.DustType<NeapoliniteDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ChestDrop = ModContent.ItemType<Items.Placeable.ConfectionBiomeChestItem>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.ConfectionBiomeChestItem>());
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 
-            name = CreateMapEntryName(Name + "_Locked");
-            AddMapEntry(new Color(0, 141, 63), name, MapChestName);
+            AddMapEntry(new Color(0, 141, 63), this.GetLocalization("MapEntry1"), MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -104,7 +103,6 @@ namespace TheConfectionRebirth.Tiles
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
             Chest.DestroyChest(i, j);
         }
 
@@ -170,7 +168,7 @@ namespace TheConfectionRebirth.Tiles
                     {
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
-                            NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, left, top);
+                            NetMessage.SendData(MessageID.Unlock, -1, -1, null, player.whoAmI, 1f, left, top);
                         }
                     }
                 }

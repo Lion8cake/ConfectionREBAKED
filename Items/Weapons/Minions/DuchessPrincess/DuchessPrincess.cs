@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.DuchessPrincess
 
         public override int SummonersShine_MaxEnergy => 600;
 
-        internal override List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, Item item, List<Projectile> valid)
+        internal override List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, int item, List<Projectile> valid)
         {
             return valid;
         }

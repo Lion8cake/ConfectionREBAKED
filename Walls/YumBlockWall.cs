@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Walls
 	{
 		public override void SetStaticDefaults() {
 			Main.wallHouse[Type] = true;
-			ItemDrop = ModContent.ItemType<Items.Placeable.YumBlockWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.YumBlockWall>());
 			DustType = ModContent.DustType<YumDust>();
 			AddMapEntry(new Color(64, 121, 94));
 		}

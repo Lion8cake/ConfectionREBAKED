@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 6);
-            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteChandelier>();
+            Item.createTile = Mod.Find<ModTile>("SacchariteChandelier").Type;
         }
 
         public override void AddRecipes()

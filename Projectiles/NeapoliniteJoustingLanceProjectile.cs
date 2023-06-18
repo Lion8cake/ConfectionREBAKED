@@ -115,17 +115,11 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) 
 		{
-			if (damage > 0)
-			{
-				knockback *= Main.player[Projectile.owner].velocity.Length() / 7f;
-			}
-		}
+			modifiers.Knockback *= Main.player[Projectile.owner].velocity.Length() / 7f;
 
-		public override void ModifyDamageScaling(ref float damageScale)
-		{
-			damageScale *= 0.1f + Main.player[Projectile.owner].velocity.Length() / 7f * 0.9f;
+			modifiers.SourceDamage *= 0.1f + Main.player[Projectile.owner].velocity.Length() / 7f * 0.9f;
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

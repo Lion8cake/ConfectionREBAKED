@@ -54,13 +54,13 @@ namespace TheConfectionRebirth.Projectiles
             Vector2 vector3 = (num8 + Projectile.ai[0] * ((float)Math.PI / 2f)).ToRotationVector2();
             //if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), 278, vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), ModContent.DustType<NeapoliniteDust>(), vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
                 dust2.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust2.noGravity = true;
             }
             //if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
             {
-                Dust.NewDustPerfect(vector2, ModContent.DustType<NeapoliniteCrumbs>(), vector3 * 1f, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
+                Dust.NewDustPerfect(vector2, ModContent.DustType<NeapoliniteDust>(), vector3 * 1f, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
             }
             //Projectile.scale *= Projectile.ai[2];
             if (Projectile.localAI[0] >= Projectile.ai[1])
@@ -81,7 +81,7 @@ namespace TheConfectionRebirth.Projectiles
             return true;
         }
         public override bool? CanCutTiles() => true;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
             ParticleOrchestraSettings particleOrchestraSettings = default(ParticleOrchestraSettings);
@@ -359,7 +359,7 @@ namespace TheConfectionRebirth.Projectiles
             Vector2 vector3 = (num8 + Projectile.ai[0] * ((float)Math.PI / 2f)).ToRotationVector2();
             //if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), 278, vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), ModContent.DustType<NeapoliniteCrumbs>(), vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
                 dust2.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust2.noGravity = true;
             }
@@ -386,7 +386,7 @@ namespace TheConfectionRebirth.Projectiles
             return true;
         }
         public override bool? CanCutTiles() => true;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
             ParticleOrchestraSettings particleOrchestraSettings = default(ParticleOrchestraSettings);

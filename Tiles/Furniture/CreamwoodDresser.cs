@@ -33,12 +33,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             //name.SetDefault("Creamwood Dresser");
             AddMapEntry(new Color(106, 65, 51), name);
             AdjTiles = new int[] { TileID.Dressers };
             //ContainerName.SetDefault("Creamwood Dresser");
-            DresserDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>());
             TileID.Sets.DisableSmartCursor[Type] = true;
         }
 
@@ -215,7 +215,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, DresserDrop);
             Chest.DestroyChest(i, j);
         }
     }

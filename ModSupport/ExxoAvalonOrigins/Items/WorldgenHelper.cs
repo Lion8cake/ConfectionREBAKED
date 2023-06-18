@@ -1,4 +1,4 @@
-/*using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -11,13 +11,13 @@ class WorldgenHelper : ModItem
 {
     public override bool IsLoadingEnabled(Mod mod)
     {
-        return ModLoader.TryGetMod("AvalonTesting", out _);
+        return ModLoader.TryGetMod("Avalon", out _);
     }
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("WorldGen Helper");
-        Tooltip.SetDefault("Use this item to generate a pre-set structure at your location\nDO NOT USE IN NORMAL GAMEPLAY - IT WILL OVERWRITE BLOCKS");
+        // DisplayName.SetDefault("WorldGen Helper");
+        // Tooltip.SetDefault("Use this item to generate a pre-set structure at your location\nDO NOT USE IN NORMAL GAMEPLAY - IT WILL OVERWRITE BLOCKS");
     }
 
     public override void SetDefaults()
@@ -36,4 +36,4 @@ class WorldgenHelper : ModItem
         World.ConfectedAltars.Generate();
         return true;
     }
-}*/
+}

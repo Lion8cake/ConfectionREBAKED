@@ -8,7 +8,7 @@ namespace TheConfectionRebirth.Items
 	public class SacchariteBatFish : ModItem
 	{
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 2;
+			Item.ResearchUnlockCount = 2;
 		}
 
 		public override void SetDefaults() {

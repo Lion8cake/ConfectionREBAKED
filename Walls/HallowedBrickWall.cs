@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.HallowedBrickWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.HallowedBrickWall>());
             DustType = 84;
             AddMapEntry(new Color(59, 59, 73));
         }

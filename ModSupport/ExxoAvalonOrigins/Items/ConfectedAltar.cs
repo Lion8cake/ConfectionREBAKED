@@ -1,4 +1,4 @@
-/*using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -11,13 +11,13 @@ class ConfectedAltar : ModItem
     public Mod avalon;
     public override bool IsLoadingEnabled(Mod mod)
     {
-        return ModLoader.TryGetMod("AvalonTesting", out avalon);
+        return ModLoader.TryGetMod("Avalon", out avalon);
     }
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Confected Altar");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Confected Altar");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -34,4 +34,4 @@ class ConfectedAltar : ModItem
         Item.useAnimation = 20;
         Item.height = 30;
     }
-}*/
+}

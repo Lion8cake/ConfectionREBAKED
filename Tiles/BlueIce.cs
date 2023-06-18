@@ -11,13 +11,13 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CookieBlock>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<HallowedOre>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<NeapoliniteOre>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamstoneBrick>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamBlock>()] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HallowedOre").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamBlock").Type] = true;
             TheConfectionRebirth.tileMerge[Type, 161] = true;
             TheConfectionRebirth.tileMerge[Type, 163] = true;
             TheConfectionRebirth.tileMerge[Type, 164] = true;
@@ -30,7 +30,6 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.IcesSnow[Type] = true;
             TileID.Sets.Conversion.Ice[Type] = true;
             DustType = ModContent.DustType<OrangeIceDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.OrangeIce>();
             AddMapEntry(new Color(237, 145, 103));
 
             HitSound = SoundID.Tink;

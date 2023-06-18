@@ -17,6 +17,8 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSand[Type] = true;
+<<<<<<< HEAD
+<<<<<<< Updated upstream
             TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
             TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamstoneBrick>()] = true;
             TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
@@ -24,11 +26,24 @@ namespace TheConfectionRebirth.Tiles
             TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamsandstone>()] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
             TileID.Sets.Suffocate[Type] = true;
+=======
+=======
+>>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsandstone").Type] = true;
+<<<<<<< HEAD
+			TileID.Sets.Suffocate[Type] = true;
+>>>>>>> Stashed changes
+=======
+            TileID.Sets.TouchDamageSands[Type] = 15;
+>>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.Falling[Type] = true;
             AddMapEntry(new Color(99, 57, 46));
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamsand>();
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -55,7 +70,8 @@ namespace TheConfectionRebirth.Tiles
                 if (Main.netMode == NetmodeID.SinglePlayer)
                 {
                     Main.tile[i, j].ClearTile();
-                    int proj = Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, projectileType, 50, 0f, Main.myPlayer, 1f);
+                    int proj = Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, projectileType, 50, 0f, Main.myPlayer);
+                    Main.projectile[proj].ai[0] = 1f;
                     WorldGen.SquareTileFrame(i, j);
                 }
                 else if (Main.netMode == NetmodeID.Server)
@@ -75,7 +91,9 @@ namespace TheConfectionRebirth.Tiles
 
                     if (spawnProj)
                     {
-                        int proj = Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(i, j) * 16 + new Vector2(8, 8) + new Vector2(2f), new Vector2(0f, 0.5f), projectileType, 50, 0f, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, projectileType, 50, 0f, Main.myPlayer);
+                        Main.projectile[proj].velocity.Y = 0.5f;
+                        Main.projectile[proj].position.Y += 2f;
                         Main.projectile[proj].netUpdate = true;
                     }
 

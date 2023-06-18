@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 38;
             Item.value = Item.buyPrice(0, 10);
             Item.rare = 4;
-            Item.shoot = ModContent.ProjectileType<Projectiles.BearClaw>();
+            Item.shoot = Mod.Find<ModProjectile>("BearClaw").Type;
             Item.shootSpeed = 16f;
         }
 

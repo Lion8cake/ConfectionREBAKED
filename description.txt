@@ -1,0 +1,66 @@
+===========================================
+Confection REBAKED (Alternate Hallowed mod)
+===========================================
+The Confection nolonger uses Alternate Libraries mod to be able to be compatible with other alternate biome mods due to the mod being taken off the modbrowser/workshop
+
+This mod supported Chinese and Russian translations
+
+If you have bugs to report please report in our discord so we can betterly handle these bugs
+Discord: https://discord.gg/JwEKrVhjA6
+===========================================
+Changelog
+===========================================
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+Fixed issue with drawing the sprinklings
+=======
+Removed altlib as it was taken down from the workshop
+these features have been removed until altlib is put back up or we add the code ourselves
+Worldgen
+worldspread
+Perworld drops (neapolinite bars)
+>>>>>>> Stashed changes
+=======
+Fixed Summoner's Shine compatability
+Completely reworked the Dimensional split and Lickety Split
+Added banana warp peel
+Added 1.4.4 Sword AoE effect to Sucrosa and true sucrosa (Experimental)
+Made True Sucrosa True Melee (Experimental)
+Added polishing to the code by Hariq
+>>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
+
+===========================================
+Credit - Programmers
+===========================================
+Lion8cake - Main dev 
+BasicallyIAmFox - For Altlib, cream fox pet, old biome chest, old biome generation, cleaning up part of confection's bad code and Adding Alternating and 4 layered backgrounds
+Cace - For Altlib, 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
+Yreorel - For much of the reworks for different items as well as making the Icescreamer AI
+Ghasttear1 - For the 1.3 menu UI
+Hariq - Polished backend code
+CastledKing2341 - For the awesome and very polished Meowzer NPC
+sOvr9000 - For the awesome and very polished Icecream Gal NPC
+foxyboy55 - many bug fixes an a few texture changes
+Blahblahbal - for allowing the use of the Sucrosa Trail effect and other misc bits of code
+
+===========================================
+Credit - Artists
+===========================================
+SnickerBobble - Original concept creator of the Confection
+Delicios Satern - Music
+mddznyan - Creating textures for some items and the new logo
+Snacks - Several 1.4 textures including the furniture toilets, saccharite furniture sprites and Cosmic cookie cannon
+DakotaSpine - The amazing New background for the confection
+AstralGel - For all the sounds used from the 0.18.2 update and above
+Neobind - Textures for a few things
+Miguel Noturn0 - Confection Tree icons
+splig - for Gummy Worm-whip sprite
+WumblyBee - Making the Confection Charm sprite
+
+===========================================
+Credit - Translators
+===========================================
+Cyril - for Chinese translation
+AstralGel - for Russian translation
+
+And to all the people that helped me out with coding problems and other issues, thank you!

@@ -10,12 +10,11 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.CookieBlock>();
             AddMapEntry(new Color(153, 97, 60));
         }
 
@@ -27,7 +26,7 @@ namespace TheConfectionRebirth.Tiles
             Tile right = Main.tile[i + 1, j];
             if (WorldGen.genRand.Next(3) == 0 && (up.TileType == ModContent.TileType<CreamGrass>() || down.TileType == ModContent.TileType<CreamGrass>() || left.TileType == ModContent.TileType<CreamGrass>() || right.TileType == ModContent.TileType<CreamGrass>()))
             {
-                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false);
+                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<CreamGrass>(), repeat: false, 0);
             }
         }
 

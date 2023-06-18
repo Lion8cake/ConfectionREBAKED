@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -83,7 +82,7 @@ namespace TheConfectionRebirth.NPCs
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            int type = ModContent.ProjectileType<CreamySprayEvil>();
+            int type = Mod.Find<ModProjectile>("CreamySprayEvil").Type;
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = Magnitude(velocity);
             if (magnitude > 0f)
@@ -99,7 +98,7 @@ namespace TheConfectionRebirth.NPCs
             return (float)Math.Sqrt(mag.X * mag.X + mag.Y * mag.Y);
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
@@ -109,7 +108,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CcretTicket>(), 100));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

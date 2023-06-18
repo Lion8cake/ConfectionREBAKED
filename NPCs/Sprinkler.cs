@@ -10,7 +10,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Projectiles;
 using static Humanizer.On;
 
 namespace TheConfectionRebirth.NPCs
@@ -80,7 +79,7 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.BlueSlime;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
             Index = -1;
         }
 
@@ -92,12 +91,12 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.damage = (int)(NPC.damage * 0.2f);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -111,7 +110,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.AnyInvasionActive())
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive())
             {
                 return 1f;
             }
@@ -147,7 +146,7 @@ namespace TheConfectionRebirth.NPCs
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            int type = ModContent.ProjectileType<SprinklingBall>();
+            int type = Mod.Find<ModProjectile>("SprinklingBall").Type;
             Vector2 velocity = player.Center - NPC.Center;
             float magnitude = MathF.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);
             if (magnitude > 0f)

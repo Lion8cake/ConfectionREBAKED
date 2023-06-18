@@ -19,6 +19,6 @@ namespace TheConfectionRebirth.Biomes
 
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<ConfectionSnowUGBackgroundStyle>();
 
-		public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && (player.ZoneRockLayerHeight || player.ZoneUnderworldHeight);
+		public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiome>().IsBiomeActive(player) && (player.ZoneRockLayerHeight || player.ZoneUnderworldHeight);
 	}
 }

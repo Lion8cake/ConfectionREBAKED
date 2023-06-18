@@ -12,8 +12,16 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = false;
             Main.tileLighted[Type] = true;
+<<<<<<< HEAD
+<<<<<<< Updated upstream
             TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
+=======
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+>>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
             ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
+=======
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+>>>>>>> Stashed changes
             AddMapEntry(new Color(32, 174, 221));
             DustType = ModContent.DustType<SacchariteCrystals>();
             HitSound = SoundID.Item27;

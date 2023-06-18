@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.NeapoliniteBrickWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.NeapoliniteBrickWall>());
             DustType = ModContent.DustType<NeapoliniteDust>();
             AddMapEntry(new Color(115, 98, 62));
         }

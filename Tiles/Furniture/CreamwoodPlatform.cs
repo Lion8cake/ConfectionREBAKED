@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddMapEntry(new Color(106, 65, 51));
 
             DustType = ModContent.DustType<ChipDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodPlatform>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodPlatform>());
             AdjTiles = new int[] { TileID.Platforms };
 
             TileObjectData.newTile.CoordinateHeights = new[] { 16 };

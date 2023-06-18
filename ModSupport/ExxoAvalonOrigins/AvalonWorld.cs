@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -16,7 +16,7 @@ public class AvalonWorld : ModSystem
 {
     public override bool IsLoadingEnabled(Mod mod)
     {
-        return ModLoader.TryGetMod("AvalonTesting", out _);
+        return ModLoader.TryGetMod("Avalon", out _);
     }
 
     /*public static void GenerateHallowedOre()
@@ -45,9 +45,9 @@ public class AvalonWorld : ModSystem
         }
     }*/
 
-    /*public override void ModifyHardmodeTasks(List<GenPass> list)
+    public override void ModifyHardmodeTasks(List<GenPass> list)
     {
         int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
         list.Insert(index + 1, new PassLegacy("Confection REBAKED: Hardmode Good (Confected Altars)", new WorldGenLegacyMethod(World.ConfectedAltars.Method)));
     }
-}*/
+}

@@ -1,0 +1,116 @@
+Mods: {
+	TheConfectionRebirth: {
+		ItemName: {
+			# Armor
+			RockCandyConemail: Rock Candy Cone Mail
+			RockCandyLeggings: Rock Candy Greaves
+			RockCandyHeadset: Rock Candy Headset
+			YumdropFairyTiara: Yumdrop Fairy Tiara
+			YumdropFairyBreastplate: Yumdrop Fairy Breastplate
+			YumdropFairyPompomGreaves: Yumdrop Fairy Pom Pom Greaves
+			#Weapons
+			NeapoliniteMegaphone: Neapolinite Megaphone
+			NeapoliniteScythe: Neapolinite Scythe
+			TrueNeapoliniteScythe: True Neapolinite Scythe
+			NeapoliniteScepter: Neapolinite Scepter
+			#Items
+			ConfectedCharm: Confected Charm
+		}
+
+		ProjectileName: {
+			NeapoliniteMegaphonePro: Neapolinite Megaphone
+			NeapoliniteMegaphonePro1: Neapolinite Megaphone
+			NeapoliniteMegaphonePro2: Neapolinite Megaphone
+			NeapoliniteScepterVanilla: Neapolinite Bolt
+			NeapoliniteScepterChocolate: Neapolinite Bolt
+			NeapoliniteScepterStrawberry: Neapolinite Bolt
+			NeapoliniteScythePro: Neapolinite Scythe
+			TrueNeapoliniteScythePro: True Neapolinite Scythe
+		}
+
+		ItemTooltip: {
+			# Armor
+			RockCandyConemail: 5% increased symphotic critical strike chance
+			RockCandyLeggings:
+				'''
+				5% increased symphonic damage
+				7% increased movement speed
+				'''
+			RockCandyHeadset:
+				'''
+				10% increased symphonic damage
+				4% increased symphonic critical strike chance
+				'''
+			YumdropFairyTiara:
+				'''
+				10% increased radiant damage
+				4% increased radiant critical strike chance
+				10% decreased mana cost
+				'''
+			YumdropFairyBreastplate:
+				'''
+				15% increased radiant damage
+				6% increased radiant critical strike chance
+				10% decreased mana cost
+				'''
+			YumdropFairyPompomGreaves:
+				'''
+				10% increased radiant damage
+				6% increased movement speed
+				10% decreased mana cost
+				'''
+			#Weapons
+			NeapoliniteMegaphone: Rapidly releases a burst of expanding sound waves
+			NeapoliniteScythe: Rapidly spins a neapolinite scythe all around you
+			TrueNeapoliniteScythe: Rapidly spins a neapolinite scythe all around you
+			NeapoliniteScepter: Fires 3 bolts in the cone like shape
+			#Items
+			ConfectedCharm: A lucky charm baked with the materials of biome made of confectionary deserts
+		}
+
+		BuffName: {
+			# Neapolinite Buffs
+			RockinStar: Rockin' Star
+			RockinStarI: Rockin' Star I
+			RockinStarII: Rockin' Star II
+			RockinStarIII: Rockin' Star III
+			RockinStarIV: Rockin' Star IV
+			RockinStarV: Rockin' Star V
+			YumdropKissI: Yumdrop Kiss I
+			YumdropKissII: Yumdrop Kiss II
+			YumdropKissIII: Yumdrop Kiss III
+			YumdropKissIV: Yumdrop Kiss IV
+			YumdropKissV: Yumdrop Kiss V
+		}
+
+		BuffDescription: {
+			# Neapolinite Buffs
+			RockinStarI: 2% increased symphonic damage and increased critical strike chance
+			RockinStarII: 4% increased symphonic damage and increased critical strike chance
+			RockinStarIII: 6% increased symphonic damage and increased critical strike chance
+			RockinStarIV: 8% increased symphonic damage and increased critical strike chance
+			RockinStarV: 10% increased symphonic damage and increased critical strike chance
+			YumdropKissI: 1% increased symphonic damage, 2% increased critical strike chance, healing spells will heal and additional 1 life
+			YumdropKissII: 2% increased symphonic damage, 4% increased critical strike chance, healing spells will heal and additional 2 life
+			YumdropKissIII: 3% increased symphonic damage, 6% increased critical strike chance, healing spells will heal and additional 3 life
+			YumdropKissIV: 4% increased symphonic damage, 8% increased critical strike chance, healing spells will heal and additional 4 life
+			YumdropKissV: 5% increased symphonic damage, 10% increased critical strike chance, healing spells will heal and additional 5 life
+		}
+
+		SetBonus: {
+			RockCandyHeadset:
+				'''
+				Every time a symphonic weapon is used a buff is applied and gets 
+				stronger every use until the buff upgrades 5 times, increases 
+				damage, critical strike chance to symphonic weapons
+				'''
+			YumdropFairyTiara:
+				'''
+				Every time a radiant weapon is used a buff is applied and gets 
+				stronger every use until the buff upgrades 5 times, increases 
+				damage, critical strike chance to radiant weapons and extra 
+				life heals
+				'''
+		}
+	}
+}

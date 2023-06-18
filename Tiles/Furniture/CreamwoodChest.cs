@@ -29,11 +29,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             DustType = ModContent.DustType<ChipDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ChestDrop = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodChest>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodChest>());
 
             //ContainerName.SetDefault("Creamwood Chest");
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(106, 65, 51), name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -88,7 +88,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
             Chest.DestroyChest(i, j);
         }
 

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Backgrounds
 {
-    public class ConfectionSnowSurfaceBackgroundStyle : ModSurfaceBackgroundStyle, IBackground
+    public class ConfectionSnowSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
     {
         // Use this to keep far Backgrounds like the mountains.
         public override void ModifyFarFades(float[] fades, float transitionSpeed)

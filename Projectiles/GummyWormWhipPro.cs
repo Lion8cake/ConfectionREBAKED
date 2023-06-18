@@ -99,10 +99,10 @@ namespace TheConfectionRebirth.Projectiles
 		}
 		*/
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
-			Projectile.damage = (int)(damage * 0.7f);
+			Projectile.damage = (int)(hit.Damage * 0.7f);
 		}
 
 		private static void DrawLine(List<Vector2> list)

@@ -58,7 +58,7 @@ namespace TheConfectionRebirth.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.SharkFin, 8, 1, 1));
             npcLoot.Add(ItemDropRule.Food(ItemID.Nachos, 30, 1, 1));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 25, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ItemID.LightShard, 25, 1, 1));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.WindyEnoughForKiteDrops(), ItemID.KiteSandShark, 25, 1, 1, 1));
 		}
 
@@ -71,7 +71,7 @@ namespace TheConfectionRebirth.NPCs
             return 0f;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

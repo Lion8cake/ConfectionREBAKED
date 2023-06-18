@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.autoReuse = true;
             Item.shoot = 10;
             Item.shootSpeed = 16f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.PopRocket>();
+            Item.shoot = Mod.Find<ModProjectile>("PopRocket").Type;
             Item.useAnimation = 12;
         }
 

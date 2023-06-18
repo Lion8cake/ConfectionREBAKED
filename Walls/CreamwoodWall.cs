@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.CreamwoodWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CreamwoodWall>());
             DustType = ModContent.DustType<CreamwoodDust>();
             AddMapEntry(new Color(61, 39, 27));
         }

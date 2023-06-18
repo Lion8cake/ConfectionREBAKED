@@ -10,10 +10,10 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CookieBlock>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrassMowed>()] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBrick[Type] = true;
@@ -23,10 +23,17 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             AddMapEntry(new Color(235, 207, 150));
+<<<<<<< Updated upstream
             //SoundType = 0;
             //SoundStyle = 2;
-            ItemDrop = ModContent.ItemType<Items.Placeable.CookieBlock>();
+            ItemDrop = Mod.Find<ModItem>("CookieBlock").Type;
         }
+=======
+			//SoundType = 0;
+			//SoundStyle = 2;
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
+		}
+>>>>>>> Stashed changes
 
         private bool SpawnGrass(int i, int j)
         {

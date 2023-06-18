@@ -11,9 +11,9 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soda Potion");
-			Tooltip.SetDefault("A fizzy beberage that contains a weird looking orange substance");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Soda Potion");
+			// Tooltip.SetDefault("A fizzy beberage that contains a weird looking orange substance");
+			Item.ResearchUnlockCount = 99;
 		}
 	
 		public override void SetDefaults()

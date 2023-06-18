@@ -8,7 +8,7 @@ namespace TheConfectionRebirth.Items
 	public class Sprinklefish : ModItem
 	{
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {

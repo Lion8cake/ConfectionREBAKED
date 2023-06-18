@@ -41,7 +41,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
         public override int SummonersShine_MaxEnergy => 600;
 
-        internal override List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, Item item, List<Projectile> valid)
+        internal override List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, int item, List<Projectile> valid)
         {
             return valid;
         }
@@ -639,7 +639,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
             return player.Center - new Vector2(player.direction * squishRatio * 32 * (Projectile.minionPos + 1), 0);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (SummonersShine != null && Projectile.Projectile_IsCastingSpecialAbility(ModContent.ItemType<SweetStaff>()))
             {

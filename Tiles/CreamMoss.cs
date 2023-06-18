@@ -4,10 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
-using AltLibrary;
-using AltLibrary.Common.AltBiomes;
-using AltLibrary.Common.Systems;
-using AltLibrary.Common.Hooks;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -74,26 +70,25 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            TileMerge(Type, ModContent.TileType<CookieBlock>());
-            TileMerge(Type, ModContent.TileType<CreamGrass>());
-            TileMerge(Type, ModContent.TileType<HallowedOre>());
-            TileMerge(Type, ModContent.TileType<NeapoliniteOre>());
-            TileMerge(Type, ModContent.TileType<CreamstoneBrick>());
-            TileMerge(Type, ModContent.TileType<SacchariteBlock>());
-            TileMerge(Type, ModContent.TileType<CreamWood>());
-            TileMerge(Type, ModContent.TileType<CreamBlock>());
-            TileMerge(Type, ModContent.TileType<BlueIce>());
-            TileMerge(Type, ModContent.TileType<CreamstoneRuby>());
-            TileMerge(Type, ModContent.TileType<CreamstoneSaphire>());
-            TileMerge(Type, ModContent.TileType<CreamstoneDiamond>());
-            TileMerge(Type, ModContent.TileType<CreamstoneAmethyst>());
-            TileMerge(Type, ModContent.TileType<CreamstoneTopaz>());
-			TileMerge(Type, ModContent.TileType<CreamstoneEmerald>());
-			TileMerge(Type, ModContent.TileType<Creamstone>());
+            TileMerge(Type, Mod.Find<ModTile>("CookieBlock").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamGrass").Type);
+            TileMerge(Type, Mod.Find<ModTile>("HallowedOre").Type);
+            TileMerge(Type, Mod.Find<ModTile>("NeapoliniteOre").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneBrick").Type);
+            TileMerge(Type, Mod.Find<ModTile>("SacchariteBlock").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamWood").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamBlock").Type);
+            TileMerge(Type, Mod.Find<ModTile>("BlueIce").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneRuby").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneSaphire").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneDiamond").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneAmethyst").Type);
+            TileMerge(Type, Mod.Find<ModTile>("CreamstoneTopaz").Type);
+			TileMerge(Type, Mod.Find<ModTile>("CreamstoneEmerald").Type);
+			TileMerge(Type, Mod.Find<ModTile>("Creamstone").Type);
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<CreamDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
             AddMapEntry(mossColor);
 
 			foreach(KeyValuePair<int, Color> entry in TilePostDraws.Moss.MossColor)
@@ -101,7 +96,9 @@ namespace TheConfectionRebirth.Tiles
 				TileMerge(Type, entry.Key);
 			}
 			TilePostDraws.Moss.MossColor.Add(Type, mossColor);
-			ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
+			//ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
+
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Creamstone>());
 
 			for (int x = 0; x < TileID.Sets.Stone.Length; x++)
 			{

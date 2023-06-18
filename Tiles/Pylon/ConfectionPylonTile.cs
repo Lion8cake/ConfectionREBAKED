@@ -1,4 +1,5 @@
-﻿using TheConfectionRebirth.Biomes;
+﻿using Terraria.Localization;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -47,14 +48,12 @@ namespace TheConfectionRebirth.Tiles.Pylon
 
 			AddToArray(ref TileID.Sets.CountsAsPylon);
 
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(217, 53, 122), name);
 		}
 
-		public override int? IsPylonForSale(int npcType, Player player, bool isNPCHappyEnough) {
-			return ModContent.GetInstance<ConfectionBiomeSurface>().IsBiomeActive(player) && isNPCHappyEnough.Equals(true)
-				? ModContent.ItemType<ConfectionPylon>()
-				: null;
+		public override NPCShop.Entry GetNPCShopEntry() {
+			return new NPCShop.Entry(ModContent.ItemType<ConfectionPylon>(), new Condition("Mods.TheConfectionRebirth.Conditions.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>()), Condition.HappyEnoughToSellPylons, Condition.AnotherTownNPCNearby);
 		}
 
 

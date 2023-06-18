@@ -56,11 +56,11 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 15));
+            npcLoot.Add(ItemDropRule.Common(ItemID.LightShard, 15));
             npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
         }
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

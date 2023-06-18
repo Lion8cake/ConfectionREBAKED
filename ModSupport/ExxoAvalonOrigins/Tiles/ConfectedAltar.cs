@@ -1,4 +1,4 @@
-﻿/*//using AvalonTesting;
+﻿//using AvalonTesting;
 //using AvalonTesting.Systems;
 //using AvalonTesting.Tiles.Ores;
 using Microsoft.Xna.Framework;
@@ -18,19 +18,19 @@ public class ConfectedAltar : ModTile
 {
     public Mod avalon;
 
-    /*public bool SuperHardmode
+    public bool SuperHardmode
     {
         get
         {
-            Type w = avalon.GetType().Assembly.GetType("AvalonTesting.AvalonTestingWorld");
+            Type w = avalon.GetType().Assembly.GetType("Avalon.AvalonWorld");
             object m = typeof(ModContent).GetMethod(nameof(ModContent.GetInstance)).MakeGenericMethod(w).Invoke(null, Array.Empty<object>());
             return (bool)m.GetType().GetProperty("SuperHardmode", BindingFlags.Public | BindingFlags.Instance).GetMethod.Invoke(w, Array.Empty<object>());
         }
-    }*/
+    }
 
-    /*public override bool IsLoadingEnabled(Mod mod)
+    public override bool IsLoadingEnabled(Mod mod)
     {
-        return ModLoader.TryGetMod("AvalonTesting", out avalon);
+        return ModLoader.TryGetMod("Avalon", out avalon);
     }
 
     public override void SetStaticDefaults()
@@ -46,7 +46,7 @@ public class ConfectedAltar : ModTile
         DustType = 164;
         TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
         TileID.Sets.InteractibleByNPCs[Type] = true;
-        HitSound = new SoundStyle("AvalonTesting/Sounds/Item/HallowedAltarHit");
+        HitSound = new SoundStyle("Avalon/Sounds/Item/HallowedAltarHit");
     }
 
     public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -223,4 +223,4 @@ public class ConfectedAltar : ModTile
 
         ModContent.GetInstance<ExxoWorldGen>().HallowedAltarCount++;
     }*/
-//}
+}

@@ -26,10 +26,10 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heavenly Forge");
-            Tooltip.SetDefault("Allows you to convert hallowed materials into their confection alternatives and vice versa\n" +
-                "'A forge created from the both the lands of rainbows and candy'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Heavenly Forge");
+            /* Tooltip.SetDefault("Allows you to convert hallowed materials into their confection alternatives and vice versa\n" +
+                "'A forge created from the both the lands of rainbows and candy'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void AddRecipes()

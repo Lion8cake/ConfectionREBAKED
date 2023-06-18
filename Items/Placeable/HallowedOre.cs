@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,10 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(this, 5).AddTile(TileID.AdamantiteForge).ReplaceResult(ItemID.HallowedBar);
-        }
+			Recipe.Create(ItemID.HallowedBar)
+				.AddIngredient(this, 5)
+				.AddTile(TileID.AdamantiteForge)
+				.Register();
+		}
     }
 }

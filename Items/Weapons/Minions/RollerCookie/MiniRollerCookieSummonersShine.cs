@@ -114,11 +114,11 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.RollerCookie
 
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             int dir = Math.Sign(Projectile.velocity.X);
             if(dir != 0)
-                hitDirection = dir;
+                modifiers.HitDirectionOverride = dir;
         }
     }
 }

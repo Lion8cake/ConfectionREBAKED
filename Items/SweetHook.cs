@@ -9,14 +9,14 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.IlluminantHook);
             Item.shootSpeed = 18f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.SweetHook>();
+            Item.shoot = Mod.Find<ModProjectile>("SweetHook").Type;
         }
     }
 }

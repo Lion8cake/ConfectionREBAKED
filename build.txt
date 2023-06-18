@@ -1,0 +1,16 @@
+displayName = Confection REBAKED (Hallow Alternative)
+author = Lion8cake, Snickerbobble, Fox, Cace, Delicious Saturn
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+version = 0.18.1
+=======
+version = 0.19.0
+>>>>>>> Stashed changes
+=======
+version = 0.18.3
+>>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
+homepage = https://terrariamods.wiki.gg/wiki/Confection_Rebaked
+includeSource = true
+includePDB = true
+weakReferences = ThoriumMod
+

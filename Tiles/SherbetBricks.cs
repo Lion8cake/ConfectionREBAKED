@@ -15,7 +15,6 @@ namespace TheConfectionRebirth.Tiles
             HitSound = SoundID.Dig;
             AnimationFrameHeight = 90;
             Main.tileBlockLight[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.SherbetBricks>();
             AddMapEntry(new Color(213, 105, 89));
             DustType = ModContent.DustType<SherbetDust>();
         }

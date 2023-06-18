@@ -11,14 +11,13 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamWood>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<PinkFairyFloss>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<BlueFairyFloss>()] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("PinkFairyFloss").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("BlueFairyFloss").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.PurpleFairyFloss>();
             AddMapEntry(new Color(210, 90, 250));
             DustType = ModContent.DustType<FairyFlossDust2>();
         }

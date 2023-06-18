@@ -51,7 +51,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.Meawzer
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 		}

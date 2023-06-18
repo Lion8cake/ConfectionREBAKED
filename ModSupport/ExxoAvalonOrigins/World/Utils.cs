@@ -1,4 +1,4 @@
-/*using TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Tiles;
+using TheConfectionRebirth.ModSupport.ExxoAvalonOrigins.Tiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -65,4 +65,4 @@ class Utils
             Main.tile[x + 1, y].TileType = (ushort)ModContent.TileType<ConfectedAltar>();
         }
     }
-}*/
+}

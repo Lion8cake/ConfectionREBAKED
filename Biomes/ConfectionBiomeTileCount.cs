@@ -3,8 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
 
-using AltLibrary.Common.AltBiomes;
-
 namespace TheConfectionRebirth.Biomes
 {
     public class ConfectionBiomeTileCount : ModSystem
