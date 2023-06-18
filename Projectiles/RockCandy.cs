@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +42,6 @@ namespace TheConfectionRebirth.Projectiles
 					Projectile.NewProjectile(new EntitySource_Misc("Rock candy shard from rock candy"), Projectile.Center.X, Projectile.Center.Y, (float)((0.0 - Math.Sin(offsetAngle)) * 5.0), (float)((0.0 - Math.Cos(offsetAngle)) * 5.0), ModContent.ProjectileType<RockCandyShard>(), (int)(Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
 				}
 			}
-			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/CrunchBallBreak"));
 		}
 	}
 }

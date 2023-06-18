@@ -49,8 +49,8 @@ namespace TheConfectionRebirth.NPCs
             NPC.damage = 50;
             NPC.defense = 22;
             NPC.lifeMax = 400;
-			NPC.HitSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Custom/IceScreamerHurt");
-			NPC.DeathSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Custom/IceScreamerDeath");
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 60f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -215,14 +215,14 @@ namespace TheConfectionRebirth.NPCs
                 Vector2 northPosClose = npc.Center + new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
                 Vector2 southPosClose = npc.Center - new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
             }
-			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Custom/IceScreamerShriek"));
-		}
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BearClaw>(), 100));
 
-			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<BananawarpPeel>(), 10));
+			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsUp())).OnSuccess(ItemDropRule.Common(ModContent.ItemType<DimensionSplit>(), 100));
+			npcLoot.Add(new LeadingConditionRule(new Conditions.TenthAnniversaryIsNotUp())).OnSuccess(ItemDropRule.NormalvsExpert(ModContent.ItemType<DimensionSplit>(), 500, 400));
 
 			npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
 		}

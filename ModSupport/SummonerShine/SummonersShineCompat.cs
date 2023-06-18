@@ -49,7 +49,7 @@ namespace TheConfectionRebirth
 		/// <summary>
 		/// Call this in <see cref="ModProjectile.SetStaticDefaults"/>. Changes a projectile config setting in the config.
 		/// </summary>
-		/// <param name="ConfigType">The Projectile Config Type</param>
+		/// <param name="ConfigType">The Projectile Config Tyoe</param>
 		/// <param name="ProjectileType">The Projectile Type</param>
 		internal static void AddModdedConfig(ProjectileConfig ConfigType, int ProjectileType)
 		{
@@ -58,7 +58,7 @@ namespace TheConfectionRebirth
 		/// <summary>
 		/// Call this in <see cref="ModItem.SetStaticDefaults"/>. Changes an item config setting in the config.
 		/// </summary>
-		/// <param name="ConfigType">The Item Config Type</param>
+		/// <param name="ConfigType">The Item Config Tyoe</param>
 		/// <param name="ItemType">The Item Type</param>
 		internal static void AddModdedConfig(ItemConfig ConfigType, int ItemType)
 		{
@@ -79,46 +79,14 @@ namespace TheConfectionRebirth
 					break;
 			}
 			SummonersShine.Call(0, configType, ItemType);
-        }
+		}
 
-        /// <summary>
-        /// Call this in <see cref="ModItem.SetStaticDefaults"/>. Prevents this weapon's special ability from being automatically casted upon whipping, assuming the player turned on autocast
-        /// </summary>
-        /// <param name="ItemType">The Item Type</param>
-        internal static void SetSummonWeaponSpecialAbilityAutocastFalse(int ItemType)
-        {
-            SummonersShine.Call(0, 17, ItemType);
-        }
-
-        /// <summary>
-        /// Call this in <see cref="ModItem.SetStaticDefaults"/>. Causes a minion's stats to be derived from minions linked to an item defined by SetSummonWeaponStatSourceMinions.
-		/// Useful for ensuring worms move at the same rate and have uniform stats throughout their body parts.
-		/// For instance, by default, Stardust Dragon 1/2/3/4 (head/body 1/body 2/tail) are tied to the Stardust Dragon staff, which, in turn, derives their stats from Stardust Dragon 2 (body 1).
-        /// </summary>
-        /// <param name="ProjectileType">The Projectile Type</param>
-        /// <param name="ItemType">The Item Type</param>
-        internal static void SetSummonMinionWeaponStatSource(int ProjectileType, int ItemType)
-        {
-            SummonersShine.Call(0, 15, ProjectileType, ItemType);
-        }
-        /// <summary>
-        /// Call this in <see cref="ModItem.SetStaticDefaults"/>. To be used in conjunction with SetSummonMinionWeaponStatSource.
-		/// Causes minions tied to item type in SetSummonMinionWeaponStatSource to derive their stats from minions with one of StatSourceMinions' projectile IDs.
-		/// Useful for ensuring worms move at the same rate.
-        /// </summary>
-        /// <param name="ItemType">The Item Type</param>
-        /// <param name="StatSourceMinions">The array of Projectile IDs to derive stats from.</param>
-        internal static void SetSummonWeaponStatSourceMinions(int ItemType, int[] StatSourceMinions)
-        {
-            SummonersShine.Call(0, 16, ItemType, StatSourceMinions);
-        }
-
-        /// <summary>
-        /// Call this in <see cref="ModBuff.SetStaticDefaults"/>. Causes a buff to display the energy of all summoned minions associated with an item.
-        /// </summary>
-        /// <param name="BuffType">The Buff Type</param>
-        /// <param name="ItemType">The Item Type</param>
-        internal static void SetBuffDisplayMinionEnergy(int BuffType, params int[] ItemType)
+		/// <summary>
+		/// Call this in <see cref="ModBuff.SetStaticDefaults"/>. Causes a buff to display the energy of all summoned minions associated with an item.
+		/// </summary>
+		/// <param name="BuffType">The Buff Type</param>
+		/// <param name="ItemType">The Item Type</param>
+		internal static void SetBuffDisplayMinionEnergy(int BuffType, params int[] ItemType)
 		{
 			SummonersShine.Call(0, 11, BuffType, ItemType);
 		}
@@ -656,12 +624,12 @@ namespace TheConfectionRebirth
 		/// delegate Entity SpecialAbilityFindTargetHook(Player Owner, Vector2 ClickPosition).<br />
 		/// Return any kind of Entity - a Projectile, a Player, an NPC, a dummy Entity with only Position and Velocity values, or even Null.</param>
 		/// <param name="SpecialAbilityFindMinions">The function called when trying to find valid minions<br />
-		/// delegate List&lt;Projectile&gt; SpecialAbilityFindMinionsHook(Player Owner, int ItemType, List&lt;Projectile&gt; ViableMinions)<br />
+		/// delegate List&lt;Projectile&gt; SpecialAbilityFindMinionsHook(Player Owner, Item item, List&lt;Projectile&gt; ViableMinions)<br />
 		/// Returns a list of valid minions. If an empty list or null is returned the special ability will not be cast.</param>
 		/// <param name="minionPowers">The minion power values used for the special ability.</param>
 		/// <param name="minionPowerRechargeTime">Cooldown of the minion power in ticks. 1 second = 60 ticks.</param>
 		/// <param name="specialActive">Removes the default passive special ability from the item and projectile</param>
-		internal static void ModSupport_AddItemStatics(int ItemType, Func<Player, Vector2, Entity> SpecialAbilityFindTarget, Func<Player, int, List<Projectile>, List<Projectile>> SpecialAbilityFindMinions, MinionPowerCollection minionPowers, int minionPowerRechargeTime, bool specialActive)
+		internal static void ModSupport_AddItemStatics(int ItemType, Func<Player, Vector2, Entity> SpecialAbilityFindTarget, Func<Player, Item, List<Projectile>, List<Projectile>> SpecialAbilityFindMinions, MinionPowerCollection minionPowers, int minionPowerRechargeTime, bool specialActive)
 		{
 			SummonersShine.Call(2, ItemType, SpecialAbilityFindTarget, SpecialAbilityFindMinions, minionPowers.BakeToTupleArray(), minionPowerRechargeTime, specialActive);
 		}
@@ -924,8 +892,8 @@ namespace TheConfectionRebirth
 			minionCDType,
 			drawBehindType,
 			ArmorIgnoredPerc,
-            prefixMinionPower,
-        }
+			PrefixMinionPower,
+		}
 
 		internal enum ProjectileDataVariableType
 		{
@@ -939,7 +907,7 @@ namespace TheConfectionRebirth
 			specialCastPosition,
 			cancelSpecialNextFrame,
 			minionFlickeringThreshold,
-			DEPRECIATED,
+			prefixMinionPower,
 			minionTrackingAcceleration,
 			minionTrackingImperfection,
 			trackingState,
@@ -1071,45 +1039,34 @@ namespace TheConfectionRebirth
 		public static void HookMeleeInstastrikeDefaultSpecialPostTeleport(Mod mod, Action<Projectile, NPC> handler)
 		{
 			SummonersShine.Call(18, mod, 2, handler);
-        }
+		}
 
-        /// <summary>
-        /// Call this in <see cref="Mod.PostSetupContent"/>.Allows you to modify if a projectile is detected as ranged or melee.<br />
-        ///  Use if you need to make Instastrike register your projectile as ranged or melee.
-        /// </summary>
-        /// <param name="mod">Your mod</param>
-        /// <param name="handler">The instastrike handler<br />
-        /// delegate bool DefaultSpecialDetectRanged(Projectile minion);
-        /// </param>
-        public static void HookDefaultSpecialAbilityDetectRanged(Mod mod, Func<Projectile, bool> handler)
-        {
-            SummonersShine.Call(18, mod, 3, handler);
-        }
+		/// <summary>
+		/// Call this in <see cref="Mod.PostSetupContent"/>.Allows you to modify if a projectile is detected as ranged or melee.<br />
+		///  Use if you need to make Instastrike register your projectile as ranged or melee.
+		/// </summary>
+		/// <param name="mod">Your mod</param>
+		/// <param name="handler">The instastrike handler<br />
+		/// delegate bool DefaultSpecialDetectRanged(Projectile minion);
+		/// </param>
+		public static void HookDefaultSpecialAbilityDetectRanged(Mod mod, Func<Projectile, bool> handler)
+		{
+			SummonersShine.Call(18, mod, 3, handler);
+		}
 
-        /// <summary>
-        /// Call this in <see cref="Mod.PostSetupContent"/>.Allows you to do whatever (such as making aspho eri noises) every time the player activates enrage.<br />
-        ///  Use this to make aspho eri noises.
-        /// </summary>
-        /// <param name="mod">Your mod</param>
-        /// <param name="handler">The on enrage handler<br />
-        /// delegate void OnEnrageUsed(Projectile minion);
-        /// </param>
-        public static void HookDefaultSpecialAbilityOnEnrageUsed(Mod mod, Action<Projectile> handler)
-        {
-            SummonersShine.Call(18, mod, 4, handler);
-        }
 
-        /// <summary>
-        /// Call this in <see cref="Mod.PostSetupContent"/>Adds or modifies a custom default special ability.<br />
-        /// Handles the custom addition of a minion power through config. Required.
-        /// </summary>
-        /// <param name="mod">Your mod</param>
-        /// <param name="specialName">Your default special ability's name</param>
-        /// <param name="hook">The function<br />
-        /// delegate Tuple&lt;float, int, int, bool&gt; GetMinionPower(float MinionPower0, float MinionPower1);<br />
-        /// Returns a MinionPowerCollection baked to Tuple Array
-        /// </param>
-        public static void HookCustomDefaultSpecialAbility_GetMinionPower(Mod mod, string specialName, Func<float, float, Tuple<float, int, int, bool>[]> hook)
+
+		/// <summary>
+		/// Call this in <see cref="Mod.PostSetupContent"/>Adds or modifies a custom default special ability.<br />
+		/// Handles the custom addition of a minion power through config. Required.
+		/// </summary>
+		/// <param name="mod">Your mod</param>
+		/// <param name="specialName">Your default special ability's name</param>
+		/// <param name="hook">The function<br />
+		/// delegate Tuple&lt;float, int, int, bool&gt; GetMinionPower(float MinionPower0, float MinionPower1);<br />
+		/// Returns a MinionPowerCollection baked to Tuple Array
+		/// </param>
+		public static void HookCustomDefaultSpecialAbility_GetMinionPower(Mod mod, string specialName, Func<float, float, Tuple<float, int, int, bool>[]> hook)
 		{
 			SummonersShine.Call(19, mod, specialName, 0, hook);
 		}
@@ -1420,20 +1377,8 @@ namespace TheConfectionRebirth
 		public static void HookCustomDefaultWhipSpecialAbility_SaveNetData_extra(Mod mod, string specialName, Action<ModPacket, float, float, object> hook)
 		{
 			SummonersShine.Call(20, mod, specialName, 14, hook);
-        }
-
-        /// <summary>
-        /// Acquires an IEntitySource which contains arbitrary minion data. Use this if you want to spawn a minion without passing in an item or projectile source (i.e. Pirate Staff, Houndius Shootius specials)
-        /// </summary>
-        /// <param name="itemSource">The item source</param>
-        /// <param name="MinionASMod">The minion's attack time modifier</param>
-        /// <param name="MinionCrit">The probability for the minion to crit</param>
-        /// <param name="PrefixMinionPower">The minion's ability power</param>
-        public static IEntitySource GetArbitraryEntitySource(int itemSource, float MinionASMod, int MinionCrit, float PrefixMinionPower)
-        {
-            return (IEntitySource)SummonersShine.Call(10, 21, itemSource, MinionASMod, MinionCrit, PrefixMinionPower);
-        }
-    }
+		}
+	}
 
 	internal static class SummonersShineGenerics
 	{
@@ -1609,29 +1554,11 @@ namespace TheConfectionRebirth
 		public static void ForciblyDisplayFinishedCooldown(this Player player, int itemID, bool playerHasMultipleMinions, bool golden)
 		{
 			SummonersShine.Call(10, 18, player, itemID, playerHasMultipleMinions, golden);
-        }
+		}
 
-        /// <summary>
-        /// Acquires an IEntitySource which contains this minion's stats. Use this if your mod respawns minions automatically so the respawned minions can retain their attack speed, crit chance, and ability power.
-        /// </summary>
-        /// <param name="minion">The minion to get Summoner's Shine stats</param>
-        public static IEntitySource GetRespawnMinionEntitySource(this Projectile minion)
-        {
-            return (IEntitySource)SummonersShine.Call(10, 19, minion);
-        }
-
-        /// <summary>
-        /// Does something every time the player casts a Right-Click Special Ability.
-        /// </summary>
-        /// <param name="Hook">Is called every time any player uses a special ability. It looks like this: Hook(Player Player, Vector2 MouseWorld, int ItemID, Projectile[] ViableMinions, bool FromServer)<br />
-		/// Player is the player who casted the special ability <br />
-		/// MouseWorld is where the player's cursor is <br />
-		/// ItemID is the summon staff swung <br />
-		/// ViableMinions are the minions who are casting the special ability <br />
-		/// FromServer is whether this is being duplicated on other clients</param>
-        public static void AddOnPlayerCastSpecialAbilityHook(Action<Player, Vector2, int, Projectile[], bool> Hook)
+		public static IEntitySource GetRespawnMinionEntitySource(this Projectile minion)
 		{
-			SummonersShine.Call(10, 20, Hook);
+			return (IEntitySource)SummonersShine.Call(10, 19, minion);
 		}
 	}
 }

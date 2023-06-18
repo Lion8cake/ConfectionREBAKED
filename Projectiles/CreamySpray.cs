@@ -38,7 +38,7 @@ namespace TheConfectionRebirth.Projectiles
                 float num152 = Projectile.velocity.X / 3f * num151;
                 float num153 = Projectile.velocity.Y / 3f * num151;
                 int num154 = 14;
-                int num155 = Dust.NewDust(new Vector2(Projectile.position.X + num154, Projectile.position.Y + num154), Projectile.width - num154 * 2, Projectile.height - num154 * 2, 91, 0f, 0f, 100);
+                int num155 = Dust.NewDust(new Vector2(Projectile.position.X + num154, Projectile.position.Y + num154), Projectile.width - num154 * 2, Projectile.height - num154 * 2, 133, 0f, 0f, 100);
                 Dust obj = Main.dust[num155];
                 obj.noGravity = true;
                 obj.velocity *= 0.1f;
@@ -49,10 +49,10 @@ namespace TheConfectionRebirth.Projectiles
             if (Main.rand.NextBool(8))
             {
                 int num156 = 16;
-                int num91 = Dust.NewDust(new Vector2(Projectile.position.X + num156, Projectile.position.Y + num156), Projectile.width - num156 * 2, Projectile.height - num156 * 2, 91, 0f, 0f, 100, default(Color), 0.5f);
-                Dust obj2 = Main.dust[num91];
+                int num133 = Dust.NewDust(new Vector2(Projectile.position.X + num156, Projectile.position.Y + num156), Projectile.width - num156 * 2, Projectile.height - num156 * 2, 133, 0f, 0f, 100, default(Color), 0.5f);
+                Dust obj2 = Main.dust[num133];
                 obj2.velocity *= 0.25f;
-                Dust obj3 = Main.dust[num91];
+                Dust obj3 = Main.dust[num133];
                 obj3.velocity += Projectile.velocity * 0.5f;
             }
         }

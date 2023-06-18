@@ -54,7 +54,7 @@ namespace TheConfectionRebirth.Projectiles
             Vector2 vector3 = (num8 + Projectile.ai[0] * ((float)Math.PI / 2f)).ToRotationVector2();
             //if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), ModContent.DustType<NeapoliniteDust>(), vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), 278, vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
                 dust2.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust2.noGravity = true;
             }
@@ -359,7 +359,7 @@ namespace TheConfectionRebirth.Projectiles
             Vector2 vector3 = (num8 + Projectile.ai[0] * ((float)Math.PI / 2f)).ToRotationVector2();
             //if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), ModContent.DustType<NeapoliniteDust>(), vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), 278, vector3 * 1f, ModContent.DustType<NeapoliniteDust>(), Color.Lerp(Color.Gold, Color.Purple, Main.rand.NextFloat() * 1f), 0.4f);
                 dust2.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust2.noGravity = true;
             }

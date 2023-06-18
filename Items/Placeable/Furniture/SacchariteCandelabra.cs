@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 3);
-            Item.createTile = Mod.Find<ModTile>("SacchariteCandel").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteCandel>();
         }
 
         public override void AddRecipes()

@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(copper: 40);
-            Item.createTile = Mod.Find<ModTile>("SacchariteDoorClosed").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteDoorClosed>();
         }
 
         public override void AddRecipes()

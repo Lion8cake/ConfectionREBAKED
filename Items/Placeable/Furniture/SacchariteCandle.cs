@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = Mod.Find<ModTile>("SacchariteCandle").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteCandle>();
         }
 
         public override void AddRecipes()

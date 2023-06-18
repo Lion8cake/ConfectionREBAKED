@@ -35,7 +35,7 @@ namespace TheConfectionRebirth.Items.Weapons.Minions
         //note - this is treated as static. Do not use the "this" parameter.
         internal virtual Entity SummonersShine_SpecialAbilityFindTarget(Player player, Vector2 mousePos) { return null; }
         //note - this is treated as static. Do not use the "this" parameter.
-        internal virtual List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, int itemType, List<Projectile> valid) { return valid; }
+        internal virtual List<Projectile> SummonersShine_SpecialAbilityFindMinions(Player player, Item item, List<Projectile> valid) { return valid; }
         public sealed override void SetStaticDefaults()
         {
             ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;

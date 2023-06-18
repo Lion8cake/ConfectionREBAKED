@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.autoReuse = true;
             Item.shoot = 10;
             Item.shootSpeed = 16f;
-            Item.shoot = Mod.Find<ModProjectile>("PopRocket").Type;
+            Item.shoot = ModContent.ProjectileType<Projectiles.PopRocket>();
             Item.useAnimation = 12;
         }
 
