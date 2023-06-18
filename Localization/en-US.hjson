@@ -3,7 +3,7 @@ Mods: {
 	{
 		Common: {
 			Impersonate: "'Great for impersonating Confection Creators'"
-			Banner: Banner
+			Banner: " Banner"
 			Banner2: "Nearby players get a bonus against:"
 
 			CaughtInConfection: Caught anywhere in the Confection
@@ -56,43 +56,45 @@ Mods: {
 			NeapoliniteMask: Neapolinite Mask
 			RightTrousers: Right Trousers
 			TopCake: Top Cake
+			Unicookie: Unicookie
 			WonkyCoat: Wonky Coat
 			WonkyHat: Wonky Hat
 			WonkyTrousers: Wonky Trousers
 
 			# Banners
-			BirdnanaBanner: "{$Mods.TheConfectionRebirth.NPCName.Birdnana} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CherryBomberBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBomber} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CherryBugBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBug} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.NPCName.BigMimicConfection} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CrazyConeBanner: "{$Mods.TheConfectionRebirth.NPCName.CrazyCone} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamSwollower} {$Mods.TheConfectionRebirth.Common.Banner}"
-			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.CrookedCookie} {$Mods.TheConfectionRebirth.Common.Banner}"
-			DudleyBanner: "{$Mods.TheConfectionRebirth.NPCName.Dudley} {$Mods.TheConfectionRebirth.Common.Banner}"
-			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.NPCName.FoaminFloat} {$Mods.TheConfectionRebirth.Common.Banner}"
-			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.NPCName.GummyWyrm} {$Mods.TheConfectionRebirth.Common.Banner}"
-			HungerBanner: "{$Mods.TheConfectionRebirth.NPCName.Hunger} {$Mods.TheConfectionRebirth.Common.Banner}"
-			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.NPCName.IcecreamGal} {$Mods.TheConfectionRebirth.Common.Banner}"
-			IscreamerBanner: "{$Mods.TheConfectionRebirth.NPCName.Iscreamer} {$Mods.TheConfectionRebirth.Common.Banner}"
-			MeowzerBanner: "{$Mods.TheConfectionRebirth.NPCName.Meowzer} {$Mods.TheConfectionRebirth.Common.Banner}"
-			MintJrBanner: "{$Mods.TheConfectionRebirth.NPCName.MintJr} {$Mods.TheConfectionRebirth.Common.Banner}"
-			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.ParfaitSlime} {$Mods.TheConfectionRebirth.Common.Banner}"
-			PipBanner: "{$Mods.TheConfectionRebirth.NPCName.Pip} {$Mods.TheConfectionRebirth.Common.Banner}"
-			PricksterBanner: "{$Mods.TheConfectionRebirth.NPCName.Prickster} {$Mods.TheConfectionRebirth.Common.Banner}"
-			RollerCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.Rollercookie} {$Mods.TheConfectionRebirth.Common.Banner}"
-			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.SherbetSlime} {$Mods.TheConfectionRebirth.Common.Banner}"
-			SprinklingBanner: "{$Mods.TheConfectionRebirth.NPCName.Sprinkling} {$Mods.TheConfectionRebirth.Common.Banner}"
-			StripedPigronBanner: "{$Mods.TheConfectionRebirth.NPCName.StripedPigron} {$Mods.TheConfectionRebirth.Common.Banner}"
-			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.NPCName.TheUnfirm} {$Mods.TheConfectionRebirth.Common.Banner}"
-			WildWillyBanner: "{$Mods.TheConfectionRebirth.NPCName.WildWilly} {$Mods.TheConfectionRebirth.Common.Banner}"
+			BirdnanaBanner: "{$Mods.TheConfectionRebirth.NPCName.Birdnana}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBomberBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBomber}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CherryBugBanner: "{$Mods.TheConfectionRebirth.NPCName.CherryBug}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateBunnyBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateBunny}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ChocolateFrogBanner: "{$Mods.TheConfectionRebirth.NPCName.ChocolateFrog}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ConfectionMimicBanner: "{$Mods.TheConfectionRebirth.NPCName.BigMimicConfection}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrazyConeBanner: "{$Mods.TheConfectionRebirth.NPCName.CrazyCone}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamsandWitchBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamsandWitchPhase1}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CreamSwollowerBanner: "{$Mods.TheConfectionRebirth.NPCName.CreamSwollower}{$Mods.TheConfectionRebirth.Common.Banner}"
+			CrookedCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.CrookedCookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			DudleyBanner: "{$Mods.TheConfectionRebirth.NPCName.Dudley}{$Mods.TheConfectionRebirth.Common.Banner}"
+			FoaminFloatBanner: "{$Mods.TheConfectionRebirth.NPCName.FoaminFloat}{$Mods.TheConfectionRebirth.Common.Banner}"
+			GummyWyrmBanner: "{$Mods.TheConfectionRebirth.NPCName.GummyWyrm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			HungerBanner: "{$Mods.TheConfectionRebirth.NPCName.Hunger}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IcecreamGalBanner: "{$Mods.TheConfectionRebirth.NPCName.IcecreamGal}{$Mods.TheConfectionRebirth.Common.Banner}"
+			IscreamerBanner: "{$Mods.TheConfectionRebirth.NPCName.Iscreamer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MeowzerBanner: "{$Mods.TheConfectionRebirth.NPCName.Meowzer}{$Mods.TheConfectionRebirth.Common.Banner}"
+			MintJrBanner: "{$Mods.TheConfectionRebirth.NPCName.MintJr}{$Mods.TheConfectionRebirth.Common.Banner}"
+			ParfaitSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.ParfaitSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PipBanner: "{$Mods.TheConfectionRebirth.NPCName.Pip}{$Mods.TheConfectionRebirth.Common.Banner}"
+			PricksterBanner: "{$Mods.TheConfectionRebirth.NPCName.Prickster}{$Mods.TheConfectionRebirth.Common.Banner}"
+			RollerCookieBanner: "{$Mods.TheConfectionRebirth.NPCName.Rollercookie}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SherbetSlimeBanner: "{$Mods.TheConfectionRebirth.NPCName.SherbetSlime}{$Mods.TheConfectionRebirth.Common.Banner}"
+			SprinklingBanner: "{$Mods.TheConfectionRebirth.NPCName.Sprinkling}{$Mods.TheConfectionRebirth.Common.Banner}"
+			StripedPigronBanner: "{$Mods.TheConfectionRebirth.NPCName.StripedPigron}{$Mods.TheConfectionRebirth.Common.Banner}"
+			TheUnfirmBanner: "{$Mods.TheConfectionRebirth.NPCName.TheUnfirm}{$Mods.TheConfectionRebirth.Common.Banner}"
+			WildWillyBanner: "{$Mods.TheConfectionRebirth.NPCName.WildWilly}{$Mods.TheConfectionRebirth.Common.Banner}"
 
 			# Furniture
 			CreamwoodBath: Creamwood Bath
 			CreamwoodBed: Creamwood Bed
 			CreamwoodBookcase: Creamwood Bookcase
+			CreamwoodChandelier: Creamwood Chandelier
 			CreamwoodCandelabra: Creamwood Candelabra
 			CreamwoodCandle: Creamwood Candle
 			CreamwoodChair: Creamwood Chair
@@ -112,6 +114,7 @@ Mods: {
 			SacchariteBath: Saccharite Bath
 			SacchariteBed: Saccharite Bed
 			SacchariteBookcase: Saccharite Bookcase
+			SacchariteChandelier: Saccharite Chandelier
 			SacchariteCandelabra: Saccharite Candelabra
 			SacchariteCandle: Saccharite Candle
 			SacchariteChair: Saccharite Chair
@@ -197,7 +200,7 @@ Mods: {
 			SherbetTorch: Sherbet Torch
 			SherbetWall: Sherbet Brick Wall
 			YumBlock: Yum Block
-			YumWall: Yum Wall
+			YumBlockWall: Yum Wall
 
 			# Weapons.Minions
 			GummyStaff: Fairy Tooth
@@ -216,7 +219,7 @@ Mods: {
 			CookieCrumbler: Cookie Pike-let
 			CosmicCookieCannon: Cosmic Cookie Cannon
 			CreamBeam: Cream Beam
-			CreamSpray: Cream Spray
+			CreamSpray: Icing Spray
 			CreamwoodBow: Creamwood Bow
 			CreamwoodHammer: Creamwood Hammer
 			CreamwoodSword: Creamwood Sword
@@ -244,6 +247,7 @@ Mods: {
 			YoyoCookie: The Crumbler
 
 			# Misc/common items
+			BananawarpPeel: Bananawarp Peel
 			Brownie: Brownie
 			Cakekite: Cakekite
 			CcretTicket: C-cret Ticket
@@ -399,7 +403,7 @@ Mods: {
 			CherryGrenade: After detonation cherry shards with come out and explode.
 			ChipArrow: Cunks of Chocolate bounce around after impact.
 			CosmicCookieCannon: "'But wait? Doesn't it shoot cosmic brownies instead?'"
-			CreamSpray: Shoots a spray of cream
+			CreamSpray: 'The best book to decorate your cake AND your enemies with icing'
 			CrunchBall: Launches a large Rock Candy ball
 			Drixer: "'Not to be confused with a Drax'"
 			GrandSlammer: Strong enough to destroy Demon Altars
@@ -421,6 +425,7 @@ Mods: {
 			Trifle: 30% chance to save ammo
 
 			# Misc/common items
+			BananawarpPeel: Places a portal at the break location, 2 are needed in order for it to work
 			Brownie:
 				'''
 				{$CommonItemTooltip.MediumStats}
@@ -498,7 +503,7 @@ Mods: {
 			SherbetSlime: Sherbet Slime
 			Sprinkler: Sprinkler
 			Sprinkling: Sprinkling
-			StripedPigron: Striped Pigron
+			StripedPigron: StripedPigron
 			SugarGhoul: Sugar Ghoul
 			SweetGummy: Sweet Gummy
 			TheUnfirm: The Unfirm
@@ -557,7 +562,7 @@ Mods: {
 
 		BuffDescription: {
 			# Weapons.Minions
-			DuchessPrincessSummonBuff: The Candy Fairy will instill diabetes in your enemies!
+			DuchessPrincessSummonBuff: How many teeth can one fairy have?!
 			GastropodSummonBuff: The Mini Gastropod will shoot pink lasers at your enemies.
 			MeawzerSummonBuff: The little Meawzers will shoot rainbow lasers at your enemies.
 			RollerCookieSummonBuff: The roller cookie will fight for you.

@@ -5,12 +5,19 @@ The Confection Uses Alternate Libraries mod to be able to be compatible with oth
 
 You are 100% able to port 1.3 confection worlds to 1.4 tmodloader ALTHOUGH your world will turn to being hallowed as registration for worlds being confection or not are different in 1.4 due to altlib.
 
+This mod supported Chinese and Russian translations
+
 If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Changelog
 ===========================================
-Fixed issue with drawing the sprinklings
+Fixed Summoner's Shine compatability
+Completely reworked the Dimensional split and Lickety Split
+Added banana warp peel
+Added 1.4.4 Sword AoE effect to Sucrosa and true sucrosa (Experimental)
+Made True Sucrosa True Melee (Experimental)
+Added polishing to the code by Hariq
 
 ===========================================
 Credit - Programmers
@@ -20,7 +27,7 @@ BasicallyIAmFox - For Altlib, cream fox pet, old biome chest, old biome generati
 Cace - For Altlib, 1.3 the very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
 Yreorel - For much of the reworks for different items as well as making the Icescreamer AI
 Ghasttear1 - For the 1.3 menu UI
-DavidF-Dev - Otherworldly music switcher that he allowed for us to use
+Hariq - Polished backend code
 CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
 foxyboy55 - many bug fixes an a few texture changes
@@ -34,8 +41,15 @@ Delicios Satern - Music
 mddznyan - Creating textures for some items and the new logo
 Snacks - Several 1.4 textures including the furniture toilets, saccharite furniture sprites and Cosmic cookie cannon
 DakotaSpine - The amazing New background for the confection
+AstralGel - For all the sounds used from the 0.18.2 update and above
 Neobind - Textures for a few things
 Miguel Noturn0 - Confection Tree icons
 splig - for Gummy Worm-whip sprite
+
+===========================================
+Credit - Translators
+===========================================
+Cyril - for Chinese translation
+AstralGel - for Russian translation
 
 And to all the people that helped me out with coding problems and other issues, thank you!

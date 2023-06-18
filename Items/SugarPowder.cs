@@ -13,7 +13,7 @@ namespace TheConfectionRebirth.Items
 
         public override void SetDefaults()
         {
-            Item.shoot = ModContent.ProjectileType<Projectiles.SugarPowder>();
+            Item.shoot = Mod.Find<ModProjectile>("SugarPowder").Type;
             Item.useStyle = 1;
             Item.shootSpeed = 4f;
             Item.width = 16;

@@ -1,13 +1,14 @@
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles.Furniture;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-    public class SacchariteWorkBench : ModItem, IArchived
-    {
+    public class SacchariteWorkBench : ModItem {
+		public override void SetStaticDefaults() {
+			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
+		}
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             Item.width = 26;
             Item.height = 22;
@@ -19,9 +20,7 @@ namespace TheConfectionRebirth.Items.Archived
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = ModContent.TileType<SacchariteWorkbench>();
+            Item.createTile = Mod.Find<ModTile>("SacchariteWorkbench").Type;
         }
-
-        public int ArchivatesTo() => ModContent.ItemType<Placeable.Furniture.SacchariteWorkbench>();
     }
 }

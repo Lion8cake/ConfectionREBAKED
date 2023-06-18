@@ -10,10 +10,10 @@ namespace TheConfectionRebirth.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrass>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CookieBlock>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
-            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<CreamGrassMowed>()] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBrick[Type] = true;
@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(235, 207, 150));
             //SoundType = 0;
             //SoundStyle = 2;
-            ItemDrop = ModContent.ItemType<Items.Placeable.CookieBlock>();
+            ItemDrop = Mod.Find<ModItem>("CookieBlock").Type;
         }
 
         private bool SpawnGrass(int i, int j)

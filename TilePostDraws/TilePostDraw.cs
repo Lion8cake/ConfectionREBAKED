@@ -34,9 +34,9 @@ namespace TheConfectionRebirth.TilePostDraws
         private void GetScreenDrawArea(Vector2 screenPosition, Vector2 offSet, out int firstTileX, out int lastTileX, out int firstTileY, out int lastTileY)
 		{
 			firstTileX = (int)((screenPosition.X - offSet.X) / 16f - 1f);
-			lastTileX = (int)((screenPosition.X + (float)Main.screenWidth + offSet.X) / 16f) + 2;
+			lastTileX = (int)((screenPosition.X + Main.screenWidth + offSet.X) / 16f) + 2;
 			firstTileY = (int)((screenPosition.Y - offSet.Y) / 16f - 1f);
-			lastTileY = (int)((screenPosition.Y + (float)Main.screenHeight + offSet.Y) / 16f) + 5;
+			lastTileY = (int)((screenPosition.Y + Main.screenHeight + offSet.Y) / 16f) + 5;
 			if (firstTileX < 4)
 			{
 				firstTileX = 4;
@@ -53,7 +53,7 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				lastTileY = Main.maxTilesY - 4;
 			}
-			if (Main.sectionManager.AnyUnfinishedSections)
+			if (Main.sectionManager.FrameSectionsLeft > 0)
 			{
 				TimeLogger.DetailedDrawReset();
 				WorldGen.SectionTileFrameWithCheck(firstTileX, firstTileY, lastTileX, lastTileY);
@@ -63,10 +63,6 @@ namespace TheConfectionRebirth.TilePostDraws
 		public override void PostDrawTiles()
 		{
 			Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-			int num3;
-			int num4;
-			int num5;
-			int num6;
 			Vector2 screenPosition = Main.Camera.UnscaledPosition;
 			Vector2 screenOffset = Vector2.Zero;
 			//Vector2 screenOffset = new((float)Main.offScreenRange, (float)Main.offScreenRange);
@@ -74,7 +70,7 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				screenOffset = Vector2.Zero;
 			}
-			this.GetScreenDrawArea(screenPosition, screenOffset + (Main.Camera.UnscaledPosition - Main.Camera.ScaledPosition), out num3, out num4, out num5, out num6);
+			this.GetScreenDrawArea(screenPosition, screenOffset + (Main.Camera.UnscaledPosition - Main.Camera.ScaledPosition), out int num3, out int num4, out int num5, out int num6);
 			for (int tileX = num3 - 2; tileX < num4 + 2; tileX++)
 			{
 				for (int tileY = num5; tileY < num6 + 4; tileY++)
@@ -148,7 +144,7 @@ namespace TheConfectionRebirth.TilePostDraws
 						{
 							mossAdjacency[7] = true;
 						}
-						Vector2 normalTilePosition = new Vector2((float)(tileX * 16 - (int)screenPosition.X) - (16 - 16f) / 2f, (float)(tileY * 16 - (int)screenPosition.Y + 0)) + screenOffset + new Vector2(8f, 8f);
+						Vector2 normalTilePosition = new Vector2(tileX * 16 - (int)screenPosition.X - (16 - 16f) / 2f, tileY * 16 - (int)screenPosition.Y + 0) + screenOffset + new Vector2(8f, 8f);
 						Tile tile = Main.tile[tileX, tileY];
 						if (tile.IsHalfBlock)
 						{
@@ -177,9 +173,9 @@ namespace TheConfectionRebirth.TilePostDraws
 
 			for (int i = 0; i < 16; i++)
 			{
-				int yDrawDisp = 0;
-				int yRectDisp = 0;
-				int yRectDispEnd = 32;
+				int yDrawDisp;
+				int yRectDisp;
+				int yRectDispEnd;
 				int disp = i * 2 - 8;
 				switch (slope)
 				{
@@ -200,7 +196,7 @@ namespace TheConfectionRebirth.TilePostDraws
 						break;
 					default:
 						yDrawDisp = Top_DrawFull;
-						yRectDisp = (24 - disp);
+						yRectDisp = 24 - disp;
 						yRectDispEnd = disp + 8;
 						break;
 				}
@@ -237,8 +233,7 @@ namespace TheConfectionRebirth.TilePostDraws
 		const byte BottomRightFalse = 15;
 		Rectangle GetMossTile_FromAdjacency(BitsByte adj, BitsByte mossAdjacency, Tile tile)
 		{
-			bool succeed = MossAdjacencyRules.TryGetValue(adj, out int Base);
-
+			MossAdjacencyRules.TryGetValue(adj, out int Base);
 			return GetMossTile(Base, tile.TileFrameNumber);
 		}
 
@@ -322,7 +317,7 @@ namespace TheConfectionRebirth.TilePostDraws
 		void AdjBake(int value, params byte[] adjRule)
 		{
 			BitsByte bakedByte = new();
-			List<byte> IgnoreBytes = new();
+			Span<byte> IgnoreBytes = stackalloc byte[8];
 
 			for (int x = 0; x < adjRule.Length; x++)
 			{
@@ -331,6 +326,7 @@ namespace TheConfectionRebirth.TilePostDraws
 					bakedByte[index] = true;
 			}
 
+			int ignoranceCount = 0;
 			for (byte i = 0; i < 8; i++)
 			{
 				bool ignored = true;
@@ -340,13 +336,15 @@ namespace TheConfectionRebirth.TilePostDraws
 					if (index == i)
 						ignored = false;
 				}
-				if (ignored)
-					IgnoreBytes.Add(i);
+				if (ignored) {
+					IgnoreBytes[i] = i;
+					ignoranceCount++;
+				}
 			}
 
-			int maxPermutations = (int)Math.Pow(2, IgnoreBytes.Count);
+			int maxPermutations = (int)Math.Pow(2, ignoranceCount);
 			for (BitsByte permutations = 0; permutations < maxPermutations; permutations++) {
-				for (int x = 0; x < IgnoreBytes.Count; x++)
+				for (int x = 0; x < ignoranceCount; x++)
 				{
 					bakedByte[IgnoreBytes[x]] = permutations[x];
 				}
@@ -356,7 +354,6 @@ namespace TheConfectionRebirth.TilePostDraws
 		}
 		bool IsMoss(int i, int j)
 		{
-
 			Tile tile = Main.tile[i, j];
 			return tile.HasTile && MossColor.TryGetValue(tile.TileType, out Color _);
 		}

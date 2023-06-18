@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.value = Item.buyPrice(gold: 3);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<Tiles.PottedConfectionPalm>();
+            Item.createTile = Mod.Find<ModTile>("PottedConfectionPalm").Type;
         }
     }
 }

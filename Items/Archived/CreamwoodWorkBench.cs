@@ -1,12 +1,14 @@
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles.Furniture;
 
 namespace TheConfectionRebirth.Items.Archived
 {
-    public class CreamwoodWorkBench : ModItem, IArchived
-    {
-        public override void SetDefaults()
+    public class CreamwoodWorkBench : ModItem {
+		public override void SetStaticDefaults() {
+			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
+		}
+
+		public override void SetDefaults()
         {
             Item.width = 26;
             Item.height = 22;
@@ -18,9 +20,7 @@ namespace TheConfectionRebirth.Items.Archived
             Item.useStyle = 1;
             Item.consumable = true;
             Item.value = 0;
-            Item.createTile = ModContent.TileType<CreamwoodWorkbench>();
+            Item.createTile = Mod.Find<ModTile>("CreamwoodWorkbench").Type;
         }
-
-        public int ArchivatesTo() => ModContent.ItemType<Placeable.Furniture.CreamwoodWorkbench>();
     }
 }

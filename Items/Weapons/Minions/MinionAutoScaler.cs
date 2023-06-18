@@ -26,7 +26,7 @@ namespace TheConfectionRebirth.Util
             {
                 speed = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.MinionASMod);
                 crit = (int)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.ProjectileCrit);
-                prefixMinionPower = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.PrefixMinionPower);
+                prefixMinionPower = (float)SummonersShineCompat.ModSupport_GetVariable_ProjFuncs(proj, SummonersShineCompat.ProjectileFuncsVariableType.prefixMinionPower);
             }
             else {
                 speed = 0;
@@ -112,7 +112,7 @@ namespace TheConfectionRebirth.Util
             Directed.ForEach(x => {
                 SummonersShineCompat.ModSupport_SetVariable_ProjFuncs(x, SummonersShineCompat.ProjectileFuncsVariableType.ProjectileCrit, crit);
                 SummonersShineCompat.ModSupport_SetVariable_ProjFuncs(x, SummonersShineCompat.ProjectileFuncsVariableType.MinionASMod, 1 / speed);
-                SummonersShineCompat.ModSupport_SetVariable_ProjFuncs(x, SummonersShineCompat.ProjectileFuncsVariableType.PrefixMinionPower, prefixMinionPower);
+                SummonersShineCompat.ModSupport_SetVariable_ProjFuncs(x, SummonersShineCompat.ProjectileFuncsVariableType.prefixMinionPower, prefixMinionPower);
             });
         }
 

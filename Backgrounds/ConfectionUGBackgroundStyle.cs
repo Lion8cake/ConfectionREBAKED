@@ -2,7 +2,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Backgrounds
 {
-    public class ConfectionUGBackgroundStyle : ModUndergroundBackgroundStyle
+    public class IceConfectionUndergroundBiome : ModUndergroundBackgroundStyle
     {
         public override void FillTextureArray(int[] textureSlots)
         {
