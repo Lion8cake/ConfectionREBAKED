@@ -1,0 +1,15 @@
+Mods: {
+	TheConfectionRebirth: {
+		DryadSpecialText: {
+			WorldStatusAll: "{0} is {1}% hallow, {2}% confected, {3}% corrupt, and {4}% crimson."
+			WorldStatusHallowCandyCorrupt: "{0} is {1}% hallow, {2}% confected, and {3}% corrupt."
+			WorldStatusHallowCandyCrimson: "{0} is {1}% hallow, {2}% confected, and {3}% crimson."
+			WorldStatusCandyCorruptCrimson: "{0} is {1}% confected, {2}% corrupt, and {3}% crimson."
+			WorldStatusCandyCorrupt: "{0} is {1}% confected and {2}% corrupt."
+			WorldStatusCandyCrimson: "{0} is {1}% confected and {2}% crimson."
+			WorldStatusHallowCandy: "{0} is {1}% hallow and {2}% confected."
+			WorldStatusCandy: "{0} is {1}% confected."
+			WorldDescriptionSweeterAir: The air we breathe has become a lot sweeter.
+		}
+	}
+}

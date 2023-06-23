@@ -129,6 +129,51 @@ namespace TheConfectionRebirth.Projectiles
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<ArgonCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.ArgonMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BlueCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.BlueMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BrownCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.BrownMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<GreenCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.GreenMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<KryptonCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.KryptonMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<LavaCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.LavaMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<PurpleCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.PurpleMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<RedCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.RedMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<XenomCreamMoss>()) {
+							Main.tile[k, l].TileType = TileID.XenonMoss;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
 						#endregion
 					}
 				}

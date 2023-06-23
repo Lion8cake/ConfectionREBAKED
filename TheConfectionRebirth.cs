@@ -28,6 +28,8 @@ using Terraria.GameContent.ItemDropRules;
 using static TheConfectionRebirth.NPCs.BagDrops;
 using Terraria.Graphics.Effects;
 using TheConfectionRebirth.Hooks;
+using Terraria.Localization;
+using Terraria.GameContent.Personalities;
 
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
@@ -101,6 +103,7 @@ namespace TheConfectionRebirth {
 			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
 			Terraria.On_Player.MowGrassTile += On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
+			On_Lang.GetDryadWorldStatusDialog += On_Lang_GetDryadWorldStatusDialog;
 		}
 
 		public override void Unload()
@@ -109,7 +112,75 @@ namespace TheConfectionRebirth {
 			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
 			Terraria.On_Player.MowGrassTile -= On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
+			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog;
 		}
+
+		#region DryadText
+		private string On_Lang_GetDryadWorldStatusDialog(On_Lang.orig_GetDryadWorldStatusDialog orig, out bool worldIsEntirelyPure) {
+			orig.Invoke(out worldIsEntirelyPure);
+			string text = "";
+			worldIsEntirelyPure = false;
+			int tGood = WorldGen.tGood;
+			int tEvil = WorldGen.tEvil;
+			int tBlood = WorldGen.tBlood;
+			int tCandy = ConfectionWorldGeneration.tCandy;
+			if (tGood > 0 && tEvil > 0 && tBlood > 0 && tCandy > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood, tCandy);
+			}
+
+			else if (tGood > 0 && tCandy > 0 && tEvil > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusHallowCandyCorrupt", Main.worldName, tGood, tCandy, tEvil);
+			}
+			else if (tGood > 0 && tCandy > 0 && tBlood > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusHallowCandyCrimson", Main.worldName, tGood, tCandy, tBlood);
+			}
+			else if (tCandy > 0 && tEvil > 0 && tBlood > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandyCorruptCrimson", Main.worldName, tCandy, tEvil, tBlood);
+			}
+			else if (tGood > 0 && tEvil > 0 && tBlood > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
+			}
+
+			else if (tGood > 0 && tEvil > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCorrupt", Main.worldName, tGood, tEvil);
+			}
+			else if (tGood > 0 && tBlood > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCrimson", Main.worldName, tGood, tBlood);
+			}
+			else if (tCandy > 0 && tEvil > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandyCorrupt", Main.worldName, tCandy, tEvil);
+			}
+			else if (tCandy > 0 && tBlood > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandyCrimson", Main.worldName, tCandy, tBlood);
+			}
+			else if (tEvil > 0 && tBlood > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusCorruptCrimson", Main.worldName, tEvil, tBlood);
+			}
+			else if (tGood > 0 && tCandy > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusHallowCandy", Main.worldName, tGood, tCandy);
+			}
+
+			else if (tCandy > 0) {
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandy", Main.worldName, tCandy);
+			}
+			else if (tEvil > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusCorrupt", Main.worldName, tEvil);
+			}
+			else if (tBlood > 0) {
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusCrimson", Main.worldName, tBlood);
+			}
+			else {
+				if (tGood <= 0) {
+					text = Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName);
+					worldIsEntirelyPure = true;
+					return text;
+				}
+				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallow", Main.worldName, tGood);
+			}
+			string arg = (((double)(tGood + tCandy) * 1.2 >= (double)(tEvil + tBlood) && (double)(tGood + tCandy) * 0.8 <= (double)(tEvil + tBlood)) ? Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") : ((tGood >= tEvil + tBlood + tCandy) ? Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") : ((tCandy >= tEvil + tBlood + tGood) ? Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldDescriptionSweeterAir") : ((tEvil + tBlood > (tGood + tCandy) + 20) ? Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") : ((tEvil + tBlood <= 5) ? Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") : Language.GetTextValue("DryadSpecialText.WorldDescriptionWork"))))));
+			return $"{text} {arg}";
+		}
+		#endregion
 
 		#region TwinsDropDetour
 		private void On_ItemDropDatabase_RegisterBoss_Twins(On_ItemDropDatabase.orig_RegisterBoss_Twins orig, ItemDropDatabase self)

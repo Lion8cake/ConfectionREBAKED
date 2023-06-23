@@ -115,7 +115,48 @@ Mods: {
 
 		// TheConfection: Mods.TheConfectionRebirth.TheConfection
 		// Conditions.InConfection: Mods.TheConfectionRebirth.Conditions.InConfection
-		// Configs.ConfectionConfig.DisplayName: Confection Config
+
+		Configs: {
+			ConfectionConfig: {
+				// DisplayName: Confection Config
+				// Headers.ConfectionClientsideConfig: Confection Clientside Config
+
+				CookieSpread: {
+					// Label: Cookie and Cream Spreading
+					/* Tooltip:
+						'''
+								Enables spreading for the following:
+								Cookie Block
+								Cream Block
+								Pink Fairy Floss
+								Purple Fairy Floss
+								Blue Fairy Floss
+								Cookiest Cookie Block
+								All Creamstone gems
+						''' */
+				}
+			}
+
+			ConfectionServerConfig: {
+				// DisplayName: Confection Server Config
+				// Headers.ConfectionServersideConfig: Confection Serverside Config Header
+
+				CookieSpread: {
+					// Label: Cookie and Cream Spreading
+					/* Tooltip:
+						'''
+						Enables spreading for the following:
+								Cookie Block
+								Cream Block
+								Pink Fairy Floss
+								Purple Fairy Floss
+								Blue Fairy Floss
+								Cookiest Cookie Block
+								All Creamstone gems
+						''' */
+				}
+			}
+		}
 
 		Projectiles: {
 			// YoyoCookieYoyo.DisplayName: Yoyo Cookie Yoyo
@@ -1837,7 +1878,7 @@ Mods: {
 
 			ConfectionBiome: {
 				// TownNPCDialogueName: the Confection Biome
-				// DisplayName: Confection Biome
+				// DisplayName: Confection
 			}
 		}
 	}
