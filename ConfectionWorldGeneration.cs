@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,7 +99,7 @@ namespace TheConfectionRebirth {
 		}
 
 		public override void ModifyHardmodeTasks(List<GenPass> list) {
-			if (confectionorHallow) {
+			if (confectionorHallow && !Main.drunkWorld) {
 				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
 				if (index2 != -1) {
 					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(Confection)));
@@ -106,13 +107,246 @@ namespace TheConfectionRebirth {
 				}
 				int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
 				if (index3 != -1) {
+					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(NullGen)));
+					list.RemoveAt(index3);
+				}
+			}
+			if (Main.drunkWorld) {
+				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
+				if (index2 != -1) {
+					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(ConfectionDrunkInner)));
+					list.RemoveAt(index2);
+				}
+				int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
+				if (index3 != -1) {
+					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(ConfectionDrunkOuter)));
 					list.RemoveAt(index3);
 				}
 			}
 		}
 
+		#region DrunkWorldgen
+		private static void ConfectionDrunkInner(GenerationProgress progres, GameConfiguration configurations) {
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null) {
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int num3 = (int)((double)(Main.maxTilesX) * num);
+			int num4 = (int)((double)(Main.maxTilesX) * (1.0 - num));
+			int num5 = 1;
+			if (GenVars.dungeonX < Main.maxTilesX / 2) {
+				num4 = (int)((double)(Main.maxTilesX) * num);
+				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num));
+				num5 = -1;
+			}
+			int num6 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2) {
+				num6 = -1;
+			}
+			if (num6 < 0) {
+				if (num4 < num3) {
+					num4 = (int)((double)(Main.maxTilesX) * num2);
+				}
+				else {
+					num3 = (int)((double)(Main.maxTilesX) * num2);
+				}
+			}
+			else if (num4 > num3) {
+				num4 = (int)((double)(Main.maxTilesX) * (1.0 - num2));
+			}
+			else {
+				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num2));
+			}
+			if (Main.remixWorld) {
+				int num7 = Main.maxTilesX / 7;
+				int num8 = Main.maxTilesX / 14;
+				if (Main.dungeonX < Main.maxTilesX / 2) {
+					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++) {
+						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
+							if (i > Main.maxTilesX - num7) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+						}
+					}
+				}
+				else {
+					for (int k = 0; k < num7 + num8; k++) {
+						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
+							if (k < num7) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+						}
+					}
+				}
+			}
+			else {
+				if (confectionorHallow) {
+					ConfectGERunner(num3, 0, 3 * num5, 5.0);
+				}
+				else {
+					WorldGen.GERunner(num3, 0, 3 * num5, 5.0);
+				}
+				WorldGen.GERunner(num4, 0, 3 * -num5, 5.0, good: false);
+			}
+			double num9 = (double)(Main.maxTilesX / 2) / 4200.0;
+			int num10 = (int)(25.0 * num9);
+			ShapeData shapeData = new ShapeData();
+			int num11 = 0;
+			while (num10 > 0) {
+				if (++num11 % 15000 == 0) {
+					num10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort num12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType]) {
+					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType]) {
+					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType]) {
+					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && num12 != 0 && !tile2.HasTile) {
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag) {
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
+						num10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2) {
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+
+		private static void ConfectionDrunkOuter(GenerationProgress progres, GameConfiguration configurations) {
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null) {
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double numm = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double numm2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int numm3 = (int)((double)(Main.maxTilesX) * numm);
+			int numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
+			int numm5 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2) {
+				numm4 = (int)((double)(Main.maxTilesX) * numm);
+				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
+				numm5 = -1;
+			}
+			int numm6 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2) {
+				numm6 = -1;
+			}
+			if (numm6 < 0) {
+				if (numm4 < numm3) {
+					numm4 = (int)((double)(Main.maxTilesX) * numm2);
+				}
+				else {
+					numm3 = (int)((double)(Main.maxTilesX) * numm2);
+				}
+			}
+			else if (numm4 > numm3) {
+				numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
+			}
+			else {
+				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
+			}
+			if (Main.remixWorld) {
+				int numm7 = Main.maxTilesX / 7;
+				int numm8 = Main.maxTilesX / 14;
+				if (Main.dungeonX < Main.maxTilesX / 2) {
+					for (int i = Main.maxTilesX - numm7 - numm8; i < Main.maxTilesX; i++) {
+						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
+							if (i > Main.maxTilesX - numm7) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+						}
+					}
+				}
+				else {
+					for (int k = 0; k < numm7 + numm8; k++) {
+						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
+							if (k < numm7) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+						}
+					}
+				}
+			}
+			else {
+				if (!confectionorHallow) {
+					ConfectGERunner(numm4, 0, 3 * numm5, 5.0);
+				}
+				else {
+					WorldGen.GERunner(numm4, 0, 3 * numm5, 5.0);
+				}
+				AltEvilGERunner(numm3, 0, 3 * -numm5, 5.0, good: false);
+			}
+			double numm9 = (double)Main.maxTilesX / 4200.0;
+			int numm10 = (Main.maxTilesX / 2) + (int)(25.0 * numm9);
+			ShapeData shapeData = new ShapeData();
+			int numm11 = 0;
+			while (numm10 > 0) {
+				if (++numm11 % 15000 == 0) {
+					numm10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort numm12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType]) {
+					numm12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType]) {
+					numm12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType]) {
+					numm12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && numm12 != 0 && !tile2.HasTile) {
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag) {
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(numm12));
+						numm10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2) {
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+		#endregion
+
+		#region NormalWorldgen
 		private static void Confection(GenerationProgress progres, GameConfiguration configurations) {
-			Main.NewText("Hallow Generation is happening");
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
 			if (Main.rand == null) {
 				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
 			}
@@ -151,7 +385,10 @@ namespace TheConfectionRebirth {
 					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++) {
 						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
 							if (i > Main.maxTilesX - num7) {
-								WorldGen.Convert(i, j, 2, 1);
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
 							}
 						}
 					}
@@ -160,14 +397,17 @@ namespace TheConfectionRebirth {
 					for (int k = 0; k < num7 + num8; k++) {
 						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
 							if (k < num7) {
-								WorldGen.Convert(k, l, 2, 1);
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
 							}
 						}
 					}
 				}
 			}
 			else {
-				WorldGen.GERunner(num3, 0, 3 * num5, 5.0);
+				ConfectGERunner(num3, 0, 3 * num5, 5.0);
 				WorldGen.GERunner(num4, 0, 3 * -num5, 5.0, good: false);
 			}
 			double num9 = (double)Main.maxTilesX / 4200.0;
@@ -182,7 +422,13 @@ namespace TheConfectionRebirth {
 				Tile tile = Main.tile[point.X, point.Y];
 				Tile tile2 = Main.tile[point.X, point.Y - 1];
 				ushort num12 = 0;
-				if (TileID.Sets.Hallow[tile.TileType]) {
+				if (TileID.Sets.Crimson[tile.TileType]) {
+					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType]) {
+					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType]) {
 					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
 				}
 				if (tile.HasTile && num12 != 0 && !tile2.HasTile) {
@@ -194,14 +440,409 @@ namespace TheConfectionRebirth {
 					shapeData.Clear();
 				}
 			}
-			if (Main.netMode == 0) {
-				Main.NewText(Lang.misc[15].Value, 50, byte.MaxValue, 130);
-			}
-			AchievementsHelper.NotifyProgressionEvent(9);
 			if (Main.netMode == 2) {
 				Netplay.ResetSections();
 			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
 		}
+
+		private static void NullGen(GenerationProgress progres, GameConfiguration configurations) 
+		{
+		}
+		#endregion
+
+		#region CovertToConfectionWorldGen
+			public static void ConfectGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true) {
+			int num = 0;
+			for (int k = 20; k < Main.maxTilesX - 20; k++) {
+				for (int l = 20; l < Main.maxTilesY - 20; l++) {
+					if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == 225) {
+						num++;
+					}
+				}
+			}
+			bool flag = false;
+			if (num > 200000) {
+				flag = true;
+			}
+			int num2 = WorldGen.genRand.Next(200, 250);
+			double num3 = (double)Main.maxTilesX / 4200.0;
+			num2 = (int)((double)num2 * num3);
+			double num4 = num2;
+			Vector2D val = default(Vector2D);
+			val.X = i;
+			val.Y = j;
+			Vector2D val2 = default(Vector2D);
+			val2.X = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			val2.Y = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			if (speedX != 0.0 || speedY != 0.0) {
+				val2.X = speedX;
+				val2.Y = speedY;
+			}
+			bool flag2 = true;
+			while (flag2) {
+				int num5 = (int)(val.X - num4 * 0.5);
+				int num6 = (int)(val.X + num4 * 0.5);
+				int num7 = (int)(val.Y - num4 * 0.5);
+				int num8 = (int)(val.Y + num4 * 0.5);
+				if (num5 < 0) {
+					num5 = 0;
+				}
+				if (num6 > Main.maxTilesX) {
+					num6 = Main.maxTilesX;
+				}
+				if (num7 < 0) {
+					num7 = 0;
+				}
+				if (num8 > Main.maxTilesY - 5) {
+					num8 = Main.maxTilesY - 5;
+				}
+				for (int m = num5; m < num6; m++) {
+					for (int n = num7; n < num8; n++) {
+						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015))) {
+							continue;
+						}
+						if (good) {
+							if (Main.tile[m, n].WallType == 63 || Main.tile[m, n].WallType == 65 || Main.tile[m, n].WallType == 66 || Main.tile[m, n].WallType == 68 || Main.tile[m, n].WallType == 69 || Main.tile[m, n].WallType == 81) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamGrassWall>();
+							}
+							else if (Main.tile[m, n].WallType == 216) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<HardenedCreamsandWall>();
+							}
+							else if (Main.tile[m, n].WallType == 187) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamsandstoneWall>();
+							}
+							else if (Main.tile[m, n].WallType == 3 || Main.tile[m, n].WallType == 83) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneWall>();
+							}
+							else if (Main.tile[m, n].WallType == 50 || Main.tile[m, n].WallType == 51 || Main.tile[m, n].WallType == 52 || Main.tile[m, n].WallType == 189 || Main.tile[m, n].WallType == 193 || Main.tile[m, n].WallType == 214 || Main.tile[m, n].WallType == 201) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<Creamstone2Wall>();
+							}
+							else if (Main.tile[m, n].WallType == 56 || Main.tile[m, n].WallType == 188 || Main.tile[m, n].WallType == 192 || Main.tile[m, n].WallType == 213 || Main.tile[m, n].WallType == 202) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<Creamstone3Wall>();
+							}
+							else if (Main.tile[m, n].WallType == 48 || Main.tile[m, n].WallType == 49 || Main.tile[m, n].WallType == 53 || Main.tile[m, n].WallType == 57 || Main.tile[m, n].WallType == 58 || Main.tile[m, n].WallType == 190 || Main.tile[m, n].WallType == 194 || Main.tile[m, n].WallType == 212 || Main.tile[m, n].WallType == 203) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<Creamstone4Wall>();
+							}
+							else if (Main.tile[m, n].WallType == 191 || Main.tile[m, n].WallType == 195 || Main.tile[m, n].WallType == 185 || Main.tile[m, n].WallType == 215 || Main.tile[m, n].WallType == 200 || Main.tile[m, n].WallType == 83) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<Creamstone5Wall>();
+							}
+							else if (Main.tile[m, n].WallType == 2 || Main.tile[m, n].WallType == 16) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.Cloud) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.IceUnsafe) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<BlueIceWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.SnowWallUnsafe) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamWall>();
+							}
+							if (flag && Main.tile[m, n].TileType == 225) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (flag && Main.tile[m, n].TileType == 230) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 2) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamGrass>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 1 || Main.tile[m, n].TileType == 25 || Main.tile[m, n].TileType == 203) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 53 || Main.tile[m, n].TileType == 123 || Main.tile[m, n].TileType == 112 || Main.tile[m, n].TileType == 234) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 0) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookieBlock>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 668) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookiestCookieBlock>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 147) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamBlock>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Cloud || Main.tile[m, n].TileType == TileID.LesionBlock || Main.tile[m, n].TileType == TileID.FleshBlock) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.RainCloud) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.SnowCloud) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Amethyst) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Topaz) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Sapphire) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Emerald) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Ruby) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Diamond) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.ArgonMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<ArgonCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.BlueMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.BrownMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BrownCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.GreenMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<GreenCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.KryptonMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<KryptonCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.LavaMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<LavaCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.PurpleMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.RedMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<RedCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.XenonMoss) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<XenomCreamMoss>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 661 || Main.tile[m, n].TileType == 662) {
+								Main.tile[m, n].TileType = 60; //Jungle Grass
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 23 || Main.tile[m, n].TileType == 199) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamGrass>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 161 || Main.tile[m, n].TileType == 163 || Main.tile[m, n].TileType == 200) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueIce>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 396) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 397) {
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsandstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+					}
+				}
+				val += val2;
+				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
+				if (val2.X > speedX + 1.0) {
+					val2.X = speedX + 1.0;
+				}
+				if (val2.X < speedX - 1.0) {
+					val2.X = speedX - 1.0;
+				}
+				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2)) {
+					flag2 = false;
+				}
+			}
+		}
+		#endregion
+
+		#region SwapEvilConvert
+		public static void AltEvilGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true) {
+			int num = 0;
+			for (int k = 20; k < Main.maxTilesX - 20; k++) {
+				for (int l = 20; l < Main.maxTilesY - 20; l++) {
+					if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == 225) {
+						num++;
+					}
+				}
+			}
+			bool flag = false;
+			if (num > 200000) {
+				flag = true;
+			}
+			int num2 = WorldGen.genRand.Next(200, 250);
+			double num3 = (double)Main.maxTilesX / 4200.0;
+			num2 = (int)((double)num2 * num3);
+			double num4 = num2;
+			Vector2D val = default(Vector2D);
+			val.X = i;
+			val.Y = j;
+			Vector2D val2 = default(Vector2D);
+			val2.X = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			val2.Y = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			if (speedX != 0.0 || speedY != 0.0) {
+				val2.X = speedX;
+				val2.Y = speedY;
+			}
+			bool flag2 = true;
+			while (flag2) {
+				int num5 = (int)(val.X - num4 * 0.5);
+				int num6 = (int)(val.X + num4 * 0.5);
+				int num7 = (int)(val.Y - num4 * 0.5);
+				int num8 = (int)(val.Y + num4 * 0.5);
+				if (num5 < 0) {
+					num5 = 0;
+				}
+				if (num6 > Main.maxTilesX) {
+					num6 = Main.maxTilesX;
+				}
+				if (num7 < 0) {
+					num7 = 0;
+				}
+				if (num8 > Main.maxTilesY - 5) {
+					num8 = Main.maxTilesY - 5;
+				}
+				for (int m = num5; m < num6; m++) {
+					for (int n = num7; n < num8; n++) {
+						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015))) {
+							continue;
+						}
+						if (!WorldGen.crimson && good == false) {
+							if (Main.tile[m, n].WallType == 63 || Main.tile[m, n].WallType == 65 || Main.tile[m, n].WallType == 66 || Main.tile[m, n].WallType == 68) {
+								Main.tile[m, n].WallType = 81;
+							}
+							else if (Main.tile[m, n].WallType == 216) {
+								Main.tile[m, n].WallType = 218;
+							}
+							else if (Main.tile[m, n].WallType == 187) {
+								Main.tile[m, n].WallType = 221;
+							}
+							if (flag && Main.tile[m, n].TileType == 225) {
+								Main.tile[m, n].TileType = 203;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (flag && Main.tile[m, n].TileType == 230) {
+								Main.tile[m, n].TileType = 399;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 60 || Main.tile[m, n].TileType == 661) {
+								Main.tile[m, n].TileType = 662;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 2 || Main.tile[m, n].TileType == 109) {
+								Main.tile[m, n].TileType = 199;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 1 || Main.tile[m, n].TileType == 117) {
+								Main.tile[m, n].TileType = 203;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 53 || Main.tile[m, n].TileType == 123 || Main.tile[m, n].TileType == 116) {
+								Main.tile[m, n].TileType = 234;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 161 || Main.tile[m, n].TileType == 164) {
+								Main.tile[m, n].TileType = 200;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 396) {
+								Main.tile[m, n].TileType = 401;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 397) {
+								Main.tile[m, n].TileType = 399;
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+						else {
+							if (Main.tile[m, n].WallType == 63 || Main.tile[m, n].WallType == 65 || Main.tile[m, n].WallType == 66 || Main.tile[m, n].WallType == 68) {
+								Main.tile[m, n].WallType = 69;
+							}
+							else if (Main.tile[m, n].WallType == 216) {
+								Main.tile[m, n].WallType = 217;
+							}
+							else if (Main.tile[m, n].WallType == 187) {
+								Main.tile[m, n].WallType = 220;
+							}
+							if (flag && Main.tile[m, n].TileType == 225) {
+								Main.tile[m, n].TileType = 25;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (flag && Main.tile[m, n].TileType == 230) {
+								Main.tile[m, n].TileType = 398;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 60 || Main.tile[m, n].TileType == 662) {
+								Main.tile[m, n].TileType = 661;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 2 || Main.tile[m, n].TileType == 109) {
+								Main.tile[m, n].TileType = 23;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 1 || Main.tile[m, n].TileType == 117) {
+								Main.tile[m, n].TileType = 25;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 53 || Main.tile[m, n].TileType == 123 || Main.tile[m, n].TileType == 116) {
+								Main.tile[m, n].TileType = 112;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 161 || Main.tile[m, n].TileType == 164) {
+								Main.tile[m, n].TileType = 163;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 396) {
+								Main.tile[m, n].TileType = 400;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == 397) {
+								Main.tile[m, n].TileType = 398;
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+					}
+				}
+				val += val2;
+				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
+				if (val2.X > speedX + 1.0) {
+					val2.X = speedX + 1.0;
+				}
+				if (val2.X < speedX - 1.0) {
+					val2.X = speedX - 1.0;
+				}
+				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2)) {
+					flag2 = false;
+				}
+			}
+		}
+#endregion
 
 		public static int totalCandy;
 		public static int totalCandy2;
@@ -223,7 +864,7 @@ namespace TheConfectionRebirth {
 			On_WorldGen.hardUpdateWorld -= On_WorldGen_hardUpdateWorld;
 			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile -= On_WorldGen_UpdateWorld_UndergroundTile;
-			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls;
+			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls; 
 		}
 
 		#region SpreadingDetours
