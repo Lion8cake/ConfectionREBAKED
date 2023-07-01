@@ -85,7 +85,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
             num = 1;
         }
 
-        public override void MouseOver(int i, int j)
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<CreamwoodDoor>());
+			return false;
+		}
+
+		public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;

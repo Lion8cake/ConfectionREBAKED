@@ -30,6 +30,9 @@ using Terraria.Graphics.Effects;
 using TheConfectionRebirth.Hooks;
 using Terraria.Localization;
 using Terraria.GameContent.Personalities;
+using Terraria.Graphics;
+using static Terraria.Graphics.FinalFractalHelper;
+using TheConfectionRebirth.Items.Weapons;
 
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
@@ -93,6 +96,11 @@ namespace TheConfectionRebirth {
 
 		public override void Load()
 		{
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
+			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
+
 			Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
 
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
@@ -108,11 +116,16 @@ namespace TheConfectionRebirth {
 
 		public override void Unload()
 		{
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
+			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
+
 			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
 			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
 			Terraria.On_Player.MowGrassTile -= On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
-			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog;
+			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog; 
 		}
 
 		#region DryadText

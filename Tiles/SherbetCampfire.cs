@@ -124,5 +124,10 @@ namespace TheConfectionRebirth.Tiles
             HitWire(i, j);
             return true;
         }
-    }
+
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<Items.Placeable.SherbetCampfire>());
+			return false;
+		}
+	}
 }

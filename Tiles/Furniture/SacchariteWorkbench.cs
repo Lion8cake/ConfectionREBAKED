@@ -38,5 +38,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
         {
             num = fail ? 1 : 3;
         }
-    }
+
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Furniture.SacchariteWorkbench>());
+			return false;
+		}
+	}
 }

@@ -98,6 +98,16 @@ namespace TheConfectionRebirth {
 			confectionBG = Main.rand.Next(4);
 		}
 
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
+			if (confectionorHallow) {
+				int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+				if (index2 != -1) {
+					tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+					tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
+				}
+			}
+		}
+
 		public override void ModifyHardmodeTasks(List<GenPass> list) {
 			if (confectionorHallow && !Main.drunkWorld) {
 				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
@@ -124,6 +134,45 @@ namespace TheConfectionRebirth {
 				}
 			}
 		}
+
+		#region BiomeChest
+		private static void ConfectionChest(GenerationProgress progres, GameConfiguration configurations) {
+			for (int num79 = 0; num79 < 1; num79++) {
+				bool flag5 = false;
+				while (!flag5) {
+					int num80 = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
+					int num81 = WorldGen.genRand.Next((int)Main.worldSurface, GenVars.dMaxY);
+					if (!Main.wallDungeon[Main.tile[num80, num81].WallType] || Main.tile[num80, num81].HasTile) {
+						continue;
+					}
+					ushort chestTileType = (ushort)ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
+					int contain = 0;
+					int style2 = 0;
+					if (num79 == 0) {
+						style2 = 1;
+						contain = ModContent.ItemType<Items.Weapons.PopRocket>();
+					}
+					flag5 = WorldGen.AddBuriedChest(num80, num81, contain, notNearOtherChests: false, style2, trySlope: false, chestTileType);
+				}
+			}
+		}
+
+		private static void HallowChestRemoval(GenerationProgress progres, GameConfiguration configurations) {
+			if (!Main.drunkWorld)
+			{
+				for (int index = 0; index < Main.maxChests; index++) {
+					if (Main.chest[index] != null) {
+						int X = Main.chest[index].x;
+						int Y = Main.chest[index].y;
+						if (Main.tile[X, Y].TileType == TileID.Containers && Main.wallDungeon[Main.tile[X, Y].WallType] && (Main.tile[X, Y].TileFrameX == 26 * (18 * 2) || Main.tile[X, Y].TileFrameX == 26.5 * (18 * 2))) {
+							Chest.DestroyChestDirect(X, Y, index);
+							WorldGen.KillTile(X, Y, false, false, true);
+						}
+					}
+				}
+			}
+		}
+#endregion
 
 		#region DrunkWorldgen
 		private static void ConfectionDrunkInner(GenerationProgress progres, GameConfiguration configurations) {

@@ -126,5 +126,10 @@ namespace TheConfectionRebirth.Tiles
             HitWire(i, j); //makes when you right click it redirects to HitWire for the rest of the code
             return true;
         }
-    }
+
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<Items.Placeable.ConfectionCampfire>());
+			return false;
+		}
+	}
 }

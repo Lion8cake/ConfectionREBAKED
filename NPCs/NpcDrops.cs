@@ -10,6 +10,7 @@ using static TheConfectionRebirth.NPCs.BagDrops;
 using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.GameContent.ItemDropRules;
+using System;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -43,12 +44,10 @@ namespace TheConfectionRebirth.NPCs
             globalLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
 		}
 
-		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-        {
-            if (npc.type == NPCID.Gastropod)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 2, 15, 25));
-            }
+		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
+			if (npc.type == NPCID.Gastropod) {
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 2, 15, 25));
+			}
 
 			var entries = npcLoot.Get(false);
 			if (npc.type == NPCID.WallofFlesh) {
@@ -71,12 +70,29 @@ namespace TheConfectionRebirth.NPCs
 				npcLoot.Add(HallowHammer);
 			}
 
-			if (npc.type == NPCID.Spazmatism || npc.type == NPCID.Retinazer || npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
+			if (npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
 				npcLoot.RemoveWhere(
 				rule => rule is ItemDropWithConditionRule drop
 					&& drop.itemId == ItemID.HallowedBar
 				);
 			}
+			/*if (npc.type == NPCID.Spazmatism || npc.type == NPCID.Retinazer) { //npc loot it the bane of my existance
+				npcLoot.RemoveWhere(rule => {
+					// Loop through the topmost rules
+					foreach (var rule2 in npcLoot.Get()) {
+						// If the rule has any children (e.g. from OnSuccess and OnFailed), check them
+						for (int i = 0; i < rule2.ChainedRules.Count; i++) {
+							var chained = rule2.ChainedRules[i].RuleToChain;
+							// ItemDropRule.Common returns a CommonDrop
+							if (chained is CommonDrop common && common.itemId == ItemID.HallowedBar) {
+								rule2.ChainedRules.RemoveAt(i);
+								return true;
+							}
+						}
+					}
+					return false;
+				});//shout out to aquaAqurian for the help on this, even if it doesn't work
+			}*/
 
 			if (npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
 				LeadingConditionRule Expertmode = new LeadingConditionRule(new Conditions.NotExpert());

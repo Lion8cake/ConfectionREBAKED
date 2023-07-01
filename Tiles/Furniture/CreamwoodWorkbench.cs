@@ -37,5 +37,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
 		public override void NumDust(int x, int y, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
-    }
+
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Furniture.CreamwoodWorkbench>());
+			return false;
+		}
+	}
 }

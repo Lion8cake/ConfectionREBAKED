@@ -63,9 +63,9 @@ namespace TheConfectionRebirth.Projectiles
                 if (Projectile.ai[0] == 0)
                 {
                     owner.Teleport(owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.position, 1);
-                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
                 }
-                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
             }
             return true;
         }

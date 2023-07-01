@@ -77,11 +77,13 @@ namespace TheConfectionRebirth.Items.Placeable
             Recipe recipe = Recipe.Create(hall);
             recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
             recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
             recipe.AddIngredient(hall);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
         }
 
         private static void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
@@ -92,11 +94,13 @@ namespace TheConfectionRebirth.Items.Placeable
             Recipe recipe = Recipe.Create(ht);
             recipe.AddIngredient(ct);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
             recipe = Recipe.Create(ct);
             recipe.AddIngredient(ht);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
         }
     }
 }

@@ -83,14 +83,14 @@ namespace TheConfectionRebirth.Projectiles
                 if (Projectile.ai[0] == 0)
                 {
                     owner.Teleport(owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.position, 1);
-                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
                     if (owner.HasBuff(ModContent.BuffType<Buffs.GoneBananas>()))
                     {
                         owner.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((owner.statLifeMax2 + owner.statDefense) * (owner.endurance + 1) / 7), 0);
                     }
                     owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 }
-                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+				owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
             }
             return true;
         }
