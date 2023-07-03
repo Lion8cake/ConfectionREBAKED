@@ -18,12 +18,12 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 51;
+            Item.damage = 76;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 40;
-            Item.useTime = 25;
-            Item.useAnimation = 25;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(silver: 460);
@@ -31,14 +31,14 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Projectiles.SucrosaSlash>();
+			//Item.noMelee = true;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.SucrosaSlash2>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.SucrosaSlash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
             return false;
         }
-        public override void MeleeEffects(Player player, Rectangle hitbox)
+        /*public override void MeleeEffects(Player player, Rectangle hitbox)
         {
             if (Main.rand.NextBool(3))
             {
@@ -47,7 +47,7 @@ namespace TheConfectionRebirth.Items.Weapons
                 Main.dust[num313].fadeIn = 1.25f;
                 Main.dust[num313].velocity *= 0.25f;
             }
-        }
+        }*/
 
         public override void AddRecipes()
         {

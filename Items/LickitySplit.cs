@@ -27,7 +27,15 @@ namespace TheConfectionRebirth.Items
             Item.autoReuse = true;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override void PostUpdate() {
+			Lighting.AddLight(Item.Center, new Vector3(2.39f, 1.64f, 0.05f) * 0.22f * Main.essScale);
+		}
+
+		public override Color? GetAlpha(Color lightColor) {
+			return Color.White;
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
             int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);

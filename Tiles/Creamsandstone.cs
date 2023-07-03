@@ -26,5 +26,18 @@ namespace TheConfectionRebirth.Tiles
         {
             num = fail ? 1 : 3;
         }
-    }
+
+		public override void RandomUpdate(int i, int j) {
+			if (Main.rand.NextBool(12)) {
+				if (j > Main.rockLayer) {
+					if (Main.tile[i, j + 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+					if (Main.tile[i, j - 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+				}
+			}
+		}
+	}
 }

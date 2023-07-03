@@ -37,7 +37,7 @@ namespace TheConfectionRebirth.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 30);
+            recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 15);
             recipe.AddIngredient(ItemID.SoulofFlight, 20);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();

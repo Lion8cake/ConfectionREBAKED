@@ -16,6 +16,7 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override void SetDefaults()
 		{
+			Item.consumeAmmoOnFirstShotOnly = true;
 			Item.damage = 22;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 50;
@@ -31,7 +32,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<CandleFlames>();
 			Item.shootSpeed = 9f; 
-			Item.useAmmo = AmmoID.Gel; 
+			Item.useAmmo = AmmoID.Gel;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -63,7 +64,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12)
 				.AddIngredient(ItemID.IllegalGunParts)
-				.AddIngredient(ItemID.SoulofSight, 20)
+				.AddIngredient(ItemID.SoulofFright, 20)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 		}

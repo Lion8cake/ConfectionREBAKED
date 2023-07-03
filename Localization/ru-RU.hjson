@@ -1966,5 +1966,7 @@ Mods: {
 			// SweetStaff: "{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} extra-cookie knockback"
 			// GummyStaff: "{1}x {$Mods.TheConfectionRebirth.Summon.RightClickSpecial} super candy duration"
 		}
+
+		// InConfection: Mods.TheConfectionRebirth.InConfection
 	}
 }

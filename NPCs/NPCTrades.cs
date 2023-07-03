@@ -9,6 +9,8 @@ namespace TheConfectionRebirth.NPCs
 {
     public class NPCTrades : GlobalNPC
     {
+		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>());
+
 		public override void ModifyShop(NPCShop shop) {
 			var confectionworld = new Condition("Mods.TheConfectionRebirth.TheConfection", () => ConfectionWorldGeneration.confectionorHallow);
 			if (shop.NpcType == NPCID.Dryad) {
@@ -52,7 +54,11 @@ namespace TheConfectionRebirth.NPCs
 				}
 			}
 			if (shop.NpcType == NPCID.Steampunker) {
-				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, confectionworld);
+				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, InConfection);
+				/*if (shop.TryGetEntry(ItemID.GreenSolution, out NPCShop.Entry entry8)) {
+					entry8.AddCondition(InConfection);
+					entry8.Disable();
+				}*/
 			}
 			if (shop.NpcType == NPCID.Wizard) {
 				shop.InsertAfter(ItemID.Bell, ModContent.ItemType<Items.Kazoo>(), Condition.Hardmode);

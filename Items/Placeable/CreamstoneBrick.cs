@@ -30,7 +30,6 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             CreateRecipe()
                 .AddIngredient<Creamstone>(2)
-                .AddIngredient<Creamsand>()
                 .AddTile(TileID.Furnaces)
                 .Register();
             CreateRecipe()

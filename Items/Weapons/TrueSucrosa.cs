@@ -18,13 +18,13 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useAnimation = 25;
-			Item.useTime = 25;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
 			Item.autoReuse = true;
 			Item.knockBack = 6f;
 			Item.width = 40;
 			Item.height = 40;
-			Item.damage = 69;
+			Item.damage = 79;
 			Item.scale = 1f;
 			Item.UseSound = SoundID.Item1;
 			Item.rare = ItemRarityID.Yellow;
@@ -34,8 +34,8 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.SucrosaSlash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
 			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.TrueSucrosaSlash2>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.TrueSucrosaSlash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
 			return false;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
