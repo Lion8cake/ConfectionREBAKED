@@ -1586,7 +1586,7 @@ Mods: {
 			}
 
 			VanillaValorV: {
-				Description: 10% increased critical strike chance and all melee attacks ignore defense
+				Description: 10% increased critical strike chance and all melee crits ignore defense
 				DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R5})"
 			}
 
@@ -1794,7 +1794,7 @@ Mods: {
 				'''
 				Every 80 damage dealt will increase critical strike chance by 2%
 				for 5 seconds, once 10% critical strike chance has been reached defense is
-				ignored for 5 seconds
+				ignored when hitting a critical stike for 5 seconds
 				'''
 		}
 

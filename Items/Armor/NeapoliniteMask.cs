@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Items.Armor
         {
             player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteMask");
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
-            int rank = Math.Min(damage, 400) / 80 - 1;
+            int rank = Math.Min(damage, 1750) / 350 - 1;
             StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.GameContent.ItemDropRules;
 using System;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -108,28 +109,61 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
-        //Putting this here because the confection doesn't need another global npc file cloging up space 
-        //This is the code that bypasses the defence of every npc when the player has hit the max neapolinite set buff
-        //most of the code goes to Ouroel and foxXD_ for helping make this
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
-            if (player.HasBuff(ModContent.BuffType<VanillaValorV>()) && npc.type != NPCID.DungeonGuardian)
-            {
-                modifiers.FinalDamage = modifiers.FinalDamage + (int)(npc.defense * 0.5f);
-            }
+			if (player.HasBuff(ModContent.BuffType<VanillaValorV>()) && npc.type != NPCID.DungeonGuardian) {
+				modifiers.HideCombatText();
+			}
         }
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
-            if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && npc.type != NPCID.DungeonGuardian)
-            {
-				modifiers.FinalDamage = modifiers.FinalDamage + (int)(npc.defense * 0.5f);  
-            }
-            if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && npc.type == NPCID.DungeonGuardian)
-            {
-                modifiers.FinalDamage = modifiers.FinalDamage + (int)(npc.defense * 0.5f) + 3;
-            }
-        }
-    }
+			if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && npc.type != NPCID.DungeonGuardian) {
+				modifiers.HideCombatText();
+			}
+		}
+		public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			if (player.HasBuff(ModContent.BuffType<VanillaValorV>()) && hit.Crit && npc.type != NPCID.DungeonGuardian) {
+				hit.Damage = hit.Damage + (int)(npc.defense * 0.5f);
+				Color color3 = new(230, 196, 125);
+				CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color3, hit.Damage, true);
+			}
+			else if (player.HasBuff(ModContent.BuffType<VanillaValorV>()) && !hit.Crit) {
+				HitText(npc, hit);
+			}
+		}
+
+		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && hit.Crit && npc.type != NPCID.DungeonGuardian) {
+				hit.Damage = hit.Damage + (int)(npc.defense * 0.5f);
+				Color color2 = new(230, 196, 125);
+				CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color2, hit.Damage, true);
+			}
+			else if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && !hit.Crit) {
+				HitText(npc, hit);
+			}
+		}
+
+		private static void HitText(NPC npc, NPC.HitInfo hit) {
+			double num = hit.Damage;
+			bool crit = hit.Crit;
+			if (hit.InstantKill) {
+				num = ((npc.realLife > 0) ? Main.npc[npc.realLife].life : npc.life);
+			}
+			if (!hit.InstantKill && npc.lifeMax > 1 && !npc.HideStrikeDamage) {
+				if (npc.friendly) {
+					Color color = (crit ? CombatText.DamagedFriendlyCrit : CombatText.DamagedFriendly);
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color, (int)num, crit);
+				}
+				else {
+					Color color2 = (crit ? CombatText.DamagedHostileCrit : CombatText.DamagedHostile);
+					/*if (Main.netMode == NetmodeID.SinglePlayer) {
+						color2 = (crit ? CombatText.OthersDamagedHostileCrit : CombatText.OthersDamagedHostile);
+					}*/
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color2, (int)num, crit);
+				}
+			}
+		}
+	}
 
 	public class BagDrops : GlobalItem {
 

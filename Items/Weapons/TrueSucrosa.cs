@@ -34,19 +34,9 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.TrueSucrosaSlash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
 			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.SucrosaSlash>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.TrueSucrosaSlash2>(), damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
 			return false;
-		}
-		public override void MeleeEffects(Player player, Rectangle hitbox)
-		{
-			if (Main.rand.NextBool(3))
-			{
-				int num313 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<NeapoliniteCrumbs>());
-				Main.dust[num313].noGravity = true;
-				Main.dust[num313].fadeIn = 1.25f;
-				Main.dust[num313].velocity *= 0.25f;
-			}
 		}
 
 		public override void AddRecipes()

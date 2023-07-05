@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Dusts
             dust.scale *= 0.99f;
             float light = 0.35f * dust.scale;
             Lighting.AddLight(dust.position, light, light, light);
-            if (dust.scale < 0.5f)
+            if (dust.scale < 0.1f)
             {
                 dust.active = false;
             }
