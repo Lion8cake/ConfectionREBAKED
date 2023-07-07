@@ -39,6 +39,16 @@ namespace TheConfectionRebirth.Items.Weapons
 			return false;
 		}
 
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
+			ParticleSystem.AddParticle(new TrueNeapoliniteSlash(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1), default, 24);
+		}
+
+		public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo) {
+			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
+			ParticleSystem.AddParticle(new TrueNeapoliniteSlash(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1), default, 24);
+		}
+
 		public override void AddRecipes()
 		{
 			CreateRecipe(1)

@@ -12,6 +12,10 @@ Mods: {
 			// R3: III
 			// R4: IV
 			// R5: V
+			// VanillaValor: Vanilla Valor
+			// SwirlySwarm: Swirly Swarm
+			// StrawberryStrike: Strawberry Strike
+			// ChocolateCharge: Chocolate Charge
 		}
 
 		Projectiles: {
@@ -1586,103 +1590,103 @@ Mods: {
 			}
 
 			VanillaValorV: {
-				// Description: 10% increased critical strike chance and all melee attacks ignore defense
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R5})"
+				// Description: 10% increased critical strike chance and all melee crits ignore defense
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.VanillaValor} ({$Mods.TheConfectionRebirth.Common.R5})"
 			}
 
 			VanillaValorIV: {
 				// Description: 8% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R4})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.VanillaValor} ({$Mods.TheConfectionRebirth.Common.R4})"
 			}
 
 			VanillaValorIII: {
 				// Description: 6% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R3})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.VanillaValor} ({$Mods.TheConfectionRebirth.Common.R3})"
 			}
 
 			VanillaValorII: {
 				// Description: 4% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R2})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.VanillaValor} ({$Mods.TheConfectionRebirth.Common.R2})"
 			}
 
 			VanillaValorI: {
 				// Description: 2% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.VanillaValor} ({$Mods.ConfectionRebaked.Common.R1})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.VanillaValor} ({$Mods.TheConfectionRebirth.Common.R1})"
 			}
 
 			SwirlySwarmV: {
 				// Description: 30% increased whip speed, 10% increased summoner critical strike chance and damage
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R5})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.SwirlySwarm} ({$Mods.TheConfectionRebirth.Common.R5})"
 			}
 
 			SwirlySwarmIV: {
 				// Description: 30% increased whip speed and 10% increased summoner critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R4})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.SwirlySwarm} ({$Mods.TheConfectionRebirth.Common.R4})"
 			}
 
 			SwirlySwarmIII: {
 				// Description: 30% increased whip speed
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R3})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.SwirlySwarm} ({$Mods.TheConfectionRebirth.Common.R3})"
 			}
 
 			SwirlySwarmII: {
 				// Description: 20% increased whip speed
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R2})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.SwirlySwarm} ({$Mods.TheConfectionRebirth.Common.R2})"
 			}
 
 			SwirlySwarmI: {
 				// Description: 10% increased whip speed
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.SwirlySwarm} ({$Mods.ConfectionRebaked.Common.R1})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.SwirlySwarm} ({$Mods.TheConfectionRebirth.Common.R1})"
 			}
 
 			StrawberryStrikeV: {
 				// Description: Summons five attacking strawberries
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R5})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.StrawberryStrike} ({$Mods.TheConfectionRebirth.Common.R5})"
 			}
 
 			StrawberryStrikeIV: {
 				// Description: Summons four attacking strawberries
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R4})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.StrawberryStrike} ({$Mods.TheConfectionRebirth.Common.R4})"
 			}
 
 			StrawberryStrikeIII: {
 				// Description: Summons three attacking strawberries
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R3})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.StrawberryStrike} ({$Mods.TheConfectionRebirth.Common.R3})"
 			}
 
 			StrawberryStrikeII: {
 				// Description: Summons two attacking strawberries
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R2})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.StrawberryStrike} ({$Mods.TheConfectionRebirth.Common.R2})"
 			}
 
 			StrawberryStrikeI: {
 				// Description: Summons an attacking strawberry
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.StrawberryStrike} ({$Mods.ConfectionRebaked.Common.R1})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.StrawberryStrike} ({$Mods.TheConfectionRebirth.Common.R1})"
 			}
 
 			ChocolateChargeV: {
 				// Description: 20% increased ranged damage and 10% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R5})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R5})"
 			}
 
 			ChocolateChargeIV: {
 				// Description: 16% increased ranged damage and 8% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R4})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R4})"
 			}
 
 			ChocolateChargeIII: {
 				// Description: 12% increased ranged damage and 6% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R3})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R3})"
 			}
 
 			ChocolateChargeII: {
 				// Description: 8% increased ranged damage and 4% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R2})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R2})"
 			}
 
 			ChocolateChargeI: {
 				// Description: 4% increased ranged damage and 2% increased critical strike chance
-				// DisplayName: "{$Mods.ConfectionRebaked.BuffName.ChocolateCharge} ({$Mods.ConfectionRebaked.Common.R1})"
+				// DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R1})"
 			}
 
 			GoneBananas: {
@@ -1794,7 +1798,7 @@ Mods: {
 				'''
 				Every 80 damage dealt will increase critical strike chance by 2%
 				for 5 seconds, once 10% critical strike chance has been reached defense is
-				ignored for 5 seconds
+				ignored when hitting a critical stike for 5 seconds
 				''' */
 		}
 

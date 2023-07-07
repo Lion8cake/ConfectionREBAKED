@@ -10,6 +10,7 @@ using TheConfectionRebirth.Dusts;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.GameContent;
+using System.Collections.Generic;
 
 namespace TheConfectionRebirth.Projectiles
 {

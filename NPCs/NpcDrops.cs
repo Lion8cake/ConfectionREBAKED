@@ -12,6 +12,8 @@ using Terraria.ID;
 using Terraria.GameContent.ItemDropRules;
 using System;
 using Microsoft.Xna.Framework;
+using static Terraria.GameContent.ItemDropRules.Chains;
+using static Terraria.GameContent.ItemDropRules.Conditions;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -46,6 +48,59 @@ namespace TheConfectionRebirth.NPCs
 		}
 
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
+			bool TwinsDrops(DropAttemptInfo info)
+			{
+				NPC npc = info.npc;
+				if (npc is null) {
+					return false;
+				}
+				if (npc.type == NPCID.Retinazer) {
+					return !NPC.AnyNPCs(NPCID.Spazmatism);
+				}
+				else if (npc.type == NPCID.Spazmatism) {
+					return !NPC.AnyNPCs(NPCID.Retinazer);
+				}
+				return false;
+			}
+			if (npc.type == NPCID.Retinazer || npc.type == NPCID.Spazmatism) {
+				try {
+					IItemDropRule obj9 = npcLoot.Get(false).Find(delegate (IItemDropRule rule) {
+						LeadingConditionRule val19 = (LeadingConditionRule)(object)((rule is LeadingConditionRule) ? rule : null);
+						return val19 != null && val19.condition is MissingTwin;
+					});
+					LeadingConditionRule LCR_LTS = (LeadingConditionRule)(object)((obj9 is LeadingConditionRule) ? obj9 : null);
+					if (LCR_LTS != null) {
+						IItemDropRule ruleToChain2 = LCR_LTS.ChainedRules.Find(delegate (IItemDropRuleChainAttempt chainAttempt) {
+							TryIfSucceeded val17 = (TryIfSucceeded)(object)((chainAttempt is TryIfSucceeded) ? chainAttempt : null);
+							if (val17 != null) {
+								IItemDropRule ruleToChain7 = val17.RuleToChain;
+								LeadingConditionRule val18 = (LeadingConditionRule)(object)((ruleToChain7 is LeadingConditionRule) ? ruleToChain7 : null);
+								if (val18 != null) {
+									return val18.condition is NotExpert;
+								}
+							}
+							return false;
+						}).RuleToChain;
+						LeadingConditionRule LCR_NotExpert10 = (LeadingConditionRule)(object)((ruleToChain2 is LeadingConditionRule) ? ruleToChain2 : null);
+						if (LCR_NotExpert10 != null) {
+							LCR_NotExpert10.ChainedRules.RemoveAll(delegate (IItemDropRuleChainAttempt chainAttempt) {
+								TryIfSucceeded val15 = (TryIfSucceeded)(object)((chainAttempt is TryIfSucceeded) ? chainAttempt : null);
+								if (val15 != null) {
+									IItemDropRule ruleToChain6 = val15.RuleToChain;
+									CommonDrop val16 = (CommonDrop)(object)((ruleToChain6 is CommonDrop) ? ruleToChain6 : null);
+									if (val16 != null) {
+										return val16.itemId == 1225;
+									}
+								}
+								return false;
+							});
+						}
+					}
+				}
+				catch (ArgumentNullException) {
+				}
+			}
+
 			if (npc.type == NPCID.Gastropod) {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 2, 15, 25));
 			}
@@ -77,23 +132,6 @@ namespace TheConfectionRebirth.NPCs
 					&& drop.itemId == ItemID.HallowedBar
 				);
 			}
-			/*if (npc.type == NPCID.Spazmatism || npc.type == NPCID.Retinazer) { //npc loot it the bane of my existance
-				npcLoot.RemoveWhere(rule => {
-					// Loop through the topmost rules
-					foreach (var rule2 in npcLoot.Get()) {
-						// If the rule has any children (e.g. from OnSuccess and OnFailed), check them
-						for (int i = 0; i < rule2.ChainedRules.Count; i++) {
-							var chained = rule2.ChainedRules[i].RuleToChain;
-							// ItemDropRule.Common returns a CommonDrop
-							if (chained is CommonDrop common && common.itemId == ItemID.HallowedBar) {
-								rule2.ChainedRules.RemoveAt(i);
-								return true;
-							}
-						}
-					}
-					return false;
-				});//shout out to aquaAqurian for the help on this, even if it doesn't work
-			}*/
 
 			if (npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
 				LeadingConditionRule Expertmode = new LeadingConditionRule(new Conditions.NotExpert());
@@ -108,6 +146,8 @@ namespace TheConfectionRebirth.NPCs
 				npcLoot.Add(HallowCondition);
 			}
 		}
+
+		//Vanilla Valor Critical stike ignore defence code below
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -203,6 +243,7 @@ namespace TheConfectionRebirth.NPCs
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			if (item.type == ItemID.WallOfFleshBossBag) {
 				NPCLoader.blockLoot.Add(ItemID.Pwnhammer);
+				itemLoot.Remove(FindHammer(itemLoot));
 
 				LeadingConditionRule ConfectionHammer = new LeadingConditionRule(new ConfectionDropRule());
 				ConfectionHammer.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GrandSlammer>()));
@@ -214,15 +255,36 @@ namespace TheConfectionRebirth.NPCs
 			}
 			if (item.type == ItemID.TwinsBossBag || item.type == ItemID.DestroyerBossBag || item.type == ItemID.SkeletronPrimeBossBag) {
 				NPCLoader.blockLoot.Add(ItemID.HallowedBar);
+				itemLoot.Remove(FindHallowedBars(itemLoot));
 
 				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
 				ConfectionCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(ConfectionCondition);
-
+				
 				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
 				HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(HallowCondition);
 			}
+		}
+
+		private static IItemDropRule FindHallowedBars(ItemLoot loot) {
+			foreach (IItemDropRule item in loot.Get(false)) {
+				CommonDrop c = (CommonDrop)(object)((item is CommonDrop) ? item : null);
+				if (c != null && c.itemId == 1225) {
+					return (IItemDropRule)(object)c;
+				}
+			}
+			return null;
+		}
+
+		private static IItemDropRule FindHammer(ItemLoot loot) {
+			foreach (IItemDropRule item in loot.Get(false)) {
+				CommonDrop c = (CommonDrop)(object)((item is CommonDrop) ? item : null);
+				if (c != null && c.itemId == ItemID.Pwnhammer) {
+					return (IItemDropRule)(object)c;
+				}
+			}
+			return null;
 		}
 	}
 }
