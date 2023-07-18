@@ -2,14 +2,10 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Items.Archived
+namespace TheConfectionRebirth.Items
 {
 	public class CanofMeat : ModItem
 	{
-		public override void SetStaticDefaults() {
-			ItemID.Sets.Deprecated[Type] = true;
-		}
-
 		public override void SetDefaults()
 		{
 			Item.width = 10;

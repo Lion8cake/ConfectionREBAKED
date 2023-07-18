@@ -1,7 +1,3 @@
-===========================================
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 Beta v0.18.4
 ===========================================
 Removed altlib as it was taken down from the workshop
@@ -14,23 +10,6 @@ Mowed Grass
 Solution conversion
 Confection Mimic spawn
 
-===========================================
-=======
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
-Beta v0.18.3
-===========================================
-Fixed Summoner's Shine compatability
-Completely reworked the Dimensional split and Lickety Split
-Added banana warp peel
-Added 1.4.4 Sword AoE effect to Sucrosa and true sucrosa (Experimental)
-Made True Sucrosa True Melee (Experimental)
-Added polishing to the code by Hariq
-
-===========================================
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 Beta v0.18.2
 ===========================================
 Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
@@ -43,7 +22,6 @@ Fixed Foamin' Float not being able to shoot Cream Spray.
 Fixed ultra far background sometimes being weird.
 Fixed Sprinkler being too high off the ground.
 Slight changes in localization for biomes.
-<<<<<<< HEAD
 Made True Sucrosa true melee.
 Added Sucrosa sword AoE.
 Added True Sucrosa AoE.

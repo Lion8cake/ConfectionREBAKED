@@ -12,9 +12,48 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
+using TheConfectionRebirth.Items.Weapons;
+using Terraria.ID;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorld : ModSystem {
+
+		//Recipes and shit, not making a new file for this like last time
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ItemID.TerraBlade);
+			recipe.AddIngredient(ItemID.TrueNightsEdge)
+			.AddIngredient(ModContent.ItemType<TrueSucrosa>())
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+			Recipe recipe2 = Recipe.Create(ItemID.TerraBlade);
+			recipe2.AddIngredient(ModContent.ItemType<TrueDeathsRaze>())
+			.AddIngredient(ItemID.TrueExcalibur)
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+			Recipe recipe3 = Recipe.Create(ItemID.TerraBlade);
+			recipe3.AddIngredient(ModContent.ItemType<TrueDeathsRaze>())
+			.AddIngredient(ModContent.ItemType<TrueSucrosa>())
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+
+		public override void AddRecipeGroups() {
+			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<Items.Placeable.CreamWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.Cherimoya>());
+		}
+
+		public override void PostAddRecipes() {
+			for (int i = 0; i < Recipe.numRecipes; i++) {
+				Recipe recipe = Main.recipe[i];
+				if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer)) {
+					recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
+				}
+			}
+		}
+
 		public static int ConfTileCount { get; set; }
 		public static float ConfTileInfo => ConfTileCount / 100;
 		public static bool IsEaster => DateTime.Now.Day >= 2 && DateTime.Now.Day <= 24 && DateTime.Now.Month.Equals(4);

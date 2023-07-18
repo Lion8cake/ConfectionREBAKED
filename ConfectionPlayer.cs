@@ -100,7 +100,10 @@ namespace TheConfectionRebirth {
                     ? ModContent.ItemType<Items.Placeable.BananaSplitCrate>()
                     : ModContent.ItemType<Items.Placeable.ConfectionCrate>();
 			}
-        }
+			if (Main.rand.NextBool(30)) {
+				itemDrop = ModContent.ItemType<Items.Placeable.SweetAndSavage>();
+			}
+		}
         const int oneStageNeapolioniteSummoner = 8 * 60;
         public override void PostUpdate()
         {
@@ -189,7 +192,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead) {
 				return;
 			}
 
@@ -234,7 +237,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead) {
 				return;
 			}
 
@@ -274,7 +277,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead) {
 				return;
 			}
 
@@ -315,4 +318,137 @@ namespace TheConfectionRebirth {
 			}
 		}
 	}
+
+	/*public class NeapoliniteCookieDrawing : PlayerDrawLayer {
+
+		public static int CookieSpinTimer = 0;
+
+		public static bool CookieReturn = false;
+
+		public static int CookieTurnAdditive = 0;
+
+		public static int CookieUpTimer = 0;
+
+		public static bool CookieUpReturn = false;
+
+		public override Position GetDefaultPosition() {
+			return PlayerDrawLayers.AfterLastVanillaLayer;
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo) {
+
+			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
+				return;
+			}
+
+			Player drawPlayer = drawInfo.drawPlayer;
+
+			if (drawPlayer.HasBuff(ModContent.BuffType<Buffs.NeapoliniteBuffs.ChocolateChargeI>())) {
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/NeapoliniteCookies");
+
+				if (CookieReturn == false) {
+					CookieSpinTimer++;
+				}	
+				else if (CookieReturn == true) {
+					CookieSpinTimer--;
+				}
+
+				if (CookieSpinTimer > 60) {
+					CookieReturn = true;
+				}
+				else if (CookieSpinTimer < 0) {
+					CookieReturn = false;
+				}
+
+				CookieSpinTimer = CookieSpinTimer * (CookieTurnAdditive / 10);
+
+				if (CookieReturn == false) {
+					if (CookieSpinTimer >= 0 && CookieSpinTimer <= 2) {
+						CookieTurnAdditive++;
+					}
+					else if (CookieSpinTimer >= 58 && CookieSpinTimer <= 60) {
+						CookieTurnAdditive--;
+					}
+				}
+				else {
+					if (CookieSpinTimer >= 0 && CookieSpinTimer <= 2) {
+						CookieTurnAdditive--;
+					}
+					else if (CookieSpinTimer >= 58 && CookieSpinTimer <= 60) {
+						CookieTurnAdditive++;
+					}
+				}
+				if (CookieUpReturn == false) {
+					CookieUpTimer++;
+				}
+				else if (CookieUpReturn == true) {
+					CookieUpTimer--;
+				}
+
+				if (CookieUpTimer > 30) {
+					CookieUpReturn = true;
+				}
+				else if (CookieUpTimer < -30) {
+					CookieUpReturn = false;
+				}
+
+				Main.NewText(CookieSpinTimer);
+
+				float drawX = ((int)drawInfo.Position.X + drawPlayer.width / 2) - 20;
+				float drawY = ((int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f) + 32;
+				Vector2 origin = drawInfo.bodyVect;
+				Vector2 position = new Vector2((float)(drawX + (CookieSpinTimer)), drawY + (CookieUpTimer / 8)) + drawPlayer.bodyPosition - Main.screenPosition;
+				Rectangle frame = new(0, 0, 14, 14);
+				float rotation = drawPlayer.bodyRotation;
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+
+				float scale = 1f;
+
+				if (CookieReturn == true) {
+					scale = 0f;
+				}
+
+				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, scale, spriteEffects, 0);
+				drawData.shader = drawInfo.cBody;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
+
+	public class NeapoliniteCookieBehindDrawing : PlayerDrawLayer {
+
+		public override Position GetDefaultPosition() {
+			return PlayerDrawLayers.BeforeFirstVanillaLayer;
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo) {
+
+			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
+				return;
+			}
+
+			Player drawPlayer = drawInfo.drawPlayer;
+
+			if (drawPlayer.HasBuff(ModContent.BuffType<Buffs.NeapoliniteBuffs.ChocolateChargeI>())) {
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/NeapoliniteCookies");
+
+				float drawX = ((int)drawInfo.Position.X + drawPlayer.width / 2) - 20;
+				float drawY = ((int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f) + 32;
+				Vector2 origin = drawInfo.bodyVect;
+				Vector2 position = new Vector2((float)(drawX + (NeapoliniteCookieDrawing.CookieSpinTimer)), drawY + (NeapoliniteCookieDrawing.CookieUpTimer / 8)) + drawPlayer.bodyPosition - Main.screenPosition;
+				Rectangle frame = new(0, 0, 14, 14);
+				float rotation = drawPlayer.bodyRotation;
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+				float scale = 0f;
+
+				if (NeapoliniteCookieDrawing.CookieReturn == true) {
+					scale = 1f;
+				}
+
+				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, scale, spriteEffects, 0);
+				drawData.shader = drawInfo.cBody;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}*/
 }

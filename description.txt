@@ -1,16 +1,29 @@
 ===========================================
 Confection REBAKED (Alternate Hallowed mod)
 ===========================================
+This is a 1.4.4 beta of the confection for its upcoming 0.19.0 update, please report any issues or features to our discord
+
 The Confection nolonger uses Alternate Libraries mod to be able to be compatible with other alternate biome mods due to the mod being taken off the modbrowser/workshop
 
-This mod supported Chinese and Russian translations
+This mod supported Chinese and Russian translations (due to 1.4.4 translation this is currently unavailable)
 
 If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Changelog
 ===========================================
-1.4.4... change this based on changes made 
+Over 90+ changes ready for the 0.19.0 upcoming update
+here is a summary until the update comes out fully
+
+Worldgen remake - Worldgen has been built from the ground up
+Dryad support - Dryad will say how much the world is confection under her new Confected %
+Hallow Boss spawning - The Royal Cherry Bug and the Enchanted Saccharite will now allow you to spawn the hallow's bosses in the confection
+Better world spreading - world spreading is now identical to how its done in the base game
+Cookie and cream block spreading - this is now a config to disable the confection confecting dirt and snow
+Multiple reworks - some items have been polished and multiple more will be given the same treatment over time
+Drunk seed support - Now play with both the hallow and the confection in drunk seed worlds
+1.4.4 changes - Changes to both weapons and other items
+Removal of Altlib - Nolonger do you need altlib to run the mod
 
 ===========================================
 Credit - Programmers
@@ -24,7 +37,7 @@ CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
 foxyboy55 - many bug fixes an a few texture changes
 JeoHashtag1553 - Particle system allowing for particles and other cool drawing effects
-BasicallyIAmFox - cleaning up backend code
+BasicallyIAmFox - cleaning up backend code and npc variation code
 
 ===========================================
 Credit - Artists

@@ -300,4 +300,95 @@ namespace TheConfectionRebirth
 			spriteBatch.Draw(texture, DrawPos - BlueOffset, frame, new Color(255, 255, 255, 0) * 0.3f, 0, frameOrigin, new Vector2(1.4f, (float)Math.Sin((float)(TimeInWorld + 1) * 0.20f) * 2f) * 0.7f, SpriteEffects.None, 0);
 		}
 	}
+
+	public class BloodyNeedle : Particle {
+		protected int MoveToCentre = 10;
+
+		public override void Update() {
+			TimeInWorld += 1;
+			if (Main.timeForVisualEffects % 4 == 0) {
+				TimeInWorld += 1;
+			}
+
+			if (TimeInWorld > 26)
+				Active = false;
+			AI1 -= 0.1f;
+
+			if (MoveToCentre > 0) {
+				MoveToCentre--;
+			}
+		}
+
+		public override void Draw(SpriteBatch spriteBatch) {
+			Texture2D texture = TextureAssets.Extra[98].Value;
+			Rectangle frame = texture.Frame();
+			Vector2 frameOrigin = frame.Size() / 2f;
+			Color color = new(223, 22, 49, TimeInWorld * 10);
+			Color color2 = new Color(255, 255, 255, TimeInWorld * 10)/* * 0.3f*/;
+			float realscale = 0.45f;
+			Vector2 size = new Vector2(1f, 2.5f) * realscale;
+			Vector2 size2 = new Vector2(0.8f, 2.3f) * realscale;
+
+			Vector2 DrawPosLtoR = Position - Main.screenPosition + new Vector2(-MoveToCentre * 2, -MoveToCentre * 2);
+			Vector2 DrawPosRtoL = Position - Main.screenPosition - new Vector2(-MoveToCentre * 2, MoveToCentre * 2);
+
+			spriteBatch.Draw(texture, DrawPosLtoR, frame, color, -MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, DrawPosLtoR, frame, color2, -MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+
+			spriteBatch.Draw(texture, DrawPosRtoL, frame, color, MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, DrawPosRtoL, frame, color2, MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+		}
+	}
+
+	public class TrueBloodyNeedle : Particle {
+		protected int MoveToCentre = 10;
+		protected int CentreNeedleMove = 10;
+
+		public override void Update() {
+			TimeInWorld += 1;
+			if (Main.timeForVisualEffects % 4 == 0) {
+				TimeInWorld += 1;
+			}
+
+			if (TimeInWorld > 26)
+				Active = false;
+			AI1 -= 0.1f;
+
+			if (MoveToCentre > 0) {
+				MoveToCentre--;
+			}
+
+			if (CentreNeedleMove > 0 && TimeInWorld > 16) {
+				CentreNeedleMove -= 2;
+			}
+		}
+
+		public override void Draw(SpriteBatch spriteBatch) {
+			Texture2D texture = TextureAssets.Extra[98].Value;
+			Rectangle frame = texture.Frame();
+			Vector2 frameOrigin = frame.Size() / 2f;
+			Color color = new(223, 22, 49, TimeInWorld * 10);
+			Color color2 = new Color(255, 255, 255, TimeInWorld * 10);
+			Color color3 = new Color(244, 191, 90, TimeInWorld * 10);
+			float realscale = 0.45f;
+			Vector2 size = new Vector2(1f, 2.5f) * realscale;
+			Vector2 size2 = new Vector2(0.8f, 2.3f) * realscale;
+			float realscale2 = 0.65f;
+			Vector2 size3 = new Vector2(1f, 2.5f) * realscale2;
+			Vector2 size4 = new Vector2(0.8f, 2.3f) * realscale2;
+
+			Vector2 DrawPosLtoR = Position - Main.screenPosition + new Vector2(-MoveToCentre * 2, -MoveToCentre * 2);
+			Vector2 DrawPosRtoL = Position - Main.screenPosition - new Vector2(-MoveToCentre * 2, MoveToCentre * 2);
+			Vector2 DrawPosTtoB = Position - Main.screenPosition - new Vector2(0, CentreNeedleMove * 2);
+
+			spriteBatch.Draw(texture, DrawPosLtoR, frame, color, -MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, DrawPosLtoR, frame, color2, -MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+
+			spriteBatch.Draw(texture, DrawPosRtoL, frame, color, MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, DrawPosRtoL, frame, color2, MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+
+			spriteBatch.Draw(texture, DrawPosTtoB, frame, color3, 0, frameOrigin, size3, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, DrawPosTtoB, frame, color2, 0, frameOrigin, size4, SpriteEffects.None, 0);
+		}
+	}
 }

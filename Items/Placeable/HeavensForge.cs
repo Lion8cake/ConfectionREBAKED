@@ -26,9 +26,6 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Heavenly Forge");
-            /* Tooltip.SetDefault("Allows you to convert hallowed materials into their confection alternatives and vice versa\n" +
-                "'A forge created from the both the lands of rainbows and candy'"); */
             Item.ResearchUnlockCount = 1;
         }
 
@@ -70,6 +67,7 @@ namespace TheConfectionRebirth.Items.Placeable
             AddAndReplace<Creamsandstone>(ItemID.HallowSandstone);
             AddAndReplace<HardenedCreamsand>(ItemID.HallowHardenedSand);
             AddAndReplace<OrangeIce>(ItemID.PinkIceBlock);
+			AddAndReplace<NPCs.Critters.RoyalCherryBugItem>(ItemID.EmpressButterfly);
         }
 
         private static void AddAndReplace<TConf>(int hall) where TConf : ModItem

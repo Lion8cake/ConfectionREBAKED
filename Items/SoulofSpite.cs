@@ -6,13 +6,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Items.Archived
+namespace TheConfectionRebirth.Items
 {
 	public class SoulofSpite : ModItem {
-		public override void SetStaticDefaults() {
-			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
-		}
-
 		public override void SetDefaults()
 		{
 			Item refItem = new();

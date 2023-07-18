@@ -35,7 +35,7 @@ namespace TheConfectionRebirth.Items.Armor
         {
             player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteHelmet");
             int rank;
-            float len = player.velocity.X;
+            float len = player.velocity.Length();
             if (len >= 11f)
                 rank = 4;
             else

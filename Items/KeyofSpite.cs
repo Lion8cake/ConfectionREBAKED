@@ -2,13 +2,9 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheConfectionRebirth.Items.Archived
+namespace TheConfectionRebirth.Items
 {
     public class KeyofSpite : ModItem {
-		public override void SetStaticDefaults() {
-			Terraria.ID.ItemID.Sets.Deprecated[Type] = true;
-		}
-
 		public override void SetDefaults()
         {
             Item.width = 10;

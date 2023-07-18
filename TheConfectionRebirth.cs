@@ -14,7 +14,6 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Items.Archived;
 using TheConfectionRebirth.ModSupport;
 using System.Collections.Generic;
 using Terraria.UI;
@@ -264,7 +263,7 @@ namespace TheConfectionRebirth {
 					ConfectionConfig config = ModContent.GetInstance<ConfectionConfig>();
 					Dictionary<string, ConfectionConfig.WorldDataValues> tempDict = config.GetWorldData();
 
-					if (!tempDict.ContainsKey(path))
+					/*if (!tempDict.ContainsKey(path))
 					{
 						byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);
 						var stream = new MemoryStream(buf);
@@ -300,7 +299,7 @@ namespace TheConfectionRebirth {
 							config.SetWorldData(tempDict);
 							ConfectionConfig.Save(config);
 						}
-					}
+					}*/
 
 					#region RegularSeedIcon
 					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)

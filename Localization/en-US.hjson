@@ -89,6 +89,8 @@ Mods: {
 			DuchessPrincessRockCandy.DisplayName: Rock Candy
 			DuchessPrincess.DisplayName: Candy Fairy
 			DuchessCrystal.DisplayName: Rock Candy
+			DeathsSlash.DisplayName: Deaths Slash
+			TrueDeathsSlash.DisplayName: True Deaths Slash
 		}
 
 		NPCs: {
@@ -124,6 +126,7 @@ Mods: {
 			CreamsandWitchPhase1.DisplayName: Creamsand Witch
 			CrazyCone.DisplayName: Crazy Cone
 			BigMimicConfection.DisplayName: Confection Mimic
+			RoyalCherryBug.DisplayName: Royal Cherry Bug
 		}
 
 		Items: {
@@ -1348,7 +1351,11 @@ Mods: {
 			}
 
 			NeapoliniteConeMail: {
-				Tooltip: 5% increased critical strike chance
+				Tooltip:
+					'''
+					5% increased critical strike chance
+					Changes falvor based on what helmet is worn
+					'''
 				DisplayName: Neapolinite Cone Mail
 			}
 
@@ -1449,7 +1456,7 @@ Mods: {
 
 			TrueDeathsRaze: {
 				Tooltip: ""
-				DisplayName: True Deaths Raze
+				DisplayName: True Death's Raze
 			}
 
 			SoulofSpite: {
@@ -1457,34 +1464,14 @@ Mods: {
 				DisplayName: Soul of Spite
 			}
 
-			SacchariteWorkBench: {
-				Tooltip: ""
-				DisplayName: Saccharite Workbench
-			}
-
-			MeetyMummyBanner: {
-				Tooltip: ""
-				DisplayName: Meety Mummy Banner
-			}
-
 			KeyofSpite: {
 				Tooltip: ""
 				DisplayName: Key of Spite
 			}
 
-			HeavenGift: {
-				Tooltip:
-					'''
-					An old legacy item ment for the 1.3 version of the Confection.
-					Thank you all who have supported the confection in the past, thank you just thanks!
-					Sell this to any npc to get a platinum coin.
-					'''
-				DisplayName: Heaven's Gift
-			}
-
 			DeathsRaze: {
 				Tooltip: ""
-				DisplayName: Deaths Raze
+				DisplayName: Death's Raze
 			}
 
 			CreamwoodWorkBench: {
@@ -1520,6 +1507,25 @@ Mods: {
 			CookieWings: {
 				Tooltip: ""
 				DisplayName: Cookie Wings
+			}
+
+			RoyalCherryBugItem: {
+				DisplayName: Royal Cherry Bug Item
+				Tooltip:
+					'''
+					'Although a king of a race known for its taste it has no flavor.' 
+					'You shouldn't kill a king, bad things may happen...'
+					'''
+			}
+
+			EnchantedSaccharite: {
+				DisplayName: Enchanted Saccharite
+				Tooltip: Summons Queen Slime
+			}
+
+			SweetAndSavage: {
+				DisplayName: Sweet And Savage
+				Tooltip: "'Not V. Costa Moura'"
 			}
 		}
 
@@ -1811,6 +1817,7 @@ Mods: {
 			GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the land.
 			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. They have a particular sour taste.
 			Pip: A very small bird that looks like marshmellow. Despite everything it can be quite amazing seeing the little wings carry its large body.
+			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
 			# Enemies
 			Meowzer: A cat and pastry foe that uses its large tart cannon to blast away anyone who disturb the confection at night. 50% cat, 50% pastry and 100% rainbow lazer fury.
 			BigMimicConfection: Mimics that are engolthed by the Confection turn into a monsterest cake. A certain key can bring them to life.
