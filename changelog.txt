@@ -41,7 +41,6 @@ Changed creamy spray to icing spray
 
 Added Chinese Transaltion by Cyril
 Added Russian Translation by AstralGel
->>>>>>> 21d961fc5a6b7f1a1395f5a436ef383fb42b52eb
 
 ===========================================
 Beta v0.18.1

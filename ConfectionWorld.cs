@@ -14,11 +14,13 @@ using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
 using TheConfectionRebirth.Items.Weapons;
 using Terraria.ID;
+using Terraria.Utilities;
+using System.Linq;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorld : ModSystem {
 
-		//Recipes and shit, not making a new file for this like last time
+		//Recipes, not making a new file for this like last time
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.TerraBlade);
 			recipe.AddIngredient(ItemID.TrueNightsEdge)
@@ -51,6 +53,18 @@ namespace TheConfectionRebirth {
 				if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer)) {
 					recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
 				}
+				if (recipe.HasResult(ItemID.GoldenShower) && recipe.HasIngredient(ItemID.SoulofNight)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 15);
+				}
+				if (recipe.HasResult(4142) && recipe.HasIngredient(ItemID.SoulofNight)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 10);
+				}
+				if (recipe.HasResult(ItemID.MechanicalWorm) && recipe.HasIngredient(ItemID.SoulofNight) && recipe.HasIngredient(ItemID.Vertebrae)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 6);
+				}
 			}
 		}
 
@@ -65,6 +79,7 @@ namespace TheConfectionRebirth {
 				return d;
 			}
 		}
+
 
 		public override void Load() => Terraria.On_Main.SetBackColor += Main_SetBackColor;
 

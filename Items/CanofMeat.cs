@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,6 +7,10 @@ namespace TheConfectionRebirth.Items
 {
 	public class CanofMeat : ModItem
 	{
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 1;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.width = 10;
@@ -13,6 +18,24 @@ namespace TheConfectionRebirth.Items
 			Item.value = 4500;
 			Item.rare = ItemRarityID.Green;
 			Item.maxStack = 9999;
+		}
+
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.OnyxBlaster)
+				.AddIngredient(ItemID.Shotgun)
+				.AddIngredient<CanofMeat>(2)
+				.AddIngredient<SoulofSpite>(10)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+
+			Recipe.Create(ItemID.DarkShard)
+				.AddIngredient<CanofMeat>()
+				.AddTile(TileID.DemonAltar)
+				.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.DarkShard)
+				.AddTile(TileID.DemonAltar)
+				.Register();
 		}
 	}
 }

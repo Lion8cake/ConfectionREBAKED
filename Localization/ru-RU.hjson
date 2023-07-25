@@ -91,6 +91,8 @@ Mods: {
 			// DuchessCrystal.DisplayName: Rock Candy
 			// DeathsSlash.DisplayName: Deaths Slash
 			// TrueDeathsSlash.DisplayName: True Deaths Slash
+			// SprinklingBallLarge.DisplayName: Sprinkling Ball Large
+			// SprinklingBallSmall.DisplayName: Sprinkling Ball Small
 		}
 
 		NPCs: {
@@ -136,7 +138,7 @@ Mods: {
 			}
 
 			SoulofDelight: {
-				// Tooltip: "'The essence of delightful creatures'"
+				// Tooltip: "'The essence of sweet creatures'"
 				// DisplayName: Soul of Delight
 			}
 
@@ -178,11 +180,6 @@ Mods: {
 			TaffyApple: {
 				// Tooltip: Summons a Dudling
 				// DisplayName: Taffy Apple
-			}
-
-			CreamFoxPetItem: {
-				// Tooltip: ""
-				// DisplayName: delete
 			}
 
 			CreamySandwhich: {
@@ -1460,12 +1457,12 @@ Mods: {
 			}
 
 			SoulofSpite: {
-				// Tooltip: ""
+				// Tooltip: "'The essence of meat creatures'"
 				// DisplayName: Soul of Spite
 			}
 
 			KeyofSpite: {
-				// Tooltip: ""
+				// Tooltip: "{$ItemTooltip.NightKey}"
 				// DisplayName: Key of Spite
 			}
 

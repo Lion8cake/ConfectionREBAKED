@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items
         {
             Item.width = 10;
             Item.height = 12;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
         }
     }
 }

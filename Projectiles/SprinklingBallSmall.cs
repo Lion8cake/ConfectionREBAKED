@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Projectiles
 {
-    public class SprinklingBall : ModProjectile
+    public class SprinklingBallSmall : ModProjectile
     {
 		public override void SetStaticDefaults()
 		{
@@ -14,8 +14,8 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void SetDefaults()
         {
-			Projectile.width = 8;
-            Projectile.height = 8;
+			Projectile.width = 6;
+            Projectile.height = 6;
             Projectile.hostile = true;
             Projectile.tileCollide = true;
         }

@@ -67,6 +67,52 @@ namespace TheConfectionRebirth {
 				for (var j = 0; j < Main.tile.Height; ++j)
 					if (ConfectCountCollection.Contains(Main.tile[i, j].TileType))
 						totalCandy2++;
+
+
+			//World Converter (1.4.3 => 1.4.4)
+			//Also contains some explinations 
+			string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
+			var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
+			if (tag2.ContainsKey("modData")) { //We look for modData here and v there 
+				foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData")) {
+					if (modDataTag.Get<string>("mod") == "AltLibrary") { //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+						TagCompound dataTag = modDataTag.Get<TagCompound>("data");
+
+						if (dataTag.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //Look for the correct string that WorldHallow is saved under
+							confectionorHallow = true; //Convert world by giving it the tag
+							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
+						}
+						else {
+							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
+						}
+						break;
+					}
+					if (modDataTag.Get<string>("mod") == "ModLoader") {
+						ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
+						TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
+						if (dataTag.ContainsKey("list")) { //find a list called list
+							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
+							foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list")) { //same here as above ^
+
+								if (unloadedList.Get<string>("mod") == "AltLibrary") { //Look for altlib inside of list
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods"); //announce that altlib has been found inside tmod's unloaded data
+									TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+
+									if (dataTag2.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //same as the lines previously when altlib was enabled
+										confectionorHallow = true;
+										ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!");
+									}
+									else {
+										ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world");
+									}
+									break;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
 		}
 
 		public override void NetSend(BinaryWriter writer) {
@@ -1089,7 +1135,7 @@ namespace TheConfectionRebirth {
 
 		private void On_WorldGen_hardUpdateWorld(On_WorldGen.orig_hardUpdateWorld orig, int i, int j) {
 			orig.Invoke(i, j);
-			if (Main.hardMode || !Main.tile[i, j].IsActuated) {
+			if (Main.hardMode && !Main.tile[i, j].IsActuated) {
 				int type = Main.tile[i, j].TileType;
 				if ((NPC.downedPlantBoss && WorldGen.genRand.Next(2) == 0) || WorldGen.AllowedToSpreadInfections) {
 					if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (

@@ -39,25 +39,6 @@ namespace TheConfectionRebirth {
 
 		public static int[] confectBG = new int[3];
 
-		//\ private variables i cannot be btohered reflecting
-		private static float bgScale = 1f;
-
-		private double bgParallax;
-
-		private int bgStartX;
-
-		private int bgLoops;
-
-		private int bgStartY;
-
-		private int bgLoopsY;
-
-		private int bgTopY;
-
-		private static int bgWidthScaled = (int)(1024f * bgScale);
-
-		private float scAdj;
-
 		internal float screenOff;
 
 		private static TileTest v = new();
@@ -111,7 +92,10 @@ namespace TheConfectionRebirth {
 			Terraria.On_Player.MowGrassTile += On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Lang.GetDryadWorldStatusDialog += On_Lang_GetDryadWorldStatusDialog;
+			On_NPC.BigMimicSummonCheck += On_NPC_BigMimicSummonCheck;
 		}
+
+		
 
 		public override void Unload()
 		{
@@ -124,8 +108,85 @@ namespace TheConfectionRebirth {
 			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
 			Terraria.On_Player.MowGrassTile -= On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
-			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog; 
+			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog;
+			On_NPC.BigMimicSummonCheck -= On_NPC_BigMimicSummonCheck;
 		}
+
+		#region CorruptionMimic
+		private bool On_NPC_BigMimicSummonCheck(On_NPC.orig_BigMimicSummonCheck orig, int x, int y, Player user) {
+			if (user.width == -1) {
+				orig.Invoke(x, y, user);
+			}
+			else {
+				if (Main.netMode == NetmodeID.MultiplayerClient || !Main.hardMode) {
+					return false;
+				}
+				int num = Chest.FindChest(x, y);
+				if (num < 0) {
+					return false;
+				}
+				int num2 = 0;
+				int num3 = 0;
+				int num4 = 0;
+				for (int i = 0; i < 40; i++) {
+					ushort num5 = Main.tile[Main.chest[num].x, Main.chest[num].y].TileType;
+					int num6 = Main.tile[Main.chest[num].x, Main.chest[num].y].TileFrameX / 36;
+					if (TileID.Sets.BasicChest[num5] && (num5 != 21 || num6 < 5 || num6 > 6) && Main.chest[num].item[i] != null && Main.chest[num].item[i].type > 0) {
+						if (Main.chest[num].item[i].type == ItemID.LightKey) {
+							num2 += Main.chest[num].item[i].stack;
+						}
+						else if (Main.chest[num].item[i].type == ItemID.NightKey) {
+							num3 += Main.chest[num].item[i].stack;
+						}
+						else {
+							num4++;
+						}
+					}
+				}
+				if (num4 == 0 && num2 + num3 == 1) {
+					if (num2 != 1) {
+						_ = 1;
+					}
+					if (TileID.Sets.BasicChest[Main.tile[x, y].TileType]) {
+						if (Main.tile[x, y].TileFrameX % 36 != 0) {
+							x--;
+						}
+						if (Main.tile[x, y].TileFrameY % 36 != 0) {
+							y--;
+						}
+						int number = Chest.FindChest(x, y);
+						for (int j = 0; j < 40; j++) {
+							Main.chest[num].item[j] = new Item();
+						}
+						Chest.DestroyChest(x, y);
+						for (int k = x; k <= x + 1; k++) {
+							for (int l = y; l <= y + 1; l++) {
+								if (TileID.Sets.BasicChest[Main.tile[k, l].TileType]) {
+									Main.tile[k, l].ClearTile();
+								}
+							}
+						}
+						int number2 = 1;
+						if (Main.tile[x, y].TileType == 467) {
+							number2 = 5;
+						}
+						NetMessage.SendData(MessageID.ChestUpdates, -1, -1, null, number2, x, y, 0f, number);
+						NetMessage.SendTileSquare(-1, x, y, 3);
+					}
+					int num7 = 475;
+					if (num3 == 1) {
+						num7 = 473;
+					}
+					int num8 = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 16, y * 16 + 32, num7);
+					Main.npc[num8].whoAmI = num8;
+					NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, num8);
+					Main.npc[num8].BigMimicSpawnSmoke();
+				}
+				return false;
+			}
+			return false;
+		}
+		#endregion
 
 		#region DryadText
 		private string On_Lang_GetDryadWorldStatusDialog(On_Lang.orig_GetDryadWorldStatusDialog orig, out bool worldIsEntirelyPure) {
@@ -245,13 +306,19 @@ namespace TheConfectionRebirth {
 		#region WorldUiOverlay
 		private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)
 		{
-			orig(self);
+			orig.Invoke(self);
 
 			UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+
+			ConfectionConfig config = ModContent.GetInstance<ConfectionConfig>();
+			Dictionary<string, ConfectionConfig.WorldDataValues> tempDict = config.GetWorldData();
+
 			foreach (var item in WorldList)
 			{
 				if (item is UIWorldListItem)
 				{
+
+
 					UIElement _WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
 					//_WorldIcon = GetIconElement();
 
@@ -260,9 +327,10 @@ namespace TheConfectionRebirth {
 
 					var path = Path.ChangeExtension(Data.Path, ".twld");
 
-					ConfectionConfig config = ModContent.GetInstance<ConfectionConfig>();
-					Dictionary<string, ConfectionConfig.WorldDataValues> tempDict = config.GetWorldData();
-
+					if (!tempDict.ContainsKey(path)) {
+						ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Confection REBAKED: A world wasn't found inside the confection's world dictionary in its config. Opening all your worlds with the confection enabled should stop this from being printed");
+						continue;
+					}
 					/*if (!tempDict.ContainsKey(path))
 					{
 						byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);

@@ -64,6 +64,12 @@ namespace TheConfectionRebirth.Items
                 .AddIngredient<SoulofDelight>(10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
-        }
+			Recipe.Create(ItemID.CoolWhip)
+				.AddIngredient<SoulofDelight>(8)
+				.AddIngredient(ItemID.SoulofNight, 8)
+				.AddIngredient(ItemID.FrostCore, 2)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+		}
     }
 }

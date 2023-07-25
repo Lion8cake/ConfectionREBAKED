@@ -41,10 +41,52 @@ namespace TheConfectionRebirth.NPCs
             }
         }
 
+		public class SoulOfNightCorruption : IItemDropRuleCondition, IProvideItemConditionDescription {
+			public bool CanDrop(DropAttemptInfo info) {
+				if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
+					return info.player.ZoneCorrupt;
+				}
+				return false;
+			}
 
-        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+			public bool CanShowItemDropInUI() {
+				return false;
+			}
+
+			public string GetConditionDescription() {
+				return "";
+			}
+		}
+
+		public class SoulOfSpite : IItemDropRuleCondition, IProvideItemConditionDescription {
+			public bool CanDrop(DropAttemptInfo info) {
+				if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
+					return info.player.ZoneCrimson;
+				}
+				return false;
+			}
+
+			public bool CanShowItemDropInUI() {
+				return false;
+			}
+
+			public string GetConditionDescription() {
+				return "";
+			}
+		}
+
+
+		public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
             globalLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
+
+			globalLoot.RemoveWhere(
+				rule => rule is ItemDropWithConditionRule drop
+					&& drop.itemId == ItemID.SoulofNight
+					&& drop.condition is Conditions.SoulOfNight
+			);
 		}
 
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
@@ -105,6 +147,16 @@ namespace TheConfectionRebirth.NPCs
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShellBlock>(), 2, 15, 25));
 			}
 
+			if (npc.type == NPCID.BloodMummy) {
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CanofMeat>(), 10));
+			}
+			if (npc.type == NPCID.DesertGhoulCrimson) {
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CanofMeat>(), 15));
+			}
+			if (npc.type == NPCID.SandsharkCrimson) {
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CanofMeat>(), 25));
+			}
+
 			var entries = npcLoot.Get(false);
 			if (npc.type == NPCID.WallofFlesh) {
 				foreach (var entry in entries) {
@@ -145,6 +197,19 @@ namespace TheConfectionRebirth.NPCs
 				HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
 				npcLoot.Add(HallowCondition);
 			}
+			if (npc.type == NPCID.BloodMummy || npc.type == NPCID.DesertGhoulCrimson || npc.type == NPCID.SandsharkCrimson) {
+				npcLoot.Remove(FindDarkShard(npcLoot));
+			}
+		}
+
+		private static IItemDropRule FindDarkShard(NPCLoot loot) {
+			foreach (IItemDropRule item in loot.Get(false)) {
+				CommonDrop c = (CommonDrop)(object)((item is CommonDrop) ? item : null);
+				if (c != null && c.itemId == ItemID.DarkShard) {
+					return (IItemDropRule)(object)c;
+				}
+			}
+			return null;
 		}
 
 		//Vanilla Valor Critical stike ignore defence code below
