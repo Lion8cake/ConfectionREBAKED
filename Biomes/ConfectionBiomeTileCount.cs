@@ -3,8 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
 
-using AltLibrary.Common.AltBiomes;
-
 namespace TheConfectionRebirth.Biomes
 {
     public class ConfectionBiomeTileCount : ModSystem
@@ -22,10 +20,6 @@ namespace TheConfectionRebirth.Biomes
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
 
-            /*desertOverlaytileCount = tileCounts[ModContent.TileType<Creamsand>()]
-                + tileCounts[ModContent.TileType<HardenedCreamsand>()]
-                + tileCounts[ModContent.TileType<Creamsandstone>()];*/
-
             confectionBlockCount = tileCounts[ModContent.TileType<CookieBlock>()]
                 + tileCounts[ModContent.TileType<Creamstone>()]
                 + tileCounts[ModContent.TileType<CreamGrass>()]
@@ -36,24 +30,4 @@ namespace TheConfectionRebirth.Biomes
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
         }
     }
-
-    /*public class ConfectionTileCounter : ALBiomeTileCountModifier
-    {
-        public override int GetTileCount(ReadOnlySpan<int> TileCounts)
-        {
-            return TileCounts[ModContent.TileType<CookieBlock>()]
-                + TileCounts[ModContent.TileType<Creamstone>()]
-                + TileCounts[ModContent.TileType<CreamGrass>()]
-                + TileCounts[ModContent.TileType<CreamBlock>()]
-                + TileCounts[ModContent.TileType<BlueIce>()]
-                + TileCounts[ModContent.TileType<Creamsand>()]
-                + TileCounts[ModContent.TileType<HardenedCreamsand>()]
-                + TileCounts[ModContent.TileType<Creamsandstone>()];
-        }
-
-        public override void OnReceiveModifiedTileCount(int TileCount)
-        {
-            ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount = TileCount;
-        }
-    }*/
 }

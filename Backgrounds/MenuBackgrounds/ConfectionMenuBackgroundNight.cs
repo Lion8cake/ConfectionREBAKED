@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 {
-    public class ConfectionMenuBackgroundNight : ModSurfaceBackgroundStyle, IBackground
+    public class ConfectionMenuBackgroundNight : ModSurfaceBackgroundStyle
     {
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
@@ -41,28 +41,7 @@ namespace TheConfectionRebirth.Backgrounds.MenuBackgrounds
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenu2Close");
-        }
-
-
-        public Asset<Texture2D> GetFarTexture(int i)
-        {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Far");
-        }
-
-        public Asset<Texture2D> GetCloseTexture(int i)
-        {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/MenuBackgrounds/ConfectionMenu2Close");
-        }
-
-        public Asset<Texture2D> GetMidTexture(int i)
-        {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2Mid");
-        }
-
-        public Asset<Texture2D> GetUltraFarTexture(int i)
-        {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurface2UltraFar");
+            return BackgroundTextureLoader.GetBackgroundSlot("TheConfectionRebirth/Backgrounds/ConfectionSurface2Close");
         }
     }
 }

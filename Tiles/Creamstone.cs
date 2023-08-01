@@ -33,40 +33,23 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
             AddMapEntry(new Color(188, 168, 120));
 
             HitSound = SoundID.Tink;
             MinPick = 65;
         }
-
-        private bool Saccharite(int i, int j)
-		{
-            if (j > Main.rockLayer)
-            {
-                if (Main.tile[i, j + 1].TileType == 0 && Main.rand.Next(2) == 0)
-                {
-                    WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-                    return true;
-                }
-                if (Main.tile[i, j - 1].TileType == 0 && Main.rand.Next(20) == 0)
-                {
-                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-                    return true;
-                }
-                return false;
-            }
-            return true;
-        }
 	
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.rand.Next(12) == 0)
+			if (Main.rand.NextBool(12))
 			{
-				bool spawned = false;
-				if (!spawned)
-				{
-					spawned = Saccharite(i, j);
+				if (j > Main.rockLayer) {
+					if (Main.tile[i, j + 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+					if (Main.tile[i, j - 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
 				}
 			}
 		}

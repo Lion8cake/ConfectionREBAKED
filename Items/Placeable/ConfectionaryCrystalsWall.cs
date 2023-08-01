@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             CreateRecipe(4)
                 .AddIngredient(ModContent.ItemType<Creamstone>())
-                .AddCondition(Recipe.Condition.InGraveyardBiome)
+                .AddCondition(Condition.InGraveyard)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

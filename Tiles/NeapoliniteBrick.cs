@@ -14,7 +14,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.NeapoliniteBrick>();
             AddMapEntry(new Color(186, 134, 75));
             DustType = ModContent.DustType<NeapoliniteDust>();
 

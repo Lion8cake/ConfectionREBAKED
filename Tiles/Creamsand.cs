@@ -22,12 +22,11 @@ namespace TheConfectionRebirth.Tiles
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsandstone").Type] = true;
-            TileID.Sets.TouchDamageSands[Type] = 15;
+			TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.Falling[Type] = true;
             AddMapEntry(new Color(99, 57, 46));
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamsand>();
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

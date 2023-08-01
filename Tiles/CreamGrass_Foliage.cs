@@ -23,10 +23,10 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
-            //HitSound = SoundID.Grass;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(200, 170, 108));
+			HitSound = SoundID.Grass;
         }
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)

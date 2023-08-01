@@ -12,8 +12,7 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = false;
             Main.tileLighted[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.Saccharite>();
+            TheConfectionRebirth.tileMerge[Type, ModContent.TileType<Creamstone>()] = true;
             AddMapEntry(new Color(32, 174, 221));
             DustType = ModContent.DustType<SacchariteCrystals>();
             HitSound = SoundID.Item27;
@@ -29,7 +28,7 @@ namespace TheConfectionRebirth.Tiles
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
             if (j > Main.rockLayer)
             {
-                if (WorldGen.genRand.NextBool(20) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
+                if (WorldGen.genRand.NextBool(10) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
                 {
                     bool placeSaccharite = false;
                     int yTest = j;
@@ -63,6 +62,24 @@ namespace TheConfectionRebirth.Tiles
                             NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
                         }
                     }
+					if (WorldGen.genRand.NextBool(2)) {
+						if (placeSaccharite) {
+							tileBelow.TileType = (ushort)ModContent.TileType<EnchantedSacchariteBlock>();
+							tileBelow.HasTile = true;
+							WorldGen.SquareTileFrame(i, j + 1, true);
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
+							}
+						}
+						if (placeSaccharite) {
+							tileBelow.TileType = (ushort)ModContent.TileType<EnchantedSacchariteBlock>();
+							tileBelow.HasTile = true;
+							WorldGen.SquareTileFrame(i, j + 1, true);
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
+							}
+						}
+					}
                 }
             }
         }

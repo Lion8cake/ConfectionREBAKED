@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             AnimationType = NPCID.Bird;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<BirdnanaBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -53,7 +53,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             return true;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -87,7 +87,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 1f;
             }
@@ -97,7 +97,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class BirdnanaItem : ModItem
     {
-        public override void SetStaticDefaults() => SacrificeTotal = 5;
+        public override void SetStaticDefaults() => Item.ResearchUnlockCount = 5;
 
         public override void SetDefaults()
         {

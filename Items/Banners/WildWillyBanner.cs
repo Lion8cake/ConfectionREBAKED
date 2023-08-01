@@ -28,6 +28,7 @@ namespace TheConfectionRebirth.Items.Banners
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-        }
+			ItemID.Sets.KillsToBanner[Type] = 10;
+		}
     }
 }

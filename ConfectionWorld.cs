@@ -12,11 +12,62 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
+using TheConfectionRebirth.Items.Weapons;
+using Terraria.ID;
+using Terraria.Utilities;
+using System.Linq;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorld : ModSystem {
-		internal static int[] ConfectionSurfaceBG = new int[TheConfectionRebirth.bgVarAmount] { -1, -1, -1, -1 };
-		internal static bool Secret;
+
+		//Recipes, not making a new file for this like last time
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ItemID.TerraBlade);
+			recipe.AddIngredient(ItemID.TrueNightsEdge)
+			.AddIngredient(ModContent.ItemType<TrueSucrosa>())
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+			Recipe recipe2 = Recipe.Create(ItemID.TerraBlade);
+			recipe2.AddIngredient(ModContent.ItemType<TrueDeathsRaze>())
+			.AddIngredient(ItemID.TrueExcalibur)
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+			Recipe recipe3 = Recipe.Create(ItemID.TerraBlade);
+			recipe3.AddIngredient(ModContent.ItemType<TrueDeathsRaze>())
+			.AddIngredient(ModContent.ItemType<TrueSucrosa>())
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+
+		public override void AddRecipeGroups() {
+			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<Items.Placeable.CreamWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.Cherimoya>());
+		}
+
+		public override void PostAddRecipes() {
+			for (int i = 0; i < Recipe.numRecipes; i++) {
+				Recipe recipe = Main.recipe[i];
+				if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer)) {
+					recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
+				}
+				if (recipe.HasResult(ItemID.GoldenShower) && recipe.HasIngredient(ItemID.SoulofNight)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 15);
+				}
+				if (recipe.HasResult(4142) && recipe.HasIngredient(ItemID.SoulofNight)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 10);
+				}
+				if (recipe.HasResult(ItemID.MechanicalWorm) && recipe.HasIngredient(ItemID.SoulofNight) && recipe.HasIngredient(ItemID.Vertebrae)) {
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<Items.SoulofSpite>(), 6);
+				}
+			}
+		}
+
 		public static int ConfTileCount { get; set; }
 		public static float ConfTileInfo => ConfTileCount / 100;
 		public static bool IsEaster => DateTime.Now.Day >= 2 && DateTime.Now.Day <= 24 && DateTime.Now.Month.Equals(4);
@@ -29,11 +80,12 @@ namespace TheConfectionRebirth {
 			}
 		}
 
-		public override void Load() => On.Terraria.Main.SetBackColor += Main_SetBackColor;
 
-		public override void Unload() => On.Terraria.Main.SetBackColor -= Main_SetBackColor;
+		public override void Load() => Terraria.On_Main.SetBackColor += Main_SetBackColor;
 
-		private void Main_SetBackColor(On.Terraria.Main.orig_SetBackColor orig, Main.InfoToSetBackColor info, out Color sunColor, out Color moonColor) {
+		public override void Unload() => Terraria.On_Main.SetBackColor -= Main_SetBackColor;
+
+		private void Main_SetBackColor(Terraria.On_Main.orig_SetBackColor orig, Main.InfoToSetBackColor info, out Color sunColor, out Color moonColor) {
 			double num = Main.time;
 			Color bgColorToSet = Color.White;
 			sunColor = Color.White;
@@ -469,38 +521,12 @@ namespace TheConfectionRebirth {
 			ConfTileCount = tileCounts[ModContent.TileType<CreamGrass>()] + tileCounts[ModContent.TileType<CreamGrassMowed>()] + tileCounts[ModContent.TileType<CreamGrass_Foliage>()] + tileCounts[ModContent.TileType<CreamVines>()] + tileCounts[ModContent.TileType<Creamstone>()] + tileCounts[ModContent.TileType<Creamsand>()] + tileCounts[ModContent.TileType<BlueIce>()] + tileCounts[ModContent.TileType<HardenedCreamsand>()] + tileCounts[ModContent.TileType<Creamsandstone>()];
 			ConfTileCount += tileCounts[ModContent.TileType<CreamstoneAmethyst>()] + tileCounts[ModContent.TileType<CreamstoneTopaz>()] + tileCounts[ModContent.TileType<CreamstoneSaphire>()] + tileCounts[ModContent.TileType<CreamstoneEmerald>()] + tileCounts[ModContent.TileType<CreamstoneRuby>()] + tileCounts[ModContent.TileType<CreamstoneDiamond>()];
 			ConfTileCount += tileCounts[ModContent.TileType<CookieBlock>()] + tileCounts[ModContent.TileType<CreamBlock>()];
-			Main.SceneMetrics.EvilTileCount -= ConfTileCount;
-			if (Main.SceneMetrics.EvilTileCount < 0)
-				Main.SceneMetrics.EvilTileCount = 0;
-			Main.SceneMetrics.BloodTileCount -= ConfTileCount;
-			if (Main.SceneMetrics.BloodTileCount < 0)
-				Main.SceneMetrics.BloodTileCount = 0;
-		}
-
-		public override void SaveWorldData(TagCompound tag) {
-			tag[nameof(ConfectionSurfaceBG) + "2"] = ConfectionSurfaceBG;
-			tag[nameof(Secret)] = Secret;
-		}
-
-		public override void LoadWorldData(TagCompound tag) {
-			if (tag.ContainsKey(nameof(ConfectionSurfaceBG) + "2"))
-				ConfectionSurfaceBG = tag.GetIntArray(nameof(ConfectionSurfaceBG) + "2");
-			Secret = tag.ContainsKey(nameof(Secret)) && tag.GetBool(nameof(Secret));
-		}
-
-		public override void NetSend(BinaryWriter writer) {
-			writer.Write(TheConfectionRebirth.bgVarAmount);
-			for (int i = 0; i < TheConfectionRebirth.bgVarAmount; i++)
-				writer.Write(ConfectionSurfaceBG[i]);
-			writer.Write(Secret);
-		}
-
-		public override void NetReceive(BinaryReader reader) {
-			int bgVar = reader.ReadInt32();
-			ConfectionSurfaceBG = new int[TheConfectionRebirth.bgVarAmount] { -1, -1, -1, -1 };
-			for (int i = 0; i < bgVar; i++)
-				ConfectionSurfaceBG[i] = reader.ReadInt32();
-			Secret = reader.ReadBoolean();
-		}
+            Main.SceneMetrics.EvilTileCount -= ConfTileCount;
+            if (Main.SceneMetrics.EvilTileCount < 0)
+                Main.SceneMetrics.EvilTileCount = 0;
+            Main.SceneMetrics.BloodTileCount -= ConfTileCount;
+            if (Main.SceneMetrics.BloodTileCount < 0)
+                Main.SceneMetrics.BloodTileCount = 0;
+        }
 	}
 }

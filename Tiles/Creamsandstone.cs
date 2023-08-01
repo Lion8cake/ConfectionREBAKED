@@ -17,7 +17,6 @@ namespace TheConfectionRebirth.Tiles
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsand").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamsandstone>();
             AddMapEntry(new Color(89, 47, 36));
             TileID.Sets.Conversion.HardenedSand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
@@ -27,5 +26,18 @@ namespace TheConfectionRebirth.Tiles
         {
             num = fail ? 1 : 3;
         }
-    }
+
+		public override void RandomUpdate(int i, int j) {
+			if (Main.rand.NextBool(12)) {
+				if (j > Main.rockLayer) {
+					if (Main.tile[i, j + 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+					if (Main.tile[i, j - 1].TileType == 0 && Main.rand.NextBool(2)) {
+						WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+				}
+			}
+		}
+	}
 }

@@ -7,7 +7,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class ChipArrow : ModItem
 	{
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
@@ -15,7 +15,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 8;
 			Item.height = 8;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true; 
 			Item.knockBack = 1.5f;
 			Item.value = 80;

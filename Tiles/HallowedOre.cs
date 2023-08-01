@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Tiles
@@ -19,11 +20,10 @@ namespace TheConfectionRebirth.Tiles
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(180, 180, 204), name);
 
             DustType = 84;
-            ItemDrop = ModContent.ItemType<Items.Placeable.HallowedOre>();
             HitSound = SoundID.Tink;
             MineResist = 4f;
             MinPick = 180;

@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
@@ -27,9 +28,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             DustType = ModContent.DustType<ChipDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
-            CloseDoorID = ModContent.TileType<CreamwoodDoorClosed>();
+			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<CreamwoodDoorClosed>();
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             //name.SetDefault("Creamwood Door");
             AddMapEntry(new Color(106, 65, 51), name);
 
@@ -84,12 +85,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
             num = 1;
         }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<CreamwoodDoor>());
-        }
+		public override bool CanDrop(int i, int j) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<CreamwoodDoor>());
+			return false;
+		}
 
-        public override void MouseOver(int i, int j)
+		public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;

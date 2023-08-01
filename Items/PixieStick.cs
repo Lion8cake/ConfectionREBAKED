@@ -9,9 +9,9 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pixie Stick");
-            Tooltip.SetDefault("Summons a Pixie Stick to ride on");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Pixie Stick");
+            // Tooltip.SetDefault("Summons a Pixie Stick to ride on");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

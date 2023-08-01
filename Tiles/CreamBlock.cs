@@ -20,7 +20,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLighted[Type] = false;
             TileID.Sets.Snow[Type] = true;
             DustType = ModContent.DustType<CreamSnowDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.CreamBlock>();
             AddMapEntry(new Color(219, 223, 234));
         }
 

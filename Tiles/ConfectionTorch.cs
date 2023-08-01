@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Biomes;
@@ -28,7 +29,6 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.Torch[Type] = true;
 
-            ItemDrop = ModContent.ItemType<Items.Placeable.ConfectionTorch>();
             DustType = ModContent.DustType<SherbetDust>();
             AdjTiles = new int[] { TileID.Torches };
 
@@ -49,7 +49,7 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
 
             AddMapEntry(new Color(200, 200, 200), name);
 
@@ -61,7 +61,7 @@ namespace TheConfectionRebirth.Tiles
 
         public override float GetTorchLuck(Player player)
         {
-            bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>());
+            bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiome>());
             return inConfectionUndergroundBiome ? 1f : -0.1f;
         }
 

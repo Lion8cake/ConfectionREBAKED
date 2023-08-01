@@ -115,7 +115,7 @@ namespace TheConfectionRebirth.Projectiles
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 v = Main.rand.NextVector2CircularEdge(200f, 200f);
             if (v.Y < 0.0)
@@ -125,18 +125,19 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.NewProjectile(Projectile.GetSource_FromThis("Cosmic cookie slash"), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
-        {
-            Vector2 v = Main.rand.NextVector2CircularEdge(200f, 200f);
-            if (v.Y < 0.0)
-                v.Y *= -1f;
-            v.Y += 100f;
-            Vector2 velocity = v.SafeNormalize(Vector2.UnitY) * 6f;
-            Projectile.NewProjectile(Projectile.GetSource_FromThis("Cosmic cookie slash"), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
-        }
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			if (info.PvP) {
+				Vector2 v = Main.rand.NextVector2CircularEdge(200f, 200f);
+				if (v.Y < 0.0)
+					v.Y *= -1f;
+				v.Y += 100f;
+				Vector2 velocity = v.SafeNormalize(Vector2.UnitY) * 6f;
+				Projectile.NewProjectile(Projectile.GetSource_FromThis("Cosmic cookie slash"), target.Center - velocity * 20f, velocity, ProjectileID.SuperStarSlash, Projectile.damage / 2, 0.0f, Projectile.owner, ai1: target.Center.Y);
+			}
+		}
 
-        //Make the projectile shoot out cookie star dusts
-        public override void Kill(int timeLeft)
+		//Make the projectile shoot out cookie star dusts
+		public override void Kill(int timeLeft)
         {
             for (int k = 15; k < 50; k++)
             {

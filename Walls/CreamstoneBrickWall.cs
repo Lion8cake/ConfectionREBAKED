@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.CreamstoneBrickWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CreamstoneBrickWall>());
             AddMapEntry(new Color(90, 78, 51));
         }
 

@@ -13,7 +13,7 @@ namespace TheConfectionRebirth.Walls.GraveyardWalls
             DustType = ModContent.DustType<CreamDust>();
             AddMapEntry(new Color(58, 48, 35));
 
-            ItemDrop = ModContent.ItemType<Items.Placeable.CrackedConfectionWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CrackedConfectionWall>());
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

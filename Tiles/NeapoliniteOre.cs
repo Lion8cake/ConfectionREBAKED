@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
 
@@ -22,10 +23,9 @@ namespace TheConfectionRebirth.Tiles
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<NeapoliniteDust>();
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(153, 96, 62), name);
 
-            ItemDrop = ModContent.ItemType<Items.Placeable.NeapoliniteOre>();
             HitSound = SoundID.Tink;
             MineResist = 4f;
             MinPick = 180;

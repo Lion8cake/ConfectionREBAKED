@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -33,7 +35,13 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(188, 168, 120));
         }
 
-        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+		public override void NearbyEffects(int i, int j, bool closer) {
+			if (Main.tile[i, j].TileFrameX < 36) {
+				Main.SceneMetrics.ActiveFountainColor = ModContent.Find<ModWaterStyle>("TheConfectionRebirth/CreamWaterStyle").Slot;
+			}
+		}
+
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return true;
         }
@@ -53,12 +61,51 @@ namespace TheConfectionRebirth.Tiles
             }
         }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ConfectionWaterFountain>());
-        }
+		public override void HitWire(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			int x = i - tile.TileFrameX / 18 % 2;
+			tile = Main.tile[i, j];
+			int y = j - tile.TileFrameY / 18 % 4;
+			for (int m = x; m < x + 2; m++) {
+				for (int n = y; n < y + 4; n++) {
+					tile = Main.tile[m, n];
+					if (!tile.HasTile) {
+						continue;
+					}
+					tile = Main.tile[m, n];
+					if (tile.TileFrameX < 18 * 2) {
+						tile = Main.tile[m, n];
+						tile.TileFrameX += (short)(18 * 2);
+					}
+					else {
+						tile = Main.tile[m, n];
+						tile.TileFrameX -= (short)(18 * 2);
+					}
+				}
+			}
+			if (!Wiring.running) {
+				return;
+			}
+			for (int k = 0; k < 2; k++) {
+				for (int l = 0; l < 4; l++) {
+					Wiring.SkipWire(x + k, y + l);
+				}
+			}
+		}
 
-        public override void MouseOver(int i, int j)
+		public override bool RightClick(int i, int j) {
+			HitWire(i, j);
+			SoundEngine.PlaySound(SoundID.Mech, (Vector2?)new Vector2((float)(i * 16), (float)(j * 16)));
+			return true;
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			if (frameX >= 36) {
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ConfectionWaterFountain>());
+			}
+		}
+
+		public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;

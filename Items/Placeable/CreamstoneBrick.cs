@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
@@ -30,7 +30,6 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             CreateRecipe()
                 .AddIngredient<Creamstone>(2)
-                .AddIngredient<Creamsand>()
                 .AddTile(TileID.Furnaces)
                 .Register();
             CreateRecipe()

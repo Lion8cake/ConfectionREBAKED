@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddMapEntry(new Color(32, 174, 221));
 
             DustType = ModContent.DustType<SacchariteCrystals>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.Furniture.SaccharitePlatform>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.SaccharitePlatform>());
             AdjTiles = new int[] { TileID.Platforms };
 
             TileObjectData.newTile.CoordinateHeights = new[] { 16 };

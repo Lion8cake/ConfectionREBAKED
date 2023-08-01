@@ -4,6 +4,7 @@ using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -71,19 +72,84 @@ namespace TheConfectionRebirth.NPCs
             NPC.lifeMax = 120;
             NPC.HitSound = SoundID.NPCHit5;
             NPC.DeathSound = SoundID.NPCDeath7;
-            NPC.value = 60f;
-            // npc.noGravity = false;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = 0;
-            AIType = 0;
+            AIType = -1;
             AnimationType = NPCID.BlueSlime;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SprinklingBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
             Index = -1;
+			NPC.gfxOffY = 4;
         }
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		public override void AI() {
+			NPC.TargetClosest();
+			float num281 = 12f;
+			Vector2 vector32 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+			float num282 = Main.player[NPC.target].position.X + (float)(Main.player[NPC.target].width / 2) - vector32.X;
+			float num283 = Main.player[NPC.target].position.Y - vector32.Y;
+			float num284 = (float)Math.Sqrt(num282 * num282 + num283 * num283);
+			num284 = num281 / num284;
+			num282 *= num284;
+			num283 *= num284;
+			if (NPC.directionY < 0) {
+				if (NPC.velocity.X != 0f) {
+					NPC.velocity.X *= 0.9f;
+					if ((double)NPC.velocity.X > -0.1 || (double)NPC.velocity.X < 0.1) {
+						NPC.netUpdate = true;
+						NPC.velocity.X = 0f;
+					}
+				}
+			}
+			if (NPC.ai[0] > 0f) {
+				NPC.ai[0] -= 1f;
+			}
+
+			if (Collision.CanHit(NPC.position, NPC.width, NPC.height, Main.player[NPC.target].position, Main.player[NPC.target].width, Main.player[NPC.target].height)) {
+				if (Main.netMode != 1) {
+					if (NPC.ai[0] == 0f) {
+						NPC.ai[0] = 200f;
+					}
+					int num285 = 55;
+					if (NPC.ai[0] == 30f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallSmall>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
+					if (NPC.ai[0] == 45f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBall>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
+					if (NPC.ai[0] == 60f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallLarge>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
+				}
+			}
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
@@ -91,26 +157,26 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.damage = (int)(NPC.damage * 0.2f);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
                 Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
                 int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
                 (Main.npc[index].ModNPC as Sprinkling).Index = Index;
-                if (Main.netMode == NetmodeID.Server)
+				if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
             }
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()) && !spawnInfo.AnyInvasionActive())
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && !spawnInfo.Player.ZoneDirtLayerHeight && !spawnInfo.Player.ZoneRockLayerHeight && Main.hardMode)
             {
                 return 1f;
             }
@@ -128,36 +194,6 @@ namespace TheConfectionRebirth.NPCs
             }
 
             return true;
-        }
-
-		public override void AI()
-        {
-            NPC.TargetClosest(false);
-            player = NPC.target == -1 ? null : Main.player[NPC.target];
-
-            if (player == null || !Collision.CanHit(NPC, player) || --NPC.ai[1] > 0f)
-                return;
-
-            Shoot();
-        }
-
-        private void Shoot()
-        {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
-
-            int type = Mod.Find<ModProjectile>("SprinklingBall").Type;
-            Vector2 velocity = player.Center - NPC.Center;
-            float magnitude = MathF.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);
-            if (magnitude > 0f)
-            {
-                velocity *= 5f / magnitude;
-            }
-
-            int ind = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, type, NPC.damage, 2f);
-            Main.projectile[ind].frame = Index;
-
-            NPC.ai[1] = 200f;
         }
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

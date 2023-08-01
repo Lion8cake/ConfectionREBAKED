@@ -7,8 +7,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.Meawzer
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Little Meawzer");
-			Description.SetDefault("The little Meawzers will shoot rainbow lazers at your enemies.");
+			// DisplayName.SetDefault("Little Meawzer");
+			// Description.SetDefault("The little Meawzers will shoot rainbow lazers at your enemies.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.buffNoSave[Type] = true;
 		}

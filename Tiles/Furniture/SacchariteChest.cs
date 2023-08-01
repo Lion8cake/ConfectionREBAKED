@@ -29,11 +29,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             DustType = ModContent.DustType<SacchariteCrystals>();
             AdjTiles = new int[] { TileID.Containers };
-            ChestDrop = ModContent.ItemType<Items.Placeable.Furniture.SacchariteChest>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.SacchariteChest>());
 
-            ContainerName.SetDefault("Saccharite Chest");
-
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(32, 174, 221), name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -48,7 +46,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
         }
 
-        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
+		public override LocalizedText DefaultContainerName(int frameX, int frameY) => Language.GetOrRegister("Saccharite Chest");
+
+		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -88,7 +88,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
             Chest.DestroyChest(i, j);
         }
 

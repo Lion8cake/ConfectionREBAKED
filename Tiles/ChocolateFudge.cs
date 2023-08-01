@@ -25,7 +25,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<Dusts.FudgeDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.ChocolateFudge>();
             AddMapEntry(new Color(108, 61, 49));
         }
 

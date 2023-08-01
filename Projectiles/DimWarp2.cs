@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
         }
 		
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.boss == false && target.lifeMax < 1000 && target.type != NPCID.TargetDummy)
             {
@@ -45,22 +45,36 @@ namespace TheConfectionRebirth.Projectiles
                 Projectile.Kill();
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
+
+
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
             if (Main.player[Main.myPlayer] == target)
             {
-                Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
-                target.Teleport(warppoint.position, 1);
-                target.HealEffect(1);
-                if (target.HasBuff(ModContent.BuffType<Buffs.GoneBananas>()))
-                {
-                    target.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((target.statLifeMax2 + target.statDefense) * (target.endurance + 1) / 7), 0);
-                }
-                target.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
-                Projectile.ai[0] = 1;
-                Projectile.Kill();
+                OnHitPlayer(target);
             }
         }
+
+        const float warpRad = 16;
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            return false;
+        }
+		void OnHitPlayer(Player target) {
+			if (Main.player[Main.myPlayer] == target) {
+				Projectile warppoint = Main.player[Projectile.owner].GetModPlayer<ConfectionPlayer>().DimensionalWarp;
+				target.Teleport(warppoint.position, 1);
+				target.HealEffect(1);
+				if (target.HasBuff(ModContent.BuffType<Buffs.GoneBananas>())) {
+					target.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((target.statLifeMax2 + target.statDefense) * (target.endurance + 1) / 7), 0);
+				}
+				target.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
+				Projectile.ai[0] = 1;
+				Projectile.Kill();
+			}
+		}
+        
+
         public override bool PreKill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
@@ -69,14 +83,14 @@ namespace TheConfectionRebirth.Projectiles
                 if (Projectile.ai[0] == 0)
                 {
                     owner.Teleport(owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.position, 1);
-                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
                     if (owner.HasBuff(ModContent.BuffType<Buffs.GoneBananas>()))
                     {
                         owner.Hurt(PlayerDeathReason.ByCustomReason("DimensionSplit"), (int)((owner.statLifeMax2 + owner.statDefense) * (owner.endurance + 1) / 7), 0);
                     }
                     owner.AddBuff(ModContent.BuffType<Buffs.GoneBananas>(), 360);
                 }
-                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+				owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
             }
             return true;
         }

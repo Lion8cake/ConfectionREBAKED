@@ -18,7 +18,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<CreamDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.CreamstoneBrick>();
             AddMapEntry(new Color(180, 156, 103));
 
             HitSound = SoundID.Tink;

@@ -36,9 +36,14 @@ namespace TheConfectionRebirth.Items.Armor
             if (rank > 5)
                 rank = 5;
             StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
-        }
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 3;
+		}
 
-        public override void AddRecipes()
+		public override void UpdateVanitySet(Player player) {
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 3;
+		}
+
+		public override void AddRecipes()
         {
             CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
         }

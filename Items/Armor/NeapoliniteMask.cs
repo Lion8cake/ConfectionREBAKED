@@ -33,11 +33,16 @@ namespace TheConfectionRebirth.Items.Armor
         {
             player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteMask");
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
-            int rank = Math.Min(damage, 400) / 80 - 1;
+            int rank = Math.Min(damage, 1750) / 350 - 1;
             StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
-        }
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 1;
+		}
 
-        public override void AddRecipes()
+		public override void UpdateVanitySet(Player player) {
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 1;
+		}
+
+		public override void AddRecipes()
         {
             CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
         }

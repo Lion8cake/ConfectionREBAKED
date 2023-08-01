@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -53,7 +54,7 @@ namespace TheConfectionRebirth.TilePostDraws
 			{
 				lastTileY = Main.maxTilesY - 4;
 			}
-			if (Main.sectionManager.FrameSectionsLeft > 0)
+			if (Main.sectionManager.AnyUnfinishedSections) //may break idk //Update: it did, and heavily
 			{
 				TimeLogger.DetailedDrawReset();
 				WorldGen.SectionTileFrameWithCheck(firstTileX, firstTileY, lastTileX, lastTileY);

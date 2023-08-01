@@ -11,7 +11,7 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = true;
             DustType = ModContent.DustType<FairyFlossDust3>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.BlueFairyFlossWall>();
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.BlueFairyFlossWall>());
             AddMapEntry(new Color(39, 95, 126));
         }
 

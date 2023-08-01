@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Tiles
 			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ItemID.Ruby;
+			RegisterItemDrop(ItemID.Ruby);
             DustType = ModContent.DustType<CreamDust>();
             AddMapEntry(new Color(188, 168, 120));
 

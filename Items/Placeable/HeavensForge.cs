@@ -26,10 +26,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heavenly Forge");
-            Tooltip.SetDefault("Allows you to convert hallowed materials into their confection alternatives and vice versa\n" +
-                "'A forge created from the both the lands of rainbows and candy'");
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void AddRecipes()
@@ -70,6 +67,7 @@ namespace TheConfectionRebirth.Items.Placeable
             AddAndReplace<Creamsandstone>(ItemID.HallowSandstone);
             AddAndReplace<HardenedCreamsand>(ItemID.HallowHardenedSand);
             AddAndReplace<OrangeIce>(ItemID.PinkIceBlock);
+			AddAndReplace<NPCs.Critters.RoyalCherryBugItem>(ItemID.EmpressButterfly);
         }
 
         private static void AddAndReplace<TConf>(int hall) where TConf : ModItem
@@ -77,11 +75,13 @@ namespace TheConfectionRebirth.Items.Placeable
             Recipe recipe = Recipe.Create(hall);
             recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
             recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
             recipe.AddIngredient(hall);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
         }
 
         private static void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
@@ -92,11 +92,13 @@ namespace TheConfectionRebirth.Items.Placeable
             Recipe recipe = Recipe.Create(ht);
             recipe.AddIngredient(ct);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
             recipe = Recipe.Create(ct);
             recipe.AddIngredient(ht);
             recipe.AddTile(ModContent.TileType<HeavensForgeTile>());
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
         }
     }
 }

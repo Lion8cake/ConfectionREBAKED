@@ -142,7 +142,6 @@ namespace TheConfectionRebirth.Tiles
 
         public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
         {
-            treeFrame = (tile.TileFrameNumber + tile.TileFrameX + tile.TileFrameY) % 4;
         }
 
         public override Asset<Texture2D> GetBranchTextures()

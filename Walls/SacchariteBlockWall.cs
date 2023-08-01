@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<Items.Placeable.SacchariteBlockWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.SacchariteBlockWall>());
             DustType = ModContent.DustType<SacchariteCrystals>();
             AddMapEntry(new Color(72, 120, 123));
         }

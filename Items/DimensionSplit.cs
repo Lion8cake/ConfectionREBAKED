@@ -12,8 +12,9 @@ namespace TheConfectionRebirth.Items
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-        }
+            Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LickitySplit>();
+		}
         public override void SetDefaults()
         {
             Item.useTime = 25;
@@ -28,7 +29,15 @@ namespace TheConfectionRebirth.Items
             Item.autoReuse = true;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override void PostUpdate() {
+			Lighting.AddLight(Item.Center, new Vector3(2.39f, 1.64f, 0.05f) * 0.22f * Main.essScale);
+		}
+
+		public override Color? GetAlpha(Color lightColor) {
+			return Color.White;
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
             int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
@@ -59,15 +68,15 @@ namespace TheConfectionRebirth.Items
                 .AddIngredient(ModContent.ItemType<CookieDough>(), 2)
                 .AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 6)
                 .AddIngredient(ItemID.SoulofLight, 8)
-                .AddCondition(NetworkText.FromKey("CelebrationMK10"), r => Main.tenthAnniversaryWorld)
-                .AddTile(TileID.Anvils)
+                .AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld)
+				.AddTile(TileID.Anvils)
                 .Register();
             CreateRecipe(1)
                 .AddIngredient(ModContent.ItemType<BananawarpPeel>())
                 .AddIngredient(ModContent.ItemType<CookieDough>(), 2)
                 .AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 6)
                 .AddIngredient(ModContent.ItemType<SoulofDelight>(), 8)
-                .AddCondition(NetworkText.FromKey("CelebrationMK10"), r => Main.tenthAnniversaryWorld)
+                .AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

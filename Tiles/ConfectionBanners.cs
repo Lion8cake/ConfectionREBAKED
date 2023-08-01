@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,7 +26,7 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.newTile.StyleWrapLimit = 111;
             TileObjectData.addTile(Type);
             DustType = -1;
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(13, 88, 130), name);
         }
 
@@ -126,7 +127,6 @@ namespace TheConfectionRebirth.Tiles
                     return;
 
             }
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, Mod.Find<ModItem>(item).Type);
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -216,9 +216,9 @@ namespace TheConfectionRebirth.Tiles
                     case 26:
                         type = "Prickster";
                         break;
-                    case 27:
-                        type = "CherryBomber";
-                        break;
+                    //case 27:
+                     //   type = "CherryBomber";
+                     //   break;
                     case 28:
                         type = "BigMimicConfection";
                         break;

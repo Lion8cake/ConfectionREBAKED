@@ -26,8 +26,8 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(64, 133, 44));
-            ItemDrop = ModContent.ItemType<Items.YumDrop>();
-        }
+			RegisterItemDrop(ModContent.ItemType<Items.YumDrop>());
+		}
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

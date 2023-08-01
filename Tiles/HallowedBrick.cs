@@ -13,7 +13,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.HallowedBrick>();
             AddMapEntry(new Color(136, 136, 160));
             DustType = 84;
 

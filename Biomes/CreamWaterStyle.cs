@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Biomes
             return ModContent.Find<ModGore>("TheConfectionRebirth/CreamDroplet").Type;
         }
 
-        public override void LightColorMultiplier(ref float r, ref float g, ref float b)
+		public override void LightColorMultiplier(ref float r, ref float g, ref float b)
         {
             r = 1f;
             g = 1f;

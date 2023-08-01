@@ -72,7 +72,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

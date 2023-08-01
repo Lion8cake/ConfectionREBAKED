@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Walls.GraveyardWalls
         {
             Main.wallHouse[Type] = true;
             AddMapEntry(new Color(61, 39, 27));
-            ItemDrop = ModContent.ItemType<Items.Placeable.CookieWall>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieWall>());
         }
     }
 }

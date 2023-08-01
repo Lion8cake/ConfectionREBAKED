@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.NPCs.Critters
             NPC.friendly = true;
             AIType = NPCID.Worm;
             AnimationType = NPCID.Worm;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiomeSurface>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -83,7 +83,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiomeSurface>()))
+            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
             {
                 return 1f;
             }
@@ -93,7 +93,7 @@ namespace TheConfectionRebirth.NPCs.Critters
 
     internal class GummyWormItem : ModItem
     {
-        public override void SetStaticDefaults() => SacrificeTotal = 5;
+        public override void SetStaticDefaults() => Item.ResearchUnlockCount = 5;
 
         public override void SetDefaults()
         {

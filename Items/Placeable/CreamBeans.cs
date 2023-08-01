@@ -1,7 +1,10 @@
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -23,15 +26,23 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.useTurn = true;
-            Item.createTile = Mod.Find<ModTile>("CreamGrass").Type;
             Item.consumable = true;
         }
 
-        public override bool? UseItem(Player player)
-        {
-            // WorldGen.destroyObject = false;
-            TileID.Sets.BreakableWhenPlacing[0] = false;
-            return false;
-        }
-    }
+		public override bool? UseItem(Player player) { //I want to thank DylanDoe21 for this 
+			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+
+			if ((tile.HasTile && tile.TileType == ModContent.TileType<Tiles.CookieBlock>() || tile.HasTile && tile.TileType == TileID.Dirt) &&
+			player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple)) 
+			{
+				SoundEngine.PlaySound(SoundID.Dig, player.Center);
+
+				Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)ModContent.TileType<CreamGrass>();
+
+				return true;
+			}
+
+			return false;
+		}
+	}
 }

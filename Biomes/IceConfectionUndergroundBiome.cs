@@ -15,7 +15,5 @@ namespace TheConfectionRebirth.Biomes
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
 
         public override string MapBackground => BackgroundPath;
-
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionUndergroundBiome>().IsBiomeActive(player) && player.ZoneSnow;
     }
 }

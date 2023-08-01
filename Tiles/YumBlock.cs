@@ -17,7 +17,6 @@ namespace TheConfectionRebirth.Tiles
             TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.YumBlock>();
             AddMapEntry(new Color(110, 234, 184));
             DustType = ModContent.DustType<YumDust>();
         }

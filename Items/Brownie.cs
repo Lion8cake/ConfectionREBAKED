@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 5;
+			Item.ResearchUnlockCount = 5;
 
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 

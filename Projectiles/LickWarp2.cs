@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
         }
 		
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.boss == false && target.lifeMax < 1000 && target.type != NPCID.TargetDummy)
             {
@@ -44,7 +44,7 @@ namespace TheConfectionRebirth.Projectiles
                 Projectile.Kill();
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.player[Main.myPlayer] == target)
             {
@@ -63,9 +63,9 @@ namespace TheConfectionRebirth.Projectiles
                 if (Projectile.ai[0] == 0)
                 {
                     owner.Teleport(owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.position, 1);
-                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                    owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
                 }
-                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.Kill();
+                owner.GetModPlayer<ConfectionPlayer>().DimensionalWarp.timeLeft = 0;
             }
             return true;
         }

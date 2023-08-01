@@ -4,10 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
-using AltLibrary;
-using AltLibrary.Common.AltBiomes;
-using AltLibrary.Common.Systems;
-using AltLibrary.Common.Hooks;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -93,7 +89,6 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<CreamDust>();
-            ItemDrop = ModContent.ItemType<Items.Placeable.Creamstone>();
             AddMapEntry(mossColor);
 
 			foreach(KeyValuePair<int, Color> entry in TilePostDraws.Moss.MossColor)
@@ -101,7 +96,9 @@ namespace TheConfectionRebirth.Tiles
 				TileMerge(Type, entry.Key);
 			}
 			TilePostDraws.Moss.MossColor.Add(Type, mossColor);
-			ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
+			//ModContent.Find<AltBiome>("TheConfectionRebirth", "ConfectionBiome").BakeTileChild(Type, tileParent, new(true, true, true));
+
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Creamstone>());
 
 			for (int x = 0; x < TileID.Sets.Stone.Length; x++)
 			{

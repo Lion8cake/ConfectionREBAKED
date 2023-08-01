@@ -50,7 +50,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 125));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             int num = NPC.life > 0 ? 1 : 5;
             for (int k = 0; k < num; k++)
@@ -60,8 +60,7 @@ namespace TheConfectionRebirth.NPCs
         }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.InModBiome(ModContent.GetInstance<SandConfectionUndergroundBiome>()) && !spawnInfo.AnyInvasionActive())
-			{
+			if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && spawnInfo.Player.ZoneDesert && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
 				return 1f;
 			}
 			return 0f;

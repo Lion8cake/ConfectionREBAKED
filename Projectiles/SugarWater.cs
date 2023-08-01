@@ -1,4 +1,3 @@
-using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -27,8 +26,8 @@ namespace TheConfectionRebirth.Projectiles
 
             if (Projectile.owner == Main.myPlayer)
             {
-                ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
-            }
+				CreamSolution.Convert((int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+			}
 
             if (Projectile.timeLeft > 10)
             {

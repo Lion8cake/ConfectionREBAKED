@@ -32,7 +32,8 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-        }
+			ItemID.Sets.Torches[Type] = true;
+		}
 
         public override void HoldItem(Player player)
         {
@@ -50,11 +51,6 @@ namespace TheConfectionRebirth.Items.Placeable
             {
                 Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 0.27f, 1.34f, 1.69f);
             }
-        }
-
-        public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)
-        {
-            dryTorch = true;
         }
 
         public override void AddRecipes()

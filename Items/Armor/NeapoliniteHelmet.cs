@@ -1,5 +1,6 @@
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,7 +12,7 @@ namespace TheConfectionRebirth.Items.Armor
     [AutoloadEquip(EquipType.Head)]
     public class NeapoliniteHelmet : ModItem
     {
-        public override void SetStaticDefaults()
+		public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -43,9 +44,14 @@ namespace TheConfectionRebirth.Items.Armor
                 rank = (int)(speed - 1);
             }
             StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
-        }
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 2;
+		}
 
-        public override void AddRecipes()
+		public override void UpdateVanitySet(Player player) {
+			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 2;
+		}
+
+		public override void AddRecipes()
         {
             CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
         }

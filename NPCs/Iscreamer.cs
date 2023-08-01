@@ -71,7 +71,7 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -215,7 +215,7 @@ namespace TheConfectionRebirth.NPCs
                 Vector2 northPosClose = npc.Center + new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
                 Vector2 southPosClose = npc.Center - new Vector2((Closeness - 30f) * (float)Math.Sin(radians + 1.57), (Closeness - 30f) * (float)Math.Cos(radians + 1.57));
             }
-			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Custom/IceScreamerShriek"));
+			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Custom/IceScreamerShriek"), npc.position);
 		}
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -229,8 +229,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionUndergroundBiome>()) || spawnInfo.Player.InModBiome(ModContent.GetInstance<IceConfectionUndergroundBiome>())) && !spawnInfo.AnyInvasionActive())
-            {
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
                 return 0.2f;
             }
             return 0f;
