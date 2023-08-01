@@ -18,7 +18,5 @@ namespace TheConfectionRebirth.Biomes
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSnowSurfaceBackgroundStyle>();
 
         public override string MapBackground => BackgroundPath;
-
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && player.ZoneUndergroundDesert;
     }
 }

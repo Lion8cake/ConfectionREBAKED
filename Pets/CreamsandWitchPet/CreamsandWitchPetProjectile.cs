@@ -9,6 +9,11 @@ namespace TheConfectionRebirth.Pets.CreamsandWitchPet
 		public override void SetStaticDefaults() {
 			Main.projFrames[Projectile.type] = 10;
 			Main.projPet[Projectile.type] = true;
+
+			ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, 0, 1)
+				.WithOffset(-10, 2f)
+				.WithSpriteDirection(-1)
+				.WhenSelected(1, 5, 6);
 		}
 
 		public override void SetDefaults() {

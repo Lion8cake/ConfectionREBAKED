@@ -60,11 +60,11 @@ namespace TheConfectionRebirth.Tiles
             if (NPC.downedPlantBoss)
             {
                 AchievementsHelper.NotifyProgressionEvent(20);
-                return false;
+                return true;
             }
 
             DustType = dustType;
-            return true;
+            return false;
         }
 
         public static string MapChestName(string name, int i, int j)

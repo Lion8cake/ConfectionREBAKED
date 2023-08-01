@@ -269,7 +269,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead || drawInfo.drawPlayer.armor[11].type != 0) {
 				return;
 			}
 
@@ -314,7 +314,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead || drawInfo.drawPlayer.armor[11].type != 0) {
 				return;
 			}
 
@@ -354,7 +354,7 @@ namespace TheConfectionRebirth {
 
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 
-			if (drawInfo.drawPlayer.dead) {
+			if (drawInfo.drawPlayer.dead || drawInfo.drawPlayer.armor[11].type != 0) {
 				return;
 			}
 

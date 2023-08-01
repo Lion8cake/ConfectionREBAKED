@@ -91,8 +91,9 @@ Mods: {
 			// DuchessCrystal.DisplayName: Rock Candy
 			// DeathsSlash.DisplayName: Deaths Slash
 			// TrueDeathsSlash.DisplayName: True Deaths Slash
-			// SprinklingBallLarge.DisplayName: Sprinkling Ball Large
-			// SprinklingBallSmall.DisplayName: Sprinkling Ball Small
+			// SprinklingBallLarge.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
+			// SprinklingBallSmall.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
+			// DefenciveSprinkle.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
 		}
 
 		NPCs: {
@@ -1976,5 +1977,6 @@ Mods: {
 		}
 
 		// InConfection: Mods.TheConfectionRebirth.InConfection
+		// TheHallow: Mods.TheConfectionRebirth.TheHallow
 	}
 }

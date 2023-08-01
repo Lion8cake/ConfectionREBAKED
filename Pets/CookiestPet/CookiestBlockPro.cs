@@ -10,6 +10,13 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 {
 	public class CookiestBlockPro : ModProjectile
 	{
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, 0, 1)
+				.WithOffset(10, 0f)
+				.WithSpriteDirection(-1)
+				.WithCode(DelegateMethods.CharacterPreview.CompanionCubePet);
+		}
+
 		public override void SetDefaults()
 		{
 			Projectile.width = 16;
@@ -19,6 +26,7 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 			Projectile.timeLeft *= 5;
 			Projectile.friendly = true;
 			Projectile.ignoreWater = true;
+			Projectile.tileCollide = true;
 		}
 
 		public override void AI()
@@ -38,9 +46,9 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 			{
 				player.GetModPlayer<ConfectionPlayer>().cookiePet = false;
 			}
-			if (player.GetModPlayer<ConfectionPlayer>().cookiePet)
-			{
+			if (!player.dead && player.HasBuff(ModContent.BuffType<CookiestBlockBuff>())) {
 				Projectile.timeLeft = 2;
+				player.GetModPlayer<ConfectionPlayer>().cookiePet = true;
 			}
 
 			Vector2 vector = player.Center;
@@ -587,6 +595,10 @@ namespace TheConfectionRebirth.Pets.CookiestPet
 			Projectile.velocity = Projectile.velocity.MoveTowards(vector10, maxAmountAllowedToMove);
 			Projectile.frame = 8;
 			Projectile.rotation += 0.6f * (float)Projectile.spriteDirection;
+		}
+
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			return false;
 		}
 	}
 }

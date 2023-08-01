@@ -12,6 +12,9 @@ public class ConfectionBiome : ModBiome
 
     public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
+	public override int BiomeTorchItemType => ModContent.ItemType<Items.Placeable.ConfectionTorch>();
+	public override int BiomeCampfireItemType => ModContent.ItemType<Items.Placeable.ConfectionCampfire>();
+
 	public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle
 	{
 		get

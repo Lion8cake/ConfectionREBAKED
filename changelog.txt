@@ -1,3 +1,86 @@
+Beta v0.19.0
+===========================================
+Made the confection use Otherworldly Hallow and Otherworldly Underground hallow for its otherworldly music
+Fixed Sound issue with icescreamers
+Added pitch to the kazoo and magic kazoo
+Removed Altlib requirement
+Added world creation screen
+Added world Icon tree overlay for confection worlds
+Added cream grass mowing
+Added Cream solution, sugar powder and sugar water conversion
+Added NPC shops replacing items instead of just adding items
+Added Mimic spawning
+Added Neapolinite ore, hallowed ore and grand slammer to boss drops
+Fixed Hallowed ore not having a recipe to turn them into Hallowed bars
+Added Hallowed Globe
+Changed alternating backgrounds
+Made the Confection menu change between confection backgrounds
+Updated 2nd and 3rd Confection Background textures
+Added Dryad status text for the confection under confectry %
+Added Hardmode spreading
+Added conversion for mosses from normal mosses
+Added config to make cookie blocks, cream blocks and other misc tiles/walls to not spread
+Added Drunk worldgen
+Updated drunk worldgen icon overlay
+Added Sucrosa and True Sucrosa to the zenith projectile
+Gave descriptionless buffs buff descriptions
+Remade some bestiary descriptions
+Renamed the Cream Swallower to the Saccharite Sharpnose
+Renamed the Icing spray to the Icing tome
+Fixed error when using the lickety split or dimensional split
+Update english localisation to work on 1.4.4.9
+Fixed being able to decraft some confection items into hallowed items
+Fixed cream beans not being consumable and creating a tile instead of converting tiles
+Fixed some tiles not dropping
+Made the cream wings require 15 souls of delight instead of 30
+Made some NPC banners require less kills to get such as Unfirm, wild willy, Icecream Gal, Creamsand withc and Confection Mimic
+Made the cream solution only buy-able when the steampunker is in the confection biome or in the hallow biome while in a graveyard
+Made cream bricks nolonger require creamsand to make
+Fixed Saccharite taking 10x as long to grow beyond 1 tile
+Made Saccharite grow on creamsand stone and hardened creamsand
+Made the dimensional split and lickety split glow similar to the soul of delight
+Changed the glow of soul of delight to be less intense
+Updated the candle lighter to now be more similar to the flamethrower
+Fixed Candle lighter requiring 20 souls of sight instead of fright
+Nerfed the Sucrosa and True sucrosa damage
+Made the Baker's dozen glow
+Remade the Sucrosa and true sucrosa AoE
+Added a particle system for the Sucrosa, true sucrosa, death's raze and true death's raze
+Updated the DPS requirement for the Vanilla Valor V to be 1750 instead of 400
+Made the Vanilla valor now only ignore defence on crits and made crits that ignore defence have a vanilla color
+Gave the Cookie pike-let and the spear of cavendes an extention similar to the Gunginir
+Updated the spear of cavendes banana
+Updated the neapolinite female chestplate texture to better reflect the forum post
+Removed all unused neapolinite glowmasks
+Made the neapolinite chestplate change texture depending on helmet equiped
+Removed the following items: Creamy fox pet, blueberry tree tops and branches, blue berry background, two roller cookie sprites and ancient cosmic cookie cannon
+Added Royal Cherry bug
+Added Enchanted Saccharite
+Added Sweet and Savage Painting by oogely_boogely
+Readded the Can of meat, soul of spite, key of spite, death's raze and true death's raze
+Removed multiple unused items/projectiles
+Added Cherimoya and creamwood to the fruit and wood recipe group respectivly
+Added recipes for the Terra blade that includes the True Sucrosa and True Death's Raze
+Made the night's edge recipe with the bloody butcherer be replaces with the death's rae
+Made most item's stack size 9999
+Made the key of night only spawn the Corruption Mimic
+Changed the Soul of delight tooltip
+Made the cool whip craftable with souls of delight
+Reworked the Sprinkler and sprinkling AI to be more unqiue
+Fixed Sprinler dropping coins
+Changed the Confection and Sherbet Campfires to be more like their vanilla counterparts
+Added CelebrationMK10 Island worldgen
+Updated all spawn for confection npcs
+Made the steam punker sell the blue solution when in the confection when in a graveyard
+Made the dryad sell the world's opposite good seed when in a graveyard
+Fixed Music boxes not emitting music notes when activated
+Fixed the Confection water fountain not being functional
+Fixed Creamgrass and Mowed Creamgrass not actually being grass
+Fixed the Cookiest cookie pet constantly despawning when touching a tile and not going away when disabling the buff
+Fixed Creamsand witch pet sprite sheet having mixels
+Added player preview to all pets
+Fixed Confection chest not unlocking after planterra
+
 Beta v0.18.4
 ===========================================
 Removed altlib as it was taken down from the workshop

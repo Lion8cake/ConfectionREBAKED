@@ -72,8 +72,6 @@ namespace TheConfectionRebirth.NPCs
             NPC.lifeMax = 120;
             NPC.HitSound = SoundID.NPCHit5;
             NPC.DeathSound = SoundID.NPCDeath7;
-            NPC.value = 60f;
-            // npc.noGravity = false;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = 0;
             AIType = -1;
@@ -109,42 +107,44 @@ namespace TheConfectionRebirth.NPCs
 			}
 
 			if (Collision.CanHit(NPC.position, NPC.width, NPC.height, Main.player[NPC.target].position, Main.player[NPC.target].width, Main.player[NPC.target].height)) {
-				if (Main.netMode != 1 && NPC.ai[0] == 0f) {
-					NPC.ai[0] = 200f;
-					int num285 = 10;
-					int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallSmall>();
-					int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
-					Main.projectile[num287].ai[0] = 2f;
-					Main.projectile[num287].timeLeft = 300;
-					Main.projectile[num287].friendly = false;
-					Main.projectile[num287].frame = Index;
-					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
-					NPC.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item5, NPC.position);
-				}
-				if (Main.netMode != 1 && NPC.ai[0] == 30f) {
-					int num285 = 10;
-					int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallLarge>();
-					int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
-					Main.projectile[num287].ai[0] = 2f;
-					Main.projectile[num287].timeLeft = 300;
-					Main.projectile[num287].friendly = false;
-					Main.projectile[num287].frame = Index;
-					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
-					NPC.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item5, NPC.position);
-				}
-				if (Main.netMode != 1 && NPC.ai[0] == 15f) {
-					int num285 = 10;
-					int num286 = ModContent.ProjectileType<Projectiles.SprinklingBall>();
-					int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
-					Main.projectile[num287].ai[0] = 2f;
-					Main.projectile[num287].timeLeft = 300;
-					Main.projectile[num287].friendly = false;
-					Main.projectile[num287].frame = Index;
-					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
-					NPC.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+				if (Main.netMode != 1) {
+					if (NPC.ai[0] == 0f) {
+						NPC.ai[0] = 200f;
+					}
+					int num285 = 55;
+					if (NPC.ai[0] == 30f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallSmall>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
+					if (NPC.ai[0] == 45f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBall>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
+					if (NPC.ai[0] == 60f) {
+						int num286 = ModContent.ProjectileType<Projectiles.SprinklingBallLarge>();
+						int num287 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector32.X, vector32.Y, num282, num283, num286, num285, 0f, Main.myPlayer);
+						Main.projectile[num287].ai[0] = 2f;
+						Main.projectile[num287].timeLeft = 300;
+						Main.projectile[num287].friendly = false;
+						Main.projectile[num287].frame = Index;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num287);
+						NPC.netUpdate = true;
+						SoundEngine.PlaySound(SoundID.Item5, NPC.position);
+					}
 				}
 			}
 		}
@@ -169,14 +169,14 @@ namespace TheConfectionRebirth.NPCs
                 Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
                 int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
                 (Main.npc[index].ModNPC as Sprinkling).Index = Index;
-                if (Main.netMode == NetmodeID.Server)
+				if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
             }
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && !spawnInfo.Player.ZoneDirtLayerHeight && !spawnInfo.Player.ZoneRockLayerHeight)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && !spawnInfo.Player.ZoneDirtLayerHeight && !spawnInfo.Player.ZoneRockLayerHeight && Main.hardMode)
             {
                 return 1f;
             }

@@ -60,8 +60,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<IceConfectionUndergroundBiome>()) && !spawnInfo.AnyInvasionActive())
-            {
+			if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight) && spawnInfo.Player.ZoneSnow) {
                 return 0.05f;
             }
             return 0f;

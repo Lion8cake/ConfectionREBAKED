@@ -11,11 +11,16 @@ namespace TheConfectionRebirth.NPCs
     {
 		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>());
 
+		public static Condition confectionworld = new Condition("Mods.TheConfectionRebirth.TheConfection", () => ConfectionWorldGeneration.confectionorHallow);
+
+		public static Condition hallowworld = new Condition("Mods.TheConfectionRebirth.TheHallow", () => !ConfectionWorldGeneration.confectionorHallow);
+
 		public override void ModifyShop(NPCShop shop) {
-			var confectionworld = new Condition("Mods.TheConfectionRebirth.TheConfection", () => ConfectionWorldGeneration.confectionorHallow);
 			if (shop.NpcType == NPCID.Dryad) {
 				shop.InsertAfter(ItemID.HallowedGrassEcho, ModContent.ItemType<CreamgrassWall>(), Condition.Hardmode, confectionworld);
-				shop.InsertAfter(ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>(), Condition.Hardmode, confectionworld);
+				shop.InsertAfter(ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>(), Condition.Hardmode, confectionworld, Condition.NotInGraveyard);
+				shop.InsertAfter(ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>(), Condition.Hardmode, hallowworld, Condition.InGraveyard);
+				shop.InsertAfter(ItemID.HallowedSeeds, ItemID.HallowedSeeds, Condition.Hardmode, confectionworld, Condition.InGraveyard);
 
 				shop.InsertAfter(ItemID.PottedHallowCedar, ModContent.ItemType<PottedConfectionCedar>(), Condition.Hardmode, confectionworld, Condition.MoonPhaseFull);
 				shop.InsertAfter(ItemID.PottedHallowCedar, ModContent.ItemType<PottedConfectionCedar>(), Condition.Hardmode, confectionworld, Condition.MoonPhaseWaningGibbous);
@@ -54,7 +59,9 @@ namespace TheConfectionRebirth.NPCs
 				}
 			}
 			if (shop.NpcType == NPCID.Steampunker) {
-				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, InConfection);
+				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, InConfection, Condition.NotInGraveyard);
+				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, Condition.InHallow, Condition.InGraveyard);
+				shop.InsertAfter(ItemID.BlueSolution, ItemID.BlueSolution, Condition.Hardmode, InConfection, Condition.InGraveyard);
 				/*if (shop.TryGetEntry(ItemID.GreenSolution, out NPCShop.Entry entry8)) {
 					entry8.AddCondition(InConfection);
 					entry8.Disable();

@@ -8,6 +8,10 @@ namespace TheConfectionRebirth.Pets.RollerCookiePet
 	{
 		public override void SetStaticDefaults() {
 			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, 0, 1)
+				.WithOffset(2, -12f)
+				.WithSpriteDirection(-1)
+				.WithCode(DelegateMethods.CharacterPreview.FloatAndSpinWhenWalking);
 		}
 
 		public override void SetDefaults() {

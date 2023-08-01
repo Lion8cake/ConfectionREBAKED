@@ -16,7 +16,5 @@ namespace TheConfectionRebirth.Biomes
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSandSurfaceBackgroundStyle>();
 
         public override string MapBackground => BackgroundPath;
-
-        public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiome>().IsBiomeActive(player) && player.ZoneDesert;
     }
 }

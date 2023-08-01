@@ -28,8 +28,8 @@ namespace TheConfectionRebirth {
 		public static int confectionBG;
 
 		public override void OnWorldLoad() {
-			confectionorHallow = false;
 			confectionBG = 0;
+			confectionorHallow = false;
 		}
 
 		public override void OnWorldUnload() {
@@ -61,21 +61,19 @@ namespace TheConfectionRebirth {
 		}
 
 		public override void LoadWorldData(TagCompound tag) {
-			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
 			confectionBG = tag.GetInt("TheConfectionRebirth:confectionBG");
 			for (var i = 0; i < Main.tile.Width; ++i)
 				for (var j = 0; j < Main.tile.Height; ++j)
 					if (ConfectCountCollection.Contains(Main.tile[i, j].TileType))
 						totalCandy2++;
-
-
+			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
 			//World Converter (1.4.3 => 1.4.4)
 			//Also contains some explinations 
 			string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
 			var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
 			if (tag2.ContainsKey("modData")) { //We look for modData here and v there 
 				foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData")) {
-					if (modDataTag.Get<string>("mod") == "AltLibrary") { //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+					if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager") { //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
 						TagCompound dataTag = modDataTag.Get<TagCompound>("data");
 
 						if (dataTag.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //Look for the correct string that WorldHallow is saved under
@@ -94,8 +92,8 @@ namespace TheConfectionRebirth {
 							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
 							foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list")) { //same here as above ^
 
-								if (unloadedList.Get<string>("mod") == "AltLibrary") { //Look for altlib inside of list
-									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods"); //announce that altlib has been found inside tmod's unloaded data
+								if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager") { //Look for altlib inside of list
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods!"); //announce that altlib has been found inside tmod's unloaded data
 									TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
 
 									if (dataTag2.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //same as the lines previously when altlib was enabled
@@ -951,7 +949,10 @@ namespace TheConfectionRebirth {
 			On_WorldGen.UpdateWorld_OvergroundTile += On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile += On_WorldGen_UpdateWorld_UndergroundTile;
 			On_WorldGen.SpreadDesertWalls += On_WorldGen_SpreadDesertWalls;
+			On_WorldGen.ConvertSkyIslands += On_WorldGen_ConvertSkyIslands;
 		}
+
+		
 
 		public override void Unload() {
 			On_WorldGen.CountTiles -= On_WorldGen_CountTiles;
@@ -959,8 +960,57 @@ namespace TheConfectionRebirth {
 			On_WorldGen.hardUpdateWorld -= On_WorldGen_hardUpdateWorld;
 			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile -= On_WorldGen_UpdateWorld_UndergroundTile;
-			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls; 
+			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls;
+			On_WorldGen.ConvertSkyIslands -= On_WorldGen_ConvertSkyIslands;
 		}
+
+		#region ConfectionSkyIslands
+		private void On_WorldGen_ConvertSkyIslands(On_WorldGen.orig_ConvertSkyIslands orig, int convertType, bool growTrees) {
+			if (confectionorHallow) {
+				int num = 0;
+				for (int i = 20; (double)i < Main.worldSurface; i++) {
+					for (int j = 20; j < Main.maxTilesX - 20; j++) {
+						Tile tile = Main.tile[j, i];
+						if (tile.HasTile && TileID.Sets.Clouds[tile.TileType]) {
+							num = i;
+							break;
+						}
+					}
+				}
+				for (int k = 20; k <= Main.maxTilesX - 20; k++) {
+					for (int l = 20; l < num; l++) {
+						Tile tile2 = Main.tile[k, l];
+						Tile tile3 = Main.tile[k, l - 1];
+						if (tile2.HasTile && (tile2.TileType == 2 || tile2.TileType == 0 || tile2.TileType == TileID.Cloud || tile2.TileType == TileID.RainCloud || tile2.TileType == TileID.SnowCloud)) {
+							if (tile3.TileType == 596 || tile3.TileType == 616) {
+								WorldGen.KillTile(k, l - 1);
+							}
+							Projectiles.CreamSolution.Convert(k, l, 1);
+							ushort type = tile3.TileType;
+							if ((uint)(type - 82) <= 1u || (uint)(type - 185) <= 2u || type == 227) {
+								WorldGen.KillTile(k, l - 1);
+							}
+							if (growTrees && WorldGen._genRand.NextBool(3)) {
+								WorldGen.GrowTree(k, l);
+							}
+						}
+					}
+				}
+				for (int n = 0; n < Main.maxTilesX; n++)
+				{
+					for (int m = 0; m < Main.maxTilesY; m++) {
+						if (Main.tile[n, m].HasTile && Main.tile[n, m].TileType == TileID.WaterFountain) {
+							Tile tile = Main.tile[n, m];
+							tile.HasTile = false;
+						}
+					}
+				}
+			}
+			else {
+				orig.Invoke(convertType, growTrees);
+			}
+		}
+		#endregion
 
 		#region SpreadingDetours
 		private void On_WorldGen_SpreadDesertWalls(On_WorldGen.orig_SpreadDesertWalls orig, int wallDist, int i, int j) {

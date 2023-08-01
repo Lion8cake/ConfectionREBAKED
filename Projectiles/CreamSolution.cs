@@ -264,6 +264,16 @@ namespace TheConfectionRebirth.Projectiles
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
+						else if (Main.tile[k, l].TileType == 3 && Main.tile[k, l].TileFrameX > 16 * 9 && Main.tile[k, l].TileFrameX < 16 * 8) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamGrass_Foliage>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == 3 && Main.tile[k, l].TileFrameX < 16 * 9 && Main.tile[k, l].TileFrameX > 16 * 8) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<YumDrop>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
 						#endregion
 					}
 				}

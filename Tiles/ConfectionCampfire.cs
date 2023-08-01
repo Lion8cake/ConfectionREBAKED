@@ -1,135 +1,188 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace TheConfectionRebirth.Tiles
 {
-    //Keep in mind this is my first time making an example of some of my own code so some of my explinations might sound weird
-    public class ConfectionCampfire : ModTile
-    {
-        public int Timer;
+	// Campfires are special tiles that support the block swap feature and the biome torch feature. ExampleSurfaceBiome shows how the biome campfire is assigned.
+	public class ConfectionCampfire : ModTile {
+		private Asset<Texture2D> flameTexture;
 
-        public override void SetStaticDefaults()
-        {
-            Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
-            Main.tileWaterDeath[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-            TileID.Sets.DisableSmartCursor[Type] = true;
-            TileID.Sets.IgnoredByNpcStepUp[Type] = true;
-            Main.tileLighted[Type] = true;
+		public override void SetStaticDefaults() {
+			// Properties
+			Main.tileLighted[Type] = true;
+			Main.tileFrameImportant[Type] = true;
+			Main.tileWaterDeath[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.InteractibleByNPCs[Type] = true;
+			TileID.Sets.Campfire[Type] = true;
 
-            DustType = ModContent.DustType<Dusts.ChipDust>();
-            AdjTiles = new int[] { TileID.Campfire }; //This sets the tile to be a campfire so some things like dst seed rain put out is already done
+			DustType = -1; // No dust when mined.
+			AdjTiles = new int[] { TileID.Campfire };
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
-            TileObjectData.newTile.CoordinateWidth = 16;
-            TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.addTile(Type);
+			// Placement
+			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Campfire, 0));
+			/*  This is what is copied from the Campfire tile
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+			TileObjectData.newTile.StyleWrapLimit = 16;
+			TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+			TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+			TileObjectData.newTile.WaterDeath = true;
+			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.newTile.DrawYOffset = 2;
+			*/
+			TileObjectData.newTile.StyleLineSkip = 9; // This needs to be added to work for modded tiles.
+			TileObjectData.addTile(Type);
 
-            AnimationFrameHeight = 36;
-            TileID.Sets.HasOutlines[Type] = true;
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(254, 121, 2), name);
-        }
+			// Etc
+			AddMapEntry(new Color(254, 121, 2), Language.GetText("ItemName.Campfire"));
 
-        public override void NumDust(int x, int y, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
+			// Assets
+			if (!Main.dedServ) {
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
+			}
+		}
 
-        public override void NearbyEffects(int i, int j, bool closer)
-        {
-            Player player = Main.LocalPlayer;
-            if (Main.tile[i, j].TileFrameX < 52 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 125)
-            {
-                player.AddBuff(BuffID.Campfire, 5); //Gives the player the campfire buff when around the campfire in a 125x125 area around the campfires centre
-                Main.buffNoTimeDisplay[BuffID.Campfire] = true; //Stops the buff giving the time left when its given to the player
-            }
+		public override void NearbyEffects(int i, int j, bool closer) {
+			var tile = Main.tile[i, j];
+			if (tile.TileFrameY < 36) {
+				Main.SceneMetrics.HasCampfire = true;
+			}
+		}
 
-            if (Main.tile[i, j].TileFrameX < 52 && (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 3 && player.HeldItem.type == ItemID.MarshmallowonaStick)
-            {
-                Timer++; //A timer for a few seconds when holding a marshmellow on a stick over the campfire
-                if (Timer > 2200)
-                {
-                    player.HeldItem.TurnToAir(); //Deletes the Marshmellow on a stick
-                    player.QuickSpawnItem(Entity.GetSource_None(), ItemID.CookedMarshmallow, 1); //Gives the player a cooked marshmellow
-                    Timer = 0; //Resets the timer
-                }
-            }
+		public override void MouseOver(int i, int j) {
+			Player player = Main.LocalPlayer;
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
 
-            if (Main.tile[i, j].TileFrameX < 52 && Main.rand.NextBool(5))
-            {
-                int num162 = Dust.NewDust(new Vector2(i * 16, j * 16), 0, -16, DustID.Smoke, 0, -2f, 128, default, 1f); //This spawns the smoke above the campfire, its not perfect but its better than not having any smoke at all
-                Main.dust[num162].noGravity = true;
-            }
-        }
+			int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
+			player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
+		}
 
-        public override void AnimateTile(ref int frame, ref int frameCounter)
-        {
-            frame = Main.tileFrame[TileID.Campfire];
-            frameCounter = Main.tileFrameCounter[TileID.Campfire];  //Animates the campfire tile
-        }
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
+			return true;
+		}
 
-        public override void MouseOver(int i, int j)
-        {
-            Player player = Main.LocalPlayer;
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ConfectionCampfire>(); 
-        }
+		public override bool RightClick(int i, int j) {
+			SoundEngine.PlaySound(SoundID.Mech, new Vector2(i * 16, j * 16));
+			ToggleTile(i, j);
+			return true;
+		}
 
-        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+		public override void HitWire(int i, int j) {
+			ToggleTile(i, j);
+		}
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
-        {
-            if (Main.tile[i, j].TileFrameX < 52) //Only gives the on state (the sprites on the left side) light
-            {
-                r = 1.45f;
-                g = 2.41f;
-                b = 2.47f;
-            }
-        }
+		// ToggleTile is a method that contains code shared by HitWire and RightClick, since they both toggle the state of the tile.
+		// Note that TileFrameY doesn't necessarily match up with the image that is drawn, AnimateTile and AnimateIndividualTile contribute to the drawing decisions.
+		public void ToggleTile(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			int topX = i - tile.TileFrameX % 54 / 18;
+			int topY = j - tile.TileFrameY % 36 / 18;
 
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
-        {
-            //This code allows for the tile to have a glowmask while also having a outline
-            //The animated tile in ExampleMod replace the regular texture and adds both the glowmask and regular texture which means adding a highlight is very difficult to do
-            Tile tile = Main.tile[i, j];
+			short frameAdjustment = (short)(tile.TileFrameY >= 36 ? -36 : 36);
 
-            int frameYOffset = Main.tileFrame[Type] * AnimationFrameHeight;
-            
-            int xPos = Main.tile[i, j].TileFrameX;
-            int yPos = Main.tile[i, j].TileFrameY + frameYOffset;
+			for (int x = topX; x < topX + 3; x++) {
+				for (int y = topY; y < topY + 2; y++) {
+					Main.tile[x, y].TileFrameY += frameAdjustment;
 
-            Texture2D glowmask = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/ConfectionCampfire_Glow").Value; 
-            Vector2 zero = (Vector2)(Main.drawToScreen ? Vector2.Zero : new Vector2((float)Main.offScreenRange));
-            Vector2 drawOffset = new Vector2((float)(i * 16) - Main.screenPosition.X, (float)(j * 16) - Main.screenPosition.Y) + zero;
-            Main.spriteBatch.Draw(glowmask, drawOffset, (Rectangle?)new Rectangle(xPos, yPos, 18, 18), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-        }
+					if (Wiring.running) {
+						Wiring.SkipWire(x, y);
+					}
+				}
+			}
 
-        public override void HitWire(int i, int j)
-        {
-            ConfectionHitWire.HitWire(Type, i, j, 3, 2); //See ConfectionHitWire to see how hitwire works with the campfire and other tiles like water fountains
-        }
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				NetMessage.SendTileSquare(-1, topX, topY, 3, 2);
+			}
+		}
 
-        public override bool RightClick(int i, int j)
-        {
-            HitWire(i, j); //makes when you right click it redirects to HitWire for the rest of the code
-            return true;
-        }
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 4) {
+				frameCounter = 0;
+				frame = ++frame % 8;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			var tile = Main.tile[i, j];
+			if (tile.TileFrameY < 36) {
+				frameYOffset = Main.tileFrame[type] * 36;
+			}
+			else {
+				frameYOffset = 252;
+			}
+		}
 
-		public override bool CanDrop(int i, int j) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<Items.Placeable.ConfectionCampfire>());
-			return false;
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (Main.gamePaused || !Main.instance.IsActive) {
+				return;
+			}
+			if (!Lighting.UpdateEveryFrame || new FastRandom(Main.TileFrameSeed).WithModifier(i, j).Next(4) == 0) {
+				Tile tile = Main.tile[i, j];
+				// Only emit dust from the top tiles, and only if toggled on. This logic limits dust spawning under different conditions.
+				if (tile.TileFrameY == 0 && Main.rand.NextBool(3) && ((Main.drawToScreen && Main.rand.NextBool(4)) || !Main.drawToScreen)) {
+					Dust dust = Dust.NewDustDirect(new Vector2(i * 16 + 2, j * 16 - 4), 4, 8, DustID.Smoke, 0f, 0f, 100);
+					if (tile.TileFrameX == 0)
+						dust.position.X += Main.rand.Next(8);
+
+					if (tile.TileFrameX == 36)
+						dust.position.X -= Main.rand.Next(8);
+
+					dust.alpha += Main.rand.Next(100);
+					dust.velocity *= 0.2f;
+					dust.velocity.Y -= 0.5f + Main.rand.Next(10) * 0.1f;
+					dust.fadeIn = 0.5f + Main.rand.Next(10) * 0.1f;
+				}
+			}
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY < 36) {
+				float pulse = Main.rand.Next(28, 42) * 0.005f;
+				pulse += (270 - Main.mouseTextColor) / 700f;
+				r = 1.45f + pulse;
+				g = 2.41f + pulse;
+				b = 2.47f + pulse;
+			}
+		}
+
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			var tile = Main.tile[i, j];
+			if (tile.TileFrameY < 36) {
+				Color color = new Color(255, 255, 255, 0);
+
+				Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+				if (Main.drawToScreen) {
+					zero = Vector2.Zero;
+				}
+
+				int width = 16;
+				int offsetY = 0;
+				int height = 16;
+				short frameX = tile.TileFrameX;
+				short frameY = tile.TileFrameY;
+				int addFrX = 0;
+				int addFrY = 0;
+
+				TileLoader.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref frameX, ref frameY); // calculates the draw offsets
+				TileLoader.SetAnimationFrame(Type, i, j, ref addFrX, ref addFrY); // calculates the animation offsets
+
+				Rectangle drawRectangle = new Rectangle(tile.TileFrameX, tile.TileFrameY + addFrY, 16, 16);
+
+				// The flame is manually drawn separate from the tile texture so that it can be drawn at full brightness.
+				Main.spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + offsetY) + zero, drawRectangle, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
 		}
 	}
 }
