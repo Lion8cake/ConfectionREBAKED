@@ -1,4 +1,3 @@
-using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -27,7 +26,7 @@ namespace TheConfectionRebirth.Projectiles
 
             if (Projectile.owner == Main.myPlayer)
             {
-                ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
+                //ALConvert.SimulateSolution<ConfectionBiome>(Projectile);
             }
 
             if (Projectile.timeLeft > 10)

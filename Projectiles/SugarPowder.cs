@@ -1,4 +1,3 @@
-using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -79,7 +78,7 @@ namespace TheConfectionRebirth.Projectiles
 
         private static void Convert(int i, int j, int size = 4)
         {
-			ALConvert.Convert<ConfectionBiome>(i, j, size);
+			//ALConvert.Convert<ConfectionBiome>(i, j, size);
         }
 
         /*public override void AI() {
