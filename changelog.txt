@@ -1,3 +1,17 @@
+Beta v0.19.1
+===========================================
+Resprited the opening animation of the locked confection biome chest
+Fixed the item sprite of the confection biome chest to be the unlocked version instead of the locked version
+Rebuilt the confection fishing from the ground up to be both more persice and to have more loot
+Fixed typo in the biome world creation description
+Fixed Unsafe and echo creamstone walls not being able to be clentaminated
+Rebuilt the confection music to now properly account for the remix seed, wheather and otherworldly music
+Fixed orange ice having the tick mining sound instead of the ice block mining sound
+Fixed creamwood chest and saccharite chest requiring iron bars instead of the iron bar recipe group
+Fixed the hallow globe not being sold by the zoologist after planterra has been defeated
+Added shimmer transmutation to make the sugar powder convert into vicious powder and vise versa
+Made the sugar powder clense evil instead of spreading the confection
+
 Beta v0.19.0
 ===========================================
 Made the confection use Otherworldly Hallow and Otherworldly Underground hallow for its otherworldly music

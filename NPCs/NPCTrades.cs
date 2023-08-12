@@ -74,6 +74,9 @@ namespace TheConfectionRebirth.NPCs
 					entry3.Disable();
 				}
 			}
+			if (shop.NpcType == NPCID.BestiaryGirl) {
+				shop.InsertAfter(ItemID.WorldGlobe, ModContent.ItemType<Items.HallowedGlobe>(), Condition.DownedPlantera);
+			}
 		}
 	}
 }

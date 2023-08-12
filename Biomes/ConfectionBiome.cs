@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System;
+using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
@@ -54,9 +55,35 @@ public class ConfectionBiome : ModBiome
 	{
 		get
 		{
-			if (Main.LocalPlayer.ZoneRockLayerHeight)
-				return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
+			bool TOWMusicCheck = (bool)typeof(Main).GetField("swapMusic", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
 
+			if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))) {
+				if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
+					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+				}
+				else {
+					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
+				}
+			}
+			else if (Main.dayTime) {
+				if (TOWMusicCheck == false) {
+					if (Main._shouldUseStormMusic) {
+						return 52;
+					}
+					else if (Main.cloudAlpha > 0f && !Main.gameMenu) {
+						return 19;
+					}
+					else if (Main._shouldUseWindyDayMusic && !Main.remixWorld) {
+						return 44;
+					}
+					else {
+						return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+					}
+				}
+				else {
+					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+				}
+			}
 			return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 		}
 	}

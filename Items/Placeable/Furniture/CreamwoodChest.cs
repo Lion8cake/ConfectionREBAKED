@@ -23,12 +23,12 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 1);
-            Item.createTile = Mod.Find<ModTile>("CreamwoodChest").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.CreamwoodChest>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "CreamWood", 8).AddIngredient(22, 2).AddTile(TileID.WorkBenches).Register();
-        }
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<CreamWood>(), 8).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
+		}
     }
 }

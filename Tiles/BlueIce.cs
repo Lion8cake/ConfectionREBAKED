@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Tiles
             DustType = ModContent.DustType<OrangeIceDust>();
             AddMapEntry(new Color(237, 145, 103));
 
-            HitSound = SoundID.Tink;
+            HitSound = SoundID.Item50;
         }
 
         public override void FloorVisuals(Player player)

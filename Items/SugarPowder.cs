@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,11 +10,13 @@ namespace TheConfectionRebirth.Items
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 99;
-        }
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ViciousPowder;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousPowder] = ModContent.ItemType<SugarPowder>();
+		}
 
         public override void SetDefaults()
         {
-            Item.shoot = Mod.Find<ModProjectile>("SugarPowder").Type;
+			Item.shoot = ProjectileID.PurificationPowder; //ill change this to be a purification powder resprite later //ModContent.ProjectileType<Projectiles.SugarPowder>();
             Item.useStyle = 1;
             Item.shootSpeed = 4f;
             Item.width = 16;

@@ -544,14 +544,13 @@ namespace TheConfectionRebirth {
 		private void Main_UpdateAudio_DecideOnTOWMusic(Terraria.On_Main.orig_UpdateAudio_DecideOnTOWMusic orig, Main self)
 		{
 			orig.Invoke(self);
-			Player player = Main.CurrentPlayer;
-			if (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !Main.LocalPlayer.ZoneRockLayerHeight)
-			{
-				Main.newMusic = 88; //Hallow Otherworldly
-			}
-			if (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.LocalPlayer.ZoneRockLayerHeight)
-			{
-				Main.newMusic = 78; //Underground Hallow Otherworldly
+			if (!Main.gameMenu) {
+				if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/ConfectionUnderground")) {
+					Main.newMusic = 78;
+				}
+				else if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Confection")) {
+					Main.newMusic = 88;
+				}
 			}
 		}
 		#endregion

@@ -23,12 +23,12 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 1);
-            Item.createTile = Mod.Find<ModTile>("SacchariteChest").Type;
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteChest>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "SacchariteBrick", 8).AddIngredient(22, 2).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<SacchariteBrick>(), 8).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

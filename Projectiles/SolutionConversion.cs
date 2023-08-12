@@ -208,6 +208,26 @@ namespace TheConfectionRebirth.Projectiles
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
+						else if (wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.MeltingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.RocksUnsafe4;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.LinedConfectionGemWall>()) {
+							Main.tile[k, l].WallType = WallID.RocksUnsafe3;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.ConfectionaryCrystalWall>()) {
+							Main.tile[k, l].WallType = WallID.RocksUnsafe2;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CrackingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.RocksUnsafe1;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
 						#endregion
 
 						#region TileIDConversions
@@ -277,6 +297,26 @@ namespace TheConfectionRebirth.Projectiles
 						}
 						else if (wall == ModContent.WallType<CreamGrassWall>()) {
 							Main.tile[k, l].WallType = 69;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.MeltingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.CorruptionUnsafe4;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.LinedConfectionGemWall>()) {
+							Main.tile[k, l].WallType = WallID.CorruptionUnsafe3;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.ConfectionaryCrystalWall>()) {
+							Main.tile[k, l].WallType = WallID.CorruptionUnsafe2;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CrackingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.CorruptionUnsafe1;
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
@@ -390,6 +430,26 @@ namespace TheConfectionRebirth.Projectiles
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
+						else if (wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.MeltingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.CrimsonUnsafe4;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.LinedConfectionGemWall>()) {
+							Main.tile[k, l].WallType = WallID.CrimsonUnsafe3;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.ConfectionaryCrystalWall>()) {
+							Main.tile[k, l].WallType = WallID.CrimsonUnsafe2;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CrackingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.CrimsonUnsafe1;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
 						#endregion
 					}
 				}
@@ -421,6 +481,26 @@ namespace TheConfectionRebirth.Projectiles
 						}
 						else if (wall == ModContent.WallType<CreamGrassWall>()) {
 							Main.tile[k, l].WallType = 70;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.MeltingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.HallowUnsafe4;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.LinedConfectionGemWall>()) {
+							Main.tile[k, l].WallType = WallID.HallowUnsafe3;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.ConfectionaryCrystalWall>()) {
+							Main.tile[k, l].WallType = WallID.HallowUnsafe2;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CrackingConfectionWall>()) {
+							Main.tile[k, l].WallType = WallID.HallowUnsafe1;
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}

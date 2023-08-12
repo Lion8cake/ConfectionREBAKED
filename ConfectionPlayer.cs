@@ -89,20 +89,54 @@ namespace TheConfectionRebirth {
             bool inWater = !attempt.inLava && !attempt.inHoney;
             bool inConfectionSurfaceBiome = Player.InModBiome(ModContent.GetInstance<ConfectionBiome>());
 
-            if (!inWater || !inConfectionSurfaceBiome) {
-                return;
-            }
-
-            if (Main.hardMode && Main.rand.NextBool(50)) {
-				itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.GummyStaff>();
-			}
-            else if (attempt.rare && !attempt.veryrare && !attempt.legendary) {
-				itemDrop = !Main.hardMode
-                    ? ModContent.ItemType<Items.Placeable.BananaSplitCrate>()
-                    : ModContent.ItemType<Items.Placeable.ConfectionCrate>();
-			}
-			if (Main.rand.NextBool(30)) {
-				itemDrop = ModContent.ItemType<Items.Placeable.SweetAndSavage>();
+            if (inWater && inConfectionSurfaceBiome) {
+				if (Player.ZoneDesert && Main.rand.NextBool(2)) {
+					if (attempt.uncommon && attempt.questFish == 4393) {
+						itemDrop = 4393;
+					}
+					else if (attempt.uncommon && attempt.questFish == 4394) {
+						itemDrop = 4394;
+					}
+					else if (attempt.uncommon) {
+						itemDrop = 4410;
+					}
+					else if (Main.rand.NextBool(3)) {
+						itemDrop = 4402;
+					}
+					else {
+						itemDrop = 4401;
+					}
+				}
+				else if (attempt.legendary && Main.hardMode && Player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)) {
+					itemDrop = 2429;
+				}
+				else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+					itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.GummyStaff>();
+				}
+				else if (attempt.rare && attempt.crate) {
+					itemDrop = (Main.hardMode ? ModContent.ItemType<Items.Placeable.ConfectionCrate>() : ModContent.ItemType<Items.Placeable.BananaSplitCrate>());
+				}
+				else if (attempt.legendary && Main.hardMode && !Main.rand.NextBool(3)) {
+					itemDrop = ModContent.ItemType<Items.Placeable.SweetAndSavage>();
+				}
+				else if (attempt.heightLevel > 1 && attempt.veryrare) {
+					itemDrop = ModContent.ItemType<Items.SugarFish>();
+				}
+				else if (attempt.heightLevel > 1 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.SacchariteBatFish>()) {
+					itemDrop = ModContent.ItemType<Items.SacchariteBatFish>();
+				}
+				else if (attempt.heightLevel < 2 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.Sprinklefish>()) {
+					itemDrop = ModContent.ItemType<Items.Sprinklefish>();
+				}
+				else if (attempt.rare) {
+					itemDrop = ModContent.ItemType<Items.Cakekite>();
+				}
+				else if (attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.CookieCutterShark>()) {
+					itemDrop = ModContent.ItemType<Items.CookieCutterShark>();
+				}
+				else if (attempt.uncommon) {
+					itemDrop = ModContent.ItemType<Items.CookieCarp>();
+				}
 			}
 		}
         const int oneStageNeapolioniteSummoner = 8 * 60;

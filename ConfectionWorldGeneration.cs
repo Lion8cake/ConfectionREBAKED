@@ -952,8 +952,6 @@ namespace TheConfectionRebirth {
 			On_WorldGen.ConvertSkyIslands += On_WorldGen_ConvertSkyIslands;
 		}
 
-		
-
 		public override void Unload() {
 			On_WorldGen.CountTiles -= On_WorldGen_CountTiles;
 			On_WorldGen.AddUpAlignmentCounts -= On_WorldGen_AddUpAlignmentCounts;
