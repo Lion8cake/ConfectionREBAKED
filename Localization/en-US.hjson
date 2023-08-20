@@ -82,7 +82,7 @@ Mods: {
 			MeowzerBeam.DisplayName: Meowzer Beam
 			RollerCookieSummonProj.DisplayName: Roller Cookie
 			MiniRollerCookieSummonersShine.DisplayName: Extra Cookie
-			MeawzerSummonProj.DisplayName: Meawzer
+			MeawzerSummonProj.DisplayName: Meowzer
 			MeawzerSummonLazer.DisplayName: Rainbow Laser
 			GastropodSummonProj.DisplayName: Mini Gastropod
 			GastropodSummonPinkLazer.DisplayName: Pink Laser
@@ -108,7 +108,7 @@ Mods: {
 			Rollercookie.DisplayName: Rollercookie
 			Prickster.DisplayName: Prickster
 			ParfaitSlime.DisplayName: Parfait Slime
-			MintJr.DisplayName: Mint Jr
+			MintJr.DisplayName: Mint Jr.
 			MeowzerCannonHitbox.DisplayName: Meowzer Tail
 			Meowzer.DisplayName: Meowzer
 			Iscreamer.DisplayName: Iscreamer
@@ -119,7 +119,7 @@ Mods: {
 			CrookedCookie.DisplayName: Crooked Cookie
 			Pip.DisplayName: Pip
 			GummyWorm.DisplayName: Gummy Worm
-			GrumbleBee.DisplayName: Grumble Bee
+			GrumbleBee.DisplayName: Gumble Bee
 			ChocolateFrog.DisplayName: Chocolate Frog
 			ChocolateBunny.DisplayName: Chocolate Bunny
 			CherryBug.DisplayName: Cherry Bug
@@ -174,7 +174,7 @@ Mods: {
 			}
 
 			ToastyToaster: {
-				Tooltip: Summons a Meawzer Pet
+				Tooltip: Summons a Meowzer Pet
 				DisplayName: Toasty Toaster
 			}
 
@@ -185,7 +185,7 @@ Mods: {
 
 			CreamySandwhich: {
 				Tooltip: Summons a little Creamsand Witch
-				DisplayName: Creamy Sandwhich
+				DisplayName: Creamy Sandwich
 			}
 
 			CookiestBlock: {
@@ -328,7 +328,7 @@ Mods: {
 			}
 
 			PastryStaff: {
-				Tooltip: Summons a Little Meawzer to fight for you
+				Tooltip: Summons a Little Meowzer to fight for you
 				DisplayName: Pastry Staff
 			}
 
@@ -343,7 +343,7 @@ Mods: {
 			}
 
 			IcecreamBell: {
-				Tooltip: Do you scream, for Ice-cream?
+				Tooltip: "'Do you scream, for ice-cream?'"
 				DisplayName: Icecream Bell
 			}
 
@@ -999,7 +999,7 @@ Mods: {
 			}
 
 			ChocolateFudge: {
-				Tooltip: A honey like chocolate block
+				Tooltip: A honey-like chocolate block
 				DisplayName: Chocolate Fudge
 			}
 
@@ -1508,10 +1508,10 @@ Mods: {
 			}
 
 			RoyalCherryBugItem: {
-				DisplayName: Royal Cherry Bug Item
+				DisplayName: Royal Cherry Bug
 				Tooltip:
 					'''
-					'Although a king of a race known for its taste it has no flavor.' 
+					'Although a king of a race known for its taste, it has no flavor.' 
 					'You shouldn't kill a king, bad things may happen...'
 					'''
 			}
@@ -1535,7 +1535,7 @@ Mods: {
 
 			MeawzerPet: {
 				Description: A miniture Meowzer is following you
-				DisplayName: Meawzer
+				DisplayName: Meowzer
 			}
 
 			DudlingPet: {
@@ -1569,8 +1569,8 @@ Mods: {
 			}
 
 			MeawzerSummonBuff: {
-				Description: The little Meawzers will shoot rainbow lasers at your enemies.
-				DisplayName: Little Meawzer
+				Description: The little Meowzers will shoot rainbow lasers at your enemies.
+				DisplayName: Little Meowzer
 			}
 
 			GastropodSummonBuff: {
@@ -1794,7 +1794,7 @@ Mods: {
 				'''
 			NeapoliniteHelmet:
 				'''
-				Every 10mph you go damage is increased by 4% and critical strike chance
+				For every 10mph you go, damage is increased by 4% and critical strike chance
 				is increased by 2% which will last for 5 seconds.
 				This stacks up to 5 times
 				'''
@@ -1901,12 +1901,12 @@ Mods: {
 
 			Hallow: {
 				Title: Hallow
-				Description: Fairy-tale like hallow is guarenteed to be present in your world.
+				Description: Fairy-tale like Hallow is guaranteed to be present in your world.
 			}
 
 			Confection: {
 				Title: Confection
-				Description: Cookie n' cream confection is guarenteed to be present in your world.
+				Description: Cookies n' cream filled Confection is guaranteed to be present in your world.
 			}
 		}
 
