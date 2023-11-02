@@ -4,6 +4,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Biomes;
 
@@ -20,21 +21,11 @@ public class ConfectionBiome : ModBiome
 	{
 		get
 		{
-			if (Main.LocalPlayer.ZoneDesert)
+			if (Main.LocalPlayer.ZoneDesert) {
 				return ModContent.GetInstance<SandConfectionSurfaceBiome>().SurfaceBackgroundStyle;
-			else if (Main.LocalPlayer.ZoneSnow)
+			}
+			else if (Main.LocalPlayer.ZoneSnow) {
 				return ModContent.GetInstance<IceConfectionSurfaceBiome>().SurfaceBackgroundStyle;
-			else if (ConfectionWorldGeneration.confectionBG == 0) {
-				return ModContent.GetInstance<ConfectionSurfaceBackgroundStyle>();
-			}
-			else if (ConfectionWorldGeneration.confectionBG == 1) {
-				return ModContent.GetInstance<ConfectionSurface1BackgroundStyle>();
-			}
-			else if (ConfectionWorldGeneration.confectionBG == 2) {
-				return ModContent.GetInstance<ConfectionSurface2BackgroundStyle>();
-			}
-			else if (ConfectionWorldGeneration.confectionBG == 3) {
-				return ModContent.GetInstance<ConfectionSurface3BackgroundStyle>();
 			}
 			return ModContent.GetInstance<ConfectionSurfaceBackgroundStyle>();
 		}
@@ -44,10 +35,19 @@ public class ConfectionBiome : ModBiome
     {
 		get
 		{
-			if (Main.LocalPlayer.ZoneSnow)
-				return ModContent.GetInstance<IceConfectionSurfaceBiome>().UndergroundBackgroundStyle;
-
-			return ModContent.GetInstance<Backgrounds.IceConfectionUndergroundBiome>();
+			double num2 = Main.maxTilesY - 330;
+			double num3 = (int)((num2 - Main.worldSurface) / 6.0) * 6;
+			num2 = Main.worldSurface + num3 - 5.0;
+			if (WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenHeight / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16)) {
+				return ModContent.GetInstance<ConfectionUndergroundOceanBackgroundStyle>();
+			}
+			else if ((double)(Main.screenPosition.Y / 16f) > Main.rockLayer + 60.0 && (double)(Main.screenPosition.Y / 16f) < num2 - 60.0) {
+				if (Main.player[Main.myPlayer].ZoneSnow) {
+					return ModContent.GetInstance<IceConfectionSurfaceBiome>().UndergroundBackgroundStyle;
+				}
+				return ModContent.GetInstance<ConfectionUndergroundBackgroundStyle>();
+			}
+			return null;
 		}
 	}
 
@@ -56,33 +56,41 @@ public class ConfectionBiome : ModBiome
 		get
 		{
 			bool TOWMusicCheck = (bool)typeof(Main).GetField("swapMusic", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+			if (TOWMusicCheck == false && !Main.drunkWorld || TOWMusicCheck == true && Main.drunkWorld) {
+				if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))) {
+					if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
+						return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+					}
+					else {
+						return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
+					}
+				}
+				else if (Main.dayTime) {
 
-			if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))) {
-				if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
-					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
-				}
-				else {
-					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
-				}
-			}
-			else if (Main.dayTime) {
-				if (TOWMusicCheck == false) {
 					if (Main._shouldUseStormMusic) {
-						return 52;
+						return MusicID.Monsoon;
 					}
 					else if (Main.cloudAlpha > 0f && !Main.gameMenu) {
-						return 19;
+						return MusicID.Rain;
 					}
 					else if (Main._shouldUseWindyDayMusic && !Main.remixWorld) {
-						return 44;
+						return MusicID.WindyDay;
 					}
 					else {
 						return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 					}
 				}
 				else {
-					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+					if (Main.bloodMoon) {
+						return MusicID.Eerie;
+					}
+					else {
+						return MusicID.Night;
+					}
 				}
+			}
+			else if (TOWMusicCheck == true && Main.drunkWorld || TOWMusicCheck == false && !Main.drunkWorld) {
+				return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 			}
 			return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 		}

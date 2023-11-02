@@ -29,6 +29,8 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void AddRecipes()
         {
             CreateRecipe(1).AddIngredient(ModContent.ItemType<CreamwoodWall>(), 4).Register();
-        }
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CreamwoodFence>(), 4).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<Furniture.CreamwoodPlatform>(), 2).Register();
+		}
     }
 }

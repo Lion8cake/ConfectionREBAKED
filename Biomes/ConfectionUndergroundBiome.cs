@@ -16,7 +16,5 @@ namespace TheConfectionRebirth.Biomes
 		public override Color? BackgroundColor => base.BackgroundColor;
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
-
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<ConfectionSnowUGBackgroundStyle>();
 	}
 }

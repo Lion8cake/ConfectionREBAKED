@@ -32,6 +32,7 @@ using Terraria.GameContent.Personalities;
 using Terraria.Graphics;
 using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items.Weapons;
+using Terraria.GameContent.Drawing;
 
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
@@ -78,6 +79,8 @@ namespace TheConfectionRebirth {
 		{
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
+			ConfectionWindUtilities.Load();
+
 			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
 			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
 
@@ -88,29 +91,251 @@ namespace TheConfectionRebirth {
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
 				ConfectionSelectionMenu.ILShowOptionDescription;
 
-			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
+			On_UIWorldListItem.DrawSelf += (orig, self, spriteBatch) => {
+				orig(self, spriteBatch);
+				DrawWorldSelectItemOverlay(self, spriteBatch);
+			};
+
 			Terraria.On_Player.MowGrassTile += On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Lang.GetDryadWorldStatusDialog += On_Lang_GetDryadWorldStatusDialog;
 			On_NPC.BigMimicSummonCheck += On_NPC_BigMimicSummonCheck;
-		}
 
-		
+			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
+
+			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
+
+			On_Main.DrawSurfaceBG_DrawChangeOverlay += On_Main_DrawSurfaceBG_DrawChangeOverlay;
+		}
 
 		public override void Unload()
 		{
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
+			ConfectionWindUtilities.Unload();
+
 			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
 			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
 
 			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
-			Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
+
 			Terraria.On_Player.MowGrassTile -= On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Lang.GetDryadWorldStatusDialog -= On_Lang_GetDryadWorldStatusDialog;
 			On_NPC.BigMimicSummonCheck -= On_NPC_BigMimicSummonCheck;
+
+			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+
+			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
+
+			On_Main.DrawSurfaceBG_DrawChangeOverlay -= On_Main_DrawSurfaceBG_DrawChangeOverlay;
 		}
+
+		private void On_Main_DrawSurfaceBG_DrawChangeOverlay(On_Main.orig_DrawSurfaceBG_DrawChangeOverlay orig, Main self, int backgroundAreaId) {
+			/*Texture2D value = TextureAssets.MagicPixel.Value;
+			float flashPower = 1;//WorldGen.BackgroundsCache.GetFlashPower(backgroundAreaId);
+			Color color = Color.Black * flashPower;
+			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);*/
+			orig.Invoke(self, backgroundAreaId);
+		}
+
+		#region MapBackgroundColorFixer
+		private void On_Main_DrawMapFullscreenBackground(On_Main.orig_DrawMapFullscreenBackground orig, Vector2 screenPosition, int screenWidth, int screenHeight) {
+			if (Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiome>())) 
+			{
+				Texture2D MapBGAsset = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground");
+				Color color = Color.White;
+				if ((double)screenPosition.Y > Main.worldSurface * 16.0) {
+					MapBGAsset = Main.player[Main.myPlayer].ZoneDesert ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundDesertMapBackground") : ((!Main.player[Main.myPlayer].ZoneSnow) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundMapBackground") : (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundIceMapBackground"));
+				}
+				else {
+					color = Main.ColorOfTheSkies;
+					MapBGAsset = ((!Main.player[Main.myPlayer].ZoneDesert) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground") : ((Main.player[Main.myPlayer].ZoneSnow) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionIceBiomeMapBackground") : (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground")));
+				}
+				Main.spriteBatch.Draw(MapBGAsset, new Rectangle(0, 0, screenWidth, screenHeight), color);
+			}
+			else {
+				orig.Invoke(screenPosition, screenWidth, screenHeight);
+			}
+		}
+		#endregion
+
+		#region VineWindTileLength
+		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY) {
+			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.ConfectionBanners>()) {
+				sizeY = 3;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) {
+				sizeX = 3;
+				sizeY = 3;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) {
+				sizeX = 3;
+				sizeY = 3;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {
+				sizeY = 2;
+			}
+			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
+		}
+		#endregion
+
+		#region NEWWorldIcondetour
+		private void DrawWorldSelectItemOverlay(UIWorldListItem uiItem, SpriteBatch spriteBatch) {
+			bool data = uiItem.Data.TryGetHeaderData(ModContent.GetInstance<ConfectionWorldGeneration>(), out var _data);
+			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
+			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
+
+			if (data) {
+				#region RegularSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNormal")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region AnniversarySeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionAnniversary")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region DontStarveSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDontStarve")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region DrunkSeedIcon
+				if (/*_data.GetBool("HasConfection") && */!Data.RemixWorld && Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDrunk")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region FTWSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionForTheWorthy")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region NotTheBeesSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNotTheBees")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region NoTrapsSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionTrap")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region RemixSeedIcon
+				if (_data.GetBool("HasConfection") && Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode) {
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionRemix")) {
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region ZenithSeedIcon
+				if (_data.GetBool("HasConfection") && Data.RemixWorld && Data.DrunkWorld) {
+					UIElement worldIcon = WorldIcon;
+					Asset<Texture2D> obj = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionEverything", (AssetRequestMode)1);
+					UIImageFramed uIImageFramed = new UIImageFramed(obj, obj.Frame(7, 16));
+					uIImageFramed.Left = new StyleDimension(0f, 0f);
+					uIImageFramed.OnUpdate += UpdateGlitchAnimation;
+					worldIcon.Append(uIImageFramed);
+				}
+				#endregion
+			}
+		}
+
+		protected UIElement GetIconElement() {
+			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(null);
+			if (Data.DrunkWorld && Data.RemixWorld) {
+				//Asset<Texture2D> obj = Main.Assets.Request<Texture2D>("Images/UI/IconEverythingAnimated");
+				Asset<Texture2D> obj = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionEverything");
+				UIImageFramed uIImageFramed = new UIImageFramed(obj, obj.Frame(7, 16));
+				uIImageFramed.Left = new StyleDimension(4f, 0f);
+				uIImageFramed.OnUpdate += UpdateGlitchAnimation;
+				return uIImageFramed;
+			}
+			return null;
+		}
+
+		protected int _glitchFrameCounter;
+
+		protected int _glitchFrame;
+
+		protected int _glitchVariation;
+
+		private void UpdateGlitchAnimation(UIElement affectedElement) {
+			_ = _glitchFrame;
+			int minValue = 3;
+			int num = 3;
+			if (_glitchFrame == 0) {
+				minValue = 15;
+				num = 120;
+			}
+			if (++_glitchFrameCounter >= Main.rand.Next(minValue, num + 1)) {
+				_glitchFrameCounter = 0;
+				_glitchFrame = (_glitchFrame + 1) % 16;
+				if ((_glitchFrame == 4 || _glitchFrame == 8 || _glitchFrame == 12) && Main.rand.Next(3) == 0) {
+					_glitchVariation = Main.rand.Next(7);
+				}
+			}
+			(affectedElement as UIImageFramed).SetFrame(7, 16, _glitchVariation, _glitchFrame, 0, 0);
+		}
+		#endregion
 
 		#region CorruptionMimic
 		private bool On_NPC_BigMimicSummonCheck(On_NPC.orig_BigMimicSummonCheck orig, int x, int y, Player user) {
@@ -198,7 +423,7 @@ namespace TheConfectionRebirth {
 			int tBlood = WorldGen.tBlood;
 			int tCandy = ConfectionWorldGeneration.tCandy;
 			if (tGood > 0 && tEvil > 0 && tBlood > 0 && tCandy > 0) {
-				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood, tCandy);
+				text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tCandy, tEvil, tBlood);
 			}
 
 			else if (tGood > 0 && tCandy > 0 && tEvil > 0) {
@@ -303,243 +528,6 @@ namespace TheConfectionRebirth {
 		}
 		#endregion
 
-		#region WorldUiOverlay
-		private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)
-		{
-			orig.Invoke(self);
-
-			UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-
-			ConfectionConfig config = ModContent.GetInstance<ConfectionConfig>();
-			Dictionary<string, ConfectionConfig.WorldDataValues> tempDict = config.GetWorldData();
-
-			foreach (var item in WorldList)
-			{
-				if (item is UIWorldListItem)
-				{
-
-
-					UIElement _WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-					//_WorldIcon = GetIconElement();
-
-					UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-					WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-
-					var path = Path.ChangeExtension(Data.Path, ".twld");
-
-					if (!tempDict.ContainsKey(path)) {
-						ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Confection REBAKED: A world wasn't found inside the confection's world dictionary in its config. Opening all your worlds with the confection enabled should stop this from being printed");
-						continue;
-					}
-					/*if (!tempDict.ContainsKey(path))
-					{
-						byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);
-						var stream = new MemoryStream(buf);
-						var tag = TagIO.FromStream(stream);
-						bool containsMod = false;
-
-						if (tag.ContainsKey("modData"))
-						{
-							foreach (TagCompound modDataTag in tag.GetList<TagCompound>("modData").Skip(2))
-							{
-								if (modDataTag.Get<string>("mod") == ModContent.GetInstance<ConfectionConfig>().Mod.Name)
-								{
-									TagCompound dataTag = modDataTag.Get<TagCompound>("data");
-									ConfectionConfig.WorldDataValues worldData;
-
-									worldData.confection = dataTag.Get<bool>("TheConfectionRebirth:confectionorHallow");
-									tempDict[path] = worldData;
-
-									containsMod = true;
-
-									break;
-								}
-							}
-
-							if (!containsMod)
-							{
-								ConfectionConfig.WorldDataValues worldData;
-
-								worldData.confection = false;
-								tempDict[path] = worldData;
-							}
-
-							config.SetWorldData(tempDict);
-							ConfectionConfig.Save(config);
-						}
-					}*/
-
-					#region RegularSeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNormal"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(1f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region AnniversarySeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionAnniversary"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(0f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region DontStarveSeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDontStarve"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(0f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region DrunkSeedIcon
-					if (/*tempDict[path].confection && */!Data.RemixWorld && Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDrunk"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(1f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region FTWSeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionForTheWorthy"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(0f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region NotTheBeesSeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNotTheBees"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(0f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region NoTrapsSeedIcon
-					if (tempDict[path].confection && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionTrap"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(1f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region RemixSeedIcon
-					if (tempDict[path].confection && Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
-					{
-						UIElement worldIcon = WorldIcon;
-						UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionRemix"))
-						{
-							Top = new StyleDimension(0f, 0f),
-							Left = new StyleDimension(1f, 0f),
-							IgnoresMouseInteraction = true
-						};
-						worldIcon.Append(element);
-					}
-					#endregion
-
-					#region RemixSeedIcon
-					if (tempDict[path].confection && Data.RemixWorld && Data.DrunkWorld)
-					{
-						UIElement worldIcon = WorldIcon;
-						Asset<Texture2D> obj = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionEverything", (AssetRequestMode)1);
-						UIImageFramed uIImageFramed = new UIImageFramed(obj, obj.Frame(7, 16));
-						uIImageFramed.Left = new StyleDimension(0f, 0f);
-						uIImageFramed.OnUpdate += UpdateGlitchAnimation;
-						worldIcon.Append(uIImageFramed);
-					}
-					#endregion
-				}
-			}
-		}
-
-		protected UIElement GetIconElement()
-		{
-			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(null);
-			if (Data.DrunkWorld && Data.RemixWorld)
-			{
-				//Asset<Texture2D> obj = Main.Assets.Request<Texture2D>("Images/UI/IconEverythingAnimated");
-				Asset<Texture2D> obj = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionEverything");
-				UIImageFramed uIImageFramed = new UIImageFramed(obj, obj.Frame(7, 16));
-				uIImageFramed.Left = new StyleDimension(4f, 0f);
-				uIImageFramed.OnUpdate += UpdateGlitchAnimation;
-				return uIImageFramed;
-			}
-			return null;
-		}
-
-		protected int _glitchFrameCounter;
-
-		protected int _glitchFrame;
-
-		protected int _glitchVariation;
-
-		private void UpdateGlitchAnimation(UIElement affectedElement)
-		{
-			_ = _glitchFrame;
-			int minValue = 3;
-			int num = 3;
-			if (_glitchFrame == 0)
-			{
-				minValue = 15;
-				num = 120;
-			}
-			if (++_glitchFrameCounter >= Main.rand.Next(minValue, num + 1))
-			{
-				_glitchFrameCounter = 0;
-				_glitchFrame = (_glitchFrame + 1) % 16;
-				if ((_glitchFrame == 4 || _glitchFrame == 8 || _glitchFrame == 12) && Main.rand.Next(3) == 0)
-				{
-					_glitchVariation = Main.rand.Next(7);
-				}
-			}
-			(affectedElement as UIImageFramed).SetFrame(7, 16, _glitchVariation, _glitchFrame, 0, 0);
-		}
-		#endregion
-
 		#region OtherworldlyMusic
 		private void Main_UpdateAudio_DecideOnTOWMusic(Terraria.On_Main.orig_UpdateAudio_DecideOnTOWMusic orig, Main self)
 		{
@@ -556,4 +544,70 @@ namespace TheConfectionRebirth {
 		#endregion
 
 	}
+
+	public static class ConfectionWindUtilities {
+		public static void Load() {
+			_addSpecialPointSpecialPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialPositions", BindingFlags.NonPublic | BindingFlags.Instance);
+			_addSpecialPointSpecialsCount = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialsCount", BindingFlags.NonPublic | BindingFlags.Instance);
+			_addVineRootPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_vineRootsPositions", BindingFlags.NonPublic | BindingFlags.Instance);
+		}
+
+		public static void Unload() {
+			_addSpecialPointSpecialPositions = null;
+			_addSpecialPointSpecialsCount = null;
+			_addVineRootPositions = null;
+		}
+
+		public static FieldInfo _addSpecialPointSpecialPositions;
+		public static FieldInfo _addSpecialPointSpecialsCount;
+		public static FieldInfo _addVineRootPositions;
+
+		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type) {
+			if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions) {
+				if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount) {
+					_specialPositions[type][_specialsCount[type]++] = new Point(x, y);
+				}
+			}
+		}
+
+		public static void CrawlToTopOfVineAndAddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int j, int i) {
+			if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions) {
+				int y = j;
+				for (int num = j - 1; num > 0; num--) {
+					Tile tile = Main.tile[i, num];
+					if (WorldGen.SolidTile(i, num) || !tile.HasTile) {
+						y = num + 1;
+						break;
+					}
+				}
+				Point item = new(i, y);
+				if (!_vineRootsPositions.Contains(item)) {
+					_vineRootsPositions.Add(item);
+					Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
+				}
+			}
+		}
+	}
+	/*public class UGBGCommand : ModCommand {
+		public override CommandType Type
+			=> CommandType.Chat;
+
+		public override string Command
+			=> "confection.ugbg_test";
+
+		public override string Description
+			=> "Tests underground background variants";
+
+		public override void Action(CommandCaller caller, string input, string[] args) {
+			ConfectionWorldGeneration.confectionUGBG += 1;
+			ConfectionWorldGeneration.confectionUGBGSnow += 1;
+			if (ConfectionWorldGeneration.confectionUGBG > 3) {
+				ConfectionWorldGeneration.confectionUGBG = 0;
+			}
+			if (ConfectionWorldGeneration.confectionUGBGSnow > 1) {
+				ConfectionWorldGeneration.confectionUGBGSnow = 0;
+			}
+			Main.NewText("UGBG STYLE: " + ConfectionWorldGeneration.confectionUGBG + " UGBGSNOW Style: " + ConfectionWorldGeneration.confectionUGBGSnow);
+		}
+	}*/
 }

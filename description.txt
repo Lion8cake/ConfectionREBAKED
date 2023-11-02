@@ -6,29 +6,23 @@ Worlds can now be converted to 1.4.4 from 1.4.3 when opened
 
 This mod supported Chinese and Russian translations (due to 1.4.4 translation this is currently unavailable)
 
+This mod has Achievement Mod Support, download and use the Achievement Mod to see achievements for this mod
+
 If you have bugs to report please report in our discord so we can betterly handle these bugs
 Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Changelog
 ===========================================
-0.19.1
+0.19.4
 =========================
-Resprited the opening animation of the locked confection biome chest
-Fixed the item sprite of the confection biome chest to be the unlocked version instead of the locked version
-Rebuilt the confection fishing from the ground up to be both more persice and to have more loot
-Fixed typo in the biome world creation description
-Fixed Unsafe and echo creamstone walls not being able to be clentaminated
-Rebuilt the confection music to now properly account for the remix seed, wheather and otherworldly music
-Fixed orange ice having the tick mining sound instead of the ice block mining sound
-Fixed creamwood chest and saccharite chest requiring iron bars instead of the iron bar recipe group
-Fixed the hallow globe not being sold by the zoologist after planterra has been defeated
-Added shimmer transmutation to make the sugar powder convert into vicious powder and vise versa
-Made the sugar powder clense evil instead of spreading the confection
-
-0.19.0
-=========================
-You can check the 0.19.0 change logs by either decompiling the mod and looking into changelog.txt or by going to our github and looking into the same file
-Github link: https://github.com/Lion8cake/ConfectionREBAKED/blob/main/changelog.txt
+Completely rebuilt backgrounds from the ground up fixing parity issues
+Added variants to the underground background
+Fixed parity between evil/goods underground backgrounds and the confection underground background
+Fixed blue lines between the cavern layer and the lava layer
+Fixed the map background not obaying sky light
+Polished the Snickerbobble Dev vanity
+Completely remade the grass spreading and foliage growth for cream grass
+Attempted to fix syncing mods issue in multiplayer
 
 ===========================================
 Credit - Programmers

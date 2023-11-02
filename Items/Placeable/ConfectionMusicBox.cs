@@ -9,8 +9,9 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-
-            MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection"), ModContent.ItemType<Items.Placeable.ConfectionMusicBox>(), ModContent.TileType<Tiles.ConfectionMusicBox>());
+			ItemID.Sets.CanGetPrefixes[Type] = false;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection"), ModContent.ItemType<Items.Placeable.ConfectionMusicBox>(), ModContent.TileType<Tiles.ConfectionMusicBox>());
         }
 
         public override void SetDefaults()

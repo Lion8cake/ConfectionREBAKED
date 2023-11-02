@@ -27,7 +27,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(null, "CreamWood", 10).AddIngredient(ItemID.IronBar, 3).AddIngredient(ItemID.Glass, 6).AddTile(TileID.Sawmill).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<CreamWood>(), 10).AddRecipeGroup(RecipeGroupID.IronBar, 3).AddIngredient(ItemID.Glass, 6).AddTile(TileID.Sawmill).Register();
         }
     }
 }

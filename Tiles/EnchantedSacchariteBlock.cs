@@ -18,6 +18,7 @@ namespace TheConfectionRebirth.Tiles
             DustType = ModContent.DustType<SacchariteCrystals>();
             HitSound = SoundID.Item27;
 			RegisterItemDrop(ModContent.ItemType<Items.EnchantedSaccharite>());
+			Main.tileOreFinderPriority[Type] = 675;
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

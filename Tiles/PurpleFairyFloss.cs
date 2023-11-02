@@ -21,5 +21,10 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(210, 90, 250));
             DustType = ModContent.DustType<FairyFlossDust2>();
         }
-    }
+
+		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
+			sightColor = new Color(210, 196, 145);
+			return true;
+		}
+	}
 }

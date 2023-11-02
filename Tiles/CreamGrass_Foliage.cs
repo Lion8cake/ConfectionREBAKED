@@ -24,7 +24,8 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
             DustType = ModContent.DustType<CreamDust>();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
+			TileObjectData.addTile(Type);
             AddMapEntry(new Color(200, 170, 108));
 			HitSound = SoundID.Grass;
         }

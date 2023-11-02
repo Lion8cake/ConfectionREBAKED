@@ -25,5 +25,9 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.BlueFairyFloss>();
         }
-    }
+
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<BlueFairyFlossWall>(), 4).Register();
+		}
+	}
 }

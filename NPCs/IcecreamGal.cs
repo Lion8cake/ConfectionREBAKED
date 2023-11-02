@@ -90,9 +90,9 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Mummy;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<IcecreamGalBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<IceConfectionUndergroundBiome>().Type };
-
-            NPC.ai[1] = -1f; // Pause the star summoning animation
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+			NPC.rarity = 2;
+			NPC.ai[1] = -1f; // Pause the star summoning animation
             for (int i = 0; i < numberOfStars; i++)
             {
                 starProjectiles[i] = -1;
@@ -103,7 +103,7 @@ namespace TheConfectionRebirth.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.TheConfectionRebirth.IcecreamGal")
+                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.IcecreamGal")
             });
         }
 

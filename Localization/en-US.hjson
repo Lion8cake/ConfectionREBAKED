@@ -920,7 +920,7 @@ Mods: {
 
 			CreamgrassWall: {
 				Tooltip: ""
-				DisplayName: Creamgrass Wall
+				DisplayName: Cream Grass Wall
 			}
 
 			CreamBlock: {
@@ -1105,7 +1105,7 @@ Mods: {
 			}
 
 			Cherimoya: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.MediumStats}"
 				DisplayName: Cherimoya
 			}
 
@@ -1824,14 +1824,14 @@ Mods: {
 			CreamSwollower: In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.
 			CrookedCookie: A creation by the Creamsand Witch, being much smaller than a normal roller cookie it is sharp and can deal a dent in anyone's armour.
 			Dudley: A neatural creature that roams the underground deserts of the confection. Although they will not go after anyone they will still hurt those who come too close.
-			FoaminFloat: A cloud of foaming root beer. When enough presure in unground confection water pools explode and a foamin' float is created.
+			FoaminFloat: A cloud of foaming root beer. When enough presure in underground confection water pools explode and a foamin' float is created.
 			Hunger: Another creation by the Creamsand Witch, a mimic like enemy that will chase those hurting their master.
 			IcecreamGal: A lost child within the confection. Don't let her decieve you though as she is out to get you.
 			Iscreamer: Living screaming ice-creams use a form of teleportation to hunt its prey. This teleportation is when wormhole and a banana are merged together allowing these creature to go from one end to the other.
 			MintJr: Another creation of the Creamsand Witch. A minty cookie that flies through the air towards those whether they know it or not.
 			ParfaitSlime: Slimes disguised as parfait cakes. These creatures use any and all fruit stuck to them to launch at those they deem as a threat.
 			Prickster: A turtle hidden as a pile of saccharite within the confection. When disturbed it uses its sharp saccharite shell to cause damage to attackers.
-			Rollercookie: A giant cookie capable of ramming into those it sees as a threat to the confection. The spirits of light controle these enemies.
+			Rollercookie: A giant cookie capable of ramming into those it sees as a threat to the confection. The spirits of light control these enemies.
 			SherbetSlime: A rainbow slime that shows up only when it rains in the confection. These slimes have developed a way to be immune to all rain.
 			Sprinkler: A pile of living sprikles devote to defending anyone from setting foot in the confection. They are quite easy to kill.
 			Sprinkling: When a sprinkler is killed they gain the ability to fly and chase after those who attacked them.
@@ -1946,7 +1946,15 @@ Mods: {
 				DisplayName: Confection Server Config
 			}
 
-			ConfectionConfig.DisplayName: Confection Config
+			ConfectionConfig: {
+				DisplayName: Confection Config
+				Headers.ConfectionClientsideConfig: Confection Clientside Config Header
+
+				CandyIconConfig: {
+					Label: Enables Confection Icon
+					Tooltip: Enables the confection icon overlay on world icons, disable this if issues persist when entering the world select screen
+				}
+			}
 		}
 
 		Summon: {
@@ -1978,5 +1986,28 @@ Mods: {
 
 		InConfection: Mods.TheConfectionRebirth.InConfection
 		TheHallow: Mods.TheConfectionRebirth.TheHallow
+
+		Emotes: {
+			ConfectionBiomeEmote: confection
+			DuchessEmote: duchess
+			GrandSlammerEmote: slammer
+		}
+
+		Achievements: {
+			DrixerMixer: {
+				Name: Drixer Mixer
+				Description: Craft a drixer or pix using neapolinite bars, and the souls of the three mechanical bosses.
+			}
+
+			TheBeamOfCream: {
+				Name: The Beam of Cream
+				Description: Obtain the Cream Beam.
+			}
+
+			BirthdayRide: {
+				Name: Birthday Ride
+				Description: Wear the full birthday suit while riding a Rollercycle.
+			}
+		}
 	}
 }

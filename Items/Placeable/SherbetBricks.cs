@@ -26,5 +26,9 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.SherbetBricks>();
         }
-    }
+
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<SherbetWall>(), 4).Register();
+		}
+	}
 }

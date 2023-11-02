@@ -26,15 +26,21 @@ namespace TheConfectionRebirth {
 		public HallowOptions SelectedHallowOption { get; set; } = HallowOptions.Random;
 		public static bool confectionorHallow;
 		public static int confectionBG;
+		public static int confectionUGBG;
+		public static int confectionUGBGSnow;
 
 		public override void OnWorldLoad() {
 			confectionBG = 0;
+			confectionUGBG = 0;
+			confectionUGBGSnow = 0;
 			confectionorHallow = false;
 		}
 
 		public override void OnWorldUnload() {
 			confectionorHallow = false;
 			confectionBG = 0;
+			confectionUGBG = 0;
+			confectionUGBGSnow = 0;
 			totalCandy = 0;
 			totalCandy2 = 0;
 			tCandy = 0;
@@ -45,71 +51,78 @@ namespace TheConfectionRebirth {
 				tag["TheConfectionRebirth:confectionorHallow"] = true;
 			}
 			tag["TheConfectionRebirth:confectionBG"] = confectionBG;
+			tag["TheConfectionRebirth:confectionUGBG"] = confectionUGBG;
+			tag["TheConfectionRebirth:confectionUGBGSnow"] = confectionUGBGSnow;
+		}
 
-			// Update config cache values on save world
-			ConfectionConfig config = ModContent.GetInstance<ConfectionConfig>();
-			Dictionary<string, ConfectionConfig.WorldDataValues> tempDict = config.GetWorldData();
-			ConfectionConfig.WorldDataValues worldData;
-
-			worldData.confection = confectionorHallow;
-
-			string path = Path.ChangeExtension(Main.worldPathName, ".twld");
-			tempDict[path] = worldData;
-			config.SetWorldData(tempDict);
-
-			ConfectionConfig.Save(config);
+		public override void SaveWorldHeader(TagCompound tag) {
+			tag["HasConfection"] = confectionorHallow;
 		}
 
 		public override void LoadWorldData(TagCompound tag) {
 			confectionBG = tag.GetInt("TheConfectionRebirth:confectionBG");
+			confectionUGBG = tag.GetInt("TheConfectionRebirth:confectionUGBG");
+			confectionUGBGSnow = tag.GetInt("TheConfectionRebirth:confectionUGBGSnow");
 			for (var i = 0; i < Main.tile.Width; ++i)
 				for (var j = 0; j < Main.tile.Height; ++j)
 					if (ConfectCountCollection.Contains(Main.tile[i, j].TileType))
 						totalCandy2++;
 			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
+
 			//World Converter (1.4.3 => 1.4.4)
 			//Also contains some explinations 
-			string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
-			var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
-			if (tag2.ContainsKey("modData")) { //We look for modData here and v there 
-				foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData")) {
-					if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager") { //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
-						TagCompound dataTag = modDataTag.Get<TagCompound>("data");
+			if (!Main.dedServ) //Make sure that we are not on a server so we dont infinatly get stuck on Syncing Mods
+			{
+				try {
+					string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
+					var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
+					if (tag2.ContainsKey("modData")) { //We look for modData here and v there 
+						foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData")) {
+							if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager") { //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data");
 
-						if (dataTag.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //Look for the correct string that WorldHallow is saved under
-							confectionorHallow = true; //Convert world by giving it the tag
-							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
-						}
-						else {
-							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
-						}
-						break;
-					}
-					if (modDataTag.Get<string>("mod") == "ModLoader") {
-						ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
-						TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
-						if (dataTag.ContainsKey("list")) { //find a list called list
-							ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
-							foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list")) { //same here as above ^
-
-								if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager") { //Look for altlib inside of list
-									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods!"); //announce that altlib has been found inside tmod's unloaded data
-									TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
-
-									if (dataTag2.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //same as the lines previously when altlib was enabled
-										confectionorHallow = true;
-										ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!");
-									}
-									else {
-										ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world");
-									}
-									break;
+								if (dataTag.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //Look for the correct string that WorldHallow is saved under
+									confectionorHallow = true; //Convert world by giving it the tag
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
 								}
+								else {
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
+								}
+								break;
+							}
+							if (modDataTag.Get<string>("mod") == "ModLoader") {
+								ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
+								if (dataTag.ContainsKey("list")) { //find a list called list
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
+									foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list")) { //same here as above ^
+
+										if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager") { //Look for altlib inside of list
+											ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods!"); //announce that altlib has been found inside tmod's unloaded data
+											TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+
+											if (dataTag2.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome") { //same as the lines previously when altlib was enabled
+												confectionorHallow = true;
+												ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!");
+											}
+											else {
+												ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world");
+											}
+											break;
+										}
+									}
+								}
+								break;
 							}
 						}
-						break;
 					}
 				}
+				catch {
+					ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
+				}
+			}
+			else {
+				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
 			}
 		}
 
@@ -119,6 +132,8 @@ namespace TheConfectionRebirth {
 			writer.Write(flags);
 
 			writer.Write(confectionBG);
+			writer.Write(confectionUGBG);
+			writer.Write(confectionUGBGSnow);
 
 			writer.Write(tCandy);
 		}
@@ -128,6 +143,8 @@ namespace TheConfectionRebirth {
 			confectionorHallow = flags[0];
 
 			confectionBG = reader.ReadInt32();
+			confectionUGBG = reader.ReadInt32();
+			confectionUGBGSnow = reader.ReadInt32();
 
 			tCandy = reader.ReadByte();
 		}
@@ -140,6 +157,8 @@ namespace TheConfectionRebirth {
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			confectionBG = Main.rand.Next(4);
+			confectionUGBG = Main.rand.Next(4);
+			confectionUGBGSnow = Main.rand.Next(2);
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
@@ -163,6 +182,11 @@ namespace TheConfectionRebirth {
 				if (index3 != -1) {
 					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(NullGen)));
 					list.RemoveAt(index3);
+				}
+				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
+				if (index4 != -1) {
+					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix)));
+					list.RemoveAt(index4);
 				}
 			}
 			if (Main.drunkWorld) {
@@ -256,7 +280,7 @@ namespace TheConfectionRebirth {
 			if (Main.remixWorld) {
 				int num7 = Main.maxTilesX / 7;
 				int num8 = Main.maxTilesX / 14;
-				if (Main.dungeonX < Main.maxTilesX / 2) {
+				if (Main.dungeonX > Main.maxTilesX / 2) {
 					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++) {
 						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
 							if (i > Main.maxTilesX - num7) {
@@ -361,35 +385,7 @@ namespace TheConfectionRebirth {
 			else {
 				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
 			}
-			if (Main.remixWorld) {
-				int numm7 = Main.maxTilesX / 7;
-				int numm8 = Main.maxTilesX / 14;
-				if (Main.dungeonX < Main.maxTilesX / 2) {
-					for (int i = Main.maxTilesX - numm7 - numm8; i < Main.maxTilesX; i++) {
-						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
-							if (i > Main.maxTilesX - numm7) {
-								Projectiles.CreamSolution.Convert(i, j, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
-								Projectiles.CreamSolution.Convert(i, j, 1);
-							}
-						}
-					}
-				}
-				else {
-					for (int k = 0; k < numm7 + numm8; k++) {
-						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
-							if (k < numm7) {
-								Projectiles.CreamSolution.Convert(k, l, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
-								Projectiles.CreamSolution.Convert(k, l, 1);
-							}
-						}
-					}
-				}
-			}
-			else {
+			if (!Main.remixWorld) {
 				if (!confectionorHallow) {
 					ConfectGERunner(numm4, 0, 3 * numm5, 5.0);
 				}
@@ -471,35 +467,7 @@ namespace TheConfectionRebirth {
 			else {
 				num3 = (int)((double)Main.maxTilesX * (1.0 - num2));
 			}
-			if (Main.remixWorld) {
-				int num7 = Main.maxTilesX / 7;
-				int num8 = Main.maxTilesX / 14;
-				if (Main.dungeonX < Main.maxTilesX / 2) {
-					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++) {
-						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
-							if (i > Main.maxTilesX - num7) {
-								Projectiles.CreamSolution.Convert(i, j, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
-								Projectiles.CreamSolution.Convert(i, j, 1);
-							}
-						}
-					}
-				}
-				else {
-					for (int k = 0; k < num7 + num8; k++) {
-						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
-							if (k < num7) {
-								Projectiles.CreamSolution.Convert(k, l, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
-								Projectiles.CreamSolution.Convert(k, l, 1);
-							}
-						}
-					}
-				}
-			}
-			else {
+			if (!Main.remixWorld) {
 				ConfectGERunner(num3, 0, 3 * num5, 5.0);
 				WorldGen.GERunner(num4, 0, 3 * -num5, 5.0, good: false);
 			}
@@ -545,8 +513,109 @@ namespace TheConfectionRebirth {
 		}
 		#endregion
 
+		#region ConfectionRemixWorldgen
+		private static void ConfectionRemix(GenerationProgress progres, GameConfiguration configurations) {
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null) {
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int num3 = (int)((double)Main.maxTilesX * num);
+			int num4 = (int)((double)Main.maxTilesX * (1.0 - num));
+			int num5 = 1;
+			if (WorldGen.genRand.Next(2) == 0) {
+				num4 = (int)((double)Main.maxTilesX * num);
+				num3 = (int)((double)Main.maxTilesX * (1.0 - num));
+				num5 = -1;
+			}
+			int num6 = 1;
+			if (GenVars.dungeonX < Main.maxTilesX / 2) {
+				num6 = -1;
+			}
+			if (num6 < 0) {
+				if (num4 < num3) {
+					num4 = (int)((double)Main.maxTilesX * num2);
+				}
+				else {
+					num3 = (int)((double)Main.maxTilesX * num2);
+				}
+			}
+			else if (num4 > num3) {
+				num4 = (int)((double)Main.maxTilesX * (1.0 - num2));
+			}
+			else {
+				num3 = (int)((double)Main.maxTilesX * (1.0 - num2));
+			}
+			if (Main.remixWorld) {
+				int num7 = Main.maxTilesX / 7;
+				int num8 = Main.maxTilesX / 14;
+				if (Main.dungeonX < Main.maxTilesX / 2) {
+					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++) {
+						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++) {
+							if (i > Main.maxTilesX - num7) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType]) {
+								Projectiles.CreamSolution.Convert(i, j, 1);
+							}
+						}
+					}
+				}
+				else {
+					for (int k = 0; k < num7 + num8; k++) {
+						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++) {
+							if (k < num7) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType]) {
+								Projectiles.CreamSolution.Convert(k, l, 1);
+							}
+						}
+					}
+				}
+			}
+			double num9 = (double)Main.maxTilesX / 4200.0;
+			int num10 = (int)(25.0 * num9);
+			ShapeData shapeData = new ShapeData();
+			int num11 = 0;
+			while (num10 > 0) {
+				if (++num11 % 15000 == 0) {
+					num10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort num12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType]) {
+					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType]) {
+					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType]) {
+					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && num12 != 0 && !tile2.HasTile) {
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag) {
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
+						num10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2) {
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+		#endregion
+
 		#region CovertToConfectionWorldGen
-			public static void ConfectGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true) {
+		public static void ConfectGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true) {
 			int num = 0;
 			for (int k = 20; k < Main.maxTilesX - 20; k++) {
 				for (int l = 20; l < Main.maxTilesY - 20; l++) {
@@ -1021,7 +1090,7 @@ namespace TheConfectionRebirth {
 				(wall == ModContent.WallType<CreamGrassWall>() || wall == ModContent.WallType<CreamstoneWall>() || wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<BlueIceWall>() || wall == ModContent.WallType<HardenedCreamsandWall>() || wall == ModContent.WallType<CreamsandstoneWall>() ||
 				((wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<BlueFairyFlossWall>() || wall == ModContent.WallType<CreamWall>() || wall == ModContent.WallType<PinkFairyFlossWall>() || wall == ModContent.WallType<PurpleFairyFlossWall>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread))
 				||
-				(type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (
+				(type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>()/* || type == ModContent.TileType<CreamVines>() */|| type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (
 				(type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() ||
 				type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread))) {
 					num = true;

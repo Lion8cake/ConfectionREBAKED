@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Tiles
             MinPick = 65;
         }
 
-        /*private bool SpawnRocks(int i, int j)
+		/*private bool SpawnRocks(int i, int j)
 	{
 		if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
 		{
@@ -79,9 +79,13 @@ namespace TheConfectionRebirth.Tiles
 		    }
 	    }*/
 
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-    }
+		public override void NumDust(int i, int j, bool fail, ref int num) {
+			num = fail ? 1 : 3;
+		}
+
+		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
+			sightColor = new Color(210, 196, 145);
+			return true;
+		}
+	}
 }

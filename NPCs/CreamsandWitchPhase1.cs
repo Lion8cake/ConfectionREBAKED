@@ -33,6 +33,7 @@ namespace TheConfectionRebirth.NPCs
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 22;
             AIType = NPCID.FloatyGross;
+			NPC.rarity = 2;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
 

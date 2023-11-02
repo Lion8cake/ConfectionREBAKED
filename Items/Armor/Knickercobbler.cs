@@ -11,6 +11,8 @@ namespace TheConfectionRebirth.Items.Armor
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
+			ArmorIDs.Body.Sets.HidesArms[Item.bodySlot] = true;
         }
 
         public override void SetDefaults()

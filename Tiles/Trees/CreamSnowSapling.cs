@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -38,13 +39,14 @@ namespace TheConfectionRebirth.Tiles.Trees
             TileObjectData.addTile(Type);
 
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(151, 107, 75), name);
 
             TileID.Sets.TreeSapling[Type] = true;
             TileID.Sets.CommonSapling[Type] = true;
             TileID.Sets.SwaysInWindBasic[Type] = true;
+			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
-            DustType = ModContent.DustType<CreamwoodDust>();
+			DustType = ModContent.DustType<CreamwoodDust>();
 
             AdjTiles = new int[] { TileID.Saplings };
         }

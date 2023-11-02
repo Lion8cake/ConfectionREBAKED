@@ -1,3 +1,62 @@
+Beta v0.19.4
+=========================
+Completely rebuilt backgrounds from the ground up fixing parity issues
+Added variants to the underground background
+Fixed parity between evil/goods underground backgrounds and the confection underground background
+Fixed blue lines between the cavern layer and the lava layer
+Fixed the map background not obaying sky light
+Polished the Snickerbobble Dev vanity
+Completely remade the grass spreading and foliage growth for cream grass
+Attempted to fix syncing mods issue in multiplayer
+
+Beta v0.19.3
+===========================================
+Added several new emotes (/confection, /duchess, /slammer)
+Rewrote the World Icons to work with new tag saving system
+Removed old tag saving system and remove the icon config option
+Fixed multiplyer getting stuck on syncing mods when loading into a server
+Fixed banners not being able to be placed on platforms
+Fixed several multi-hanging tiles not having correct wing physics
+Fixed trees not having some content such as leaves, dusts, ect
+Added biomesight to several confected blocks, they glow a cream color
+Fixed the confection not generating on the DDU and GFB seeds
+Fixed the sucrosa AoE not having its AoE graphic in dark places
+Fixed scale size of the creamwood dust
+Fixed snow pylons not working in confected snow biomes
+Fixed eerie not playing when in the confection during a blood moon
+Fixed the aaccharite lash not having reforge and sell prices
+Fixed some items not having the correct stack value
+Fixed mowed cream grass not spreading onto cookie blocks
+Fixed bestiary entry for Icecream Gal
+Fixed the hallowed globe being underpriced
+Fixed muisc boxes getting reforges
+Fixed the pitch of the Confection and Underground Confection music tracks to match the pitch of the normal terraria music (thx to @anukwarrior)
+Fixed weird issue where closing, opening and closing creamwood and saccharite doors would not drop their items
+Fixed Dressers being a buggy mess
+Fixed some platforms and walls not being decraftable into their item forms
+Fixed inconsisitencies between the confection and other biome mimics
+Fixed several NPCs not appearing on the Life Form Analizer
+Fixed Enchanted saccharite not appearing on the metal detector 
+Fixed several typos
+
+Beta v0.19.2
+===========================================
+Fixed Blood, Evil and Candy % being swapped with each other in the dryad status text when all 4 biomes where in the same world
+Fixed typos in some npc bestiary entries
+Made the enchanted saccharite take double the time to grow
+Rebuilt the music in the confection from the ground up (including otherworldly)
+Fixed Creamwood and saccharite clock recipes to use the iron bar recipe group instead of just iron bars
+Fixed saplings not being able to be planted on mowed confection grass
+Fixed material type and map color for the cream saplings and the snow cream saplings
+Updated the creamwood chest tile opening sprite to better match the vanilla opening animations
+Fixed the royal cherry bug being called the royal cherry bug item 
+Fixed the cherimoya not havign the medium improvements to stats tooltip
+Fixed the sweetstaff not playing a sound when used
+Fixed the confection mimic using the same sounds as a zombie
+Fixed transmutations not existing such as sherbet torches to campfires torches and confection campfires to shimmer campfires
+Fixed flickering texture fighting with the confection underground backgrounds
+Added config option to the confection world icon tree to avoid mod conflicts crashing the game
+
 Beta v0.19.1
 ===========================================
 Resprited the opening animation of the locked confection biome chest

@@ -527,6 +527,12 @@ namespace TheConfectionRebirth {
             Main.SceneMetrics.BloodTileCount -= ConfTileCount;
             if (Main.SceneMetrics.BloodTileCount < 0)
                 Main.SceneMetrics.BloodTileCount = 0;
-        }
+			Main.SceneMetrics.SnowTileCount += tileCounts[ModContent.TileType<CreamBlock>()]
+				+ tileCounts[ModContent.TileType<BlueIce>()];
+
+			Main.SceneMetrics.SandTileCount += tileCounts[ModContent.TileType<Creamsand>()]
+				+ tileCounts[ModContent.TileType<HardenedCreamsand>()]
+				+ tileCounts[ModContent.TileType<Creamsandstone>()];
+		}
 	}
 }

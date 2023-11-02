@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,5 +22,25 @@ namespace TheConfectionRebirth.Items.Armor
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-    }
+
+		public override bool IsArmorSet(Item head, Item body, Item legs) {
+			return body.type == ModContent.ItemType<BirthdaySuit>() && legs.type == ModContent.ItemType<RightTrousers>();
+		}
+
+		public override void UpdateArmorSet(Player player) {
+			if (player.HasBuff<Buffs.RollercycleBuff>()) {
+				if (ConfectionModCalling.Achievements != null) {
+					ConfectionModCalling.Achievements.Call("Event", "BirthdaySuitRollerCookieRide");
+				}
+			}
+		}
+
+		public override void UpdateVanitySet(Player player) {
+			if (player.HasBuff<Buffs.RollercycleBuff>()) {
+				if (ConfectionModCalling.Achievements != null) {
+					ConfectionModCalling.Achievements.Call("Event", "BirthdaySuitRollerCookieRide");
+				}
+			}
+		}
+	}
 }

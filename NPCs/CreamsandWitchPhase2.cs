@@ -40,7 +40,8 @@ namespace TheConfectionRebirth.NPCs
             AnimationType = NPCID.Mummy;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CreamsandWitchBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
+			NPC.rarity = 2;
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

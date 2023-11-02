@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,10 +17,10 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Projectiles.SacchariteLash>(), 68, 2, 4); 
+			Item.DefaultToWhip(ModContent.ProjectileType<Projectiles.SacchariteLash>(), 68, 2, 4);
 
 			Item.shootSpeed = 4;
-			Item.rare = ItemRarityID.Pink;
+			Item.SetShopValues(ItemRarityColor.Pink5, Item.sellPrice(0, 4, 60));
 		}
 
 		public override void AddRecipes()

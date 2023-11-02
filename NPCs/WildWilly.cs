@@ -36,6 +36,7 @@ namespace TheConfectionRebirth.NPCs
             NPC.aiStyle = 3;
             AIType = NPCID.Zombie;
             AnimationType = NPCID.Zombie;
+			NPC.rarity = 2;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<WildWillyBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };

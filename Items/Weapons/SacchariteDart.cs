@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 26;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.height = 30;
 

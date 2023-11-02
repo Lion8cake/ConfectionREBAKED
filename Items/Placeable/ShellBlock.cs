@@ -25,5 +25,8 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.ShellBlock>();
         }
-    }
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<ShellBlockWall>(), 4).Register();
+		}
+	}
 }

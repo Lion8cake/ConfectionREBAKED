@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Projectiles
 					ConvertNormal((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
 				}
 			}
-			if ((projectile.type == 10 || projectile.type == 145) && projectile.owner == Main.myPlayer) {
+			if ((/*projectile.type == 10 || */projectile.type == 145) && projectile.owner == Main.myPlayer) {
 				if (projectile.owner == Main.myPlayer) {
 					ConvertPure((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
 				}

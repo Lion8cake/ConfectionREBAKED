@@ -12,11 +12,10 @@ using Terraria.ID;
 using TheConfectionRebirth.NPCs.Critters;
 using TheConfectionRebirth.Items;
 
-namespace TheConfectionRebirth.Tiles
+namespace TheConfectionRebirth.Tiles.Trees
 {
-    public class CreamTree : ModTree
-    {
-        public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
+	public class CreamTree : ModTree {
+		public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
         {
             UseSpecialGroups = true,
             SpecialGroupMinimalHueValue = 11f / 72f,
@@ -25,10 +24,14 @@ namespace TheConfectionRebirth.Tiles
             SpecialGroupMaximumSaturationValue = 1f
         };
 
-        public override void SetStaticDefaults()
+		public override int CreateDust() {
+			return ModContent.DustType<Dusts.CreamwoodDust>();
+		}
+
+		public override void SetStaticDefaults()
         {
             GrowsOnTileId = new int[2] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() };
-        }
+		}
 
         public override bool Shake(int x, int y, ref bool createLeaves)
         {
@@ -144,7 +147,11 @@ namespace TheConfectionRebirth.Tiles
         {
         }
 
-        public override Asset<Texture2D> GetBranchTextures()
+		public override int TreeLeaf() {
+			return ModContent.GoreType<CreamTreeLeaf>();
+		}
+
+		public override Asset<Texture2D> GetBranchTextures()
         {
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Branches");
         }
@@ -158,5 +165,5 @@ namespace TheConfectionRebirth.Tiles
         {
             return ModContent.ItemType<Items.Placeable.CreamWood>();
         }
-    }
+	}
 }

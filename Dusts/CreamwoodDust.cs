@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Dusts
             dust.velocity *= 0.4f;
             // dust.noGravity = false;
             dust.noLight = true;
-            dust.scale *= 1.5f;
+            dust.scale *= 1f;
         }
     }
 }

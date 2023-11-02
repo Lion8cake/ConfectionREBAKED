@@ -19,17 +19,18 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetDefaults()
         {
-            NPC.width = 30;
-            NPC.height = 40;
-            NPC.damage = 180;
-            NPC.defense = 34;
-            NPC.lifeMax = 3500;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath2;
+			NPC.width = 28;
+			NPC.height = 44;
+			NPC.aiStyle = 87;
+			NPC.damage = 90;
+			NPC.defense = 34;
+			NPC.lifeMax = 3500;
+			NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 60f;
             NPC.knockBackResist = 0.5f;
-            NPC.aiStyle = 87;
-            AIType = NPCID.BigMimicHallow;
+			NPC.rarity = 5;
+			AIType = NPCID.BigMimicHallow;
             AnimationType = NPCID.BigMimicHallow;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
         }

@@ -39,7 +39,18 @@ namespace TheConfectionRebirth.Tiles.Furniture
             }
         }
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			bool intoRenderTargets = true;
+			bool flag = intoRenderTargets || Main.LightingEveryFrame;
+
+			if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag) {
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
+			}
+
+			return false;
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
             if (tile.TileFrameX < 88)
@@ -50,7 +61,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             }
         }
 
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        /*public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             SpriteEffects effects = SpriteEffects.None;
 
@@ -79,6 +90,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
                 spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + shakeX, j * 16 - (int)Main.screenPosition.Y + offsetY + shakeY) + zero, new Rectangle(frameX, frameY, width, height), new Color(100, 100, 100, 0), 0f, default, 1f, effects, 0f);
             }
-        }
+        }*/
     }
 }

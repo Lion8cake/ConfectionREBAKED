@@ -24,15 +24,8 @@ namespace TheConfectionRebirth.Items
 			Item.consumable = true;
 		}
 
-		public override bool ConsumeItem(Player player) {
-			if (player.whoAmI != Main.myPlayer && player.InModBiome<ConfectionBiome>()) {
-				return false;
-			}
-			return true;
-		}
-
 		public override bool CanUseItem(Player player) {
-			return !NPC.AnyNPCs(NPCID.QueenSlimeBoss);
+			return !NPC.AnyNPCs(NPCID.QueenSlimeBoss) && player.InModBiome<ConfectionBiome>();
 		}
 
 		public override bool? UseItem(Player player) {

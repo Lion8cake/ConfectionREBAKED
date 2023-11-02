@@ -26,11 +26,12 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-        }
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
+		}
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 10).AddIngredient(null, "SherbetTorch", 5).Register();
+            CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 10).AddIngredient(ModContent.ItemType<SherbetTorch>(), 5).Register();
         }
     }
 }

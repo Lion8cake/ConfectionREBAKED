@@ -39,5 +39,10 @@ namespace TheConfectionRebirth.Tiles
 				}
 			}
 		}
+
+		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
+			sightColor = new Color(210, 196, 145);
+			return true;
+		}
 	}
 }

@@ -2,16 +2,10 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
-using TheConfectionRebirth.Backgrounds.MenuBackgrounds;
 using Terraria;
 
 namespace TheConfectionRebirth {
 	public class ConfectionMenu : ModMenu {
-
-		private bool Background = false;
-		private bool Background1 = false;
-		private bool Background2 = false;
-		private bool Background3 = false;
 
 		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Logo");
 
@@ -20,44 +14,22 @@ namespace TheConfectionRebirth {
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle {
 			get {
 				if (Main.time < 100 && Main.dayTime) {
-					if (Main.rand.NextBool(4)) {
-						Background = true;
-						Background1 = false;
-						Background2 = false;
-						Background3 = false;
-					}
-					if (Main.rand.NextBool(4)) {
-						Background1 = true;
-						Background = false;
-						Background2 = false;
-						Background3 = false;
-					}
-					if (Main.rand.NextBool(4)) {
-						Background2 = true;
-						Background = false;
-						Background1 = false;
-						Background3 = false;
-					}
-					if (Main.rand.NextBool(4)) {
-						Background3 = true;
-						Background = false;
-						Background1 = false;
-						Background2 = false;
-					}
+					ConfectionWorldGeneration.confectionBG = Main.rand.Next(4);
 				}
-				if (Background) {
-					return ModContent.GetInstance<ConfectionMenuBackground>();
+				int bgType = ConfectionWorldGeneration.confectionBG;
+				if (bgType == 0) {
+					return ModContent.GetInstance<ConfectionMenuStyle0>();
 				}
-				if (Background1) {
-					return ModContent.GetInstance<ConfectionSurface1BackgroundStyle>();
+				else if (bgType == 1) {
+					return ModContent.GetInstance<ConfectionMenuStyle1>();
 				}
-				if (Background2) {
-					return ModContent.GetInstance<ConfectionMenuBackgroundNight>();
+				else if (bgType == 2) {
+					return ModContent.GetInstance<ConfectionMenuStyle2>();
 				}
-				if (Background3) {
-					return ModContent.GetInstance<ConfectionMenuBackground3>();
+				else if (bgType == 3) {
+					return ModContent.GetInstance<ConfectionMenuStyle3>();
 				}
-				return ModContent.GetInstance<ConfectionMenuBackground>();
+				return ModContent.GetInstance<ConfectionMenuStyle0>();
 			}
 		}
 

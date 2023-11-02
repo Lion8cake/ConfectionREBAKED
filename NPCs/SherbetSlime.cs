@@ -36,6 +36,7 @@ namespace TheConfectionRebirth.NPCs
             NPC.aiStyle = 1;
             AIType = NPCID.Crimslime;
             AnimationType = NPCID.Crimslime;
+			NPC.rarity = 1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SherbetSlimeBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };

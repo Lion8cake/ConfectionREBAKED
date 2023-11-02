@@ -47,6 +47,11 @@ namespace TheConfectionRebirth.Items.Placeable
                 .AddIngredient<LinedConfectionGemWall>(4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-        }
+
+			CreateRecipe()
+				.AddIngredient<CreamstoneWall>(4)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+		}
 	}
 }

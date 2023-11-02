@@ -89,5 +89,10 @@ namespace TheConfectionRebirth.Tiles
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-    }
+
+		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
+			sightColor = new Color(210, 196, 145);
+			return true;
+		}
+	}
 }

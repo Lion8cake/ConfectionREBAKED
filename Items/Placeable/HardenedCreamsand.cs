@@ -25,5 +25,9 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.HardenedCreamsand>();
         }
-    }
+
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<HardenedCreamsandWall>(), 4).Register();
+		}
+	}
 }

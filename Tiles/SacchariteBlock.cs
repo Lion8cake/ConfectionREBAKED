@@ -62,7 +62,7 @@ namespace TheConfectionRebirth.Tiles
                             NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
                         }
                     }
-					if (WorldGen.genRand.NextBool(2)) {
+					if (WorldGen.genRand.NextBool(4)) {
 						if (placeSaccharite) {
 							tileBelow.TileType = (ushort)ModContent.TileType<EnchantedSacchariteBlock>();
 							tileBelow.HasTile = true;

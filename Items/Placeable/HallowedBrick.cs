@@ -26,9 +26,9 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.createTile = ModContent.TileType<Tiles.HallowedBrick>();
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe(5)
+		public override void AddRecipes() {
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<HallowedBrickWall>(), 4).Register();
+			CreateRecipe(5)
                 .AddIngredient(ItemID.StoneBlock, 5)
                 .AddIngredient<HallowedOre>()
                 .AddTile(TileID.Furnaces)

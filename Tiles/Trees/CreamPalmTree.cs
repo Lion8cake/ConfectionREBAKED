@@ -43,7 +43,11 @@ namespace TheConfectionRebirth.Tiles
             return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamPalmTree_Tops");
         }
 
-        public override int DropWood()
+		public override int TreeLeaf() {
+			return ModContent.GoreType<CreamTreeLeaf>();
+		}
+
+		public override int DropWood()
         {
             return ModContent.ItemType<Items.Placeable.CreamWood>();
         }

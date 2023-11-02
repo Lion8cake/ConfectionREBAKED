@@ -28,7 +28,8 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(5)
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<NeapoliniteBrickWall>(), 4).Register();
+			CreateRecipe(5)
                 .AddIngredient(ItemID.StoneBlock, 5)
                 .AddIngredient<NeapoliniteOre>()
                 .AddTile(TileID.Furnaces)

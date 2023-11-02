@@ -19,5 +19,10 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLighted[Type] = false;
             AddMapEntry(new Color(78, 191, 252));
         }
-    }
+
+		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
+			sightColor = new Color(210, 196, 145);
+			return true;
+		}
+	}
 }

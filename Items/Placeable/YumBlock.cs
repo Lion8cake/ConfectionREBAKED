@@ -26,9 +26,10 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.createTile = ModContent.TileType<Tiles.YumBlock>();
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe(5).AddIngredient(ModContent.ItemType<Items.YumDrop>(), 5).Register();
+		public override void AddRecipes() 
+		{
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<YumBlockWall>(), 4).Register();
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<Items.YumDrop>(), 5).Register();
         }
     }
 }
