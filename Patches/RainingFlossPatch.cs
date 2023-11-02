@@ -23,12 +23,12 @@ file interface IFlossWaterfall {
 file sealed class Chocofall : ModWaterfallStyle, IFlossWaterfall {
 	private static Asset<Texture2D> asset;
 
-	public override string Texture => "TheConfectionRebirth/Assets/Chocofall";
+	public override string Texture => "TheConfectionRebirth/Assets/Empty";
 
-	public bool UsesSnowyFrames => true;
+	public bool UsesSnowyFrames => false;
 
 	public override void Load() {
-		asset = ModContent.Request<Texture2D>(Texture);
+		asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Chocofall");
 	}
 
 	public override void Unload() {
@@ -44,12 +44,12 @@ file sealed class Chocofall : ModWaterfallStyle, IFlossWaterfall {
 file sealed class Chocofall2 : ModWaterfallStyle, IFlossWaterfall {
 	private static Asset<Texture2D> asset;
 
-	public override string Texture => "TheConfectionRebirth/Assets/Chocofall2";
+	public override string Texture => "TheConfectionRebirth/Assets/Empty";
 
-	public bool UsesSnowyFrames => false;
+	public bool UsesSnowyFrames => true;
 
 	public override void Load() {
-		asset = ModContent.Request<Texture2D>(Texture);
+		asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Chocofall2");
 	}
 
 	public override void Unload() {
@@ -143,6 +143,7 @@ file sealed class RainingFlossPatch : ILoadable {
 			var gotoSnowCloudCase = default(ILLabel);
 
 			var gotoPurpleFlossCase = c.DefineLabel();
+			var gotoTrueSnowCloudCase = c.DefineLabel();
 
 			c.GotoNext(
 				i => i.MatchLdloca(out tileVarIndex),
@@ -173,13 +174,17 @@ file sealed class RainingFlossPatch : ILoadable {
 				i => i.MatchLdcI4(TileID.SnowCloud)
 				);
 
+			c.EmitNop();
+			foreach (var label in c.IncomingLabels) {
+				label.Target = c.Prev;
+			}
+
 			CopypastaPatch<BlueFairyFloss, Chocofall>(gotoPurpleFlossCase);
 
 			c.MarkLabel(gotoPurpleFlossCase);
+			CopypastaPatch<PurpleFairyFloss, Chocofall2>(gotoTrueSnowCloudCase);
 
-			CopypastaPatch<PurpleFairyFloss, Chocofall2>(gotoSnowCloudCase);
-
-			gotoSnowCloudCase.Target = c.Next;
+			c.MarkLabel(gotoTrueSnowCloudCase);
 
 			void CopypastaPatch<TTile, TWaterfall>(ILLabel gotoCase) where TTile : ModTile where TWaterfall : ModWaterfallStyle, IFlossWaterfall {
 				c.EmitLdloc(tileVarIndex);
@@ -224,15 +229,24 @@ file sealed class RainingFlossPatch : ILoadable {
 			int positionVarIndex = -1, source1VarIndex = -1, source2VarIndex = -1, color1VarIndex = -1, color2VarIndex = -1, originVarIndex = -1;
 			var waterfallStyleVarIndex = -1;
 			var finishDrawingCase = default(ILLabel);
-			var skipVanillaDrawingCase = c.DefineLabel();
+			var moveToSnowfallsCase = default(ILLabel);
 			
-			c.GotoNext(
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloc(out waterfallStyleVarIndex),
 				i => i.MatchLdcI4(11),
-				i => i.MatchBeq(out _)
+				i => i.MatchBeq(out moveToSnowfallsCase)
 				);
 
+			Debug.Assert(moveToSnowfallsCase != null);
+
+			c.EmitLdloc(waterfallStyleVarIndex);
+			c.EmitDelegate(static (int waterfallStyle) => {
+				return ModContent.GetModWaterfallStyle(waterfallStyle) is IFlossWaterfall;
+			});
+			c.EmitBrtrue(moveToSnowfallsCase);
+
 			c.GotoNext(
-				i => i.MatchLdloc(out waterfallStyleVarIndex),
+				i => i.MatchLdloc(waterfallStyleVarIndex),
 				i => i.MatchLdcI4(22),
 				i => i.MatchBneUn(out _)
 				);
@@ -244,14 +258,16 @@ file sealed class RainingFlossPatch : ILoadable {
 			Debug.Assert(waterfallStyleVarIndex != -1);
 
 			c.EmitLdloc(waterfallStyleVarIndex);
-			c.EmitDelegate(static (int waterfallStyle) => ModContent.GetModWaterfallStyle(waterfallStyle) as IFlossWaterfall);
+			c.EmitDelegate(static (int waterfallStyle) => {
+				return ModContent.GetModWaterfallStyle(waterfallStyle) as IFlossWaterfall;
+			});
 			c.EmitStloc(flossWaterfallVarIndex);
 
 			c.EmitLdloc(flossWaterfallVarIndex);
 			c.EmitLdloca(waterfallStyleVarIndex);
 			c.EmitLdloca(oldWaterfallStyleVarIndex);
 			c.EmitDelegate(static (IFlossWaterfall flossWaterfall, ref int currentStyle, ref int oldStyle) => {
-				if (!flossWaterfall.UsesSnowyFrames)
+				if (flossWaterfall == null || !flossWaterfall.UsesSnowyFrames)
 					return;
 
 				oldStyle = currentStyle;
@@ -268,7 +284,6 @@ file sealed class RainingFlossPatch : ILoadable {
 
 			var currentTargetIndex = c.Index;
 
-			c.GotoNext(i => i.MatchBr(out finishDrawingCase));
 			c.GotoNext(i => i.MatchLdloc(out positionVarIndex));
 			c.GotoNext(i => i.MatchLdloc(out source2VarIndex));
 			c.GotoNext(i => i.MatchLdloc(out color2VarIndex));
@@ -276,6 +291,9 @@ file sealed class RainingFlossPatch : ILoadable {
 			c.GotoNext(i => i.MatchLdloc(positionVarIndex));
 			c.GotoNext(i => i.MatchLdloc(out source1VarIndex));
 			c.GotoNext(i => i.MatchLdloc(out color1VarIndex));
+			c.Index = currentTargetIndex;
+			c.GotoNext(i => i.MatchBr(out finishDrawingCase));
+			c.Index = currentTargetIndex;
 
 			Debug.Assert(positionVarIndex != -1);
 			Debug.Assert(originVarIndex != -1);
@@ -285,13 +303,11 @@ file sealed class RainingFlossPatch : ILoadable {
 			Debug.Assert(color2VarIndex != -1);
 			Debug.Assert(finishDrawingCase != null);
 
-			c.Index = currentTargetIndex;
-
 			c.EmitLdloc(flossWaterfallVarIndex);
 			c.EmitLdloca(waterfallStyleVarIndex);
 			c.EmitLdloc(oldWaterfallStyleVarIndex);
 			c.EmitDelegate(static (IFlossWaterfall flossWaterfall, ref int currentStyle, int oldStyle) => {
-				if (!flossWaterfall.UsesSnowyFrames)
+				if (flossWaterfall == null || !flossWaterfall.UsesSnowyFrames)
 					return;
 
 				currentStyle = oldStyle;
@@ -313,6 +329,8 @@ file sealed class RainingFlossPatch : ILoadable {
 				return false;
 			});
 			c.EmitBrtrue(finishDrawingCase);
+
+			MonoModHooks.DumpIL(ModContent.GetInstance<TheConfectionRebirth>(), il);
 		}
 		catch {
 			MonoModHooks.DumpIL(ModContent.GetInstance<TheConfectionRebirth>(), il);
