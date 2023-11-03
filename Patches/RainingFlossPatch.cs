@@ -4,8 +4,10 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.Utils;
 using ReLogic.Content;
+using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,55 +15,120 @@ using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Patches;
 
-file interface IFlossWaterfall {
-	bool UsesSnowyFrames { get; }
+#region Data Structs
+file ref struct CloudfallParams {
+	private Span<int> _x;
+	private Span<int> _y;
+	private Span<int> _fgX;
+	private Span<int> _bgX;
+	private Span<int> _rbX;
+	private Span<int> _rfX;
+	private Span<int> _sfX;
 
-	void Draw(Vector2 position, Rectangle source1, Rectangle source2, Color color1, Color color2, Vector2 origin);
+	public readonly int X => _x[0];
+	public readonly int Y => _y[0];
+	public ref int ForegroundFrameX => ref _fgX[0];
+	public ref int BackgroundFrameX => ref _bgX[0];
+	public readonly int RainBackgroundFrame => _rbX[0];
+	public readonly int RainForegroundFrame => _rfX[0];
+	public readonly int SnowForegroundFrame => _sfX[0];
+
+	public static CloudfallParams Create(ref int x, ref int y, ref int foregroundFrameX, ref int backgroundFrameX, ref int rainFrameBackground, ref int rainFrameForeground, ref int snowFrameForeground) => new CloudfallParams {
+		_x = MemoryMarshal.CreateSpan(ref x, 1),
+		_y = MemoryMarshal.CreateSpan(ref y, 1),
+		_fgX = MemoryMarshal.CreateSpan(ref foregroundFrameX, 1),
+		_bgX = MemoryMarshal.CreateSpan(ref backgroundFrameX, 1),
+		_rbX = MemoryMarshal.CreateSpan(ref rainFrameBackground, 1),
+		_rfX = MemoryMarshal.CreateSpan(ref rainFrameForeground, 1),
+		_sfX = MemoryMarshal.CreateSpan(ref snowFrameForeground, 1)
+	};
 }
 
-// Blue uses this
-file sealed class Chocofall : ModWaterfallStyle, IFlossWaterfall {
-	private static Asset<Texture2D> asset;
-
-	public override string Texture => "TheConfectionRebirth/Assets/Empty";
-
-	public bool UsesSnowyFrames => false;
+file abstract class FlossWaterfallStyle : ModWaterfallStyle {
+	protected Asset<Texture2D> Asset { get; private set; }
 
 	public override void Load() {
-		asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Chocofall");
+		Asset = ModContent.Request<Texture2D>(Texture);
 	}
 
 	public override void Unload() {
-		asset = null;
+		Asset = null;
 	}
 
-	public void Draw(Vector2 position, Rectangle source1, Rectangle source2, Color color1, Color color2, Vector2 origin) {
-		Main.spriteBatch.Draw(asset.Value, position, source2, color2, 0f, origin, 1f, SpriteEffects.None, 0f);
+	public abstract void ModifyWaterfallLength(int waterfallDistance, ref int length);
+
+	public abstract void ModifyWaterfallParams(in CloudfallParams cloudfallParams);
+
+	public virtual void Draw(Vector2 position, Rectangle backgroundSource, Rectangle foregroundSource, Color backgroundColor, Color foregroundColor, Vector2 origin) {
+		Main.spriteBatch.Draw(Asset.Value, position, foregroundSource, foregroundColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+	}
+}
+#endregion
+
+#region Waterfalls
+// Blue uses this
+file sealed class Chocofall : FlossWaterfallStyle {
+	public override string Texture => "TheConfectionRebirth/Assets/Chocofall";
+
+	public override void ModifyWaterfallLength(int waterfallDistance, ref int length) {
+		length = waterfallDistance / 5;
+	}
+
+	public override void ModifyWaterfallParams(in CloudfallParams cloudfallParams) {
+		var x = cloudfallParams.X;
+		if (x % 2 == 0) {
+			cloudfallParams.ForegroundFrameX = cloudfallParams.SnowForegroundFrame + 3;
+			if (cloudfallParams.ForegroundFrameX > 7) {
+				cloudfallParams.ForegroundFrameX -= 8;
+			}
+
+			cloudfallParams.BackgroundFrameX = cloudfallParams.RainBackgroundFrame + 3;
+			if (cloudfallParams.BackgroundFrameX > 7) {
+				cloudfallParams.BackgroundFrameX -= 8;
+			}
+		}
+		else {
+			cloudfallParams.ForegroundFrameX = cloudfallParams.SnowForegroundFrame;
+			cloudfallParams.BackgroundFrameX = cloudfallParams.RainBackgroundFrame;
+		}
 	}
 }
 
 // Purple uses this
-file sealed class Chocofall2 : ModWaterfallStyle, IFlossWaterfall {
-	private static Asset<Texture2D> asset;
+file sealed class Chocofall2 : FlossWaterfallStyle {
+	public override string Texture => "TheConfectionRebirth/Assets/Chocofall2";
 
-	public override string Texture => "TheConfectionRebirth/Assets/Empty";
-
-	public bool UsesSnowyFrames => true;
-
-	public override void Load() {
-		asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Chocofall2");
+	public override void ModifyWaterfallLength(int waterfallDistance, ref int length) {
+		length = waterfallDistance / 3;
 	}
 
-	public override void Unload() {
-		asset = null;
+	public override void ModifyWaterfallParams(in CloudfallParams cloudfallParams) {
+		var x = cloudfallParams.X;
+		if (x % 2 == 0) {
+			cloudfallParams.ForegroundFrameX = cloudfallParams.RainForegroundFrame + 7;
+			if (cloudfallParams.ForegroundFrameX > 7) {
+				cloudfallParams.ForegroundFrameX -= 8;
+			}
+
+			cloudfallParams.BackgroundFrameX = cloudfallParams.RainBackgroundFrame + 2;
+			if (cloudfallParams.BackgroundFrameX > 7) {
+				cloudfallParams.BackgroundFrameX -= 8;
+			}
+		}
+		else {
+			cloudfallParams.ForegroundFrameX = cloudfallParams.RainForegroundFrame;
+			cloudfallParams.BackgroundFrameX = cloudfallParams.RainBackgroundFrame;
+		}
 	}
 
-	public void Draw(Vector2 position, Rectangle source1, Rectangle source2, Color color1, Color color2, Vector2 origin) {
-		Main.spriteBatch.Draw(asset.Value, position, source1, color1, 0f, origin, 1f, SpriteEffects.None, 0f);
-		Main.spriteBatch.Draw(asset.Value, position, source2, color2, 0f, origin, 1f, SpriteEffects.None, 0f);
+	public override void Draw(Vector2 position, Rectangle backgroundSource, Rectangle foregroundSource, Color backgroundColor, Color foregroundColor, Vector2 origin) {
+		Main.spriteBatch.Draw(Asset.Value, position, backgroundSource, backgroundColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+		Main.spriteBatch.Draw(Asset.Value, position, foregroundSource, foregroundColor, 0f, origin, 1f, SpriteEffects.None, 0f);
 	}
 }
+#endregion
 
+#region Patch
 file sealed class RainingFlossPatch : ILoadable {
 	public void Load(Mod mod) {
 		IL_WaterfallManager.FindWaterfalls += FindCandyFlossWaterfalls;
@@ -186,7 +253,7 @@ file sealed class RainingFlossPatch : ILoadable {
 
 			c.MarkLabel(gotoTrueSnowCloudCase);
 
-			void CopypastaPatch<TTile, TWaterfall>(ILLabel gotoCase) where TTile : ModTile where TWaterfall : ModWaterfallStyle, IFlossWaterfall {
+			void CopypastaPatch<TTile, TWaterfall>(ILLabel gotoCase) where TTile : ModTile where TWaterfall : FlossWaterfallStyle {
 				c.EmitLdloc(tileVarIndex);
 				c.EmitDelegate(static (Tile tile) => tile.TileType == ModContent.TileType<TTile>());
 				c.EmitBrfalse(gotoCase);
@@ -219,61 +286,157 @@ file sealed class RainingFlossPatch : ILoadable {
 
 	private static void DrawCandyFlossWaterfalls(ILContext il) {
 		try {
+			var rainyFrameBgField = typeof(WaterfallManager).GetField("rainFrameBackground", BindingFlags.Instance | BindingFlags.NonPublic);
+			var rainyFrameFgField = typeof(WaterfallManager).GetField("rainFrameForeground", BindingFlags.Instance | BindingFlags.NonPublic);
+			var snowyFrameFgField = typeof(WaterfallManager).GetField("snowFrameForeground", BindingFlags.Instance | BindingFlags.NonPublic);
+			var waterfallDistField = typeof(WaterfallManager).GetField("waterfallDist", BindingFlags.Instance | BindingFlags.NonPublic);
+
+			Debug.Assert(rainyFrameBgField != null && rainyFrameFgField != null);
+			Debug.Assert(snowyFrameFgField != null);
+			Debug.Assert(waterfallDistField != null);
+
 			var c = new ILCursor(il);
 
-			c.Context.Body.Variables.Add(new VariableDefinition(c.IL.Import(typeof(IFlossWaterfall))));
+			c.Context.Body.Variables.Add(new VariableDefinition(c.IL.Import(typeof(FlossWaterfallStyle))));
 			var flossWaterfallVarIndex = c.Context.Body.Variables.Count - 1;
-			c.Context.Body.Variables.Add(new VariableDefinition(c.IL.Import(typeof(int))));
-			var oldWaterfallStyleVarIndex = c.Context.Body.Variables.Count - 1;
 
-			int positionVarIndex = -1, source1VarIndex = -1, source2VarIndex = -1, color1VarIndex = -1, color2VarIndex = -1, originVarIndex = -1;
+			int backgroundSourceVarIndex = -1, foregroundSourceVarIndex = -1;
+			int backgroundColorVarIndex = -1, foregroundColorVarIndex = -1;
+			int positionVarIndex = -1, originVarIndex = -1;
+			int xVarIndex = -1, yVarIndex = -1;
+			int foregroundXFrameVarIndex = -1, backgroundXFrameVarIndex = -1;
 			var waterfallStyleVarIndex = -1;
-			var finishDrawingCase = default(ILLabel);
+			var waterfallLengthVarIndex = -1;
 			var moveToSnowfallsCase = default(ILLabel);
-			
+			var finishDrawingCase = default(ILLabel);
+
+			// Retrive X coordinate.
+			c.GotoNext(
+				i => i.MatchLdelema<WaterfallManager.WaterfallData>(),
+				i => i.MatchLdfld<WaterfallManager.WaterfallData>("x")
+				);
+			c.GotoNext(
+				i => i.MatchStloc(out xVarIndex)
+				);
+
+			Debug.Assert(xVarIndex != -1);
+
+			// Retrive Y coordinate.
+			c.GotoNext(
+				i => i.MatchLdelema<WaterfallManager.WaterfallData>(),
+				i => i.MatchLdfld<WaterfallManager.WaterfallData>("y")
+				);
+			c.GotoNext(
+				i => i.MatchStloc(out yVarIndex)
+				);
+
+			Debug.Assert(yVarIndex != -1);
+
+			// Branch into 11, 22 cases (rainfall and snowfall from cloud blocks) if waterfall style is of FlossWaterfallStyle type.
 			c.GotoNext(MoveType.After,
 				i => i.MatchLdloc(out waterfallStyleVarIndex),
 				i => i.MatchLdcI4(11),
 				i => i.MatchBeq(out moveToSnowfallsCase)
 				);
 
+			Debug.Assert(waterfallStyleVarIndex != -1);
 			Debug.Assert(moveToSnowfallsCase != null);
 
 			c.EmitLdloc(waterfallStyleVarIndex);
-			c.EmitDelegate(static (int waterfallStyle) => {
-				return ModContent.GetModWaterfallStyle(waterfallStyle) is IFlossWaterfall;
-			});
+			c.EmitDelegate(static (int waterfallStyle) => ModContent.GetModWaterfallStyle(waterfallStyle) is FlossWaterfallStyle);
 			c.EmitBrtrue(moveToSnowfallsCase);
 
-			c.GotoNext(
-				i => i.MatchLdloc(waterfallStyleVarIndex),
-				i => i.MatchLdcI4(22),
-				i => i.MatchBneUn(out _)
-				);
-
+			// Move after Main.drewLava check
 			c.GotoNext(MoveType.After,
 				i => i.MatchBrtrue(out _)
 				);
 
-			Debug.Assert(waterfallStyleVarIndex != -1);
-
+			// Store dummy instance, so we can draw and call hooks on it.
 			c.EmitLdloc(waterfallStyleVarIndex);
-			c.EmitDelegate(static (int waterfallStyle) => {
-				return ModContent.GetModWaterfallStyle(waterfallStyle) as IFlossWaterfall;
-			});
+			c.EmitDelegate(static (int waterfallStyle) => ModContent.GetModWaterfallStyle(waterfallStyle) as FlossWaterfallStyle);
 			c.EmitStloc(flossWaterfallVarIndex);
 
-			c.EmitLdloc(flossWaterfallVarIndex);
-			c.EmitLdloca(waterfallStyleVarIndex);
-			c.EmitLdloca(oldWaterfallStyleVarIndex);
-			c.EmitDelegate(static (IFlossWaterfall flossWaterfall, ref int currentStyle, ref int oldStyle) => {
-				if (flossWaterfall == null || !flossWaterfall.UsesSnowyFrames)
-					return;
+			c.GotoNext(MoveType.After,
+				i => i.MatchDiv(),
+				i => i.MatchStloc(out waterfallLengthVarIndex)
+				);
 
-				oldStyle = currentStyle;
-				currentStyle = 22;
+			Debug.Assert(waterfallLengthVarIndex != -1);
+
+			// Modify waterfall length if needed
+			c.EmitLdloc(flossWaterfallVarIndex);
+			c.EmitLdloc(waterfallLengthVarIndex);
+			c.EmitLdarg0().EmitLdfld(waterfallDistField);
+			c.EmitDelegate(static (FlossWaterfallStyle flossWaterfall, int waterfallLength, int waterfallDistance) => {
+				flossWaterfall?.ModifyWaterfallLength(waterfallDistance, ref waterfallLength);
+				return waterfallLength;
+			});
+			c.EmitStloc(waterfallLengthVarIndex);
+
+			// Retrive foreground and background frames.
+			c.GotoNext(
+				i => i.MatchLdfld(rainyFrameFgField),
+				i => i.MatchStloc(out foregroundXFrameVarIndex)
+				);
+
+			c.GotoNext(
+				i => i.MatchLdfld(rainyFrameBgField),
+				i => i.MatchStloc(out backgroundXFrameVarIndex)
+				);
+
+			Debug.Assert(foregroundXFrameVarIndex != -1);
+			Debug.Assert(backgroundXFrameVarIndex != -1);
+			
+			// Move to background source.
+			c.GotoNext(i => i.MatchLdloca(out _));
+
+			c.EmitNop();
+			foreach (var label in c.IncomingLabels) {
+				label.Target = c.Prev;
+			}
+
+			// Modify parameters if needed.
+			c.EmitLdloc(flossWaterfallVarIndex);
+			c.EmitLdloca(xVarIndex);
+			c.EmitLdloca(yVarIndex);
+			c.EmitLdloca(backgroundXFrameVarIndex);
+			c.EmitLdloca(foregroundXFrameVarIndex);
+			c.EmitLdarg0().EmitLdflda(rainyFrameBgField);
+			c.EmitLdarg0().EmitLdflda(rainyFrameFgField);
+			c.EmitLdarg0().EmitLdflda(snowyFrameFgField);
+			c.EmitDelegate(static (FlossWaterfallStyle flossWaterfall, ref int x, ref int y, ref int backgroundXFrame, ref int foregroundXFrame, ref int rainyBg, ref int rainyFg, ref int snowyFg) => {
+				flossWaterfall?.ModifyWaterfallParams(CloudfallParams.Create(ref x, ref y, ref foregroundXFrame, ref backgroundXFrame, ref rainyBg, ref rainyFg, ref snowyFg));
 			});
 
+			// Move to background source. again.
+			c.GotoNext(
+				i => i.MatchLdloca(out backgroundSourceVarIndex)
+				);
+
+			Debug.Assert(backgroundSourceVarIndex != -1);
+
+			// Move to foreground source.
+			c.GotoNext(
+				i => i.MatchLdloca(out foregroundSourceVarIndex)
+				);
+
+			Debug.Assert(foregroundSourceVarIndex != -1);
+
+			// Move to origin.
+			c.GotoNext(
+				i => i.MatchLdloca(out originVarIndex)
+				);
+
+			Debug.Assert(originVarIndex != -1);
+
+			// Move to position.
+			c.GotoNext(
+				i => i.MatchStloc(out positionVarIndex)
+				);
+
+			Debug.Assert(positionVarIndex != -1);
+
+			// Move right before drawing.
 			c.GotoNext(
 				i => i.MatchLdloc(waterfallStyleVarIndex),
 				i => i.MatchLdcI4(22),
@@ -282,55 +445,43 @@ file sealed class RainingFlossPatch : ILoadable {
 				i => i.MatchLdsfld<Main>(nameof(Main.spriteBatch))
 				);
 
+			// Store current target, so we can move back.
 			var currentTargetIndex = c.Index;
 
-			c.GotoNext(i => i.MatchLdloc(out positionVarIndex));
-			c.GotoNext(i => i.MatchLdloc(out source2VarIndex));
-			c.GotoNext(i => i.MatchLdloc(out color2VarIndex));
-			c.GotoNext(i => i.MatchLdloc(out originVarIndex));
-			c.GotoNext(i => i.MatchLdloc(positionVarIndex));
-			c.GotoNext(i => i.MatchLdloc(out source1VarIndex));
-			c.GotoNext(i => i.MatchLdloc(out color1VarIndex));
-			c.Index = currentTargetIndex;
-			c.GotoNext(i => i.MatchBr(out finishDrawingCase));
-			c.Index = currentTargetIndex;
+			c.GotoNext(
+				i => i.MatchBr(out finishDrawingCase)
+				);
 
-			Debug.Assert(positionVarIndex != -1);
-			Debug.Assert(originVarIndex != -1);
-			Debug.Assert(source1VarIndex != -1);
-			Debug.Assert(source2VarIndex != -1);
-			Debug.Assert(color1VarIndex != -1);
-			Debug.Assert(color2VarIndex != -1);
 			Debug.Assert(finishDrawingCase != null);
 
-			c.EmitLdloc(flossWaterfallVarIndex);
-			c.EmitLdloca(waterfallStyleVarIndex);
-			c.EmitLdloc(oldWaterfallStyleVarIndex);
-			c.EmitDelegate(static (IFlossWaterfall flossWaterfall, ref int currentStyle, int oldStyle) => {
-				if (flossWaterfall == null || !flossWaterfall.UsesSnowyFrames)
-					return;
+			c.Index = currentTargetIndex;
 
-				currentStyle = oldStyle;
-			});
+			// Retrieve background and foreground colors
+			c.GotoPrev(i => i.MatchStloc(out foregroundColorVarIndex));
+			c.GotoPrev(i => i.MatchStloc(out backgroundColorVarIndex));
 
+			Debug.Assert(foregroundColorVarIndex != -1);
+			Debug.Assert(backgroundColorVarIndex != -1);
+
+			c.Index = currentTargetIndex;
+
+			// Draw our cloudfall.
 			c.EmitLdloc(flossWaterfallVarIndex)
 				.EmitLdloc(positionVarIndex)
+				.EmitLdloc(backgroundSourceVarIndex)
+				.EmitLdloc(foregroundSourceVarIndex)
+				.EmitLdloc(backgroundColorVarIndex)
+				.EmitLdloc(foregroundColorVarIndex)
 				.EmitLdloc(originVarIndex)
-				.EmitLdloc(source1VarIndex)
-				.EmitLdloc(source2VarIndex)
-				.EmitLdloc(color1VarIndex)
-				.EmitLdloc(color2VarIndex)
-				.EmitDelegate(static (IFlossWaterfall flossWaterfall, Vector2 position, Vector2 origin, Rectangle source1, Rectangle source2, Color color1, Color color2) => {
-				if (flossWaterfall != null) {
-					flossWaterfall.Draw(position, source1, source2, color1, color2, origin);
-					return true;
-				}
+				.EmitDelegate(static (FlossWaterfallStyle flossWaterfall, Vector2 position, Rectangle backgroundSource, Rectangle foregroundSource, Color backgroundColor, Color foregroundColor, Vector2 origin) => {
+					if (flossWaterfall != null) {
+						flossWaterfall.Draw(position, backgroundSource, foregroundSource, backgroundColor, foregroundColor, origin);
+						return true;
+					}
 
-				return false;
-			});
+					return false;
+				});
 			c.EmitBrtrue(finishDrawingCase);
-
-			MonoModHooks.DumpIL(ModContent.GetInstance<TheConfectionRebirth>(), il);
 		}
 		catch {
 			MonoModHooks.DumpIL(ModContent.GetInstance<TheConfectionRebirth>(), il);
@@ -340,3 +491,4 @@ file sealed class RainingFlossPatch : ILoadable {
 	public void Unload() {
 	}
 }
+#endregion
