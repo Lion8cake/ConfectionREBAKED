@@ -37,6 +37,7 @@ using Terraria.GameContent.Drawing;
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
 	{
+		internal static TheConfectionRebirth Instance;
 
 		public static int[] confectBG = new int[3];
 
@@ -77,14 +78,13 @@ namespace TheConfectionRebirth {
 
 		public override void Load()
 		{
+			Instance = this;
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
 			ConfectionWindUtilities.Load();
 
 			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
 			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
-
-			Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
 
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
@@ -104,20 +104,17 @@ namespace TheConfectionRebirth {
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
 
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
-
-			On_Main.DrawSurfaceBG_DrawChangeOverlay += On_Main_DrawSurfaceBG_DrawChangeOverlay;
 		}
 
 		public override void Unload()
 		{
+			Instance = null;
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
 			ConfectionWindUtilities.Unload();
 
 			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
 			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
-
-			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
 
 			Terraria.On_Player.MowGrassTile -= On_Player_MowGrassTile;
 			Terraria.GameContent.ItemDropRules.On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
@@ -127,16 +124,6 @@ namespace TheConfectionRebirth {
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
-
-			On_Main.DrawSurfaceBG_DrawChangeOverlay -= On_Main_DrawSurfaceBG_DrawChangeOverlay;
-		}
-
-		private void On_Main_DrawSurfaceBG_DrawChangeOverlay(On_Main.orig_DrawSurfaceBG_DrawChangeOverlay orig, Main self, int backgroundAreaId) {
-			/*Texture2D value = TextureAssets.MagicPixel.Value;
-			float flashPower = 1;//WorldGen.BackgroundsCache.GetFlashPower(backgroundAreaId);
-			Color color = Color.Black * flashPower;
-			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);*/
-			orig.Invoke(self, backgroundAreaId);
 		}
 
 		#region MapBackgroundColorFixer
@@ -177,6 +164,9 @@ namespace TheConfectionRebirth {
 				sizeY = 2;
 			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) {
 				sizeY = 2;
 			}
 			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
@@ -486,13 +476,19 @@ namespace TheConfectionRebirth {
 			orig.Invoke(self);
 			LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.MissingTwin());
 			LeadingConditionRule leadingConditionRule2 = new LeadingConditionRule(new Conditions.NotExpert());
+			LeadingConditionRule leadingConditionRule3 = new LeadingConditionRule(new DrunkWorldIsNotActive());
 			LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
 			LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
+			LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
 			leadingConditionRule.OnSuccess(leadingConditionRule2);
-			leadingConditionRule2.OnSuccess(ConfectionCondition);
-			leadingConditionRule2.OnSuccess(HallowCondition);
+			leadingConditionRule2.OnSuccess(leadingConditionRule3);
+			leadingConditionRule3.OnSuccess(ConfectionCondition);
+			leadingConditionRule3.OnSuccess(HallowCondition);
+			leadingConditionRule2.OnSuccess(DrunkCondition);
 			ConfectionCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
 			HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+			DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+			DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
 			self.RegisterToMultipleNPCs(leadingConditionRule, 126, 125);
 		}
 		#endregion
@@ -527,22 +523,6 @@ namespace TheConfectionRebirth {
 			}
 		}
 		#endregion
-
-		#region OtherworldlyMusic
-		private void Main_UpdateAudio_DecideOnTOWMusic(Terraria.On_Main.orig_UpdateAudio_DecideOnTOWMusic orig, Main self)
-		{
-			orig.Invoke(self);
-			if (!Main.gameMenu) {
-				if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/ConfectionUnderground")) {
-					Main.newMusic = 78;
-				}
-				else if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Confection")) {
-					Main.newMusic = 88;
-				}
-			}
-		}
-		#endregion
-
 	}
 
 	public static class ConfectionWindUtilities {

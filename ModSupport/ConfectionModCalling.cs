@@ -7,6 +7,12 @@ namespace TheConfectionRebirth
     {
 		public static readonly Mod? Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
 
+
+		/// <summary>
+		/// Checks if fargos best of both worlds is enabled
+		/// </summary>
+		public static bool FargoBoBW = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargoSeedConfectionConfiguration>().BothGoods;
+
 		public override void PostSetupContent()
 		{
             if (Achievements == null)

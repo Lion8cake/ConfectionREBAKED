@@ -21,6 +21,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.Snow[Type] = true;
             DustType = ModContent.DustType<CreamSnowDust>();
             AddMapEntry(new Color(219, 223, 234));
+			HitSound = SoundID.Item48;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

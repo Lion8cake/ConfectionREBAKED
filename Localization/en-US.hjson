@@ -1525,6 +1525,11 @@ Mods: {
 				DisplayName: Sweet And Savage
 				Tooltip: "'Not V. Costa Moura'"
 			}
+
+			SoulofSpiteinaBottleItem: {
+				DisplayName: Soul of Spite in a Bottle
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -1712,7 +1717,7 @@ Mods: {
 		Tiles: {
 			CreamSnowSapling.MapEntry: "{$Mods.TheConfectionRebirth.Tiles.CreamSapling.MapEntry}"
 			CreamSapling.MapEntry: Cream Sapling
-			SoulofDelightinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofDelightItem.DisplayName}"
+			SoulofDelightinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofDelightinaBottleItem.DisplayName}"
 			SherbetTorch.MapEntry: "{$ItemName.Torch}"
 			SherbetCampfire.MapEntry: "{$ItemName.Campfire}"
 			ConfectionPylonTile.MapEntry: "{$MapObject.TeleportationPylon}"
@@ -1777,6 +1782,8 @@ Mods: {
 			ChocolateFrogCage.MapEntry: "{$Mods.TheConfectionRebirth.Items.ChocolateFrogCageItem.DisplayName}"
 			ChocolateBunnyCage.MapEntry: "{$Mods.TheConfectionRebirth.Items.ChocolateBunnyCageItem.DisplayName}"
 			CherryBugBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.CherryBugBottleItem.DisplayName}"
+			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
+			SoulofSpiteinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofSpiteinaBottleItem.DisplayName}"
 		}
 
 		SetBonus: {
@@ -1944,6 +1951,11 @@ Mods: {
 
 				Headers.ConfectionServersideConfig: Confection Serverside Config
 				DisplayName: Confection Server Config
+
+				corner: {
+					Label: test BoBW config
+					Tooltip: ""
+				}
 			}
 
 			ConfectionConfig: {
@@ -1953,6 +1965,16 @@ Mods: {
 				CandyIconConfig: {
 					Label: Enables Confection Icon
 					Tooltip: Enables the confection icon overlay on world icons, disable this if issues persist when entering the world select screen
+				}
+			}
+
+			FargoSeedConfectionConfiguration: {
+				DisplayName: Fargo Seed Confection Configuration
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: Drunk Seed (Requires Fargo's best of both worlds mod)
+
+				BothGoods: {
+					Label: "[i:526][i:TheConfectionRebirth/CookieDough] Both Goods"
+					Tooltip: ""
 				}
 			}
 		}

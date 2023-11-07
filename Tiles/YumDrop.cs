@@ -21,10 +21,11 @@ namespace TheConfectionRebirth.Tiles
             Main.tileTable[Type] = true;
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
-            DustType = ModContent.DustType<CreamDust>();
+            DustType = ModContent.DustType<YumDust>();
             HitSound = SoundID.Grass;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
+			TileObjectData.addTile(Type);
             AddMapEntry(new Color(64, 133, 44));
 			RegisterItemDrop(ModContent.ItemType<Items.YumDrop>());
 		}

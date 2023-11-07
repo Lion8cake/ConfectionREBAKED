@@ -49,7 +49,7 @@ namespace TheConfectionRebirth.Tiles
 				}
 				int maxValue = 2;
 				bool flag = false;
-				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(maxValue) == 0) {
+				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(maxValue) == 0 && Main.tile[i, minJ].LiquidType < LiquidID.Water) {
 					flag = true;
 					if (WorldGen.PlaceTile(i, minJ, num18, mute: true)) {
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
@@ -90,7 +90,7 @@ namespace TheConfectionRebirth.Tiles
 			else {
 				int num2 = Main.tile[i, j].TileType;
 
-				if (!Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(10) == 0) {
+				if (!Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(10) == 0 && Main.tile[i, minJ].LiquidType < LiquidID.Water) {
 					int placedgrass = ModContent.TileType<CreamGrass_Foliage>();
 					if (WorldGen.genRand.Next(12) == 0) {
 						placedgrass = ModContent.TileType<YumDrop>();

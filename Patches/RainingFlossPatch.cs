@@ -6,6 +6,7 @@ using MonoMod.Utils;
 using ReLogic.Content;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
@@ -16,7 +17,7 @@ using TheConfectionRebirth.Tiles;
 namespace TheConfectionRebirth.Patches;
 
 #region Data Structs
-file ref struct CloudfallParams {
+ref struct CloudfallParams {
 	private Span<int> _x;
 	private Span<int> _y;
 	private Span<int> _fgX;
@@ -44,7 +45,7 @@ file ref struct CloudfallParams {
 	};
 }
 
-file abstract class FlossWaterfallStyle : ModWaterfallStyle {
+abstract class FlossWaterfallStyle : ModWaterfallStyle {
 	protected Asset<Texture2D> Asset { get; private set; }
 
 	public override void Load() {
@@ -67,7 +68,7 @@ file abstract class FlossWaterfallStyle : ModWaterfallStyle {
 
 #region Waterfalls
 // Blue uses this
-file sealed class Chocofall : FlossWaterfallStyle {
+sealed class Chocofall : FlossWaterfallStyle {
 	public override string Texture => "TheConfectionRebirth/Assets/Chocofall";
 
 	public override void ModifyWaterfallLength(int waterfallDistance, ref int length) {
@@ -95,7 +96,7 @@ file sealed class Chocofall : FlossWaterfallStyle {
 }
 
 // Purple uses this
-file sealed class Chocofall2 : FlossWaterfallStyle {
+sealed class Chocofall2 : FlossWaterfallStyle {
 	public override string Texture => "TheConfectionRebirth/Assets/Chocofall2";
 
 	public override void ModifyWaterfallLength(int waterfallDistance, ref int length) {
@@ -129,7 +130,7 @@ file sealed class Chocofall2 : FlossWaterfallStyle {
 #endregion
 
 #region Patch
-file sealed class RainingFlossPatch : ILoadable {
+sealed class RainingFlossPatch : ILoadable {
 	public void Load(Mod mod) {
 		IL_WaterfallManager.FindWaterfalls += FindCandyFlossWaterfalls;
 		IL_WaterfallManager.DrawWaterfall_int_float += DrawCandyFlossWaterfalls;

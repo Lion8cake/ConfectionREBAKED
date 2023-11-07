@@ -162,11 +162,19 @@ namespace TheConfectionRebirth {
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
-			if (confectionorHallow) {
-				int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
-				if (index2 != -1) {
-					tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
-					tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
+			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld) {
+				int index = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+				if (index != -1) {
+					tasks.Insert(index + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+				}
+			}
+			else {
+				if (confectionorHallow) {
+					int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+					if (index2 != -1) {
+						tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+						tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
+					}
 				}
 			}
 		}
@@ -189,7 +197,7 @@ namespace TheConfectionRebirth {
 					list.RemoveAt(index4);
 				}
 			}
-			if (Main.drunkWorld) {
+			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld) {
 				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
 				if (index2 != -1) {
 					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(ConfectionDrunkInner)));
@@ -1327,7 +1335,7 @@ namespace TheConfectionRebirth {
 				}
 			}
 
-			if (Main.hardMode || !Main.tile[i, j].IsActuated) {
+			if (Main.hardMode && !Main.tile[i, j].IsActuated) {
 				int type = Main.tile[i, j].TileType;
 				if ((NPC.downedPlantBoss && WorldGen.genRand.Next(2) == 0) || WorldGen.AllowedToSpreadInfections) {
 					if ((type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() || type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {

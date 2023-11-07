@@ -1,3 +1,21 @@
+Beta v0.19.5
+=========================
+Readded Fairy Floss Rain waterfalls, curtesy of Basically i am cat
+Fixed foliage growing underwater
+Rewrote the otherworldly music code to nolonger need an detour
+Fixed yumdrops having incorrect dusts and a visual glitch that made the bottom of the stop drawing
+Added a map name to the enchanted saccharite which also fixes the metal detector localisation issue
+Added recipe to the soul of delight in a bottle
+Added soul of spite in a bottle
+Fixed Soul bottles not being able to be placed under platforms
+Fixed the confection spreading in pre-hardmode
+Fixed banners clipping through platforms when placed under them
+Fixed mech bosses dropping ore and a bag in expert mode
+Fixed Cream Blocks not having the correct hitting sound
+Fixed WoF not dropping any hammer in hallowed worlds
+Added drunk support for mech and WoF drops to now alternate or give both confection and hallow items
+Added Fargo Best of Both worlds support
+
 Beta v0.19.4
 =========================
 Completely rebuilt backgrounds from the ground up fixing parity issues

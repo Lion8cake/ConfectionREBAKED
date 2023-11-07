@@ -8,7 +8,7 @@ using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items
 {
-	class DimensionSplit : ModItem
+	public class DimensionSplit : ModItem
     {
         public override void SetStaticDefaults()
         {

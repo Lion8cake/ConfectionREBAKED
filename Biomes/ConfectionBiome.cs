@@ -90,7 +90,31 @@ public class ConfectionBiome : ModBiome
 				}
 			}
 			else if (TOWMusicCheck == true && Main.drunkWorld || TOWMusicCheck == false && !Main.drunkWorld) {
-				return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
+				if ((double)Main.player[Main.myPlayer].position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16)) {
+					if (Main.remixWorld && (double)Main.player[Main.myPlayer].position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
+						if (Main.cloudAlpha > 0f) {
+							return MusicID.OtherworldlyRain;
+						}
+						return MusicID.OtherworldlyHallow;
+					}
+					return MusicID.OtherworldlyUGHallow;
+				}
+				else if (Main.dayTime) {
+					if (Main.cloudAlpha > 0f && !Main.gameMenu) {
+						return MusicID.OtherworldlyRain;
+					}
+					else {
+						return MusicID.OtherworldlyHallow;
+					}
+				}
+				else if (Main._shouldUseStormMusic) {
+					if (Main.bloodMoon) {
+						return MusicID.OtherworldlyEerie;
+					}
+					else {
+						return MusicID.OtherworldlyRain;
+					}
+				}
 			}
 			return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 		}

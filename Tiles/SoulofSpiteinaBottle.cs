@@ -2,16 +2,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Enums;
 
 namespace TheConfectionRebirth.Tiles
 {
-    internal class SoulofDelightinaBottle : ModTile
+    internal class SoulofSpiteinaBottle : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
 
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(215, 188, 106), name);
+            AddMapEntry(new Color(152, 21, 37), name);
         }
 
         private readonly int animationFrameWidth = 18;
@@ -50,9 +50,9 @@ namespace TheConfectionRebirth.Tiles
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 2.15f;
-            g = 1.88f;
-            b = 1.06f;
+            r = 1.52f;
+            g = 0.21f;
+            b = 0.37f;
         }
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
@@ -80,7 +80,7 @@ namespace TheConfectionRebirth.Tiles
         }
     }
 
-    internal class SoulofDelightinaBottleItem : ModItem
+    internal class SoulofSpiteinaBottleItem : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -89,13 +89,14 @@ namespace TheConfectionRebirth.Tiles
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.SoulBottleLight);
-            Item.createTile = ModContent.TileType<SoulofDelightinaBottle>();
+            Item.CloneDefaults(ItemID.SoulBottleNight);
+			Item.placeStyle = 0;
+            Item.createTile = ModContent.TileType<SoulofSpiteinaBottle>();
         }
 
 		public override void AddRecipes() {
 			CreateRecipe(1)
-				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>())
+				.AddIngredient(ModContent.ItemType<Items.SoulofSpite>())
 				.AddIngredient(ItemID.Bottle)
 				.Register();
 		}

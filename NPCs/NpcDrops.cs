@@ -166,16 +166,22 @@ namespace TheConfectionRebirth.NPCs
 					}
 				}
 
-				LeadingConditionRule Expertmode = new LeadingConditionRule(new Conditions.NotExpert());
+				DrunkWorldIsNotActive NotDrunkWorld = new DrunkWorldIsNotActive();
+				DrunkWorldIsActive DrunkWorld = new DrunkWorldIsActive();
+
 				LeadingConditionRule ConfectionHammer = new LeadingConditionRule(new ConfectionDropRule());
-				Expertmode.OnSuccess(ConfectionHammer);
-				ConfectionHammer.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GrandSlammer>()));
+				ConfectionHammer.OnSuccess(ItemDropRule.ByCondition(NotDrunkWorld, ModContent.ItemType<Items.Weapons.GrandSlammer>()));
 				npcLoot.Add(ConfectionHammer);
 
 				LeadingConditionRule HallowHammer = new LeadingConditionRule(new HallowDropRule());
-				Expertmode.OnSuccess(HallowHammer);
-				HallowHammer.OnSuccess(ItemDropRule.Common(ItemID.Pwnhammer));
+				HallowHammer.OnSuccess(ItemDropRule.ByCondition(NotDrunkWorld, ItemID.Pwnhammer));
 				npcLoot.Add(HallowHammer);
+
+				LeadingConditionRule fiftyfifty = new LeadingConditionRule(new oneintwo());
+				fiftyfifty.OnSuccess(ItemDropRule.ByCondition(DrunkWorld, ModContent.ItemType<Items.Weapons.GrandSlammer>()));
+				fiftyfifty.OnFailedConditions(ItemDropRule.ByCondition(DrunkWorld, ItemID.Pwnhammer));
+				npcLoot.Add(fiftyfifty);
+
 			}
 
 			if (npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
@@ -186,16 +192,21 @@ namespace TheConfectionRebirth.NPCs
 			}
 
 			if (npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime) {
-				LeadingConditionRule Expertmode = new LeadingConditionRule(new Conditions.NotExpert());
+				NotDrunkandExpert ExpertDrunkmode = new NotDrunkandExpert();
+				NotExpert Expertmode = new NotExpert();
+
 				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
-				Expertmode.OnSuccess(ConfectionCondition);
-				ConfectionCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(ExpertDrunkmode, ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
 				npcLoot.Add(ConfectionCondition);
 
 				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
-				Expertmode.OnSuccess(HallowCondition);
-				HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+				HallowCondition.OnSuccess(ItemDropRule.ByCondition(ExpertDrunkmode, ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
 				npcLoot.Add(HallowCondition);
+
+				LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
+				DrunkCondition.OnSuccess(ItemDropRule.ByCondition(Expertmode, ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(Expertmode, ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+				npcLoot.Add(DrunkCondition);
 			}
 			if (npc.type == NPCID.BloodMummy || npc.type == NPCID.DesertGhoulCrimson || npc.type == NPCID.SandsharkCrimson) {
 				npcLoot.Remove(FindDarkShard(npcLoot));
@@ -286,7 +297,6 @@ namespace TheConfectionRebirth.NPCs
 				return "";
 			}
 		}
-
 		#endregion
 
 		#region HallowDropRule
@@ -305,30 +315,92 @@ namespace TheConfectionRebirth.NPCs
 		}
 
 		#endregion
+
+		#region 50/50
+		public class oneintwo : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) {
+				return Main.rand.NextBool(2);
+			}
+
+			public bool CanShowItemDropInUI() {
+				return true;
+			}
+
+			public string GetConditionDescription() {
+				return null;
+			}
+		}
+		#endregion
+
+		#region notexpertordrunk
+		public class NotDrunkandExpert : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) {
+				return (!Main.drunkWorld || !ConfectionModCalling.FargoBoBW) && !Main.expertMode;
+			}
+
+			public bool CanShowItemDropInUI() {
+				return true;
+			}
+
+			public string GetConditionDescription() {
+				return null;
+			}
+		}
+		#endregion
+
+		#region drunkactive
+		public class DrunkWorldIsActive : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) {
+				return (Main.drunkWorld || ConfectionModCalling.FargoBoBW);
+			}
+
+			public bool CanShowItemDropInUI() {
+				return true;
+			}
+
+			public string GetConditionDescription() {
+				return null;
+			}
+		}
+		#endregion
+
+		#region NotDrunkActive
+		public class DrunkWorldIsNotActive : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) {
+				return (!Main.drunkWorld || !ConfectionModCalling.FargoBoBW);
+			}
+
+			public bool CanShowItemDropInUI() {
+				return true;
+			}
+
+			public string GetConditionDescription() {
+				return null;
+			}
+		}
+		#endregion
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			if (item.type == ItemID.WallOfFleshBossBag) {
-				NPCLoader.blockLoot.Add(ItemID.Pwnhammer);
 				itemLoot.Remove(FindHammer(itemLoot));
-
-				LeadingConditionRule ConfectionHammer = new LeadingConditionRule(new ConfectionDropRule());
-				ConfectionHammer.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GrandSlammer>()));
-				itemLoot.Add(ConfectionHammer);
-
-				LeadingConditionRule HallowHammer = new LeadingConditionRule(new HallowDropRule());
-				HallowHammer.OnSuccess(ItemDropRule.Common(ItemID.Pwnhammer));
-				itemLoot.Add(HallowHammer);
+				//Moved the hammer outside of the WoF bag
 			}
 			if (item.type == ItemID.TwinsBossBag || item.type == ItemID.DestroyerBossBag || item.type == ItemID.SkeletronPrimeBossBag) {
-				NPCLoader.blockLoot.Add(ItemID.HallowedBar);
 				itemLoot.Remove(FindHallowedBars(itemLoot));
 
+				DrunkWorldIsNotActive NotDrunk = new DrunkWorldIsNotActive();
+
 				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
-				ConfectionCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(ConfectionCondition);
 				
 				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
-				HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(HallowCondition);
+
+				LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+				itemLoot.Add(DrunkCondition);
 			}
 		}
 
