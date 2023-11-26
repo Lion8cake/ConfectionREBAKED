@@ -1,32 +1,42 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.Content;
 using System;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.ModSupport;
 using System.Collections.Generic;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
+using System.Linq;
 using Terraria.IO;
+using Terraria.ModLoader.IO;
+using System.IO;
 using Terraria.GameContent.ItemDropRules;
 using static TheConfectionRebirth.NPCs.BagDrops;
+using Terraria.Graphics.Effects;
 using TheConfectionRebirth.Hooks;
 using Terraria.Localization;
+using Terraria.GameContent.Personalities;
 using Terraria.Graphics;
 using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items.Weapons;
 using Terraria.GameContent.Drawing;
-using Terraria.Graphics.Shaders;
 
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
 	{
-		public static MiscShaderData GummyWyrmShaderData => GameShaders.Misc[$"{nameof(TheConfectionRebirth)}:GummyWyrm"];
-
 		internal static TheConfectionRebirth Instance;
 
 		public static int[] confectBG = new int[3];
@@ -69,11 +79,6 @@ namespace TheConfectionRebirth {
 		public override void Load()
 		{
 			Instance = this;
-
-			if (!Main.dedServ) {
-				GameShaders.Misc[$"{nameof(TheConfectionRebirth)}:GummyWyrm"] = new(new(Assets.Request<Effect>("Assets/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
-			}
-
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
 			ConfectionWindUtilities.Load();
