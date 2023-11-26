@@ -9,12 +9,21 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using ReLogic.Content;
 
 namespace TheConfectionRebirth.NPCs {
 	internal class GummyWyrmHead : ConfectionWormHead {
+		public static Asset<Texture2D> KissyHeadTexture { get; private set; }
+
 		public override int BodyType => ModContent.NPCType<GummyWyrmBody>();
 
 		public override int TailType => ModContent.NPCType<GummyWyrmTail>();
+
+		public override void Load() {
+			if (!Main.dedServ) {
+				KissyHeadTexture = Mod.Assets.Request<Texture2D>("NPCs/GummyWyrmHead_Kissy");
+			}
+		}
 
 		public override void SetStaticDefaults() {
 			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { //MF will change this one the npc is finished
@@ -27,8 +36,8 @@ namespace TheConfectionRebirth.NPCs {
 		}
 
 		public override void SetDefaults() {
-			NPC.width = 22;
-			NPC.height = 22;
+			NPC.width = 30;
+			NPC.height = 30;
 			NPC.aiStyle = -1;
 			NPC.netAlways = true;
 			NPC.damage = 70;
@@ -54,7 +63,7 @@ namespace TheConfectionRebirth.NPCs {
 
 		protected override void Draw(SpriteBatch spriteBatch, Texture2D texture, Vector2 screenPos, Color drawColor) {
 			if (NPC.HasValidTarget) {
-				// Set texture to kissy face.
+				texture = KissyHeadTexture.Value;
 			}
 
 			base.Draw(spriteBatch, texture, screenPos, drawColor);
