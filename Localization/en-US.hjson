@@ -130,6 +130,9 @@ Mods: {
 			CrazyCone.DisplayName: Crazy Cone
 			BigMimicConfection.DisplayName: Confection Mimic
 			RoyalCherryBug.DisplayName: Royal Cherry Bug
+			GummyWyrmBody.DisplayName: Gummy Wyrm Body
+			GummyWyrmHead.DisplayName: Gummy Wyrm Head
+			GummyWyrmTail.DisplayName: Gummy Wyrm Tail
 		}
 
 		Items: {
