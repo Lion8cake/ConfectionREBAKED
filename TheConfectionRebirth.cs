@@ -25,7 +25,7 @@ using Terraria.Graphics.Shaders;
 namespace TheConfectionRebirth {
 	public class TheConfectionRebirth : Mod
 	{
-		public static MiscShaderData GummyWyrmShaderData => GameShaders.Misc[$"{nameof(TheConfectionRebirth)}:GummyWyrm"];
+		public static ShaderData GummyWyrmShaderData { get; private set; }
 
 		internal static TheConfectionRebirth Instance;
 
@@ -71,7 +71,7 @@ namespace TheConfectionRebirth {
 			Instance = this;
 
 			if (!Main.dedServ) {
-				GameShaders.Misc[$"{nameof(TheConfectionRebirth)}:GummyWyrm"] = new(new(Assets.Request<Effect>("Assets/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
+				GummyWyrmShaderData = new(new(Assets.Request<Effect>("Assets/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
 			}
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);

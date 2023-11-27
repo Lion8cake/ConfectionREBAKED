@@ -255,8 +255,8 @@ namespace TheConfectionRebirth.NPCs {
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
 
-			TheConfectionRebirth.GummyWyrmShaderData.UseColor(drawColor);
-			TheConfectionRebirth.GummyWyrmShaderData.UseShaderSpecificData(new Vector4(NPC.ai[3] / 360f));
+			TheConfectionRebirth.GummyWyrmShaderData.Shader.Parameters["uColor"].SetValue(drawColor.ToVector3());
+			TheConfectionRebirth.GummyWyrmShaderData.Shader.Parameters["uHue"].SetValue(NPC.ai[3] / 360f);
 			TheConfectionRebirth.GummyWyrmShaderData.Apply();
 
 			Draw(spriteBatch, TextureAssets.Npc[Type].Value, screenPos, drawColor);
