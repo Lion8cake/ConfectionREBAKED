@@ -23,7 +23,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
 
 namespace TheConfectionRebirth {
-	public class TheConfectionRebirth : Mod
+	public partial class TheConfectionRebirth : Mod
 	{
 		public static ShaderData GummyWyrmShaderData { get; private set; }
 
@@ -36,6 +36,9 @@ namespace TheConfectionRebirth {
 		private static TileTest v = new();
 		public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11), new DateTime(2022, 10, 2), new DateTime(2022, 5, 16)).ToBoolean();
 		public static TileTest tileMerge => v;
+
+		public const string ThoriumModName = "ThoriumMod";
+		public static bool IsThoriumLoaded => ModLoader.HasMod(ThoriumModName);
 
 		public class TileTest {
 			public bool this[int tile1, int tile2] {

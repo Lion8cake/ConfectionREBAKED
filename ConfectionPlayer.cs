@@ -14,6 +14,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria.ID;
+using TheConfectionRebirth.ModSupport.Thorium;
 
 namespace TheConfectionRebirth {
 	public class ConfectionPlayer : ModPlayer
@@ -174,6 +175,12 @@ namespace TheConfectionRebirth {
                     case TimerDataType.StrawberryStrikeDelay:
                         StrawberryStrikeOnCooldown = false;
                         break;
+					case TimerDataType.ThoriumBard: {
+							if (Player.TryGetModPlayer<ThoriumDLCPlayer>(out var player))
+								player.InspirationConsumed -= top.value;
+
+							break;
+						}
                 }
             }
             //Main.NewText(VanillaValorDamageDealt);
