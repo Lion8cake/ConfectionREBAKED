@@ -44,7 +44,7 @@ CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
 foxyboy55 - many bug fixes an a few texture changes
 JeoHashtag1553 - Particle system allowing for particles and other cool drawing effects
-BasicallyIAmFox - cleaning up backend code and npc variation code & adding fairy floss raining code
+BasicallyIAmFox - cleaning up backend code and npc variation code & adding fairy floss raining code, gummy wyrm
 
 ===========================================
 Credit - Artists
