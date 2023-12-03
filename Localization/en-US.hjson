@@ -1966,6 +1966,7 @@ Mods: {
 		}
 
 		TheConfection: Confection
+
 		Conditions: {
 			InConfection: In Confection
 			NotInConfection: Not in Confection
@@ -2070,5 +2071,7 @@ Mods: {
 				Description: Wear the full birthday suit while riding a Rollercycle.
 			}
 		}
+
+		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
 	}
 }
