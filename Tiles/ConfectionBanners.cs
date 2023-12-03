@@ -230,8 +230,10 @@ namespace TheConfectionRebirth.Tiles
                         type = "TheUnfirm";
                         break;
                     case 21:
-                        type = "GummyWyrm";
-                        break;
+                        type = "GummyWyrmHead";
+						type = "GummyWyrmBody";
+						type = "GummyWyrmTail";
+						break;
                     case 22:
                         type = "CreamSwollower";
                         break;

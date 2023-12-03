@@ -28,13 +28,17 @@ namespace TheConfectionRebirth.Tiles
         }
 
 		public override void RandomUpdate(int i, int j) {
-			if (Main.rand.NextBool(12)) {
-				if (j > Main.rockLayer) {
-					if (Main.tile[i, j + 1].TileType == 0 && Main.rand.NextBool(2)) {
-						WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+			Tile Blockpos = Main.tile[i, j];
+			if (WorldGen.genRand.NextBool(20) && !Blockpos.IsHalfBlock && !Blockpos.BottomSlope && !Blockpos.LeftSlope && !Blockpos.RightSlope && !Blockpos.TopSlope) {
+				if (j > Main.rockLayer && WorldGen.genRand.NextBool(2)) {
+					if (!Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].LiquidAmount == 0) {
+						WorldGen.PlaceTile(i + 1, j, ModContent.TileType<SacchariteBlock>(), mute: true);
 					}
-					if (Main.tile[i, j - 1].TileType == 0 && Main.rand.NextBool(2)) {
+					else if (!Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].LiquidAmount == 0) {
 						WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
+					}
+					else if (!Main.tile[i - 1, j].HasTile && Main.tile[i - 1, j].LiquidAmount == 0) {
+						WorldGen.PlaceTile(i - 1, j, ModContent.TileType<SacchariteBlock>(), mute: true);
 					}
 				}
 			}

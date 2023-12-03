@@ -123,6 +123,12 @@ namespace TheConfectionRebirth.Projectiles
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
 						}
+						else if ((wall == 59 || wall == 261) && wall != ModContent.WallType<CookieStonedWall>()) {
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+							break;
+						}
 						else if ((wall == WallID.RocksUnsafe1 || wall == WallID.CorruptionUnsafe1 || wall == WallID.CrimsonUnsafe1 || wall == WallID.HallowUnsafe1) && wall != ModContent.WallType<Creamstone2Wall>()) {
 							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone2Wall>();
 							WorldGen.SquareWallFrame(k, l);

@@ -25,15 +25,11 @@ namespace TheConfectionRebirth.NPCs
             NPC.height = 18;
             NPC.damage = 60;
             NPC.defense = 24;
-            NPC.lifeMax = 140;
+            NPC.lifeMax = 150;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.value = 60f;
-            // npc.noGravity = false;
-            // npc.noTileCollide = false;
             NPC.knockBackResist = 0.5f;
-            NPC.aiStyle = 26;
-            AIType = NPCID.Unicorn;
+			NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrookedCookieBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
@@ -47,10 +43,38 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
+		
+
         public override void AI()
         {
-            NPC.rotation += NPC.velocity.X * 0.05f;
-        }
+			float num142 = 12f;
+			NPC.TargetClosest();
+			Vector2 vector91 = Main.player[NPC.target].Center - NPC.Center;
+			vector91.Normalize();
+			vector91 *= num142;
+			int num144 = 200;
+			NPC.velocity.X = (NPC.velocity.X * (float)(num144 - 1) + vector91.X) / (float)num144;
+			if (NPC.velocity.Length() > 16f) {
+				NPC.velocity.Normalize();
+				NPC.velocity *= 16f;
+			}
+			if (NPC.localAI[0] > 0f) {
+				NPC.localAI[0] -= 1f;
+			}
+			if (NPC.localAI[0] == 0f) {
+				NPC.localAI[0] = 60f;
+				if (NPC.collideY == true) {
+					NPC.velocity.Y -= 8f;
+				}
+			}
+			NPC.rotation += NPC.velocity.X * 0.05f;
+			if (NPC.velocity.Y > 16f) {
+				NPC.velocity.Y = 16f;
+			}
+			if (NPC.velocity.X < 0.1f && NPC.velocity.X > -0.1f && NPC.velocity.Y > -0.1f) {
+				NPC.localAI[0] = 0f;
+			}
+		}
 
         public override void HitEffect(NPC.HitInfo hit)
         {

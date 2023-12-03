@@ -21,13 +21,6 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override void AddRecipes() {
-			Recipe.Create(ItemID.OnyxBlaster)
-				.AddIngredient(ItemID.Shotgun)
-				.AddIngredient<CanofMeat>(2)
-				.AddIngredient<SoulofSpite>(10)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-
 			Recipe.Create(ItemID.DarkShard)
 				.AddIngredient<CanofMeat>()
 				.AddTile(TileID.DemonAltar)

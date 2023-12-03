@@ -31,6 +31,7 @@ namespace TheConfectionRebirth {
         public bool NeapoliniteMagicSet;
         public bool NeapoliniteSummonerSet;
         public bool cookiePet;
+		public bool CandySuffocation;
 
 		public int neapoliniteArmorSetType;
 
@@ -49,7 +50,7 @@ namespace TheConfectionRebirth {
             Timer = new(TimerData.Comparer);
             VanillaValorDamageDealt = 0;
             ManaConsumed = 0;
-            StrawberryStrikeOnCooldown = false;
+			StrawberryStrikeOnCooldown = false;
         }
         public override void ResetEffects()
         {
@@ -63,6 +64,7 @@ namespace TheConfectionRebirth {
             MeawzerPet = false;
             DudlingPet = false;
             FoxPet = false;
+			CandySuffocation = false;
             NeapoliniteMagicSet = false;
             NeapoliniteSummonerSet = false;
             cookiePet = false;
@@ -179,7 +181,13 @@ namespace TheConfectionRebirth {
             //Main.NewText(VanillaValorDamageDealt);
         }
 
-        public override void OnConsumeMana(Item item, int manaConsumed)
+		public override void GetDyeTraderReward(List<int> rewardPool) {
+			rewardPool.Add(ModContent.ItemType<Items.CandyCornDye>());
+			rewardPool.Add(ModContent.ItemType<Items.FoaminWispDye>());
+			rewardPool.Add(ModContent.ItemType<Items.GummyWispDye>());
+		}
+
+		public override void OnConsumeMana(Item item, int manaConsumed)
         {
             if (item.CountsAsClass(DamageClass.Magic))
             {

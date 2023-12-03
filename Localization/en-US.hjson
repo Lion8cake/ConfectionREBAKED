@@ -54,7 +54,6 @@ Mods: {
 			Drixer.DisplayName: "{$Mods.TheConfectionRebirth.Items.Drixer.DisplayName}"
 			DimWarp2.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.DimWarp.DisplayName}"
 			DimWarp.DisplayName: Dimensional Warp
-			CreamySprayEvil.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.CreamySpray.DisplayName}"
 			CreamySpray.DisplayName: Spray
 			CreamSolution.DisplayName: "{$Mods.TheConfectionRebirth.Items.CreamSolution.DisplayName}"
 			CreamsandProjectile.DisplayName: "{$Mods.TheConfectionRebirth.Items.Creamsand.DisplayName}"
@@ -94,6 +93,13 @@ Mods: {
 			SprinklingBallLarge.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
 			SprinklingBallSmall.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
 			DefenciveSprinkle.DisplayName: "{$Mods.TheConfectionRebirth.Projectiles.SprinklingBall.DisplayName}"
+			HangingBatSpawner.DisplayName: Hanging Bat Spawner
+			ParfaitBlueberry.DisplayName: Parfait Blueberry
+			ParfaitStrawberry.DisplayName: Parfait Strawberry
+			RootbeerSpray.DisplayName: Rootbeer Spray
+			YoyoCookieKiss.DisplayName: Yoyo Cookie Kiss
+			CreamsandSandgunProjectile.DisplayName: Creamsand Sandgun Projectile
+			SherbetFlare.DisplayName: Sherbet Flare
 		}
 
 		NPCs: {
@@ -130,9 +136,9 @@ Mods: {
 			CrazyCone.DisplayName: Crazy Cone
 			BigMimicConfection.DisplayName: Confection Mimic
 			RoyalCherryBug.DisplayName: Royal Cherry Bug
-			GummyWyrmBody.DisplayName: Gummy Wyrm Body
-			GummyWyrmHead.DisplayName: Gummy Wyrm Head
-			GummyWyrmTail.DisplayName: Gummy Wyrm Tail
+			GummyWyrmBody.DisplayName: Gummy Wyrm
+			GummyWyrmHead.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmBody.DisplayName}"
+			GummyWyrmTail.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmBody.DisplayName}"
 		}
 
 		Items: {
@@ -243,7 +249,7 @@ Mods: {
 
 			YoyoCookie: {
 				Tooltip: ""
-				DisplayName: The Crumbler
+				DisplayName: The Blossom Cookie
 			}
 
 			TrueSucrosa: {
@@ -355,8 +361,6 @@ Mods: {
 				DisplayName: Gummy Worm-Whip
 			}
 
-			#WIP whip, might change the name later
-			
 			GrandSlammer: {
 				Tooltip: Strong enough to destroy Demon Altars
 				DisplayName: Grand Slammer
@@ -1207,8 +1211,8 @@ Mods: {
 			}
 
 			GummyWyrmBanner: {
-				Tooltip: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCs.GummyWyrm.DisplayName}"
-				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrm.DisplayName}{$Mods.TheConfectionRebirth.Common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCs.GummyWyrmHead.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmHead.DisplayName}{$Mods.TheConfectionRebirth.Common.Banner}"
 			}
 
 			FoaminFloatBanner: {
@@ -1533,6 +1537,36 @@ Mods: {
 				DisplayName: Soul of Spite in a Bottle
 				Tooltip: ""
 			}
+
+			GummyWispDye: {
+				DisplayName: Gummy Wisp Dye
+				Tooltip: ""
+			}
+
+			FoaminWispDye: {
+				DisplayName: Foamin' Wisp Dye
+				Tooltip: ""
+			}
+
+			CandyCornDye: {
+				DisplayName: Candy Corn Dye
+				Tooltip: ""
+			}
+
+			ShiftingCreamsandsDye: {
+				DisplayName: Shifting Creamsands Dye
+				Tooltip: ""
+			}
+
+			CookieStonedWall: {
+				DisplayName: Rocky Cookie Wall
+				Tooltip: ""
+			}
+
+			SherbetFlare: {
+				DisplayName: Sherbet Flare
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -1715,6 +1749,11 @@ Mods: {
 				Description: "'Your Floating on a Foamin' Float'"
 				DisplayName: Foamin' Float Mount
 			}
+
+			FoaminSuffocation: {
+				DisplayName: Foamin' Suffocation
+				Description: Shake left and right to free yourself.
+			}
 		}
 
 		Tiles: {
@@ -1835,6 +1874,7 @@ Mods: {
 			CrookedCookie: A creation by the Creamsand Witch, being much smaller than a normal roller cookie it is sharp and can deal a dent in anyone's armour.
 			Dudley: A neatural creature that roams the underground deserts of the confection. Although they will not go after anyone they will still hurt those who come too close.
 			FoaminFloat: A cloud of foaming root beer. When enough presure in underground confection water pools explode and a foamin' float is created.
+			GummyWyrm: A dragonic-serpent made of gummies, they disguise themselves as a the similar looking Gummy Worm. When close, they will open their mouth to give you a big 'kiss'
 			Hunger: Another creation by the Creamsand Witch, a mimic like enemy that will chase those hurting their master.
 			IcecreamGal: A lost child within the confection. Don't let her decieve you though as she is out to get you.
 			Iscreamer: Living screaming ice-creams use a form of teleportation to hunt its prey. This teleportation is when wormhole and a banana are merged together allowing these creature to go from one end to the other.
@@ -1857,14 +1897,7 @@ Mods: {
 			Sprinklefish: Remember those piles of sprinkles in the confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!
 		}
 
-		PlayerDeathReason: {
-			DimensionSplit: {
-				0: "{0} got lost in a rift."
-				1: "{0} was split like a banana."
-				2: "{0} tried to banana all the time."
-				3: "{0} got split between dimensions."
-			}
-		}
+		PlayerDeathReason.ChokedOutByRootbeer: "{0} was choked to death by rootbeer."
 
 		Biomes: {
 			SandConfectionUndergroundBiome: {

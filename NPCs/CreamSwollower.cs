@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using System;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -24,27 +26,53 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetDefaults()
         {
-            NPC.width = 40;
-            NPC.height = 40;
-            NPC.damage = 50;
-            NPC.defense = 10;
-            NPC.lifeMax = 360;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.value = 60f;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
-            NPC.behindTiles = true;
-            NPC.knockBackResist = 0.5f;
-            NPC.aiStyle = 103;
-            AIType = NPCID.SandShark;
+			NPC.noGravity = true;
+			NPC.width = 100;
+			NPC.height = 24;
+			NPC.aiStyle = 103;
+			NPC.damage = 58;
+			NPC.defense = 25;
+			NPC.lifeMax = 465;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.value = 400f;
+			NPC.knockBackResist = 0.7f;
+			NPC.noTileCollide = true;
+			NPC.behindTiles = true;
             AnimationType = NPCID.SandShark;
             Banner = Type;
             BannerItem = ModContent.ItemType<CreamSwollowerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		public override bool? CanFallThroughPlatforms() {
+			return true;
+		}
+
+		public override Color? GetAlpha(Color drawColor) {
+			float num = (float)(255 - NPC.alpha) / 255f;
+			int num2 = (int)(drawColor.R * num);
+			int num3 = (int)(drawColor.G * num);
+			int num4 = (int)(drawColor.B * num);
+			int num5 = drawColor.A - NPC.alpha;
+			if (num2 + num3 + num4 > 10 && num2 + num3 + num4 >= 60) {
+				num2 *= 2;
+				num3 *= 2;
+				num4 *= 2;
+				if (num2 > 255) {
+					num2 = 255;
+				}
+				if (num3 > 255) {
+					num3 = 255;
+				}
+				if (num4 > 255) {
+					num4 = 255;
+				}
+			}
+			return new Color(num2, num3, num4, num5);
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 

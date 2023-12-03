@@ -9,8 +9,13 @@ namespace TheConfectionRebirth.Items.Placeable
 {
     public class ConfectionTorch : ModItem
     {
+		public override void SetStaticDefaults() {
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			ItemID.Sets.Torches[Type] = true;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
+		}
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             Item.width = 10;
             Item.height = 12;
@@ -29,18 +34,11 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.value = 500;
         }
 
-        public override void SetStaticDefaults()
-        {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-			ItemID.Sets.Torches[Type] = true;
-			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
-		}
-
         public override void HoldItem(Player player)
         {
             if (Main.rand.Next(player.itemAnimation > 0 ? 40 : 80) == 0)
             {
-                Dust.NewDust(new Vector2(player.itemLocation.X + 16f * player.direction, player.itemLocation.Y - 14f * player.gravDir), 4, 4, ModContent.DustType<SherbetDust>());
+                Dust.NewDust(new Vector2(player.itemLocation.X + 16f * player.direction, player.itemLocation.Y - 14f * player.gravDir), 4, 4, ModContent.DustType<NeapoliniteJoustingDust>());
             }
             Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
             Lighting.AddLight(position, 0.27f, 1.34f, 1.69f);

@@ -23,14 +23,7 @@ namespace TheConfectionRebirth.Items
 
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.TeleportationPotion)
-                .AddIngredient(this, 1)
-                .AddIngredient(ItemID.BottledWater, 1)
-                .AddIngredient(ItemID.Blinkroot, 1)
-                .AddIngredient(ItemID.Fireblossom, 1)
-                .AddTile(TileID.AlchemyTable)
-                .Register();
-            Recipe.Create(ItemID.CookedFish)
+            Recipe.Create(ItemID.SeafoodDinner)
                 .AddIngredient(this, 2)
                 .AddTile(TileID.CookingPots)
                 .Register();

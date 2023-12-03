@@ -1,15 +1,23 @@
 using Terraria.Audio;
 using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using ReLogic.Content;
+using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs {
 	internal class GummyWyrmHead : ConfectionWormHead {
@@ -26,11 +34,11 @@ namespace TheConfectionRebirth.NPCs {
 		}
 
 		public override void SetStaticDefaults() {
-			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { //MF will change this one the npc is finished
-				CustomTexturePath = "TheConfectionRebirth/NPCs/GummyWyrmHead",
+			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				CustomTexturePath = "TheConfectionRebirth/NPCs/GummyWyrm_Bestiary",
 				Position = new Vector2(40f, 24f),
 				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = 12f
+				PortraitPositionYOverride = 30f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 		}
@@ -51,18 +59,19 @@ namespace TheConfectionRebirth.NPCs {
 			NPC.behindTiles = true;
 			NPC.scale = 1f;
 			NPC.value = 300f;
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<GummyWyrmBanner>();
 		}
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { //BESTIE-iary, again will change when the npc is finished
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { 
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-				new FlavorTextBestiaryInfoElement("Looks like a Digger fell into some aqua-colored paint. Oh well.")
+				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GummyWyrm")
 			});
 		}
 
 		protected override void Draw(SpriteBatch spriteBatch, Texture2D texture, Vector2 screenPos, Color drawColor) {
-			if (NPC.HasValidTarget) {
+			if (NPC.Center.DistanceSQ(Main.player[NPC.target].Center) < (15 * 16) * (15 * 16)) {
 				texture = KissyHeadTexture.Value;
 			}
 
@@ -71,15 +80,35 @@ namespace TheConfectionRebirth.NPCs {
 
 		public override void Init() {
 			NPC.ai[3] = Main.rand.Next(361);
-			MinSegmentLength = 12; //tinkering arround with values
+			MinSegmentLength = 12;
 			MaxSegmentLength = 24;
 
 			CommonWormInit(this);
 		}
 
-		internal static void CommonWormInit(ConfectionWorm worm) { //tinkering around with these too
+		internal static void CommonWormInit(ConfectionWorm worm) {
 			worm.MoveSpeed = 5.5f;
 			worm.Acceleration = 0.045f;
+		}
+
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (Main.netMode == NetmodeID.Server) {
+				return;
+			}
+
+			if (NPC.life <= 0) {
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++) {
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("GummyWyrmHeadGore").Type);
+				}
+			}
+		}
+
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 9));
+			npcLoot.Add(ItemDropRule.Common(ItemID.WhoopieCushion, 100));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GummyWormWhip>(), 100));
 		}
 	}
 
@@ -108,10 +137,26 @@ namespace TheConfectionRebirth.NPCs {
 			NPC.scale = 1f;
 			NPC.value = 300f;
 			NPC.dontCountMe = true;
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<GummyWyrmBanner>();
 		}
 
 		public override void Init() {
 			GummyWyrmHead.CommonWormInit(this);
+		}
+
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (Main.netMode == NetmodeID.Server) {
+				return;
+			}
+
+			if (NPC.life <= 0) {
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++) {
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("GummyWyrmBodyGore").Type);
+				}
+			}
 		}
 	}
 
@@ -140,10 +185,26 @@ namespace TheConfectionRebirth.NPCs {
 			NPC.scale = 1f;
 			NPC.value = 300f;
 			NPC.dontCountMe = true;
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<GummyWyrmBanner>();
 		}
 
 		public override void Init() {
 			GummyWyrmHead.CommonWormInit(this);
+		}
+
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (Main.netMode == NetmodeID.Server) {
+				return;
+			}
+
+			if (NPC.life <= 0) {
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++) {
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("GummyWyrmTailGore").Type);
+				}
+			}
 		}
 	}
 
