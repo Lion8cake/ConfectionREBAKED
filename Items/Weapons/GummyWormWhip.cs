@@ -2,6 +2,7 @@
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -18,24 +19,13 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.ResearchUnlockCount = 1;
 		}
 
-		public override void SetDefaults()
-		{
-			Item.DamageType = DamageClass.SummonMeleeSpeed;
-			Item.damage = 60;
-			Item.knockBack = 2;
-			Item.rare = ItemRarityID.Pink;
+		public override void SetDefaults() {
+			Item.DefaultToWhip(ModContent.ProjectileType<Projectiles.GummyWormWhipPro>(), 48, 2, 4);
 
-			Item.shoot = ModContent.ProjectileType<GummyWormWhipPro>();
 			Item.shootSpeed = 4;
-
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
-			Item.UseSound = SoundID.Item152;
-			Item.channel = false;
-			Item.noMelee = true;
-			Item.noUseGraphic = true;
+			Item.SetShopValues(ItemRarityColor.Pink5, Item.sellPrice(0, 2));
 		}
+
 
 		public override bool MeleePrefix() => true;
 
@@ -44,7 +34,7 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			int index = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-			(Main.projectile[index].ModProjectile as GummyWormWhipPro).Variation = uses - 1;
+			(Main.projectile[index].ModProjectile as GummyWormWhipPro).Variation = uses;
 			if (Main.netMode == NetmodeID.Server)
 				NetMessage.SendData(MessageID.SyncProjectile, number: index);
 			return false;

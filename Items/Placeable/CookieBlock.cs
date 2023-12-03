@@ -28,6 +28,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
 		public override void AddRecipes() {
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<CookieWall>(), 4).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<CookieStonedWall>(), 4).Register();
 		}
 	}
 }

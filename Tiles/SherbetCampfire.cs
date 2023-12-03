@@ -18,6 +18,12 @@ namespace TheConfectionRebirth.Tiles
     {
 		private Asset<Texture2D> flameTexture;
 
+		private int AnimationFrameWidth = 54;
+
+		private int tileFrame = 0;
+
+		private int tileFrameCounter = 0;
+
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
@@ -122,6 +128,17 @@ namespace TheConfectionRebirth.Tiles
 			else {
 				frameYOffset = 252;
 			}
+
+			tileFrameCounter++;
+			if (tileFrameCounter > 5) {
+				tileFrameCounter = 0;
+				tileFrame++;
+				if (tileFrame > 12) {
+					tileFrame = 0;
+				}
+			}
+
+			frameXOffset = (short)(AnimationFrameWidth * tileFrame);
 		}
 
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -152,9 +169,73 @@ namespace TheConfectionRebirth.Tiles
 			if (tile.TileFrameY < 36) {
 				float pulse = Main.rand.Next(28, 42) * 0.005f;
 				pulse += (270 - Main.mouseTextColor) / 700f;
-				r = 2f + pulse;
-				g = 0.5f + pulse;
-				b = 0.5f + pulse;
+				switch (tileFrame) {
+					case 0:
+						r = 1.92f + pulse;
+						g = 0.26f + pulse;
+						b = 0.26f + pulse;
+						break;
+					case 1:
+						r = 1.93f + pulse;
+						g = 0.68f + pulse;
+						b = 0.26f + pulse;
+						break;
+					case 2:
+						r = 2.53f + pulse;
+						g = 0.91f + pulse;
+						b = 0.03f + pulse;
+						break;
+					case 3:
+						r = 2.52f + pulse;
+						g = 1.58f + pulse;
+						b = 0.03f + pulse;
+						break;
+					case 4:
+						r = 1.99f + pulse;
+						g = 1.67f + pulse;
+						b = 0.15f + pulse;
+						break;
+					case 5:
+						r = 1.04f + pulse;
+						g = 1.57f + pulse;
+						b = 0.15f + pulse;
+						break;
+					case 6:
+						r = 0.23f + pulse;
+						g = 1.07f + pulse;
+						b = 0.29f + pulse;
+						break;
+					case 7:
+						r = 0.23f + pulse;
+						g = 1.06f + pulse;
+						b = 1.06f + pulse;
+						break;
+					case 8:
+						r = 0.29f + pulse;
+						g = 0.8f + pulse;
+						b = 1.31f + pulse;
+						break;
+					case 9:
+						r = 0.37f + pulse;
+						g = 0.57f + pulse;
+						b = 2.27f + pulse;
+						break;
+					case 10:
+						r = 0.66f + pulse;
+						g = 0.37f + pulse;
+						b = 2.26f + pulse;
+						break;
+					case 11:
+						r = 1.01f + pulse;
+						g = 0.36f + pulse;
+						b = 1.62f + pulse;
+						break;
+					case 12:
+						r = 1.62f + pulse;
+						g = 0.36f + pulse;
+						b = 1.58f + pulse;
+						break;
+				}
 			}
 		}
 
@@ -171,7 +252,7 @@ namespace TheConfectionRebirth.Tiles
 				int width = 16;
 				int offsetY = 0;
 				int height = 16;
-				short frameX = tile.TileFrameX;
+				short frameX = (short)(tile.TileFrameX + (AnimationFrameWidth * tileFrame));
 				short frameY = tile.TileFrameY;
 				int addFrX = 0;
 				int addFrY = 0;

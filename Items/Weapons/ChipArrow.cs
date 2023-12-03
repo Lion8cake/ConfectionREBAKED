@@ -26,8 +26,8 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 
 		public override void AddRecipes() {
-			CreateRecipe(25)
-				.AddIngredient(ItemID.WoodenArrow, 25)
+			CreateRecipe(150)
+				.AddIngredient(ItemID.WoodenArrow, 150)
 				.AddIngredient(ModContent.ItemType<CookieDough>(), 2)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();

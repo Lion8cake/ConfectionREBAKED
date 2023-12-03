@@ -10,6 +10,7 @@ namespace TheConfectionRebirth.NPCs
     public class NPCTrades : GlobalNPC
     {
 		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>());
+		public static Condition NotInConfection = new Condition("Mods.TheConfectionRebirth.NotInConfection", () => !Main.LocalPlayer.InModBiome<ConfectionBiome>());
 
 		public static Condition confectionworld = new Condition("Mods.TheConfectionRebirth.TheConfection", () => ConfectionWorldGeneration.confectionorHallow);
 
@@ -31,48 +32,40 @@ namespace TheConfectionRebirth.NPCs
 				shop.InsertAfter(ItemID.PottedHallowBamboo, ModContent.ItemType<PottedConfectionBamboo>(), Condition.Hardmode, confectionworld, Condition.MoonPhaseFirstQuarter);
 				shop.InsertAfter(ItemID.PottedHallowBamboo, ModContent.ItemType<PottedConfectionBamboo>(), Condition.Hardmode, confectionworld, Condition.MoonPhaseWaxingGibbous);
 
-
 				if (shop.TryGetEntry(ItemID.HallowedGrassEcho, out NPCShop.Entry entry)) {
-					entry.AddCondition(confectionworld);
-					entry.Disable();
+					entry.AddCondition(hallowworld);
 				}
 				if (shop.TryGetEntry(ItemID.HallowedSeeds, out NPCShop.Entry entry2)) {
-					entry2.AddCondition(confectionworld);
-					entry2.Disable();
+					entry2.AddCondition(hallowworld);
 				}
 
 				if (shop.TryGetEntry(ItemID.PottedHallowCedar, out NPCShop.Entry entry4)) {
-					entry4.AddCondition(confectionworld);
-					entry4.Disable();
+					entry4.AddCondition(hallowworld);
 				}
 				if (shop.TryGetEntry(ItemID.PottedHallowTree, out NPCShop.Entry entry5)) {
-					entry5.AddCondition(confectionworld);
-					entry5.Disable();
+					entry5.AddCondition(hallowworld);
 				}
 				if (shop.TryGetEntry(ItemID.PottedHallowPalm, out NPCShop.Entry entry6)) {
-					entry6.AddCondition(confectionworld);
-					entry6.Disable();
+					entry6.AddCondition(hallowworld);
 				}
 				if (shop.TryGetEntry(ItemID.PottedHallowBamboo, out NPCShop.Entry entry7)) {
-					entry7.AddCondition(confectionworld);
-					entry7.Disable();
+					entry7.AddCondition(hallowworld);
 				}
 			}
 			if (shop.NpcType == NPCID.Steampunker) {
 				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, InConfection, Condition.NotInGraveyard);
 				shop.InsertAfter(ItemID.BlueSolution, ModContent.ItemType<Items.CreamSolution>(), Condition.Hardmode, Condition.InHallow, Condition.InGraveyard);
 				shop.InsertAfter(ItemID.BlueSolution, ItemID.BlueSolution, Condition.Hardmode, InConfection, Condition.InGraveyard);
-				/*if (shop.TryGetEntry(ItemID.GreenSolution, out NPCShop.Entry entry8)) {
-					entry8.AddCondition(InConfection);
-					entry8.Disable();
-				}*/
+				if (shop.TryGetEntry(ItemID.GreenSolution, out NPCShop.Entry entry8)) {
+					entry8.AddCondition(NotInConfection);
+				}
 			}
 			if (shop.NpcType == NPCID.Wizard) {
 				shop.InsertAfter(ItemID.Bell, ModContent.ItemType<Items.Kazoo>(), Condition.Hardmode);
-				if (shop.TryGetEntry(ItemID.Bell, out NPCShop.Entry entry3)) {
+				/*if (shop.TryGetEntry(ItemID.Bell, out NPCShop.Entry entry3)) {
 					entry3.AddCondition(confectionworld);
 					entry3.Disable();
-				}
+				}*/
 			}
 			if (shop.NpcType == NPCID.BestiaryGirl) {
 				shop.InsertAfter(ItemID.WorldGlobe, new Item(ModContent.ItemType<Items.HallowedGlobe>()) {

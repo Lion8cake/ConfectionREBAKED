@@ -37,36 +37,10 @@ namespace TheConfectionRebirth.Items.Placeable
                 .AddIngredient(ItemID.SoulofLight, 8)
                 .AddTile(TileID.DemonAltar)
                 .Register();
-            CreateRecipe()
-                .AddIngredient<Saccharite>(10)
-                .AddIngredient<Creamstone>(30)
-                .AddIngredient<SoulofDelight>(8)
-                .AddTile(TileID.DemonAltar)
-                .Register();
 
-            AddAndReplace<Saccharite>(ItemID.CrystalShard);
-            AddAndReplace<Sprinkles>(ItemID.PixieDust);
-            AddAndReplace<SoulofDelight>(ItemID.SoulofLight);
 			AddAndReplace<KeyofDelight>(ItemID.LightKey);
-            AddAndReplace<CookieDough>(ItemID.UnicornHorn);
-            AddAndReplace<NeapoliniteBar>(ItemID.HallowedBar);
-            AddAndReplace<HallowedOre, NeapoliniteOre>();
-            AddAndReplace<HallowedBrick, NeapoliniteBrick>();
-            AddAndReplace<HallowedBrickWall, NeapoliniteBrickWall>();
             AddAndReplace<ConfectionBiomeKey>(ItemID.HallowedKey);
-            AddAndReplace<SherbetBricks>(ItemID.RainbowBrick);
-            AddAndReplace<SherbetWall>(ItemID.RainbowBrickWall);
-            AddAndReplace<SherbetTorch>(ItemID.RainbowTorch);
-            AddAndReplace<CreamWood>(ItemID.Pearlwood);
-            AddAndReplace<Cakekite>(ItemID.Prismite);
-            AddAndReplace<CookieCarp>(ItemID.PrincessFish);
             AddAndReplace<GrandSlammer>(ItemID.Pwnhammer);
-            AddAndReplace<Creamstone>(ItemID.PearlstoneBlock);
-            AddAndReplace<CreamBeans>(ItemID.HallowedSeeds);
-            AddAndReplace<Creamsand>(ItemID.PearlsandBlock);
-            AddAndReplace<Creamsandstone>(ItemID.HallowSandstone);
-            AddAndReplace<HardenedCreamsand>(ItemID.HallowHardenedSand);
-            AddAndReplace<OrangeIce>(ItemID.PinkIceBlock);
 			AddAndReplace<NPCs.Critters.RoyalCherryBugItem>(ItemID.EmpressButterfly);
         }
 

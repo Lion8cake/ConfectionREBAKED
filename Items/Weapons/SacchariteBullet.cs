@@ -27,8 +27,8 @@ namespace TheConfectionRebirth.Items.Weapons
 		}
 
 		public override void AddRecipes() {
-			CreateRecipe(25)
-				.AddIngredient(ItemID.MusketBall, 25)
+			CreateRecipe(200)
+				.AddIngredient(ItemID.MusketBall, 200)
 				.AddIngredient<Saccharite>()
 				.AddTile(TileID.MythrilAnvil)
 				.Register();

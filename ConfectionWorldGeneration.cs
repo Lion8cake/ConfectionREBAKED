@@ -65,7 +65,7 @@ namespace TheConfectionRebirth {
 			confectionUGBGSnow = tag.GetInt("TheConfectionRebirth:confectionUGBGSnow");
 			for (var i = 0; i < Main.tile.Width; ++i)
 				for (var j = 0; j < Main.tile.Height; ++j)
-					if (ConfectCountCollection.Contains(Main.tile[i, j].TileType))
+					if (ConfectionIDs.Sets.ConfectCountCollection.Contains(Main.tile[i, j].TileType))
 						totalCandy2++;
 			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
 
@@ -700,6 +700,9 @@ namespace TheConfectionRebirth {
 							}
 							else if (Main.tile[m, n].WallType == 2 || Main.tile[m, n].WallType == 16) {
 								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieWall>();
+							}
+							else if (Main.tile[m, n].WallType == 59) {
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
 							}
 							else if (Main.tile[m, n].WallType == WallID.Cloud) {
 								Main.tile[m, n].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
@@ -1338,7 +1341,9 @@ namespace TheConfectionRebirth {
 			if (Main.hardMode && !Main.tile[i, j].IsActuated) {
 				int type = Main.tile[i, j].TileType;
 				if ((NPC.downedPlantBoss && WorldGen.genRand.Next(2) == 0) || WorldGen.AllowedToSpreadInfections) {
-					if ((type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() || type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {
+					if ((type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || 
+						type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() ||
+						type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {
 						bool flag40 = true;
 						while (flag40) {
 							flag40 = false;
@@ -1546,40 +1551,6 @@ namespace TheConfectionRebirth {
 			}
 			while (num4 < 2);
 			WorldGen.AddUpAlignmentCounts();
-		}
-
-		public static List<int> ConfectCountCollection;
-
-		public override void PostSetupContent() {
-			ConfectCountCollection = new List<int> {
-				ModContent.TileType<Creamstone>(),
-				ModContent.TileType<CreamGrass>(),
-				ModContent.TileType<CreamGrassMowed>(),
-				ModContent.TileType<Creamsand>(),
-				ModContent.TileType<BlueIce>(),
-				ModContent.TileType<Creamsandstone>(),
-				ModContent.TileType<HardenedCreamsand>(),
-				ModContent.TileType<CookieBlock>(),
-				ModContent.TileType<CreamBlock>(),
-				ModContent.TileType<PinkFairyFloss>(),
-				ModContent.TileType<PurpleFairyFloss>(),
-				ModContent.TileType<BlueFairyFloss>(),
-				ModContent.TileType<CreamstoneAmethyst>(),
-				ModContent.TileType<CreamstoneSaphire>(),
-				ModContent.TileType<CreamstoneTopaz>(),
-				ModContent.TileType<CreamstoneRuby>(),
-				ModContent.TileType<CreamstoneDiamond>(),
-				ModContent.TileType<CreamstoneEmerald>(),
-				ModContent.TileType<ArgonCreamMoss>(),
-				ModContent.TileType<BlueCreamMoss>(),
-				ModContent.TileType<BrownCreamMoss>(),
-				ModContent.TileType<GreenCreamMoss>(),
-				ModContent.TileType<KryptonCreamMoss>(),
-				ModContent.TileType<LavaCreamMoss>(),
-				ModContent.TileType<PurpleCreamMoss>(),
-				ModContent.TileType<RedCreamMoss>(),
-				ModContent.TileType<XenomCreamMoss>()
-			};
 		}
 		#endregion
 	}

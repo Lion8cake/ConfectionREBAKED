@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -35,8 +36,7 @@ namespace TheConfectionRebirth.NPCs
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 60f;
             NPC.knockBackResist = 0.5f;
-            NPC.aiStyle = 23;
-            AIType = NPCID.EnchantedSword;
+			NPC.aiStyle = -1;
             AnimationType = NPCID.EnchantedSword;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrazyConeBanner>();
@@ -51,7 +51,74 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+		public override void AI() {
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			Lighting.AddLight((int)((NPC.position.X + (float)(NPC.width / 2)) / 16f), (int)((NPC.position.Y + (float)(NPC.height / 2)) / 16f), 0.81f, 0.25f, 0.33f);
+			if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead) {
+				NPC.TargetClosest();
+			}
+			if (NPC.ai[0] == 0f) {
+				float num869 = 9f;
+				Vector2 vector249 = new(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+				float num870 = Main.player[NPC.target].position.X + (float)(Main.player[NPC.target].width / 2) - vector249.X;
+				float num871 = Main.player[NPC.target].position.Y + (float)(Main.player[NPC.target].height / 2) - vector249.Y;
+				float num872 = (float)Math.Sqrt(num870 * num870 + num871 * num871);
+				float num873 = num872;
+				num872 = num869 / num872;
+				num870 *= num872;
+				num871 *= num872;
+				NPC.velocity.X = num870;
+				NPC.velocity.Y = num871;
+				NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X) + 0.785f;
+				NPC.ai[0] = 1f;
+				NPC.ai[1] = 0f;
+				NPC.netUpdate = true;
+			}
+			else if (NPC.ai[0] == 1f) {
+				if (NPC.justHit) {
+					NPC.ai[0] = 2f;
+					NPC.ai[1] = 0f;
+				}
+				NPC.velocity *= 0.99f;
+				NPC.ai[1] += 1f;
+				if (NPC.ai[1] >= 100f) {
+					NPC.netUpdate = true;
+					NPC.ai[0] = 2f;
+					NPC.ai[1] = 0f;
+					NPC.velocity.X = 0f;
+					NPC.velocity.Y = 0f;
+				}
+				else {
+					NPC.rotation = (float)Math.Atan2(NPC.velocity.Y, NPC.velocity.X) + 0.785f;
+				}
+			}
+			else {
+				if (NPC.justHit) {
+					NPC.ai[0] = 2f;
+					NPC.ai[1] = 0f;
+				}
+				NPC.velocity *= 0.96f;
+				NPC.ai[1] += 1f;
+				float num875 = NPC.ai[1] / 120f;
+				num875 = 0.1f + num875 * 0.4f;
+				NPC.rotation += num875 * (float)NPC.direction;
+				if (NPC.ai[1] >= 120f) {
+					NPC.netUpdate = true;
+					NPC.ai[0] = 0f;
+					NPC.ai[1] = 0f;
+				}
+			}
+			NPC.rotation -= MathHelper.ToRadians(45f);
+		}
+
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			if (Main.rand.NextBool(3)) {
+				target.AddBuff(BuffID.Confused, 120);
+			}
+		}
+
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.Nazar, 100, 50));
         }

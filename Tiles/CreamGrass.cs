@@ -171,7 +171,7 @@ namespace TheConfectionRebirth.Tiles
 			}
 		}
 
-		private static bool GrowMoreVines(int x, int y) {
+		public static bool GrowMoreVines(int x, int y) {
 			if (!WorldGen.InWorld(x, y, 30)) {
 				return false;
 			}

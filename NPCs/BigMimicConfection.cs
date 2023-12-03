@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -15,7 +17,9 @@ namespace TheConfectionRebirth.NPCs
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 14;
-        }
+			NPCID.Sets.TrailCacheLength[NPC.type] = NPCID.Sets.TrailCacheLength[NPCID.BigMimicHallow];
+			NPCID.Sets.TrailingMode[NPC.type] = NPCID.Sets.TrailingMode[NPCID.BigMimicHallow];
+		}
 
         public override void SetDefaults()
         {
@@ -43,7 +47,29 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			SpriteEffects spriteEffects = (SpriteEffects)0;
+			if (NPC.spriteDirection == 1) {
+				spriteEffects = (SpriteEffects)1;
+			}
+			Vector2 halfSize = new((float)(TextureAssets.Npc[NPC.type].Width() / 2), (float)(TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type] / 2));
+			float num306 = Main.NPCAddHeight(NPC);
+			if ((int)NPC.ai[0] == 4 || NPC.ai[0] == 5f || NPC.ai[0] == 6f) {
+				for (int num177 = 1; num177 < NPC.oldPos.Length; num177++) {
+					_ = ref NPC.oldPos[num177];
+					Color newColor5 = drawColor;
+					newColor5.R = (byte)(0.5 * (int)(newColor5.R * (double)(10 - num177) / 20.0));
+					newColor5.G = (byte)(0.5 * (int)(newColor5.G * (double)(10 - num177) / 20.0));
+					newColor5.B = (byte)(0.5 * (int)(newColor5.B * (double)(10 - num177) / 20.0));
+					newColor5.A = (byte)(0.5 * (int)(newColor5.A * (double)(10 - num177) / 20.0));
+					newColor5 = NPC.GetShimmerColor(newColor5);
+					spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, new Vector2(NPC.oldPos[num177].X - screenPos.X + (float)(NPC.width / 2) - (float)TextureAssets.Npc[NPC.type].Width() * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.oldPos[num177].Y - screenPos.Y + (float)NPC.height - (float)TextureAssets.Npc[NPC.type].Height() * NPC.scale / (float)Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + num306), (Rectangle?)NPC.frame, newColor5, NPC.rotation, halfSize, NPC.scale, spriteEffects, 0f);
+				}
+			}
+			return true;
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight))
             {
