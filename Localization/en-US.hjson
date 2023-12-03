@@ -1966,7 +1966,10 @@ Mods: {
 		}
 
 		TheConfection: Confection
-		Conditions.InConfection: In Confection
+		Conditions: {
+			InConfection: In Confection
+			NotInConfection: Not in Confection
+		}
 
 		Configs: {
 			ConfectionServerConfig: {
