@@ -21,6 +21,9 @@ using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items.Weapons;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
+using TheConfectionRebirth.Items.Placeable;
+using TheConfectionRebirth.Dusts;
+using static Terraria.Player;
 
 namespace TheConfectionRebirth {
 	public partial class TheConfectionRebirth : Mod
@@ -74,7 +77,7 @@ namespace TheConfectionRebirth {
 			Instance = this;
 
 			if (!Main.dedServ) {
-				GummyWyrmShaderData = new(new(Assets.Request<Effect>("Assets/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
+				GummyWyrmShaderData = new(new(Assets.Request<Effect>("Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
 			}
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -102,6 +105,10 @@ namespace TheConfectionRebirth {
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
 
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
+
+			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool += On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
+
+			On_Player.ItemCheck_ApplyHoldStyle_Inner += On_Player_ItemCheck_ApplyHoldStyle_Inner;
 		}
 
 		public override void Unload()
@@ -122,7 +129,91 @@ namespace TheConfectionRebirth {
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
+
+			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool -= On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
+
+			On_Player.ItemCheck_ApplyHoldStyle_Inner -= On_Player_ItemCheck_ApplyHoldStyle_Inner;
 		}
+
+		#region flareholditemdust
+		private void On_Player_ItemCheck_ApplyHoldStyle_Inner(On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player self, float mountOffset, Item sItem, Rectangle heldItemFrame) {
+			orig.Invoke(self, mountOffset, sItem, heldItemFrame);
+			if (self.isPettingAnimal) {
+				int num10 = self.miscCounter % 14 / 7;
+				CompositeArmStretchAmount stretch = CompositeArmStretchAmount.ThreeQuarters;
+				if (num10 == 1) {
+					stretch = CompositeArmStretchAmount.Full;
+				}
+				float num2 = 0.3f;
+				if (self.isTheAnimalBeingPetSmall) {
+					num2 = 0.2f;
+				}
+				self.SetCompositeArmBack(enabled: true, stretch, (float)Math.PI * -2f * num2 * (float)self.direction);
+			}
+			if (!self.CanVisuallyHoldItem(sItem)) {
+				return;
+			}
+			if (sItem.holdStyle == 1 && !self.pulley) {
+				if (Main.dedServ) {
+					self.itemLocation.X = self.position.X + (float)self.width * 0.5f + 20f * (float)self.direction;
+				}
+				else if (sItem.type == 930) {
+					self.itemLocation.X = self.position.X + (float)(self.width / 2) * 0.5f - 12f - (float)(2 * self.direction);
+					float x = self.position.X + (float)(self.width / 2) + (float)(38 * self.direction);
+					if (self.direction == 1) {
+						x -= 10f;
+					}
+					float y = self.MountedCenter.Y - 4f * self.gravDir;
+					if (self.gravDir == -1f) {
+						y -= 8f;
+					}
+					self.RotateRelativePoint(ref x, ref y);
+					int num3 = 0;
+					for (int i = 54; i < 58; i++) {
+						if (self.inventory[i].stack > 0 && self.inventory[i].ammo == 931) {
+							num3 = self.inventory[i].type;
+							break;
+						}
+					}
+					if (num3 == 0) {
+						for (int j = 0; j < 54; j++) {
+							if (self.inventory[j].stack > 0 && self.inventory[j].ammo == 931) {
+								num3 = self.inventory[j].type;
+								break;
+							}
+						}
+					}
+					if (num3 == ModContent.ItemType<SherbetFlare>()) {
+						num3 = ModContent.DustType<SherbetDust>();
+					}
+					if (num3 > 0) {
+						int num4 = Dust.NewDust(new Vector2(x, y + self.gfxOffY), 6, 6, num3, 0f, 0f, 100, default(Color), 1.6f);
+						Main.dust[num4].noGravity = true;
+						Main.dust[num4].velocity.Y -= 4f * self.gravDir;
+						if (num3 == 66) {
+							Main.dust[num4].color = Main.hslToRgb(Main.GlobalTimeWrappedHourly * 0.6f % 1f, 1f, 0.5f);
+							Main.dust[num4].scale *= 0.5f;
+							Dust obj = Main.dust[num4];
+							obj.velocity *= 0.75f;
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region SandgunDetour
+		private void On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool(On_Player.orig_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool orig, Player self, Item sItem, ref int projToShoot, ref float speed, ref bool canShoot, ref int totalDamage, ref float KnockBack, out int usedAmmoItemId, bool dontConsume) {
+			orig.Invoke(self, sItem, ref projToShoot, ref speed, ref canShoot, ref totalDamage, ref KnockBack, out usedAmmoItemId, dontConsume);
+			if (projToShoot == 42) {
+				Item item = self.ChooseAmmo(sItem);
+				if (item.type == ModContent.ItemType<Creamsand>()) {
+					projToShoot = ModContent.ProjectileType<Projectiles.CreamsandSandgunProjectile>();
+					totalDamage += 5;
+				}
+			}
+		}
+		#endregion
 
 		#region MapBackgroundColorFixer
 		private void On_Main_DrawMapFullscreenBackground(On_Main.orig_DrawMapFullscreenBackground orig, Vector2 screenPosition, int screenWidth, int screenHeight) {
@@ -566,26 +657,4 @@ namespace TheConfectionRebirth {
 			}
 		}
 	}
-	/*public class UGBGCommand : ModCommand {
-		public override CommandType Type
-			=> CommandType.Chat;
-
-		public override string Command
-			=> "confection.ugbg_test";
-
-		public override string Description
-			=> "Tests underground background variants";
-
-		public override void Action(CommandCaller caller, string input, string[] args) {
-			ConfectionWorldGeneration.confectionUGBG += 1;
-			ConfectionWorldGeneration.confectionUGBGSnow += 1;
-			if (ConfectionWorldGeneration.confectionUGBG > 3) {
-				ConfectionWorldGeneration.confectionUGBG = 0;
-			}
-			if (ConfectionWorldGeneration.confectionUGBGSnow > 1) {
-				ConfectionWorldGeneration.confectionUGBGSnow = 0;
-			}
-			Main.NewText("UGBG STYLE: " + ConfectionWorldGeneration.confectionUGBG + " UGBGSNOW Style: " + ConfectionWorldGeneration.confectionUGBGSnow);
-		}
-	}*/
 }

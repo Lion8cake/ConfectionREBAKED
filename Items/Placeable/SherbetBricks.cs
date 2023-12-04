@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -9,7 +10,8 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
-        }
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 13));
+		}
 
         public override void SetDefaults()
         {

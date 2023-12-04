@@ -12,6 +12,8 @@ namespace TheConfectionRebirth.Items.Weapons.Minions.Gastropod
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			ConfectionIDs.Sets.RecipeBlacklist.SoulofLightOnlyItem[Type] = true;
+			ConfectionIDs.Sets.RecipeBlacklist.CrystalShardOnlyItem[Type] = true;
 		}
 
 		public override void SetDefaults() {

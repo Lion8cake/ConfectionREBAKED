@@ -21,15 +21,5 @@ namespace TheConfectionRebirth.Items
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = 9999;
         }
-
-        public override void AddRecipes()
-        {
-            Recipe.Create(ItemID.GreaterHealingPotion, 3)
-                .AddIngredient(this, 3)
-                .AddIngredient<Saccharite>()
-                .AddIngredient(ItemID.BottledWater, 3)
-                .AddTile(TileID.AlchemyTable)
-                .Register();
-        }
     }
 }

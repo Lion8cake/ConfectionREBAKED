@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.Torch[Type] = true;
 
-            DustType = ModContent.DustType<SherbetDust>();
+            DustType = ModContent.DustType<NeapoliniteJoustingDust>();
             AdjTiles = new int[] { TileID.Torches };
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
@@ -51,7 +51,7 @@ namespace TheConfectionRebirth.Tiles
 
             LocalizedText name = CreateMapEntryName();
 
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(253, 221, 3), name);
 
             if (!Main.dedServ)
             {
@@ -59,7 +59,14 @@ namespace TheConfectionRebirth.Tiles
             }
         }
 
-        public override float GetTorchLuck(Player player)
+		public override void MouseOver(int i, int j) {
+			Player player = Main.LocalPlayer;
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ConfectionTorch>();
+		}
+
+		public override float GetTorchLuck(Player player)
         {
             bool inConfectionUndergroundBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiome>());
             return inConfectionUndergroundBiome ? 1f : -0.1f;

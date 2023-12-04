@@ -1,6 +1,8 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Terraria;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -9,7 +11,8 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
-        }
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 13));
+		}
 
         public override void SetDefaults()
         {

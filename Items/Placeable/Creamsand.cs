@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,8 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.Creamsand>();
-            //Item.ammo = AmmoID.Sand; //Using this Sand in the Sandgun would require PickAmmo code and changes to ExampleSandProjectile or a new ModProjectile.
-        }
-    }
+            Item.ammo = AmmoID.Sand;
+			Item.notAmmo = true;
+		}
+	}
 }

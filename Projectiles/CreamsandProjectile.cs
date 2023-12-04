@@ -6,31 +6,29 @@ using Terraria.ID;
 
 namespace TheConfectionRebirth.Projectiles {
     public class CreamsandProjectile : ModProjectile {
-        public override void SetStaticDefaults() {
-            Projectile.knockBack = 6f;
-            Projectile.width = 14;
-            Projectile.height = 14;
-            Projectile.friendly = true;
-            Projectile.hostile = true;
-            Projectile.penetrate = -1;
-        }
 
-        public override void AI() {
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.FallingBlockDoesNotFallThroughPlatforms[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.knockBack = 6f;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.aiStyle = -1;
+			Projectile.friendly = true;
+			Projectile.hostile = true;
+			Projectile.penetrate = -1;
+		}
+
+		public override void AI() {
 			if (Main.rand.NextBool(2)) {
-				int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ChipDust>(), 0f, Projectile.velocity.Y / 2f);
-                ref Dust dust = ref Main.dust[dustIndex];
-                dust.velocity.X *= 0.4f;
+				int i = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Dusts.ChipDust>(), 0f, Projectile.velocity.Y * 0.5f);
+				Main.dust[i].velocity.X *= 0.2f;
 			}
-
-			Projectile.tileCollide = true;
-			Projectile.localAI[1] = 0f;
-
 			Projectile.velocity.Y += 0.41f;
-
-			Projectile.rotation -= 0.1f;
-
-			if (Projectile.velocity.Y < -10f) {
-				Projectile.velocity.Y = -10f;
+			Projectile.rotation += 0.1f;
+			if (Projectile.velocity.Y > 10f) {
+				Projectile.velocity.Y = 10f;
 			}
 		}
 

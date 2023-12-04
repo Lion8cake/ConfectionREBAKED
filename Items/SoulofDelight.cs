@@ -40,36 +40,5 @@ namespace TheConfectionRebirth.Items
         {
             return Color.White;
         }
-
-        public override void AddRecipes() // thanks to foxyboy55 for this fix
-        {
-            Recipe.Create(ItemID.MechanicalEye)
-                .AddIngredient(ItemID.Lens, 3)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
-                .AddIngredient<SoulofDelight>(6)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-
-            Recipe.Create(ItemID.MechanicalSkull)
-                .AddIngredient(ItemID.Bone, 30)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
-                .AddIngredient<SoulofDelight>(3)
-                .AddIngredient(ItemID.SoulofNight, 3)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-
-            Recipe.Create(ItemID.MeteorStaff)
-                .AddIngredient(ItemID.MeteoriteBar, 20)
-                .AddIngredient<Sprinkles>(10)
-                .AddIngredient<SoulofDelight>(10)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-			Recipe.Create(ItemID.CoolWhip)
-				.AddIngredient<SoulofDelight>(8)
-				.AddIngredient(ItemID.SoulofNight, 8)
-				.AddIngredient(ItemID.FrostCore, 2)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-		}
     }
 }

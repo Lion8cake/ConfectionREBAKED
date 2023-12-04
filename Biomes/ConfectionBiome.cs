@@ -89,7 +89,7 @@ public class ConfectionBiome : ModBiome
 					}
 				}
 			}
-			else if (TOWMusicCheck == true && Main.drunkWorld || TOWMusicCheck == false && !Main.drunkWorld) {
+			else if (TOWMusicCheck == true && !Main.drunkWorld || TOWMusicCheck == false && Main.drunkWorld) {
 				if ((double)Main.player[Main.myPlayer].position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16)) {
 					if (Main.remixWorld && (double)Main.player[Main.myPlayer].position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
 						if (Main.cloudAlpha > 0f) {
@@ -113,6 +113,14 @@ public class ConfectionBiome : ModBiome
 					}
 					else {
 						return MusicID.OtherworldlyRain;
+					}
+				}
+				else {
+					if (Main.bloodMoon) {
+						return MusicID.OtherworldlyEerie;
+					}
+					else {
+						return MusicID.OtherworldlyHallow;
 					}
 				}
 			}

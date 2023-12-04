@@ -10,6 +10,10 @@ Confection_old.png - was another unused overlay for the confection trees before 
 SugarHigh - there was a planned debuff for the saccharite lash to inflict enemies with a debuff when hit that would decrease defence. Due to defence decreasment and the
 infliction of debuffs through whips being too hard was scraped in favor for giving the player a positive buff when striking an npc
 
+CrazyCone - Old crazy cone texture back in 2021, may become used at some point so here if need be
+
+NeapoliniteCookies - Plans for cookies to circle players wearing the neapolinite armour, the visuals never looked nice but may return later which is why they are here
+
 ConfectionZenithFull - Before the drama with altlib that happened late febuary 2023 these were the planed to be the textures for the zenith icon. ofc that never happened
 ConfectionZenithLeft - ^ this
 ConfectionZenithRight - ^^ this again

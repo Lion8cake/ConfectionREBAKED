@@ -9,11 +9,16 @@ namespace TheConfectionRebirth.Biomes
     {
         public int confectionBlockCount;
         public int snowpylonConfectionCount;
+		public int desertpylonConfectionCount;
 
-        public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
+		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
 			snowpylonConfectionCount = tileCounts[ModContent.TileType<CreamBlock>()]
 				+ tileCounts[ModContent.TileType<BlueIce>()];
+
+			desertpylonConfectionCount = tileCounts[ModContent.TileType<Creamsand>()]
+				+ tileCounts[ModContent.TileType<Creamsandstone>()]
+				+ tileCounts[ModContent.TileType<HardenedCreamsand>()];
 
 			confectionBlockCount = tileCounts[ModContent.TileType<CookieBlock>()]
                 + tileCounts[ModContent.TileType<Creamstone>()]

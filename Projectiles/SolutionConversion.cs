@@ -51,8 +51,13 @@ namespace TheConfectionRebirth.Projectiles
 							WorldGen.SquareWallFrame(k, l);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else if (wall == ModContent.WallType<CookieWall>()) {
+						else if (wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieWallArtificial>()) {
 							Main.tile[k, l].WallType = 2;
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieStonedWallArtificial>()) {
+							Main.tile[k, l].WallType = 59;
 							WorldGen.SquareWallFrame(k, l);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
