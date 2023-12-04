@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using TheConfectionRebirth.ModSupport.Thorium.Dusts;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.ModSupport.Thorium.Items.Weapons;
 using ThoriumMod;
 using ThoriumMod.Projectiles;

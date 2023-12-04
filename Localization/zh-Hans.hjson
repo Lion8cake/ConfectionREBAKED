@@ -18,6 +18,15 @@ Mods: {
 			// ChocolateCharge: Chocolate Charge
 		}
 
+		CommonItemTooltip: {
+			// PercentIncreasedBardDamage: "{0}% increased symphonic damage"
+			// PercentIncreasedBardCritChance: "{0}% increased symphonic critical strike chance"
+			// PercentIncreasedBardDamageCritChance: "{0}% increased symphonic damage and critical strike chance"
+			// PercentIncreasedHealerDamage: "{0}% increased radiant damage"
+			// PercentIncreasedHealerCritChance: "{0}% increased radiant critical strike chance"
+			// PercentIncreasedHealerDamageCritChance: "{0}% increased radiant damage and critical strike chance"
+		}
+
 		Projectiles: {
 			// YoyoCookieYoyo.DisplayName: "{$Mods.TheConfectionRebirth.Items.YoyoCookie.DisplayName}"
 			// TrueSucrosaSlash2.DisplayName: "{$Mods.TheConfectionRebirth.Items.TrueSucrosa.DisplayName}"
@@ -1538,6 +1547,112 @@ Mods: {
 				// Tooltip: ""
 			}
 
+			ConfectedCharm: {
+				// DisplayName: Confected Charm
+				// Tooltip: A lucky charm baked with the materials of biome made of confectionary deserts
+			}
+
+			Jawbreaker: {
+				// DisplayName: Jawbreaker
+				// Tooltip: "'The jagged shard hold an unknown power'"
+			}
+
+			NeapoliniteMegaphone: {
+				// DisplayName: Neapolinite Megaphone
+				// Tooltip: Rapidly releases a burst of expanding sound waves
+			}
+
+			NeapoliniteScepter: {
+				// DisplayName: Neapolinite Scepter
+				// Tooltip: Fires 3 bolts in the cone like shape
+			}
+
+			NeapoliniteScythe: {
+				// DisplayName: Neapolinite Scythe
+				// Tooltip: Rapidly spins a neapolinite scythe all around you
+			}
+
+			TrueNeapoliniteScythe: {
+				// DisplayName: True Neapolinite Scythe
+				// Tooltip: Rapidly spins an enchanted scythe all around you
+			}
+
+			JawbreakerPickaxe: {
+				// DisplayName: Jawbreaker Pickaxe
+				// Tooltip: Mines tiles in a 3x3 area
+			}
+
+			JawbreakerHamaxe: {
+				// DisplayName: Jawbreaker Hamaxe
+				// Tooltip: ""
+			}
+
+			RockCandyHeadset: {
+				// DisplayName: Rock Candy Headset
+				/* Tooltip:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardDamage@0}
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardCritChance@1}
+					''' */
+				/* SetBonus:
+					'''
+					Every time a symphonic weapon is used a buff is applied and gets 
+					stronger every use until the buff upgrades 5 times, increases 
+					damage, critical strike chance to symphonic weapons
+					''' */
+			}
+
+			RockCandyConemail: {
+				// DisplayName: Rock Candy Conemail
+				// Tooltip: "{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardCritChance@0}"
+			}
+
+			RockCandyLeggings: {
+				// DisplayName: Rock Candy Leggings
+				/* Tooltip:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardDamage@0}
+					{$CommonItemTooltip.PercentIncreasedMovementSpeed@1}
+					''' */
+			}
+
+			YumdropFairyTiara: {
+				// DisplayName: Yumdrop Fairy Tiara
+				/* Tooltip:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerDamage@0}
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerCritChance@1}
+					{$CommonItemTooltip.PercentReducedManaCost@2}
+					''' */
+				/* SetBonus:
+					'''
+					Every time a radiant weapon is used a buff is applied and gets 
+					stronger every use until the buff upgrades 5 times, increases 
+					damage, critical strike chance to radiant weapons and extra 
+					life heals
+					''' */
+			}
+
+			YumdropFairyBreastplate: {
+				// DisplayName: Yumdrop Fairy Breastplate
+				/* Tooltip:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerDamage@0}
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerCritChance@1}
+					{$CommonItemTooltip.PercentReducedManaCost@2}
+					''' */
+			}
+
+			YumdropFairyPompomGreaves: {
+				// DisplayName: Yumdrop Fairy Pompom Greaves
+				/* Tooltip:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerDamage@0}
+					{$CommonItemTooltip.PercentReducedManaCost@1}
+					{$CommonItemTooltip.PercentIncreasedMovementSpeed@2}
+					''' */
+			}
+
 			GummyWispDye: {
 				// DisplayName: Gummy Wisp Dye
 				// Tooltip: ""
@@ -1748,6 +1863,21 @@ Mods: {
 			CcretBuff: {
 				// Description: "'Your Floating on a Foamin' Float'"
 				// DisplayName: Foamin' Float Mount
+			}
+
+			RockinStar: {
+				// DisplayName: Rockin' Star {0}
+				// Description: "{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardDamageCritChance@0}"
+			}
+
+			YumdropKiss: {
+				// DisplayName: Yumdrop Kiss {0}
+				/* Description:
+					'''
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerDamage@0}
+					{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedHealerCritChance@1}
+					Healing spells will heal and additional {2} life
+					''' */
 			}
 
 			FoaminSuffocation: {
@@ -1966,7 +2096,11 @@ Mods: {
 		}
 
 		// TheConfection: Confection
-		// Conditions.InConfection: In Confection
+
+		Conditions: {
+			// InConfection: In Confection
+			// NotInConfection: Not in Confection
+		}
 
 		Configs: {
 			ConfectionServerConfig: {
@@ -2067,5 +2201,7 @@ Mods: {
 				// Description: Wear the full birthday suit while riding a Rollercycle.
 			}
 		}
+
+		// NotInConfection: Mods.TheConfectionRebirth.NotInConfection
 	}
 }

@@ -13,6 +13,8 @@ public sealed class ThoriumDLCPlayer : ModPlayer {
 	private int rockinStarStage;
 	private int yumdropKissStage;
 
+	public bool JawbreakerPickEffects { get; set; }
+
 	public int InspirationConsumed { get; set; }
 
 	public bool NeapoliniteBard { get; set; }
@@ -24,6 +26,7 @@ public sealed class ThoriumDLCPlayer : ModPlayer {
 	public override void ResetEffects() {
 		NeapoliniteBard = false;
 		NeapoliniteHealer = false;
+		JawbreakerPickEffects = false;
 	}
 
 	public override void OnEnterWorld() {

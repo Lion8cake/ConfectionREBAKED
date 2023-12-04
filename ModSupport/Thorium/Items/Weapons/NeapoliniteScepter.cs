@@ -37,7 +37,7 @@ public sealed class NeapoliniteScepter : ThoriumItem {
 		Item.shootSpeed = 15f;
 
 		Item.mana = 12;
-		Item.value = Item.sellPrice(0, 4, 80, 0);
+		Item.value = Item.sellPrice(gold: 4, silver: 80);
 		Item.rare = ItemRarityID.Pink;
 	}
 

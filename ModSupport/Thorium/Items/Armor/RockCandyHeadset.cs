@@ -1,4 +1,3 @@
-using ConfectionDLC.Thorium.Items.Armor;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -52,7 +51,7 @@ public sealed class RockCandyHeadset : BardItem {
 		player.setBonus = SetBonus.Value;
 		dlcPlayer.NeapoliniteBard = true;
 
-		int rank = Math.Min(player.GetModPlayer<RockCandyPlayer>().InspirationConsumed / 4, ModContent.GetInstance<RockinStar>().StageCount);
+		int rank = Math.Min(dlcPlayer.InspirationConsumed / 4, ModContent.GetInstance<RockinStar>().StageCount);
 		if (rank > 0) {
 			dlcPlayer.RockinStarStage = rank;
 			player.AddBuff(ModContent.BuffType<RockinStar>(), 180);

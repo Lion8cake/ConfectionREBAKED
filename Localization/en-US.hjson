@@ -1546,10 +1546,15 @@ Mods: {
 				DisplayName: Soul of Spite in a Bottle
 				Tooltip: ""
 			}
-			
+
 			ConfectedCharm: {
 				DisplayName: Confected Charm
 				Tooltip: A lucky charm baked with the materials of biome made of confectionary deserts
+			}
+
+			Jawbreaker: {
+				DisplayName: Jawbreaker
+				Tooltip: "'The jagged shard hold an unknown power'"
 			}
 
 			NeapoliniteMegaphone: {
@@ -1570,6 +1575,16 @@ Mods: {
 			TrueNeapoliniteScythe: {
 				DisplayName: True Neapolinite Scythe
 				Tooltip: Rapidly spins an enchanted scythe all around you
+			}
+
+			JawbreakerPickaxe: {
+				DisplayName: Jawbreaker Pickaxe
+				Tooltip: Mines tiles in a 3x3 area
+			}
+
+			JawbreakerHamaxe: {
+				DisplayName: Jawbreaker Hamaxe
+				Tooltip: ""
 			}
 
 			RockCandyHeadset: {
@@ -1849,7 +1864,7 @@ Mods: {
 				Description: "'Your Floating on a Foamin' Float'"
 				DisplayName: Foamin' Float Mount
 			}
-			
+
 			RockinStar: {
 				DisplayName: Rockin' Star {0}
 				Description: "{$Mods.TheConfectionRebirth.CommonItemTooltip.PercentIncreasedBardDamageCritChance@0}"
@@ -2081,6 +2096,7 @@ Mods: {
 		}
 
 		TheConfection: Confection
+
 		Conditions: {
 			InConfection: In Confection
 			NotInConfection: Not in Confection
@@ -2185,5 +2201,7 @@ Mods: {
 				Description: Wear the full birthday suit while riding a Rollercycle.
 			}
 		}
+
+		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
 	}
 }
