@@ -1,23 +1,37 @@
 ﻿using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.ModSupport.Thorium.Items.Tools;
 
 public sealed class JawbreakerPickaxe : ModItem {
+	private sealed class JawbreakerPickaxeBuff : ModBuff {
+		public const int DefenseBonus = 6;
+
+		public override LocalizedText Description => base.Description.WithFormatArgs(DefenseBonus);
+
+		public override void Update(Player player, ref int buffIndex) {
+			player.statDefense += DefenseBonus;
+		}
+	}
+
 	public override bool IsLoadingEnabled(Mod mod) => TheConfectionRebirth.IsThoriumLoaded;
 
 	public override void Load() {
 		On_Player.PickTile += static (On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower) => {
-			if (self.TryGetModPlayer<ThoriumDLCPlayer>(out var dlcPlayer) && dlcPlayer.JawbreakerPickEffects) {
-				for (int i = -1; i <= 1; i++) {
-					for (int j = -1; j <= 1; j++) {
-						orig(self, x + i, y + j, pickPower);
-					}
+			Handle(self, x, y);
+			orig(self, x, y, pickPower);
+
+			static void Handle(Player player, int x, int y) {
+				if (Main.myPlayer != player.whoAmI || player.HeldItem.pick <= 0 || !WorldGen.InWorld(x, y)) {
+					return;
 				}
-			}
-			else {
-				orig(self, x, y, pickPower);
+
+				var tile = Framing.GetTileSafely(x, y);
+				if (tile.HasTile && TileID.Sets.Ore[tile.TileType] && player.GetModPlayer<ThoriumDLCPlayer>().JawbreakerSetEffects) {
+					player.AddBuff(ModContent.BuffType<JawbreakerPickaxeBuff>(), 15 * 60, quiet: false);
+				}
 			}
 		};
 	}

@@ -1579,11 +1579,16 @@ Mods: {
 
 			JawbreakerPickaxe: {
 				DisplayName: Jawbreaker Pickaxe
-				Tooltip: Mines tiles in a 3x3 area
+				Tooltip: 
 			}
 
 			JawbreakerHamaxe: {
 				DisplayName: Jawbreaker Hamaxe
+				Tooltip: ""
+			}
+
+			TheGobstopper: {
+				DisplayName: The Gobstopper
 				Tooltip: ""
 			}
 
@@ -1596,7 +1601,7 @@ Mods: {
 					'''
 				SetBonus:
 					'''
-					Every time a symphonic weapon is used a buff is applied and gets 
+					Every 4 consumed inspiration a buff is applied and gets 
 					stronger every use until the buff upgrades 5 times, increases 
 					damage, critical strike chance to symphonic weapons
 					'''
@@ -1651,6 +1656,22 @@ Mods: {
 					{$CommonItemTooltip.PercentReducedManaCost@1}
 					{$CommonItemTooltip.PercentIncreasedMovementSpeed@2}
 					'''
+			}
+
+			JawbreakerHelmet: {
+				DisplayName: Jawbreaker Helmet
+				Tooltip: "Yet to come up with one :3"
+				SetBonus: Upon mining nearby tiles break as well
+			}
+
+			JawbreakerChestplate: {
+				DisplayName: Jawbreaker Chestplate
+				Tooltip: "Yet to come up with one :3"
+			}
+
+			JawbreakerLeggings: {
+				DisplayName: Jawbreaker Leggings
+				Tooltip: "Yet to come up with one :3"
 			}
 
 			GummyWispDye: {
@@ -1848,6 +1869,11 @@ Mods: {
 			ChocolateChargeI: {
 				Description: 4% increased ranged damage and 2% increased critical strike chance
 				DisplayName: "{$Mods.TheConfectionRebirth.Common.ChocolateCharge} ({$Mods.TheConfectionRebirth.Common.R1})"
+			}
+
+			JawbreakerPickaxeBuff: {
+				DisplayName: Ore Frenzy
+				Description: Increases defense by {0}
 			}
 
 			GoneBananas: {
