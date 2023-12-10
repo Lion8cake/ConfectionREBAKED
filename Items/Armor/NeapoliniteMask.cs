@@ -35,11 +35,6 @@ namespace TheConfectionRebirth.Items.Armor
             int damage = player.GetModPlayer<ConfectionPlayer>().VanillaValorDamageDealt;
             int rank = Math.Min(damage, 1750) / 350 - 1;
             StackableBuffData.VanillaValor.AscendBuff(player, rank, 300);
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 1;
-		}
-
-		public override void UpdateVanitySet(Player player) {
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 1;
 		}
 
 		public override void AddRecipes()

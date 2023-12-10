@@ -1,116 +1,79 @@
+﻿using Microsoft.Xna.Framework;
+using MonoMod.Cil;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs.Critters
 {
-    internal class GummyWorm : ModNPC
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Worm];
-            Main.npcCatchable[NPC.type] = true;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
-            {
-                Velocity = 1f,
-                Position = new(1, 2)
-            });
-        }
+	public class GummyWorm : ModNPC
+	{
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Worm];
+			Main.npcCatchable[Type] = true;
 
-        public override void SetDefaults()
-        {
-            NPC.CloneDefaults(NPCID.Worm);
-            NPC.catchItem = (short)ModContent.ItemType<GummyWormItem>();
-            NPC.aiStyle = 66;
-            NPC.friendly = true;
-            AIType = NPCID.Worm;
-            AnimationType = NPCID.Worm;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
-        }
+			NPCID.Sets.CountsAsCritter[Type] = true;
+			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+			NPCID.Sets.TownCritter[Type] = true;
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Velocity = 1f,
+				Position = new(1, 2)
+			});
+		}
 
-                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GummyWorm")
-            });
-        }
+		public override void SetDefaults() {
+			NPC.width = 10;
+			NPC.height = 4;
+			NPC.aiStyle = 66;
+			NPC.damage = 0;
+			NPC.defense = 0;
+			NPC.lifeMax = 5;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.npcSlots = 0.1f;
 
-        public override bool? CanBeHitByItem(Player player, Item item)
-        {
-            return true;
-        }
+			NPC.catchItem = ModContent.ItemType<Items.GummyWorm>();
+			AIType = NPCID.Worm;
+			AnimationType = NPCID.Worm;
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+		}
 
-        public override bool? CanBeHitByProjectile(Projectile projectile)
-        {
-            return true;
-        }
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-        /*public override void HitEffect(int hitDirection, double damage)
-        {
-            if (Main.netMode == NetmodeID.Server)
-            {
-                return;
-            }
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
 
-            if (NPC.life <= 0)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
-                }
-            }
-        }*/
+				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GummyWorm")
+			});
+		}
 
-        public virtual void OnCatchNPC(Player player, Item item)
-        {
-            item.stack = 1;
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
+				return 1f;
+			}
+			return 0f;
+		}
 
-            try
-            {
-                var npcCenter = NPC.Center.ToTileCoordinates();
-            }
-            catch
-            {
-                return;
-            }
-        }
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (Main.netMode == NetmodeID.Server) {
+				return;
+			}
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && Main.raining && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
-            {
-                return 1f;
-            }
-            return 0f;
-        }
-    }
-
-    internal class GummyWormItem : ModItem
-    {
-        public override void SetStaticDefaults() => Item.ResearchUnlockCount = 5;
-
-        public override void SetDefaults()
-        {
-            Item.useStyle = 1;
-            Item.autoReuse = true;
-            Item.useTurn = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 12;
-            Item.height = 12;
-            Item.makeNPC = 360;
-            Item.noUseGraphic = true;
-            Item.bait = 40;
-
-            Item.makeNPC = (short)ModContent.NPCType<GummyWorm>();
-        }
-    }
+			if (NPC.life <= 0) {
+				for (int i = 0; i < 10; i++) {
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CritterBlood>());
+				}
+			}
+		}
+	}
 }

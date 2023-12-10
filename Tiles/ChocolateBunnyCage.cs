@@ -37,23 +37,4 @@ namespace TheConfectionRebirth.Tiles
             frameYOffset = Main.bunnyCageFrame[offset] * AnimationFrameHeight;
         }
     }
-
-    internal class ChocolateBunnyCageItem : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.BunnyCage);
-            Item.createTile = ModContent.TileType<ChocolateBunnyCage>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(null, "ChocolateBunnyItem", 1).AddIngredient(ItemID.Terrarium, 1).Register();
-        }
-    }
 }

@@ -142,9 +142,9 @@ Mods: {
 		}
 
 		Items: {
-			SoulofDelightinaBottleItem: {
-				// Tooltip: ""
+			SoulofDelightinaBottle: {
 				// DisplayName: Soul of Delight in a Bottle
+				// Tooltip: ""
 			}
 
 			SoulofDelight: {
@@ -157,9 +157,19 @@ Mods: {
 				// DisplayName: Pip Cage
 			}
 
+			PipCage: {
+				// DisplayName: Pip Cage
+				// Tooltip: ""
+			}
+
 			GummyWormCageItem: {
 				// Tooltip: ""
 				// DisplayName: Gummy Worm Terrarium
+			}
+
+			GummyWormCage: {
+				// DisplayName: Gummy Worm Cage
+				// Tooltip: ""
 			}
 
 			ChocolateFrogCageItem: {
@@ -167,12 +177,27 @@ Mods: {
 				// DisplayName: Chocolate Frog Terrarium
 			}
 
+			ChocolateFrogCage: {
+				// DisplayName: Chocolate Frog Cage
+				// Tooltip: ""
+			}
+
 			ChocolateBunnyCageItem: {
 				// Tooltip: ""
 				// DisplayName: Chocolate Bunny Terrarium
 			}
 
+			ChocolateBunnyCage: {
+				// DisplayName: Chocolate Bunny Cage
+				// Tooltip: ""
+			}
+
 			CherryBugBottleItem: {
+				// Tooltip: ""
+				// DisplayName: Cherry Bug Bottle
+			}
+
+			CherryBugBottle: {
 				// Tooltip: ""
 				// DisplayName: Cherry Bug Bottle
 			}
@@ -207,39 +232,9 @@ Mods: {
 				// DisplayName: Magical Kazoo
 			}
 
-			PipItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
-			}
-
-			GummyWormItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
-			}
-
-			GrumbleBeeItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
-			}
-
-			ChocolateFrogItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
-			}
-
-			ChocolateBunnyItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}"
-			}
-
-			CherryBugItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}"
-			}
-
-			BirdnanaItem: {
-				// Tooltip: ""
-				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+			GrumbleBee: {
+				// DisplayName: Grumble Bee
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
 			}
 
 			YumDrop: {
@@ -359,6 +354,11 @@ Mods: {
 			GummyWormWhip: {
 				// Tooltip: ""
 				// DisplayName: Gummy Worm-Whip
+			}
+
+			GummyWorm: {
+				// DisplayName: Gummy Worm
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
 			}
 
 			GrandSlammer: {
@@ -1255,14 +1255,29 @@ Mods: {
 				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}{$Mods.TheConfectionRebirth.Common.Banner}"
 			}
 
+			ChocolateFrog: {
+				// DisplayName: Chocolate Frog
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
+			}
+
 			ChocolateBunnyBanner: {
 				// Tooltip: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}"
 				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}{$Mods.TheConfectionRebirth.Common.Banner}"
 			}
 
+			ChocolateBunny: {
+				// DisplayName: Chocolate Bunny
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}"
+			}
+
 			CherryBugBanner: {
 				// Tooltip: "{$Mods.TheConfectionRebirth.Common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}"
 				// DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}{$Mods.TheConfectionRebirth.Common.Banner}"
+			}
+
+			CherryBug: {
+				// DisplayName: Cherry Bug
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}"
 			}
 
 			CherryBomberBanner: {
@@ -1514,7 +1529,7 @@ Mods: {
 				// DisplayName: Cookie Wings
 			}
 
-			RoyalCherryBugItem: {
+			RoyalCherryBug: {
 				// DisplayName: Royal Cherry Bug
 				/* Tooltip:
 					'''
@@ -1533,7 +1548,7 @@ Mods: {
 				// Tooltip: "'Not V. Costa Moura'"
 			}
 
-			SoulofSpiteinaBottleItem: {
+			SoulofSpiteinaBottle: {
 				// DisplayName: Soul of Spite in a Bottle
 				// Tooltip: ""
 			}
@@ -1567,6 +1582,67 @@ Mods: {
 				// DisplayName: Sherbet Flare
 				// Tooltip: ""
 			}
+
+			SwirllingChocolateDye: {
+				// DisplayName: Swirlling Chocolate Dye
+				// Tooltip: ""
+			}
+
+			ChocoRabbitCupcake: {
+				// DisplayName: Choco-Rabbit Cupcake
+				/* Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'Its seems to have fallen into the Cupcake'
+					''' */
+			}
+
+			FrogInAPond: {
+				// DisplayName: Frog in a Pond
+				/* Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'A classic kid treat, the chocolate goes surprisingly well with the green jello'
+					''' */
+			}
+
+			BirdnanaPops: {
+				// DisplayName: Birdnana Pop
+				/* Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'oiseau banane au chocolat'
+					''' */
+			}
+
+			Birdnana: {
+				// DisplayName: Birdnana
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+			}
+
+			PipKebob: {
+				// DisplayName: Pip Kebob
+				/* Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'A classic fruit kebab with a marshmellow-y twist'
+					''' */
+			}
+
+			Pip: {
+				// DisplayName: Pip
+				// Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
+			}
+
+			RoyalCherryBugBottleItem: {
+				// DisplayName: Royal Cherry Bug Bottle Item
+				// Tooltip: ""
+			}
+
+			RoyalCherryBugBottle: {
+				// DisplayName: Royal Cherry Bug Bottle
+				// Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -1583,11 +1659,6 @@ Mods: {
 			DudlingPet: {
 				// Description: A dudley is following you
 				// DisplayName: Dudling
-			}
-
-			FoxPet: {
-				// Description: Mods.TheConfectionRebirth.Buffs.FoxPet.Description
-				// DisplayName: delete later
 			}
 
 			CreamsandWitchPet: {
@@ -1826,6 +1897,7 @@ Mods: {
 			// CherryBugBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.CherryBugBottleItem.DisplayName}"
 			// EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 			// SoulofSpiteinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofSpiteinaBottleItem.DisplayName}"
+			// RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
 		}
 
 		SetBonus: {
@@ -1857,13 +1929,13 @@ Mods: {
 
 		Bestiary: {
 			# Critters
-			// Birdnana: A creature disguised as a bird or banana to blend in with its surroundings. Is it a bird, or is it a banana?
+			// Birdnana: Camouflaged as a banana, this creature takes to the skies when startled. Is it a bird, or is it a banana?
 			// CherryBug: A bug known for its distinguished cherry taste. Often used as food flavorings.
-			// ChocolateBunny: A rabbit that has made itself appear as if its made out of pure chocolate.
-			// ChocolateFrog: When it rains in the confection frogs will start to appear and look like they are coated in chocolate.
-			// GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the land.
-			// GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. They have a particular sour taste.
-			// Pip: A very small bird that looks like marshmellow. Despite everything it can be quite amazing seeing the little wings carry its large body.
+			// ChocolateBunny: A unique rabbit disquised to look like chocolate to blend in with confection.
+			// ChocolateFrog: When the confection clashes with the jungle, these unique amphibians come out to hop around and swim in cream water lakes.
+			// GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the confected land.
+			// GummyWorm: Underneath rocks and when it rains you can find small rainbow worms wriggling withing the cookie filled soil. They have a particular sour taste.
+			// Pip: A very small bird that looks like marshmellow. Despite everything it is able to carry itself with its small wings. It can be quite amazing seeing the little wings carry its large body.
 			// RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
 			# Enemies
 			// Meowzer: A cat and pastry foe that uses its large tart cannon to blast away anyone who disturb the confection at night. 50% cat, 50% pastry and 100% rainbow lazer fury.

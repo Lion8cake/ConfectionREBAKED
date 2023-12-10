@@ -1,118 +1,75 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using MonoMod.Cil;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs.Critters
 {
-    internal class ChocolateFrog : ModNPC
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Frog];
-            Main.npcCatchable[NPC.type] = true;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
-            {
-                Velocity = 1f
-            });
-        }
+	public class ChocolateFrog : ModNPC
+	{
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Frog];
+			Main.npcCatchable[Type] = true;
 
-        public override void SetDefaults()
-        {
-            NPC.CloneDefaults(NPCID.Frog);
-            NPC.catchItem = (short)ModContent.ItemType<ChocolateFrogItem>();
-            NPC.aiStyle = 7;
-            NPC.friendly = true;
-            AIType = NPCID.Frog;
-            AnimationType = NPCID.Frog;
-            Banner = NPC.type;
-            BannerItem = ModContent.ItemType<ChocolateFrogBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
-        }
+			NPCID.Sets.CountsAsCritter[Type] = true;
+			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+			NPCID.Sets.TownCritter[Type] = true;
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+		}
 
-                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.ChocolateFrog")
-            });
-        }
+		public override void SetDefaults() {
+			NPC.width = 12;
+			NPC.height = 10;
+			NPC.aiStyle = 7;
+			NPC.damage = 0;
+			NPC.defense = 0;
+			NPC.lifeMax = 5;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
 
-        public override bool? CanBeHitByItem(Player player, Item item)
-        {
-            return true;
-        }
+			NPC.catchItem = ModContent.ItemType<Items.ChocolateFrog>();
+			AIType = NPCID.Frog;
+			AnimationType = NPCID.Frog;
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<ChocolateFrogBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+		}
 
-        public override bool? CanBeHitByProjectile(Projectile projectile)
-        {
-            return true;
-        }
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            if (Main.netMode == NetmodeID.Server)
-            {
-                return;
-            }
+				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.ChocolateFrog")
+			});
+		}
 
-            if (NPC.life <= 0)
-            {
-                var entitySource = NPC.GetSource_Death();
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && spawnInfo.Player.ZoneJungle && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
+				return 0.75f;
+			}
+			return 0f;
+		}
 
-                for (int i = 0; i < 1; i++)
-                {
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateFrogGore1").Type);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateFrogGore2").Type);
-                }
-            }
-        }
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (Main.netMode == NetmodeID.Server) {
+				return;
+			}
 
-        /*public virtual void OnCatchNPC(Player player, Item item)
-        {
-            item.stack = 1;
+			if (NPC.life <= 0) {
+				var entitySource = NPC.GetSource_Death();
 
-            try
-            {
-                var npcCenter = NPC.Center.ToTileCoordinates();
-            }
-            catch
-            {
-                return;
-            }
-        }*/
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
-            {
-                return 1f;
-            }
-            return 0f;
-        }
-    }
-
-    internal class ChocolateFrogItem : ModItem
-    {
-        public override void SetStaticDefaults() => Item.ResearchUnlockCount = 5;
-
-        public override void SetDefaults()
-        {
-            Item.useStyle = 1;
-            Item.autoReuse = true;
-            Item.useTurn = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 12;
-            Item.height = 12;
-            Item.makeNPC = 360;
-            Item.noUseGraphic = true;
-
-            Item.makeNPC = (short)ModContent.NPCType<ChocolateFrog>();
-        }
-    }
+				for (int i = 0; i < 1; i++) {
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateFrogGore1").Type);
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChocolateFrogGore2").Type);
+				}
+			}
+		}
+	}
 }

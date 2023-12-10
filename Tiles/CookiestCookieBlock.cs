@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Pets.CookiestPet;
-
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -10,7 +8,7 @@ namespace TheConfectionRebirth.Tiles
 		public override void SetStaticDefaults()
 		{
 			base.SetStaticDefaults();
-			RegisterItemDrop(ModContent.ItemType<CookiestBlock>());
+			RegisterItemDrop(ModContent.ItemType<Items.CookiestBlock>());
 		}
 
 		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {

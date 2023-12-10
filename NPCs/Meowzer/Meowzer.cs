@@ -14,7 +14,6 @@ using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.NPCs.Meowzer.Gores;
 using TheConfectionRebirth.Items;
-using TheConfectionRebirth.Pets.MeawzerPet;
 
 namespace TheConfectionRebirth.NPCs.Meowzer
 {

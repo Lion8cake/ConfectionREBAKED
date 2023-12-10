@@ -36,11 +36,6 @@ namespace TheConfectionRebirth.Items.Armor
             if (rank > 5)
                 rank = 5;
             StackableBuffData.StrawberryStrike.AscendBuff(player, rank - 1, 300);
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 3;
-		}
-
-		public override void UpdateVanitySet(Player player) {
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 3;
 		}
 
 		public override void AddRecipes()

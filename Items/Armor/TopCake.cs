@@ -34,13 +34,5 @@ namespace TheConfectionRebirth.Items.Armor
 				}
 			}
 		}
-
-		public override void UpdateVanitySet(Player player) {
-			if (player.HasBuff<Buffs.RollercycleBuff>()) {
-				if (ConfectionModCalling.Achievements != null) {
-					ConfectionModCalling.Achievements.Call("Event", "BirthdaySuitRollerCookieRide");
-				}
-			}
-		}
 	}
 }

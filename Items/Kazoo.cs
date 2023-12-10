@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 40;
             Item.useTime = 15;
             Item.useAnimation = 20;
-            Item.useStyle = 2;
+            Item.useStyle = 1;
             Item.value = Item.buyPrice(gold: 1);
 			Item.UseSound = null;
             Item.autoReuse = true;

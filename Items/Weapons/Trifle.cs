@@ -45,13 +45,17 @@ namespace TheConfectionRebirth.Items.Weapons
 			ShotAmount++;
 			if (ShotAmount == 1) {
 				Projectile.NewProjectile(source, position, velocity, type, damage, knockback);
-				player.ChooseAmmo(player.HeldItem).stack--;
+				if (player.ChooseAmmo(player.HeldItem).consumable) {
+					player.ChooseAmmo(player.HeldItem).stack--;
+				}
 			}
 			else if (ShotAmount == 2) {
 				int FailedSlots = 0;
 				for (int StackSlot = 55; StackSlot < 58; StackSlot++) {
 					if (player.inventory[StackSlot].ammo == AmmoID.Bullet) {
-						player.inventory[StackSlot].stack--;
+						if (player.inventory[StackSlot].consumable) {
+							player.inventory[StackSlot].stack--;
+						}
 						Projectile.NewProjectile(source, position, velocity, player.inventory[StackSlot].shoot, damage, knockback);
 						SecondSlotUsed = StackSlot;
 						break;
@@ -62,7 +66,9 @@ namespace TheConfectionRebirth.Items.Weapons
 				}
 				if (FailedSlots == 3) {
 					Projectile.NewProjectile(source, position, velocity, type, damage, knockback);
-					player.ChooseAmmo(player.HeldItem).stack--;
+					if (player.ChooseAmmo(player.HeldItem).consumable) {
+						player.ChooseAmmo(player.HeldItem).stack--;
+					}
 				}
 				
 			}
@@ -70,7 +76,9 @@ namespace TheConfectionRebirth.Items.Weapons
 				int FailedSlots2 = 0;
 				for (int StackSlot2 = 56; StackSlot2 < 58; StackSlot2++) {
 					if (player.inventory[StackSlot2].ammo == AmmoID.Bullet && StackSlot2 != SecondSlotUsed) {
-						player.inventory[StackSlot2].stack--;
+						if (player.inventory[StackSlot2].consumable) {
+							player.inventory[StackSlot2].stack--;
+						}
 						Projectile.NewProjectile(source, position, velocity, player.inventory[StackSlot2].shoot, damage, knockback);
 						break;
 					}
@@ -80,7 +88,9 @@ namespace TheConfectionRebirth.Items.Weapons
 				}
 				if (FailedSlots2 == 2) {
 					Projectile.NewProjectile(source, position, velocity, type, damage, knockback);
-					player.ChooseAmmo(player.HeldItem).stack--;
+					if (player.ChooseAmmo(player.HeldItem).consumable) {
+						player.ChooseAmmo(player.HeldItem).stack--;
+					}
 				}
 				ShotAmount = 0;
 			}

@@ -13,7 +13,7 @@ namespace TheConfectionRebirth {
 
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle {
 			get {
-				if (Main.time < 100 && Main.dayTime) {
+				if (Main.time < 100 && Main.dayTime && !Main.lockMenuBGChange) {
 					ConfectionWorldGeneration.confectionBG = Main.rand.Next(4);
 				}
 				int bgType = ConfectionWorldGeneration.confectionBG;

@@ -44,11 +44,6 @@ namespace TheConfectionRebirth.Items.Armor
                 rank = (int)(speed - 1);
             }
             StackableBuffData.ChocolateCharge.AscendBuff(player, rank, 300);
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 2;
-		}
-
-		public override void UpdateVanitySet(Player player) {
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 2;
 		}
 
 		public override void AddRecipes()

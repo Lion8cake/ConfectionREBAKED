@@ -41,7 +41,7 @@ namespace TheConfectionRebirth.Items.Placeable
 			AddAndReplace<KeyofDelight>(ItemID.LightKey);
             AddAndReplace<ConfectionBiomeKey>(ItemID.HallowedKey);
             AddAndReplace<GrandSlammer>(ItemID.Pwnhammer);
-			AddAndReplace<NPCs.Critters.RoyalCherryBugItem>(ItemID.EmpressButterfly);
+			AddAndReplace<RoyalCherryBug>(ItemID.EmpressButterfly);
         }
 
         private static void AddAndReplace<TConf>(int hall) where TConf : ModItem

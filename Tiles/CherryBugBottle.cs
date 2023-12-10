@@ -69,18 +69,4 @@ namespace TheConfectionRebirth.Tiles
             frame = Main.tileFrame[TileID.FireflyinaBottle];
         }
     }
-
-    internal class CherryBugBottleItem : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.FireflyinaBottle);
-            Item.createTile = ModContent.TileType<CherryBugBottle>();
-        }
-    }
 }
