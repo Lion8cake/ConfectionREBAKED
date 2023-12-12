@@ -81,8 +81,8 @@ namespace TheConfectionRebirth.Tiles.Trees
 					1 => 297,
 					2 => 298,
 					3 => 299,
-					4 => ModContent.NPCType<Pip>(),
-					5 => ModContent.NPCType<Birdnana>(),
+					4 => ModContent.NPCType<NPCs.Critters.Pip>(),
+					5 => ModContent.NPCType<NPCs.Critters.Birdnana>(),
 					_ => 538,
 				};
 				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {

@@ -35,23 +35,4 @@ namespace TheConfectionRebirth.Tiles
             frameYOffset = Main.frogCageFrame[offset] * AnimationFrameHeight;
         }
     }
-
-    internal class ChocolateFrogCageItem : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.FrogCage);
-            Item.createTile = ModContent.TileType<ChocolateFrogCage>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(null, "ChocolateFrogItem", 1).AddIngredient(ItemID.Terrarium, 1).Register();
-        }
-    }
 }

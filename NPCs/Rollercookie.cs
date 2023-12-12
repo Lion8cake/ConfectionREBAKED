@@ -14,7 +14,6 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Pets.RollerCookiePet;
 
 namespace TheConfectionRebirth.NPCs
 {

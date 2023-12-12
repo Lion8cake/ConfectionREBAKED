@@ -79,25 +79,4 @@ namespace TheConfectionRebirth.Tiles
             frame = Main.tileFrame[TileID.SoulBottles];
         }
     }
-
-    internal class SoulofDelightinaBottleItem : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.SoulBottleLight);
-            Item.createTile = ModContent.TileType<SoulofDelightinaBottle>();
-        }
-
-		public override void AddRecipes() {
-			CreateRecipe(1)
-				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>())
-				.AddIngredient(ItemID.Bottle)
-				.Register();
-		}
-	}
 }

@@ -9,7 +9,6 @@ using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
-using TheConfectionRebirth.Pets.CreamsandWitchPet;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -69,7 +68,7 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ModContent.ItemType<CreamHat>(), ModContent.ItemType<CookieCorset>(), ModContent.ItemType<CakeDress>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Creamsand>(), 1, 30, 50));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PixieStick>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamySandwhich>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.CreamySandwhich>(), 10));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
         }
 

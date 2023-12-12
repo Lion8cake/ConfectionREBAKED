@@ -24,6 +24,7 @@ using Terraria.Graphics.Shaders;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Dusts;
 using static Terraria.Player;
+using Terraria.GameContent;
 
 namespace TheConfectionRebirth {
 	public partial class TheConfectionRebirth : Mod
@@ -103,11 +104,8 @@ namespace TheConfectionRebirth {
 			On_NPC.BigMimicSummonCheck += On_NPC_BigMimicSummonCheck;
 
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
-
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
-
 			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool += On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
-
 			On_Player.ItemCheck_ApplyHoldStyle_Inner += On_Player_ItemCheck_ApplyHoldStyle_Inner;
 		}
 
@@ -127,37 +125,19 @@ namespace TheConfectionRebirth {
 			On_NPC.BigMimicSummonCheck -= On_NPC_BigMimicSummonCheck;
 
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
-
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
-
 			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool -= On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
-
 			On_Player.ItemCheck_ApplyHoldStyle_Inner -= On_Player_ItemCheck_ApplyHoldStyle_Inner;
 		}
 
 		#region flareholditemdust
 		private void On_Player_ItemCheck_ApplyHoldStyle_Inner(On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player self, float mountOffset, Item sItem, Rectangle heldItemFrame) {
 			orig.Invoke(self, mountOffset, sItem, heldItemFrame);
-			if (self.isPettingAnimal) {
-				int num10 = self.miscCounter % 14 / 7;
-				CompositeArmStretchAmount stretch = CompositeArmStretchAmount.ThreeQuarters;
-				if (num10 == 1) {
-					stretch = CompositeArmStretchAmount.Full;
-				}
-				float num2 = 0.3f;
-				if (self.isTheAnimalBeingPetSmall) {
-					num2 = 0.2f;
-				}
-				self.SetCompositeArmBack(enabled: true, stretch, (float)Math.PI * -2f * num2 * (float)self.direction);
-			}
-			if (!self.CanVisuallyHoldItem(sItem)) {
-				return;
-			}
 			if (sItem.holdStyle == 1 && !self.pulley) {
 				if (Main.dedServ) {
 					self.itemLocation.X = self.position.X + (float)self.width * 0.5f + 20f * (float)self.direction;
 				}
-				else if (sItem.type == 930) {
+				else if (sItem.type == ItemID.FlareGun) {
 					self.itemLocation.X = self.position.X + (float)(self.width / 2) * 0.5f - 12f - (float)(2 * self.direction);
 					float x = self.position.X + (float)(self.width / 2) + (float)(38 * self.direction);
 					if (self.direction == 1) {
@@ -184,10 +164,7 @@ namespace TheConfectionRebirth {
 						}
 					}
 					if (num3 == ModContent.ItemType<SherbetFlare>()) {
-						num3 = ModContent.DustType<SherbetDust>();
-					}
-					if (num3 > 0) {
-						int num4 = Dust.NewDust(new Vector2(x, y + self.gfxOffY), 6, 6, num3, 0f, 0f, 100, default(Color), 1.6f);
+						int num4 = Dust.NewDust(new Vector2(x, y + self.gfxOffY), 6, 6, ModContent.DustType<SherbetDust>(), 0f, 0f, 100, default(Color), 1.6f);
 						Main.dust[num4].noGravity = true;
 						Main.dust[num4].velocity.Y -= 4f * self.gravDir;
 						if (num3 == 66) {
@@ -250,6 +227,9 @@ namespace TheConfectionRebirth {
 				sizeY = 3;
 			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) {
 				sizeY = 2;
 			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {

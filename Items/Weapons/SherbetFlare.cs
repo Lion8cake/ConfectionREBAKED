@@ -19,7 +19,6 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.maxStack = 9999;
 			Item.consumable = true; 
 			Item.knockBack = 1.5f;
-			Item.rare = ItemRarityID.Orange;
 			Item.shoot = ModContent.ProjectileType<Projectiles.SherbetFlare>();
 			Item.shootSpeed = 6f;
 			Item.width = 12;

@@ -14,23 +14,80 @@ Discord: https://discord.gg/JwEKrVhjA6
 ===========================================
 Changelog
 ===========================================
-0.19.5
-=========================
-Readded Fairy Floss Rain waterfalls, curtesy of Basically i am cat
-Fixed foliage growing underwater
-Rewrote the otherworldly music code to nolonger need an detour
-Fixed yumdrops having incorrect dusts and a visual glitch that made the bottom of the stop drawing
-Added a map name to the enchanted saccharite which also fixes the metal detector localisation issue
-Added recipe to the soul of delight in a bottle
-Added soul of spite in a bottle
-Fixed Soul bottles not being able to be placed under platforms
-Fixed the confection spreading in pre-hardmode
-Fixed banners clipping through platforms when placed under them
-Fixed mech bosses dropping ore and a bag in expert mode
-Fixed Cream Blocks not having the correct hitting sound
-Fixed WoF not dropping any hammer in hallowed worlds
-Added drunk support for mech and WoF drops to now alternate or give both confection and hallow items
-Added Fargo Best of Both worlds support
+0.20.0.1
+========
+Creamgrass and Mowed Creamgrass now allow sunflowers, fallen logs and pumpkins to be placed ontop
+Gave correct credit to people who helped in the 0.20 update
+
+0.20.0
+========
+Added a system that automatically replaces item ingredients with confection recipe groups. This fixes incompatibilities with some items from other mods. Dedicated support for some modded items will still need to be added
+
+Added Gummy Whip Dye
+Added Foamin' Wisp Dye
+Added Candy Corn Dye
+Added Swirling Chocolate Dye
+Added Shifting Creamsands Dye
+Added the Gummy Wyrm
+Added Rocky Cookie Wall
+Added Sherbet Flare
+Added Chlorophyte extractanator support
+Added Choco-rabbit Cupcakes
+Added Frog in a pond
+Added Birdnana Pop
+Added Pip Kebob
+Added a special effect to royal cherry bugs
+Added Royal Cherry bug bottle
+Remade the Crazy Cone from the ground up
+Fixed the Desert Pylon not working in the confection
+Reworked the Trifle, now consumes the top 3 most ammo slots in sucsession
+Added 15 souls of light to the megashark recipe
+Remade the parfait slime from the ground up (prepare for spiked slime AI)
+Remade the Crooked Cookie from the ground up
+Remade the mint JR from the ground up
+Fixed the Confection mimic not having an afterimage
+Remade the hunger from the ground up
+Remade the foamin' float from the ground up
+Fixed the gummy worm-whip being a "broken mess"
+Turn The Crumbler into The Blossom Cookie and reworked the yoyo to be more than just a boring yoyo
+Rewrote the sky coloring code to longer break and be unreliable
+fixed creamsand stone having the hardened sand conversion
+Fixed Creamsand not crafting sand related items
+Fixed Creamsand not being able to be fired out of a sandgun
+Fixed the crunch ball sound not having a position
+Fixed spreading issues with biome specific blocks (cookie, cream, fairy floss blocks)
+Resprited the soul of spite in a bottle
+increased the arrow requirement and recipe amount of the Chip Arrow and Saccharite Arrows
+increased the bullet requirement and recipe amount of the Saccharite Bullets
+Fixed Otherwordly music never playing
+Changed how saccharite grows, now being more similar to thorns in generation and now also grow on walls
+Fixed artifical cookie wall not turning into natural dirt wall apon conversion
+Fixed Sherbet bricks not being animated
+Fixed sherbet bricks providing light
+Fixed sherbet bricks not having the stone mining sound
+Made Sherbet dusts now be animated
+Fixed the Sherbet brick item not being animated
+Fixed the sherbet wall item and tile being formatted horribly and animated incorrectly
+Fixed all torches not having a mouse hover over sprite
+Fixed the confection torches using the sherbet dust
+Changed the sherbet campfire to have rainbow flames in its tile and item sprite
+Fixed the saccharite shot having a massive hitbox
+Touched up the cherimoya sprite
+Rewrote all the critters from the ground up
+Fixed royal and normal cherry bugs lighting not working properly or at all
+Rewrote some critter bestiaries
+Removed bait amount from the royal cherry bug
+Fixed critters spawning during events
+Fixed the sherbet slime and gummy wyrm having swapped banner sprites
+Fixed Chocolate frogs not crafting the froggle bunwich
+Moved alot of files around, this may cause some item unloading issues although this most likely wont happen
+Removed 1.3 tiles deletion code (noone should be playing 1.3 anymore)
+Changed the Shiny Birdnana Pet AI
+Changed the sword swing use style of the kazoo and magical kazoo
+Resprited and remade the meowzer pet
+Fixed the Top Cake hat not having candles
+Optimised the neapolinite chestplate player layers which now makes most helmet swaps instantanious and fixes helmets not working in the social slots
+Fixed exploit of being able to change the a world's confection background by doing the following: have a new day happen, while loading into a world, with the confection menu open
 
 ===========================================
 Credit - Programmers
@@ -43,8 +100,8 @@ Hariq - Polished backend code
 CastledKing2341 - For the awesome and very polished Meowzer NPC
 sOvr9000 - For the awesome and very polished Icecream Gal NPC
 foxyboy55 - many bug fixes an a few texture changes
-JeoHashtag1553 - Particle system allowing for particles and other cool drawing effects
-BasicallyIAmFox - cleaning up backend code and npc variation code & adding fairy floss raining code, gummy wyrm
+JeoHashtag1553 - Particle system allowing for particles and other cool drawing effects and Royal Cherry bug effects
+BasicallyIAmFox - cleaning up backend code and npc variation code & adding fairy floss raining code, gummy wyrm and swirling chocolate shader code
 
 ===========================================
 Credit - Artists

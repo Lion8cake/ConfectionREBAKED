@@ -33,11 +33,6 @@ namespace TheConfectionRebirth.Items.Armor
         {
             player.setBonus = Language.GetTextValue("Mods.TheConfectionRebirth.SetBonus.NeapoliniteHat");
             player.GetModPlayer<ConfectionPlayer>().NeapoliniteSummonerSet = true;
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 4;
-		}
-
-		public override void UpdateVanitySet(Player player) {
-			player.GetModPlayer<ConfectionPlayer>().neapoliniteArmorSetType = 4;
 		}
 
 		public override void AddRecipes()

@@ -9,7 +9,6 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
-using TheConfectionRebirth.Pets.DudlingPet;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -48,7 +47,7 @@ namespace TheConfectionRebirth.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TaffyApple>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.TaffyApple>(), 50));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 125));
         }
 

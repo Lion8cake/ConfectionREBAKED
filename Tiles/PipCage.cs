@@ -35,23 +35,4 @@ namespace TheConfectionRebirth.Tiles
             frameYOffset = Main.grasshopperCageFrame[offset] * AnimationFrameHeight;
         }
     }
-
-    internal class PipCageItem : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.GrasshopperCage);
-            Item.createTile = ModContent.TileType<PipCage>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(null, "PipItem", 1).AddIngredient(ItemID.Terrarium, 1).Register();
-        }
-    }
 }
