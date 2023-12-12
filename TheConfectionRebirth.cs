@@ -41,6 +41,9 @@ namespace TheConfectionRebirth {
 		public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11), new DateTime(2022, 10, 2), new DateTime(2022, 5, 16)).ToBoolean();
 		public static TileTest tileMerge => v;
 
+		public const string CalamityModName = "CalamityMod";
+		public static bool IsCalamityLoaded => ModLoader.HasMod(CalamityModName);
+
 		public const string ThoriumModName = "ThoriumMod";
 		public static bool IsThoriumLoaded => ModLoader.HasMod(ThoriumModName);
 

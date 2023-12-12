@@ -2301,5 +2301,10 @@ Mods: {
 		}
 
 		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
+
+		Status.Progression: {
+			NeapoliniteOreText: "The Confection has been blessed with rich, delicious minerals!"
+			BothOresText: "The Hallow and Confection have been blessed with powerful ores!"
+		}
 	}
 }

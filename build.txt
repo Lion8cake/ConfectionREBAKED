@@ -4,5 +4,5 @@ version = 0.20.0.1
 homepage = https://terrariamods.wiki.gg/wiki/Confection_Rebaked
 includeSource = true
 includePDB = true
-weakReferences = ThoriumMod@1.7.1.3
-sortAfter = ThoriumMod
+weakReferences = CalamityMod@2.0.3.1, ThoriumMod@1.7.1.3
+sortAfter = CalamityMod, ThoriumMod
