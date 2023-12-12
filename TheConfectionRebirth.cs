@@ -25,6 +25,7 @@ using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Dusts;
 using static Terraria.Player;
 using Terraria.GameContent;
+using System.Linq;
 
 namespace TheConfectionRebirth {
 	public partial class TheConfectionRebirth : Mod
@@ -75,9 +76,8 @@ namespace TheConfectionRebirth {
 			StackableBuffData.PostSetupContent();
 			ModSupport.ModSupportBaseClass.HookAll();
 		}
-
-		public override void Load()
-		{
+		
+		public override void Load() {
 			Instance = this;
 
 			if (!Main.dedServ) {

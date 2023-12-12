@@ -9,12 +9,15 @@ using ThoriumMod.Projectiles;
 namespace TheConfectionRebirth.ModSupport.Thorium.Projectiles;
 
 public sealed class TheGobstopperPro : ModProjectile {
+	public override bool IsLoadingEnabled(Mod mod) => TheConfectionRebirth.IsThoriumLoaded;
+
 	public override LocalizedText DisplayName => ModContent.GetInstance<TheGobstopper>().DisplayName;
 
 	public override void SetDefaults() {
 		Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 	}
 
+	[JITWhenModsEnabled(TheConfectionRebirth.ThoriumModName)]
 	public override bool PreDrawExtras() {
 		Vector2? playerOffset = null;
 		if (Main.player[Projectile.owner].HeldItem.type == ModContent.ItemType<TheGobstopper>()) {

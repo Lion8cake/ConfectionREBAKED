@@ -7,6 +7,8 @@ namespace TheConfectionRebirth.ModSupport.Thorium.Items.Tools;
 
 public sealed class JawbreakerPickaxe : ModItem {
 	private sealed class JawbreakerPickaxeBuff : ModBuff {
+		public override bool IsLoadingEnabled(Mod mod) => TheConfectionRebirth.IsThoriumLoaded;
+
 		public const int DefenseBonus = 6;
 
 		public override LocalizedText Description => base.Description.WithFormatArgs(DefenseBonus);

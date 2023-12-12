@@ -37,7 +37,7 @@ public sealed class YumdropKiss : NeapoliniteBuff {
 		tip = Description.Format(GetHealerDamageIncreaseByStage(stage), GetHealerCritChanceIncreaseByStage(stage));
 	}
 
-	[JITWhenModsEnabled("ThoriumMod")]
+	[JITWhenModsEnabled(TheConfectionRebirth.ThoriumModName)]
 	public override void Update(Player player, ref int buffIndex) {
 		base.Update(player, ref buffIndex);
 

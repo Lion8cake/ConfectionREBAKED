@@ -14,12 +14,12 @@ using CalamityHallowedOreTile = CalamityMod.Tiles.Ores.HallowedOre;
 
 namespace TheConfectionRebirth.ModSupport.Calamity;
 
+[JITWhenModsEnabled(TheConfectionRebirth.CalamityModName)]
 public sealed class HallowedOreTweaks : ModSystem {
 	public override bool IsLoadingEnabled(Mod mod) {
 		return TheConfectionRebirth.IsCalamityLoaded;
 	}
 
-	[JITWhenModsEnabled(TheConfectionRebirth.CalamityModName)]
 	public override void OnModLoad() {
 		var spawnHardmodeOresMethod = typeof(CalamityGlobalNPC).FindMethod("SpawnMechBossHardmodeOres");
 
@@ -72,6 +72,7 @@ public sealed class HallowedOreTweaks : ModSystem {
 			}
 			catch (Exception) {
 				ModContent.GetInstance<TheConfectionRebirth>().Logger.Error("Something broke in hallowed ore patch, blame lion8cake");
+				MonoModHooks.DumpIL(ModContent.GetInstance<TheConfectionRebirth>(), ctx);
 			}
 		});
 	}

@@ -33,7 +33,7 @@ public sealed class RockinStar : NeapoliniteBuff {
 		tip = Description.Format(GetBardDamageIncreaseByStage(stage), GetBardCritChanceIncreaseByStage(stage));
 	}
 
-	[JITWhenModsEnabled("ThoriumMod")]
+	[JITWhenModsEnabled(TheConfectionRebirth.ThoriumModName)]
 	public override void Update(Player player, ref int buffIndex) {
 		base.Update(player, ref buffIndex);
 
