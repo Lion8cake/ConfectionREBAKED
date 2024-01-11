@@ -35,24 +35,27 @@ public sealed class ThoriumDLCPlayer : ModPlayer {
 		InspirationConsumed = 0;
 	}
 
+	[JITWhenModsEnabled(TheConfectionRebirth.ThoriumModName)]
 	public override void Load() {
 		MonoModHooks.Add(
 			typeof(BardItem).GetMethod(nameof(BardItem.ConsumeInspiration), BindingFlags.Static | BindingFlags.Public),
-			static (Func<Player, int, bool, bool> orig, Player player, int cost, bool pay) => {
-				if (orig(player, cost, pay) && pay) {
-					if (player.TryGetModPlayer<ThoriumDLCPlayer>(out var dlcPlayer)
-						&& player.TryGetModPlayer<ConfectionPlayer>(out var confectionPlayer)
-						&& dlcPlayer.NeapoliniteBard
-						&& player.whoAmI == Main.myPlayer) {
+			OnConsumeInspiration);
+			
+		static bool OnConsumeInspiration(Func<Player, int, bool, bool> orig, Player player, int cost, bool pay) {
+			if (orig(player, cost, pay) && pay) {
+				if (player.TryGetModPlayer<ThoriumDLCPlayer>(out var dlcPlayer)
+					   && player.TryGetModPlayer<ConfectionPlayer>(out var confectionPlayer)
+					   && dlcPlayer.NeapoliniteBard
+					   && player.whoAmI == Main.myPlayer) {
 						dlcPlayer.InspirationConsumed += cost;
-						confectionPlayer.Timer.Add(new(cost, 180, TimerDataType.ThoriumBard));
-					}
-
-					return true;
+						confectionPlayer.Timer.Add(new TimerData(cost, 180, TimerDataType.ThoriumBard));
 				}
 
-				return false;
-			});
+				return true;
+			}
+
+			return false;
+		}
 	}
 
 	public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {

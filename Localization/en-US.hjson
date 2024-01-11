@@ -1594,7 +1594,7 @@ Mods: {
 
 			JawbreakerPickaxe: {
 				DisplayName: Jawbreaker Pickaxe
-				Tooltip: 
+				Tooltip: ""
 			}
 
 			JawbreakerHamaxe: {

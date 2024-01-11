@@ -6,11 +6,11 @@ namespace TheConfectionRebirth.ModSupport.Thorium;
 
 internal static class CollisionHelper {
 	public static bool CanHitLine(this Entity start, Entity end) {
-		return CanHitLine(Utils.ToTileCoordinates(start.Center), Utils.ToTileCoordinates(end.Center));
+		return CanHitLine(start.Center.ToTileCoordinates(), end.Center.ToTileCoordinates());
 	}
 
 	public static bool CanHitLine(Vector2 start, Vector2 end) {
-		return CanHitLine(Utils.ToTileCoordinates(start), Utils.ToTileCoordinates(end));
+		return CanHitLine(start.ToTileCoordinates(), end.ToTileCoordinates());
 	}
 
 	public static bool CanHitLine(Point start, Point end) {
