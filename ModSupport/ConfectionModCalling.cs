@@ -11,7 +11,7 @@ namespace TheConfectionRebirth
 		/// <summary>
 		/// Checks if fargos best of both worlds is enabled
 		/// </summary>
-		public static bool FargoBoBW = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargoSeedConfectionConfiguration>().BothGoods;
+		public static bool FargoBoBW => ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargoSeedConfectionConfiguration>().BothGoods;
 
 		public override void PostSetupContent()
 		{

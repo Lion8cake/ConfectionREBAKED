@@ -4,5 +4,6 @@
         MeleeDamage,
         MagicManaRegeneration,
         StrawberryStrikeDelay,
+		ThoriumBard,
     }
 }
