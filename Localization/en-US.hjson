@@ -233,8 +233,8 @@ Mods: {
 			}
 
 			GrumbleBee: {
-				DisplayName: Grumble Bee
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
+				Tooltip: ""
 			}
 
 			YumDrop: {
@@ -357,8 +357,8 @@ Mods: {
 			}
 
 			GummyWorm: {
-				DisplayName: Gummy Worm
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
+				Tooltip: ""
 			}
 
 			GrandSlammer: {
@@ -1616,8 +1616,8 @@ Mods: {
 			}
 
 			Birdnana: {
-				DisplayName: Birdnana
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+				Tooltip: ""
 			}
 
 			PipKebob: {
@@ -1630,8 +1630,8 @@ Mods: {
 			}
 
 			Pip: {
-				DisplayName: Pip
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
+				Tooltip: ""
 			}
 
 			RoyalCherryBugBottleItem: {
@@ -2145,5 +2145,29 @@ Mods: {
 		}
 
 		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
+
+		CreditsRollCategory_ConfectionTeam: {
+			1: Confection REBAKED Team
+			2: Lion8cake
+			3: Snickerbobble
+			4: Delicious Saturn
+			5: Cyril
+			6: AstralGel
+			7: Cace “Basketcace”
+			8: Snacks
+			9: Ghasttear1
+			10: CastledKing2341
+			11: S0vr9000
+			12: Jeo “JeoHashtag1553”
+			13: Hariq “Hariq53”
+			14: Foxyboy55
+			15: Mddznyan
+			16: DakotaSpine
+			17: Miguel Noturn0
+			18: Neo “Neobind”
+			19: Splig “split0282”
+			20: Yreorel
+			21: BasicallyIAmFox
+		}
 	}
 }
