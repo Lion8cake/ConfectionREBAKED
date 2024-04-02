@@ -732,6 +732,10 @@ namespace TheConfectionRebirth {
 								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsandstone>();
 								WorldGen.SquareTileFrame(m, n);
 							}
+							else if (ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType] >= 0) {
+								Main.tile[m, n].TileType = (ushort)ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType];
+								WorldGen.SquareTileFrame(m, n);
+							}
 						}
 					}
 				}

@@ -76,7 +76,7 @@ namespace TheConfectionRebirth {
 			Instance = this;
 
 			if (!Main.dedServ) {
-				GummyWyrmShaderData = new(new(Assets.Request<Effect>("Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad).Value), "GummyWyrmPass");
+				GummyWyrmShaderData = new(ModContent.Request<Effect>("TheConfectionRebirth/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad), "GummyWyrmPass");
 			}
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -137,6 +137,18 @@ namespace TheConfectionRebirth {
 			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
+		}
+
+		public override object Call(params object[] args) {
+			//For Content creators: Message me (Lion8cake) on discord if you have any mod call suggestions
+			return args switch {
+				["confectionorHallow"] => ConfectionWorldGeneration.confectionorHallow,
+				["SetconfectionorHallow", bool boolean] => ConfectionWorldGeneration.confectionorHallow = boolean,
+
+				//IDs
+				["ConvertsToConfection", int tileID, int num] => ConfectionIDs.Sets.ConvertsToConfection[tileID] = num,
+				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
+			};
 		}
 
 		#region credits

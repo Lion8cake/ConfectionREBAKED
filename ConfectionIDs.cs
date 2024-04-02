@@ -62,6 +62,14 @@ namespace TheConfectionRebirth {
 
 				public static bool[] PearlstoneOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.HallowedTorch, ItemID.PearlstoneBrick, ItemID.PearlstoneEcho, ItemID.Hallow1Echo, ItemID.Hallow2Echo, ItemID.Hallow3Echo, ItemID.Hallow4Echo);
 			}
+
+			/// <summary>
+			/// Used to add extra tiles to the Confection's worldgen, such as modded grass tiles converting to confection grass tiles upon hardmode
+			/// <br/> Example:
+			/// <br/> ConfectionIDs.Sets.ConvertsToConfection[Type] = TileID.Clay;
+			/// <br/> This will turn the modded tile of choice into clay blocks if the confection's worldgen hits directly ontop of the modded tile
+			/// </summary>
+			public static int[] ConvertsToConfection = TileID.Sets.Factory.CreateIntSet(-1);
 		}
     }
 }
