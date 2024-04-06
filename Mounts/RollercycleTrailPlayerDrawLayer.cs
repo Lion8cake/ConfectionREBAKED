@@ -52,7 +52,7 @@ public sealed class RollercycleTrailPlayerDrawLayer : PlayerDrawLayer {
 
 		// Modify all draw data that was drawn from DrawStarboardRainbowTrail call.
 		// Have to do this for the sake of trail not appearing out of thin air.
-		for (int i = oldDrawDataCacheCount; i < (float)drawInfo.DrawDataCache.Count; i++) {
+		for (int i = oldDrawDataCacheCount; i < drawInfo.DrawDataCache.Count; i++) {
 			// `0f` is first trail element, `1f` is last trail element.
 			float trailOrder = (i - oldDrawDataCacheCount) / ((float)drawInfo.DrawDataCache.Count - oldDrawDataCacheCount);
 
