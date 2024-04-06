@@ -38,27 +38,27 @@ public sealed class RollercycleTrailPlayerDrawLayer : PlayerDrawLayer {
 		if (opacity <= 0f)
 			return;
 
-		// Store old amount of draw data, draw the trail, update new draw data.
+		// Temporarily swap cWings and cMount just to support shaders.
+		(int origCWings, drawInfo.cWings) = (drawInfo.cWings, drawInfo.drawPlayer.cMount);
+
+		// Store old count of draw data, draw the trail, update new draw data.
 		int oldDrawDataCacheCount = drawInfo.DrawDataCache.Count;
 
 		CalculateTrailDrawingValues(in drawInfo, out var commonWingPosPreFloor, out var directions);
 
 		PlayerDrawLayers.DrawStarboardRainbowTrail(ref drawInfo, commonWingPosPreFloor, directions);
 
-		float newDrawDataCacheCount = drawInfo.DrawDataCache.Count;
+		drawInfo.cWings = origCWings;
 
 		// Modify all draw data that was drawn from DrawStarboardRainbowTrail call.
 		// Have to do this for the sake of trail not appearing out of thin air.
-		for (int i = oldDrawDataCacheCount; i < newDrawDataCacheCount; i++) {
+		for (int i = oldDrawDataCacheCount; i < (float)drawInfo.DrawDataCache.Count; i++) {
 			// `0f` is first trail element, `1f` is last trail element.
-			float trailOrder = (i - oldDrawDataCacheCount) / (newDrawDataCacheCount - oldDrawDataCacheCount);
+			float trailOrder = (i - oldDrawDataCacheCount) / ((float)drawInfo.DrawDataCache.Count - oldDrawDataCacheCount);
 
 			var drawData = drawInfo.DrawDataCache[i];
 
 			drawData.color *= MathHelper.SmoothStep(0f, opacity, trailOrder);
-
-			// Change dye to mount dye. There may or may not be a dye, but it's already handled for us.
-			drawData.shader = drawInfo.drawPlayer.cMount;
 
 			drawInfo.DrawDataCache[i] = drawData;
 		}
