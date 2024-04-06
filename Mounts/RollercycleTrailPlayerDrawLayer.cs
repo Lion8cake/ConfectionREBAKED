@@ -38,7 +38,7 @@ public sealed class RollercycleTrailPlayerDrawLayer : PlayerDrawLayer {
 		if (opacity <= 0f)
 			return;
 
-		// Temporarily swap cWings and cMount just to support shaders.
+		// Temporarily swap cWings and cMount just to support dyes.
 		(int origCWings, drawInfo.cWings) = (drawInfo.cWings, drawInfo.drawPlayer.cMount);
 
 		// Store old count of draw data, draw the trail, update new draw data.
