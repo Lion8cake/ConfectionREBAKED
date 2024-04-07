@@ -446,11 +446,6 @@ Mods: {
 				DisplayName: Baker's Dozen
 			}
 
-			AncientCosmicCookieCannon: {
-				Tooltip: "{$Mods.TheConfectionRebirth.Items.CosmicCookieCannon.Tooltip}"
-				DisplayName: Ancient Cosmic Cookie Cannon
-			}
-
 			SweetHook: {
 				Tooltip: ""
 				DisplayName: Sweet Hook
@@ -502,7 +497,7 @@ Mods: {
 			}
 
 			SherbetCampfire: {
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 				DisplayName: Sherbet Campfire
 			}
 
@@ -991,7 +986,7 @@ Mods: {
 			}
 
 			ConfectionCampfire: {
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 				DisplayName: Confection Campfire
 			}
 
@@ -1256,8 +1251,8 @@ Mods: {
 			}
 
 			ChocolateFrog: {
-				DisplayName: Chocolate Frog
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
+				Tooltip: ""
 			}
 
 			ChocolateBunnyBanner: {
@@ -1505,27 +1500,27 @@ Mods: {
 			}
 
 			WildAiryBlue: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Wild Airy Blue
 			}
 
 			SprinkleWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Sprinkle Wings
 			}
 
 			SacchariteWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Saccharite Wings
 			}
 
 			CreamWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Cream Wings
 			}
 
 			CookieWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Cookie Wings
 			}
 
@@ -1898,6 +1893,7 @@ Mods: {
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 			SoulofSpiteinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofSpiteinaBottleItem.DisplayName}"
 			RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
+			CreamTree.MapEntry: Cream Tree
 		}
 
 		SetBonus: {

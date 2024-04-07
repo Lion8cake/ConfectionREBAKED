@@ -59,7 +59,7 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<SherbetBricks>()).Register();
+            CreateRecipe(10).AddIngredient(ItemID.Torch, 10).AddIngredient(ModContent.ItemType<SherbetBricks>()).Register();
         }
 
 		private void LightColor(out float red, out float green, out float blue) {

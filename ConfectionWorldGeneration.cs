@@ -27,11 +27,13 @@ namespace TheConfectionRebirth {
 		public HallowOptions SelectedHallowOption { get; set; } = HallowOptions.Random;
 		public static bool confectionorHallow;
 		public static int confectionBG;
+		public static int confectionTree;
 		public static int confectionUGBG;
 		public static int confectionUGBGSnow;
 
 		public override void OnWorldLoad() {
 			confectionBG = 0;
+			confectionTree = 0;
 			confectionUGBG = 0;
 			confectionUGBGSnow = 0;
 			confectionorHallow = false;
@@ -40,6 +42,7 @@ namespace TheConfectionRebirth {
 		public override void OnWorldUnload() {
 			confectionorHallow = false;
 			confectionBG = 0;
+			confectionTree = 0;
 			confectionUGBG = 0;
 			confectionUGBGSnow = 0;
 			totalCandy = 0;
@@ -52,6 +55,7 @@ namespace TheConfectionRebirth {
 				tag["TheConfectionRebirth:confectionorHallow"] = true;
 			}
 			tag["TheConfectionRebirth:confectionBG"] = confectionBG;
+			tag["TheConfectionRebirth:confectionTree"] = confectionTree;
 			tag["TheConfectionRebirth:confectionUGBG"] = confectionUGBG;
 			tag["TheConfectionRebirth:confectionUGBGSnow"] = confectionUGBGSnow;
 		}
@@ -62,6 +66,7 @@ namespace TheConfectionRebirth {
 
 		public override void LoadWorldData(TagCompound tag) {
 			confectionBG = tag.GetInt("TheConfectionRebirth:confectionBG");
+			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
 			confectionUGBG = tag.GetInt("TheConfectionRebirth:confectionUGBG");
 			confectionUGBGSnow = tag.GetInt("TheConfectionRebirth:confectionUGBGSnow");
 			for (var i = 0; i < Main.tile.Width; ++i)
@@ -133,6 +138,7 @@ namespace TheConfectionRebirth {
 			writer.Write(flags);
 
 			writer.Write(confectionBG);
+			writer.Write(confectionTree);
 			writer.Write(confectionUGBG);
 			writer.Write(confectionUGBGSnow);
 
@@ -144,6 +150,7 @@ namespace TheConfectionRebirth {
 			confectionorHallow = flags[0];
 
 			confectionBG = reader.ReadInt32();
+			confectionTree = reader.ReadInt32();
 			confectionUGBG = reader.ReadInt32();
 			confectionUGBGSnow = reader.ReadInt32();
 
@@ -158,6 +165,7 @@ namespace TheConfectionRebirth {
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			confectionBG = Main.rand.Next(4);
+			confectionTree = Main.rand.Next(2);
 			confectionUGBG = Main.rand.Next(4);
 			confectionUGBGSnow = Main.rand.Next(2);
 		}
@@ -182,23 +190,13 @@ namespace TheConfectionRebirth {
 
 		public override void ModifyHardmodeTasks(List<GenPass> list) {
 			if (confectionorHallow && !Main.drunkWorld) {
-				/*int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
-				if (index2 != -1) {
-					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(Confection)));
-					list.RemoveAt(index2);
-				}
-				int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
-				if (index3 != -1) {
-					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(NullGen)));
-					list.RemoveAt(index3);
-				}*/
 				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
 				if (index4 != -1) {
 					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix)));
 					list.RemoveAt(index4);
 				}
 			}
-			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld) {
+			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld) { //Should be changed to not remove the genpasses to allow for other mods (like avalon) load their hardmode stuff
 				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
 				if (index2 != -1) {
 					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(ConfectionDrunkInner)));

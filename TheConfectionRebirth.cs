@@ -147,6 +147,18 @@ namespace TheConfectionRebirth {
 
 				//IDs
 				["ConvertsToConfection", int tileID, int num] => ConfectionIDs.Sets.ConvertsToConfection[tileID] = num,
+				["SoulofLightOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.SoulofLightOnlyItem[itemID] = flag,
+				["SoulofNightOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.SoulofNightOnlyItem[itemID] = flag,
+				["DarkShardOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.DarkShardOnlyItem[itemID] = flag,
+				["PixieDustOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PixieDustOnlyItem[itemID] = flag,
+				["UnicornHornOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.UnicornHornOnlyItem[itemID] = flag,
+				["CrystalShardOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.CrystalShardOnlyItem[itemID] = flag,
+				["HallowedBarOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.HallowedBarOnlyItem[itemID] = flag,
+				["PrincessFishOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PrincessFishOnlyItem[itemID] = flag,
+				["PrismiteOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PrismiteOnlyItem[itemID] = flag,
+				["ChaosFishOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.ChaosFishOnlyItem[itemID] = flag,
+				["HallowedSeedsOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.HallowedSeedsOnlyItem[itemID] = flag,
+				["PearlstoneOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PearlstoneOnlyItem[itemID] = flag,
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
