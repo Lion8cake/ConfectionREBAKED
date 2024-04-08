@@ -165,7 +165,7 @@ namespace TheConfectionRebirth {
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			confectionBG = Main.rand.Next(4);
-			confectionTree = Main.rand.Next(2);
+			confectionTree = Main.rand.Next(3);
 			confectionUGBG = Main.rand.Next(4);
 			confectionUGBGSnow = Main.rand.Next(2);
 		}

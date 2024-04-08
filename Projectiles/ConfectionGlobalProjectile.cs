@@ -62,14 +62,24 @@ namespace TheConfectionRebirth.Projectiles
 			if (projectile.type == ProjectileID.WorldGlobe) {
 				Player player = Main.LocalPlayer;
 				if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
-					ConfectionWorldGeneration.confectionBG = Main.rand.Next(4);
+					int rand = Main.rand.Next(4);
+					if (rand == ConfectionWorldGeneration.confectionBG)
+						rand++;
+					if (rand > 3)
+						rand = 0;
+					ConfectionWorldGeneration.confectionBG = rand;
 					NetMessage.SendData(MessageID.WorldData);
 				}
 			}
 			if (projectile.type == ProjectileID.TreeGlobe) {
 				Player player = Main.LocalPlayer;
 				if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
-					ConfectionWorldGeneration.confectionTree = Main.rand.Next(2);
+					int rand = Main.rand.Next(3);
+					if (rand == ConfectionWorldGeneration.confectionTree)
+						rand++;
+					if (rand > 2)
+						rand = 0;
+					ConfectionWorldGeneration.confectionTree = rand;
 					NetMessage.SendData(MessageID.WorldData);
 				}
 			}

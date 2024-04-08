@@ -26,6 +26,7 @@ using TheConfectionRebirth.Tiles.Trees;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth;
 using TheConfectionRebirth.Items;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace TheConfectionRebirth.Tiles.Trees
 {
@@ -488,7 +489,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 		}
 
 		public Texture2D GetTreeTopTexture(int tileType, int treeTextureStyle, byte tileColor) {
-			Texture2D texture2D = TryGetTreeTopAndRequestIfNotReady(tileType, treeTextureStyle, tileColor);
+			Texture2D texture2D = TryGetTreeTopAndRequestIfNotReady(ConfectionWorldGeneration.confectionTree, treeTextureStyle, tileColor);
 			if (texture2D == null) {
 				texture2D = (Texture2D)ModContent.Request<Texture2D>(Texture + "_Tops"); //unsure if we need to add the variant code here or not
 			}
@@ -496,21 +497,11 @@ namespace TheConfectionRebirth.Tiles.Trees
 		}
 
 		public Texture2D GetTreeBranchTexture(int tileType, int treeTextureStyle, byte tileColor) {
-			Texture2D texture2D = TryGetTreeBranchAndRequestIfNotReady(tileType, treeTextureStyle, tileColor);
+			Texture2D texture2D = TryGetTreeBranchAndRequestIfNotReady(ConfectionWorldGeneration.confectionTree, treeTextureStyle, tileColor);
 			if (texture2D == null) {
 				texture2D = (Texture2D)ModContent.Request<Texture2D>(Texture + "_Branches");
 			}
 			return texture2D;
-		}
-
-		//Paint Content
-		public static TreePaintingSettings GetTreeFoliageSettings(int tileType) {
-			if (tileType == ModContent.TileType<CreamTree>()) {
-				return TreeCream;
-			}
-			else {
-				return null;
-			}
 		}
 
 		public class TreeTopRenderTargetHolder : ARenderTargetHolder {
@@ -518,17 +509,14 @@ namespace TheConfectionRebirth.Tiles.Trees
 
 			public override void Prepare() {
 				Asset<Texture2D> asset = null;
-				if (Key.TextureIndex == ModContent.TileType<CreamTree>()) {
-					int num = ConfectionWorldGeneration.confectionTree;
-					if (num == 0) {
+				if (Key.TextureIndex == 0) {
 						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Tops");
-					}
-					else if (num == 1) {
-						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_2_Tops");
-					}
-					else {
-						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Tops");
-					}
+				}
+				else if (Key.TextureIndex == 1) {
+					asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_2_Tops");
+				}
+				else if (Key.TextureIndex == 2) {
+					asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_3_Tops");
 				}
 				if (asset == null) {
 					asset = TextureAssets.TreeTop[0];
@@ -538,7 +526,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 
 			public override void PrepareShader() {
-				PrepareShader(Key.PaintColor, GetTreeFoliageSettings(Key.TextureIndex));
+				PrepareShader(Key.PaintColor, TreeCream);
 			}
 		}
 
@@ -547,17 +535,14 @@ namespace TheConfectionRebirth.Tiles.Trees
 
 			public override void Prepare() {
 				Asset<Texture2D> asset = null;
-				if (Key.TextureIndex == ModContent.TileType<CreamTree>()) {
-					int num = ConfectionWorldGeneration.confectionTree;
-					if (num == 0) {
-						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Branches");
-					}
-					else if (num == 1) {
-						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_2_Branches");
-					}
-					else {
-						asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Branches");
-					}
+				if (Key.TextureIndex == 0) {
+					asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_Branches");
+				}
+				else if (Key.TextureIndex == 1) {
+					asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_2_Branches");
+				}
+				else if (Key.TextureIndex == 2) {
+					asset = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/CreamTree_3_Branches");
 				}
 				if (asset == null) {
 					asset = TextureAssets.TreeBranch[0];
@@ -567,7 +552,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 
 			public override void PrepareShader() {
-				PrepareShader(Key.PaintColor, GetTreeFoliageSettings(Key.TextureIndex));
+				PrepareShader(Key.PaintColor, TreeCream);
 			}
 		}
 
@@ -586,8 +571,6 @@ namespace TheConfectionRebirth.Tiles.Trees
 			if (!value.IsReady) {
 				_requests.Add(value);
 			}
-			value.Clear();
-			_treeTopRenders.Clear();
 		}
 
 		public void RequestTreeBranch(ref TreeFoliageVariantKey lookupKey) {
@@ -601,29 +584,26 @@ namespace TheConfectionRebirth.Tiles.Trees
 			if (!value.IsReady) {
 				_requests.Add(value);
 			}
-			value.Clear();
-			_treeBranchRenders.Clear();
 		}
 
-		public Texture2D TryGetTreeTopAndRequestIfNotReady(int treeTopIndex, int treeTopStyle, int paintColor) {
+		public Texture2D TryGetTreeTopAndRequestIfNotReady(int confectionTreeVariation, int treeTopStyle, int paintColor) {
 			TreeFoliageVariantKey treeFoliageVariantKey = default(TreeFoliageVariantKey);
-			treeFoliageVariantKey.TextureIndex = treeTopIndex;
 			treeFoliageVariantKey.TextureStyle = treeTopStyle;
 			treeFoliageVariantKey.PaintColor = paintColor;
+			treeFoliageVariantKey.TextureIndex = confectionTreeVariation;
 			TreeFoliageVariantKey lookupKey = treeFoliageVariantKey;
 			if (_treeTopRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
 				return (Texture2D)(object)value.Target;
 			}
-			
 			RequestTreeTop(ref lookupKey);
 			return null;
 		}
 
-		public Texture2D TryGetTreeBranchAndRequestIfNotReady(int tiletype, int treeTopStyle, int paintColor) {
+		public Texture2D TryGetTreeBranchAndRequestIfNotReady(int confectionTreeVariation, int treeTopStyle, int paintColor) {
 			TreeFoliageVariantKey treeFoliageVariantKey = default(TreeFoliageVariantKey);
 			treeFoliageVariantKey.TextureStyle = treeTopStyle;
 			treeFoliageVariantKey.PaintColor = paintColor;
-			treeFoliageVariantKey.TextureIndex = tiletype; //We use the tiletype as the index instead of the actual tree index since we can't insert our own index
+			treeFoliageVariantKey.TextureIndex = confectionTreeVariation; //We use the tiletype as the index instead of the actual tree index since we can't insert our own index
 			TreeFoliageVariantKey lookupKey = treeFoliageVariantKey;
 			if (_treeBranchRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
 				return (Texture2D)(object)value.Target;
@@ -916,8 +896,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 		public static bool GetCreamwoodTreeFoliageData(int i, int j, int xoffset, ref int treeFrame, out int floorY, out int topTextureFrameWidth, out int topTextureFrameHeight)
 		{
 			int num = i + xoffset;
-			topTextureFrameWidth = 80;
-			topTextureFrameHeight = 80;
+			CreamTreeTextureFrame(out topTextureFrameWidth, out topTextureFrameHeight);
 			floorY = j;
 			for (int k = 0; k < 100; k++)
 			{
@@ -929,6 +908,22 @@ namespace TheConfectionRebirth.Tiles.Trees
 				}
 			}
 			return true;
+		}
+
+		private static void CreamTreeTextureFrame(out int topTextureFrameWidth, out int topTextureFrameHeight) {
+			int variant = ConfectionWorldGeneration.confectionTree;
+			if (variant == 0) {
+				topTextureFrameWidth = 80;
+				topTextureFrameHeight = 80;
+			}
+			else if (variant == 1) {
+				topTextureFrameWidth = 100;
+				topTextureFrameHeight = 110;
+			}
+			else {
+				topTextureFrameWidth = 100;
+				topTextureFrameHeight = 110;
+			}
 		}
 
 		private void DrawTrees(int k, int l)
