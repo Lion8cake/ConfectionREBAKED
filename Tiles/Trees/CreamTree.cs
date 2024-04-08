@@ -582,13 +582,12 @@ namespace TheConfectionRebirth.Tiles.Trees
 					Key = lookupKey
 				};
 				_treeTopRenders.Add(lookupKey, value);
-				Main.NewText("test 2");
 			}
-			//if (!value.IsReady) {
+			if (!value.IsReady) {
 				_requests.Add(value);
-			Main.NewText("test 3");
-			//}
-			Main.NewText("test");
+			}
+			value.Clear();
+			_treeTopRenders.Clear();
 		}
 
 		public void RequestTreeBranch(ref TreeFoliageVariantKey lookupKey) {
@@ -599,9 +598,11 @@ namespace TheConfectionRebirth.Tiles.Trees
 				};
 				_treeBranchRenders.Add(lookupKey, value);
 			}
-			//if (!value.IsReady) {
+			if (!value.IsReady) {
 				_requests.Add(value);
-			//}
+			}
+			value.Clear();
+			_treeBranchRenders.Clear();
 		}
 
 		public Texture2D TryGetTreeTopAndRequestIfNotReady(int treeTopIndex, int treeTopStyle, int paintColor) {
@@ -610,9 +611,9 @@ namespace TheConfectionRebirth.Tiles.Trees
 			treeFoliageVariantKey.TextureStyle = treeTopStyle;
 			treeFoliageVariantKey.PaintColor = paintColor;
 			TreeFoliageVariantKey lookupKey = treeFoliageVariantKey;
-			/*if (_treeTopRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
+			if (_treeTopRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
 				return (Texture2D)(object)value.Target;
-			}*/
+			}
 			
 			RequestTreeTop(ref lookupKey);
 			return null;
@@ -624,9 +625,9 @@ namespace TheConfectionRebirth.Tiles.Trees
 			treeFoliageVariantKey.PaintColor = paintColor;
 			treeFoliageVariantKey.TextureIndex = tiletype; //We use the tiletype as the index instead of the actual tree index since we can't insert our own index
 			TreeFoliageVariantKey lookupKey = treeFoliageVariantKey;
-			/*if (_treeBranchRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
+			if (_treeBranchRenders.TryGetValue(lookupKey, out var value) && value.IsReady) {
 				return (Texture2D)(object)value.Target;
-			}*/
+			}
 			RequestTreeBranch(ref lookupKey);
 			return null;
 		}
@@ -664,11 +665,6 @@ namespace TheConfectionRebirth.Tiles.Trees
 				}
 			} 
 			return false;
-		}
-
-		public override void RandomUpdate(int i, int j) {
-			bool flag = true;
-			TileFrame(i, j, ref flag, ref flag);
 		}
 
 		public override IEnumerable<Item> GetItemDrops(int i, int j)
