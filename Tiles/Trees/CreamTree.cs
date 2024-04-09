@@ -32,15 +32,6 @@ namespace TheConfectionRebirth.Tiles.Trees
 {
     public class CreamTree : ModTile
     {
-		//Plans for this
-
-		//Basically since we need to create our own tree for tree variants we run into a few issues
-		//converting normal trees into this tree
-		//converting this tree into normal trees
-		
-		//with converting, this tile will extend off the normal tree tile anchor types and then if this tile detects that the tile thats below it is NOT creamgrass then
-		//it will convert to the normal tree type and vise versa for the normal tree. This will HOPEFULLY give a seamless transition between converting trees
-
 		public static GrowTreeSettings Tree_Cream = new GrowTreeSettings
 		{
 			GroundTest = CreamwoodTreeGroundTest,
@@ -67,6 +58,7 @@ namespace TheConfectionRebirth.Tiles.Trees
             Main.tileFrameImportant[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
+			Main.tileBlockLight[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.IsATreeTrunk[Type] = true;
             TileID.Sets.IsShakeable[Type] = true;
@@ -75,7 +67,7 @@ namespace TheConfectionRebirth.Tiles.Trees
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(42, 43, 51), name); //change to normal tree color
+			AddMapEntry(new Color(151, 107, 75), name);
 			DustType = ModContent.DustType<CreamwoodDust>();
 		}
 
@@ -484,9 +476,9 @@ namespace TheConfectionRebirth.Tiles.Trees
 			return true;
 		}
 
-		public static bool IsTileTypeFitForTree(ushort type) {
+		/*public static bool IsTileTypeFitForTree(ushort type) {
 			return type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>();
-		}
+		}*/
 
 		public Texture2D GetTreeTopTexture(int tileType, int treeTextureStyle, byte tileColor) {
 			Texture2D texture2D = TryGetTreeTopAndRequestIfNotReady(ConfectionWorldGeneration.confectionTree, treeTextureStyle, tileColor);
@@ -637,10 +629,11 @@ namespace TheConfectionRebirth.Tiles.Trees
 				{
 					if (Main.tileFrameImportant[Type])
 					{
-						CheckTreeWithSettings(i, j, new CheckTreeSettings
+						CheckTree(i, j);
+						/*CheckTreeWithSettings(i, j, new CheckTreeSettings
 						{
 							IsGroundValid = CreamwoodTreeGroundTest
-						});
+						});*/
 					}
 				}
 			} 
@@ -672,6 +665,15 @@ namespace TheConfectionRebirth.Tiles.Trees
 				{
 					ShakeTree(i, j);
 				}
+			}
+		}
+
+		public override void NearbyEffects(int i, int j, bool closer) {
+			GetTreeBottom(i, j, out var x, out var y);
+			Tile tilebelow = Main.tile[x, y + 1];
+			Tile tilecurrent = Main.tile[x, y];
+			if (tilebelow.TileType != ModContent.TileType<CreamGrass>() && tilecurrent.TileType != ModContent.TileType<CreamGrass>() && tilebelow.TileType != ModContent.TileType<CreamGrassMowed>() && tilecurrent.TileType != ModContent.TileType<CreamGrassMowed>()) {
+				Main.tile[i, j].TileType = TileID.Trees;
 			}
 		}
 
@@ -917,8 +919,8 @@ namespace TheConfectionRebirth.Tiles.Trees
 				topTextureFrameHeight = 80;
 			}
 			else if (variant == 1) {
-				topTextureFrameWidth = 100;
-				topTextureFrameHeight = 110;
+				topTextureFrameWidth = 102;
+				topTextureFrameHeight = 118;
 			}
 			else {
 				topTextureFrameWidth = 100;

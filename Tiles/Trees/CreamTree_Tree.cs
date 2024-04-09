@@ -30,7 +30,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 
 		public override void SetStaticDefaults()
         {
-            GrowsOnTileId = new int[2] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() };
+            GrowsOnTileId = new int[3] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>(), ModContent.TileType<CreamTree>() };
 		}
 
         public override bool Shake(int x, int y, ref bool createLeaves)
