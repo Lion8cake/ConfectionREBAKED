@@ -26,8 +26,8 @@ public sealed class NeapoliniteMegaphone : BardItem {
 		Item.width = 30;
 		Item.height = 30;
 
-		Item.useTime = 18;
-		Item.useAnimation = 18;
+		Item.useTime = 22;
+		Item.useAnimation = 22;
 		Item.holdStyle = ItemHoldStyleID.HoldHeavy;
 		Item.useStyle = ItemUseStyleID.Shoot;
 		Item.UseSound = SoundID.Item24;
@@ -52,7 +52,7 @@ public sealed class NeapoliniteMegaphone : BardItem {
 			position += vector;
 		}
 
-		const float magicConstant = 0.35f * 0.25f;
+		const float magicConstant = 0.45f * 0.25f;
 		float velocityLength = vector.Length();
 		float velocityAngle = MathF.Atan2(velocity.X, velocity.Y);
 		float circleDistance = Main.rand.NextFloat() * 0.2f + 0.95f;

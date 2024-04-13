@@ -29,7 +29,7 @@ public abstract class BaseNeapoliniteMegaphonePro : BardProjectile {
         Projectile.aiStyle = 0;
         Projectile.scale = 1f;
         Projectile.alpha = 255;
-        Projectile.penetrate = -1;
+        Projectile.penetrate = 1;
         Projectile.timeLeft = 70;
         Projectile.friendly = true;
     }
@@ -59,6 +59,20 @@ public abstract class BaseNeapoliniteMegaphonePro : BardProjectile {
         Projectile.position = Projectile.Center;
         Projectile.Size = new Vector2(20f * Projectile.scale);
         Projectile.Center = Projectile.position;
+
+		NPC closestNPC = null;
+		float closestDistance = -0.0f;
+		foreach (var npc in Main.ActiveNPCs) {
+			float distance = npc.DistanceSQ(Projectile.Center);
+
+			if (npc.CanBeChasedBy() && distance > closestDistance) {
+				closestNPC = npc;
+				closestDistance = distance;
+			}
+		}
+		closestDistance = MathF.Sqrt(closestDistance);
+
+		Projectile.velocity = (Projectile.Center - closestNPC.Center).SafeNormalize(default) * MathF.Pow(closestDistance, 0.69f);
     }
 }
 
