@@ -1,22 +1,10 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Linq;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Projectiles;
 
-namespace TheConfectionRebirth.Mounts
-{
+namespace TheConfectionRebirth.Mounts {
 	public class Rollercycle : ModMount
 	{
-		protected class RollercycleSpecificData
-		{
-			internal static float[] offsets = new float[] { 0, 14, -14 };
-		}
-
 		public override void SetStaticDefaults() {
 			MountData.jumpHeight = 20;
 			MountData.acceleration = 0.06f;
@@ -63,18 +51,6 @@ namespace TheConfectionRebirth.Mounts
 			if (!Main.dedServ) {
 				MountData.textureWidth = MountData.backTexture.Width() + 20;
 				MountData.textureHeight = MountData.backTexture.Height();
-			}
-		}
-
-		public override void UpdateEffects(Player player)
-		{
-			if (Math.Abs(player.velocity.X) > 14f)
-			{
-				Rectangle rect = player.getRect();
-
-				var entitySource = new EntitySource_Misc("");
-
-				Projectile.NewProjectile(entitySource, player.Center.X - 4f, player.Center.Y - -20f, 0f, 0f, ModContent.ProjectileType<RollercycleTrail>(), 0, 0f, player.whoAmI, 0f);
 			}
 		}
 	}

@@ -44,13 +44,11 @@ namespace TheConfectionRebirth.Tiles
 				int num20 = -1;
 				int num = ModContent.TileType<CookieBlock>();
 				int num18 = ModContent.TileType<CreamGrass_Foliage>();
-				if (WorldGen.genRand.Next(12) == 0) {
+				if (WorldGen.genRand.NextBool(12)) {
 					num18 = ModContent.TileType<YumDrop>();
 				}
 				int maxValue = 2;
-				bool flag = false;
-				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(maxValue) == 0 && Main.tile[i, minJ].LiquidType < LiquidID.Water) {
-					flag = true;
+				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.NextBool(maxValue) && Main.tile[i, minJ].LiquidType <= -1) {
 					if (WorldGen.PlaceTile(i, minJ, num18, mute: true)) {
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
 					}

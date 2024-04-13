@@ -13,8 +13,8 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             ItemID.Sets.IsFishingCrate[Type] = true;
             ItemID.Sets.IsFishingCrateHardmode[Type] = true;
-
-            Item.ResearchUnlockCount = 5;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<BananaSplitCrate>();
+			Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()

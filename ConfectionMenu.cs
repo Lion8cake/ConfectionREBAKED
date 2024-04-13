@@ -3,10 +3,10 @@ using ReLogic.Content;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
 using Terraria;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth {
 	public class ConfectionMenu : ModMenu {
-
 		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/Logo");
 
 		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");

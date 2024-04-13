@@ -242,8 +242,8 @@ Mods: {
 			}
 
 			GrumbleBee: {
-				DisplayName: Grumble Bee
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GrumbleBee.DisplayName}"
+				Tooltip: ""
 			}
 
 			YumDrop: {
@@ -366,8 +366,8 @@ Mods: {
 			}
 
 			GummyWorm: {
-				DisplayName: Gummy Worm
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWorm.DisplayName}"
+				Tooltip: ""
 			}
 
 			GrandSlammer: {
@@ -455,11 +455,6 @@ Mods: {
 				DisplayName: Baker's Dozen
 			}
 
-			AncientCosmicCookieCannon: {
-				Tooltip: "{$Mods.TheConfectionRebirth.Items.CosmicCookieCannon.Tooltip}"
-				DisplayName: Ancient Cosmic Cookie Cannon
-			}
-
 			SweetHook: {
 				Tooltip: ""
 				DisplayName: Sweet Hook
@@ -511,7 +506,7 @@ Mods: {
 			}
 
 			SherbetCampfire: {
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 				DisplayName: Sherbet Campfire
 			}
 
@@ -1000,7 +995,7 @@ Mods: {
 			}
 
 			ConfectionCampfire: {
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 				DisplayName: Confection Campfire
 			}
 
@@ -1265,8 +1260,8 @@ Mods: {
 			}
 
 			ChocolateFrog: {
-				DisplayName: Chocolate Frog
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
+				Tooltip: ""
 			}
 
 			ChocolateBunnyBanner: {
@@ -1514,27 +1509,27 @@ Mods: {
 			}
 
 			WildAiryBlue: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Wild Airy Blue
 			}
 
 			SprinkleWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Sprinkle Wings
 			}
 
 			SacchariteWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Saccharite Wings
 			}
 
 			CreamWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Cream Wings
 			}
 
 			CookieWings: {
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 				DisplayName: Cookie Wings
 			}
 
@@ -1752,8 +1747,8 @@ Mods: {
 			}
 
 			Birdnana: {
-				DisplayName: Birdnana
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+				Tooltip: ""
 			}
 
 			PipKebob: {
@@ -1766,8 +1761,8 @@ Mods: {
 			}
 
 			Pip: {
-				DisplayName: Pip
-				Tooltip: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
+				Tooltip: ""
 			}
 
 			RoyalCherryBugBottleItem: {
@@ -2054,6 +2049,7 @@ Mods: {
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 			SoulofSpiteinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofSpiteinaBottleItem.DisplayName}"
 			RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
+			CreamTree.MapEntry: Cream Tree
 		}
 
 		SetBonus: {
@@ -2305,6 +2301,30 @@ Mods: {
 		Status.Progression: {
 			NeapoliniteOreText: "The Confection has been blessed with rich, delicious minerals!"
 			BothOresText: "The Hallow and Confection have been blessed with powerful ores!"
+		}
+
+		CreditsRollCategory_ConfectionTeam: {
+			1: Confection REBAKED Team
+			2: Lion8cake
+			3: Snickerbobble
+			4: Delicious Saturn
+			5: Cyril
+			6: AstralGel
+			7: Cace “Basketcace”
+			8: Snacks
+			9: Ghasttear1
+			10: CastledKing2341
+			11: S0vr9000
+			12: Jeo “JeoHashtag1553”
+			13: Hariq “Hariq53”
+			14: Foxyboy55
+			15: Mddznyan
+			16: DakotaSpine
+			17: Miguel Noturn0
+			18: Neo “Neobind”
+			19: Splig “split0282”
+			20: Yreorel
+			21: BasicallyIAmFox
 		}
 	}
 }

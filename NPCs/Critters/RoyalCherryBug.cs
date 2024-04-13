@@ -205,8 +205,8 @@ namespace TheConfectionRebirth.NPCs.Critters
 					new Vector2((1.1f + (float)Math.Sin(Main.timeForVisualEffects * 0.03f) * 0.3f) * NPC.ai[2], (0.7f + (float)Math.Sin(Main.timeForVisualEffects * 0.1f) * 0.7f) * NPC.ai[2]), SpriteEffects.None, 0);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && NPC.downedPlantBoss && Main.hardMode && !spawnInfo.AnyInvasionActive()) {
-				return 0.1f;
+			if (spawnInfo.Player.ZoneOverworldHeight && (Main.remixWorld || (!Main.dayTime && Main.time < 16200.0)) && spawnInfo.Player.RollLuck(10) == 0 && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && NPC.downedPlantBoss && Main.hardMode && !spawnInfo.AnyInvasionActive() && !NPC.AnyNPCs(ModContent.NPCType<RoyalCherryBug>())) {
+				return 0.3f;
 			}
 			return 0f;
 		}
