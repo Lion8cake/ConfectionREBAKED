@@ -31,7 +31,7 @@ using static Terraria.Graphics.FinalFractalHelper;
 using static TheConfectionRebirth.NPCs.BagDrops;
 
 namespace TheConfectionRebirth {
-	public class TheConfectionRebirth : Mod {
+	public partial class TheConfectionRebirth : Mod {
 		public static ShaderData GummyWyrmShaderData { get; private set; }
 
 		internal static TheConfectionRebirth Instance;
@@ -43,6 +43,12 @@ namespace TheConfectionRebirth {
 		private static TileTest v = new();
 		public static bool OurFavoriteDay => new DateTimeMatch(DateTime.Now, new DateTime(2022, 12, 11), new DateTime(2022, 10, 2), new DateTime(2022, 5, 16)).ToBoolean();
 		public static TileTest tileMerge => v;
+
+		public const string CalamityModName = "CalamityMod";
+		public static bool IsCalamityLoaded => ModLoader.HasMod(CalamityModName);
+
+		public const string ThoriumModName = "ThoriumMod";
+		public static bool IsThoriumLoaded => ModLoader.HasMod(ThoriumModName);
 
 		public class TileTest {
 			public bool this[int tile1, int tile2] {
