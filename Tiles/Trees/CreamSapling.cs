@@ -45,7 +45,7 @@ namespace TheConfectionRebirth.Tiles.Trees
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(151, 107, 75), name);
 
-            //TileID.Sets.TreeSapling[Type] = true;
+            TileID.Sets.TreeSapling[Type] = true;
             TileID.Sets.CommonSapling[Type] = true;
             TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);

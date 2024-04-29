@@ -35,14 +35,9 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 		}
-		
-		public override void Kill(int timeLeft)
-		{
-			if (Main.myPlayer != Projectile.owner)
-			{
-				return;
-			}
 
+		public override void OnKill(int timeLeft)
+		{
 			for (int i = 0; i < 5; i++)
 			{
 				Projectile.NewProjectile(new EntitySource_Misc("Chocolate chip from chip arrow"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<ChocolateChip>(), 24, 1f, Main.myPlayer, 0f, 0f);

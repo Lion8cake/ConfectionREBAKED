@@ -21,6 +21,7 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.Utilities;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Hooks;
@@ -105,6 +106,7 @@ namespace TheConfectionRebirth {
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
 			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool += On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
 			On_Player.ItemCheck_ApplyHoldStyle_Inner += On_Player_ItemCheck_ApplyHoldStyle_Inner;
+			IL_Sandstorm.EmitDust += CreamsandSandstorm;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
@@ -131,6 +133,7 @@ namespace TheConfectionRebirth {
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
 			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool -= On_Player_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool;
 			On_Player.ItemCheck_ApplyHoldStyle_Inner -= On_Player_ItemCheck_ApplyHoldStyle_Inner;
+			IL_Sandstorm.EmitDust -= CreamsandSandstorm;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
@@ -162,6 +165,25 @@ namespace TheConfectionRebirth {
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region SandstormEdit
+		private void CreamsandSandstorm(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before, 
+				i => i.MatchLdcR4(0.2f), 
+				i => i.MatchLdcR4(0.35f), 
+				i => i.MatchLdsfld<Sandstorm>("Severity"), 
+				i => i.MatchCall("Microsoft.Xna.Framework.MathHelper", "Lerp"),
+				i => i.MatchStloc(18));
+			c.EmitLdloca(17);
+			c.EmitDelegate((ref WeightedRandom<Color> weightedRandom) => {
+				weightedRandom.Add(new Color(99, 57, 46), 
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.Creamsand>()) + 
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.Creamsandstone>()) + 
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.HardenedCreamsand>()));
+			});
+		}
+		#endregion
 
 		#region credits
 		private SegmentInforReport PlaySegment_ModdedTextRoll(CreditsRollComposer self, int startTime, string sourceCategory, Vector2 anchorOffset = default(Vector2)) {

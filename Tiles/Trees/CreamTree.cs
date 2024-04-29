@@ -27,6 +27,7 @@ using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth;
 using TheConfectionRebirth.Items;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.PointsToAnalysis;
 
 namespace TheConfectionRebirth.Tiles.Trees
 {
@@ -681,7 +682,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 		{
 			spriteBatch.End();
 			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
-			DrawTrees(i, j);
+			DrawTrees(i, j, spriteBatch);
 			spriteBatch.End();
 			spriteBatch.Begin(); //No params as PostDraw doesn't use spritebatch with params
 		}
@@ -718,69 +719,88 @@ namespace TheConfectionRebirth.Tiles.Trees
 			{
 				return;
 			}
-
-			if (Main.getGoodWorld && genRand.Next(17) == 0)
-			{
+			if (Main.getGoodWorld && genRand.NextBool(17)) {
 				Projectile.NewProjectile(new EntitySource_ShakeTree(x, y), x * 16, y * 16, (float)Main.rand.Next(-100, 101) * 0.002f, 0f, ProjectileID.Bomb, 0, 0f, Main.myPlayer, 16f, 16f);
 			}
-			else if (genRand.Next(35) == 0 && Main.halloween)
-			{
+			else if (genRand.NextBool(7)) {
+				Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.Acorn, genRand.Next(1, 3));
+			}
+			else if (genRand.NextBool(35) && Main.halloween) {
 				Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.RottenEgg, genRand.Next(1, 3));
 			}
-			else if (genRand.Next(12) == 0)
-			{
+			else if (genRand.NextBool(12)) {
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.CreamWood>(), genRand.Next(1, 4));
 			}
-			else if (genRand.Next(20) == 0)
-			{
+			else if (genRand.NextBool(20)) {
 				int type = ItemID.CopperCoin;
 				int num2 = genRand.Next(50, 100);
-				if (genRand.Next(30) == 0)
-				{
+				if (genRand.NextBool(30)) {
 					type = ItemID.GoldCoin;
 					num2 = 1;
-					if (genRand.Next(5) == 0)
-					{
+					if (genRand.NextBool(5)) {
 						num2++;
 					}
-					if (genRand.Next(10) == 0)
-					{
+					if (genRand.NextBool(10)) {
 						num2++;
 					}
 				}
-				else if (genRand.Next(10) == 0)
-				{
+				else if (genRand.NextBool(10)) {
 					type = ItemID.SilverCoin;
 					num2 = genRand.Next(1, 21);
-					if (genRand.Next(3) == 0)
-					{
+					if (genRand.NextBool(3)) {
 						num2 += genRand.Next(1, 21);
 					}
-					if (genRand.Next(4) == 0)
-					{
+					if (genRand.NextBool(4)) {
 						num2 += genRand.Next(1, 21);
 					}
 				}
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type, num2);
 			}
-			else if (genRand.Next(20) == 0 && y > Main.maxTilesY - 250)
-			{
-				//Should probs look into the shake code again
-				//NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, (WorldGen.genRand.NextBool(3) ? ModContent.NPCType<NPCs.AlbinoRat>() : (WorldGen.genRand.NextBool(2) ? ModContent.NPCType<NPCs.EnchantedNightmareWorm>() : ModContent.NPCType<NPCs.QuartzCrawler>())));
+			else if (genRand.NextBool(15)) {
+				int type2 = Main.rand.NextFromList(new short[4] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>(), NPCID.Squirrel, NPCID.SquirrelRed });
+				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
+					type2 = ((!genRand.NextBool(2)) ? NPCID.SquirrelGold : NPCID.GoldBird);
+				}
+				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type2);
 			}
-			else if (Main.remixWorld && genRand.Next(20) == 0 && y > Main.maxTilesY - 250)
-			{
-				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ItemID.Rope, genRand.Next(20, 41));
+			else if (genRand.NextBool(50)&& !Main.dayTime) {
+				int type3 = Main.rand.NextFromList(new short[3] { NPCID.FairyCritterPink, NPCID.FairyCritterGreen, NPCID.FairyCritterBlue });
+				if (Main.tenthAnniversaryWorld && !Main.rand.NextBool(4)) {
+					type3 = NPCID.FairyCritterPink;
+				}
+				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type3);
 			}
-			else if (genRand.Next(12) == 0)
-			{
-				int secondaryItemStack = ((genRand.Next(2) != 0) ? ModContent.ItemType<Cherimoya>() : ItemID.Starfruit); //I think its time to add a secondary fruit
+			else if (genRand.NextBool(50)) {
+				Point point;
+				for (int l = 0; l < 5; l++) {
+					point = new(x + Main.rand.Next(-2, 2), y - 1 + Main.rand.Next(-2, 2));
+					int type4 = ((Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) != 0f) ? Main.rand.NextFromList(new short[2] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>() }) : NPCID.GoldBird);
+					NPC obj3 = Main.npc[NPC.NewNPC(new EntitySource_ShakeTree(x, y), point.X * 16, point.Y * 16, type4)];
+					obj3.velocity = Main.rand.NextVector2CircularEdge(3f, 3f);
+					obj3.netUpdate = true;
+				}
+			}
+			/*else if (genRand.NextBool(20)&& !IsPalmOasisTree(x)) { //Type == CreamPalmTree
+				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, NPCID.Seagull2);
+			}*/
+			else if (genRand.NextBool(20) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) {
+				int type5 = ModContent.NPCType<NPCs.Critters.GrumbleBee>();
+				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
+					type5 = NPCID.GoldButterfly ;
+				}
+				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type5);
+			}
+			/*else if (genRand.NextBool(12) && !IsPalmOasisTree(x)) { //Type == CreamPalmTree
+				int secondaryItemStack = ((!genRand.NextBool(2)) ? 4287 : 4283);
+				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
+			}*/
+			else if (genRand.NextBool(12)) {
+				int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<Cherimoya>() : ItemID.Starfruit);
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}
-
-			if (Main.netMode == 2)
+			if (Main.netMode == NetmodeID.Server)
 			{
-				NetMessage.SendData(112, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<CreamTreeLeaf>());
+				NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<CreamTreeLeaf>());
 			}
 			if (Main.netMode == 0)
 			{
@@ -898,7 +918,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 		public static bool GetCreamwoodTreeFoliageData(int i, int j, int xoffset, ref int treeFrame, out int floorY, out int topTextureFrameWidth, out int topTextureFrameHeight)
 		{
 			int num = i + xoffset;
-			CreamTreeTextureFrame(out topTextureFrameWidth, out topTextureFrameHeight);
+			CreamTreeTextureFrame(i, ref treeFrame, out topTextureFrameWidth, out topTextureFrameHeight);
 			floorY = j;
 			for (int k = 0; k < 100; k++)
 			{
@@ -912,7 +932,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			return true;
 		}
 
-		private static void CreamTreeTextureFrame(out int topTextureFrameWidth, out int topTextureFrameHeight) {
+		private static void CreamTreeTextureFrame(int i, ref int treeFrame, out int topTextureFrameWidth, out int topTextureFrameHeight) {
 			int variant = ConfectionWorldGeneration.confectionTree;
 			if (variant == 0) {
 				topTextureFrameWidth = 80;
@@ -921,6 +941,12 @@ namespace TheConfectionRebirth.Tiles.Trees
 			else if (variant == 1) {
 				topTextureFrameWidth = 102;
 				topTextureFrameHeight = 118;
+				if (i % 3 == 1) {
+					treeFrame += 3;
+				}
+				else if (i % 3 == 2) {
+					treeFrame += 6;
+				}
 			}
 			else {
 				topTextureFrameWidth = 100;
@@ -928,7 +954,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 		}
 
-		private void DrawTrees(int k, int l)
+		private void DrawTrees(int k, int l, SpriteBatch spriteBatch)
 		{
 			double _treeWindCounter = (double)typeof(TileDrawing).GetField("_treeWindCounter", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
@@ -975,7 +1001,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							{
 								color6 = Color.White;
 							}
-							Main.spriteBatch.Draw(treeTopTexture, vector, (Rectangle?)new Rectangle(treeFrame * (topTextureFrameWidth3 + 2), 0, topTextureFrameWidth3, topTextureFrameHeight3), color6, num7 * num15, new Vector2((float)(topTextureFrameWidth3 / 2), (float)topTextureFrameHeight3), 1f, (SpriteEffects)0, 0f);
+							spriteBatch.Draw(treeTopTexture, vector, (Rectangle?)new Rectangle(treeFrame * (topTextureFrameWidth3 + 2), 0, topTextureFrameWidth3, topTextureFrameHeight3), color6, num7 * num15, new Vector2((float)(topTextureFrameWidth3 / 2), (float)topTextureFrameHeight3), 1f, (SpriteEffects)0, 0f);
 							break;
 						}
 					case 44:
@@ -1005,7 +1031,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							{
 								color4 = Color.White;
 							}
-							Main.spriteBatch.Draw(treeBranchTexture2, position2, (Rectangle?)new Rectangle(0, treeFrame * 42, 40, 40), color4, num4 * num16, new Vector2(40f, 24f), 1f, (SpriteEffects)0, 0f);
+							spriteBatch.Draw(treeBranchTexture2, position2, (Rectangle?)new Rectangle(0, treeFrame * 42, 40, 40), color4, num4 * num16, new Vector2(40f, 24f), 1f, (SpriteEffects)0, 0f);
 							break;
 						}
 					case 66:
@@ -1035,7 +1061,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							{
 								color2 = Color.White;
 							}
-							Main.spriteBatch.Draw(treeBranchTexture, position, (Rectangle?)new Rectangle(42, treeFrame * 42, 40, 40), color2, num20 * num16, new Vector2(0f, 30f), 1f, (SpriteEffects)0, 0f);
+							spriteBatch.Draw(treeBranchTexture, position, (Rectangle?)new Rectangle(42, treeFrame * 42, 40, 40), color2, num20 * num16, new Vector2(0f, 30f), 1f, (SpriteEffects)0, 0f);
 							break;
 						}
 				}
