@@ -1893,7 +1893,7 @@ Mods: {
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 			SoulofSpiteinaBottle.MapEntry: "{$Mods.TheConfectionRebirth.Items.SoulofSpiteinaBottleItem.DisplayName}"
 			RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
-			CreamTree.MapEntry: Cream Tree
+			CreamTree.MapEntry: Tree
 		}
 
 		SetBonus: {
@@ -2045,6 +2045,15 @@ Mods: {
 				CookieSpread: {
 					Tooltip:
 						'''
+						No Spread:
+							Special Confection Only tiles don't spread
+							World generation doesn't generate confection only tiles
+
+						Partial Spread:
+							Special Confection Only tiles only spread when near spreadable tiles
+							in a 6x6 area (e.g Creamstone, creamgras, ect)
+
+						Full Spread:
 						Enables spreading for the following:
 								Cookie Block
 								Cream Block

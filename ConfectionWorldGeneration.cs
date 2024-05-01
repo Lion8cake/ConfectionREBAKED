@@ -591,20 +591,23 @@ namespace TheConfectionRebirth {
 							else if (Main.tile[m, n].WallType == 191 || Main.tile[m, n].WallType == 195 || Main.tile[m, n].WallType == 185 || Main.tile[m, n].WallType == 215 || Main.tile[m, n].WallType == 200 || Main.tile[m, n].WallType == 83) {
 								Main.tile[m, n].WallType = (ushort)ModContent.WallType<Creamstone5Wall>();
 							}
-							else if (Main.tile[m, n].WallType == 2 || Main.tile[m, n].WallType == 16) {
-								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieWall>();
-							}
-							else if (Main.tile[m, n].WallType == 59) {
-								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
-							}
-							else if (Main.tile[m, n].WallType == WallID.Cloud) {
-								Main.tile[m, n].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
-							}
-							else if (Main.tile[m, n].WallType == WallID.IceUnsafe) {
-								Main.tile[m, n].WallType = (ushort)ModContent.WallType<BlueIceWall>();
-							}
-							else if (Main.tile[m, n].WallType == WallID.SnowWallUnsafe) {
-								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamWall>();
+							else if (ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread") 
+							{
+								if (Main.tile[m, n].WallType == 2 || Main.tile[m, n].WallType == 16) {
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieWall>();
+								}
+								else if (Main.tile[m, n].WallType == 59) {
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cloud) {
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.IceUnsafe) {
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<BlueIceWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.SnowWallUnsafe) {
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamWall>();
+								}
 							}
 							if (flag && Main.tile[m, n].TileType == 225) {
 								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamstone>();
@@ -624,90 +627,6 @@ namespace TheConfectionRebirth {
 							}
 							else if (Main.tile[m, n].TileType == 53 || Main.tile[m, n].TileType == 123 || Main.tile[m, n].TileType == 112 || Main.tile[m, n].TileType == 234) {
 								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsand>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == 0) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookieBlock>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == 668) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookiestCookieBlock>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == 147) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamBlock>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Cloud || Main.tile[m, n].TileType == TileID.LesionBlock || Main.tile[m, n].TileType == TileID.FleshBlock) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.RainCloud) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.SnowCloud) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Amethyst) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Topaz) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Sapphire) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Emerald) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Ruby) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.Diamond) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.ArgonMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<ArgonCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.BlueMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.BrownMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BrownCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.GreenMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<GreenCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.KryptonMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<KryptonCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.LavaMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<LavaCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.PurpleMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.RedMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<RedCreamMoss>();
-								WorldGen.SquareTileFrame(m, n);
-							}
-							else if (Main.tile[m, n].TileType == TileID.XenonMoss) {
-								Main.tile[m, n].TileType = (ushort)ModContent.TileType<XenomCreamMoss>();
 								WorldGen.SquareTileFrame(m, n);
 							}
 							else if (Main.tile[m, n].TileType == 661 || Main.tile[m, n].TileType == 662) {
@@ -733,6 +652,92 @@ namespace TheConfectionRebirth {
 							else if (ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType] >= 0) {
 								Main.tile[m, n].TileType = (ushort)ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType];
 								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread") {
+								if (Main.tile[m, n].TileType == 0) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookieBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == 668) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookiestCookieBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == 147) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Cloud || Main.tile[m, n].TileType == TileID.LesionBlock || Main.tile[m, n].TileType == TileID.FleshBlock) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.RainCloud) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.SnowCloud) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Amethyst) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Topaz) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Sapphire) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Emerald) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Ruby) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Diamond) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.ArgonMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<ArgonCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.BlueMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.BrownMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<BrownCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.GreenMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<GreenCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.KryptonMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<KryptonCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.LavaMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<LavaCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.PurpleMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.RedMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<RedCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.XenonMoss) {
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<XenomCreamMoss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
 							}
 						}
 					}
@@ -981,11 +986,11 @@ namespace TheConfectionRebirth {
 				int type = Main.tile[i, j].TileType;
 				if (
 				(wall == ModContent.WallType<CreamGrassWall>() || wall == ModContent.WallType<CreamstoneWall>() || wall == ModContent.WallType<Creamstone2Wall>() || wall == ModContent.WallType<Creamstone3Wall>() || wall == ModContent.WallType<Creamstone4Wall>() || wall == ModContent.WallType<Creamstone5Wall>() || wall == ModContent.WallType<BlueIceWall>() || wall == ModContent.WallType<HardenedCreamsandWall>() || wall == ModContent.WallType<CreamsandstoneWall>() ||
-				((wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<BlueFairyFlossWall>() || wall == ModContent.WallType<CreamWall>() || wall == ModContent.WallType<PinkFairyFlossWall>() || wall == ModContent.WallType<PurpleFairyFlossWall>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread))
+				((wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<BlueFairyFlossWall>() || wall == ModContent.WallType<CreamWall>() || wall == ModContent.WallType<PinkFairyFlossWall>() || wall == ModContent.WallType<PurpleFairyFlossWall>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread"))
 				||
 				(type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>()/* || type == ModContent.TileType<CreamVines>() */|| type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (
 				(type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() ||
-				type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread))) {
+				type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread"))) {
 					num = true;
 				}
 				if (num == false) {
@@ -1001,7 +1006,7 @@ namespace TheConfectionRebirth {
 								int type2 = Main.tile[num4, num5].TileType;
 								if (Main.tile[num4, num5].HasTile && (type2 == ModContent.TileType<CreamGrass>() || type2 == ModContent.TileType<CreamGrass_Foliage>() || type2 == ModContent.TileType<CreamVines>() || type2 == ModContent.TileType<Creamsand>() || type2 == ModContent.TileType<Creamstone>() || type2 == ModContent.TileType<BlueIce>() || type2 == ModContent.TileType<HardenedCreamsand>() || type2 == ModContent.TileType<Creamsandstone>() || type2 == ModContent.TileType<CreamGrassMowed>() || (
 									(type2 == ModContent.TileType<CookieBlock>() || type2 == ModContent.TileType<CreamBlock>() || type2 == ModContent.TileType<PinkFairyFloss>() || type2 == ModContent.TileType<PurpleFairyFloss>() || type2 == ModContent.TileType<BlueFairyFloss>() || type2 == ModContent.TileType<CookiestCookieBlock>() || type2 == ModContent.TileType<CreamstoneAmethyst>() || type2 == ModContent.TileType<CreamstoneTopaz>() || type2 == ModContent.TileType<CreamstoneSaphire>() || type2 == ModContent.TileType<CreamstoneEmerald>() || type2 == ModContent.TileType<CreamstoneRuby>() || type2 == ModContent.TileType<CreamstoneDiamond>() ||
-									type2 == ModContent.TileType<ArgonCreamMoss>() || type2 == ModContent.TileType<BlueCreamMoss>() || type2 == ModContent.TileType<BrownCreamMoss>() || type2 == ModContent.TileType<GreenCreamMoss>() || type2 == ModContent.TileType<KryptonCreamMoss>() || type2 == ModContent.TileType<LavaCreamMoss>() || type2 == ModContent.TileType<PurpleCreamMoss>() || type2 == ModContent.TileType<RedCreamMoss>() || type2 == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread))) {
+									type2 == ModContent.TileType<ArgonCreamMoss>() || type2 == ModContent.TileType<BlueCreamMoss>() || type2 == ModContent.TileType<BrownCreamMoss>() || type2 == ModContent.TileType<GreenCreamMoss>() || type2 == ModContent.TileType<KryptonCreamMoss>() || type2 == ModContent.TileType<LavaCreamMoss>() || type2 == ModContent.TileType<PurpleCreamMoss>() || type2 == ModContent.TileType<RedCreamMoss>() || type2 == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread"))) {
 									flag = true;
 									break;
 								}
@@ -1037,60 +1042,15 @@ namespace TheConfectionRebirth {
 
 		private void On_WorldGen_UpdateWorld_OvergroundTile(On_WorldGen.orig_UpdateWorld_OvergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist) {
 			orig.Invoke(i, j, checkNPCSpawns, wallDist);
-			if (WorldGen.AllowedToSpreadInfections) {
-				if (Main.tile[i, j].WallType == ModContent.WallType<CreamGrassWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CreamGrass>() && Main.tile[i, j].HasTile)) {
-					int num30 = i + WorldGen.genRand.Next(-2, 3);
-					int num31 = j + WorldGen.genRand.Next(-2, 3);
-					if ((WorldGen.InWorld(num30, num31, 10) && Main.tile[num30, num31].WallType == 63) || Main.tile[num30, num31].WallType == 65 || Main.tile[num30, num31].WallType == 66 || Main.tile[num30, num31].WallType == 68) {
-						bool flag4 = false;
-						for (int num32 = i - wallDist; num32 < i + wallDist; num32++) {
-							for (int num33 = j - wallDist; num33 < j + wallDist; num33++) {
-								if (Main.tile[num32, num33].HasTile) {
-									int type6 = Main.tile[num32, num33].TileType;
-									if (type6 == ModContent.TileType<CreamGrass>() || type6 == ModContent.TileType<CreamGrass_Foliage>() || type6 == ModContent.TileType<CreamVines>() || type6 == ModContent.TileType<Creamsand>() || type6 == ModContent.TileType<Creamstone>() || type6 == ModContent.TileType<BlueIce>() || type6 == ModContent.TileType<HardenedCreamsand>() || type6 == ModContent.TileType<Creamsandstone>() || type6 == ModContent.TileType<CreamGrassMowed>()) {
-										flag4 = true;
-										break;
-									}
-								}
-							}
-						}
-						if (flag4) {
-							Main.tile[num30, num31].WallType = (ushort)ModContent.WallType<CreamGrassWall>();
-							if (Main.netMode == 2) {
-								NetMessage.SendTileSquare(-1, num30, num31);
-							}
-						}
-					}
-				}
-				if ((Main.tile[i, j].WallType == ModContent.WallType<CookieWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CookieBlock>() && Main.tile[i, j].HasTile)) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {
-					int num30 = i + WorldGen.genRand.Next(-2, 3);
-					int num31 = j + WorldGen.genRand.Next(-2, 3);
-					if (Main.tile[num30, num31].WallType == 2 || Main.tile[num30, num31].WallType == 16) {
-						bool flag4 = false;
-						for (int num32 = i - wallDist; num32 < i + wallDist; num32++) {
-							for (int num33 = j - wallDist; num33 < j + wallDist; num33++) {
-								if (Main.tile[num32, num33].HasTile) {
-									int type6 = Main.tile[num32, num33].TileType;
-									if (type6 == ModContent.TileType<CreamGrass>() || type6 == ModContent.TileType<CreamGrass_Foliage>() || type6 == ModContent.TileType<CreamVines>() || type6 == ModContent.TileType<Creamsand>() || type6 == ModContent.TileType<Creamstone>() || type6 == ModContent.TileType<BlueIce>() || type6 == ModContent.TileType<HardenedCreamsand>() || type6 == ModContent.TileType<Creamsandstone>() || type6 == ModContent.TileType<CreamGrassMowed>()) {
-										flag4 = true;
-										break;
-									}
-								}
-							}
-						}
-						if (flag4) {
-							Main.tile[num30, num31].WallType = (ushort)ModContent.WallType<CookieWall>();
-							if (Main.netMode == 2) {
-								NetMessage.SendTileSquare(-1, num30, num31);
-							}
-						}
-					}
-				}
-			}
+			WallSpread(i, j, wallDist);
 		}
 
 		private void On_WorldGen_UpdateWorld_UndergroundTile(On_WorldGen.orig_UpdateWorld_UndergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist) {
 			orig.Invoke(i, j, checkNPCSpawns, wallDist);
+			WallSpread(i, j, wallDist);
+		}
+
+		private void WallSpread(int i, int j, int wallDist) {
 			if (WorldGen.AllowedToSpreadInfections) {
 				if (Main.tile[i, j].WallType == ModContent.WallType<CreamGrassWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CreamGrass>() && Main.tile[i, j].HasTile)) {
 					int num30 = i + WorldGen.genRand.Next(-2, 3);
@@ -1116,7 +1076,7 @@ namespace TheConfectionRebirth {
 						}
 					}
 				}
-				if ((Main.tile[i, j].WallType == ModContent.WallType<CookieWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CookieBlock>() && Main.tile[i, j].HasTile)) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {
+				if ((Main.tile[i, j].WallType == ModContent.WallType<CookieWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CookieBlock>() && Main.tile[i, j].HasTile)) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread") {
 					int num30 = i + WorldGen.genRand.Next(-2, 3);
 					int num31 = j + WorldGen.genRand.Next(-2, 3);
 					if (Main.tile[num30, num31].WallType == 2 || Main.tile[num30, num31].WallType == 16) {
@@ -1150,7 +1110,7 @@ namespace TheConfectionRebirth {
 				if ((NPC.downedPlantBoss && WorldGen.genRand.Next(2) == 0) || WorldGen.AllowedToSpreadInfections) {
 					if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (
 						(type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() ||
-						type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread)) {
+						type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread")) {
 						bool flag4 = true;
 						while (flag4) {
 							flag4 = false;
@@ -1223,9 +1183,9 @@ namespace TheConfectionRebirth {
 			if (Main.hardMode && !Main.tile[i, j].IsActuated) {
 				int type = Main.tile[i, j].TileType;
 				if ((NPC.downedPlantBoss && WorldGen.genRand.Next(2) == 0) || WorldGen.AllowedToSpreadInfections) {
-					if ((type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || 
+					if ((type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrass_Foliage>() || type == ModContent.TileType<CreamVines>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<Creamstone>() || type == ModContent.TileType<BlueIce>() || type == ModContent.TileType<HardenedCreamsand>() || type == ModContent.TileType<Creamsandstone>() || type == ModContent.TileType<CreamGrassMowed>() || (
 						type == ModContent.TileType<CookieBlock>() || type == ModContent.TileType<CreamBlock>() || type == ModContent.TileType<PinkFairyFloss>() || type == ModContent.TileType<PurpleFairyFloss>() || type == ModContent.TileType<BlueFairyFloss>() || type == ModContent.TileType<CookiestCookieBlock>() || type == ModContent.TileType<CreamstoneAmethyst>() || type == ModContent.TileType<CreamstoneTopaz>() || type == ModContent.TileType<CreamstoneSaphire>() || type == ModContent.TileType<CreamstoneEmerald>() || type == ModContent.TileType<CreamstoneRuby>() || type == ModContent.TileType<CreamstoneDiamond>() ||
-						type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread) {
+						type == ModContent.TileType<ArgonCreamMoss>() || type == ModContent.TileType<BlueCreamMoss>() || type == ModContent.TileType<BrownCreamMoss>() || type == ModContent.TileType<GreenCreamMoss>() || type == ModContent.TileType<KryptonCreamMoss>() || type == ModContent.TileType<LavaCreamMoss>() || type == ModContent.TileType<PurpleCreamMoss>() || type == ModContent.TileType<RedCreamMoss>() || type == ModContent.TileType<XenomCreamMoss>()) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread") && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread") {
 						bool flag40 = true;
 						while (flag40) {
 							flag40 = false;

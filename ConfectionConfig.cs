@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
 using Terraria.UI;
+using TheConfectionRebirth.Items.Armor;
 
 namespace TheConfectionRebirth
 {
@@ -19,16 +20,9 @@ namespace TheConfectionRebirth
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
 		[Header("ConfectionServersideConfig")]
-		[Label("Cookie and Cream Spreading")]
-		[Tooltip(@"Enables spreading for the following:
-		Cookie Block
-		Cream Block
-		Pink Fairy Floss
-		Purple Fairy Floss
-		Blue Fairy Floss
-		Cookiest Cookie Block
-		All Creamstone gems")]
-		[DefaultValue(true)]
-		public bool CookieSpread;
+		[DrawTicks]
+		[OptionStrings(new string[] { "No Spread", "Partial Spread", "Full Spread" })]
+		[DefaultValue("Full Spread")]
+		public string CookieSpread;
 	}
 }

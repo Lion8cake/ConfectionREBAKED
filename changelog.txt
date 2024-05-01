@@ -1,3 +1,23 @@
+Beta v0.21.0
+=========================
+Added Custom Credits for those who helped with the confection
+Remade the Rollercycle rainbow effect
+Added Tree Variants, Trees now come in three different flavours
+Added Sandstorm support, dusts now show up as brown when in a confection sandstorm
+Remade the Spreading Config, worldgen doesnt generate cookie blocks on No Spread and has partial spread type
+Added ConvertsToConfection ID set for those who want custom WorldGen Support
+Added ModCalls for outside mod support
+Added licensing
+Resprited Confection Tree Branches
+Fixed Key of Spite not being craftable
+Fixed Confection Crate not being shimmer-able into banna split crates
+Fixed Various critters having their names repeated in their tooltip
+Fixed Gummy Wyrm shader error
+Fixed Royal Cherry Bug Spawning to be the same as the Prismatic Lacewing
+Fixed confection wings not having any tooltips
+Fixed confection Campfires not having any tooltips
+Fixed World Globe sometime repeating the same background when used in the confection
+
 Beta v0.20.0.1
 =========================
 Creamgrass and Mowed Creamgrass now allow sunflowers, fallen logs and pumpkins to be placed ontop
