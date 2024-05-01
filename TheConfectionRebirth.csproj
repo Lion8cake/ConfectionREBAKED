@@ -1,18 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\tModLoader.targets" />
-  <PropertyGroup>
-    <AssemblyName>TheConfectionRebirth</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ThoriumMod">
-      <HintPath>..\..\..\..\..\..\ThoriumMod\ThoriumMod.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+		
+	</PropertyGroup>
+
+	<!-- References -->
+	<ItemGroup>
+		
+	</ItemGroup>
+
 </Project>
