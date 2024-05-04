@@ -8,4 +8,14 @@ Items: {
 		DisplayName: Saccharite
 		Tooltip: ""
 	}
+
+	CookieBlock: {
+		DisplayName: Cookie Block
+		Tooltip: ""
+	}
+
+	OrangeIce: {
+		DisplayName: Orange Ice
+		Tooltip: ""
+	}
 }

@@ -17,13 +17,9 @@ namespace TheConfectionRebirth.Tiles
 			AddMapEntry(new Color(153, 97, 60));
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			DustType = DustID.Dirt;
-		}
-
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
-			return true;
 		}
 	}
 }
