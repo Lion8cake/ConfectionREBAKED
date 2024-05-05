@@ -28,6 +28,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CookieBlock>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<BlueIceStalactite>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;
 			Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileMerge[Type][TileID.SnowBlock] = true;
 			Main.tileMerge[Type][TileID.FleshIce] = true;
