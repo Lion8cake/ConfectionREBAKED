@@ -1,3 +1,8 @@
+Beta v0.21.1
+=========================
+Fixed multiplayer crash with Creamsand
+Fixed creamsand not emitting dusts when walked on
+
 Beta v0.21.0
 =========================
 Added Custom Credits for those who helped with the confection
@@ -525,12 +530,12 @@ Added Saccharite Lash.
 ===========================================
 Beta v0.15.0
 ===========================================
-Fixed being able to see pink lines while confection trees are swinging while it’s windy while being at max zoom.
+Fixed being able to see pink lines while confection trees are swinging while it s windy while being at max zoom.
 Fixed the cookie wheel sprite sheet being off by alot and not hiding the players legs.
 Fixed Neapolinite set bonus descriptions taking up only one line instead of multiple.
 Fixed wings being uncraftable, having incorrect acceleration, rarity and sell price.
 Fixed Sweet Hook not letting the player reach the top of the hook when grappling.
-Moved folder for the Kazoo item. (this won’t affect anything in game)
+Moved folder for the Kazoo item. (this won t affect anything in game)
 Fixed banners not giving the banner buff for the Confection NPCs.
 Fixed misspell in Creamy Sandwich name being Creamy sandwhich.
 Readded item sprites from the 1.3 version for banners.
@@ -609,7 +614,7 @@ Add rainbow trait effect and some effect when hitting top speeds when on the Rol
 Fixed Soul of Delight not glowing like normal souls and not having a glowmask overtop.
 Fixed Cream Droplets showing their sprite sheet instead of their actual animation.
 Now you can craft Mechanical Skull and Mechanical Eye using Souls of Delight.
-Fixed Soul of Spite’s tooltip to not include a random capital for bloody.
+Fixed Soul of Spite s tooltip to not include a random capital for bloody.
 Fixed Wild Willy not being able to be killed because of invalid gores.
 Fixed Neapolinite armor sprite showing skin between the arm and body.
 Fixed Confection music playing overtop Confection Underground music.
