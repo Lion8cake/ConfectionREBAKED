@@ -18,4 +18,14 @@ Items: {
 		DisplayName: Orange Ice
 		Tooltip: ""
 	}
+
+	Creamsandstone: {
+		DisplayName: Creamsandstone
+		Tooltip: ""
+	}
+
+	HardenedCreamsand: {
+		DisplayName: Hardened Creamsand
+		Tooltip: ""
+	}
 }

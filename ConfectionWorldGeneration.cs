@@ -12,8 +12,7 @@ namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {
 
 		//Stalac Checks, unfinished
-		//TODO: convert to stalac tiles when under normal stalacs (and vise versa), make orange ice stalac partly transparent
-		//Some funky reason creamstone stalactites dont merge to creamstone
+		//TODO: convert mormal stalacs to these
 		public static void PlaceTight(int x, int y) {
 			if (Main.tile[x, y].LiquidType != LiquidID.Shimmer) {
 				PlaceUncheckedStalactite(x, y, WorldGen.genRand.NextBool(2), WorldGen.genRand.Next(3));
@@ -51,7 +50,7 @@ namespace TheConfectionRebirth {
 						tile2.TileFrameY = 18;
 					}
 				}
-				if (Main.tile[x, y - 1].TileType == ModContent.TileType<Creamstone>()) {
+				if (Main.tile[x, y - 1].TileType == ModContent.TileType<Creamstone>() || Main.tile[x, y - 1].TileType == ModContent.TileType<Creamsandstone>() || Main.tile[x, y - 1].TileType == ModContent.TileType<HardenedCreamsand>()) {
 					type = (ushort)ModContent.TileType<CreamstoneStalactite>();
 					if (preferSmall) {
 						int num16 = 54 + variation * 18;
@@ -77,7 +76,7 @@ namespace TheConfectionRebirth {
 				}
 			}
 			else {
-				if (Main.tile[x, y + 1].TileType == ModContent.TileType<Creamstone>()) {
+				if (Main.tile[x, y + 1].TileType == ModContent.TileType<Creamstone>() || Main.tile[x, y + 1].TileType == ModContent.TileType<Creamsandstone>() || Main.tile[x, y + 1].TileType == ModContent.TileType<HardenedCreamsand>()) {
 					type = (ushort)ModContent.TileType<CreamstoneStalactite>();
 					if (preferSmall) {
 						int num5 = 54 + variation * 18;
@@ -219,6 +218,8 @@ namespace TheConfectionRebirth {
 					num2 = (ushort)ModContent.TileType<BlueIceStalactite>();
 				else if (desiredType == 1)
 					num2 = (ushort)ModContent.TileType<CreamstoneStalactite>();
+				else if (desiredType == 2)
+					num2 = TileID.Stalactite;
 				else
 					num2 = TileID.Stalactite;
 				for (int i = y; i < y + height; i++) {
@@ -239,6 +240,8 @@ namespace TheConfectionRebirth {
 				type = 0;
 			else if (Main.tile[x, y].TileType == ModContent.TileType<CreamstoneStalactite>())
 				type = 1;
+			else if (Main.tile[x, y].TileType == TileID.Stalactite)
+				type = 2;
 			else
 				fail = true;
 		}
@@ -268,14 +271,15 @@ namespace TheConfectionRebirth {
 				height = 2;
 				desiredStyle = Main.tile[x, y - 1].TileType;
 			}
-			if (desiredStyle == ModContent.TileType<Creamstone>() /*|| Main.tileMoss[desiredStyle]*/) {
+			if (desiredStyle == ModContent.TileType<Creamstone>() || desiredStyle == ModContent.TileType<Creamsandstone>() || desiredStyle == ModContent.TileType<HardenedCreamsand>()) {
 				desiredStyle = 1;
 			}
 			else if (desiredStyle == ModContent.TileType<BlueIce>()) {
 				desiredStyle = 0;
 			}
 			else {
-				fail = true;
+				desiredStyle = 2;
+				//fail = true;
 			}
 		}
 	}

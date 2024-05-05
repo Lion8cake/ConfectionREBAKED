@@ -74,5 +74,7 @@ namespace TheConfectionRebirth.Tiles
 				}
 			}
 		}
+
+		//Add special merging for snow/cream blocks
 	}
 }
