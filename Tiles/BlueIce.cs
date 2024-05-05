@@ -15,6 +15,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileShine2[Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
+
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.IceSkateSlippery[Type] = true;
 			TileID.Sets.Ices[Type] = true;
@@ -24,6 +25,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+
 			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CookieBlock>()] = true;
@@ -39,6 +41,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileMerge[TileID.FleshIce][Type] = true;
 			Main.tileMerge[TileID.CorruptIce][Type] = true;
 			Main.tileMerge[TileID.HallowedIce][Type] = true;
+
 			DustType = ModContent.DustType<OrangeIceDust>();
 			AddMapEntry(new Color(237, 145, 103));
 			HitSound = SoundID.Item50;
