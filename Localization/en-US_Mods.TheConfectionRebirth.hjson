@@ -24,8 +24,23 @@ Items: {
 		Tooltip: ""
 	}
 
+	Creamsand: {
+		DisplayName: Creamsand
+		Tooltip: ""
+	}
+
 	HardenedCreamsand: {
 		DisplayName: Hardened Creamsand
 		Tooltip: ""
 	}
+
+	CreamBlock: {
+		DisplayName: Cream Block
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	CreamsandProjectile.DisplayName: Creamsand Projectile
+	CreamsandSandGunProjectile.DisplayName: Creamsand Sand Gun Projectile
 }
