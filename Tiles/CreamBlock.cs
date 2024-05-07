@@ -15,7 +15,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileBrick[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(219, 223, 234));
+			
 			TileID.Sets.Conversion.Snow[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
 			TileID.Sets.Snow[Type] = true;
@@ -23,7 +23,10 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+
+			AddMapEntry(new Color(219, 223, 234));
 			DustType = ModContent.DustType<CreamDust>();
 			HitSound = SoundID.Item48;
 		}

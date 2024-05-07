@@ -14,11 +14,14 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(153, 97, 60));
+
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+
+			AddMapEntry(new Color(153, 97, 60));
 			DustType = DustID.Dirt;
 		}
 	}

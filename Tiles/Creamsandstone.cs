@@ -13,7 +13,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(89, 47, 36));
+			
 			TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
@@ -21,9 +21,12 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+
 			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<BlueIceStalactite>()] = true;
+
+			AddMapEntry(new Color(89, 47, 36));
 			DustType = ModContent.DustType<CreamsandDust>();
 		}
 

@@ -13,12 +13,15 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileSolid[Type] = false;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 4500;
-			AddMapEntry(new Color(32, 174, 221));
+			
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+
 			DustType = ModContent.DustType<SacchariteDust>();
 			HitSound = SoundID.Item27;
+			AddMapEntry(new Color(32, 174, 221));
 		}
 
 		public override void RandomUpdate(int i, int j) {
@@ -48,7 +51,7 @@ namespace TheConfectionRebirth.Tiles
 						tileBelow.HasTile = true;
 						WorldGen.SquareTileFrame(i, j + 1, true);
 						if (Main.netMode == NetmodeID.Server) {
-							NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
+							NetMessage.SendTileSquare(1, i, j - 1, 3, TileChangeType.None);
 						}
 					}
 					/*if (WorldGen.genRand.NextBool(15)) {

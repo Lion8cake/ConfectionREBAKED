@@ -65,7 +65,8 @@ namespace TheConfectionRebirth.Projectiles {
 					if (tBelow.Slope != SlopeType.Solid) {
 						tBelow.Slope = SlopeType.Solid;
 					}
-					if (tBelow.IsHalfBlock) tBelow.IsHalfBlock = false;
+					if (tBelow.IsHalfBlock) 
+						tBelow.IsHalfBlock = false;
 					WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<Tiles.Creamsand>(), forced: true);
 					WorldGen.SquareTileFrame(p.X, p.Y);
 				}

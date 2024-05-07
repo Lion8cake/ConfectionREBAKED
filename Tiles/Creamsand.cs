@@ -15,6 +15,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileBlockLight[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+
 			TileID.Sets.Conversion.Sand[Type] = true; 
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
@@ -23,6 +24,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.FallingBlockProjectile[Type] = new TileID.Sets.FallingBlockProjectileInfo(ModContent.ProjectileType<CreamsandProjectile>(), 10);
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<CreamsandDust>();
 			AddMapEntry(new Color(99, 57, 46));
