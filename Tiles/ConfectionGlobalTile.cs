@@ -7,9 +7,31 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles {
 	public class ConfectionGlobalTile : GlobalTile {
+		public override void SetStaticDefaults() { //Daybloom does not appear here yet, a complete rewrite of modded herbs is required first
+			TileObjectData tileObjectData = TileObjectData.GetTileData(TileID.Sunflower, 0);
+			tileObjectData.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrass>()).ToArray();
+			tileObjectData.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrassMowed>()).ToArray();
+			TileObjectData tileObjectData2 = TileObjectData.GetTileData(TileID.Pumpkins, 0);
+			tileObjectData2.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrass>()).ToArray();
+			tileObjectData2.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrassMowed>()).ToArray();
+			TileObjectData tileObjectData3 = TileObjectData.GetTileData(TileID.FallenLog, 0);
+			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrass>()).ToArray();
+			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrassMowed>()).ToArray();
+		}
+
+		public override void Unload() {
+			TileObjectData tileObjectData = TileObjectData.GetTileData(TileID.Sunflower, 0);
+			tileObjectData.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() }).ToArray();
+			TileObjectData tileObjectData2 = TileObjectData.GetTileData(TileID.Pumpkins, 0);
+			tileObjectData2.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() }).ToArray();
+			TileObjectData tileObjectData3 = TileObjectData.GetTileData(TileID.FallenLog, 0);
+			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() }).ToArray();
+		}
+
 		public override void RandomUpdate(int i, int j, int type) {
 			if (ConfectionIDs.Sets.CanGrowSaccharite[type]) {
 				Tile Blockpos = Main.tile[i, j];
