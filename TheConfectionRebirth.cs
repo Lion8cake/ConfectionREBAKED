@@ -9,6 +9,8 @@ using TheConfectionRebirth.Tiles;
 using Terraria.ID;
 using MonoMod.Cil;
 using System.Reflection;
+using Microsoft.CodeAnalysis.Emit;
+using Terraria.ModLoader.Config;
 
 namespace TheConfectionRebirth
 {
@@ -24,16 +26,58 @@ namespace TheConfectionRebirth
 		//DelWater (done)
 		//SmartCursorHelper.cs
 		//Step_LawnMower
+		//WorldGen.cs
+		//IsFitToPlaceFlowerIn
+		//PlantCheck
+
 		public override void Load() {
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
 			IL_Liquid.DelWater += BurnGrass;
+			IL_WorldGen.PlantCheck += PlantTileFrameIL;
 		}
 
 		public override void Unload() {
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
 			IL_Liquid.DelWater -= BurnGrass;
+			IL_WorldGen.PlantCheck -= PlantTileFrameIL;
+		}
+
+		private void PlantTileFrameIL(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel IL_0433 = null;
+			if (!c.TryGotoNext(
+				MoveType.After,
+				i => i.MatchLdloc0(),
+				i => i.MatchLdcI4(633),
+				i => i.MatchBneUn(out IL_0433)
+				)) {
+				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("The Confection REBAKED: Plant Check massive if statement instructions was not found");
+				return;
+			}
+			if (IL_0433 == null)
+				return;
+			c.EmitLdloc1(); //num2
+			c.EmitLdloc0(); //num
+			c.EmitDelegate((int num2, int num) => {
+				return (num2 != ModContent.TileType<CreamGrass_Foliage>() || num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>());
+			});
+			c.EmitBrtrue(IL_0433);
+
+			c.GotoNext(
+				MoveType.Before,
+				i => i.MatchLdloc1(),
+				i => i.MatchLdsflda<Main>("tile"),
+				i => i.MatchLdarg0(),
+				i => i.MatchLdarg1()
+				);
+			c.EmitLdloc0(); //num
+			c.EmitLdloc1(); //num2
+			c.EmitDelegate((int num, int num2) => {
+				if (num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>())
+					num2 = ((num2 != 73) ? ModContent.TileType<CreamGrass_Foliage>() : 113);
+			});
 		}
 
 		private void BurnGrass(ILContext il) {
@@ -56,7 +100,7 @@ namespace TheConfectionRebirth
 				if (tile5.TileType == ModContent.TileType<CreamGrass>()) { //Turns Creamgrass into Cookie block when lava is near
 					tile5.TileType = (ushort)ModContent.TileType<CookieBlock>();
 					WorldGen.SquareTileFrame(i, j);
-					if (Main.netMode == 2) {
+					if (Main.netMode == NetmodeID.Server) {
 						NetMessage.SendTileSquare(-1, num, num2, 3);
 					}
 				}
