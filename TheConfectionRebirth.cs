@@ -58,7 +58,7 @@ namespace TheConfectionRebirth
 				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's main tile framing could not be found");
 				return;
 			}
-			IL_0433.Target = c.Next;
+			c.MarkLabel(IL_0433);
 			if (!c.TryGotoPrev(
 				MoveType.Before,
 				i => i.MatchLdloca(5),
