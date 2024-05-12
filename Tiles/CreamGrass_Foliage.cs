@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,6 +39,12 @@ namespace TheConfectionRebirth.Tiles
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			WorldGen.PlantCheck(i, j);
 			return false;
+		}
+
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			if (Main.tile[i, j].TileFrameX == 144) {
+				yield return new Item(ModContent.ItemType<Items.YumDrop>());
+			}
 		}
 	}
 }

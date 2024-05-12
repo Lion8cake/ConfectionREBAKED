@@ -38,6 +38,11 @@ Items: {
 		DisplayName: Cream Block
 		Tooltip: ""
 	}
+
+	YumDrop: {
+		DisplayName: Yum Drop
+		Tooltip: ""
+	}
 }
 
 Projectiles: {

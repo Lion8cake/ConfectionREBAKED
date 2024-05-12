@@ -28,7 +28,7 @@ namespace TheConfectionRebirth
 		//Step_LawnMower
 		//WorldGen.cs
 		//IsFitToPlaceFlowerIn
-		//PlantCheck
+		//PlantCheck (done) (i think)
 
 		public override void Load() {
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
@@ -45,65 +45,67 @@ namespace TheConfectionRebirth
 		}
 
 		private void PlantTileFrameIL(ILContext il) {
-			ILCursor c = new(il);
-			ILLabel IL_0433 = c.DefineLabel();
-			if (!c.TryGotoNext(
-				MoveType.Before,
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc2(),
-				i => i.MatchLdloc1(),
-				i => i.MatchLdcI4(3),
-				i => i.MatchBeq(out _)
-				)) {
-				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's main tile framing could not be found");
-				return;
-			}
-			c.MarkLabel(IL_0433);
-			if (!c.TryGotoPrev(
-				MoveType.Before,
-				i => i.MatchLdloca(5),
-				i => i.MatchCall<Tile>("get_type"),
-				i => i.MatchPop(),
-				i => i.MatchLdloc1(),
-				i => i.MatchLdcI4(3),
-				i => i.MatchBneUn(out _)
-				)) {
-				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's massive if statement instructions could not found");
-				return;
-			}
-			if (!c.TryGotoPrev(
-				MoveType.Before,
-				i => i.MatchLdloca(5),
-				i => i.MatchCall<Tile>("nactive"),
-				i => i.MatchBrfalse(out _)
-				)) {
-				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's before massive if statement could not be found");
-				return;
-			}
-			if (IL_0433 == null) {
-				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's main tile framing IlLable could not be found");
-				return;
-			}
-			c.EmitLdloc1(); //num2
-			c.EmitLdloc0(); //num
-			c.EmitDelegate((int num2, int num) => {
-				return (!(num2 != ModContent.TileType<CreamGrass_Foliage>() || num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>()));
-			});
-			c.EmitBrtrue(IL_0433);
-			
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc2()
-				);
-			c.EmitLdloc0(); //num
-			c.EmitLdloca(1); //num2
-			c.EmitDelegate((int num, ref int num2) => {
-				if (num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>()) 
-				{
-					num2 = ModContent.TileType<CreamGrass_Foliage>();
+			try {
+				ILCursor c = new(il);
+				ILLabel IL_0433 = c.DefineLabel();
+				c.GotoNext(
+					MoveType.Before,
+					i => i.MatchLdcI4(0),
+					i => i.MatchStloc2(),
+					i => i.MatchLdloc1(),
+					i => i.MatchLdcI4(3),
+					i => i.MatchBeq(out _)
+					);
+				c.MarkLabel(IL_0433);
+				c.GotoPrev(
+					MoveType.Before,
+					i => i.MatchLdloca(5),
+					i => i.MatchCall<Tile>("get_type"),
+					i => i.MatchPop(),
+					i => i.MatchLdloc1(),
+					i => i.MatchLdcI4(3),
+					i => i.MatchBneUn(out _)
+					);
+				c.GotoPrev(
+					MoveType.Before,
+					i => i.MatchLdloca(5),
+					i => i.MatchCall<Tile>("nactive"),
+					i => i.MatchBrfalse(out _)
+					);
+				if (IL_0433 == null) {
+					ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Plant Check's main tile framing IlLable could not be found");
+					return;
 				}
-			});
+				c.EmitLdloc1(); //num2
+				c.EmitLdloc0(); //num
+				c.EmitDelegate((int num2, int num) => {
+					return (!(num2 != ModContent.TileType<CreamGrass_Foliage>() || num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>()));
+				});
+				c.EmitBrtrue(IL_0433);
+
+				c.GotoNext(
+					MoveType.After,
+					i => i.MatchLdcI4(0),
+					i => i.MatchStloc2()
+					);
+				c.EmitLdloc0(); //num
+				c.EmitLdloca(1); //num2
+				c.EmitLdloca(2); //flag
+				c.EmitLdloca(5); //tile
+				c.EmitLdarg0(); //x
+				c.EmitLdarg1(); //y
+				c.EmitDelegate((int num, ref int num2, ref bool flag, ref Tile tile, int x, int y) => {
+					if (num2 == ModContent.TileType<CreamGrass_Foliage>()) {
+						tile = Main.tile[x, y]; //The last use of the tile variable uses the coords [x + 1, y + 1], so we reset it here
+						flag = tile.TileFrameX == 144; //This is supposed to convert crimson mushrooms to yumdrops but doesnt????
+					}
+					if (num == ModContent.TileType<CreamGrass>() || num == ModContent.TileType<CreamGrassMowed>()) {
+						num2 = ModContent.TileType<CreamGrass_Foliage>();
+					}
+				});
+			}
+			catch (Exception e) {
+			}
 		}
 
 		private void BurnGrass(ILContext il) {
