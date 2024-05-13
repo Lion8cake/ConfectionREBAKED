@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.Tiles
 
 			AddMapEntry(new Color(235, 207, 150));
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
-			DustType = DustID.Dirt;
+			DustType = ModContent.DustType<CreamGrassDust>();
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail) {

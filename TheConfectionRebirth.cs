@@ -12,6 +12,7 @@ using System.Reflection;
 using Microsoft.CodeAnalysis.Emit;
 using Terraria.ModLoader.Config;
 using Terraria.Utilities;
+using Terraria.ObjectData;
 
 namespace TheConfectionRebirth
 {
@@ -28,7 +29,7 @@ namespace TheConfectionRebirth
 		//SmartCursorHelper.cs
 		//Step_LawnMower
 		//WorldGen.cs
-		//IsFitToPlaceFlowerIn
+		//IsFitToPlaceFlowerIn (done)
 		//PlantCheck (done) (i think)
 
 		public override void Load() {
@@ -37,6 +38,64 @@ namespace TheConfectionRebirth
 			IL_Liquid.DelWater += BurnGrass;
 			IL_WorldGen.PlantCheck += PlantTileFrameIL;
 			On_Player.DoBootsEffect_PlaceFlowersOnTile += FlowerBootsEdit;
+			On_WorldGen.IsFitToPlaceFlowerIn += Flowerplacement;
+			On_WorldGen.PlaceTile += PlaceTile;
+		}
+
+		public override void Unload() {
+			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
+			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
+			IL_Liquid.DelWater -= BurnGrass;
+			IL_WorldGen.PlantCheck -= PlantTileFrameIL;
+			On_Player.DoBootsEffect_PlaceFlowersOnTile -= FlowerBootsEdit;
+			On_WorldGen.IsFitToPlaceFlowerIn -= Flowerplacement;
+			On_WorldGen.PlaceTile -= PlaceTile;
+		}
+
+		private bool PlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style) {
+			int num = Type;
+			if (i >= 0 && j >= 0 && i < Main.maxTilesX && j < Main.maxTilesY) {
+				Tile tile = Main.tile[i, j];
+				if (forced || Collision.EmptyTile(i, j) || !Main.tileSolid[num]) {
+					if (num == ModContent.TileType<CreamGrass_Foliage>()) {
+						if (WorldGen.IsFitToPlaceFlowerIn(i, j, num)) {
+							if (tile.WallType >= 0 && WallID.Sets.AllowsPlantsToGrow[tile.WallType] && Main.tile[i, j + 1].WallType >= 0 && Main.tile[i, j + 1].WallType < WallLoader.WallCount && WallID.Sets.AllowsPlantsToGrow[Main.tile[i, j + 1].WallType]) {
+								if (WorldGen.genRand.NextBool(50) || WorldGen.genRand.NextBool(40)) {
+									tile.HasTile = true;
+									tile.TileType = (ushort)num;
+									tile.TileFrameX = 144;
+								}
+								else if (WorldGen.genRand.NextBool(35) || (Main.tile[i, j].WallType >= 63 && Main.tile[i, j].WallType <= 70)) {
+									tile.HasTile = true;
+									tile.TileType = (ushort)num;
+									int num3 = WorldGen.genRand.NextFromList<int>(6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+									tile.TileFrameX = (short)(num3 * 18);
+								}
+								else {
+									tile.HasTile = true;
+									tile.TileType = (ushort)num;
+									tile.TileFrameX = (short)(WorldGen.genRand.Next(6) * 18);
+								}
+							}
+						}
+					}
+				}
+			}
+			return orig.Invoke(i, j, Type, mute, forced, plr, style);
+		}
+
+		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {
+			if (y < 1 || y > Main.maxTilesY - 1) {
+				return false;
+			}
+			Tile tile = Main.tile[x, y + 1];
+			if (tile.HasTile && tile.Slope == 0 && !tile.IsHalfBlock) {
+				if ((tile.TileType != ModContent.TileType<CreamGrass>() && tile.TileType != ModContent.TileType<CreamGrassMowed>()) || typeAttemptedToPlace != ModContent.TileType<CreamGrass_Foliage>()) {
+					return false;
+				}
+				return true;
+			}
+			return orig.Invoke(x, y, typeAttemptedToPlace);
 		}
 
 		private bool FlowerBootsEdit(On_Player.orig_DoBootsEffect_PlaceFlowersOnTile orig, Player self, int X, int Y) {
@@ -52,12 +111,12 @@ namespace TheConfectionRebirth
 					int[] ShortgrassArray = new int[] { 6, 7, 10, 15, 16, 17 };
 					//if (Main.rand.Next(2) == 0) {
 					tile.HasTile = true;
-						tile.TileType = (ushort)ModContent.TileType<CreamGrass_Foliage>();
-						tile.TileFrameX = (short)(18 * ShortgrassArray[Main.rand.Next(6)]);
-						tile.CopyPaintAndCoating(Main.tile[X, Y + 1]);
-						while (tile.TileFrameX == 90) {
-							tile.TileFrameX = (short)(18 * Main.rand.Next(4, 7));
-						}
+					tile.TileType = (ushort)ModContent.TileType<CreamGrass_Foliage>();
+					tile.TileFrameX = (short)(18 * ShortgrassArray[Main.rand.Next(6)]);
+					tile.CopyPaintAndCoating(Main.tile[X, Y + 1]);
+					while (tile.TileFrameX == 90) {
+						tile.TileFrameX = (short)(18 * Main.rand.Next(4, 7));
+					}
 					/*}
 					else {
 						tile.active(active: true);
@@ -75,13 +134,6 @@ namespace TheConfectionRebirth
 				}
 			}
 			return orig.Invoke(self, X, Y);
-		}
-
-		public override void Unload() {
-			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
-			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
-			IL_Liquid.DelWater -= BurnGrass;
-			IL_WorldGen.PlantCheck -= PlantTileFrameIL;
 		}
 
 		private void PlantTileFrameIL(ILContext il) {

@@ -27,12 +27,8 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1); //Literally only here so I can place the foliage with dragonlens
-			TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
-			TileObjectData.addTile(Type);
-
 			AddMapEntry(new Color(200, 170, 108));
-			DustType = ModContent.DustType<CreamsandDust>();
+			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
 		}
 
