@@ -11,6 +11,7 @@ using MonoMod.Cil;
 using System.Reflection;
 using Microsoft.CodeAnalysis.Emit;
 using Terraria.ModLoader.Config;
+using Terraria.Utilities;
 
 namespace TheConfectionRebirth
 {
@@ -18,7 +19,7 @@ namespace TheConfectionRebirth
 	{
 		//Edit the following
 		//Player.cs
-		//DoBootsEffect_PlaceFlowersOnTile //Needs foliage to be done
+		//DoBootsEffect_PlaceFlowersOnTile (done)
 		//MowGrassTile //Needs lawnmower grass to be done, this should be the FINAL thing to do with that grass
 		//PlaceThing_Tiles_PlaceIt_KillGrassForSolids (done)
 		//DoesPickTargetTransformOnKill (done)
@@ -35,6 +36,45 @@ namespace TheConfectionRebirth
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
 			IL_Liquid.DelWater += BurnGrass;
 			IL_WorldGen.PlantCheck += PlantTileFrameIL;
+			On_Player.DoBootsEffect_PlaceFlowersOnTile += FlowerBootsEdit;
+		}
+
+		private bool FlowerBootsEdit(On_Player.orig_DoBootsEffect_PlaceFlowersOnTile orig, Player self, int X, int Y) {
+			Tile tile = Main.tile[X, Y];
+			if (tile == null) {
+				return false;
+			}
+			if (!tile.HasTile && tile.LiquidType == 0 && Main.tile[X, Y + 1] != null && WorldGen.SolidTile(X, Y + 1)) {
+				tile.TileFrameY = 0;
+				tile.Slope = 0;
+				tile.IsHalfBlock = false;
+				if (Main.tile[X, Y + 1].TileType == ModContent.TileType<CreamGrass>() || Main.tile[X, Y + 1].TileType == ModContent.TileType<CreamGrassMowed>()) {
+					int[] ShortgrassArray = new int[] { 6, 7, 10, 15, 16, 17 };
+					//if (Main.rand.Next(2) == 0) {
+					tile.HasTile = true;
+						tile.TileType = (ushort)ModContent.TileType<CreamGrass_Foliage>();
+						tile.TileFrameX = (short)(18 * ShortgrassArray[Main.rand.Next(6)]);
+						tile.CopyPaintAndCoating(Main.tile[X, Y + 1]);
+						while (tile.TileFrameX == 90) {
+							tile.TileFrameX = (short)(18 * Main.rand.Next(4, 7));
+						}
+					/*}
+					else {
+						tile.active(active: true);
+						tile.type = 113;
+						tile.frameX = (short)(18 * Main.rand.Next(2, 8));
+						tile.CopyPaintAndCoating(Main.tile[X, Y + 1]);
+						while (tile.frameX == 90) {
+							tile.frameX = (short)(18 * Main.rand.Next(2, 8));
+						}
+					}*/
+					if (Main.netMode == 1) {
+						NetMessage.SendTileSquare(-1, X, Y);
+					}
+					return true;
+				}
+			}
+			return orig.Invoke(self, X, Y);
 		}
 
 		public override void Unload() {
