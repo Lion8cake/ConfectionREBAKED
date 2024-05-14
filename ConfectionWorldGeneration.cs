@@ -1,15 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {
+
+		public static int confectionTree;
+		public override void OnWorldLoad() {
+			confectionTree = 0;
+		}
+
+		public override void OnWorldUnload() {
+			confectionTree = 0;
+		}
+
+		public override void SaveWorldData(TagCompound tag) {
+			tag["TheConfectionRebirth:confectionTree"] = confectionTree;
+		}
+
+		public override void LoadWorldData(TagCompound tag) {
+			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
+		}
+
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write(confectionTree);
+		}
+
+		public override void NetReceive(BinaryReader reader) {
+			confectionTree = reader.ReadInt32();
+		}
+
+		public override void PreWorldGen() {
+			confectionTree = Main.rand.Next(3);
+		}
 
 		//Stalac Checks, unfinished
 		//TODO: convert mormal stalacs to these

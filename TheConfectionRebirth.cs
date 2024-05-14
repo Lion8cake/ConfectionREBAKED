@@ -47,6 +47,19 @@ namespace TheConfectionRebirth
 			IL_WorldGen.TileFrame += VineTileFrame;
 		}
 
+		public override void Unload() {
+			ConfectionWindUtilities.Unload();
+
+			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
+			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
+			IL_Liquid.DelWater -= BurnGrass;
+			IL_WorldGen.PlantCheck -= PlantTileFrameIL;
+			On_Player.DoBootsEffect_PlaceFlowersOnTile -= FlowerBootsEdit;
+			On_WorldGen.IsFitToPlaceFlowerIn -= Flowerplacement;
+			On_WorldGen.PlaceTile -= PlaceTile;
+			IL_WorldGen.TileFrame -= VineTileFrame;
+		}
+
 		private void VineTileFrame(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(
@@ -73,18 +86,6 @@ namespace TheConfectionRebirth
 					flag5 = true;
 				}
 			});
-		}
-
-		public override void Unload() {
-			ConfectionWindUtilities.Unload();
-
-			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
-			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
-			IL_Liquid.DelWater -= BurnGrass;
-			IL_WorldGen.PlantCheck -= PlantTileFrameIL;
-			On_Player.DoBootsEffect_PlaceFlowersOnTile -= FlowerBootsEdit;
-			On_WorldGen.IsFitToPlaceFlowerIn -= Flowerplacement;
-			On_WorldGen.PlaceTile -= PlaceTile;
 		}
 
 		private bool PlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style) {
@@ -297,6 +298,7 @@ namespace TheConfectionRebirth
 			}
 		}
 	}
+
 	public static class ConfectionWindUtilities {
 		public static void Load() {
 			_addSpecialPointSpecialPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialPositions", BindingFlags.NonPublic | BindingFlags.Instance);

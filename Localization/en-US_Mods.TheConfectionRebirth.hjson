@@ -49,3 +49,9 @@ Projectiles: {
 	CreamsandProjectile.DisplayName: Creamsand Projectile
 	CreamsandSandGunProjectile.DisplayName: Creamsand Sand Gun Projectile
 }
+
+Tiles: {
+	CreamSapling.MapEntry: Cream Sapling
+	CreamSnowSapling.MapEntry: Cream Snow Sapling
+	CreamTree.MapEntry: Cream Tree
+}
