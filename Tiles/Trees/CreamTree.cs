@@ -97,7 +97,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 			GetTreeBottom(i, j, out var x, out var y);
 			if (Main.tile[x, y].HasTile) {
-				//dropItem = ModContent.ItemType<Items.Placeable.CreamWood>();
+				dropItem = ModContent.ItemType<Items.Placeable.CreamWood>();
 			}
 			int num = Player.FindClosest(new Vector2((float)(x * 16), (float)(y * 16)), 16, 16);
 			int axe = Main.player[num].inventory[Main.player[num].selectedItem].axe;
@@ -729,7 +729,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.RottenEgg, genRand.Next(1, 3));
 			}
 			else if (genRand.NextBool(12)) {
-				//Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.CreamWood>(), genRand.Next(1, 4));
+				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.CreamWood>(), genRand.Next(1, 4));
 			}
 			else if (genRand.NextBool(20)) {
 				int type = ItemID.CopperCoin;
@@ -757,7 +757,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type, num2);
 			}
 			else if (genRand.NextBool(15)) {
-				int type2 = NPCID.Butterfly;//Main.rand.NextFromList(new short[4] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>(), NPCID.Squirrel, NPCID.SquirrelRed });
+				int type2 = Main.rand.NextFromList(new short[4] { (short)ModContent.NPCType<NPCs.Pip>(), (short)ModContent.NPCType<NPCs.Birdnana>(), NPCID.Squirrel, NPCID.SquirrelRed });
 				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
 					type2 = ((!genRand.NextBool(2)) ? NPCID.SquirrelGold : NPCID.GoldBird);
 				}
@@ -774,7 +774,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Point point;
 				for (int l = 0; l < 5; l++) {
 					point = new(x + Main.rand.Next(-2, 2), y - 1 + Main.rand.Next(-2, 2));
-					int type4 = NPCID.Butterfly;//((Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) != 0f) ? Main.rand.NextFromList(new short[2] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>() }) : NPCID.GoldBird);
+					int type4 = ((Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) != 0f) ? Main.rand.NextFromList(new short[2] { (short)ModContent.NPCType<NPCs.Pip>(), (short)ModContent.NPCType<NPCs.Birdnana>() }) : NPCID.GoldBird);
 					NPC obj3 = Main.npc[NPC.NewNPC(new EntitySource_ShakeTree(x, y), point.X * 16, point.Y * 16, type4)];
 					obj3.velocity = Main.rand.NextVector2CircularEdge(3f, 3f);
 					obj3.netUpdate = true;
@@ -784,7 +784,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, NPCID.Seagull2);
 			}*/
 			else if (genRand.NextBool(20) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) {
-				int type5 = NPCID.Butterfly;//ModContent.NPCType<NPCs.Critters.GrumbleBee>();
+				int type5 = ModContent.NPCType<NPCs.GrumbleBee>();
 				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
 					type5 = NPCID.GoldButterfly ;
 				}
@@ -795,8 +795,8 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}*/
 			else if (genRand.NextBool(12)) {
-				//int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<Cherimoya>() : ItemID.Starfruit);
-				//Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
+				int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<Cherimoya>() : ModContent.ItemType<CocoaBeans>());
+				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}
 			if (Main.netMode == NetmodeID.Server)
 			{

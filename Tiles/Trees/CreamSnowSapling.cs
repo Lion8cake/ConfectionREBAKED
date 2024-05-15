@@ -46,7 +46,7 @@ namespace TheConfectionRebirth.Tiles.Trees
             TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
-			//DustType = ModContent.DustType<CreamwoodDust>();
+			DustType = ModContent.DustType<CreamwoodDust>();
 
             AdjTiles = new int[] { TileID.Saplings };
         }

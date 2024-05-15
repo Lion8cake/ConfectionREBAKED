@@ -62,7 +62,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 
         public override int DropWood()
         {
-			return 7;// ModContent.ItemType<Items.Placeable.CreamWood>();
+			return ModContent.ItemType<Items.Placeable.CreamWood>();
         }
 	}
 }

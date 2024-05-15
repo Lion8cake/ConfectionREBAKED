@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles;
 
-namespace ExampleMod.Content.Tiles
+namespace TheConfectionRebirth.Tiles.Trees
 {
-    public class SprinklerCactusCactus : ModCactus
+    public class SprinkleCactus : ModCactus
     {
-        public override void SetStaticDefaults()
+        public override void SetStaticDefaults() //Add a IL edit that adds a map color to this
         {
             GrowsOnTileId = [ModContent.TileType<Creamsand>()];
         }
