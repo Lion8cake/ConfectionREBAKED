@@ -14,6 +14,9 @@ using Terraria.ModLoader.Config;
 using Terraria.Utilities;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
+using Terraria.Map;
+using TheConfectionRebirth.Tiles.Trees;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TheConfectionRebirth
 {
@@ -21,18 +24,11 @@ namespace TheConfectionRebirth
 	{
 		//Edit the following
 		//Player.cs
-		//DoBootsEffect_PlaceFlowersOnTile (done)
 		//MowGrassTile //Needs lawnmower grass to be done, this should be the FINAL thing to do with that grass
-		//PlaceThing_Tiles_PlaceIt_KillGrassForSolids (done)
-		//DoesPickTargetTransformOnKill (done)
-		//Liquid.cs
-		//DelWater (done)
 		//SmartCursorHelper.cs
 		//Step_LawnMower
 		//WorldGen.cs
-		//IsFitToPlaceFlowerIn (done)
 		//PlantCheck (done) (i think)
-		//TileFrame (vines)
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
@@ -45,6 +41,7 @@ namespace TheConfectionRebirth
 			On_WorldGen.IsFitToPlaceFlowerIn += Flowerplacement;
 			On_WorldGen.PlaceTile += PlaceTile;
 			IL_WorldGen.TileFrame += VineTileFrame;
+			IL_MapHelper.CreateMapTile += CactusMapColor;
 		}
 
 		public override void Unload() {
@@ -58,6 +55,27 @@ namespace TheConfectionRebirth
 			On_WorldGen.IsFitToPlaceFlowerIn -= Flowerplacement;
 			On_WorldGen.PlaceTile -= PlaceTile;
 			IL_WorldGen.TileFrame -= VineTileFrame;
+			IL_MapHelper.CreateMapTile -= CactusMapColor;
+		}
+
+		private void CactusMapColor(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdsfld("Terraria.Map.MapHelper", "tileLookup"),
+				i => i.MatchLdloc(7),
+				i => i.MatchLdelemU2(),
+				i => i.MatchStloc3());
+			c.EmitLdarg0(); //i (aka X)
+			c.EmitLdarg1(); //j (aka Y)
+			c.EmitLdloca(3); //num5
+			c.EmitDelegate((int i, int j, ref int num5) => {
+				Tile tile = Main.tile[i, j];
+				WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
+				if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType == ModContent.TileType<Creamsand>()) {
+					num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
+				}
+			});
 		}
 
 		private void VineTileFrame(ILContext il) {

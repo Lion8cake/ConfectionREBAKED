@@ -6,19 +6,21 @@ namespace TheConfectionRebirth.Tiles.Trees
 {
     public class SprinkleCactus : ModCactus
     {
-        public override void SetStaticDefaults() //Add a IL edit that adds a map color to this
+		string Texture = "TheConfectionRebirth/Tiles/Trees/SprinkleCactus";
+
+		public override void SetStaticDefaults()
         {
             GrowsOnTileId = [ModContent.TileType<Creamsand>()];
         }
 
         public override Asset<Texture2D> GetTexture()
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/SprinkleCactus");
+            return ModContent.Request<Texture2D>(Texture);
         }
 
         public override Asset<Texture2D> GetFruitTexture()
         {
-            return ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Trees/SprinkleCactusPear");
+            return ModContent.Request<Texture2D>(Texture + "_Pear");
         }
     }
 }
