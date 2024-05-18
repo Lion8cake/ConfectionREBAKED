@@ -20,21 +20,21 @@ namespace TheConfectionRebirth.Tiles
 
 			TileID.Sets.TileCutIgnore.Regrowth[Type] = true;
 
-			AddMapEntry(new Color(200, 170, 108));
+			AddMapEntry(new Color(200, 170, 108)); //120 110 100
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
 		}
 
 		public override void RandomUpdate(int i, int j) {
-			WorldGen.CheckCatTail(i, j);
+			ConfectionWorldGeneration.CheckCreamCatTail(i, j);
 			if (Main.tile[i, j].HasTile && WorldGen.genRand.NextBool(8)) {
 				WorldGen.GrowCatTail(i, j);
-				WorldGen.CheckCatTail(i, j);
+				ConfectionWorldGeneration.CheckCreamCatTail(i, j);
 			}
 		}
 
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			WorldGen.CheckCatTail(i, j);
+			ConfectionWorldGeneration.CheckCreamCatTail(i, j);
 			return false;
 		}
 	}
