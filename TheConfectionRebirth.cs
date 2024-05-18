@@ -9,7 +9,6 @@ using TheConfectionRebirth.Tiles;
 using Terraria.ID;
 using MonoMod.Cil;
 using System.Reflection;
-using Microsoft.CodeAnalysis.Emit;
 using Terraria.ModLoader.Config;
 using Terraria.Utilities;
 using Terraria.ObjectData;
@@ -42,6 +41,8 @@ namespace TheConfectionRebirth
 			On_WorldGen.PlaceTile += PlaceTile;
 			IL_WorldGen.TileFrame += VineTileFrame;
 			IL_MapHelper.CreateMapTile += CactusMapColor;
+			On_WorldGen.PlaceLilyPad += LilyPadPreventer;
+			On_WorldGen.CheckCatTail += CheckCattail;
 		}
 
 		public override void Unload() {
@@ -56,6 +57,320 @@ namespace TheConfectionRebirth
 			On_WorldGen.PlaceTile -= PlaceTile;
 			IL_WorldGen.TileFrame -= VineTileFrame;
 			IL_MapHelper.CreateMapTile -= CactusMapColor;
+			On_WorldGen.PlaceLilyPad -= LilyPadPreventer;
+		}
+
+		private void CheckCattail(On_WorldGen.orig_CheckCatTail orig, int x, int j) {
+			if (Main.tile[x, j] == null) {
+				return;
+			}
+			int num = j;
+			bool flag = false;
+			int num2 = num;
+			while ((!Main.tile[x, num2].HasTile || !Main.tileSolid[Main.tile[x, num2].TileType] || Main.tileSolidTop[Main.tile[x, num2].TileType]) && num2 < Main.maxTilesY - 50) {
+				if (Main.tile[x, num2].HasTile && (Main.tile[x, num2].TileType != 519 || Main.tile[x, num2].TileType != ModContent.TileType<CreamCattails>())) {
+					flag = true;
+				}
+				if (!Main.tile[x, num2].HasTile) {
+					break;
+				}
+				num2++;
+				if (Main.tile[x, num2] == null) {
+					return;
+				}
+			}
+			num = num2 - 1;
+			if (Main.tile[x, num] == null) {
+				return;
+			}
+			while (Main.tile[x, num] != null && Main.tile[x, num].LiquidAmount > 0 && num > 50) {
+				if ((Main.tile[x, num].HasTile && (Main.tile[x, num].TileType != 519 || Main.tile[x, num].TileType != ModContent.TileType<CreamCattails>())) || Main.tile[x, num].LiquidType != 0) {
+					flag = true;
+				}
+				num--;
+				if (Main.tile[x, num] == null) {
+					return;
+				}
+			}
+			num++;
+			if (Main.tile[x, num] == null) {
+				return;
+			}
+			//CreamcattailCheck2(x, num2, ref num, ref flag);
+			int num3 = num;
+			int num4 = 8;//WorldGen.catTailDistance;
+			if (num2 - num3 > num4) {
+				flag = true;
+			}
+			int type = Main.tile[x, num2].TileType;
+			int num5 = -1;
+			if (type == ModContent.TileType<CreamGrass>()) { //
+				num5 = ModContent.TileType<CreamCattails>(); //
+			} //
+			switch (type) {
+				case 2:
+				case 477:
+					num5 = 0;
+					break;
+				case 53:
+					num5 = 18;
+					break;
+				case 199:
+				case 234:
+				case 662:
+					num5 = 54;
+					break;
+				case 23:
+				case 112:
+				case 661:
+					num5 = 72;
+					break;
+				case 70:
+					num5 = 90;
+					break;
+			}
+			if (!Main.tile[x, num2].HasTile) {
+				flag = true;
+			}
+			if (num5 < 0) {
+				flag = true;
+			}
+			num = num2 - 1;
+			if (Main.tile[x, num] != null && !Main.tile[x, num].HasTile) {
+				for (int num6 = num; num6 >= num3; num6--) {
+					if (Main.tile[x, num6] == null) {
+						return;
+					}
+					if (Main.tile[x, num6].HasTile && Main.tile[x, num6].TileType == 519) {
+						num = num6;
+						break;
+					}
+				}
+			}
+			while (Main.tile[x, num] != null && Main.tile[x, num].HasTile && Main.tile[x, num].TileType == 519) {
+				num--;
+			}
+			num++;
+			//if (Main.tile[x, num2].TileType == ModContent.TileType<CreamCattails>()) { //
+			//CreamcattailCheck(x, num2, ref num, ref flag);
+			//}
+			CreamcattailCheck3(x, num2, ref num, ref flag);
+			if (flag) {
+				int num7 = num3;
+				if (num < num3) {
+					num7 = num;
+				}
+				num7 -= 4;
+				for (int i = num7; i <= num2; i++) {
+					if (Main.tile[x, i] != null && Main.tile[x, i].HasTile && Main.tile[x, i].TileType == ModContent.TileType<CreamCattails>()) {
+						WorldGen.KillTile(x, i);
+						if (Main.netMode == NetmodeID.Server) {
+							NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, i);
+						}
+						WorldGen.SquareTileFrame(x, i);
+					}
+				}
+			}
+			else {
+				if (num5 == ModContent.TileType<CreamCattails>()) {
+					for (int k = num; k < num2; k++) {
+						if (Main.tile[x, k] != null && Main.tile[x, k].HasTile) {
+							Main.tile[x, k].TileType = (ushort)num5;
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(-1, x, num);
+							}
+						}
+					}
+					//return;
+				}
+			} //
+
+			if (Main.tile[x, num2 - 1] != null && Main.tile[x, num2 - 1].LiquidAmount < 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num].TileFrameX >= 180 && Main.tile[x, num].LiquidAmount > 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num2 - 1] != null && Main.tile[x, num].TileFrameX > 18) {
+				if (Main.tile[x, num2 - 1].TileFrameX < 36 || Main.tile[x, num2 - 1].TileFrameX > 72) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX < 90) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX >= 108 && Main.tile[x, num].TileFrameX <= 162) {
+					Main.tile[x, num].TileFrameX = 90;
+				}
+			}
+			if (num2 > num + 4 && Main.tile[x, num + 4] != null && Main.tile[x, num + 3] != null && Main.tile[x, num + 4].LiquidAmount == 0 && Main.tile[x, num + 3].TileType == 519) {
+				flag = true;
+			}
+			if (flag) {
+				int num7 = num3;
+				if (num < num3) {
+					num7 = num;
+				}
+				num7 -= 4;
+				for (int i = num7; i <= num2; i++) {
+					if (Main.tile[x, i] != null && Main.tile[x, i].HasTile && Main.tile[x, i].TileType == 519) {
+						WorldGen.KillTile(x, i);
+						if (Main.netMode == NetmodeID.Server) {
+							NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, i);
+						}
+						WorldGen.SquareTileFrame(x, i);
+					}
+				}
+			}
+			else {
+				if (num5 == Main.tile[x, num].TileFrameY) {
+					return;
+				}
+				for (int k = num; k < num2; k++) {
+					if (Main.tile[x, k] != null && Main.tile[x, k].HasTile && Main.tile[x, k].TileType == 519) {
+						Main.tile[x, k].TileFrameY = (short)num5;
+						Main.tile[x, k].TileType = 519; //
+						if (Main.netMode == NetmodeID.Server) {
+							NetMessage.SendTileSquare(-1, x, num);
+						}
+					}
+				}
+			}
+		}
+
+		private void CreamcattailCheck2(int x, int y, ref int num, ref bool flag) {
+			int num2 = y;
+			while ((!Main.tile[x, num2].HasTile || !Main.tileSolid[Main.tile[x, num2].TileType] || Main.tileSolidTop[Main.tile[x, num2].TileType]) && num2 < Main.maxTilesY - 50) {
+				if (Main.tile[x, num2].HasTile && Main.tile[x, num2].TileType != ModContent.TileType<CreamCattails>()) {
+					flag = true;
+				}
+				if (!Main.tile[x, num2].HasTile) {
+					break;
+				}
+				num2++;
+				if (Main.tile[x, num2] == null) {
+					return;
+				}
+			}
+			num = num2 - 1;
+			while (Main.tile[x, num] != null && Main.tile[x, num].LiquidAmount > 0 && num > 50) {
+				if ((Main.tile[x, num].HasTile && Main.tile[x, num].TileType != ModContent.TileType<CreamCattails>()) || Main.tile[x, num].LiquidType != 0) {
+					flag = true;
+				}
+				num--;
+				if (Main.tile[x, num] == null) {
+					return;
+				}
+			}
+			num++;
+		}
+
+		private void CreamcattailCheck(int x, int y, ref int num, ref bool flag) {
+			int num2 = y;
+			while ((!Main.tile[x, num2].HasTile || !Main.tileSolid[Main.tile[x, num2].TileType] || Main.tileSolidTop[Main.tile[x, num2].TileType]) && num2 < Main.maxTilesY - 50) {
+				if (Main.tile[x, num2].HasTile && Main.tile[x, num2].TileType != ModContent.TileType<CreamCattails>()) {
+					flag = true;
+				}
+				if (!Main.tile[x, num2].HasTile) {
+					break;
+				}
+				num2++;
+				if (Main.tile[x, num2] == null) {
+					return;
+				}
+			}
+			num = num2 - 1;
+			while (Main.tile[x, num] != null && Main.tile[x, num].LiquidAmount > 0 && num > 50) {
+				if ((Main.tile[x, num].HasTile && Main.tile[x, num].TileType != ModContent.TileType<CreamCattails>()) || Main.tile[x, num].LiquidType != 0) {
+					flag = true;
+				}
+				num--;
+				if (Main.tile[x, num] == null) {
+					return;
+				}
+			}
+			num++;
+			int num3 = num;
+			int num4 = 8;//WorldGen.catTailDistance;
+			if (num2 - num3 > num4) {
+				flag = true;
+			}
+			if (!Main.tile[x, num2].HasTile) {
+				flag = true;
+			}
+			num = num2 - 1;
+			if (Main.tile[x, num] != null && !Main.tile[x, num].HasTile) {
+				for (int num6 = num; num6 >= num3; num6--) {
+					if (Main.tile[x, num6] == null) {
+						return;
+					}
+					if (Main.tile[x, num6].HasTile && Main.tile[x, num6].TileType == ModContent.TileType<CreamCattails>()) {
+						num = num6;
+						break;
+					}
+				}
+			}
+			while (Main.tile[x, num] != null && Main.tile[x, num].HasTile && Main.tile[x, num].TileType == ModContent.TileType<CreamCattails>()) {
+				num--;
+			}
+			num++;
+			if (Main.tile[x, num2 - 1] != null && Main.tile[x, num2 - 1].LiquidAmount < 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num].TileFrameX >= 180 && Main.tile[x, num].LiquidAmount > 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num2 - 1] != null && Main.tile[x, num].TileFrameX > 18) {
+				if (Main.tile[x, num2 - 1].TileFrameX < 36 || Main.tile[x, num2 - 1].TileFrameX > 72) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX < 90) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX >= 108 && Main.tile[x, num].TileFrameX <= 162) {
+					Main.tile[x, num].TileFrameX = 90;
+				}
+			}
+			if (num2 > num + 4 && Main.tile[x, num + 4] != null && Main.tile[x, num + 3] != null && Main.tile[x, num + 4].LiquidAmount == 0 && Main.tile[x, num + 3].TileType == ModContent.TileType<CreamCattails>()) {
+				flag = true;
+			}
+		}
+
+		private void CreamcattailCheck3(int x, int num2, ref int num, ref bool flag) {
+			if (Main.tile[x, num2 - 1] != null && Main.tile[x, num2 - 1].LiquidAmount < 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num].TileFrameX >= 180 && Main.tile[x, num].LiquidAmount > 127 && WorldGen.genRand.NextBool(4)) {
+				flag = true;
+			}
+			if (Main.tile[x, num] != null && Main.tile[x, num2 - 1] != null && Main.tile[x, num].TileFrameX > 18) {
+				if (Main.tile[x, num2 - 1].TileFrameX < 36 || Main.tile[x, num2 - 1].TileFrameX > 72) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX < 90) {
+					flag = true;
+				}
+				else if (Main.tile[x, num].TileFrameX >= 108 && Main.tile[x, num].TileFrameX <= 162) {
+					Main.tile[x, num].TileFrameX = 90;
+				}
+			}
+			if (num2 > num + 4 && Main.tile[x, num + 4] != null && Main.tile[x, num + 3] != null && Main.tile[x, num + 4].LiquidAmount == 0 && Main.tile[x, num + 3].TileType == ModContent.TileType<CreamCattails>()) {
+				flag = true;
+			}
+		}
+
+		private bool LilyPadPreventer(On_WorldGen.orig_PlaceLilyPad orig, int x, int j) {
+			int num = j;
+			while (Main.tile[x, num].LiquidAmount > 0 && num > 50) {
+				num--;
+			}
+			num++;
+			int l;
+			for (l = num; (!Main.tile[x, l].HasTile || !Main.tileSolid[Main.tile[x, l].TileType] || Main.tileSolidTop[Main.tile[x, l].TileType]) && l < Main.maxTilesY - 50; l++) {
+				if (Main.tile[x, l].HasTile && Main.tile[x, l].TileType == ModContent.TileType<CreamCattails>()) {
+					return false;
+				}
+			}
+			return orig.Invoke(x, j);
 		}
 
 		private void CactusMapColor(ILContext il) {
@@ -71,9 +386,11 @@ namespace TheConfectionRebirth
 			c.EmitLdloca(3); //num5
 			c.EmitDelegate((int i, int j, ref int num5) => {
 				Tile tile = Main.tile[i, j];
-				WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
-				if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType == ModContent.TileType<Creamsand>()) {
-					num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
+				if (tile != null) { //somehow still out of bounds
+					WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
+					if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType == ModContent.TileType<Creamsand>()) {
+						num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
+					}
 				}
 			});
 		}
@@ -133,6 +450,9 @@ namespace TheConfectionRebirth
 							}
 						}
 					}
+					else if (num == ModContent.TileType<CreamCattails>()) {
+						WorldGen.PlaceCatTail(i, j);
+					}
 				}
 			}
 			return orig.Invoke(i, j, Type, mute, forced, plr, style);
@@ -181,7 +501,7 @@ namespace TheConfectionRebirth
 							tile.frameX = (short)(18 * Main.rand.Next(2, 8));
 						}
 					}*/
-					if (Main.netMode == 1) {
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
 						NetMessage.SendTileSquare(-1, X, Y);
 					}
 					return true;
@@ -250,7 +570,7 @@ namespace TheConfectionRebirth
 					}
 				});
 			}
-			catch (Exception e) {
+			catch (Exception) {
 			}
 		}
 
