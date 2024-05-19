@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -20,7 +22,7 @@ namespace TheConfectionRebirth.Tiles
 
 			TileID.Sets.TileCutIgnore.Regrowth[Type] = true;
 
-			AddMapEntry(new Color(200, 170, 108)); //120 110 100
+			AddMapEntry(new Color(200, 170, 108));
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
 		}
@@ -37,7 +39,46 @@ namespace TheConfectionRebirth.Tiles
 			ConfectionWorldGeneration.CheckCreamCatTail(i, j);
 			return false;
 		}
+
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			bool intoRenderTargets = true;
+			bool flag = intoRenderTargets || Main.LightingEveryFrame;
+
+			if (Main.tile[i, j].TileFrameX / 18 <= 4 && flag) {
+				Main.instance.TilesRenderer.AddSpecialPoint(j, i, (int)TileCounterType.MultiTileGrass);
+			}
+
+			return false;
+		}
+
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			offsetY = 2;
+		}
+
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
+			if (i % 2 == 0) {
+				spriteEffects = (SpriteEffects)1;
+			}
+		}
+
+		private enum TileCounterType {
+			Tree,
+			DisplayDoll,
+			HatRack,
+			WindyGrass,
+			MultiTileGrass,
+			MultiTileVine,
+			Vine,
+			BiomeGrass,
+			VoidLens,
+			ReverseVine,
+			TeleportationPylon,
+			MasterTrophy,
+			AnyDirectionalGrass,
+			Count
+		}
 	}
+
 
 	public class CattailGen : GlobalTile {
 		public override void RandomUpdate(int i, int j, int type) {
