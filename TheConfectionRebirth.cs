@@ -48,8 +48,8 @@ namespace TheConfectionRebirth
 			IL_WorldGen.PlaceCatTail += PlaceCattailEdit;
 			On_WorldGen.GrowCatTail += GrowCattailEdit;
 			//IL_TileDrawing.DrawMultiTileGrassInWind += MultiTileWindEdit;
-			IL_TileDrawing.DrawMultiTileGrass += IL_TileDrawing_DrawMultiTileGrass;
-			IL_TileDrawing.DrawMultiTileGrassInWind += IL_TileDrawing_DrawMultiTileGrassInWind;
+			//IL_TileDrawing.DrawMultiTileGrass += IL_TileDrawing_DrawMultiTileGrass;
+			//IL_TileDrawing.DrawMultiTileGrassInWind += IL_TileDrawing_DrawMultiTileGrassInWind;
 		}
 
 		private void IL_TileDrawing_DrawMultiTileGrassInWind(ILContext il) {
@@ -350,7 +350,7 @@ namespace TheConfectionRebirth
 			}
 		}
 
-		private static int ClimbCreamCatTail(int originx, int originy) {
+		public static int ClimbCreamCatTail(int originx, int originy) {
 			int num = 0;
 			int num2 = originy;
 			while (num2 > 10) {
