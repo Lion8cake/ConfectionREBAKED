@@ -47,6 +47,9 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckCatTail += CheckCattailEdit;
 			IL_WorldGen.PlaceCatTail += PlaceCattailEdit;
 			On_WorldGen.GrowCatTail += GrowCattailEdit;
+			IL_WorldGen.CheckLilyPad += CheckLilyPadEdit;
+			IL_WorldGen.PlaceLilyPad += PlaceLilyPadEdit;
+			On_TileDrawing.DrawSingleTile += LilyPadDrawingPreventer;
 		}
 
 		public override void Unload() {
@@ -65,6 +68,180 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckCatTail -= CheckCattailEdit;
 			IL_WorldGen.PlaceCatTail -= PlaceCattailEdit;
 			On_WorldGen.GrowCatTail -= GrowCattailEdit;
+			IL_WorldGen.CheckLilyPad -= CheckLilyPadEdit;
+			IL_WorldGen.PlaceLilyPad -= PlaceLilyPadEdit;
+			On_TileDrawing.DrawSingleTile -= LilyPadDrawingPreventer;
+		}
+
+		private void LilyPadDrawingPreventer(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, Terraria.DataStructures.TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
+			/*drawData.tileCache = Main.tile[tileX, tileY]; //Doesnt quite work yet, probably something to do with lilypads being drawn elsewhere (not inside of TileDrawing), probs use vs to look for any instance of LilyPad or 518
+			drawData.typeCache = drawData.tileCache.TileType;
+			drawData.tileFrameX = drawData.tileCache.TileFrameX;
+			drawData.tileFrameY = drawData.tileCache.TileFrameY;
+			drawData.tileLight = Lighting.GetColor(tileX, tileY);
+			if (drawData.tileCache.LiquidAmount > 0 && drawData.tileCache.TileType == ModContent.TileType<CreamLilyPads>()) {
+				return;
+			}*/
+			orig.Invoke(self, drawData, solidLayer, waterStyleOverride, screenPosition, screenOffset, tileX, tileY);
+		}
+
+		private void PlaceLilyPadEdit(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(5),
+				i => i.MatchStloc(1),
+				i => i.MatchLdcI4(0),
+				i => i.MatchStloc(2));
+			c.EmitLdarg(0); //x
+			c.EmitLdloc1(); //num2
+			c.EmitLdloc0(); //num
+			c.EmitLdloca(2); //ref num3
+			c.EmitDelegate((int x, int num2, int num, ref int num3) => {
+				for (int i = x - num2; i <= x + num2; i++) {
+					for (int k = num - num2; k <= num + num2; k++) {
+						if (Main.tile[i, k].HasTile && Main.tile[i, k].TileType == ModContent.TileType<CreamLilyPads>()) {
+							num3++;
+						}
+					}
+				}
+			});
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdindU2(),
+				i => i.MatchStloc(5),
+				i => i.MatchLdcI4(-1), 
+				i => i.MatchStloc(6));
+			c.EmitLdloc(5); //type
+			c.EmitLdloca(6); //ref num5
+			c.EmitDelegate((int type, ref int num5) => {
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>()) {
+					num5 = ModContent.TileType<CreamLilyPads>();
+				}
+			});
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdloca(7),
+				i => i.MatchCall<Tile>("get_frameY"),
+				i => i.MatchLdloc(6),
+				i => i.MatchConvI2(),
+				i => i.MatchStindI2());
+			c.EmitLdarg(0); //x
+			c.EmitLdloc(0); //num
+			c.EmitLdloc(6); //num5
+			c.EmitDelegate((int x, int num, int num5) => {
+				if (num5 == ModContent.TileType<CreamLilyPads>()) {
+					Main.tile[x, num].TileType = (ushort)num5;
+					Main.tile[x, num].TileFrameY = 0;
+				}
+			});
+		}
+
+		private void CheckLilyPadEdit(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel IL_0000 = c.DefineLabel();
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchStloc(1),
+				i => i.MatchLdcI4(-1), //also known as Ldc.i4.m1
+				i => i.MatchStloc(2));
+			c.EmitLdloc(1); //type
+			c.EmitLdloca(2); //ref num2
+			c.EmitLdarg0(); //x
+			c.EmitLdarg1(); //y
+			c.EmitLdloca(3); //ref tile
+			c.EmitDelegate((int type, ref int num2, int x, int y, ref Tile tile) => { //we inject this to change the num2 to our tile when under a certain tile type (we use the TileID for creamlilypads as num2 for the same reasons as CheckCattail())
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>()) {
+					num2 = -1;
+					int num3 = ModContent.TileType<CreamLilyPads>();
+					tile = Main.tile[x, y];
+					if (num3 != tile.TileType) {
+						tile.TileType = (ushort)num3;
+						tile.TileFrameY = 0;
+						if (Main.netMode == 2) {
+							NetMessage.SendTileSquare(-1, x, y);
+						}
+					}
+					tile = Main.tile[x, y - 1];
+					if (tile.LiquidType > 0) {
+						if (!tile.HasTile) {
+							tile.HasTile = true;
+							tile.TileType = (ushort)ModContent.TileType<CreamLilyPads>();
+							ref short frameX = ref tile.TileFrameX;
+							tile = Main.tile[x, y];
+							frameX = tile.TileFrameX;
+							tile = Main.tile[x, y - 1];
+							ref short frameY = ref tile.TileFrameY;
+							tile = Main.tile[x, y];
+							frameY = tile.TileFrameY;
+							tile = Main.tile[x, y - 1];
+							tile.IsHalfBlock = false;
+							tile.Slope = 0;
+							tile = Main.tile[x, y];
+							tile.HasTile = false;
+							tile.TileType = 0;
+							WorldGen.SquareTileFrame(x, y - 1, resetFrame: false);
+							if (Main.netMode == 2) {
+								NetMessage.SendTileSquare(-1, x, y - 1, 1, 2);
+							}
+							return;
+						}
+					}
+					tile = Main.tile[x, y];
+					if (tile.LiquidAmount != 0) {
+						return;
+					}
+					Tile tileSafely = Framing.GetTileSafely(x, y + 1);
+					if (!tileSafely.HasTile) {
+						tile = Main.tile[x, y + 1];
+						tile.HasTile = true;
+						tile.TileType = (ushort)ModContent.TileType<CreamLilyPads>();
+						ref short frameX2 = ref tile.TileFrameX;
+						tile = Main.tile[x, y];
+						frameX2 = tile.TileFrameX;
+						tile = Main.tile[x, y + 1];
+						ref short frameY2 = ref tile.TileFrameY;
+						tile = Main.tile[x, y];
+						frameY2 = tile.TileFrameY;
+						tile = Main.tile[x, y + 1];
+						tile.IsHalfBlock = false;
+						tile.Slope = 0;
+						tile = Main.tile[x, y];
+						tile.HasTile = false;
+						tile = Main.tile[x, y];
+						tile.TileType = 0;
+						WorldGen.SquareTileFrame(x, y + 1, resetFrame: false);
+						if (Main.netMode == 2) {
+							NetMessage.SendTileSquare(-1, x, y, 1, 2);
+						}
+					}
+					else if (tileSafely.HasTile && !TileID.Sets.Platforms[tileSafely.TileType] && (!Main.tileSolid[tileSafely.TileType] || Main.tileSolidTop[tileSafely.TileType])) {
+						WorldGen.KillTile(x, y);
+						if (Main.netMode == 2) {
+							NetMessage.SendData(17, -1, -1, null, 0, x, y);
+						}
+					}
+				}
+			});
+			c.EmitLdloc(1); //type
+			c.EmitDelegate((int type) => {
+				return type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>();
+			});
+			c.EmitBrfalse(IL_0000);
+			c.EmitRet(); //return
+			c.MarkLabel(IL_0000);
+
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdloca(3),
+				i => i.MatchCall<Tile>("get_frameY"),
+				i => i.MatchLdloc(2),
+				i => i.MatchConvI2(),
+				i => i.MatchStindI2());
+			c.EmitLdloca(3); //ref Tile
+			c.EmitDelegate((ref Tile tile) => { //set the TileType to lilyPad since so the conversion between our and their tiles dont result in unintended consiquences
+				tile.TileType = TileID.LilyPad;
+			});
 		}
 
 		public static int ClimbCreamCatTail(int originx, int originy) {
@@ -384,6 +561,9 @@ namespace TheConfectionRebirth
 								}
 							}
 						}
+					}
+					else if (num == ModContent.TileType<CreamLilyPads>()) {
+						WorldGen.PlaceLilyPad(i, j);
 					}
 					else if (num == ModContent.TileType<CreamCattails>()) {
 						WorldGen.PlaceCatTail(i, j);

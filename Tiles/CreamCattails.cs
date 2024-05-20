@@ -140,13 +140,19 @@ namespace TheConfectionRebirth.Tiles
 	}
 
 
-	public class CattailGen : GlobalTile {
+	public class CattailLilyPadGen : GlobalTile {
 		public override void RandomUpdate(int i, int j, int type) {
 			if (j >= Main.worldSurface) {
 				if (Main.tile[i, j].LiquidAmount > 32) {
 					if (WorldGen.genRand.NextBool(600)) {
 						WorldGen.PlaceTile(i, j, ModContent.TileType<CreamCattails>(), mute: true);
 						if (Main.netMode == NetmodeID.Server) {
+							NetMessage.SendTileSquare(-1, i, j);
+						}
+					}
+					else if (WorldGen.genRand.NextBool(600)) {
+						WorldGen.PlaceTile(i, j, ModContent.TileType<CreamLilyPads>(), mute: true);
+						if (Main.netMode == 2) {
 							NetMessage.SendTileSquare(-1, i, j);
 						}
 					}
