@@ -281,7 +281,7 @@ namespace TheConfectionRebirth {
 			}
 			int type = Main.tile[x, num2].TileType;
 			int num5 = -1;
-			if (type == ModContent.TileType<CreamGrass>()) {
+			if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) {
 				num5 = ModContent.TileType<CreamCattails>();
 			}
 			switch (type) {

@@ -47,217 +47,7 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckCatTail += CheckCattailEdit;
 			IL_WorldGen.PlaceCatTail += PlaceCattailEdit;
 			On_WorldGen.GrowCatTail += GrowCattailEdit;
-			//IL_TileDrawing.DrawMultiTileGrassInWind += MultiTileWindEdit;
-			//IL_TileDrawing.DrawMultiTileGrass += IL_TileDrawing_DrawMultiTileGrass;
-			//IL_TileDrawing.DrawMultiTileGrassInWind += IL_TileDrawing_DrawMultiTileGrassInWind;
 		}
-
-		private void IL_TileDrawing_DrawMultiTileGrassInWind(ILContext il) {
-			ILCursor c = new(il);
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdloca(10),
-				i => i.MatchCall<Tile>("get_type"),
-				i => i.MatchLdindU2(),
-				i => i.MatchStloc(11));
-			c.EmitLdloc(3); //type
-			c.EmitLdloca(6); //flag
-			c.EmitLdloca(2); //num
-			c.EmitLdarg(3); //topLeftX
-			c.EmitLdarg(4); //topLeftY
-			c.EmitLdarg(5); //sizeX
-			c.EmitDelegate((int type, ref bool flag, ref float num, int topLeftX, int topLeftY, int sizeX) => {
-				if (type == ModContent.TileType<CreamCattails>()) {
-					flag = WorldGen.InAPlaceWithWind(topLeftX, topLeftY, sizeX, 1);
-					num = 0.07f;
-				}
-			});
-		}
-
-		private void IL_TileDrawing_DrawMultiTileGrass(ILContext il) {
-			ILCursor c = new(il);
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdsflda<Main>("tile"),
-				i => i.MatchLdloc(5),
-				i => i.MatchLdloc(6),
-				i => i.MatchCall<Tilemap>("get_Item"),
-				i => i.MatchStloc(9)
-				);
-			c.EmitLdloc(9); //tile
-			c.EmitLdloc(5); //x
-			c.EmitLdloca(6); //num3
-			c.EmitLdloca(7); //sizeX
-			c.EmitLdloca(8); //num4
-			c.EmitDelegate((Tile tile, int x, ref int num3, ref int sizeX, ref int num4) => {
-				if (tile != null && tile.HasTile) { 
-					if (Main.tile[x, num3].TileType == ModContent.TileType<CreamCattails>()) {
-						sizeX = 1;
-						num4 = ClimbCreamCatTail(x, num3);
-						num3 -= num4 - 1;
-					}
-				}
-			});
-		}
-		#region ProofOfConcept?
-		/*
-		private void On_TileDrawing_DrawMultiTileGrassInWind(On_TileDrawing.orig_DrawMultiTileGrassInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY) {
-			float windCycle = GetWindCycle(topLeftX, topLeftY, _sunflowerWindCounter);
-			new Vector2((float)(sizeX * 16) * 0.5f, (float)(sizeY * 16));
-			Vector2 vector = new Vector2((float)(topLeftX * 16 - (int)screenPosition.X) + (float)sizeX * 16f * 0.5f, (float)(topLeftY * 16 - (int)screenPosition.Y + 16 * sizeY)) + offSet;
-			float num = 0.07f;
-			int type = Main.tile[topLeftX, topLeftY].type;
-			Texture2D texture2D = null;
-			Color color = Color.Transparent;
-			bool flag = InAPlaceWithWind(topLeftX, topLeftY, sizeX, sizeY);
-			switch (type) {
-				case 27:
-					texture2D = TextureAssets.Flames[14].Value;
-					color = Color.White;
-					break;
-				case 519:
-					flag = InAPlaceWithWind(topLeftX, topLeftY, sizeX, 1);
-					break;
-				default:
-					num = 0.15f;
-					break;
-				case 521:
-				case 522:
-				case 523:
-				case 524:
-				case 525:
-				case 526:
-				case 527:
-					num = 0f;
-					flag = false;
-					break;
-			}
-			Vector2 vector3 = default(Vector2);
-			for (int i = topLeftX; i < topLeftX + sizeX; i++) {
-				for (int j = topLeftY; j < topLeftY + sizeY; j++) {
-					Tile tile = Main.tile[i, j];
-					ushort type2 = tile.type;
-					if (type == ModContent.TileType<CreamCattails>()) {
-						flag = InAPlaceWithWind(topLeftX, topLeftY, sizeX, 1);
-						num = 0.07f;
-					}
-					if (type2 != type || !IsVisible(tile)) {
-						continue;
-					}
-					Math.Abs(((float)(i - topLeftX) + 0.5f) / (float)sizeX - 0.5f);
-					short tileFrameX = tile.frameX;
-					short tileFrameY = tile.frameY;
-					float num2 = 1f - (float)(j - topLeftY + 1) / (float)sizeY;
-					if (num2 == 0f) {
-						num2 = 0.1f;
-					}
-					if (!flag) {
-						num2 = 0f;
-					}
-					GetTileDrawData(i, j, tile, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
-					bool flag2 = _rand.Next(4) == 0;
-					Color tileLight = Lighting.GetColor(i, j);
-					DrawAnimatedTile_AdjustForVisionChangers(i, j, tile, type2, tileFrameX, tileFrameY, ref tileLight, flag2);
-					tileLight = DrawTiles_GetLightOverride(j, i, tile, type2, tileFrameX, tileFrameY, tileLight);
-					if (_isActiveAndNotPaused && flag2) {
-						DrawTiles_EmitParticles(j, i, tile, type2, tileFrameX, tileFrameY, tileLight);
-					}
-					Vector2 vector2 = new Vector2((float)(i * 16 - (int)screenPosition.X), (float)(j * 16 - (int)screenPosition.Y + tileTop)) + offSet;
-					if (tile.type == 493 && tile.frameY == 0) {
-						if (Main.WindForVisuals >= 0f) {
-							tileSpriteEffect = (SpriteEffects)(tileSpriteEffect ^ 1);
-						}
-						if (!((Enum)tileSpriteEffect).HasFlag((Enum)(object)(SpriteEffects)1)) {
-							vector2.X -= 6f;
-						}
-						else {
-							vector2.X += 6f;
-						}
-					}
-					((Vector2)(ref vector3))..ctor(windCycle * 1f, Math.Abs(windCycle) * 2f * num2);
-					Vector2 origin = vector - vector2;
-					Texture2D tileDrawTexture = GetTileDrawTexture(tile, i, j);
-					if (tileDrawTexture != null) {
-						Main.spriteBatch.Draw(tileDrawTexture, vector + new Vector2(0f, vector3.Y), (Rectangle?)new Rectangle(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight), tileLight, windCycle * num * num2, origin, 1f, tileSpriteEffect, 0f);
-						if (texture2D != null) {
-							Main.spriteBatch.Draw(texture2D, vector + new Vector2(0f, vector3.Y), (Rectangle?)new Rectangle(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight), color, windCycle * num * num2, origin, 1f, tileSpriteEffect, 0f);
-						}
-					}
-				}
-			}
-		}
-
-		private void On_TileDrawing_DrawMultiTileGrass(On_TileDrawing.orig_DrawMultiTileGrass orig, TileDrawing self) {
-			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
-			Vector2 zero = Vector2.Zero;
-			int num = 4;
-			int num2 = _specialsCount[num];
-			for (int i = 0; i < num2; i++) {
-				Point val = _specialPositions[num][i];
-				int x = val.X;
-				int num3 = val.Y;
-				int sizeX = 1;
-				int num4 = 1;
-				Tile tile = Main.tile[x, num3];
-				if (tile != null && tile.HasTile) { //
-					if (Main.tile[x, num3].TileType == ModContent.TileType<CreamCattails>()) {
-						sizeX = 1;
-						num4 = ClimbCreamCatTail(x, num3);
-						num3 -= num4 - 1;
-					}
-				} //
-				if (tile != null && tile.active()) {
-					switch (Main.tile[x, num3].type) {
-						case 27:
-							sizeX = 2;
-							num4 = 5;
-							break;
-						case 236:
-						case 238:
-							sizeX = (num4 = 2);
-							break;
-						case 233:
-							sizeX = ((Main.tile[x, num3].frameY != 0) ? 2 : 3);
-							num4 = 2;
-							break;
-						case 530:
-						case 651:
-							sizeX = 3;
-							num4 = 2;
-							break;
-						case 485:
-						case 490:
-						case 521:
-						case 522:
-						case 523:
-						case 524:
-						case 525:
-						case 526:
-						case 527:
-						case 652:
-							sizeX = 2;
-							num4 = 2;
-							break;
-						case 489:
-							sizeX = 2;
-							num4 = 3;
-							break;
-						case 493:
-							sizeX = 1;
-							num4 = 2;
-							break;
-						case 519:
-							sizeX = 1;
-							num4 = ClimbCatTail(x, num3);
-							num3 -= num4 - 1;
-							break;
-					}
-					DrawMultiTileGrassInWind(unscaledPosition, zero, x, num3, sizeX, num4);
-				}
-			}
-		}
-		*/
-		#endregion
 
 		public override void Unload() {
 			ConfectionWindUtilities.Unload();
@@ -275,79 +65,6 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckCatTail -= CheckCattailEdit;
 			IL_WorldGen.PlaceCatTail -= PlaceCattailEdit;
 			On_WorldGen.GrowCatTail -= GrowCattailEdit;
-			//IL_TileDrawing.DrawMultiTileGrassInWind -= MultiTileWindEdit;
-		}
-
-		private void MultiTileWindEdit(MonoMod.Cil.ILContext il) {
-			ILCursor c = new(il);
-			c.EmitLdarg0(); //self
-			c.EmitLdarga(3); //topLeftX
-			c.EmitLdarga(4); //topLeftY
-			c.EmitLdarga(1); //screenPosition
-			c.EmitLdarga(2); //offset
-			c.EmitLdarga(5); //sizeX
-			c.EmitLdarga(6); //size Y
-			c.EmitDelegate((TileDrawing self, ref int topLeftX, ref int topLeftY, ref Vector2 screenPosition, ref Vector2 offSet, ref int sizeX, ref int sizeY) =>
-			{
-				Texture2D dud = null;
-				Color dud2 = Color.White;
-				bool dud3 = false;
-				float dud4 = 0;
-				SetMultiGrassDrawingSettings(self, ref screenPosition, ref offSet, ref topLeftX, ref topLeftY, ref sizeX, ref sizeY, ref dud3, ref dud4, ref dud, ref dud2); //Adds the sizing of the tile
-			});
-
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdloca(10),
-				i => i.MatchCall<Tile>("get_type"),
-				i => i.MatchLdindU2(),
-				i => i.MatchStloc(11));
-			c.EmitLdarg0(); //self
-			c.EmitLdarga(3); //topLeftX
-			c.EmitLdarga(4); //topLeftY
-			c.EmitLdloca(6); //flag
-			c.EmitLdloca(2); //num
-			c.EmitDelegate((TileDrawing self, ref int topLeftX, ref int topLeftY, ref bool flag, ref float num) => 
-			{
-				int dud = 0;
-				Texture2D dud2 = null;
-				Color dud3 = Color.White;
-				Vector2 dud4 = Vector2.Zero;
-				SetMultiGrassDrawingSettings(self, ref dud4, ref dud4, ref topLeftX, ref topLeftY, ref dud, ref dud, ref flag, ref num, ref dud2, ref dud3); //Adds extra content (glowmasks, color, ect)
-			});
-
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdarg0(),
-				i => i.MatchLdloc(10),
-				i => i.MatchLdloc(8),
-				i => i.MatchLdloc(9),
-				i => i.MatchCall<TileDrawing>("GetTileDrawTexture"),
-				i => i.MatchStloc(27)
-				); //Goes to before the Main.Spritebatch Drawing and injects, when I mean right before, I mean the next instruction is calling Main.spritebatch, ya know
-			c.EmitLdarg0(); //self
-			c.EmitLdarga(3); //topLeftX
-			c.EmitLdarga(4); //topLeftY
-			c.EmitLdloca(4); //val2
-			c.EmitLdloca(5); //color
-			c.EmitDelegate((TileDrawing self, ref int topLeftX, ref int topLeftY, ref Texture2D val2, ref Color color) => //Should note that the val2 is the extra texture thats only used by sunflower's """"flames""""
-			{
-				int dud = 0;
-				Vector2 dud2 = Vector2.Zero;
-				bool dud3 = false;
-				float dud4 = 0.0f;
-				SetMultiGrassDrawingSettings(self, ref dud2, ref dud2, ref topLeftX, ref topLeftY, ref dud, ref dud, ref dud3, ref dud4, ref val2, ref color); //Adds extra content (glowmasks, color, ect)
-			});
-		}
-
-		public static void SetMultiGrassDrawingSettings(TileDrawing self, ref Vector2 screenPosition, ref Vector2 offSet, ref int topLeftX, ref int topLeftY, ref int sizeX, ref int sizeY, ref bool Wind, ref float WindAmount, ref Texture2D overlayTexture, ref Color overlayColor) {
-			if (Main.tile[sizeX, sizeY].TileType == ModContent.TileType<CreamCattails>()) {
-				sizeX = 1;
-				sizeY = ClimbCreamCatTail(topLeftX, topLeftY);
-				topLeftY -= sizeY - 1;
-				Wind = WorldGen.InAPlaceWithWind(topLeftX, topLeftY, sizeX, 1);
-				WindAmount = 0.07f;
-			}
 		}
 
 		public static int ClimbCreamCatTail(int originx, int originy) {
@@ -405,7 +122,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloc(6); //type
 			c.EmitLdloca(7); //ref num5
 			c.EmitDelegate((int type, ref int num5) => {
-				if (type == ModContent.TileType<CreamGrass>()) {
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) {
 					num5 = ModContent.TileType<CreamCattails>();
 				}
 			});
@@ -454,11 +171,12 @@ namespace TheConfectionRebirth
 				i => i.MatchStloc(6));
 			c.EmitLdloc(5); //type
 			c.EmitLdloca(6); //ref num5
-			c.EmitDelegate((int type, ref int num5) => {
-				if (type == ModContent.TileType<CreamGrass>()) { 
+			c.EmitDelegate((int type, ref int num5) => { //injects this delegate just before the switch to set num5 to the TileFrameY
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) { 
 					num5 = ModContent.TileType<CreamCattails>(); 
 				}
-			});
+			}); //num5 is usually used for tileframeY of the cattail type (normal, desert, hallow(unused), corruption, crimson, mushroom)
+				//but here we use the TileID so that we dont clash with other mods
 			c.GotoNext(
 				MoveType.After,
 				i => i.MatchLdcI4(519),
@@ -472,7 +190,8 @@ namespace TheConfectionRebirth
 			c.EmitLdloc1(); //flag
 			c.EmitLdloca(0); //ref num
 			c.EmitLdloca(6); //ref num5
-			c.EmitDelegate((int x, int num2, bool flag, ref int num, ref int num5) => {
+			c.EmitDelegate((int x, int num2, bool flag, ref int num, ref int num5) => { //to make injection easier, we insert this after the incrimenting of num,
+																						//this converts the tile if num5 is the creamcattail ID
 				if (Main.tile[x, num2].TileType == ModContent.TileType<CreamCattails>()) {
 					CreamcattailCheck(x, num2, ref num, ref flag);
 				}
@@ -498,7 +217,7 @@ namespace TheConfectionRebirth
 				i => i.MatchStindI2());
 			c.EmitLdarg1(); //x
 			c.EmitLdloc(11); //k
-			c.EmitDelegate((int x, int k) => {
+			c.EmitDelegate((int x, int k) => { //Adds tiletype to make sure we arent placing a CreamCattail instead
 				Main.tile[x, k].TileType = TileID.Cattail;
 			});
 		}

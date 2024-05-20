@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
+using static Mono.CompilerServices.SymbolWriter.CodeBlockEntry;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -25,7 +26,7 @@ namespace TheConfectionRebirth.Tiles
 
 			TileID.Sets.TileCutIgnore.Regrowth[Type] = true;
 
-			AddMapEntry(new Color(200, 170, 108));
+			AddMapEntry(new Color(235, 207, 150));
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
 		}
@@ -44,14 +45,11 @@ namespace TheConfectionRebirth.Tiles
 		}
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			spriteBatch.End();
+			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
 			bool intoRenderTargets = true;
 			bool flag = intoRenderTargets || Main.LightingEveryFrame;
 
-			/*if (Main.tile[i, j].TileFrameX / 18 <= 4 && flag) {
-				Main.instance.TilesRenderer.AddSpecialPoint(j, i, (int)TileCounterType.MultiTileGrass);
-			}*/
-			spriteBatch.End();
-			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
 			if (Main.tile[i, j].TileFrameX / 18 <= 4 && flag) {
 				DrawMultiTileGrass(i, j, spriteBatch);
 			}
@@ -60,14 +58,6 @@ namespace TheConfectionRebirth.Tiles
 			return false;
 		}
 
-		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			spriteBatch.End();
-			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
-			DrawMultiTileGrass(i, j, spriteBatch);
-			spriteBatch.End();
-			spriteBatch.Begin(); //No params as PostDraw doesn't use spritebatch with params
-		}*/
-
 		private void DrawMultiTileGrass(int x, int num3, SpriteBatch unused) {
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
 			Vector2 zero = Vector2.Zero;
@@ -75,11 +65,9 @@ namespace TheConfectionRebirth.Tiles
 			int num4 = 1;
 			Tile tile = Main.tile[x, num3];
 			if (tile != null && tile.HasTile) {
-				if (Main.tile[x, num3].TileType == ModContent.TileType<CreamCattails>()) {
-						sizeX = 1;
-						num4 = TheConfectionRebirth.ClimbCreamCatTail(x, num3);
-						num3 -= num4 - 1;
-				}
+				sizeX = 1;
+				num4 = TheConfectionRebirth.ClimbCreamCatTail(x, num3);
+				num3 -= num4 - 1;
 				DrawMultiTileGrassInWind(unscaledPosition, zero, x, num3, sizeX, num4);
 			}
 		}
@@ -89,7 +77,8 @@ namespace TheConfectionRebirth.Tiles
 			float windCycle = Main.instance.TilesRenderer.GetWindCycle(topLeftX, topLeftY, _sunflowerWindCounter);
 			new Vector2((float)(sizeX * 16) * 0.5f, (float)(sizeY * 16));
 			int PositioningFix = CaptureManager.Instance.IsCapturing ? 0 : 192; //Fix to the positioning to the tiles being 192 pixels to the top and left
-			Vector2 vector = new Vector2((float)(topLeftX * 16 - (int)screenPosition.X) + (float)sizeX * 16f * 0.5f + PositioningFix, (float)(topLeftY * 16 - (int)screenPosition.Y + 16 * sizeY + PositioningFix)) + offSet;
+			offSet = new(PositioningFix, PositioningFix);
+			Vector2 vector = new Vector2((float)(topLeftX * 16 - (int)screenPosition.X) + (float)sizeX * 16f * 0.5f, (float)(topLeftY * 16 - (int)screenPosition.Y + 16 * sizeY)) + offSet;
 			float num = 0.07f;
 			int type = Main.tile[topLeftX, topLeftY].TileType;
 			Texture2D texture2D = null;
@@ -117,8 +106,9 @@ namespace TheConfectionRebirth.Tiles
 						num2 = 0f;
 					}
 					Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
-					bool flag2 = Main.rand.Next(4) == 0;
+					bool flag2 = Main.rand.NextBool(4);
 					Color tileLight = Lighting.GetColor(i, j);
+					//As far as I know cattails dont use these, so they'll keep as comments until needed (watch relogic add particle effects to cattails)
 					/*DrawAnimatedTile_AdjustForVisionChangers(i, j, tile, type2, tileFrameX, tileFrameY, ref tileLight, flag2);
 					tileLight = DrawTiles_GetLightOverride(j, i, tile, type2, tileFrameX, tileFrameY, tileLight);
 					if (_isActiveAndNotPaused && flag2) {
@@ -146,23 +136,6 @@ namespace TheConfectionRebirth.Tiles
 			if (i % 2 == 0) {
 				spriteEffects = (SpriteEffects)1;
 			}
-		}
-
-		private enum TileCounterType {
-			Tree,
-			DisplayDoll,
-			HatRack,
-			WindyGrass,
-			MultiTileGrass,
-			MultiTileVine,
-			Vine,
-			BiomeGrass,
-			VoidLens,
-			ReverseVine,
-			TeleportationPylon,
-			MasterTrophy,
-			AnyDirectionalGrass,
-			Count
 		}
 	}
 
