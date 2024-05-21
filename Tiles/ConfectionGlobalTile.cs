@@ -59,6 +59,28 @@ namespace TheConfectionRebirth.Tiles {
 					}
 				}
 			}
+
+			if (j >= Main.worldSurface) {
+				if (Main.tile[i, j].LiquidAmount > 32) {
+					if (WorldGen.genRand.NextBool(600)) {
+						WorldGen.PlaceTile(i, j, ModContent.TileType<CreamCattails>(), mute: true);
+						if (Main.netMode == NetmodeID.Server) {
+							NetMessage.SendTileSquare(-1, i, j);
+						}
+					}
+					else if (WorldGen.genRand.NextBool(600)) {
+						WorldGen.PlaceTile(i, j, ModContent.TileType<CreamLilyPads>(), mute: true);
+						if (Main.netMode == 2) {
+							NetMessage.SendTileSquare(-1, i, j);
+						}
+					}
+				}
+				if (TileID.Sets.Conversion.Sand[Main.tile[i, j].TileType]) {
+					if (!WorldGen.genRand.NextBool(20)) {
+						ConfectionWorldGeneration.PlantSeaOat(i, j - 1);
+					}
+				}
+			}
 		}
 
 		public override bool? IsTileBiomeSightable(int i, int j, int type, ref Color sightColor) {
@@ -68,6 +90,18 @@ namespace TheConfectionRebirth.Tiles {
 			}
 			else
 				return null;
+		}
+
+		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Main.tile[i, j];
+			Tile tileBelow = Main.tile[i, j + 1];
+			if (tile.TileType == TileID.SeaOats && tileBelow.TileType == ModContent.TileType<Creamsand>()) {
+				tile.TileType = (ushort)ModContent.TileType<CreamSeaOats>();
+			}
+			if (tile.TileType == ModContent.TileType<CreamSeaOats>() && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
+				tile.TileType = (ushort)TileID.SeaOats;
+			}
+			return true;
 		}
 	}
 }

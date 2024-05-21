@@ -50,6 +50,10 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckLilyPad += CheckLilyPadEdit;
 			IL_WorldGen.PlaceLilyPad += PlaceLilyPadEdit;
 			On_TileDrawing.DrawSingleTile += LilyPadDrawingPreventer;
+			On_Liquid.DelWater += LilyPadCheck;
+			On_Main.DrawTileInWater += LilyPadDrawing;
+			IL_WorldGen.PlantSeaOat += PlantSeaOatEdit;
+			IL_WorldGen.PlaceOasisPlant += PlaceOasisPlant;
 		}
 
 		public override void Unload() {
@@ -71,17 +75,95 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CheckLilyPad -= CheckLilyPadEdit;
 			IL_WorldGen.PlaceLilyPad -= PlaceLilyPadEdit;
 			On_TileDrawing.DrawSingleTile -= LilyPadDrawingPreventer;
+			On_Liquid.DelWater -= LilyPadCheck;
+			On_Main.DrawTileInWater -= LilyPadDrawing;
+			IL_WorldGen.PlantSeaOat -= PlantSeaOatEdit;
+			IL_WorldGen.PlaceOasisPlant -= PlaceOasisPlant;
+		}
+
+		#region SeaOats
+		private void PlaceOasisPlant(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(529),
+				i => i.MatchBeq(out _),
+				i => i.MatchLdcI4(0),
+				i => i.MatchStloc2());
+			c.EmitLdloc(3); //i
+			c.EmitLdloc(4); //j
+			c.EmitLdloca(2); //ref flag
+			c.EmitDelegate((int i, int j, ref bool flag) => {
+				if (Main.tile[i, j].TileType == ModContent.TileType<CreamSeaOats>() && !flag) {
+					flag = true;
+				}
+			});
+		}
+
+		private void PlantSeaOatEdit(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(529),
+				i => i.MatchStindI2(),
+				i => i.MatchLdsflda<Main>("tile"),
+				i => i.MatchLdarg0(),
+				i => i.MatchLdarg1(),
+				i => i.MatchCall<Tilemap>("get_Item"),
+				i => i.MatchStloc1());
+			c.EmitLdarg0(); //x
+			c.EmitLdarg1(); //y
+			c.EmitDelegate((int x, int y) => {
+				if (Main.tile[x, y + 1].TileType == ModContent.TileType<Creamsand>()) {
+					Main.tile[x, y].TileType = (ushort)ModContent.TileType<CreamSeaOats>();
+				}
+			});
+		}
+		#endregion
+
+		#region LilyPads
+		private void LilyPadDrawing(On_Main.orig_DrawTileInWater orig, Vector2 drawOffset, int x, int y) {
+			orig.Invoke(drawOffset, x, y);
+			if (Main.tile[x, y] != null && Main.tile[x, y].HasTile && Main.tile[x, y].TileType == ModContent.TileType<CreamLilyPads>()) {
+				Main.instance.LoadTiles(Main.tile[x, y].TileType);
+				Tile tile = Main.tile[x, y];
+				int num = tile.LiquidAmount / 16;
+				num -= 3;
+				if (WorldGen.SolidTile(x, y - 1) && num > 8) {
+					num = 8;
+				}
+				Rectangle value = new((int)tile.TileFrameX, (int)tile.TileFrameY, 16, 16);
+				Main.spriteBatch.Draw(TextureAssets.Tile[tile.TileType].Value, new Vector2((float)(x * 16), (float)(y * 16 - num)) + drawOffset, (Rectangle?)value, Lighting.GetColor(x, y), 0f, default(Vector2), 1f, (SpriteEffects)0, 0f);
+			}
+		}
+
+		private void LilyPadCheck(On_Liquid.orig_DelWater orig, int l) {
+			orig.Invoke(l);
+			int num = Main.liquid[l].x;
+			int num2 = Main.liquid[l].y;
+			Tile tile4 = Main.tile[num, num2];
+			if (!Main.tileAlch[tile4.TileType] && tile4.TileType == ModContent.TileType<CreamLilyPads>()) {
+				if (Liquid.quickFall) {
+					WorldGen.CheckLilyPad(num, num2);
+				}
+				else if (Main.tile[num, num2 + 1].LiquidAmount < byte.MaxValue || Main.tile[num, num2 - 1].LiquidAmount > 0) {
+					WorldGen.SquareTileFrame(num, num2);
+				}
+				else {
+					WorldGen.CheckLilyPad(num, num2);
+				}
+			}
 		}
 
 		private void LilyPadDrawingPreventer(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, Terraria.DataStructures.TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
-			/*drawData.tileCache = Main.tile[tileX, tileY]; //Doesnt quite work yet, probably something to do with lilypads being drawn elsewhere (not inside of TileDrawing), probs use vs to look for any instance of LilyPad or 518
+			drawData.tileCache = Main.tile[tileX, tileY]; //Doesnt quite work yet, probably something to do with lilypads being drawn elsewhere (not inside of TileDrawing), probs use vs to look for any instance of LilyPad or 518
 			drawData.typeCache = drawData.tileCache.TileType;
 			drawData.tileFrameX = drawData.tileCache.TileFrameX;
 			drawData.tileFrameY = drawData.tileCache.TileFrameY;
 			drawData.tileLight = Lighting.GetColor(tileX, tileY);
 			if (drawData.tileCache.LiquidAmount > 0 && drawData.tileCache.TileType == ModContent.TileType<CreamLilyPads>()) {
 				return;
-			}*/
+			}
 			orig.Invoke(self, drawData, solidLayer, waterStyleOverride, screenPosition, screenOffset, tileX, tileY);
 		}
 
@@ -115,7 +197,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloc(5); //type
 			c.EmitLdloca(6); //ref num5
 			c.EmitDelegate((int type, ref int num5) => {
-				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>()) {
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>() || type == ModContent.TileType<Creamsand>()) {
 					num5 = ModContent.TileType<CreamLilyPads>();
 				}
 			});
@@ -225,7 +307,7 @@ namespace TheConfectionRebirth
 			});
 			c.EmitLdloc(1); //type
 			c.EmitDelegate((int type) => {
-				return type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>();
+				return type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<Creamsand>() || type == ModContent.TileType<CreamGrassMowed>();
 			});
 			c.EmitBrfalse(IL_0000);
 			c.EmitRet(); //return
@@ -243,7 +325,9 @@ namespace TheConfectionRebirth
 				tile.TileType = TileID.LilyPad;
 			});
 		}
+		#endregion
 
+		#region Cattails
 		public static int ClimbCreamCatTail(int originx, int originy) {
 			int num = 0;
 			int num2 = originy;
@@ -299,7 +383,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloc(6); //type
 			c.EmitLdloca(7); //ref num5
 			c.EmitDelegate((int type, ref int num5) => {
-				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) {
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>() || type == ModContent.TileType<Creamsand>()) {
 					num5 = ModContent.TileType<CreamCattails>();
 				}
 			});
@@ -349,7 +433,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloc(5); //type
 			c.EmitLdloca(6); //ref num5
 			c.EmitDelegate((int type, ref int num5) => { //injects this delegate just before the switch to set num5 to the TileFrameY
-				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) { 
+				if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>() || type == ModContent.TileType<Creamsand>()) { 
 					num5 = ModContent.TileType<CreamCattails>(); 
 				}
 			}); //num5 is usually used for tileframeY of the cattail type (normal, desert, hallow(unused), corruption, crimson, mushroom)
@@ -484,56 +568,7 @@ namespace TheConfectionRebirth
 			}
 			return orig.Invoke(x, j);
 		}
-
-		private void CactusMapColor(ILContext il) {
-			ILCursor c = new(il);
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdsfld("Terraria.Map.MapHelper", "tileLookup"),
-				i => i.MatchLdloc(7),
-				i => i.MatchLdelemU2(),
-				i => i.MatchStloc3());
-			c.EmitLdarg0(); //i (aka X)
-			c.EmitLdarg1(); //j (aka Y)
-			c.EmitLdloca(3); //num5
-			c.EmitDelegate((int i, int j, ref int num5) => {
-				Tile tile = Main.tile[i, j];
-				if (tile != null) { //somehow still out of bounds
-					WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
-					if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType == ModContent.TileType<Creamsand>()) {
-						num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
-					}
-				}
-			});
-		}
-
-		private void VineTileFrame(ILContext il) {
-			ILCursor c = new(il);
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc(121));
-			c.EmitLdloc(84); //up
-			c.EmitLdloca(121); //ref num37
-			c.EmitDelegate((int up, ref int num37) => {
-				bool numCream = up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>();
-				if (numCream) {
-					num37 = ModContent.TileType<CreamVines>();
-				}
-			});
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc(122));
-			c.EmitLdloc3(); //num
-			c.EmitLdloc(84); //up
-			c.EmitLdloca(122); //ref flag5
-			c.EmitDelegate((int num, int up, ref bool flag5) => {
-				if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
-					flag5 = true;
-				}
-			});
-		}
+		#endregion
 
 		private bool PlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style) {
 			int num = Type;
@@ -562,15 +597,115 @@ namespace TheConfectionRebirth
 							}
 						}
 					}
+					if (tile.LiquidAmount > 0 || tile.CheckingLiquid) {
+						int num5 = num; 
+						if (!TileID.Sets.Torch[num]) {
+							if (num5 <= ModContent.TileType<CreamSeaOats>()) {
+								if (num5 == ModContent.TileType<CreamSeaOats>()) {
+									return false;
+								}
+							}
+						}
+					}
 					else if (num == ModContent.TileType<CreamLilyPads>()) {
 						WorldGen.PlaceLilyPad(i, j);
 					}
 					else if (num == ModContent.TileType<CreamCattails>()) {
 						WorldGen.PlaceCatTail(i, j);
 					}
+					else if (num == ModContent.TileType<CreamSeaOats>()) {
+						ConfectionWorldGeneration.PlantSeaOat(i, j);
+					}
 				}
 			}
 			return orig.Invoke(i, j, Type, mute, forced, plr, style);
+		}
+
+		#region CactusMapColor
+		private void CactusMapColor(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdsfld("Terraria.Map.MapHelper", "tileLookup"),
+				i => i.MatchLdloc(7),
+				i => i.MatchLdelemU2(),
+				i => i.MatchStloc3());
+			c.EmitLdarg0(); //i (aka X)
+			c.EmitLdarg1(); //j (aka Y)
+			c.EmitLdloca(3); //num5
+			c.EmitDelegate((int i, int j, ref int num5) => {
+				Tile tile = Main.tile[i, j];
+				if (tile != null) { //somehow still out of bounds
+					GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
+					if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType != 0 && sandType == ModContent.TileType<Creamsand>()) {
+						num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
+					}
+				}
+			});
+		}
+
+		public static void GetCactusType(int tileX, int tileY, int frameX, int frameY, out int type) {
+			type = 0;
+			int num = tileX;
+			if (frameX == 36) {
+				num--;
+			}
+			if (frameX == 54) {
+				num++;
+			}
+			if (frameX == 108) {
+				num = ((frameY != 18) ? (num + 1) : (num - 1));
+			}
+			int num2 = tileY;
+			bool flag = false;
+			Tile tile = Main.tile[num, num2];
+			if (tile == null) {
+				return;
+			}
+			if (tile.TileType == 80 && tile.HasTile) {
+				flag = true;
+			}
+			while (tile != null && (!tile.HasTile || !Main.tileSolid[tile.TileType] || !flag)) {
+				if (tile.TileType == 80 && tile.HasTile) {
+					flag = true;
+				}
+				num2++;
+				if (num2 > tileY + 20) {
+					break;
+				}
+				if (num2 <= Main.maxTilesY)
+					tile = Main.tile[num, num2];
+			}
+			type = tile.TileType;
+		}
+		#endregion
+
+		private void VineTileFrame(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(0),
+				i => i.MatchStloc(121));
+			c.EmitLdloc(84); //up
+			c.EmitLdloca(121); //ref num37
+			c.EmitDelegate((int up, ref int num37) => {
+				bool numCream = up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>();
+				if (numCream) {
+					num37 = ModContent.TileType<CreamVines>();
+				}
+			});
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(0),
+				i => i.MatchStloc(122));
+			c.EmitLdloc3(); //num
+			c.EmitLdloc(84); //up
+			c.EmitLdloca(122); //ref flag5
+			c.EmitDelegate((int num, int up, ref bool flag5) => {
+				if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
+					flag5 = true;
+				}
+			});
 		}
 
 		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {

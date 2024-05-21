@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -42,8 +43,24 @@ namespace TheConfectionRebirth {
 			confectionTree = Main.rand.Next(3);
 		}
 
-		//Stalac Checks, unfinished
+		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, unfinished
 		//TODO: convert mormal stalacs to these
+		public static bool GrowSeaOat(int x, int y) {
+			return (bool)typeof(WorldGen).GetMethod("GrowSeaOat", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
+		}
+
+		public static bool CheckSeaOat(int x, int y) {
+			return (bool)typeof(WorldGen).GetMethod("CheckSeaOat", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
+		}
+
+		public static bool SeaOatWaterCheck(int x, int y) {
+			return (bool)typeof(WorldGen).GetMethod("SeaOatWaterCheck", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
+		}
+
+		public static bool PlantSeaOat(int x, int y) {
+			return (bool)typeof(WorldGen).GetMethod("PlantSeaOat", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
+		}
+
 		public static void GrowCreamCatTail(int x, int j) {
 			if (Main.netMode == 1) {
 				return;
@@ -281,7 +298,7 @@ namespace TheConfectionRebirth {
 			}
 			int type = Main.tile[x, num2].TileType;
 			int num5 = -1;
-			if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>()) {
+			if (type == ModContent.TileType<CreamGrass>() || type == ModContent.TileType<CreamGrassMowed>() || type == ModContent.TileType<Creamsand>()) {
 				num5 = ModContent.TileType<CreamCattails>();
 			}
 			switch (type) {
