@@ -80,6 +80,21 @@ namespace TheConfectionRebirth.Tiles {
 						ConfectionWorldGeneration.PlantSeaOat(i, j - 1);
 					}
 				}
+				bool[] sand = TileID.Sets.Conversion.Sand;
+				Tile tile = Main.tile[i, j];
+				int num22 = j - 1;
+				if (sand[tile.TileType]) {
+					tile = Main.tile[i, num22];
+					if (!tile.HasTile) {
+						if (WorldGen.genRand.NextBool(25)) {
+							WorldGen.PlaceOasisPlant(i, num22, 530);
+							tile = Main.tile[i, num22];
+							if (tile.TileType == ModContent.TileType<CreamOasisPlants>() && Main.netMode == 2) {
+								NetMessage.SendTileSquare(-1, i - 1, num22 - 1, 3, 2);
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -95,12 +110,31 @@ namespace TheConfectionRebirth.Tiles {
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
 			Tile tileBelow = Main.tile[i, j + 1];
+			Tile tileAbove = Main.tile[i, j - 1];
+			Tile tileLeft = Main.tile[i + 1, j + 1];
+			Tile tileRight = Main.tile[i - 1, j + 1];
 			if (tile.TileType == TileID.SeaOats && tileBelow.TileType == ModContent.TileType<Creamsand>()) {
 				tile.TileType = (ushort)ModContent.TileType<CreamSeaOats>();
 			}
 			if (tile.TileType == ModContent.TileType<CreamSeaOats>() && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
 				tile.TileType = (ushort)TileID.SeaOats;
 			}
+			if (tile.TileType == TileID.OasisPlants && (Main.tile[i - 1, j + 1].TileType == ModContent.TileType<Creamsand>() || Main.tile[i - 2, j + 1].TileType == ModContent.TileType<Creamsand>() || tileBelow.TileType == ModContent.TileType<Creamsand>()) && tile.TileFrameX % 54 / 18 == 0 && tile.TileFrameY % 36 / 18 == 1) {
+				for (int m = i - 1; m < i + 2; m++) {
+					for (int n = j - 2; n < j; n++) {
+						tile = Main.tile[m, n];
+						//if (tile.HasTile) {
+							tile.TileType = (ushort)ModContent.TileType<CreamOasisPlants>();
+						//}
+					}
+				}
+				//tile.TileColor = PaintID.RedPaint;
+			}
+			tile = Main.tile[i, j];
+			/*if ((tile.TileType == ModContent.TileType<CreamOasisPlants>() || tileLeft.TileType == ModContent.TileType<CreamOasisPlants>() || tileRight.TileType == ModContent.TileType<CreamOasisPlants>()) && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
+				tile.TileType = (ushort)TileID.OasisPlants;
+				tileAbove.TileType = (ushort)TileID.OasisPlants;
+			}*/
 			return true;
 		}
 	}

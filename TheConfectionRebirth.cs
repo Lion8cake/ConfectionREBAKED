@@ -54,6 +54,8 @@ namespace TheConfectionRebirth
 			On_Main.DrawTileInWater += LilyPadDrawing;
 			IL_WorldGen.PlantSeaOat += PlantSeaOatEdit;
 			IL_WorldGen.PlaceOasisPlant += PlaceOasisPlant;
+			On_TileDrawing.DrawMultiTileGrassInWind += MultiTileGrassDetour;
+			On_WorldGen.PlaceOasisPlant += PlantOasisPlantEdit;
 		}
 
 		public override void Unload() {
@@ -79,6 +81,25 @@ namespace TheConfectionRebirth
 			On_Main.DrawTileInWater -= LilyPadDrawing;
 			IL_WorldGen.PlantSeaOat -= PlantSeaOatEdit;
 			IL_WorldGen.PlaceOasisPlant -= PlaceOasisPlant;
+			On_TileDrawing.DrawMultiTileGrassInWind -= MultiTileGrassDetour;
+			On_WorldGen.PlaceOasisPlant -= PlantOasisPlantEdit;
+		}
+
+		private void PlantOasisPlantEdit(On_WorldGen.orig_PlaceOasisPlant orig, int X, int Y, ushort type) {
+			if (type == 530) {
+				if (Main.tile[X, Y + 1].TileType == ModContent.TileType<Creamsand>()) {
+					type = (ushort)ModContent.TileType<CreamOasisPlants>();
+				}
+			}
+			orig.Invoke(X, Y, type);
+		}
+
+		private void MultiTileGrassDetour(On_TileDrawing.orig_DrawMultiTileGrassInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY) {
+			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<CreamOasisPlants>()) {
+				sizeX = 3;
+				sizeY = 2;
+			}
+			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
 		}
 
 		#region SeaOats

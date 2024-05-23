@@ -43,8 +43,12 @@ namespace TheConfectionRebirth {
 			confectionTree = Main.rand.Next(3);
 		}
 
-		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, unfinished
+		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, finished, oasis plants finished
 		//TODO: convert mormal stalacs to these
+		public static bool OasisPlantWaterCheck(int x, int y, bool boost = false) {
+			return (bool)typeof(WorldGen).GetMethod("OasisPlantWaterCheck", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y, boost });
+		}
+
 		public static bool GrowSeaOat(int x, int y) {
 			return (bool)typeof(WorldGen).GetMethod("GrowSeaOat", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
 		}
