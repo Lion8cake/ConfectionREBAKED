@@ -709,10 +709,9 @@ namespace TheConfectionRebirth
 				i => i.MatchStloc(121));
 			c.EmitLdloc(84); //up
 			c.EmitLdloca(121); //ref num37
-			c.EmitDelegate((int up, ref int num37) => {
-				bool numCream = up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>();
-				if (numCream) {
-					num37 = ModContent.TileType<CreamVines>();
+			c.EmitDelegate((int up, ref ushort num37) => {
+				if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
+					num37 = (ushort)ModContent.TileType<CreamVines>();
 				}
 			});
 			c.GotoNext(

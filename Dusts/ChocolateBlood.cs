@@ -1,4 +1,6 @@
 using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Dusts
@@ -9,6 +11,7 @@ namespace TheConfectionRebirth.Dusts
 			dust.noGravity = false;
 			dust.noLight = true;
 			dust.scale *= 1f;
+			ChildSafety.SafeDust[Type] = false;
 		}
 	}
 }

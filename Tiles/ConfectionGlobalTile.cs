@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Tiles.Trees;
 
 namespace TheConfectionRebirth.Tiles {
 	public class ConfectionGlobalTile : GlobalTile {
@@ -110,32 +111,135 @@ namespace TheConfectionRebirth.Tiles {
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
 			Tile tileBelow = Main.tile[i, j + 1];
-			Tile tileAbove = Main.tile[i, j - 1];
-			Tile tileLeft = Main.tile[i + 1, j + 1];
-			Tile tileRight = Main.tile[i - 1, j + 1];
 			if (tile.TileType == TileID.SeaOats && tileBelow.TileType == ModContent.TileType<Creamsand>()) {
 				tile.TileType = (ushort)ModContent.TileType<CreamSeaOats>();
 			}
 			if (tile.TileType == ModContent.TileType<CreamSeaOats>() && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
 				tile.TileType = (ushort)TileID.SeaOats;
 			}
-			if (tile.TileType == TileID.OasisPlants && (Main.tile[i - 1, j + 1].TileType == ModContent.TileType<Creamsand>() || Main.tile[i - 2, j + 1].TileType == ModContent.TileType<Creamsand>() || tileBelow.TileType == ModContent.TileType<Creamsand>()) && tile.TileFrameX % 54 / 18 == 0 && tile.TileFrameY % 36 / 18 == 1) {
-				for (int m = i - 1; m < i + 2; m++) {
-					for (int n = j - 2; n < j; n++) {
-						tile = Main.tile[m, n];
-						//if (tile.HasTile) {
-							tile.TileType = (ushort)ModContent.TileType<CreamOasisPlants>();
-						//}
+			/*if (TileID.Sets.IsVine[tile.TileType]) {
+				int num = tile.TileType;
+				int up = -1;
+				Tile tile10 = Main.tile[i, j - 1];
+				int nullium = 0;
+				WorldGen.TileMergeAttempt(0, TileID.Sets.Dirt, ref up, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium);
+				up = ((tile10 == null) ? num : ((!tile10.HasUnactuatedTile) ? (-1) : ((!tile10.BottomSlope) ? tile10.TileType : (-1))));
+				if (num != up) {
+					bool num48 = up == 60 || up == 62;
+					bool num49 = up == 109 || up == 115;
+					bool flag17 = up == 23 || up == 636 || up == 661;
+					bool flag2 = up == 199 || up == 205 || up == 662;
+					bool flag3 = up == 2 || up == 52;
+					bool flag4 = up == 382;
+					bool num50 = up == 70 || up == 528;
+					bool num51 = up == 633 || up == 638;
+					ushort num37 = 0;
+					if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
+						num37 = (ushort)ModContent.TileType<CreamVines>();
+					}
+					if (num51) {
+						num37 = 638;
+					}
+					if (num50) {
+						num37 = 528;
+					}
+					if (num49) {
+						num37 = 115;
+					}
+					if (num48) {
+						num37 = 62;
+					}
+					if (flag17) {
+						num37 = 636;
+					}
+					if (flag2) {
+						num37 = 205;
+					}
+					if (flag3 && num != 382) {
+						num37 = 52;
+					}
+					if (flag4) {
+						num37 = 382;
+					}
+					if (num37 != 0 && num37 != num) {
+						tile.TileType = num37;
+						WorldGen.SquareTileFrame(i, j);
+						return false;
 					}
 				}
-				//tile.TileColor = PaintID.RedPaint;
-			}
-			tile = Main.tile[i, j];
-			/*if ((tile.TileType == ModContent.TileType<CreamOasisPlants>() || tileLeft.TileType == ModContent.TileType<CreamOasisPlants>() || tileRight.TileType == ModContent.TileType<CreamOasisPlants>()) && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
-				tile.TileType = (ushort)TileID.OasisPlants;
-				tileAbove.TileType = (ushort)TileID.OasisPlants;
+				if (up != num) {
+					bool flag5 = false;
+					if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
+						flag5 = true;
+					}
+					if (up == -1) {
+						flag5 = true;
+					}
+					if (num == 52 && up != 2 && up != 192) {
+						flag5 = true;
+					}
+					if (num == 382 && up != 2 && up != 192) {
+						flag5 = true;
+					}
+					if (num == 62 && up != 60) {
+						flag5 = true;
+					}
+					if (num == 115 && up != 109) {
+						flag5 = true;
+					}
+					if (num == 528 && up != 70) {
+						flag5 = true;
+					}
+					if (num == 636 && up != 23 && up != 661) {
+						flag5 = true;
+					}
+					if (num == 205 && up != 199 && up != 662) {
+						flag5 = true;
+					}
+					if (num == 638 && up != 633) {
+						flag5 = true;
+					}
+					if (flag5) {
+						WorldGen.KillTile(i, j);
+					}
+				}
+				return false;
 			}*/
 			return true;
+		}
+
+		public override void NearbyEffects(int i, int j, int type, bool closer) {
+			if (type == TileID.Trees) {
+				WorldGen.GetTreeBottom(i, j, out var x, out var y);
+				Tile tilebelow = Main.tile[x, y + 1];
+				Tile tilecurrent = Main.tile[x, y];
+				if (tilebelow.TileType == ModContent.TileType<CreamGrass>() || tilebelow.TileType == ModContent.TileType<CreamGrassMowed>() || tilebelow.TileType == ModContent.TileType<CreamTree>() || tilecurrent.TileType == ModContent.TileType<CreamGrass>() || tilecurrent.TileType == ModContent.TileType<CreamGrassMowed>() || tilecurrent.TileType == ModContent.TileType<CreamTree>()) {
+					Main.tile[i, j].TileType = (ushort)ModContent.TileType<CreamTree>();
+				}
+			}
+			Tile tile = Main.tile[i, j];
+			Tile tileBelow = Main.tile[i, j + 1];
+			if (tile.TileType == TileID.OasisPlants && (Main.tile[i + 1, j + 1].TileType == ModContent.TileType<Creamsand>() || Main.tile[i + 2, j + 1].TileType == ModContent.TileType<Creamsand>() || tileBelow.TileType == ModContent.TileType<Creamsand>()) && tile.TileFrameX % 54 / 18 == 0 && tile.TileFrameY % 36 / 18 == 1) {
+				for (int m = i; m < i + 3; m++) {
+					for (int n = j - 1; n < j + 1; n++) {
+						tile = Main.tile[m, n];
+						if (tile.HasTile) {
+							tile.TileType = (ushort)ModContent.TileType<CreamOasisPlants>();
+						}
+					}
+				}
+			}
+			tile = Main.tile[i, j];
+			if (tile.TileType == ModContent.TileType<CreamOasisPlants>() && Main.tile[i + 1, j + 1].TileType != ModContent.TileType<Creamsand>() && Main.tile[i + 2, j + 1].TileType != ModContent.TileType<Creamsand>() && tileBelow.TileType != ModContent.TileType<Creamsand>() && tile.TileFrameX % 54 / 18 == 0 && tile.TileFrameY % 36 / 18 == 1) {
+				for (int m = i; m < i + 3; m++) {
+					for (int n = j - 1; n < j + 1; n++) {
+						tile = Main.tile[m, n];
+						if (tile.HasTile) {
+							tile.TileType = TileID.OasisPlants;
+						}
+					}
+				}
+			}
 		}
 	}
 }

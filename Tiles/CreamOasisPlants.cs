@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Capture;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -24,19 +25,20 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.IsMultitile[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 
-			AddMapEntry(new Color(200, 170, 108)); //may need to change
+			AddMapEntry(new Color(83, 50, 45));
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
 		}
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			bool intoRenderTargets = true;
+			bool intoRenderTargets = CaptureManager.Instance.IsCapturing ? false : true;
 			bool flag = intoRenderTargets || Main.LightingEveryFrame;
 
 			if (Main.tile[i, j].TileFrameX < 270) {
 				if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY == 0 && flag) {
-					Main.instance.TilesRenderer.AddSpecialPoint(j, i, 4);
+					Main.instance.TilesRenderer.AddSpecialPoint(i, j, 4);
 				}
+				return false;
 			}
 			return true;
 		}
@@ -48,15 +50,15 @@ namespace TheConfectionRebirth.Tiles
 				tile = Main.tile[i, j];
 				if (!ConfectionWorldGeneration.OasisPlantWaterCheck(i, j, boost: true)) {
 					WorldGen.KillTile(i, j);
-					if (Main.netMode == 2) {
-						NetMessage.SendData(17, -1, -1, null, 0, i, j);
+					if (Main.netMode == NetmodeID.Server) {
+						NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
 					}
 				}
 			}
 		}
 
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			//WorldGen.CheckOasisPlant(i, j, Type);
+			WorldGen.CheckOasisPlant(i, j, Type);
 			return false;
 		}
 
