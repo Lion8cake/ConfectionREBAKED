@@ -24,12 +24,11 @@ namespace TheConfectionRebirth
 	public class TheConfectionRebirth : Mod
 	{
 		//Edit the following
-		//Player.cs
-		//MowGrassTile //Needs lawnmower grass to be done, this should be the FINAL thing to do with that grass
-		//SmartCursorHelper.cs
-		//Step_LawnMower
 		//WorldGen.cs
-		//PlantCheck (done) (i think)
+		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason
+		//TileFrame - Vines dont properly convert
+
+		//MAKE SEEDS NOW!!!!
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
@@ -56,6 +55,9 @@ namespace TheConfectionRebirth
 			IL_WorldGen.PlaceOasisPlant += PlaceOasisPlant;
 			On_TileDrawing.DrawMultiTileGrassInWind += MultiTileGrassDetour;
 			On_WorldGen.PlaceOasisPlant += PlantOasisPlantEdit;
+			On_Player.MowGrassTile += LAWWWWNNNNMOOOWWWWWWAAAAAA;
+			On_SmartCursorHelper.Step_LawnMower += SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
+			IL_NPC.SpawnNPC += LawnSpawnPrevention;
 		}
 
 		public override void Unload() {
@@ -81,8 +83,92 @@ namespace TheConfectionRebirth
 			On_Main.DrawTileInWater -= LilyPadDrawing;
 			IL_WorldGen.PlantSeaOat -= PlantSeaOatEdit;
 			IL_WorldGen.PlaceOasisPlant -= PlaceOasisPlant;
-			On_TileDrawing.DrawMultiTileGrassInWind -= MultiTileGrassDetour;
+			On_TileDrawing.DrawMultiTileGrassInWind -= MultiTileGrassDetour; 
 			On_WorldGen.PlaceOasisPlant -= PlantOasisPlantEdit;
+			On_Player.MowGrassTile -= LAWWWWNNNNMOOOWWWWWWAAAAAA;
+			On_SmartCursorHelper.Step_LawnMower -= SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
+			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
+		}
+
+		private void LawnSpawnPrevention(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdloca(9),
+				i => i.MatchLdloc(77),
+				i => i.MatchStfld<NPCSpawnInfo>("PlayerFloorY"));
+			c.EmitLdloc(6); //num35
+			c.EmitLdloca(2); // ref flag12
+			c.EmitDelegate((int num35, ref bool flag12) => {
+				if (num35 == ModContent.TileType<CreamGrassMowed>() && !Main.bloodMoon && !Main.eclipse && Main.invasionType <= 0 && !Main.pumpkinMoon && !Main.snowMoon && !Main.slimeRain && Main.rand.Next(100) < 10) {
+					flag12 = false;
+				}
+			});
+		}
+
+		private void SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS(On_SmartCursorHelper.orig_Step_LawnMower orig, object providedInfo, ref int fX, ref int fY) {
+			orig.Invoke(providedInfo, ref fX, ref fY);
+			var SmartCursorUsageInfo = typeof(SmartCursorHelper).GetNestedType("SmartCursorUsageInfo", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+			Item item = (Item)SmartCursorUsageInfo.GetField("item", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int screenTargetX = (int)SmartCursorUsageInfo.GetField("screenTargetX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int screenTargetY = (int)SmartCursorUsageInfo.GetField("screenTargetY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableStartX = (int)SmartCursorUsageInfo.GetField("reachableStartX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableEndX = (int)SmartCursorUsageInfo.GetField("reachableEndX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableStartY = (int)SmartCursorUsageInfo.GetField("reachableStartY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableEndY = (int)SmartCursorUsageInfo.GetField("reachableEndY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			Vector2 mouse = (Vector2)SmartCursorUsageInfo.GetField("mouse", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			List<Tuple<int, int>> _targets = (List<Tuple<int, int>>)typeof(SmartCursorHelper).GetField("_targets", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public).GetValue(null);
+			_ = screenTargetX;
+			_ = screenTargetY;
+			if (item.type != 4049 || fX != -1 || fY != -1) {
+				return;
+			}
+			_targets.Clear();
+			for (int i = reachableStartX; i <= reachableEndX; i++) {
+				for (int j = reachableStartY; j <= reachableEndY; j++) {
+					Tile tile = Main.tile[i, j];
+					if (tile.HasTile && (tile.TileType == ModContent.TileType<CreamGrass>())) {
+						_targets.Add(new Tuple<int, int>(i, j));
+					}
+				}
+			}
+			if (_targets.Count > 0) {
+				float num = -1f;
+				Tuple<int, int> tuple = _targets[0];
+				for (int k = 0; k < _targets.Count; k++) {
+					float num2 = Vector2.Distance(new Vector2((float)_targets[k].Item1, (float)_targets[k].Item2) * 16f + Vector2.One * 8f, mouse);
+					if (num == -1f || num2 < num) {
+						num = num2;
+						tuple = _targets[k];
+					}
+				}
+				if (Collision.InTileBounds(tuple.Item1, tuple.Item2, reachableStartX, reachableStartY, reachableEndX, reachableEndY)) {
+					fX = tuple.Item1;
+					fY = tuple.Item2;
+				}
+			}
+			_targets.Clear();
+		}
+
+		private void LAWWWWNNNNMOOOWWWWWWAAAAAA(On_Player.orig_MowGrassTile orig, Player self, Vector2 thePos) {
+			orig.Invoke(self, thePos);
+			Point point = thePos.ToTileCoordinates();
+			Tile tile = Main.tile[point.X, point.Y];
+			ushort num = 0;
+			if (tile.TileType == ModContent.TileType<CreamGrass>()) {
+				num = (ushort)ModContent.TileType<CreamGrassMowed>();
+			}
+			if (num != 0) {
+				int num2 = WorldGen.KillTile_GetTileDustAmount(fail: true, tile, point.X, point.Y);
+				for (int i = 0; i < num2; i++) {
+					WorldGen.KillTile_MakeTileDust(point.X, point.Y, tile);
+				}
+				tile.TileType = num;
+				if (Main.netMode == 1) {
+					NetMessage.SendTileSquare(-1, point.X, point.Y);
+				}
+			}
+
 		}
 
 		private void PlantOasisPlantEdit(On_WorldGen.orig_PlaceOasisPlant orig, int X, int Y, ushort type) {
@@ -726,6 +812,7 @@ namespace TheConfectionRebirth
 					flag5 = true;
 				}
 			});
+
 		}
 
 		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {
@@ -861,7 +948,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloc(0); //num
 			c.EmitLdloc(1); //num2
 			c.EmitDelegate((ref Tile tile5, int i, int j, int num, int num2) => {
-				if (tile5.TileType == ModContent.TileType<CreamGrass>()) { //Turns Creamgrass into Cookie block when lava is near
+				if (tile5.TileType == ModContent.TileType<CreamGrass>() || tile5.TileType == ModContent.TileType<CreamGrassMowed>()) { //Turns Creamgrass or golf creamgrass into Cookie block when lava is near
 					tile5.TileType = (ushort)ModContent.TileType<CookieBlock>();
 					WorldGen.SquareTileFrame(i, j);
 					if (Main.netMode == NetmodeID.Server) {
@@ -872,7 +959,7 @@ namespace TheConfectionRebirth
 		}
 
 		private bool PickaxeKillTile(On_Player.orig_DoesPickTargetTransformOnKill orig, Player self, HitTile hitCounter, int damage, int x, int y, int pickPower, int bufferIndex, Tile tileTarget) {
-			if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && tileTarget.TileType == ModContent.TileType<CreamGrass>()) {
+			if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && (tileTarget.TileType == ModContent.TileType<CreamGrass>() || tileTarget.TileType == ModContent.TileType<CreamGrassMowed>())) {
 				return true;
 			}
 			else {
@@ -885,7 +972,7 @@ namespace TheConfectionRebirth
 			for (int i = Player.tileTargetX - 1; i <= Player.tileTargetX + 1; i++) {
 				for (int j = Player.tileTargetY - 1; j <= Player.tileTargetY + 1; j++) {
 					Tile tile = Main.tile[i, j];
-					if (!tile.HasTile || self.inventory[self.selectedItem].createTile == tile.TileType || tile.TileType != ModContent.TileType<CreamGrass>()) {
+					if (!tile.HasTile || self.inventory[self.selectedItem].createTile == tile.TileType || (tile.TileType != ModContent.TileType<CreamGrass>() && tile.TileType != ModContent.TileType<CreamGrassMowed>())) {
 						continue;
 					}
 					bool flag = true;

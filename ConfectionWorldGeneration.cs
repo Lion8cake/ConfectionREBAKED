@@ -45,6 +45,10 @@ namespace TheConfectionRebirth {
 
 		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, finished, oasis plants finished
 		//TODO: convert mormal stalacs to these
+		public static bool GrowMoreVines(int x, int y) {
+			return (bool)typeof(WorldGen).GetMethod("GrowMoreVines", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
+		}
+
 		public static bool OasisPlantWaterCheck(int x, int y, bool boost = false) {
 			return (bool)typeof(WorldGen).GetMethod("OasisPlantWaterCheck", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y, boost });
 		}
