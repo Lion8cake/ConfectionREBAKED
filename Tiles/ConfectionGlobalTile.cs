@@ -142,9 +142,6 @@ namespace TheConfectionRebirth.Tiles {
 					bool num50 = up == 70 || up == 528;
 					bool num51 = up == 633 || up == 638;
 					ushort num37 = 0;
-					if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
-						num37 = (ushort)ModContent.TileType<CreamVines>();
-					}
 					if (num51) {
 						num37 = 638;
 					}
@@ -169,6 +166,9 @@ namespace TheConfectionRebirth.Tiles {
 					if (flag4) {
 						num37 = 382;
 					}
+					if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
+						num37 = (ushort)ModContent.TileType<CreamVines>();
+					}
 					if (num37 != 0 && num37 != num) {
 						tile.TileType = num37;
 						WorldGen.SquareTileFrame(i, j);
@@ -177,9 +177,9 @@ namespace TheConfectionRebirth.Tiles {
 				}
 				if (up != num) {
 					bool flag5 = false;
-					if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
-						flag5 = true;
-					}
+					//if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
+					//	flag5 = true;
+					//}
 					if (up == -1) {
 						flag5 = true;
 					}

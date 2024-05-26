@@ -143,6 +143,11 @@ Items: {
 		DisplayName: Cocoa Beans
 		Tooltip: ""
 	}
+
+	CreamBeans: {
+		DisplayName: Cream Beans
+		Tooltip: ""
+	}
 }
 
 Projectiles: {

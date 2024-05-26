@@ -18,6 +18,7 @@ using TheConfectionRebirth.Tiles.Trees;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent;
+using Mono.Cecil.Cil;
 
 namespace TheConfectionRebirth
 {
@@ -27,8 +28,6 @@ namespace TheConfectionRebirth
 		//WorldGen.cs
 		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason
 		//TileFrame - Vines dont properly convert
-
-		//MAKE SEEDS NOW!!!!
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
@@ -58,6 +57,7 @@ namespace TheConfectionRebirth
 			On_Player.MowGrassTile += LAWWWWNNNNMOOOWWWWWWAAAAAA;
 			On_SmartCursorHelper.Step_LawnMower += SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC += LawnSpawnPrevention;
+			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
 		}
 
 		public override void Unload() {
@@ -88,8 +88,62 @@ namespace TheConfectionRebirth
 			On_Player.MowGrassTile -= LAWWWWNNNNMOOOWWWWWWAAAAAA;
 			On_SmartCursorHelper.Step_LawnMower -= SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
+			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
 		}
 
+		private void CreamBeansSmartCursor(On_SmartCursorHelper.orig_Step_GrassSeeds orig, object providedInfo, ref int focusedX, ref int focusedY) {
+			orig.Invoke(providedInfo, ref focusedX, ref focusedY);
+			var SmartCursorUsageInfo = typeof(SmartCursorHelper).GetNestedType("SmartCursorUsageInfo", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+			Item item = (Item)SmartCursorUsageInfo.GetField("item", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableStartX = (int)SmartCursorUsageInfo.GetField("reachableStartX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableEndX = (int)SmartCursorUsageInfo.GetField("reachableEndX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableStartY = (int)SmartCursorUsageInfo.GetField("reachableStartY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			int reachableEndY = (int)SmartCursorUsageInfo.GetField("reachableEndY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			Vector2 mouse = (Vector2)SmartCursorUsageInfo.GetField("mouse", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
+			List<Tuple<int, int>> _targets = (List<Tuple<int, int>>)typeof(SmartCursorHelper).GetField("_targets", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public).GetValue(null);
+			if (focusedX > -1 || focusedY > -1) {
+				return;
+			}
+			int type = item.type;
+			if ((type < 0 || !ItemID.Sets.GrassSeeds[type]) && type != ModContent.ItemType<Items.Placeable.CreamBeans>()) {
+				return;
+			}
+			_targets.Clear();
+			for (int i = reachableStartX; i <= reachableEndX; i++) {
+				for (int j = reachableStartY; j <= reachableEndY; j++) {
+					Tile tile = Main.tile[i, j];
+					bool flag = !Main.tile[i - 1, j].HasTile || !Main.tile[i, j + 1].HasTile || !Main.tile[i + 1, j].HasTile || !Main.tile[i, j - 1].HasTile;
+					bool flag2 = !Main.tile[i - 1, j - 1].HasTile || !Main.tile[i - 1, j + 1].HasTile || !Main.tile[i + 1, j + 1].HasTile || !Main.tile[i + 1, j - 1].HasTile;
+					if (tile.HasTile && !tile.IsActuated && (flag || flag2)) {
+						bool flag3 = false;
+						if (type == ModContent.ItemType<Items.Placeable.CreamBeans>()) {
+							flag3 = tile.TileType == ModContent.TileType<Tiles.CookieBlock>() || tile.TileType == TileID.Dirt;
+						}
+						if (flag3) {
+							_targets.Add(new Tuple<int, int>(i, j));
+						}
+					}
+				}
+			}
+			if (_targets.Count > 0) {
+				float num = -1f;
+				Tuple<int, int> tuple = _targets[0];
+				for (int k = 0; k < _targets.Count; k++) {
+					float num2 = Vector2.Distance(new Vector2((float)_targets[k].Item1, (float)_targets[k].Item2) * 16f + Vector2.One * 8f, mouse);
+					if (num == -1f || num2 < num) {
+						num = num2;
+						tuple = _targets[k];
+					}
+				}
+				if (Collision.InTileBounds(tuple.Item1, tuple.Item2, reachableStartX, reachableStartY, reachableEndX, reachableEndY)) {
+					focusedX = tuple.Item1;
+					focusedY = tuple.Item2;
+				}
+			}
+			_targets.Clear();
+		}
+
+		#region LAAAAAAWWWWWWNNNNNMOWWWWWWAAAAAAA!!!!!
 		private void LawnSpawnPrevention(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(
@@ -170,6 +224,9 @@ namespace TheConfectionRebirth
 			}
 
 		}
+		#endregion
+
+		#region OasisPlants
 
 		private void PlantOasisPlantEdit(On_WorldGen.orig_PlaceOasisPlant orig, int X, int Y, ushort type) {
 			if (type == 530) {
@@ -187,6 +244,7 @@ namespace TheConfectionRebirth
 			}
 			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
 		}
+		#endregion
 
 		#region SeaOats
 		private void PlaceOasisPlant(ILContext il) {
@@ -681,6 +739,11 @@ namespace TheConfectionRebirth
 			int num = Type;
 			if (i >= 0 && j >= 0 && i < Main.maxTilesX && j < Main.maxTilesY) {
 				Tile tile = Main.tile[i, j];
+				if (forced || Collision.EmptyTile(i, j) || !Main.tileSolid[num] || num == ModContent.TileType<CreamGrass>() && (tile.TileType == 0 || tile.TileType == ModContent.TileType<CookieBlock>()) && tile.HasTile) {
+					if (num == ModContent.TileType<CreamGrass>() && ((tile.TileType != 0 && tile.TileType != ModContent.TileType<CookieBlock>()) || !tile.HasTile)) {
+						return false;
+					}
+				}
 				if (forced || Collision.EmptyTile(i, j) || !Main.tileSolid[num]) {
 					if (num == ModContent.TileType<CreamGrass_Foliage>()) {
 						if (WorldGen.IsFitToPlaceFlowerIn(i, j, num)) {
@@ -788,8 +851,58 @@ namespace TheConfectionRebirth
 		#endregion
 
 		private void VineTileFrame(ILContext il) {
-			ILCursor c = new(il);
+			var cursor = new ILCursor(il); //Code thats USED here (none commented out) is made by Ghasttear1
+
+			// Add vine condition for conversion
+			cursor.GotoNext(MoveType.Before, i => i.MatchStloc(121));
+			cursor.Emit(OpCodes.Ldloc, 84); // up
+			cursor.EmitDelegate((ushort origValue, int up) =>
+			{
+				if (up == ModContent.TileType<CreamVines>() || up == ModContent.TileType<CreamGrass>()) {
+					return (ushort)ModContent.TileType<CreamVines>();
+				}
+				return origValue;
+			});
+
+			// Add vine condition for kill
+			cursor.GotoNext(MoveType.Before, i => i.MatchStloc(122));
+			cursor.Emit(OpCodes.Ldloc, 3); // num
+			cursor.Emit(OpCodes.Ldloc, 84); // up
+			cursor.EmitDelegate((bool origValue, int num, int up) =>
+			{
+				if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
+					return true;
+				}
+				return origValue;
+			});
+			/*ILCursor c = new(il);
+			ILLabel IL_0000 = c.DefineLabel();
+			ILLabel IL_80ab = null;
 			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(52),
+				i => i.MatchStloc(121),
+				i => i.MatchLdloc(120),
+				i => i.MatchBrfalse(out IL_80ab));
+			if (IL_80ab == null) {
+				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Vine Tile framing conversion could not be found");
+				return;
+			}
+			c.Prev.Operand = IL_0000;
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdcI4(382),
+				i => i.MatchStloc(121));
+			c.MarkLabel(IL_0000);
+			c.EmitLdloc(84); //up
+			c.EmitLdloca(121); //ref num37
+			c.EmitDelegate((int up, ref ushort num37) => {
+				if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
+					num37 = (ushort)ModContent.TileType<CreamVines>();
+				}
+			});
+			MonoModHooks.DumpIL(this, il);*/
+			/*c.GotoNext(
 				MoveType.After,
 				i => i.MatchLdcI4(0),
 				i => i.MatchStloc(121));
@@ -812,7 +925,7 @@ namespace TheConfectionRebirth
 					flag5 = true;
 				}
 			});
-
+			//MonoModHooks.DumpIL(this, il);*/
 		}
 
 		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {
