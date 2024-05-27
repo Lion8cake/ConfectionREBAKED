@@ -26,8 +26,8 @@ namespace TheConfectionRebirth
 	{
 		//Edit the following
 		//WorldGen.cs
-		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason
-		//TileFrame - Vines dont properly convert
+		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason - doesnt convert some purity grass correctly
+		//TileFrame - Vines dont properly convert - works only if fps is lower than 30
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();

@@ -148,11 +148,17 @@ Items: {
 		DisplayName: Cream Beans
 		Tooltip: ""
 	}
+
+	CreamSolution: {
+		DisplayName: Cream Solution
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
 	CreamsandProjectile.DisplayName: Creamsand Projectile
 	CreamsandSandGunProjectile.DisplayName: Creamsand Sand Gun Projectile
+	CreamSolution.DisplayName: Cream Solution
 }
 
 Tiles: {
