@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Items
 
         public override void SetDefaults()
         {
-			Item.shoot = ProjectileID.PurificationPowder; //ill change this to be a purification powder resprite later //ModContent.ProjectileType<Projectiles.SugarPowder>();
+			Item.shoot = ModContent.ProjectileType<Projectiles.SugarPowder>();
             Item.useStyle = 1;
             Item.shootSpeed = 4f;
             Item.width = 16;
@@ -29,6 +29,7 @@ namespace TheConfectionRebirth.Items
             Item.useTime = 15;
             Item.noMelee = true;
             Item.value = 75;
+			
 		}
-    }
+	}
 }

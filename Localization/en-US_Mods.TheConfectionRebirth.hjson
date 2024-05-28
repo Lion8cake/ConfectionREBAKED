@@ -153,12 +153,18 @@ Items: {
 		DisplayName: Cream Solution
 		Tooltip: ""
 	}
+
+	SugarPowder: {
+		DisplayName: Sugar Powder
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
 	CreamsandProjectile.DisplayName: Creamsand Projectile
 	CreamsandSandGunProjectile.DisplayName: Creamsand Sand Gun Projectile
 	CreamSolution.DisplayName: Cream Solution
+	SugarPowder.DisplayName: Sugar Powder
 }
 
 Tiles: {
