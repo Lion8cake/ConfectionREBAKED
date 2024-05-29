@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.NPCs;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -15,7 +16,7 @@ namespace TheConfectionRebirth.Projectiles
         {
             Projectile.width = 64;
 			Projectile.height = 64;
-			Projectile.aiStyle = 6;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -134,6 +135,16 @@ namespace TheConfectionRebirth.Projectiles
 					if (nPC2.type == NPCID.DemonTaxCollector) {
 						if (rectangle.Intersects(nPC2.Hitbox)) {
 							nPC2.Transform(441);
+						}
+					}
+					else if ((nPC2.type == NPCID.Bunny || nPC2.type == NPCID.BunnySlimed || nPC2.type == NPCID.BunnyXmas || nPC2.type == NPCID.ExplosiveBunny || nPC2.type == NPCID.PartyBunny) && Main.hardMode) {
+						if (rectangle.Intersects(nPC2.Hitbox)) {
+							nPC2.Transform(ModContent.NPCType<ChocolateBunny>());
+						}
+					}
+					else if (nPC2.type == NPCID.Frog && Main.hardMode) {
+						if (rectangle.Intersects(nPC2.Hitbox)) {
+							nPC2.Transform(ModContent.NPCType<ChocolateFrog>());
 						}
 					}
 					else {

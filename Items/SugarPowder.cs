@@ -29,7 +29,10 @@ namespace TheConfectionRebirth.Items
             Item.useTime = 15;
             Item.noMelee = true;
             Item.value = 75;
-			
+		}
+
+		public override void AddRecipes() {
+			CreateRecipe(5).AddIngredient(ModContent.ItemType<YumDrop>()).AddTile(TileID.Bottles).Register();
 		}
 	}
 }

@@ -158,6 +158,11 @@ Items: {
 		DisplayName: Sugar Powder
 		Tooltip: ""
 	}
+
+	SugarWater: {
+		DisplayName: Sugar Water
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -165,6 +170,7 @@ Projectiles: {
 	CreamsandSandGunProjectile.DisplayName: Creamsand Sand Gun Projectile
 	CreamSolution.DisplayName: Cream Solution
 	SugarPowder.DisplayName: Sugar Powder
+	SugarWaterBottle.DisplayName: Sugar Water Bottle
 }
 
 Tiles: {
