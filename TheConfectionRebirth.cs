@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent;
 using Mono.Cecil.Cil;
+using static Terraria.WaterfallManager;
 
 namespace TheConfectionRebirth
 {
@@ -58,6 +59,8 @@ namespace TheConfectionRebirth
 			On_SmartCursorHelper.Step_LawnMower += SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC += LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
+			//IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
+			IL_WaterfallManager.DrawWaterfall_int_float += WaterfallDrawerClouds;
 		}
 
 		public override void Unload() {
@@ -89,8 +92,63 @@ namespace TheConfectionRebirth
 			On_SmartCursorHelper.Step_LawnMower -= SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
+			//IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
+			IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallDrawerClouds;
 		}
 
+		#region Rain&SnowClouds
+		private void WaterfallDrawerClouds(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdloc(47),
+				i => i.MatchStloc(19),
+				i => i.MatchLdloc(53),
+				i => i.MatchStloc(24));
+			c.EmitLdloca(44);
+			c.EmitLdloca(46);
+			c.EmitLdloca(45);
+			c.EmitLdloca(21);
+			c.EmitDelegate((ref Tile tile4, ref Tile tile6, ref Tile tile5, ref int num15) => {
+				if ((tile4.HasTile && (tile4.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile4.type == 196// Snow variant */)) || (tile6.HasTile && (tile6.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile6.type == 196*/)) || (tile5.HasTile && (tile5.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile5.type == 196*/))) {
+					num15 = (int)(40f * ((float)Main.maxTilesX / 4200f) * Main.gfxQuality);
+				}
+			});
+		}
+
+		private void CloudWaterfalls(ILContext il) {
+			ILCursor c = new ILCursor(il);
+			c.GotoNext(
+				MoveType.After,
+				i => i.MatchLdloc(2),
+				i => i.MatchStloc(5),
+				i => i.MatchBr(out _),
+				i => i.MatchLdsflda<Main>("tile"),
+				i => i.MatchLdloc(4),
+				i => i.MatchLdloc(5),
+				i => i.MatchCall<Tilemap>("get_Item"),
+				i => i.MatchStloc(6));
+			c.EmitLdloc(4);
+			c.EmitLdloc(5);
+			c.EmitLdflda(typeof(WaterfallManager).GetField("currentMax", BindingFlags.NonPublic | BindingFlags.Instance));
+			c.EmitLdfld(typeof(WaterfallManager).GetField("qualityMax", BindingFlags.NonPublic | BindingFlags.Instance));
+			c.EmitLdfld(typeof(WaterfallManager).GetField("waterfalls", BindingFlags.NonPublic | BindingFlags.Instance));
+			c.EmitDelegate((int i, int j, ref int currentMax, int qualityMax, WaterfallData[] waterfalls) => {
+				Tile tile2 = Main.tile[i, j - 1];
+				if (Main.tile[i, j].TileType == ModContent.TileType<PurpleFairyFloss>()) {
+					Tile tile5 = Main.tile[i, j + 1];
+					if (!WorldGen.SolidTile(tile5) && tile5.Slope == 0 && currentMax < qualityMax) {
+						waterfalls[currentMax].type = 1;
+						waterfalls[currentMax].x = i;
+						waterfalls[currentMax].y = j + 1;
+						currentMax++;
+					}
+				}
+			});
+		}
+		#endregion
+
+		#region SmartCursorBeans
 		private void CreamBeansSmartCursor(On_SmartCursorHelper.orig_Step_GrassSeeds orig, object providedInfo, ref int focusedX, ref int focusedY) {
 			orig.Invoke(providedInfo, ref focusedX, ref focusedY);
 			var SmartCursorUsageInfo = typeof(SmartCursorHelper).GetNestedType("SmartCursorUsageInfo", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
@@ -142,6 +200,7 @@ namespace TheConfectionRebirth
 			}
 			_targets.Clear();
 		}
+#endregion
 
 		#region LAAAAAAWWWWWWNNNNNMOWWWWWWAAAAAAA!!!!!
 		private void LawnSpawnPrevention(ILContext il) {

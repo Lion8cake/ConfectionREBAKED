@@ -25,7 +25,13 @@ namespace TheConfectionRebirth.Biomes
             return ModContent.GoreType<CreamDroplet>();
         }
 
-        public override Color BiomeHairColor()
+		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
+			r = 1f - 0.0186f;
+			g = 1f - 0.0154f;
+			b = 1f - 0.0119f;
+		}
+
+		public override Color BiomeHairColor()
         {
             return new(186, 154, 119);
         }

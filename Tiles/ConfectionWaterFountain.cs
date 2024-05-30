@@ -36,7 +36,7 @@ namespace TheConfectionRebirth.Tiles
         }
 
 		public override void NearbyEffects(int i, int j, bool closer) {
-			if (Main.tile[i, j].TileFrameX < 36) {
+			if (Main.tile[i, j].TileFrameX >= 36) {
 				Main.SceneMetrics.ActiveFountainColor = ModContent.Find<ModWaterStyle>("TheConfectionRebirth/CreamWaterStyle").Slot;
 			}
 		}
