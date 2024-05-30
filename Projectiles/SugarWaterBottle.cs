@@ -59,7 +59,7 @@ namespace TheConfectionRebirth.Projectiles {
 			if (Projectile.owner == Main.myPlayer) {
 				int i2 = (int)(Projectile.position.X + (float)(Projectile.width / 2)) / 16;
 				int j2 = (int)(Projectile.position.Y + (float)(Projectile.height / 2)) / 16;
-				CreamSolution.Convert(i2, j2);
+				ConfectionWorldGeneration.ConfectionConvert(i2, j2);
 			}
 		}
 	}

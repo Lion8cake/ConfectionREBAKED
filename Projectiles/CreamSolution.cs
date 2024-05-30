@@ -30,7 +30,7 @@ namespace TheConfectionRebirth.Projectiles
 			int dustType = ModContent.DustType<Dusts.CreamSolution>();
 
 			if (Projectile.owner == Main.myPlayer) {
-				Convert((int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+				ConfectionWorldGeneration.ConfectionConvert((int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
 			}
 
 			if (Projectile.timeLeft > 133) {

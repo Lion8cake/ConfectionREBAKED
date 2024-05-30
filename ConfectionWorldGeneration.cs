@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
+using static System.Net.WebRequestMethods;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {

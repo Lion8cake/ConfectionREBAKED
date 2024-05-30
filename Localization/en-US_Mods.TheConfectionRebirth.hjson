@@ -163,6 +163,11 @@ Items: {
 		DisplayName: Sugar Water
 		Tooltip: ""
 	}
+
+	ConfectionWaterFountain: {
+		DisplayName: Confection Water Fountain
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
