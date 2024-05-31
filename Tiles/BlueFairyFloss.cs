@@ -7,7 +7,7 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class PurpleFairyFloss : ModTile
+	public class BlueFairyFloss : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -19,8 +19,8 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
-			AddMapEntry(new Color(210, 90, 250));
-			DustType = ModContent.DustType<FairyFlossRainDust>();
+			AddMapEntry(new Color(78, 191, 252));
+			DustType = ModContent.DustType<FairyFlossSnowDust>();
 		}
 
 		public override bool HasWalkDust() {

@@ -59,7 +59,7 @@ namespace TheConfectionRebirth
 			On_SmartCursorHelper.Step_LawnMower += SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC += LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
-			//IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
+			IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
 			IL_WaterfallManager.DrawWaterfall_int_float += WaterfallDrawerClouds;
 		}
 
@@ -92,7 +92,7 @@ namespace TheConfectionRebirth
 			On_SmartCursorHelper.Step_LawnMower -= SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
 			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
-			//IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
+			IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
 			IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallDrawerClouds;
 		}
 
@@ -110,7 +110,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloca(45);
 			c.EmitLdloca(21);
 			c.EmitDelegate((ref Tile tile4, ref Tile tile6, ref Tile tile5, ref int num15) => {
-				if ((tile4.HasTile && (tile4.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile4.type == 196// Snow variant */)) || (tile6.HasTile && (tile6.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile6.type == 196*/)) || (tile5.HasTile && (tile5.TileType == ModContent.TileType<PurpleFairyFloss>()/* || tile5.type == 196*/))) {
+				if ((tile4.HasTile && (tile4.TileType == ModContent.TileType<PurpleFairyFloss>() || tile4.TileType == ModContent.TileType<BlueFairyFloss>())) || (tile6.HasTile && (tile6.TileType == ModContent.TileType<PurpleFairyFloss>() || tile6.TileType == ModContent.TileType<BlueFairyFloss>())) || (tile5.HasTile && (tile5.TileType == ModContent.TileType<PurpleFairyFloss>() || tile5.TileType == ModContent.TileType<BlueFairyFloss>()))) {
 					num15 = (int)(40f * ((float)Main.maxTilesX / 4200f) * Main.gfxQuality);
 				}
 			});
@@ -130,21 +130,34 @@ namespace TheConfectionRebirth
 				i => i.MatchStloc(6));
 			c.EmitLdloc(4);
 			c.EmitLdloc(5);
+			c.EmitLdarg0();
 			c.EmitLdflda(typeof(WaterfallManager).GetField("currentMax", BindingFlags.NonPublic | BindingFlags.Instance));
+			c.EmitLdarg0();
 			c.EmitLdfld(typeof(WaterfallManager).GetField("qualityMax", BindingFlags.NonPublic | BindingFlags.Instance));
+			c.EmitLdarg0();
 			c.EmitLdfld(typeof(WaterfallManager).GetField("waterfalls", BindingFlags.NonPublic | BindingFlags.Instance));
 			c.EmitDelegate((int i, int j, ref int currentMax, int qualityMax, WaterfallData[] waterfalls) => {
 				Tile tile2 = Main.tile[i, j - 1];
 				if (Main.tile[i, j].TileType == ModContent.TileType<PurpleFairyFloss>()) {
 					Tile tile5 = Main.tile[i, j + 1];
 					if (!WorldGen.SolidTile(tile5) && tile5.Slope == 0 && currentMax < qualityMax) {
-						waterfalls[currentMax].type = 1;
+						waterfalls[currentMax].type = ModContent.Find<ModWaterfallStyle>("TheConfectionRebirth/ChocolateRainWaterfallStyle").Slot;
+						waterfalls[currentMax].x = i;
+						waterfalls[currentMax].y = j + 1;
+						currentMax++;
+					}
+				}
+				if (Main.tile[i, j].TileType == ModContent.TileType <BlueFairyFloss>()) {
+					Tile tile6 = Main.tile[i, j + 1];
+					if (!WorldGen.SolidTile(tile6) && tile6.Slope == 0 && currentMax < qualityMax) {
+						waterfalls[currentMax].type = ModContent.Find<ModWaterfallStyle>("TheConfectionRebirth/CreamSnowWaterfallStyle").Slot;
 						waterfalls[currentMax].x = i;
 						waterfalls[currentMax].y = j + 1;
 						currentMax++;
 					}
 				}
 			});
+			//MonoModHooks.DumpIL(this, il);
 		}
 		#endregion
 
