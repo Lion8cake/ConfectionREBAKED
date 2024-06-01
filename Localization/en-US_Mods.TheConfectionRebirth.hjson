@@ -168,6 +168,21 @@ Items: {
 		DisplayName: Confection Water Fountain
 		Tooltip: ""
 	}
+
+	BlueFairyFloss: {
+		DisplayName: Blue Fairy Floss
+		Tooltip: ""
+	}
+
+	PinkFairyFloss: {
+		DisplayName: Pink Fairy Floss
+		Tooltip: ""
+	}
+
+	PurpleFairyFloss: {
+		DisplayName: Purple Fairy Floss
+		Tooltip: ""
+	}
 }
 
 Projectiles: {

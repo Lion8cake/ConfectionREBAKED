@@ -209,7 +209,7 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else if (Main.tile[k, l].TileType == TileID.Cloud) {
+						else */if (Main.tile[k, l].TileType == TileID.Cloud) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -224,7 +224,7 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else if (Main.tile[k, l].TileType == TileID.ArgonMoss) {
+						/*else if (Main.tile[k, l].TileType == TileID.ArgonMoss) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<ArgonCreamMoss>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);

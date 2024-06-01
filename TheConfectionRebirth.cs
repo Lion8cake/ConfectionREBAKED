@@ -60,7 +60,7 @@ namespace TheConfectionRebirth
 			IL_NPC.SpawnNPC += LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
-			IL_WaterfallManager.DrawWaterfall_int_float += WaterfallDrawerClouds;
+			//IL_WaterfallManager.DrawWaterfall_int_float += WaterfallDrawerClouds;
 		}
 
 		public override void Unload() {
@@ -93,11 +93,11 @@ namespace TheConfectionRebirth
 			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
-			IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallDrawerClouds;
+			//IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallDrawerClouds;
 		}
 
 		#region Rain&SnowClouds
-		private void WaterfallDrawerClouds(ILContext il) {
+		/*private void WaterfallDrawerClouds(ILContext il) { //I dont know exactly why clouds have this, but adding this for floss block completely bricks other waterfalls near the tiles
 			ILCursor c = new(il);
 			c.GotoNext(
 				MoveType.After,
@@ -114,7 +114,7 @@ namespace TheConfectionRebirth
 					num15 = (int)(40f * ((float)Main.maxTilesX / 4200f) * Main.gfxQuality);
 				}
 			});
-		}
+		}*/
 
 		private void CloudWaterfalls(ILContext il) {
 			ILCursor c = new ILCursor(il);
