@@ -63,8 +63,8 @@ namespace TheConfectionRebirth.Biomes
 				}
 				Color color2 = color6 * num18;
 				Color color3 = color6 * num19;
-				Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Back").Value, position, (Rectangle?)value, color3, rotation, origin, 1f, (SpriteEffects)0, 0f);
-				Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture).Value, position, (Rectangle?)value2, color2, rotation, origin, 1f, (SpriteEffects)0, 0f);
+				spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Back").Value, position, (Rectangle?)value, color3, rotation, origin, 1f, (SpriteEffects)0, 0f);
+				spriteBatch.Draw(ModContent.Request<Texture2D>(Texture).Value, position, (Rectangle?)value2, color2, rotation, origin, 1f, (SpriteEffects)0, 0f);
 				if (flag) {
 					break;
 				}
