@@ -11,7 +11,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TheConfectionRebirth.UI;
-using TheConfectionRebirth;
 
 namespace TheConfectionRebirth.Hooks;
 
