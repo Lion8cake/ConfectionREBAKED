@@ -177,8 +177,6 @@ internal static class ConfectionSelectionMenu {
 			num++;
 		}
 
-		TheConfectionRebirth.Instance.Logger.Info(array);
-		TheConfectionRebirth.Instance.Logger.Info(array2);
 		LoopHorizontalLineLinks(self, array2);
 		EstablishUpDownRelationship(self, array, array2);
 		for (int n = 0; n < array2.Length; n++) {
