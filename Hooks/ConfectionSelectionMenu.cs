@@ -28,6 +28,10 @@ internal static class ConfectionSelectionMenu {
 		c.GotoNext(i => i.MatchStloc(0));
 		c.Emit(OpCodes.Ldc_I4, 48);
 		c.Emit(OpCodes.Add);
+		c.GotoNext(i => i.MatchLdcR4(170f)) // Fix page position
+			.GotoNext(i => i.MatchLdloc0());
+		c.Emit(OpCodes.Ldc_R4, 38f);
+		c.Emit(OpCodes.Add);
 	}
 
 	public static void ILMakeInfoMenu(ILContext il) {
