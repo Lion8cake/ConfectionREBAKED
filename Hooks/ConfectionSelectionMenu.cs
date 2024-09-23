@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
@@ -10,8 +12,8 @@ using Terraria.GameContent.UI.States;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 using TheConfectionRebirth.UI;
-using TheConfectionRebirth;
 
 namespace TheConfectionRebirth.Hooks;
 
@@ -25,6 +27,10 @@ internal static class ConfectionSelectionMenu {
 		// Increase world gen container size
 		c.GotoNext(i => i.MatchStloc(0));
 		c.Emit(OpCodes.Ldc_I4, 48);
+		c.Emit(OpCodes.Add);
+		c.GotoNext(i => i.MatchLdcR4(170f)) // Fix page position
+			.GotoNext(i => i.MatchLdloc0());
+		c.Emit(OpCodes.Ldc_R4, 38f);
 		c.Emit(OpCodes.Add);
 	}
 
@@ -139,5 +145,61 @@ internal static class ConfectionSelectionMenu {
 		foreach (GroupOptionButton<HallowOptions> underworldButton in HallowedButtons) {
 			underworldButton.SetCurrentOption(groupOptionButton.OptionValue);
 		}
+	}
+
+	public static void OnSetupGamepadPoints(On_UIWorldCreation.orig_SetupGamepadPoints orig, UIWorldCreation self, SpriteBatch spriteBatch) {
+		orig(self, spriteBatch);
+		int num = 3006;
+		List<SnapPoint> snapPoints = self.GetSnapPoints();
+		List<SnapPoint> snapGroup = GetSnapGroup(self, snapPoints, "size");
+		List<SnapPoint> snapGroup2 = GetSnapGroup(self, snapPoints, "difficulty");
+		List<SnapPoint> snapGroup3 = GetSnapGroup(self, snapPoints, "evil");
+		num += snapGroup.Count + snapGroup2.Count;
+		List<SnapPoint> snapGroup4 = GetSnapGroup(self, snapPoints, "hallow");
+
+		UILinkPoint uILinkPoint;
+		UILinkPoint uILinkPoint2 = UILinkPointNavigator.Points[3000];
+		UILinkPoint uILinkPoint3 = UILinkPointNavigator.Points[3001];
+
+		UILinkPoint[] array = new UILinkPoint[snapGroup3.Count];
+		for (int l = 0; l < snapGroup4.Count; l++) {
+			UILinkPointNavigator.SetPosition(num, snapGroup3[l].Position);
+			uILinkPoint = UILinkPointNavigator.Points[num];
+			array[l] = uILinkPoint;
+			num++;
+		}
+		UILinkPoint[] array2 = new UILinkPoint[snapGroup4.Count];
+		for (int l = 0; l < snapGroup4.Count; l++) {
+			UILinkPointNavigator.SetPosition(num, snapGroup4[l].Position);
+			uILinkPoint = UILinkPointNavigator.Points[num];
+			uILinkPoint.Unlink();
+			array2[l] = uILinkPoint;
+			num++;
+		}
+
+		LoopHorizontalLineLinks(self, array2);
+		EstablishUpDownRelationship(self, array, array2);
+		for (int n = 0; n < array2.Length; n++) {
+			array2[n].Down = uILinkPoint2.ID;
+		}
+
+		array2[^1].Down = uILinkPoint3.ID;
+		uILinkPoint3.Up = array2[^1].ID;
+		uILinkPoint2.Up = array2[0].ID;
+	}
+
+	private static List<SnapPoint> GetSnapGroup(UIWorldCreation self, List<SnapPoint> snapPoints, string group) {
+		return (List<SnapPoint>)typeof(UIWorldCreation).GetMethod("GetSnapGroup", BindingFlags.NonPublic | BindingFlags.Instance)?
+			.Invoke(self, [snapPoints, group]);
+	}
+
+	private static void LoopHorizontalLineLinks(UIWorldCreation self, UILinkPoint[] pointsLine) {
+		typeof(UIWorldCreation).GetMethod("LoopHorizontalLineLinks", BindingFlags.NonPublic | BindingFlags.Instance)?
+			.Invoke(self, [pointsLine]);
+	}
+
+	private static void EstablishUpDownRelationship(UIWorldCreation self, UILinkPoint[] topSide, UILinkPoint[] bottomSide) {
+		typeof(UIWorldCreation).GetMethod("EstablishUpDownRelationship", BindingFlags.NonPublic | BindingFlags.Instance)?
+			.Invoke(self, [topSide, bottomSide]);
 	}
 }
