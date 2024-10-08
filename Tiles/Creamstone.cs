@@ -17,7 +17,8 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileShine[Type] = 9000;
 			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			
+
+			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;

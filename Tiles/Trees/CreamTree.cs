@@ -681,7 +681,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			spriteBatch.End();
-			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
 			DrawTrees(i, j, spriteBatch);
 			spriteBatch.End();
 			spriteBatch.Begin(); //No params as PostDraw doesn't use spritebatch with params
@@ -958,10 +958,12 @@ namespace TheConfectionRebirth.Tiles.Trees
 		{
 			double _treeWindCounter = (double)typeof(TileDrawing).GetField("_treeWindCounter", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
-			Vector2 zero = Vector2.Zero;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen) {
+				zero = Vector2.Zero;
+			}
 			float num15 = 0.08f;
 			float num16 = 0.06f;
-			int PositioningFix = CaptureManager.Instance.IsCapturing ? 0 : 192; //Fix to the positioning to the Branches and Tops being 192 pixels to the top and left
 			int x = k;
 			int y = l;
 			Tile tile = Main.tile[x, y];
@@ -988,7 +990,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, grassPosX, floorY3);
 							byte tileColor3 = tile.TileColor;
 							Texture2D treeTopTexture = GetTreeTopTexture(Type, 0, tileColor3);
-							Vector2 vector = new Vector2((float)(x * 16 - (int)unscaledPosition.X + 8 + PositioningFix), (float)(y * 16 - (int)unscaledPosition.Y + 16 + PositioningFix)) + zero;
+							Vector2 vector = new Vector2((float)(x * 16 - (int)unscaledPosition.X + 8), (float)(y * 16 - (int)unscaledPosition.Y + 16)) + zero;
 							float num7 = 0f;
 							if (!flag)
 							{
@@ -1015,7 +1017,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, num21 + num2, floorY2);
 							byte tileColor2 = tile.TileColor;
 							Texture2D treeBranchTexture2 = GetTreeBranchTexture(Type, 0, tileColor2);
-							Vector2 position2 = new Vector2((float)(x * 16) + PositioningFix, (float)(y * 16) + PositioningFix) - unscaledPosition.Floor() + zero + new Vector2(16f, 12f);
+							Vector2 position2 = new Vector2((float)(x * 16), (float)(y * 16)) - unscaledPosition.Floor() + zero + new Vector2(16f, 12f);
 							float num4 = 0f;
 							if (!flag)
 							{
@@ -1045,7 +1047,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, num17 + num18, floorY);
 							byte tileColor = tile.TileColor;
 							Texture2D treeBranchTexture = GetTreeBranchTexture(Type, 0, tileColor);
-							Vector2 position = new Vector2((float)(x * 16) + PositioningFix, (float)(y * 16) + PositioningFix) - unscaledPosition.Floor() + zero + new Vector2(0f, 18f);
+							Vector2 position = new Vector2((float)(x * 16), (float)(y * 16)) - unscaledPosition.Floor() + zero + new Vector2(0f, 18f);
 							float num20 = 0f;
 							if (!flag)
 							{

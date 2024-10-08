@@ -15,6 +15,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
+			TileID.Sets.Conversion.Dirt[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;

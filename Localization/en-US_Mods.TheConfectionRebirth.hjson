@@ -197,6 +197,7 @@ Tiles: {
 	CreamSapling.MapEntry: Cream Sapling
 	CreamSnowSapling.MapEntry: Cream Snow Sapling
 	CreamTree.MapEntry: Cream Tree
+	CreamPalmTree.MapEntry: Cream Palm Tree
 }
 
 NPCs: {

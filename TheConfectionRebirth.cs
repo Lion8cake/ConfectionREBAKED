@@ -20,6 +20,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.GameContent;
 using Mono.Cecil.Cil;
 using static Terraria.WaterfallManager;
+using Terraria.GameContent.Events;
 
 namespace TheConfectionRebirth
 {
@@ -60,7 +61,9 @@ namespace TheConfectionRebirth
 			IL_NPC.SpawnNPC += LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
-			//IL_WaterfallManager.DrawWaterfall_int_float += WaterfallDrawerClouds;
+			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
+			IL_Sandstorm.EmitDust += CreamsandSandstorm;
+			On_WorldGen.Convert += Convert;
 		}
 
 		public override void Unload() {
@@ -93,29 +96,215 @@ namespace TheConfectionRebirth
 			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
-			//IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallDrawerClouds;
+			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+			IL_Sandstorm.EmitDust -= CreamsandSandstorm;
+			On_WorldGen.Convert -= Convert;
 		}
 
-		#region Rain&SnowClouds
-		/*private void WaterfallDrawerClouds(ILContext il) { //I dont know exactly why clouds have this, but adding this for floss block completely bricks other waterfalls near the tiles
-			ILCursor c = new(il);
-			c.GotoNext(
-				MoveType.After,
-				i => i.MatchLdloc(47),
-				i => i.MatchStloc(19),
-				i => i.MatchLdloc(53),
-				i => i.MatchStloc(24));
-			c.EmitLdloca(44);
-			c.EmitLdloca(46);
-			c.EmitLdloca(45);
-			c.EmitLdloca(21);
-			c.EmitDelegate((ref Tile tile4, ref Tile tile6, ref Tile tile5, ref int num15) => {
-				if ((tile4.HasTile && (tile4.TileType == ModContent.TileType<PurpleFairyFloss>() || tile4.TileType == ModContent.TileType<BlueFairyFloss>())) || (tile6.HasTile && (tile6.TileType == ModContent.TileType<PurpleFairyFloss>() || tile6.TileType == ModContent.TileType<BlueFairyFloss>())) || (tile5.HasTile && (tile5.TileType == ModContent.TileType<PurpleFairyFloss>() || tile5.TileType == ModContent.TileType<BlueFairyFloss>()))) {
-					num15 = (int)(40f * ((float)Main.maxTilesX / 4200f) * Main.gfxQuality);
-				}
-			});
-		}*/
+		#region solution Conversion
+		private void Convert(On_WorldGen.orig_Convert orig, int i, int j, int conversionType, int size) {
+			//Conversion Type:
+			//7 = Forest
+			//6 = Snow
+			//5 = Desert
+			//4 = Crimson
+			//3 = Glowing Mushroom
+			//2 = Hallow
+			//1 = Corruption
+			//0/default = purity
+			orig.Invoke(i, j, conversionType, size);
+			for (int k = i - size; k <= i + size; k++) {
+				for (int l = j - size; l <= j + size; l++) {
+					if (!WorldGen.InWorld(k, l, 1) || Math.Abs(k - i) + Math.Abs(l - j) >= 6) {
+						continue;
+					}
+					Tile tile = Main.tile[k, l];
+					int type = tile.TileType;
+					int wall = tile.WallType;
+					/*
+					if (wall == ModContent.WallType<CreamWall>()) {
+						Main.tile[k, l].WallType = 40;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieWallArtificial>()) {
+						Main.tile[k, l].WallType = 2;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieStonedWallArtificial>()) {
+						Main.tile[k, l].WallType = 59;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<BlueIceWall>()) {
+						Main.tile[k, l].WallType = 71;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+						break;
+					}
+					else if (wall == ModContent.WallType<PinkFairyFlossWall>()) {
+						Main.tile[k, l].WallType = 73;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+						break;
+					}
+					*/
+					if (type == ModContent.TileType<CookieBlock>()) {
+						Main.tile[k, l].TileType = TileID.Dirt;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (type == ModContent.TileType<CreamBlock>()) {
+						Main.tile[k, l].TileType = TileID.SnowBlock;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
 
+					/*else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneRuby>()) {
+						Main.tile[k, l].TileType = TileID.Ruby;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneSaphire>()) {
+						Main.tile[k, l].TileType = TileID.Sapphire;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneDiamond>()) {
+						Main.tile[k, l].TileType = TileID.Diamond;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneEmerald>()) {
+						Main.tile[k, l].TileType = TileID.Emerald;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneAmethyst>()) {
+						Main.tile[k, l].TileType = TileID.Amethyst;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneTopaz>()) {
+						Main.tile[k, l].TileType = TileID.Topaz;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}*/
+					else if (Main.tile[k, l].TileType == ModContent.TileType<PinkFairyFloss>()) {
+						Main.tile[k, l].TileType = TileID.Cloud;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<PurpleFairyFloss>()) {
+						Main.tile[k, l].TileType = TileID.RainCloud;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<BlueFairyFloss>()) {
+						Main.tile[k, l].TileType = TileID.SnowCloud;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					/*else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<ArgonCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.ArgonMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BlueCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.BlueMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BrownCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.BrownMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<GreenCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.GreenMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<KryptonCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.KryptonMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<LavaCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.LavaMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<PurpleCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.PurpleMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<RedCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.RedMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<XenomCreamMoss>()) {
+						Main.tile[k, l].TileType = TileID.XenonMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}*/
+				}
+			}
+		}
+		#endregion
+
+		#region Sandstorm
+		private void CreamsandSandstorm(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before,
+				i => i.MatchLdcR4(0.2f),
+				i => i.MatchLdcR4(0.35f),
+				i => i.MatchLdsfld<Sandstorm>("Severity"),
+				i => i.MatchCall("Microsoft.Xna.Framework.MathHelper", "Lerp"),
+				i => i.MatchStloc(18));
+			c.EmitLdloca(17);
+			c.EmitDelegate((ref WeightedRandom<Color> weightedRandom) => {
+				weightedRandom.Add(new Color(99, 57, 46),
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.Creamsand>()) +
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.Creamsandstone>()) +
+					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.HardenedCreamsand>()));
+			});
+		}
+		#endregion
+
+		#region WindEdits
+		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY) {
+			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.ConfectionBanners>()) {
+				sizeY = 3;
+			}
+			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) {
+				sizeX = 3;
+				sizeY = 3;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) {
+				sizeX = 3;
+				sizeY = 3;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) {
+				sizeY = 2;
+			}*/
+			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
+		}
+		#endregion
+
+		#region Rain&SnowClouds
 		private void CloudWaterfalls(ILContext il) {
 			ILCursor c = new ILCursor(il);
 			c.GotoNext(
@@ -157,7 +346,6 @@ namespace TheConfectionRebirth
 					}
 				}
 			});
-			//MonoModHooks.DumpIL(this, il);
 		}
 		#endregion
 
@@ -807,6 +995,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		#region Oats, Pads and cattails
 		private bool PlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style) {
 			int num = Type;
 			if (i >= 0 && j >= 0 && i < Main.maxTilesX && j < Main.maxTilesY) {
@@ -862,6 +1051,7 @@ namespace TheConfectionRebirth
 			}
 			return orig.Invoke(i, j, Type, mute, forced, plr, style);
 		}
+		#endregion
 
 		#region CactusMapColor
 		private void CactusMapColor(ILContext il) {
@@ -877,7 +1067,7 @@ namespace TheConfectionRebirth
 			c.EmitLdloca(3); //num5
 			c.EmitDelegate((int i, int j, ref int num5) => {
 				Tile tile = Main.tile[i, j];
-				if (tile != null) { //somehow still out of bounds
+				if (tile != null) {
 					GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
 					if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType != 0 && sandType == ModContent.TileType<Creamsand>()) {
 						num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
@@ -922,6 +1112,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		#region Vines
 		private void VineTileFrame(ILContext il) {
 			var cursor = new ILCursor(il); //Code thats USED here (none commented out) is made by Ghasttear1
 
@@ -999,7 +1190,9 @@ namespace TheConfectionRebirth
 			});
 			//MonoModHooks.DumpIL(this, il);*/
 		}
+		#endregion
 
+		#region Creamgrass and foliage
 		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {
 			if (y < 1 || y > Main.maxTilesY - 1) {
 				return false;
@@ -1177,49 +1370,6 @@ namespace TheConfectionRebirth
 				}
 			}
 		}
-	}
-
-	public static class ConfectionWindUtilities {
-		public static void Load() {
-			_addSpecialPointSpecialPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialPositions", BindingFlags.NonPublic | BindingFlags.Instance);
-			_addSpecialPointSpecialsCount = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialsCount", BindingFlags.NonPublic | BindingFlags.Instance);
-			_addVineRootPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_vineRootsPositions", BindingFlags.NonPublic | BindingFlags.Instance);
-		}
-
-		public static void Unload() {
-			_addSpecialPointSpecialPositions = null;
-			_addSpecialPointSpecialsCount = null;
-			_addVineRootPositions = null;
-		}
-
-		public static FieldInfo _addSpecialPointSpecialPositions;
-		public static FieldInfo _addSpecialPointSpecialsCount;
-		public static FieldInfo _addVineRootPositions;
-
-		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type) {
-			if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions) {
-				if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount) {
-					_specialPositions[type][_specialsCount[type]++] = new Point(x, y);
-				}
-			}
-		}
-
-		public static void CrawlToTopOfVineAndAddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int j, int i) {
-			if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions) {
-				int y = j;
-				for (int num = j - 1; num > 0; num--) {
-					Tile tile = Main.tile[i, num];
-					if (WorldGen.SolidTile(i, num) || !tile.HasTile) {
-						y = num + 1;
-						break;
-					}
-				}
-				Point item = new(i, y);
-				if (!_vineRootsPositions.Contains(item)) {
-					_vineRootsPositions.Add(item);
-					Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
-				}
-			}
-		}
+		#endregion
 	}
 }

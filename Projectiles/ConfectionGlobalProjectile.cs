@@ -45,10 +45,18 @@ namespace TheConfectionRebirth.Projectiles
 							}
 							Tile tile = Main.tile[num1032, num1043];
 							if (tile.TileType == ModContent.TileType<CreamSapling>()) {
-								if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20) {
+								if (tile.TileFrameX < 54)
+								{
+									if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20)
+									{
+										CreamSapling.AttemptToGrowCreamTreeFromSapling(num1032, num1043);
+									}
 									CreamSapling.AttemptToGrowCreamTreeFromSapling(num1032, num1043);
 								}
-								CreamSapling.AttemptToGrowCreamTreeFromSapling(num1032, num1043);
+								else
+								{
+									CreamSapling.GrowPalmTree(num1032, num1043);
+								}
 							}
 						}
 					}

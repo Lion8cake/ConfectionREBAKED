@@ -132,21 +132,25 @@ namespace TheConfectionRebirth {
 
 						#region TileIDConversions
 						if (TileID.Sets.Conversion.Stone[type] && type != ModContent.TileType<Creamstone>()) {
+							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<Creamstone>());
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Creamstone>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (TileID.Sets.Conversion.Sand[type] && type != ModContent.TileType<Creamsand>()) {
+							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<Creamsand>());
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Creamsand>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else if (TileID.Sets.Conversion.Grass[type] && type != ModContent.TileType<CreamGrass>()) {
+						else if (TileID.Sets.Conversion.Grass[type] && type != ModContent.TileType<CreamGrass>() && type != ModContent.TileType<CreamGrassMowed>()) {
+							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CreamGrass>());
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamGrass>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (TileID.Sets.Conversion.Ice[type] && type != ModContent.TileType<BlueIce>()) {
+							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<BlueIce>());
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<BlueIce>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -172,9 +176,16 @@ namespace TheConfectionRebirth {
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (TileID.Sets.Conversion.GolfGrass[type] && type != ModContent.TileType<CreamGrassMowed>()) {
+							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CreamGrassMowed>());
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamGrassMowed>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (TileID.Sets.Conversion.Thorn[type]) {
+							WorldGen.KillTile(k, l);
+							if (Main.netMode == NetmodeID.MultiplayerClient) {
+								NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, k, l);
+							}
 						}
 						#endregion
 
@@ -209,7 +220,8 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else */if (Main.tile[k, l].TileType == TileID.Cloud) {
+						else */
+						if (Main.tile[k, l].TileType == TileID.Cloud) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -269,6 +281,12 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}*/
+
+						if (type == TileID.Mud && (Main.tile[k - 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k + 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l - 1].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l + 1].TileType == ModContent.TileType<CreamGrass>())) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CookieBlock>();
+							WorldGen.SquareTileFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l);
+						}
 						#endregion
 					}
 				}
