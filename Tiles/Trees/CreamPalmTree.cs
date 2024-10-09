@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace TheConfectionRebirth.Tiles.Trees {
 
 		public Texture2D GetTreeTopTexture(int tileType, int treeTextureStyle, byte tileColor)
 		{
-			Texture2D texture2D = TryGetTreeTopAndRequestIfNotReady(ConfectionWorldGeneration.confectionTree, treeTextureStyle, tileColor);
+			Texture2D texture2D = TryGetTreeTopAndRequestIfNotReady(tileType, treeTextureStyle, tileColor);
 			if (texture2D == null)
 			{
 				texture2D = (Texture2D)ModContent.Request<Texture2D>(Texture + "_Tops");
@@ -223,6 +224,7 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			DrawSingleTile(_currentTileDrawInfo.Value, Main.Camera.UnscaledPosition, new Vector2(Main.offScreenRange, Main.offScreenRange), i, j);
 			return false;
 		}
+
 		#region trunk rendering
 		private void DrawSingleTile(TileDrawInfo drawData, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY)
 		{
@@ -254,7 +256,7 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			drawData.colorTint = Color.White;
 			drawData.finalColor = GetFinalLight(drawData.tileCache, drawData.typeCache, drawData.tileLight, drawData.colorTint);
 
-			if (drawData.tileCache.TileFrameX <= 132 && drawData.tileCache.TileFrameY >= 88)
+			if (drawData.tileCache.TileFrameX <= 132 && drawData.tileCache.TileFrameX >= 88)
 			{
 				return;
 			}
@@ -294,7 +296,6 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			}
 			if (tileCache.IsActuated)
 			{
-
 				tileLight = ActColor(tileLight, tileCache);
 			}
 			else if (ShouldTileShine(typeCache, tileCache.TileFrameX))
@@ -564,13 +565,8 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			int num10 = 80;
 			int num11 = 32;
 			int num13 = 0;
-			int textureIndex = 0;
-			bool isOcean = false;
-			if (x >= WorldGen.beachDistance && x <= Main.maxTilesX - WorldGen.beachDistance)
-			{
-				isOcean = true;
-			}
-			if (isOcean)
+			int textureIndex = GetPalmTreeType(x, y);
+			if (textureIndex == 1)
 			{
 				textureIndex = 1;
 				num9 = 114;
@@ -596,6 +592,51 @@ namespace TheConfectionRebirth.Tiles.Trees {
 				color7 = Color.White;
 			}
 			spriteBatch.Draw(treeTopTexture2, position3, (Rectangle?)new Rectangle(num8 * (num9 + 2), 0, num9, num10), color7, num14 * num15, new Vector2((float)(num9 / 2), (float)num10), 1f, (SpriteEffects)0, 0f);
+		}
+	}
+
+	public class CreamPalmTreeSquirelHook : GlobalProjectile
+	{
+		public override bool? GrappleCanLatchOnTo(Projectile projectile, Player player, int x, int y)
+		{
+			if (projectile.type == ProjectileID.SquirrelHook && Main.tile[x, y].TileType == ModContent.TileType<CreamPalmTree>())
+				return true;
+			else
+				return null;
+		}
+
+		public override void Load()
+		{
+			On_WorldGen.GetTileVisualHitbox += HookVisualDisplacement;
+		}
+
+		public override void Unload()
+		{
+			On_WorldGen.GetTileVisualHitbox -= HookVisualDisplacement;
+		}
+
+		private Rectangle? HookVisualDisplacement(On_WorldGen.orig_GetTileVisualHitbox orig, int x, int y)
+		{
+			Rectangle? rect = orig.Invoke(x, y);
+			Rectangle value;
+			if (rect != null)
+			{
+				value = (Rectangle)rect;
+			}
+			else
+			{
+				return null;
+			}
+            Tile tile = Main.tile[x, y];
+			if (tile == null || !tile.HasUnactuatedTile)
+			{
+				return null;
+			}
+			if (tile.TileType == ModContent.TileType<CreamPalmTree>())
+			{
+				value.X += tile.TileFrameY;
+			}
+			return value;
 		}
 	}
 }
