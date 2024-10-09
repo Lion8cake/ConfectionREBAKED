@@ -225,6 +225,16 @@ namespace TheConfectionRebirth.Tiles {
 					Main.tile[i, j].TileType = (ushort)ModContent.TileType<CreamTree>();
 				}
 			}
+			if (type == TileID.PalmTree)
+			{
+				WorldGen.GetTreeBottom(i, j, out var x, out var y);
+				Tile tilebelow = Main.tile[x, y + 1];
+				Tile tilecurrent = Main.tile[x, y];
+				if (tilebelow.TileType == ModContent.TileType<Creamsand>() || tilebelow.TileType == ModContent.TileType<CreamPalmTree>() || tilecurrent.TileType == ModContent.TileType<Creamsand>() || tilecurrent.TileType == ModContent.TileType<CreamPalmTree>())
+				{
+					Main.tile[i, j].TileType = (ushort)ModContent.TileType<CreamPalmTree>();
+				}
+			}
 			Tile tile = Main.tile[i, j];
 			Tile tileBelow = Main.tile[i, j + 1];
 			if (tile.TileType == TileID.OasisPlants && (Main.tile[i + 1, j + 1].TileType == ModContent.TileType<Creamsand>() || Main.tile[i + 2, j + 1].TileType == ModContent.TileType<Creamsand>() || tileBelow.TileType == ModContent.TileType<Creamsand>()) && tile.TileFrameX % 54 / 18 == 0 && tile.TileFrameY % 36 / 18 == 1) {
