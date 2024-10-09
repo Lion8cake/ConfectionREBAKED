@@ -149,6 +149,10 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			{
 				tileFrameY = 22;
 			}
+			else
+			{
+				tileFrameY = 0;
+			}
 		}
 
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
