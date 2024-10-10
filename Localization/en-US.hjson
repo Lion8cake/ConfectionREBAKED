@@ -1,0 +1,265 @@
+Mods:
+{
+	TheConfectionRebirth:
+	{
+		Bestiary:
+		{
+			Birdnana: A creature disguised as a bird or banana to blend in with its surroundings. Is it a bird, or is it a banana?
+			CherryBug: A bug known for its distinguished cherry taste. Often used as food flavorings.
+			ChocolateBunny: A rabbit that has made itself appear as if its made out of pure chocolate.
+			ChocolateFrog: When it rains in the confection frogs will start to appear and look like they are coated in chocolate.
+			GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the land.
+			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. They have a particular sour taste.
+			Pip: A very small bird that looks like marshmellow. Despite everything it can be quite amazing seeing the little wings carry its large body.
+			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
+		}
+
+		Tiles: {
+			CreamSapling.MapEntry: Cream Sapling
+			CreamSnowSapling.MapEntry: Cream Snow Sapling
+			CreamTree.MapEntry: Tree
+			CreamSnowTree.MapEntry: Tree
+		}
+
+		Items: {
+			Creamstone: {
+				DisplayName: Creamstone
+				Tooltip: ""
+			}
+
+			Saccharite: {
+				DisplayName: Saccharite
+				Tooltip: ""
+			}
+
+			CookieBlock: {
+				DisplayName: Cookie Block
+				Tooltip: ""
+			}
+
+			OrangeIce: {
+				DisplayName: Orange Ice
+				Tooltip: ""
+			}
+
+			Creamsandstone: {
+				DisplayName: Creamsandstone
+				Tooltip: ""
+			}
+
+			Creamsand: {
+				DisplayName: Creamsand
+				Tooltip: ""
+			}
+
+			HardenedCreamsand: {
+				DisplayName: Hardened Creamsand
+				Tooltip: ""
+			}
+
+			CreamBlock: {
+				DisplayName: Cream Block
+				Tooltip: ""
+			}
+
+			YumDrop: {
+				DisplayName: Yum Drop
+				Tooltip: ""
+			}
+
+			BirdnanaBanner: {
+				DisplayName: Birdnana Banner
+				Tooltip: ""
+			}
+
+			Birdnana: {
+				DisplayName: Birdnana
+				Tooltip: ""
+			}
+
+			CherryBugBanner: {
+				DisplayName: Cherry Bug Banner
+				Tooltip: ""
+			}
+
+			CherryBug: {
+				DisplayName: Cherry Bug
+				Tooltip: ""
+			}
+
+			ChocolateBunnyBanner: {
+				DisplayName: Chocolate Bunny Banner
+				Tooltip: ""
+			}
+
+			ChocolateBunny: {
+				DisplayName: Chocolate Bunny
+				Tooltip: ""
+			}
+
+			ChocolateFrogBanner: {
+				DisplayName: Chocolate Frog Banner
+				Tooltip: ""
+			}
+
+			ChocolateFrog: {
+				DisplayName: Chocolate Frog
+				Tooltip: ""
+			}
+
+			PipBanner: {
+				DisplayName: Pip Banner
+				Tooltip: ""
+			}
+
+			Pip: {
+				DisplayName: Pip
+				Tooltip: ""
+			}
+
+			BirdnanaPops: {
+				DisplayName: Birdnana Pops
+				Tooltip: ""
+			}
+
+			Cherimoya: {
+				DisplayName: Cherimoya
+				Tooltip: ""
+			}
+
+			ChocoRabbitCupcake: {
+				DisplayName: Choco Rabbit Cupcake
+				Tooltip: ""
+			}
+
+			FrogInAPond: {
+				DisplayName: Frog In A Pond
+				Tooltip: ""
+			}
+
+			GrumbleBee: {
+				DisplayName: Grumble Bee
+				Tooltip: ""
+			}
+
+			GummyWorm: {
+				DisplayName: Gummy Worm
+				Tooltip: ""
+			}
+
+			PipKebob: {
+				DisplayName: Pip Kebob
+				Tooltip: ""
+			}
+
+			CreamWood: {
+				DisplayName: Cream Wood
+				Tooltip: ""
+			}
+
+			RoyalCherryBug: {
+				DisplayName: Royal Cherry Bug
+				Tooltip: ""
+			}
+
+			CocoaBeans: {
+				DisplayName: Cocoa Beans
+				Tooltip: ""
+			}
+
+			CreamBeans: {
+				DisplayName: Cream Beans
+				Tooltip: ""
+			}
+
+			CreamSolution: {
+				DisplayName: Cream Solution
+				Tooltip: ""
+			}
+
+			SugarPowder: {
+				DisplayName: Sugar Powder
+				Tooltip: ""
+			}
+
+			SugarWater: {
+				DisplayName: Sugar Water
+				Tooltip: ""
+			}
+
+			ConfectionWaterFountain: {
+				DisplayName: Confection Water Fountain
+				Tooltip: ""
+			}
+
+			BlueFairyFloss: {
+				DisplayName: Blue Fairy Floss
+				Tooltip: ""
+			}
+
+			PinkFairyFloss: {
+				DisplayName: Pink Fairy Floss
+				Tooltip: ""
+			}
+
+			PurpleFairyFloss: {
+				DisplayName: Purple Fairy Floss
+				Tooltip: ""
+			}
+
+			AmethystCreamstoneBlock: {
+				DisplayName: Amethyst Creamstone Block
+				Tooltip: ""
+			}
+
+			DiamondCreamstoneBlock: {
+				DisplayName: Diamond Creamstone Block
+				Tooltip: ""
+			}
+
+			EmeraldCreamstoneBlock: {
+				DisplayName: Emerald Creamstone Block
+				Tooltip: ""
+			}
+
+			RubyCreamstoneBlock: {
+				DisplayName: Ruby Creamstone Block
+				Tooltip: ""
+			}
+
+			SaphireCreamstoneBlock: {
+				DisplayName: Saphire Creamstone Block
+				Tooltip: ""
+			}
+
+			TopazCreamstoneBlock: {
+				DisplayName: Topaz Creamstone Block
+				Tooltip: ""
+			}
+
+			Sprinkles: {
+				DisplayName: Sprinkles
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			Birdnana.DisplayName: Birdnana
+			CherryBug.DisplayName: Cherry Bug
+			ChocolateBunny.DisplayName: Chocolate Bunny
+			ChocolateFrog.DisplayName: Chocolate Frog
+			GrumbleBee.DisplayName: Grumble Bee
+			GummyWorm.DisplayName: Gummy Worm
+			Pip.DisplayName: Pip
+			RoyalCherryBug.DisplayName: Royal Cherry Bug
+		}
+
+		Projectiles: {
+			CreamsandProjectile.DisplayName: Creamsand
+			CreamsandSandGunProjectile.DisplayName: Creamsand
+			CreamSolution.DisplayName: Cream Solution
+			SugarPowder.DisplayName: Sugar Powder
+			SugarWaterBottle.DisplayName: Sugar Water Bottle
+		}
+	}
+}

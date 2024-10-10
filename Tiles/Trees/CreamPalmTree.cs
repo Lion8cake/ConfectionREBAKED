@@ -40,8 +40,7 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
 			TileID.Sets.PreventsSandfall[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(151, 107, 75), name);
+			AddMapEntry(new Color(182, 141, 86));
 			DustType = ModContent.DustType<CreamwoodDust>();
 		}
 

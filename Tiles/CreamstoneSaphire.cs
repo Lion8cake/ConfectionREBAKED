@@ -6,7 +6,7 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class Creamstone : ModTile
+	public class CreamstoneSaphire : ModTile
 	{
 		public override void SetStaticDefaults() 
 		{
@@ -18,18 +18,16 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
-			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 
-			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true; //For some reason, it wont connect to these tiles
+			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<BlueIceStalactite>()] = true;
-			ConfectionGlobalTile.MergesWithCreamGems(Type);
 
 			DustType = ModContent.DustType<CreamstoneDust>();
+			RegisterItemDrop(ItemID.Sapphire);
 			AddMapEntry(new Color(188, 168, 120));
 			HitSound = SoundID.Tink;
 			MineResist = 2f;

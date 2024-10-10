@@ -56,11 +56,6 @@ namespace TheConfectionRebirth.Tiles.Trees
             AdjTiles = new int[] { TileID.Saplings };
         }
 
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-
         public override void RandomUpdate(int i, int j)
         {
             if (!WorldGen.genRand.NextBool(20))

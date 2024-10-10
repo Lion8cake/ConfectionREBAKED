@@ -35,14 +35,5 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.noMelee = true;
 			Item.value = 200;
 		}
-		
-		public override void AddRecipes() 
-		{
-			CreateRecipe(10)
-				//.AddIngredient<Sprinkles>(3)
-				.AddIngredient<CreamBeans>()
-				.AddIngredient(ItemID.BottledWater, 10)
-				.Register();
-		}
 	}
 }

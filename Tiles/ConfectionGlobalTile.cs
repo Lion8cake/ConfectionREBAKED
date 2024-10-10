@@ -116,6 +116,22 @@ namespace TheConfectionRebirth.Tiles {
 				return null;
 		}
 
+		public static void MergesWithCreamGems(ushort Type)
+		{
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneAmethyst>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneTopaz>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneSaphire>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneEmerald>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneRuby>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneDiamond>()] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneAmethyst>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneTopaz>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneSaphire>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneEmerald>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneRuby>()][Type] = true;
+			Main.tileMerge[ModContent.TileType<CreamstoneDiamond>()][Type] = true;
+		}
+
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
 			Tile tileBelow = Main.tile[i, j + 1];
@@ -221,8 +237,13 @@ namespace TheConfectionRebirth.Tiles {
 				WorldGen.GetTreeBottom(i, j, out var x, out var y);
 				Tile tilebelow = Main.tile[x, y + 1];
 				Tile tilecurrent = Main.tile[x, y];
-				if (tilebelow.TileType == ModContent.TileType<CreamGrass>() || tilebelow.TileType == ModContent.TileType<CreamGrassMowed>() || tilebelow.TileType == ModContent.TileType<CreamTree>() || tilecurrent.TileType == ModContent.TileType<CreamGrass>() || tilecurrent.TileType == ModContent.TileType<CreamGrassMowed>() || tilecurrent.TileType == ModContent.TileType<CreamTree>()) {
+				if (tilebelow.TileType == ModContent.TileType<CreamGrass>() || tilebelow.TileType == ModContent.TileType<CreamGrassMowed>() || tilebelow.TileType == ModContent.TileType<CreamTree>() || tilecurrent.TileType == ModContent.TileType<CreamGrass>() || tilecurrent.TileType == ModContent.TileType<CreamGrassMowed>() || tilecurrent.TileType == ModContent.TileType<CreamTree>()) 
+				{
 					Main.tile[i, j].TileType = (ushort)ModContent.TileType<CreamTree>();
+				}
+				if (tilebelow.TileType == ModContent.TileType<CreamBlock>() || tilebelow.TileType == ModContent.TileType<CreamSnowTree>() || tilecurrent.TileType == ModContent.TileType<CreamBlock>() || tilecurrent.TileType == ModContent.TileType<CreamSnowTree>())
+				{
+					Main.tile[i, j].TileType = (ushort)ModContent.TileType<CreamSnowTree>();
 				}
 			}
 			if (type == TileID.PalmTree)

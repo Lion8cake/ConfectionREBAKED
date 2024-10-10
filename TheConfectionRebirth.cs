@@ -160,8 +160,7 @@ namespace TheConfectionRebirth
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
-
-					/*else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneRuby>()) {
+					else if (Main.tile[k, l].TileType == ModContent.TileType<CreamstoneRuby>()) {
 						Main.tile[k, l].TileType = TileID.Ruby;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
@@ -190,7 +189,7 @@ namespace TheConfectionRebirth
 						Main.tile[k, l].TileType = TileID.Topaz;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
-					}*/
+					}
 					else if (Main.tile[k, l].TileType == ModContent.TileType<PinkFairyFloss>()) {
 						Main.tile[k, l].TileType = TileID.Cloud;
 						WorldGen.SquareTileFrame(k, l, true);

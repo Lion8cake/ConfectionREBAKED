@@ -1,4 +1,4 @@
-/*using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,35 +6,32 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class CreamstoneAmethyst : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HallowedOre").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("SacchariteBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("BlueIce").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
-            RegisterItemDrop(ItemID.Amethyst);
-            DustType = ModContent.DustType<CreamDust>();
-            AddMapEntry(new Color(188, 168, 120));
+	public class CreamstoneAmethyst : ModTile
+	{
+		public override void SetStaticDefaults() 
+		{
+			Main.tileMergeDirt[Type] = true;
+			Main.tileSolid[Type] = true;
+			Main.tileStone[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 9000;
+			Main.tileBrick[Type] = true;
+			Main.tileBlockLight[Type] = true;
 
-            HitSound = SoundID.Tink;
-            MinPick = 65;
-        }
+			TileID.Sets.ChecksForMerge[Type] = true;
+			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-    }
-}*/
+			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<BlueIceStalactite>()] = true;
+
+			DustType = ModContent.DustType<CreamstoneDust>();
+			RegisterItemDrop(ItemID.Amethyst);
+			AddMapEntry(new Color(188, 168, 120));
+			HitSound = SoundID.Tink;
+			MineResist = 2f;
+			MinPick = 65;
+		}
+	}
+}

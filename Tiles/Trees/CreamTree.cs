@@ -687,7 +687,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			spriteBatch.Begin(); //No params as PostDraw doesn't use spritebatch with params
 		}
 
-		private static void ShakeTree(int i, int j)
+		public static void ShakeTree(int i, int j)
 		{
 			FieldInfo numTreeShakesReflect = typeof(WorldGen).GetField("numTreeShakes", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance);
 			int numTreeShakes = (int)numTreeShakesReflect.GetValue(null);
@@ -808,7 +808,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 		}
 
-		private static void EmitCreamLeaves(int tilePosX, int tilePosY, int grassPosX, int grassPosY)
+		public static void EmitCreamLeaves(int tilePosX, int tilePosY, int grassPosX, int grassPosY)
 		{
 			bool _isActiveAndNotPaused = (bool)typeof(TileDrawing).GetField("_isActiveAndNotPaused", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			int _leafFrequency = (int)typeof(TileDrawing).GetField("_leafFrequency", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);

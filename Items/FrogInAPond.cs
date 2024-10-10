@@ -28,12 +28,5 @@ namespace TheConfectionRebirth.Items
 			Item.value = Item.sellPrice(0, 0, 12, 50);
 			Item.rare = ItemRarityID.LightRed;
 		}
-
-		public override void AddRecipes() {
-			CreateRecipe()
-				.AddIngredient<ChocolateFrog>()
-				.AddTile(TileID.CookingPots)
-				.Register();
-		}
 	}
 }
