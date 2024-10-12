@@ -1,9 +1,11 @@
-Mods:
-{
-	TheConfectionRebirth:
-	{
-		Bestiary:
-		{
+Mods: {
+	TheConfectionRebirth: {
+		common: {
+			Banner: " Banner"
+			Banner2: Nearby players get a bonus against:
+		}
+
+		Bestiary: {
 			Birdnana: A creature disguised as a bird or banana to blend in with its surroundings. Is it a bird, or is it a banana?
 			CherryBug: A bug known for its distinguished cherry taste. Often used as food flavorings.
 			ChocolateBunny: A rabbit that has made itself appear as if its made out of pure chocolate.
@@ -68,8 +70,8 @@ Mods:
 			}
 
 			BirdnanaBanner: {
-				DisplayName: Birdnana Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
 			}
 
 			Birdnana: {
@@ -78,8 +80,8 @@ Mods:
 			}
 
 			CherryBugBanner: {
-				DisplayName: Cherry Bug Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CherryBug.DisplayName}"
 			}
 
 			CherryBug: {
@@ -88,8 +90,8 @@ Mods:
 			}
 
 			ChocolateBunnyBanner: {
-				DisplayName: Chocolate Bunny Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.ChocolateBunny.DisplayName}"
 			}
 
 			ChocolateBunny: {
@@ -98,8 +100,8 @@ Mods:
 			}
 
 			ChocolateFrogBanner: {
-				DisplayName: Chocolate Frog Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
 			}
 
 			ChocolateFrog: {
@@ -108,8 +110,8 @@ Mods:
 			}
 
 			PipBanner: {
-				DisplayName: Pip Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Pip.DisplayName}"
 			}
 
 			Pip: {
@@ -118,23 +120,35 @@ Mods:
 			}
 
 			BirdnanaPops: {
-				DisplayName: Birdnana Pops
-				Tooltip: ""
+				DisplayName: Birdnana Pop
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'oiseau banane au chocolat'
+					'''
 			}
 
 			Cherimoya: {
 				DisplayName: Cherimoya
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.MediumStats}"
 			}
 
 			ChocoRabbitCupcake: {
-				DisplayName: Choco Rabbit Cupcake
-				Tooltip: ""
+				DisplayName: Choco-Rabbit Cupcake
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'Its seems to have fallen into the Cupcake'
+					'''
 			}
 
 			FrogInAPond: {
-				DisplayName: Frog In A Pond
-				Tooltip: ""
+				DisplayName: Frog in a Pond
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'A classic kid treat, the chocolate goes surprisingly well with the green jello'
+					'''
 			}
 
 			GrumbleBee: {
@@ -149,7 +163,11 @@ Mods:
 
 			PipKebob: {
 				DisplayName: Pip Kebob
-				Tooltip: ""
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'A classic fruit kebab with a marshmellow-y twist'
+					'''
 			}
 
 			CreamWood: {
@@ -164,7 +182,11 @@ Mods:
 
 			CocoaBeans: {
 				DisplayName: Cocoa Beans
-				Tooltip: ""
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'Legend has it that in a far away place, these grow on jungle wood'
+					'''
 			}
 
 			CreamBeans: {
@@ -174,17 +196,21 @@ Mods:
 
 			CreamSolution: {
 				DisplayName: Cream Solution
-				Tooltip: ""
+				Tooltip:
+					'''
+					Used by the Clentaminator
+					Spreads the Confection
+					'''
 			}
 
 			SugarPowder: {
 				DisplayName: Sugar Powder
-				Tooltip: ""
+				Tooltip: Cleanses the evil
 			}
 
 			SugarWater: {
 				DisplayName: Sugar Water
-				Tooltip: ""
+				Tooltip: Spreads the Confection to some blocks
 			}
 
 			ConfectionWaterFountain: {
@@ -194,17 +220,17 @@ Mods:
 
 			BlueFairyFloss: {
 				DisplayName: Blue Fairy Floss
-				Tooltip: ""
+				Tooltip: Prevents fall damage
 			}
 
 			PinkFairyFloss: {
 				DisplayName: Pink Fairy Floss
-				Tooltip: ""
+				Tooltip: Prevents fall damage
 			}
 
 			PurpleFairyFloss: {
 				DisplayName: Purple Fairy Floss
-				Tooltip: ""
+				Tooltip: Prevents fall damage
 			}
 
 			AmethystCreamstoneBlock: {

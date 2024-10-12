@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent;
 using Newtonsoft.Json.Linq;
 using TheConfectionRebirth.Tiles;
+using Terraria.Audio;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -38,6 +39,7 @@ namespace TheConfectionRebirth.Items.Placeable
 			if (tile.HasTile && (tile.TileType == ModContent.TileType<Tiles.CookieBlock>() || tile.TileType == TileID.Dirt) && player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, Terraria.DataStructures.TileReachCheckSettings.Simple)) {
 				Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)Item.createTile;
 				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY, true);
+				SoundEngine.PlaySound(SoundID.Dig, player.position);
 				return true;
 			}
 			return false;

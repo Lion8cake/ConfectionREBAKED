@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth {
 	public class ConfectionIDs {
@@ -25,16 +26,18 @@ namespace TheConfectionRebirth {
 				ModContent.TileType<CreamstoneRuby>(),
 				ModContent.TileType<CreamstoneDiamond>(),
 				ModContent.TileType<CreamstoneEmerald>(),
-				//ModContent.TileType<ArgonCreamMoss>(),
-				//ModContent.TileType<BlueCreamMoss>(),
-				//ModContent.TileType<BrownCreamMoss>(),
-				//ModContent.TileType<GreenCreamMoss>(),
-				//ModContent.TileType<KryptonCreamMoss>(),
-				//ModContent.TileType<LavaCreamMoss>(),
-				//ModContent.TileType<PurpleCreamMoss>(),
-				//ModContent.TileType<RedCreamMoss>(),
-				//ModContent.TileType<XenomCreamMoss>()
-				};
+				ModContent.TileType<CreamstoneMossGreen>(),
+				ModContent.TileType<CreamstoneMossBrown>(),
+				ModContent.TileType<CreamstoneMossRed>(),
+				ModContent.TileType<CreamstoneMossBlue>(),
+				ModContent.TileType<CreamstoneMossPurple>(),
+				ModContent.TileType<CreamstoneMossLava>(),
+				ModContent.TileType<CreamstoneMossKrypton>(),
+				ModContent.TileType<CreamstoneMossXenon>(),
+				ModContent.TileType<CreamstoneMossArgon>(),
+				ModContent.TileType<CreamstoneMossNeon>(),
+				ModContent.TileType<CreamstoneMossHelium>()
+			};
 
 			/// <summary>
 			/// The blacklists confection items from appearing in recipes for certain items.
@@ -82,9 +85,18 @@ namespace TheConfectionRebirth {
 			public static bool[] CanGrowSaccharite = TileID.Sets.Factory.CreateBoolSet();
 
 			/// <summary>
-			/// Whther or not the tile type has both biome sight and shares the same biomesight color
+			/// Whether or not the tile type has both biome sight and shares the same biomesight color
 			/// </summary>
 			public static bool[] ConfectionBiomeSight = TileID.Sets.Factory.CreateBoolSet();
+
+			/// <summary>
+			/// Whether or not the tile draws like a creamstone moss.
+			/// <br/> The color contained is the color the moss will draw with.
+			/// <br/> Set the Color's Alpha parameter to 0 if want it to glow.
+			/// <br/> Doesn't react well with tiles that have a tile sheet different that a normal tiles that connects with dirt.
+			/// <br/> Defaults to Null.
+			/// </summary>
+			public static Color?[] IsTileCreamMoss = TileID.Sets.Factory.CreateCustomSet<Color?>(null);
 		}
 	}
 }

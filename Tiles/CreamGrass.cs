@@ -36,8 +36,10 @@ namespace TheConfectionRebirth.Tiles
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
 			DustType = ModContent.DustType<CreamGrassDust>();
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (fail) {
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) 
+		{
+			if(fail && !effectOnly) 
+			{
 				Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
 			}
 		}

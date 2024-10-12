@@ -21,6 +21,7 @@ using Terraria.GameContent;
 using Mono.Cecil.Cil;
 using static Terraria.WaterfallManager;
 using Terraria.GameContent.Events;
+using Terraria.DataStructures;
 
 namespace TheConfectionRebirth
 {
@@ -64,6 +65,8 @@ namespace TheConfectionRebirth
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust += CreamsandSandstorm;
 			On_WorldGen.Convert += Convert;
+			IL_Player.Update += TileFallDamage;
+			On_Player.PlaceThing_PaintScrapper_LongMoss += MossScapper;
 		}
 
 		public override void Unload() {
@@ -99,7 +102,91 @@ namespace TheConfectionRebirth
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust -= CreamsandSandstorm;
 			On_WorldGen.Convert -= Convert;
+			IL_Player.Update -= TileFallDamage;
+			On_Player.PlaceThing_PaintScrapper_LongMoss -= MossScapper;
 		}
+
+		#region PaintScrapperSupport
+		private void MossScapper(On_Player.orig_PlaceThing_PaintScrapper_LongMoss orig, Player self, int x, int y)
+		{
+			orig.Invoke(self, x, y);
+			Tile tile = Main.tile[x, y];
+			ushort type = tile.TileType;
+			if (
+				type != ModContent.TileType<CreamstoneMossGreen>() && 
+				type != ModContent.TileType<CreamstoneMossBrown>() && 
+				type != ModContent.TileType<CreamstoneMossRed>() && 
+				type != ModContent.TileType<CreamstoneMossBlue>() && 
+				type != ModContent.TileType<CreamstoneMossPurple>() &&
+				type != ModContent.TileType<CreamstoneMossLava>() &&
+				type != ModContent.TileType<CreamstoneMossKrypton>() &&
+				type != ModContent.TileType<CreamstoneMossXenon>() &&
+				type != ModContent.TileType<CreamstoneMossArgon>() &&
+				type != ModContent.TileType<CreamstoneMossNeon>() &&
+				type != ModContent.TileType<CreamstoneMossHelium>())
+			{
+				return;
+			}
+			self.cursorItemIconEnabled = true;
+			if (!self.ItemTimeIsZero || self.itemAnimation <= 0 || !self.controlUseItem)
+			{
+				return;
+			}
+			WorldGen.KillTile(x, y, true, false);
+			self.ApplyItemTime(self.inventory[self.selectedItem]);
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y);
+			}
+			int itemType = 0;
+			if (type == ModContent.TileType<CreamstoneMossGreen>())
+			{
+				itemType = ItemID.GreenMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossBrown>())
+			{
+				itemType = ItemID.BrownMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossRed>())
+			{
+				itemType = ItemID.RedMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossBlue>())
+			{
+				itemType = ItemID.BlueMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossPurple>())
+			{
+				itemType = ItemID.PurpleMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossLava>())
+			{
+				itemType = ItemID.LavaMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossKrypton>())
+			{
+				itemType = ItemID.KryptonMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossXenon>())
+			{
+				itemType = ItemID.XenonMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossArgon>())
+			{
+				itemType = ItemID.ArgonMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossNeon>())
+			{
+				itemType = ItemID.VioletMoss;
+			}
+			else if (type == ModContent.TileType<CreamstoneMossHelium>())
+			{
+				itemType = ItemID.RainbowMoss;
+			}
+			int number = Item.NewItem(new EntitySource_ItemUse(self, self.HeldItem), x * 16, y * 16, 16, 16, itemType);
+			NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
+		}
+		#endregion
 
 		#region solution Conversion
 		private void Convert(On_WorldGen.orig_Convert orig, int i, int j, int conversionType, int size) {
@@ -205,51 +292,63 @@ namespace TheConfectionRebirth
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
-					/*else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<ArgonCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.ArgonMoss;
-						WorldGen.SquareTileFrame(k, l, true);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BlueCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.BlueMoss;
-						WorldGen.SquareTileFrame(k, l, true);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<BrownCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.BrownMoss;
-						WorldGen.SquareTileFrame(k, l, true);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<GreenCreamMoss>()) {
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossGreen>()) {
 						Main.tile[k, l].TileType = TileID.GreenMoss;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<KryptonCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.KryptonMoss;
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossBrown>()) {
+						Main.tile[k, l].TileType = TileID.BrownMoss;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<LavaCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.LavaMoss;
-						WorldGen.SquareTileFrame(k, l, true);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<PurpleCreamMoss>()) {
-						Main.tile[k, l].TileType = TileID.PurpleMoss;
-						WorldGen.SquareTileFrame(k, l, true);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<RedCreamMoss>()) {
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossRed>()) {
 						Main.tile[k, l].TileType = TileID.RedMoss;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
-					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<XenomCreamMoss>()) {
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossBlue>()) {
+						Main.tile[k, l].TileType = TileID.BlueMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossPurple>()) {
+						Main.tile[k, l].TileType = TileID.PurpleMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossLava>()) {
+						Main.tile[k, l].TileType = TileID.LavaMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossKrypton>()) {
+						Main.tile[k, l].TileType = TileID.KryptonMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossXenon>()) {
 						Main.tile[k, l].TileType = TileID.XenonMoss;
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
-					}*/
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossArgon>()) {
+						Main.tile[k, l].TileType = TileID.ArgonMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossNeon>())
+					{
+						Main.tile[k, l].TileType = TileID.VioletMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<CreamstoneMossHelium>())
+					{
+						Main.tile[k, l].TileType = TileID.RainbowMoss;
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
 				}
 			}
 		}
@@ -304,6 +403,35 @@ namespace TheConfectionRebirth
 		#endregion
 
 		#region Rain&SnowClouds
+		private void TileFallDamage(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Player>("fallStart"), i => i.MatchSub(), i => i.MatchStloc(56));
+			c.EmitLdarg0();
+			c.EmitLdloca(56); //num26
+			c.EmitDelegate((Player self, ref int num26) =>
+			{
+				if (num26 > 0 || (self.gravDir == -1f && num26 < 0))
+				{
+					int num112 = (int)(self.position.X / 16f);
+					int num28 = (int)((self.position.X + (float)self.width) / 16f);
+					int num29 = (int)((self.position.Y + (float)self.height + 1f) / 16f);
+					if (self.gravDir == -1f)
+					{
+						num29 = (int)((self.position.Y - 1f) / 16f);
+					}
+					for (int num30 = num112; num30 <= num28; num30++)
+					{
+						if (Main.tile[num30, num29] != null && Main.tile[num30, num29].HasTile && (Main.tile[num30, num29].TileType == ModContent.TileType<PinkFairyFloss>() || Main.tile[num30, num29].TileType == ModContent.TileType<PurpleFairyFloss>() || Main.tile[num30, num29].TileType == ModContent.TileType<BlueFairyFloss>()))
+						{
+							num26 = 0;
+							break;
+						}
+					}
+				}
+			});
+		}
+
 		private void CloudWaterfalls(ILContext il) {
 			ILCursor c = new ILCursor(il);
 			c.GotoNext(
@@ -1336,7 +1464,20 @@ namespace TheConfectionRebirth
 		}
 
 		private bool PickaxeKillTile(On_Player.orig_DoesPickTargetTransformOnKill orig, Player self, HitTile hitCounter, int damage, int x, int y, int pickPower, int bufferIndex, Tile tileTarget) {
-			if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && (tileTarget.TileType == ModContent.TileType<CreamGrass>() || tileTarget.TileType == ModContent.TileType<CreamGrassMowed>())) {
+			if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && (
+				tileTarget.TileType == ModContent.TileType<CreamGrass>() 
+				|| tileTarget.TileType == ModContent.TileType<CreamGrassMowed>() 
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossGreen>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossBrown>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossBlue>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossRed>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossPurple>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossKrypton>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossXenon>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossArgon>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossNeon>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossLava>()
+				|| tileTarget.TileType == ModContent.TileType<CreamstoneMossHelium>())) {
 				return true;
 			}
 			else {

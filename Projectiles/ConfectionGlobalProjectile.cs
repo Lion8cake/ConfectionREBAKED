@@ -58,6 +58,14 @@ namespace TheConfectionRebirth.Projectiles
 									CreamSapling.GrowPalmTree(num1032, num1043);
 								}
 							}
+							if (tile.TileType == ModContent.TileType<CreamSnowSapling>())
+							{
+								if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20)
+								{
+									CreamSnowSapling.AttemptToGrowCreamSnowTreeFromSapling(num1032, num1043);
+								}
+								CreamSnowSapling.AttemptToGrowCreamSnowTreeFromSapling(num1032, num1043);
+							}
 						}
 					}
 				}

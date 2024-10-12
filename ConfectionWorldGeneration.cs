@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +12,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
-using static System.Net.WebRequestMethods;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {
@@ -44,6 +43,95 @@ namespace TheConfectionRebirth {
 
 		public override void PreWorldGen() {
 			confectionTree = Main.rand.Next(3);
+		}
+
+		public override void PostDrawTiles()
+		{
+			Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+			int scrMinX = (int)Main.screenPosition.X / 16;
+			int scrMinY = (int)Main.screenPosition.Y / 16;
+			int scrWid = Main.screenWidth / 16;
+			int scrHei = Main.screenHeight / 16;
+			int scrMaxX = scrMinX + scrWid;
+			int scrMaxY = scrMinY + scrHei;
+			for (int i = scrMinX; i < scrMaxX; i++)
+			{
+				for (int j = scrMinY; j < scrMaxY; j++)
+				{
+					if (i > 0 && i < Main.maxTilesX && j > 0 && j < Main.maxTilesY)
+					{
+						Tile tile = Main.tile[i, j];
+						if (ConfectionIDs.Sets.IsTileCreamMoss[tile.TileType] != null)
+						{
+							Vector2 tileFrameNumber = new Vector2(tile.TileFrameX / 18, tile.TileFrameY / 18);
+							if (tileFrameNumber.X >= 14 && tileFrameNumber.X < 16 && tileFrameNumber.Y >= 5 && tileFrameNumber.Y < 9)
+							{
+								continue;
+							}
+							Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
+							Vector2 mossPos = new Vector2((i * 16) - 4, (j * 16) - 4) - unscaledPosition;
+							Vector2 frameNumber = new Vector2(0, 0);
+							Rectangle frame;
+							Vector2 origin = Vector2.Zero;
+							Color color2 = (Color)ConfectionIDs.Sets.IsTileCreamMoss[tile.TileType];
+							Color color = Lighting.GetColorClamped(i, j, color2);
+							if (tile.IsTileFullbright || color2.A == 0)
+							{
+								color = color2;
+								color.A = 255;
+							}
+							if (tile.TileType == ModContent.TileType<CreamstoneMossHelium>())
+							{
+								color = Main.DiscoColor;
+							}
+							if (tile.IsHalfBlock)
+							{
+								if (tileFrameNumber.X >= 9 && tileFrameNumber.X < 12 && tileFrameNumber.Y == 3)
+								{
+									frameNumber = new Vector2(15, 8);
+								}
+								else if ((tileFrameNumber.Y == 3 && (tileFrameNumber.X == 0 || tileFrameNumber.X == 2 || tileFrameNumber.X == 4)) || (tileFrameNumber.X == 9 && tileFrameNumber.Y >= 0 && tileFrameNumber.Y < 3))
+								{
+									frameNumber = new Vector2(14, 7);
+								}
+								else if ((tileFrameNumber.Y == 3 && (tileFrameNumber.X == 1 || tileFrameNumber.X == 3 || tileFrameNumber.X == 5)) || (tileFrameNumber.X == 12 && tileFrameNumber.Y >= 0 && tileFrameNumber.Y < 3))
+								{
+									frameNumber = new Vector2(15, 7);
+								}
+								else
+								{
+									frameNumber = new Vector2(14, 8);
+								}
+							}
+							else if (tile.Slope != SlopeType.Solid)
+							{
+								switch (tile.Slope)
+								{
+									case SlopeType.SlopeDownLeft:
+										frameNumber = new Vector2(14, 5);
+										break;
+									case SlopeType.SlopeDownRight:
+										frameNumber = new Vector2(15, 5);
+										break;
+									case SlopeType.SlopeUpLeft:
+										frameNumber = new Vector2(14, 6);
+										break;
+									case SlopeType.SlopeUpRight:
+										frameNumber = new Vector2(15, 6);
+										break;
+								}
+							}
+							else
+							{
+								frameNumber = tileFrameNumber;
+							}
+							frame = new Rectangle((int)(frameNumber.X * 26), (int)(frameNumber.Y * 34), 26, 34);
+							Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/CreamstoneMoss"), mossPos, frame, color, 0f, origin, 1f, (SpriteEffects)0, 1f);
+						}
+					}
+				}
+			}
+			Main.spriteBatch.End();
 		}
 
 		public static void ConfectionConvert(int i, int j, int size = 4) {
@@ -190,7 +278,7 @@ namespace TheConfectionRebirth {
 						#endregion
 
 						#region ManualTileConverting
-						/*else if (Main.tile[k, l].TileType == TileID.Ruby) {
+						else if (Main.tile[k, l].TileType == TileID.Ruby) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -220,8 +308,7 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						else */
-						if (Main.tile[k, l].TileType == TileID.Cloud) {
+						else if (Main.tile[k, l].TileType == TileID.Cloud) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -236,51 +323,63 @@ namespace TheConfectionRebirth {
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
-						/*else if (Main.tile[k, l].TileType == TileID.ArgonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<ArgonCreamMoss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.BlueMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<BlueCreamMoss>();
+						else if (Main.tile[k, l].TileType == TileID.GreenMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossGreen>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (Main.tile[k, l].TileType == TileID.BrownMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<BrownCreamMoss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.GreenMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<GreenCreamMoss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.KryptonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<KryptonCreamMoss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.LavaMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<LavaCreamMoss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.PurpleMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PurpleCreamMoss>();
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossBrown>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (Main.tile[k, l].TileType == TileID.RedMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<RedCreamMoss>();
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossRed>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.BlueMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossBlue>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.PurpleMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossPurple>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.LavaMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossLava>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.KryptonMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossKrypton>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						else if (Main.tile[k, l].TileType == TileID.XenonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<XenomCreamMoss>();
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossXenon>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
-						}*/
+						}
+						else if (Main.tile[k, l].TileType == TileID.ArgonMoss) {
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossArgon>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.VioletMoss)
+						{
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossNeon>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (Main.tile[k, l].TileType == TileID.RainbowMoss)
+						{
+							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossHelium>();
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
 
 						if (type == TileID.Mud && (Main.tile[k - 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k + 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l - 1].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l + 1].TileType == ModContent.TileType<CreamGrass>())) {
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CookieBlock>();
