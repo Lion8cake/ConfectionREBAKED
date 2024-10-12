@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TheConfectionRebirth.Tiles;
+using TheConfectionRebirth.Walls;
 
 namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {
@@ -61,7 +62,7 @@ namespace TheConfectionRebirth {
 					if (i > 0 && i < Main.maxTilesX && j > 0 && j < Main.maxTilesY)
 					{
 						Tile tile = Main.tile[i, j];
-						if (ConfectionIDs.Sets.IsTileCreamMoss[tile.TileType] != null)
+						if (tile.HasTile && ConfectionIDs.Sets.IsTileCreamMoss[tile.TileType] != null)
 						{
 							Vector2 tileFrameNumber = new Vector2(tile.TileFrameX / 18, tile.TileFrameY / 18);
 							if (tileFrameNumber.X >= 14 && tileFrameNumber.X < 16 && tileFrameNumber.Y >= 5 && tileFrameNumber.Y < 9)
@@ -83,6 +84,10 @@ namespace TheConfectionRebirth {
 							if (tile.TileType == ModContent.TileType<CreamstoneMossHelium>())
 							{
 								color = Main.DiscoColor;
+							}
+							if (tile.IsActuated)
+							{
+								color = ActColor(color, tile);
 							}
 							if (tile.IsHalfBlock)
 							{
@@ -134,6 +139,16 @@ namespace TheConfectionRebirth {
 			Main.spriteBatch.End();
 		}
 
+		public static Color ActColor(Color oldColor, Tile tile)
+		{
+			if (!tile.IsActuated)
+			{
+				return oldColor;
+			}
+			double num = 0.4;
+			return new Color((int)(byte)(num * (double)(int)oldColor.R), (int)(byte)(num * (double)(int)oldColor.G), (int)(byte)(num * (double)(int)oldColor.B), (int)oldColor.A);
+		}
+
 		public static void ConfectionConvert(int i, int j, int size = 4) {
 			for (int k = i - size; k <= i + size; k++) {
 				for (int l = j - size; l <= j + size; l++) {
@@ -142,7 +157,7 @@ namespace TheConfectionRebirth {
 						int wall = Main.tile[k, l].WallType;
 
 						#region Walls
-						/*if (WallID.Sets.Conversion.Stone[wall] && wall != ModContent.WallType<CreamstoneWall>() && wall != WallID.RocksUnsafe1 && wall != WallID.RocksUnsafe2 && wall != WallID.RocksUnsafe3 && wall != WallID.RocksUnsafe4 && wall != WallID.CorruptionUnsafe1 && wall != WallID.CorruptionUnsafe2 && wall != WallID.CorruptionUnsafe3 && wall != WallID.CorruptionUnsafe4 && wall != WallID.CrimsonUnsafe1 && wall != WallID.CrimsonUnsafe2 && wall != WallID.CrimsonUnsafe3 && wall != WallID.CrimsonUnsafe4 && wall != WallID.HallowUnsafe1 && wall != WallID.HallowUnsafe2 && wall != WallID.HallowUnsafe3 && wall != WallID.HallowUnsafe4) {
+						if (WallID.Sets.Conversion.Stone[wall] && wall != ModContent.WallType<CreamstoneWall>()) {
 							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneWall>();
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1);
@@ -179,43 +194,47 @@ namespace TheConfectionRebirth {
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
 						}
-						else if (wall == WallID.Cloud && wall != ModContent.WallType<PinkFairyFlossWall>())
+						else if (WallID.Sets.Conversion.NewWall1[wall] && wall != ModContent.WallType<Creamstone2Wall>())
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone2Wall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+							break;
+						}
+						else if (WallID.Sets.Conversion.NewWall2[wall] && wall != ModContent.WallType<Creamstone3Wall>())
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone3Wall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+							break;
+						}
+						else if (WallID.Sets.Conversion.NewWall3[wall] && wall != ModContent.WallType<Creamstone4Wall>())
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone4Wall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+							break;
+						}
+						else if (WallID.Sets.Conversion.NewWall4[wall] && wall != ModContent.WallType<Creamstone5Wall>())
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone5Wall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+							break;
+						}
+						else if (wall == WallID.Cloud)
 						{
 							Main.tile[k, l].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
 							WorldGen.SquareWallFrame(k, l);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
 						}
-						else if ((wall == 59 || wall == 261) && wall != ModContent.WallType<CookieStonedWall>()) {
+						else if (wall == 59 || wall == 261) {
 							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
 							WorldGen.SquareWallFrame(k, l);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
 						}
-						else if ((wall == WallID.RocksUnsafe1 || wall == WallID.CorruptionUnsafe1 || wall == WallID.CrimsonUnsafe1 || wall == WallID.HallowUnsafe1) && wall != ModContent.WallType<Creamstone2Wall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone2Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if ((wall == WallID.RocksUnsafe2 || wall == WallID.CorruptionUnsafe2 || wall == WallID.CrimsonUnsafe2 || wall == WallID.HallowUnsafe2) && wall != ModContent.WallType<Creamstone3Wall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone3Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if ((wall == WallID.RocksUnsafe3 || wall == WallID.CorruptionUnsafe3 || wall == WallID.CrimsonUnsafe3 || wall == WallID.HallowUnsafe3) && wall != ModContent.WallType<Creamstone4Wall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone4Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if ((wall == WallID.RocksUnsafe4 || wall == WallID.CorruptionUnsafe4 || wall == WallID.CrimsonUnsafe4 || wall == WallID.HallowUnsafe4) && wall != ModContent.WallType<Creamstone5Wall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone5Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}*/
 						#endregion
 
 						#region TileIDConversions

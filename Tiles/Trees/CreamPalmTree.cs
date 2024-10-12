@@ -299,7 +299,7 @@ namespace TheConfectionRebirth.Tiles.Trees {
 			}
 			if (tileCache.IsActuated)
 			{
-				tileLight = ActColor(tileLight, tileCache);
+				tileLight = ConfectionWorldGeneration.ActColor(tileLight, tileCache);
 			}
 			else if (ShouldTileShine(typeCache, tileCache.TileFrameX))
 			{
@@ -311,16 +311,6 @@ namespace TheConfectionRebirth.Tiles.Trees {
 		private static bool ShouldTileShine(ushort type, short frameX)
 		{
 			return (bool)typeof(TileDrawing).GetMethod("ShouldTileShine", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { type, frameX });
-		}
-
-		private static Color ActColor(Color oldColor, Tile tile)
-		{
-			if (!tile.IsActuated)
-			{
-				return oldColor;
-			}
-			double num = 0.4;
-			return new Color((int)(byte)(num * (double)(int)oldColor.R), (int)(byte)(num * (double)(int)oldColor.G), (int)(byte)(num * (double)(int)oldColor.B), (int)oldColor.A);
 		}
 		#endregion
 

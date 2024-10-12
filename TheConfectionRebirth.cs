@@ -22,6 +22,7 @@ using Mono.Cecil.Cil;
 using static Terraria.WaterfallManager;
 using Terraria.GameContent.Events;
 using Terraria.DataStructures;
+using TheConfectionRebirth.Walls;
 
 namespace TheConfectionRebirth
 {
@@ -208,27 +209,10 @@ namespace TheConfectionRebirth
 					Tile tile = Main.tile[k, l];
 					int type = tile.TileType;
 					int wall = tile.WallType;
-					/*
-					if (wall == ModContent.WallType<CreamWall>()) {
-						Main.tile[k, l].WallType = 40;
-						WorldGen.SquareWallFrame(k, l);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieWallArtificial>()) {
-						Main.tile[k, l].WallType = 2;
-						WorldGen.SquareWallFrame(k, l);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<Walls.GraveyardWalls.CookieStonedWallArtificial>()) {
+					if (wall == ModContent.WallType<CookieStonedWall>()/* || wall == ModContent.WallType<Walls.GraveyardWalls.CookieStonedWallArtificial>()*/) {
 						Main.tile[k, l].WallType = 59;
 						WorldGen.SquareWallFrame(k, l);
 						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					else if (wall == ModContent.WallType<BlueIceWall>()) {
-						Main.tile[k, l].WallType = 71;
-						WorldGen.SquareWallFrame(k, l);
-						NetMessage.SendTileSquare(-1, k, l, 1);
-						break;
 					}
 					else if (wall == ModContent.WallType<PinkFairyFlossWall>()) {
 						Main.tile[k, l].WallType = 73;
@@ -236,7 +220,6 @@ namespace TheConfectionRebirth
 						NetMessage.SendTileSquare(-1, k, l, 1);
 						break;
 					}
-					*/
 					if (type == ModContent.TileType<CookieBlock>()) {
 						Main.tile[k, l].TileType = TileID.Dirt;
 						WorldGen.SquareTileFrame(k, l, true);

@@ -267,6 +267,71 @@ Mods: {
 				DisplayName: Sprinkles
 				Tooltip: ""
 			}
+
+			PinkFairyFlossWall: {
+				DisplayName: Pink Fairy Floss Wall
+				Tooltip: ""
+			}
+
+			ConfectionaryCrystalsWall: {
+				DisplayName: Confectionary Crystals Wall
+				Tooltip: ""
+			}
+
+			CookieStonedWall: {
+				DisplayName: Cookie Stoned Wall
+				Tooltip: ""
+			}
+
+			CookieWall: {
+				DisplayName: Cookie Wall
+				Tooltip: ""
+			}
+
+			CrackedConfectionWall: {
+				DisplayName: Cracked Confection Wall
+				Tooltip: ""
+			}
+
+			CreamgrassWall: {
+				DisplayName: Creamgrass Wall
+				Tooltip: ""
+			}
+
+			CreamsandstoneWall: {
+				DisplayName: Hardened Creamsand Wall
+				Tooltip: ""
+			}
+
+			CreamstoneWall: {
+				DisplayName: Creamstone Wall
+				Tooltip: ""
+			}
+
+			CreamWall: {
+				DisplayName: Cream Wall
+				Tooltip: ""
+			}
+
+			HardenedCreamsandWall: {
+				DisplayName: Creamsandstone Wall
+				Tooltip: ""
+			}
+
+			LinedConfectionGemWall: {
+				DisplayName: Lined Confection Gem Wall
+				Tooltip: ""
+			}
+
+			MeltingConfectionWall: {
+				DisplayName: Melting Confection Wall
+				Tooltip: ""
+			}
+
+			OrangeIceWall: {
+				DisplayName: Orange Ice Wall
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
