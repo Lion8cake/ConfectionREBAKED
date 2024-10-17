@@ -465,7 +465,7 @@ namespace TheConfectionRebirth.Tiles
 		{
 			r = 0.3f;
 			g = 0f;
-			g = 0.35f;
+			b = 0.35f;
 		}
 	}
 

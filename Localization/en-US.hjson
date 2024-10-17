@@ -332,6 +332,61 @@ Mods: {
 				DisplayName: Orange Ice Wall
 				Tooltip: ""
 			}
+
+			BlueCreamyMossyWall: {
+				DisplayName: Blue Creamy Mossy Wall
+				Tooltip: ""
+			}
+
+			BrownCreamyMossyWall: {
+				DisplayName: Brown Creamy Mossy Wall
+				Tooltip: ""
+			}
+
+			GreenCreamyMossyWall: {
+				DisplayName: Green Creamy Mossy Wall
+				Tooltip: ""
+			}
+
+			PurpleCreamyMossyWall: {
+				DisplayName: Purple Creamy Mossy Wall
+				Tooltip: ""
+			}
+
+			RedCreamyMossyWall: {
+				DisplayName: Red Creamy Mossy Wall
+				Tooltip: ""
+			}
+
+			AmethystCreamstoneWall: {
+				DisplayName: Amethyst Creamstone Wall
+				Tooltip: ""
+			}
+
+			DiamondCreamstoneWall: {
+				DisplayName: Diamond Creamstone Wall
+				Tooltip: ""
+			}
+
+			EmeraldCreamstoneWall: {
+				DisplayName: Emerald Creamstone Wall
+				Tooltip: ""
+			}
+
+			RubyCreamstoneWall: {
+				DisplayName: Ruby Creamstone Wall
+				Tooltip: ""
+			}
+
+			SapphireCreamstoneWall: {
+				DisplayName: Sapphire Creamstone Wall
+				Tooltip: ""
+			}
+
+			TopazCreamstoneWall: {
+				DisplayName: Topaz Creamstone Wall
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

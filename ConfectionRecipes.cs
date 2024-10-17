@@ -262,7 +262,7 @@ namespace TheConfectionRebirth
 			CreamWall2.SortAfter(CreamWall);
 			CreamWall2.Register();
 
-			#region Echo Sand Walls Echo Crafting Group
+			#region Echo Sand Walls Crafting Group
 			//Hardened Creamsand Wall
 			Recipe CreamsandstoneWall = Recipe.Create(ModContent.ItemType<CreamsandstoneWall>(), 4);
 			CreamsandstoneWall.AddIngredient(ModContent.ItemType<Creamsandstone>());
@@ -290,6 +290,169 @@ namespace TheConfectionRebirth
 			HardenedCreamsandWall2.AddTile(TileID.WorkBenches);
 			HardenedCreamsandWall2.SortAfter(HardenedCreamsandWall);
 			HardenedCreamsandWall2.Register();
+			#endregion
+
+			#region Echo Creamy Moss Walls Crafting Group
+			//Green Creamy Mossy Wall
+			Recipe GreenCreamyMossyWall = Recipe.Create(ModContent.ItemType<GreenCreamyMossyWall>(), 4);
+			GreenCreamyMossyWall.AddIngredient(ItemID.GreenMoss);
+			GreenCreamyMossyWall.AddIngredient(ModContent.ItemType<Creamstone>());
+			GreenCreamyMossyWall.AddCondition(Condition.InGraveyard);
+			GreenCreamyMossyWall.AddTile(TileID.WorkBenches);
+			GreenCreamyMossyWall.SortAfterFirstRecipesOf(ItemID.Cave5Echo);
+			GreenCreamyMossyWall.Register();
+
+			Recipe GreenCreamyMossyWall2 = Recipe.Create(ItemID.GreenMoss);
+			GreenCreamyMossyWall2.AddIngredient(ModContent.ItemType<GreenCreamyMossyWall>(), 4);
+			GreenCreamyMossyWall2.AddTile(TileID.WorkBenches);
+			GreenCreamyMossyWall2.SortAfter(GreenCreamyMossyWall);
+			GreenCreamyMossyWall2.Register();
+
+			//Brown Creamy Mossy Wall
+			Recipe BrownCreamyMossyWall = Recipe.Create(ModContent.ItemType<BrownCreamyMossyWall>(), 4);
+			BrownCreamyMossyWall.AddIngredient(ItemID.BrownMoss);
+			BrownCreamyMossyWall.AddIngredient(ModContent.ItemType<Creamstone>());
+			BrownCreamyMossyWall.AddCondition(Condition.InGraveyard);
+			BrownCreamyMossyWall.AddTile(TileID.WorkBenches);
+			BrownCreamyMossyWall.SortAfter(GreenCreamyMossyWall2);
+			BrownCreamyMossyWall.Register();
+
+			Recipe BrownCreamyMossyWall2 = Recipe.Create(ItemID.BrownMoss);
+			BrownCreamyMossyWall2.AddIngredient(ModContent.ItemType<BrownCreamyMossyWall>(), 4);
+			BrownCreamyMossyWall2.AddTile(TileID.WorkBenches);
+			BrownCreamyMossyWall2.SortAfter(BrownCreamyMossyWall);
+			BrownCreamyMossyWall2.Register();
+
+			//Red Creamy Mossy Wall
+			Recipe RedCreamyMossyWall = Recipe.Create(ModContent.ItemType<RedCreamyMossyWall>(), 4);
+			RedCreamyMossyWall.AddIngredient(ItemID.RedMoss);
+			RedCreamyMossyWall.AddIngredient(ModContent.ItemType<Creamstone>());
+			RedCreamyMossyWall.AddCondition(Condition.InGraveyard);
+			RedCreamyMossyWall.AddTile(TileID.WorkBenches);
+			RedCreamyMossyWall.SortAfter(BrownCreamyMossyWall2);
+			RedCreamyMossyWall.Register();
+
+			Recipe RedCreamyMossyWall2 = Recipe.Create(ItemID.RedMoss);
+			RedCreamyMossyWall2.AddIngredient(ModContent.ItemType<RedCreamyMossyWall>(), 4);
+			RedCreamyMossyWall2.AddTile(TileID.WorkBenches);
+			RedCreamyMossyWall2.SortAfter(RedCreamyMossyWall);
+			RedCreamyMossyWall2.Register();
+
+			//Blue Creamy Mossy Wall
+			Recipe BlueCreamyMossyWall = Recipe.Create(ModContent.ItemType<BlueCreamyMossyWall>(), 4);
+			BlueCreamyMossyWall.AddIngredient(ItemID.BlueMoss);
+			BlueCreamyMossyWall.AddIngredient(ModContent.ItemType<Creamstone>());
+			BlueCreamyMossyWall.AddCondition(Condition.InGraveyard);
+			BlueCreamyMossyWall.AddTile(TileID.WorkBenches);
+			BlueCreamyMossyWall.SortAfter(RedCreamyMossyWall2);
+			BlueCreamyMossyWall.Register();
+
+			Recipe BlueCreamyMossyWall2 = Recipe.Create(ItemID.BlueMoss);
+			BlueCreamyMossyWall2.AddIngredient(ModContent.ItemType<BlueCreamyMossyWall>(), 4);
+			BlueCreamyMossyWall2.AddTile(TileID.WorkBenches);
+			BlueCreamyMossyWall2.SortAfter(BlueCreamyMossyWall);
+			BlueCreamyMossyWall2.Register();
+
+			//Purple Creamy Mossy Wall
+			Recipe PurpleCreamyMossyWall = Recipe.Create(ModContent.ItemType<PurpleCreamyMossyWall>(), 4);
+			PurpleCreamyMossyWall.AddIngredient(ItemID.PurpleMoss);
+			PurpleCreamyMossyWall.AddIngredient(ModContent.ItemType<Creamstone>());
+			PurpleCreamyMossyWall.AddCondition(Condition.InGraveyard);
+			PurpleCreamyMossyWall.AddTile(TileID.WorkBenches);
+			PurpleCreamyMossyWall.SortAfter(BlueCreamyMossyWall2);
+			PurpleCreamyMossyWall.Register();
+
+			Recipe PurpleCreamyMossyWall2 = Recipe.Create(ItemID.PurpleMoss);
+			PurpleCreamyMossyWall2.AddIngredient(ModContent.ItemType<PurpleCreamyMossyWall>(), 4);
+			PurpleCreamyMossyWall2.AddTile(TileID.WorkBenches);
+			PurpleCreamyMossyWall2.SortAfter(PurpleCreamyMossyWall);
+			PurpleCreamyMossyWall2.Register();
+			#endregion
+
+			#region Echo Gem Creamstone Wall Crafting Group
+			//Amethyst Creamstone Wall
+			Recipe AmethystCreamstoneWall = Recipe.Create(ModContent.ItemType<AmethystCreamstoneWall>(), 4);
+			AmethystCreamstoneWall.AddIngredient(ModContent.ItemType<AmethystCreamstoneBlock>());
+			AmethystCreamstoneWall.AddCondition(Condition.InGraveyard);
+			AmethystCreamstoneWall.AddTile(TileID.WorkBenches);
+			AmethystCreamstoneWall.SortAfterFirstRecipesOf(ItemID.AmberStoneWallEcho);
+			AmethystCreamstoneWall.Register();
+
+			Recipe AmethystCreamstoneWall2 = Recipe.Create(ModContent.ItemType<AmethystCreamstoneBlock>());
+			AmethystCreamstoneWall2.AddIngredient(ModContent.ItemType<AmethystCreamstoneWall>(), 4);
+			AmethystCreamstoneWall2.AddTile(TileID.WorkBenches);
+			AmethystCreamstoneWall2.SortAfter(AmethystCreamstoneWall);
+			AmethystCreamstoneWall2.Register();
+
+			//Topaz Creamstone Wall
+			Recipe TopazCreamstoneWall = Recipe.Create(ModContent.ItemType<TopazCreamstoneWall>(), 4);
+			TopazCreamstoneWall.AddIngredient(ModContent.ItemType<TopazCreamstoneBlock>());
+			TopazCreamstoneWall.AddCondition(Condition.InGraveyard);
+			TopazCreamstoneWall.AddTile(TileID.WorkBenches);
+			TopazCreamstoneWall.SortAfter(AmethystCreamstoneWall2);
+			TopazCreamstoneWall.Register();
+
+			Recipe TopazCreamstoneWall2 = Recipe.Create(ModContent.ItemType<TopazCreamstoneBlock>());
+			TopazCreamstoneWall2.AddIngredient(ModContent.ItemType<TopazCreamstoneWall>(), 4);
+			TopazCreamstoneWall2.AddTile(TileID.WorkBenches);
+			TopazCreamstoneWall2.SortAfter(TopazCreamstoneWall);
+			TopazCreamstoneWall2.Register();
+
+			//Sapphire Creamstone Wall
+			Recipe SapphireCreamstoneWall = Recipe.Create(ModContent.ItemType<SapphireCreamstoneWall>(), 4);
+			SapphireCreamstoneWall.AddIngredient(ModContent.ItemType<SaphireCreamstoneBlock>());
+			SapphireCreamstoneWall.AddCondition(Condition.InGraveyard);
+			SapphireCreamstoneWall.AddTile(TileID.WorkBenches);
+			SapphireCreamstoneWall.SortAfter(TopazCreamstoneWall2);
+			SapphireCreamstoneWall.Register();
+
+			Recipe SapphireCreamstoneWall2 = Recipe.Create(ModContent.ItemType<SaphireCreamstoneBlock>());
+			SapphireCreamstoneWall2.AddIngredient(ModContent.ItemType<SapphireCreamstoneWall>(), 4);
+			SapphireCreamstoneWall2.AddTile(TileID.WorkBenches);
+			SapphireCreamstoneWall2.SortAfter(SapphireCreamstoneWall);
+			SapphireCreamstoneWall2.Register();
+
+			//Emerald Creamstone Wall
+			Recipe EmeraldCreamstoneWall = Recipe.Create(ModContent.ItemType<EmeraldCreamstoneWall>(), 4);
+			EmeraldCreamstoneWall.AddIngredient(ModContent.ItemType<EmeraldCreamstoneBlock>());
+			EmeraldCreamstoneWall.AddCondition(Condition.InGraveyard);
+			EmeraldCreamstoneWall.AddTile(TileID.WorkBenches);
+			EmeraldCreamstoneWall.SortAfter(SapphireCreamstoneWall2);
+			EmeraldCreamstoneWall.Register();
+
+			Recipe EmeraldCreamstoneWall2 = Recipe.Create(ModContent.ItemType<EmeraldCreamstoneBlock>());
+			EmeraldCreamstoneWall2.AddIngredient(ModContent.ItemType<EmeraldCreamstoneWall>(), 4);
+			EmeraldCreamstoneWall2.AddTile(TileID.WorkBenches);
+			EmeraldCreamstoneWall2.SortAfter(EmeraldCreamstoneWall);
+			EmeraldCreamstoneWall2.Register();
+
+			//Ruby Creamstone Wall
+			Recipe RubyCreamstoneWall = Recipe.Create(ModContent.ItemType<RubyCreamstoneWall>(), 4);
+			RubyCreamstoneWall.AddIngredient(ModContent.ItemType<RubyCreamstoneBlock>());
+			RubyCreamstoneWall.AddCondition(Condition.InGraveyard);
+			RubyCreamstoneWall.AddTile(TileID.WorkBenches);
+			RubyCreamstoneWall.SortAfter(EmeraldCreamstoneWall2);
+			RubyCreamstoneWall.Register();
+
+			Recipe RubyCreamstoneWall2 = Recipe.Create(ModContent.ItemType<RubyCreamstoneBlock>());
+			RubyCreamstoneWall2.AddIngredient(ModContent.ItemType<RubyCreamstoneWall>(), 4);
+			RubyCreamstoneWall2.AddTile(TileID.WorkBenches);
+			RubyCreamstoneWall2.SortAfter(RubyCreamstoneWall);
+			RubyCreamstoneWall2.Register();
+
+			//Diamond Creamstone Wall
+			Recipe DiamondCreamstoneWall = Recipe.Create(ModContent.ItemType<DiamondCreamstoneWall>(), 4);
+			DiamondCreamstoneWall.AddIngredient(ModContent.ItemType<DiamondCreamstoneBlock>());
+			DiamondCreamstoneWall.AddCondition(Condition.InGraveyard);
+			DiamondCreamstoneWall.AddTile(TileID.WorkBenches);
+			DiamondCreamstoneWall.SortAfter(RubyCreamstoneWall2);
+			DiamondCreamstoneWall.Register();
+
+			Recipe DiamondCreamstoneWall2 = Recipe.Create(ModContent.ItemType<DiamondCreamstoneBlock>());
+			DiamondCreamstoneWall2.AddIngredient(ModContent.ItemType<DiamondCreamstoneWall>(), 4);
+			DiamondCreamstoneWall2.AddTile(TileID.WorkBenches);
+			DiamondCreamstoneWall2.SortAfter(DiamondCreamstoneWall);
+			DiamondCreamstoneWall2.Register();
 			#endregion
 		}
 	}

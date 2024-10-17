@@ -229,11 +229,77 @@ namespace TheConfectionRebirth {
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
 						}
-						else if (wall == 59 || wall == 261) {
+						else if (wall == WallID.Cave6Unsafe || wall == WallID.Cave6Echo) {
 							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
 							WorldGen.SquareWallFrame(k, l);
 							NetMessage.SendTileSquare(-1, k, l, 1);
 							break;
+						}
+						else if (wall == WallID.Cave4Unsafe || wall == WallID.Cave4Echo)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<BlueCreamyMossyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.Cave2Unsafe || wall == WallID.Cave2Echo)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<BrownCreamyMossyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.CaveUnsafe || wall == WallID.Cave1Echo)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<GreenCreamyMossyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.Cave5Unsafe || wall == WallID.Cave5Echo)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<PurpleCreamyMossyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.Cave3Unsafe || wall == WallID.Cave3Echo)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<RedCreamyMossyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.AmethystUnsafe || wall == WallID.AmethystEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneAmethystWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.TopazUnsafe || wall == WallID.TopazEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneTopazWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.SapphireUnsafe || wall == WallID.SapphireEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneSapphireWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.EmeraldUnsafe || wall == WallID.EmeraldEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneEmeraldWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.RubyUnsafe || wall == WallID.RubyEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneRubyWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
+						}
+						else if (wall == WallID.DiamondUnsafe || wall == WallID.DiamondEcho)
+						{
+							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneDiamondWall>();
+							WorldGen.SquareWallFrame(k, l);
+							NetMessage.SendTileSquare(-1, k, l, 1);
 						}
 						#endregion
 

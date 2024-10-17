@@ -209,17 +209,83 @@ namespace TheConfectionRebirth
 					Tile tile = Main.tile[k, l];
 					int type = tile.TileType;
 					int wall = tile.WallType;
-					if (wall == ModContent.WallType<CookieStonedWall>()/* || wall == ModContent.WallType<Walls.GraveyardWalls.CookieStonedWallArtificial>()*/) {
-						Main.tile[k, l].WallType = 59;
+					if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<Walls.CookieStonedWallArtificial>()) {
+						Main.tile[k, l].WallType = WallID.Cave6Unsafe;
 						WorldGen.SquareWallFrame(k, l);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
 					else if (wall == ModContent.WallType<PinkFairyFlossWall>()) {
-						Main.tile[k, l].WallType = 73;
+						Main.tile[k, l].WallType = WallID.Cloud;
 						WorldGen.SquareWallFrame(k, l);
 						NetMessage.SendTileSquare(-1, k, l, 1);
-						break;
 					}
+					else if (wall == ModContent.WallType<BlueCreamyMossyWall>() || wall == ModContent.WallType<BlueCreamyMossyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.Cave4Unsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<BrownCreamyMossyWall>() || wall == ModContent.WallType<BrownCreamyMossyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.Cave2Unsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<GreenCreamyMossyWall>() || wall == ModContent.WallType<GreenCreamyMossyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.CaveUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<PurpleCreamyMossyWall>() || wall == ModContent.WallType<PurpleCreamyMossyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.Cave5Unsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<RedCreamyMossyWall>() || wall == ModContent.WallType<RedCreamyMossyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.Cave3Unsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneAmethystWall>() || wall == ModContent.WallType<CreamstoneAmethystWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.AmethystUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneTopazWall>() || wall == ModContent.WallType<CreamstoneTopazWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.TopazUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneSapphireWall>() || wall == ModContent.WallType<CreamstoneSapphireWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.SapphireUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneEmeraldWall>() || wall == ModContent.WallType<CreamstoneEmeraldWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.EmeraldUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneRubyWall>() || wall == ModContent.WallType<CreamstoneRubyWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.RubyUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CreamstoneDiamondWall>() || wall == ModContent.WallType<CreamstoneDiamondWallSafe>())
+					{
+						Main.tile[k, l].WallType = WallID.DiamondUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+
 					if (type == ModContent.TileType<CookieBlock>()) {
 						Main.tile[k, l].TileType = TileID.Dirt;
 						WorldGen.SquareTileFrame(k, l, true);
