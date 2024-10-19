@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,43 +9,1239 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.Generation;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
+using Terraria.WorldBuilding;
+using TheConfectionRebirth.ModSupport;
 using TheConfectionRebirth.Tiles;
 using TheConfectionRebirth.Walls;
 
 namespace TheConfectionRebirth {
+	public enum HallowOptions
+	{
+		Random,
+		Hallow,
+		Confection,
+	}
+
 	public class ConfectionWorldGeneration : ModSystem {
 
+		public static bool confectionorHallow;
+		public HallowOptions SelectedHallowOption { get; set; } = HallowOptions.Random;
 		public static int confectionTree;
-		public override void OnWorldLoad() {
+
+
+		public override void Load()
+		{
+			On_WorldGen.GERunner += GERunnerEditer;
+			On_WorldGen.ConvertSkyIslands += On_WorldGen_ConvertSkyIslands;
+		}
+
+		public override void Unload()
+		{
+			On_WorldGen.GERunner -= GERunnerEditer;
+			On_WorldGen.ConvertSkyIslands -= On_WorldGen_ConvertSkyIslands;
+		}
+
+		public override void OnWorldLoad()
+		{
+			confectionorHallow = false;
 			confectionTree = 0;
 		}
 
-		public override void OnWorldUnload() {
+		public override void OnWorldUnload() 
+		{
+			confectionorHallow = false;
 			confectionTree = 0;
 		}
 
-		public override void SaveWorldData(TagCompound tag) {
+		public override void SaveWorldData(TagCompound tag) 
+		{
+			tag["TheConfectionRebirth:confectionorHallow"] = confectionorHallow;
 			tag["TheConfectionRebirth:confectionTree"] = confectionTree;
 		}
 
-		public override void LoadWorldData(TagCompound tag) {
-			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
+		public override void SaveWorldHeader(TagCompound tag)
+		{
+			tag["HasConfection"] = confectionorHallow;
 		}
 
-		public override void NetSend(BinaryWriter writer) {
+		public override void LoadWorldData(TagCompound tag)
+		{
+			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
+			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
+
+			//World Converter (1.4.3 => 1.4.4)
+			//Also contains some explinations 
+			if (!Main.dedServ) //Make sure that we are not on a server so we dont infinatly get stuck on Syncing Mods
+			{
+				try
+				{
+					string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
+					var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
+					if (tag2.ContainsKey("modData"))
+					{ //We look for modData here and v there 
+						foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData"))
+						{
+							if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager")
+							{ //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data");
+
+								if (dataTag.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome")
+								{ //Look for the correct string that WorldHallow is saved under
+									confectionorHallow = true; //Convert world by giving it the tag
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
+								}
+								else
+								{
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
+								}
+								break;
+							}
+							if (modDataTag.Get<string>("mod") == "ModLoader")
+							{
+								ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
+								if (dataTag.ContainsKey("list"))
+								{ //find a list called list
+									ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
+									foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list"))
+									{ //same here as above ^
+
+										if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager")
+										{ //Look for altlib inside of list
+											ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Found Altlib under unloaded mods!"); //announce that altlib has been found inside tmod's unloaded data
+											TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+
+											if (dataTag2.Get<string>("AltLibrary:WorldHallow") == "TheConfectionRebirth/ConfectionBiome")
+											{ //same as the lines previously when altlib was enabled
+												confectionorHallow = true;
+												ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Altlib save!, converting world!");
+											}
+											else
+											{
+												ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("non-Altlib save, unable to convert world");
+											}
+											break;
+										}
+									}
+								}
+								break;
+							}
+						}
+					}
+				}
+				catch
+				{
+					ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
+				}
+			}
+			else
+			{
+				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
+			}
+		}
+
+		public override void NetSend(BinaryWriter writer) 
+		{
+			writer.Write(confectionorHallow);
 			writer.Write(confectionTree);
 		}
 
-		public override void NetReceive(BinaryReader reader) {
+		public override void NetReceive(BinaryReader reader) 
+		{
+			confectionorHallow = reader.ReadBoolean();
 			confectionTree = reader.ReadInt32();
 		}
 
-		public override void PreWorldGen() {
+		public override void PreWorldGen() 
+		{
+			confectionorHallow = SelectedHallowOption switch
+			{
+				HallowOptions.Random => Main.rand.NextBool(),
+				HallowOptions.Hallow => false,
+				HallowOptions.Confection => true,
+				_ => throw new ArgumentOutOfRangeException(),
+			};
 			confectionTree = Main.rand.Next(3);
 		}
+
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
+		{
+			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
+			{
+				int index = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+				if (index != -1)
+				{
+					tasks.Insert(index + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+				}
+			}
+			else
+			{
+				if (confectionorHallow)
+				{
+					int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+					if (index2 != -1)
+					{
+						tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+						tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
+					}
+				}
+			}
+		}
+
+		public override void ModifyHardmodeTasks(List<GenPass> list)
+		{
+			if (confectionorHallow && !Main.drunkWorld)
+			{
+				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
+				if (index4 != -1)
+				{
+					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix)));
+					list.RemoveAt(index4);
+				}
+			}
+			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
+			{ //Should be changed to not remove the genpasses to allow for other mods (like avalon) load their hardmode stuff
+				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
+				if (index2 != -1)
+				{
+					list.Insert(index2 + 1, new PassLegacy("Hardmode Good", new WorldGenLegacyMethod(ConfectionDrunkInner)));
+					list.RemoveAt(index2);
+				}
+				int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
+				if (index3 != -1)
+				{
+					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(ConfectionDrunkOuter)));
+					list.RemoveAt(index3);
+				}
+			}
+		}
+
+		#region BiomeChest
+		private static void ConfectionChest(GenerationProgress progres, GameConfiguration configurations)
+		{
+			for (int num79 = 0; num79 < 1; num79++)
+			{
+				bool flag5 = false;
+				while (!flag5)
+				{
+					int num80 = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
+					int num81 = WorldGen.genRand.Next((int)Main.worldSurface, GenVars.dMaxY);
+					if (!Main.wallDungeon[Main.tile[num80, num81].WallType] || Main.tile[num80, num81].HasTile)
+					{
+						continue;
+					}
+					ushort chestTileType = (ushort)ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
+					int contain = 0;
+					int style2 = 0;
+					if (num79 == 0)
+					{
+						style2 = 1;
+						contain = ModContent.ItemType<Items.Weapons.PopRocket>();
+					}
+					flag5 = WorldGen.AddBuriedChest(num80, num81, contain, notNearOtherChests: false, style2, trySlope: false, chestTileType);
+				}
+			}
+		}
+
+		private static void HallowChestRemoval(GenerationProgress progres, GameConfiguration configurations)
+		{
+			if (!Main.drunkWorld)
+			{
+				for (int index = 0; index < Main.maxChests; index++)
+				{
+					if (Main.chest[index] != null)
+					{
+						int X = Main.chest[index].x;
+						int Y = Main.chest[index].y;
+						if (Main.tile[X, Y].TileType == TileID.Containers && Main.wallDungeon[Main.tile[X, Y].WallType] && (Main.tile[X, Y].TileFrameX == 26 * (18 * 2) || Main.tile[X, Y].TileFrameX == 26.5 * (18 * 2)))
+						{
+							Chest.DestroyChestDirect(X, Y, index);
+							WorldGen.KillTile(X, Y, false, false, true);
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region DrunkWorldgen
+		private static void ConfectionDrunkInner(GenerationProgress progres, GameConfiguration configurations)
+		{
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null)
+			{
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int num3 = (int)((double)(Main.maxTilesX) * num);
+			int num4 = (int)((double)(Main.maxTilesX) * (1.0 - num));
+			int num5 = 1;
+			if (GenVars.dungeonX < Main.maxTilesX / 2)
+			{
+				num4 = (int)((double)(Main.maxTilesX) * num);
+				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num));
+				num5 = -1;
+			}
+			int num6 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2)
+			{
+				num6 = -1;
+			}
+			if (num6 < 0)
+			{
+				if (num4 < num3)
+				{
+					num4 = (int)((double)(Main.maxTilesX) * num2);
+				}
+				else
+				{
+					num3 = (int)((double)(Main.maxTilesX) * num2);
+				}
+			}
+			else if (num4 > num3)
+			{
+				num4 = (int)((double)(Main.maxTilesX) * (1.0 - num2));
+			}
+			else
+			{
+				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num2));
+			}
+			if (Main.remixWorld)
+			{
+				int num7 = Main.maxTilesX / 7;
+				int num8 = Main.maxTilesX / 14;
+				if (Main.dungeonX > Main.maxTilesX / 2)
+				{
+					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
+					{
+						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++)
+						{
+							if (i > Main.maxTilesX - num7)
+							{
+								ConfectionConvert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
+							{
+								ConfectionConvert(i, j, 1);
+							}
+						}
+					}
+				}
+				else
+				{
+					for (int k = 0; k < num7 + num8; k++)
+					{
+						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++)
+						{
+							if (k < num7)
+							{
+								ConfectionConvert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
+							{
+								ConfectionConvert(k, l, 1);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (confectionorHallow)
+				{
+					ConfectGERunner(num3, 0, 3 * num5, 5.0);
+				}
+				else
+				{
+					WorldGen.GERunner(num3, 0, 3 * num5, 5.0);
+				}
+				WorldGen.GERunner(num4, 0, 3 * -num5, 5.0, good: false);
+			}
+			double num9 = (double)(Main.maxTilesX / 2) / 4200.0;
+			int num10 = (int)(25.0 * num9);
+			ShapeData shapeData = new ShapeData();
+			int num11 = 0;
+			while (num10 > 0)
+			{
+				if (++num11 % 15000 == 0)
+				{
+					num10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort num12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType])
+				{
+					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType])
+				{
+					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType])
+				{
+					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
+				{
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag)
+					{
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
+						num10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2)
+			{
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+
+		private static void ConfectionDrunkOuter(GenerationProgress progres, GameConfiguration configurations)
+		{
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null)
+			{
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double numm = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double numm2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int numm3 = (int)((double)(Main.maxTilesX) * numm);
+			int numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
+			int numm5 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2)
+			{
+				numm4 = (int)((double)(Main.maxTilesX) * numm);
+				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
+				numm5 = -1;
+			}
+			int numm6 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2)
+			{
+				numm6 = -1;
+			}
+			if (numm6 < 0)
+			{
+				if (numm4 < numm3)
+				{
+					numm4 = (int)((double)(Main.maxTilesX) * numm2);
+				}
+				else
+				{
+					numm3 = (int)((double)(Main.maxTilesX) * numm2);
+				}
+			}
+			else if (numm4 > numm3)
+			{
+				numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
+			}
+			else
+			{
+				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
+			}
+			if (!Main.remixWorld)
+			{
+				if (!confectionorHallow)
+				{
+					ConfectGERunner(numm4, 0, 3 * numm5, 5.0);
+				}
+				else
+				{
+					WorldGen.GERunner(numm4, 0, 3 * numm5, 5.0);
+				}
+				AltEvilGERunner(numm3, 0, 3 * -numm5, 5.0, good: false);
+			}
+			double numm9 = (double)Main.maxTilesX / 4200.0;
+			int numm10 = (Main.maxTilesX / 2) + (int)(25.0 * numm9);
+			ShapeData shapeData = new ShapeData();
+			int numm11 = 0;
+			while (numm10 > 0)
+			{
+				if (++numm11 % 15000 == 0)
+				{
+					numm10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort numm12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType])
+				{
+					numm12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType])
+				{
+					numm12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType])
+				{
+					numm12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && numm12 != 0 && !tile2.HasTile)
+				{
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag)
+					{
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(numm12));
+						numm10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2)
+			{
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+		#endregion
+
+		#region ConfectionRemixWorldgen
+		private static void ConfectionRemix(GenerationProgress progres, GameConfiguration configurations)
+		{
+			WorldGen.IsGeneratingHardMode = true;
+			WorldGen.TryProtectingSpawnedItems();
+			if (Main.rand == null)
+			{
+				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
+			}
+			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			int num3 = (int)((double)Main.maxTilesX * num);
+			int num4 = (int)((double)Main.maxTilesX * (1.0 - num));
+			int num5 = 1;
+			if (WorldGen.genRand.Next(2) == 0)
+			{
+				num4 = (int)((double)Main.maxTilesX * num);
+				num3 = (int)((double)Main.maxTilesX * (1.0 - num));
+				num5 = -1;
+			}
+			int num6 = 1;
+			if (GenVars.dungeonX < Main.maxTilesX / 2)
+			{
+				num6 = -1;
+			}
+			if (num6 < 0)
+			{
+				if (num4 < num3)
+				{
+					num4 = (int)((double)Main.maxTilesX * num2);
+				}
+				else
+				{
+					num3 = (int)((double)Main.maxTilesX * num2);
+				}
+			}
+			else if (num4 > num3)
+			{
+				num4 = (int)((double)Main.maxTilesX * (1.0 - num2));
+			}
+			else
+			{
+				num3 = (int)((double)Main.maxTilesX * (1.0 - num2));
+			}
+			if (Main.remixWorld)
+			{
+				int num7 = Main.maxTilesX / 7;
+				int num8 = Main.maxTilesX / 14;
+				if (Main.dungeonX < Main.maxTilesX / 2)
+				{
+					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
+					{
+						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++)
+						{
+							if (i > Main.maxTilesX - num7)
+							{
+								ConfectionConvert(i, j, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
+							{
+								ConfectionConvert(i, j, 1);
+							}
+						}
+					}
+				}
+				else
+				{
+					for (int k = 0; k < num7 + num8; k++)
+					{
+						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++)
+						{
+							if (k < num7)
+							{
+								ConfectionConvert(k, l, 1);
+							}
+							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
+							{
+								ConfectionConvert(k, l, 1);
+							}
+						}
+					}
+				}
+			}
+			double num9 = (double)Main.maxTilesX / 4200.0;
+			int num10 = (int)(25.0 * num9);
+			ShapeData shapeData = new ShapeData();
+			int num11 = 0;
+			while (num10 > 0)
+			{
+				if (++num11 % 15000 == 0)
+				{
+					num10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort num12 = 0;
+				if (TileID.Sets.Crimson[tile.TileType])
+				{
+					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Corrupt[tile.TileType])
+				{
+					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
+				}
+				else if (TileID.Sets.Hallow[tile.TileType])
+				{
+					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
+				}
+				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
+				{
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag)
+					{
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
+						num10--;
+					}
+					shapeData.Clear();
+				}
+			}
+			if (Main.netMode == 2)
+			{
+				Netplay.ResetSections();
+			}
+			WorldGen.UndoSpawnedItemProtection();
+			WorldGen.IsGeneratingHardMode = false;
+		}
+		#endregion
+
+		#region CovertToConfectionWorldGen
+		public static void ConfectGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true)
+		{
+			GERunnerCalulations(out Vector2D val, out int num4, out int num2, out Vector2D val2, out bool flag, i, j, speedX, speedY);
+			bool flag2 = true;
+			while (flag2)
+			{
+				int num5 = (int)(val.X - num4 * 0.5);
+				int num6 = (int)(val.X + num4 * 0.5);
+				int num7 = (int)(val.Y - num4 * 0.5);
+				int num8 = (int)(val.Y + num4 * 0.5);
+				if (num5 < 0)
+				{
+					num5 = 0;
+				}
+				if (num6 > Main.maxTilesX)
+				{
+					num6 = Main.maxTilesX;
+				}
+				if (num7 < 0)
+				{
+					num7 = 0;
+				}
+				if (num8 > Main.maxTilesY - 5)
+				{
+					num8 = Main.maxTilesY - 5;
+				}
+				for (int m = num5; m < num6; m++)
+				{
+					for (int n = num7; n < num8; n++)
+					{
+						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015)))
+						{
+							continue;
+						}
+						if (good)
+						{
+							if (Main.tile[m, n].WallType == WallID.GrassUnsafe || Main.tile[m, n].WallType == WallID.FlowerUnsafe || Main.tile[m, n].WallType == WallID.Grass || Main.tile[m, n].WallType == WallID.Flower || Main.tile[m, n].WallType == WallID.CorruptGrassUnsafe || Main.tile[m, n].WallType == WallID.CrimsonGrassUnsafe)
+							{
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamGrassWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.HardenedSand)
+							{
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<HardenedCreamsandWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.Sandstone)
+							{
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamsandstoneWall>();
+							}
+							else if (Main.tile[m, n].WallType == WallID.EbonstoneUnsafe || Main.tile[m, n].WallType == WallID.CrimstoneUnsafe)
+							{
+								Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneWall>();
+							}
+							else if (ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread")
+							{
+								if (Main.tile[m, n].WallType == WallID.Dirt || Main.tile[m, n].WallType == WallID.DirtUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cave6Unsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cloud)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.IceUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<BlueIceWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.SnowWallUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cave4Unsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<BlueCreamyMossyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cave2Unsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<BrownCreamyMossyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.CaveUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<GreenCreamyMossyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cave5Unsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<PurpleCreamyMossyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.Cave3Unsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<RedCreamyMossyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.AmethystUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneAmethystWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.TopazUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneTopazWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.SapphireUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneSapphireWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.EmeraldUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneEmeraldWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.RubyUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneRubyWall>();
+								}
+								else if (Main.tile[m, n].WallType == WallID.DiamondUnsafe)
+								{
+									Main.tile[m, n].WallType = (ushort)ModContent.WallType<CreamstoneDiamondWall>();
+								}
+							}
+							if (flag && Main.tile[m, n].TileType == TileID.Hive)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (flag && Main.tile[m, n].TileType == TileID.CrispyHoneyBlock)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Grass)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamGrass>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Stone || Main.tile[m, n].TileType == TileID.Ebonstone || Main.tile[m, n].TileType == TileID.Crimstone)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Sand || Main.tile[m, n].TileType == TileID.Silt || Main.tile[m, n].TileType == TileID.Ebonsand || Main.tile[m, n].TileType == TileID.Crimsand)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.CorruptJungleGrass || Main.tile[m, n].TileType == TileID.CrimsonJungleGrass)
+							{
+								Main.tile[m, n].TileType = TileID.JungleGrass;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.CorruptGrass || Main.tile[m, n].TileType == TileID.CrimsonGrass)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamGrass>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.IceBlock || Main.tile[m, n].TileType == TileID.CorruptIce || Main.tile[m, n].TileType == TileID.FleshIce)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueIce>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.Sandstone)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == TileID.HardenedSand)
+							{
+								Main.tile[m, n].TileType = (ushort)ModContent.TileType<Creamsandstone>();
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType] >= 0)
+							{
+								Main.tile[m, n].TileType = (ushort)ConfectionIDs.Sets.ConvertsToConfection[Main.tile[m, n].TileType];
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread")
+							{
+								if (Main.tile[m, n].TileType == TileID.Dirt)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookieBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.DirtiestBlock)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CookiestCookieBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.SnowBlock)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamBlock>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Cloud || Main.tile[m, n].TileType == TileID.LesionBlock || Main.tile[m, n].TileType == TileID.FleshBlock)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.RainCloud)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.SnowCloud)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Amethyst)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Topaz)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Sapphire)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Emerald)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Ruby)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.Diamond)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.GreenMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossGreen>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.BrownMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossBrown>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.RedMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossRed>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.BlueMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossBlue>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.PurpleMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossPurple>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.LavaMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossLava>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.KryptonMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossKrypton>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.XenonMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossXenon>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.ArgonMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossArgon>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.VioletMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossNeon>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+								else if (Main.tile[m, n].TileType == TileID.RainbowMoss)
+								{
+									Main.tile[m, n].TileType = (ushort)ModContent.TileType<CreamstoneMossHelium>();
+									WorldGen.SquareTileFrame(m, n);
+								}
+							}
+						}
+					}
+				}
+				val += val2;
+				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
+				if (val2.X > speedX + 1.0)
+				{
+					val2.X = speedX + 1.0;
+				}
+				if (val2.X < speedX - 1.0)
+				{
+					val2.X = speedX - 1.0;
+				}
+				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2))
+				{
+					flag2 = false;
+				}
+			}
+		}
+		#endregion
+
+		#region SwapEvilConvert
+		public static void AltEvilGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true)
+		{
+			GERunnerCalulations(out Vector2D val, out int num4, out int num2, out Vector2D val2, out bool flag, i, j, speedX, speedY);
+			bool flag2 = true;
+			while (flag2)
+			{
+				int num5 = (int)(val.X - num4 * 0.5);
+				int num6 = (int)(val.X + num4 * 0.5);
+				int num7 = (int)(val.Y - num4 * 0.5);
+				int num8 = (int)(val.Y + num4 * 0.5);
+				if (num5 < 0)
+				{
+					num5 = 0;
+				}
+				if (num6 > Main.maxTilesX)
+				{
+					num6 = Main.maxTilesX;
+				}
+				if (num7 < 0)
+				{
+					num7 = 0;
+				}
+				if (num8 > Main.maxTilesY - 5)
+				{
+					num8 = Main.maxTilesY - 5;
+				}
+				for (int m = num5; m < num6; m++)
+				{
+					for (int n = num7; n < num8; n++)
+					{
+						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015)))
+						{
+							continue;
+						}
+
+					}
+				}
+				val += val2;
+				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
+				if (val2.X > speedX + 1.0)
+				{
+					val2.X = speedX + 1.0;
+				}
+				if (val2.X < speedX - 1.0)
+				{
+					val2.X = speedX - 1.0;
+				}
+				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2))
+				{
+					flag2 = false;
+				}
+			}
+		}
+		#endregion
+
+		private void GERunnerEditer(On_WorldGen.orig_GERunner orig, int i, int j, double speedX, double speedY, bool good)
+		{
+			if (good && confectionorHallow)
+			{
+				ConfectGERunner(i, j, speedX, speedY, good);
+				return;
+			}
+			else
+			{
+				GERunnerEdits(i, j, speedX, speedY, good);
+			}
+			orig.Invoke(i, j, speedX, speedY, good);
+		}
+
+		private static void GERunnerCalulations(out Vector2D val, out int num4, out int num2, out Vector2D val2, out bool flag, int i, int j, double speedX = 0.0, double speedY = 0.0)
+		{
+			int num = 0;
+			for (int k = 20; k < Main.maxTilesX - 20; k++)
+			{
+				for (int l = 20; l < Main.maxTilesY - 20; l++)
+				{
+					if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == TileID.Hive)
+					{
+						num++;
+					}
+				}
+			}
+			flag = false;
+			if (num > 200000)
+			{
+				flag = true;
+			}
+			num2 = WorldGen.genRand.Next(200, 250);
+			double num3 = (double)Main.maxTilesX / 4200.0;
+			num2 = (int)((double)num2 * num3);
+			num4 = num2;
+			val = default(Vector2D);
+			val.X = i;
+			val.Y = j;
+			val2 = default(Vector2D);
+			val2.X = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			val2.Y = (double)WorldGen.genRand.Next(-10, 11) * 0.1;
+			if (speedX != 0.0 || speedY != 0.0)
+			{
+				val2.X = speedX;
+				val2.Y = speedY;
+			}
+		}
+
+		public static void GERunnerEdits(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true)
+		{
+			GERunnerCalulations(out Vector2D val, out int num4, out int num2, out Vector2D val2, out bool flag, i, j, speedX, speedY);
+			bool flag2 = true;
+			while (flag2)
+			{
+				int num5 = (int)(val.X - num4 * 0.5);
+				int num6 = (int)(val.X + num4 * 0.5);
+				int num7 = (int)(val.Y - num4 * 0.5);
+				int num8 = (int)(val.Y + num4 * 0.5);
+				if (num5 < 0)
+				{
+					num5 = 0;
+				}
+				if (num6 > Main.maxTilesX)
+				{
+					num6 = Main.maxTilesX;
+				}
+				if (num7 < 0)
+				{
+					num7 = 0;
+				}
+				if (num8 > Main.maxTilesY - 5)
+				{
+					num8 = Main.maxTilesY - 5;
+				}
+				for (int m = num5; m < num6; m++)
+				{
+					for (int n = num7; n < num8; n++)
+					{
+						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015)))
+						{
+							continue;
+						}
+						if (good)
+						{
+							if (Main.tile[m, n].TileType == ModContent.TileType<CreamGrass>())
+							{
+								Main.tile[m, n].TileType = TileID.HallowedGrass;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamstone>())
+							{
+								Main.tile[m, n].TileType = TileID.Pearlstone;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamsand>())
+							{
+								Main.tile[m, n].TileType = TileID.Pearlsand;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<BlueIce>())
+							{
+								Main.tile[m, n].TileType = TileID.HallowedIce;
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+						else if (WorldGen.crimson)
+						{
+							if (Main.tile[m, n].TileType == ModContent.TileType<CreamGrass>())
+							{
+								Main.tile[m, n].TileType = TileID.CrimsonGrass;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamstone>())
+							{
+								Main.tile[m, n].TileType = TileID.Crimstone;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamsand>())
+							{
+								Main.tile[m, n].TileType = TileID.Crimsand;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<BlueIce>())
+							{
+								Main.tile[m, n].TileType = TileID.FleshIce;
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+						else
+						{
+							if (Main.tile[m, n].TileType == ModContent.TileType<CreamGrass>())
+							{
+								Main.tile[m, n].TileType = TileID.CorruptGrass;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamstone>())
+							{
+								Main.tile[m, n].TileType = TileID.Ebonstone;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<Creamsand>())
+							{
+								Main.tile[m, n].TileType = TileID.Ebonsand;
+								WorldGen.SquareTileFrame(m, n);
+							}
+							else if (Main.tile[m, n].TileType == ModContent.TileType<BlueIce>())
+							{
+								Main.tile[m, n].TileType = TileID.CorruptIce;
+								WorldGen.SquareTileFrame(m, n);
+							}
+						}
+					}
+				}
+				val += val2;
+				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
+				if (val2.X > speedX + 1.0)
+				{
+					val2.X = speedX + 1.0;
+				}
+				if (val2.X < speedX - 1.0)
+				{
+					val2.X = speedX - 1.0;
+				}
+				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2))
+				{
+					flag2 = false;
+				}
+			}
+		}
+
+		#region ConfectionSkyIslands
+		private void On_WorldGen_ConvertSkyIslands(On_WorldGen.orig_ConvertSkyIslands orig, int convertType, bool growTrees)
+		{
+			if (confectionorHallow)
+			{
+				int num = 0;
+				for (int i = 20; (double)i < Main.worldSurface; i++)
+				{
+					for (int j = 20; j < Main.maxTilesX - 20; j++)
+					{
+						Tile tile = Main.tile[j, i];
+						if (tile.HasTile && TileID.Sets.Clouds[tile.TileType])
+						{
+							num = i;
+							break;
+						}
+					}
+				}
+				for (int k = 20; k <= Main.maxTilesX - 20; k++)
+				{
+					for (int l = 20; l < num; l++)
+					{
+						Tile tile2 = Main.tile[k, l];
+						Tile tile3 = Main.tile[k, l - 1];
+						if (tile2.HasTile && (tile2.TileType == 2 || tile2.TileType == 0 || tile2.TileType == TileID.Cloud || tile2.TileType == TileID.RainCloud || tile2.TileType == TileID.SnowCloud))
+						{
+							if (tile3.TileType == 596 || tile3.TileType == 616)
+							{
+								WorldGen.KillTile(k, l - 1);
+							}
+							ConfectionConvert(k, l, 1);
+							ushort type = tile3.TileType;
+							if ((uint)(type - 82) <= 1u || (uint)(type - 185) <= 2u || type == 227)
+							{
+								WorldGen.KillTile(k, l - 1);
+							}
+							if (growTrees && WorldGen._genRand.NextBool(3))
+							{
+								WorldGen.GrowTree(k, l);
+							}
+						}
+					}
+				}
+				for (int n = 0; n < Main.maxTilesX; n++)
+				{
+					for (int m = 0; m < Main.maxTilesY; m++)
+					{
+						if (Main.tile[n, m].HasTile && Main.tile[n, m].TileType == TileID.WaterFountain)
+						{
+							Tile tile = Main.tile[n, m];
+							tile.HasTile = false;
+						}
+					}
+				}
+			}
+			else
+			{
+				orig.Invoke(convertType, growTrees);
+			}
+		}
+		#endregion
 
 		public override void PostDrawTiles()
 		{

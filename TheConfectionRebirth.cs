@@ -23,6 +23,7 @@ using static Terraria.WaterfallManager;
 using Terraria.GameContent.Events;
 using Terraria.DataStructures;
 using TheConfectionRebirth.Walls;
+using TheConfectionRebirth.Hooks;
 
 namespace TheConfectionRebirth
 {
@@ -68,6 +69,13 @@ namespace TheConfectionRebirth
 			On_WorldGen.Convert += Convert;
 			IL_Player.Update += TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += MossScapper;
+
+			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
+			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
+			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
+				ConfectionSelectionMenu.ILShowOptionDescription;
+			Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
+			Terraria.GameContent.UI.States.On_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.OnSetupGamepadPoints;
 		}
 
 		public override void Unload() {

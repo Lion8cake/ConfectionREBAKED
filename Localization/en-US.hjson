@@ -21,6 +21,11 @@ Mods: {
 			CreamSnowSapling.MapEntry: Cream Snow Sapling
 			CreamTree.MapEntry: Tree
 			CreamSnowTree.MapEntry: Tree
+
+			ConfectionBiomeChestTile: {
+				MapEntry0: Confection Chest
+				MapEntry1: Locked Confection Chest
+			}
 		}
 
 		Items: {
@@ -387,6 +392,27 @@ Mods: {
 				DisplayName: Topaz Creamstone Wall
 				Tooltip: ""
 			}
+
+			ConfectionBiomeKey: {
+				DisplayName: Confection Key
+				Tooltip: ""
+				KeyToolTip: Unlocks a Confection Chest in the dungeon
+			}
+
+			CookiestBlock: {
+				DisplayName: Cookiest Cookie Block
+				Tooltip: "'Now with 50% more cookies!'"
+			}
+
+			ConfectionBiomeChestItem: {
+				DisplayName: Confection Chest
+				Tooltip: ""
+			}
+
+			PopRocket: {
+				DisplayName: Pop Rocket
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -406,6 +432,73 @@ Mods: {
 			CreamSolution.DisplayName: Cream Solution
 			SugarPowder.DisplayName: Sugar Powder
 			SugarWaterBottle.DisplayName: Sugar Water Bottle
+			CookiestCookieBlock.DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"
+			PopRocket.DisplayName: Pop Rocket
+		}
+
+		Configs: {
+			FargoSeedConfectionConfiguration: {
+				DisplayName: Fargo Seed Confection Configuration
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: Drunk Seed (Requires Fargo's best of both worlds mod)
+
+				BothGoods: {
+					Label: "[i:526][i:TheConfectionRebirth/CookieDough] Both Goods"
+					Tooltip: ""
+				}
+			}
+
+			ConfectionServerConfig: {
+				CookieSpread: {
+					Tooltip:
+						'''
+						No Spread:
+							Special Confection Only tiles don't spread
+							World generation doesn't generate confection only tiles
+
+						Partial Spread:
+							Special Confection Only tiles only spread when near spreadable tiles
+							in a 6x6 area (e.g Creamstone, creamgras, ect)
+
+						Full Spread:
+						Enables spreading for the following:
+								Cookie Block
+								Cream Block
+								Pink Fairy Floss
+								Purple Fairy Floss
+								Blue Fairy Floss
+								Cookiest Cookie Block
+								All Creamstone gems
+						'''
+					Label: Cookie and Cream Spreading
+				}
+
+				Headers.ConfectionServersideConfig: Confection Serverside Config
+				DisplayName: Confection Server Config
+			}
+		}
+
+		Buffs: {
+			CookiestBlockBuff: {
+				DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"
+				Description: You can tell by all the extra cookie
+			}
+		}
+
+		HallowSelection: {
+			Random: {
+				Title: Random
+				Description: Let nature decide whether hallow or confection defends your world.
+			}
+
+			Hallow: {
+				Title: Hallow
+				Description: Fairy-tale like hallow is guaranteed to be present in your world.
+			}
+
+			Confection: {
+				Title: Confection
+				Description: Cookies n' cream confection is guaranteed to be present in your world.
+			}
 		}
 	}
 }
