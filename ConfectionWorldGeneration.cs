@@ -73,7 +73,7 @@ namespace TheConfectionRebirth {
 		public override void LoadWorldData(TagCompound tag)
 		{
 			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
-			confectionorHallow = tag.ContainsKey("TheConfectionRebirth:confectionorHallow");
+			confectionorHallow = tag.GetBool("TheConfectionRebirth:confectionorHallow");
 
 			//World Converter (1.4.3 => 1.4.4)
 			//Also contains some explinations 
@@ -172,6 +172,7 @@ namespace TheConfectionRebirth {
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
+			ConfectionModCalling.UpdateFargoBoBW();
 			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
 			{
 				int index = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
@@ -196,7 +197,8 @@ namespace TheConfectionRebirth {
 
 		public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
-			if (confectionorHallow && !Main.drunkWorld)
+			ConfectionModCalling.UpdateFargoBoBW();
+			if (confectionorHallow && !(ConfectionModCalling.FargoBoBW || Main.drunkWorld))
 			{
 				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
 				if (index4 != -1)
@@ -206,7 +208,7 @@ namespace TheConfectionRebirth {
 				}
 			}
 			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
-			{ //Should be changed to not remove the genpasses to allow for other mods (like avalon) load their hardmode stuff
+			{
 				int index2 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good"));
 				if (index2 != -1)
 				{
@@ -271,26 +273,24 @@ namespace TheConfectionRebirth {
 		#endregion
 
 		#region DrunkWorldgen
-		private static void ConfectionDrunkInner(GenerationProgress progres, GameConfiguration configurations)
+		public static void HardmodeCalulations(out double num, out double num2, out int num3, out int num4, out int num5, out int num6)
 		{
-			WorldGen.IsGeneratingHardMode = true;
-			WorldGen.TryProtectingSpawnedItems();
 			if (Main.rand == null)
 			{
 				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
 			}
-			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
-			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
-			int num3 = (int)((double)(Main.maxTilesX) * num);
-			int num4 = (int)((double)(Main.maxTilesX) * (1.0 - num));
-			int num5 = 1;
-			if (GenVars.dungeonX < Main.maxTilesX / 2)
+			num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
+			num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
+			num3 = (int)((double)(Main.maxTilesX) * num);
+			num4 = (int)((double)(Main.maxTilesX) * (1.0 - num));
+			num5 = 1;
+			if (GenVars.dungeonX > Main.maxTilesX / 2)
 			{
 				num4 = (int)((double)(Main.maxTilesX) * num);
 				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num));
 				num5 = -1;
 			}
-			int num6 = 1;
+			num6 = 1;
 			if (GenVars.dungeonX > Main.maxTilesX / 2)
 			{
 				num6 = -1;
@@ -314,200 +314,31 @@ namespace TheConfectionRebirth {
 			{
 				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num2));
 			}
-			if (Main.remixWorld)
+		}
+
+		private static void ConfectionDrunkInner(GenerationProgress progres, GameConfiguration configurations)
+		{
+			HardmodeCalulations(out double num, out double num2, out int num3, out int num4, out int num5, out int num6);
+			if (!Main.remixWorld)
 			{
-				int num7 = Main.maxTilesX / 7;
-				int num8 = Main.maxTilesX / 14;
-				if (Main.dungeonX > Main.maxTilesX / 2)
-				{
-					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
-					{
-						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++)
-						{
-							if (i > Main.maxTilesX - num7)
-							{
-								ConfectionConvert(i, j, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
-							{
-								ConfectionConvert(i, j, 1);
-							}
-						}
-					}
-				}
-				else
-				{
-					for (int k = 0; k < num7 + num8; k++)
-					{
-						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++)
-						{
-							if (k < num7)
-							{
-								ConfectionConvert(k, l, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
-							{
-								ConfectionConvert(k, l, 1);
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				if (confectionorHallow)
-				{
-					ConfectGERunner(num3, 0, 3 * num5, 5.0);
-				}
-				else
-				{
-					WorldGen.GERunner(num3, 0, 3 * num5, 5.0);
-				}
+				WorldGen.GERunner(num3, 0, 3 * num5, 5.0);
 				WorldGen.GERunner(num4, 0, 3 * -num5, 5.0, good: false);
 			}
-			double num9 = (double)(Main.maxTilesX / 2) / 4200.0;
-			int num10 = (int)(25.0 * num9);
-			ShapeData shapeData = new ShapeData();
-			int num11 = 0;
-			while (num10 > 0)
-			{
-				if (++num11 % 15000 == 0)
-				{
-					num10--;
-				}
-				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
-				Tile tile = Main.tile[point.X, point.Y];
-				Tile tile2 = Main.tile[point.X, point.Y - 1];
-				ushort num12 = 0;
-				if (TileID.Sets.Crimson[tile.TileType])
-				{
-					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Corrupt[tile.TileType])
-				{
-					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Hallow[tile.TileType])
-				{
-					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
-				}
-				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
-				{
-					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
-					if (shapeData.Count > 50 && flag)
-					{
-						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
-						num10--;
-					}
-					shapeData.Clear();
-				}
-			}
-			if (Main.netMode == 2)
-			{
-				Netplay.ResetSections();
-			}
-			WorldGen.UndoSpawnedItemProtection();
-			WorldGen.IsGeneratingHardMode = false;
 		}
 
 		private static void ConfectionDrunkOuter(GenerationProgress progres, GameConfiguration configurations)
 		{
-			WorldGen.IsGeneratingHardMode = true;
-			WorldGen.TryProtectingSpawnedItems();
-			if (Main.rand == null)
-			{
-				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
-			}
-			double numm = (double)WorldGen.genRand.Next(300, 400) * 0.001;
-			double numm2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
-			int numm3 = (int)((double)(Main.maxTilesX) * numm);
-			int numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
-			int numm5 = 1;
-			if (GenVars.dungeonX > Main.maxTilesX / 2)
-			{
-				numm4 = (int)((double)(Main.maxTilesX) * numm);
-				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm));
-				numm5 = -1;
-			}
-			int numm6 = 1;
-			if (GenVars.dungeonX > Main.maxTilesX / 2)
-			{
-				numm6 = -1;
-			}
-			if (numm6 < 0)
-			{
-				if (numm4 < numm3)
-				{
-					numm4 = (int)((double)(Main.maxTilesX) * numm2);
-				}
-				else
-				{
-					numm3 = (int)((double)(Main.maxTilesX) * numm2);
-				}
-			}
-			else if (numm4 > numm3)
-			{
-				numm4 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
-			}
-			else
-			{
-				numm3 = (int)((double)(Main.maxTilesX) * (1.0 - numm2));
-			}
+			HardmodeCalulations(out double num, out double num2, out int num3, out int num4, out int num5, out int num6);
 			if (!Main.remixWorld)
 			{
-				if (!confectionorHallow)
-				{
-					ConfectGERunner(numm4, 0, 3 * numm5, 5.0);
-				}
-				else
-				{
-					WorldGen.GERunner(numm4, 0, 3 * numm5, 5.0);
-				}
-				AltEvilGERunner(numm3, 0, 3 * -numm5, 5.0, good: false);
+				confectionorHallow = !confectionorHallow;
+				WorldGen.GERunner(num4, 0, 3 * num5, 5.0);
+				confectionorHallow = !confectionorHallow;
+
+				WorldGen.crimson = !WorldGen.crimson;
+				WorldGen.GERunner(num3, 0, 3 * -num5, 5.0, good: false);
+				WorldGen.crimson = !WorldGen.crimson;
 			}
-			double numm9 = (double)Main.maxTilesX / 4200.0;
-			int numm10 = (Main.maxTilesX / 2) + (int)(25.0 * numm9);
-			ShapeData shapeData = new ShapeData();
-			int numm11 = 0;
-			while (numm10 > 0)
-			{
-				if (++numm11 % 15000 == 0)
-				{
-					numm10--;
-				}
-				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
-				Tile tile = Main.tile[point.X, point.Y];
-				Tile tile2 = Main.tile[point.X, point.Y - 1];
-				ushort numm12 = 0;
-				if (TileID.Sets.Crimson[tile.TileType])
-				{
-					numm12 = (ushort)(192 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Corrupt[tile.TileType])
-				{
-					numm12 = (ushort)(188 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Hallow[tile.TileType])
-				{
-					numm12 = (ushort)(200 + WorldGen.genRand.Next(4));
-				}
-				if (tile.HasTile && numm12 != 0 && !tile2.HasTile)
-				{
-					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
-					if (shapeData.Count > 50 && flag)
-					{
-						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(numm12));
-						numm10--;
-					}
-					shapeData.Clear();
-				}
-			}
-			if (Main.netMode == 2)
-			{
-				Netplay.ResetSections();
-			}
-			WorldGen.UndoSpawnedItemProtection();
-			WorldGen.IsGeneratingHardMode = false;
 		}
 		#endregion
 
@@ -954,62 +785,7 @@ namespace TheConfectionRebirth {
 		}
 		#endregion
 
-		#region SwapEvilConvert
-		public static void AltEvilGERunner(int i, int j, double speedX = 0.0, double speedY = 0.0, bool good = true)
-		{
-			GERunnerCalulations(out Vector2D val, out int num4, out int num2, out Vector2D val2, out bool flag, i, j, speedX, speedY);
-			bool flag2 = true;
-			while (flag2)
-			{
-				int num5 = (int)(val.X - num4 * 0.5);
-				int num6 = (int)(val.X + num4 * 0.5);
-				int num7 = (int)(val.Y - num4 * 0.5);
-				int num8 = (int)(val.Y + num4 * 0.5);
-				if (num5 < 0)
-				{
-					num5 = 0;
-				}
-				if (num6 > Main.maxTilesX)
-				{
-					num6 = Main.maxTilesX;
-				}
-				if (num7 < 0)
-				{
-					num7 = 0;
-				}
-				if (num8 > Main.maxTilesY - 5)
-				{
-					num8 = Main.maxTilesY - 5;
-				}
-				for (int m = num5; m < num6; m++)
-				{
-					for (int n = num7; n < num8; n++)
-					{
-						if (!(Math.Abs((double)m - val.X) + Math.Abs((double)n - val.Y) < (double)num2 * 0.5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.015)))
-						{
-							continue;
-						}
-
-					}
-				}
-				val += val2;
-				val2.X += (double)WorldGen.genRand.Next(-10, 11) * 0.05;
-				if (val2.X > speedX + 1.0)
-				{
-					val2.X = speedX + 1.0;
-				}
-				if (val2.X < speedX - 1.0)
-				{
-					val2.X = speedX - 1.0;
-				}
-				if (val.X < (double)(-num2) || val.Y < (double)(-num2) || val.X > (double)(Main.maxTilesX + num2) || val.Y > (double)(Main.maxTilesY + num2))
-				{
-					flag2 = false;
-				}
-			}
-		}
-		#endregion
-
+		#region GERunner Edits and other
 		private void GERunnerEditer(On_WorldGen.orig_GERunner orig, int i, int j, double speedX, double speedY, bool good)
 		{
 			if (good && confectionorHallow)
@@ -1180,6 +956,7 @@ namespace TheConfectionRebirth {
 				}
 			}
 		}
+		#endregion
 
 		#region ConfectionSkyIslands
 		private void On_WorldGen_ConvertSkyIslands(On_WorldGen.orig_ConvertSkyIslands orig, int convertType, bool growTrees)

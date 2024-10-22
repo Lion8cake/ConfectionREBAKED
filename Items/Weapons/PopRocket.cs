@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
-    public class PopRocket : ModItem //Big eww, remake EVERYTHING!!
+    public class PopRocket : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,35 +16,38 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 58;
+			Item.width = 40;
+			Item.height = 18;
+			Item.damage = 58;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 55;
-            Item.width = 40;
-            Item.height = 20;
-            Item.useTime = 20;
-            Item.useAnimation = 10;
+            Item.mana = 8;
+            Item.useTime = 40;
+            Item.useAnimation = 40;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.knockBack = 4;
+            Item.knockBack = 2;
             Item.rare = ItemRarityID.Yellow;
+            Item.value = Item.sellPrice(gold: 20);
             Item.UseSound = SoundID.Item11;
-            Item.value = Item.sellPrice(silver: 700);
             Item.autoReuse = true;
-            Item.shoot = 10;
-            Item.shootSpeed = 16f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.PopRocket>();
-            Item.useAnimation = 12;
+            Item.shootSpeed = 22f;
+            Item.shoot = ModContent.ProjectileType<Projectiles.RocketPop>();
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            int numberProjectiles = 3 + Main.rand.Next(4);
-            for (int i = 0; i < numberProjectiles; i++)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+            for (int i = -15; i <= 15; i += 10)
             {
-                Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedByRandom(MathHelper.ToRadians(15));
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+                float j = i / 2;
+                Vector2 Velocity2 = velocity.RotatedBy(MathHelper.ToRadians(j));
+				Projectile.NewProjectile(source, position, Velocity2, type, damage, knockback, player.whoAmI);
             }
             return false;
-        }
-    }
+		}
+
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2(-2f, -2f);
+		}
+	}
 }

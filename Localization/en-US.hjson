@@ -434,6 +434,8 @@ Mods: {
 			SugarWaterBottle.DisplayName: Sugar Water Bottle
 			CookiestCookieBlock.DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"
 			PopRocket.DisplayName: Pop Rocket
+			RocketPop.DisplayName: Rocket Pop
+			RocketPopExplosion.DisplayName: Rocket Pop Explosion
 		}
 
 		Configs: {

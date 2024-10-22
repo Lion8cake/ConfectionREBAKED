@@ -22,6 +22,14 @@ namespace TheConfectionRebirth.ModSupport
 		/// </summary>
 		public static bool FargoBoBW = false;
 
+		/// <summary>
+		/// Call this method to update the FargoBoBW bool before using it.
+		/// </summary>
+		public static void UpdateFargoBoBW()
+		{
+			FargoBoBW = ModContent.GetInstance<FargoSeedConfectionConfiguration>().BothGoods && FargoSeeds != null;
+		}
+
 		public override void PostSetupContent()
 		{
             if (Achievements == null)
@@ -102,18 +110,6 @@ namespace TheConfectionRebirth.ModSupport
 			static bool InflictsOnFire()
 			{
 				return true;
-			}
-		}
-
-		public override void PostUpdateEverything()
-		{
-			if (FargoSeeds != null)
-			{
-				FargoBoBW = ModContent.GetInstance<ModSupport.FargoSeedConfectionConfiguration>().BothGoods;
-			}
-			else
-			{
-				FargoBoBW = false;
 			}
 		}
 	}

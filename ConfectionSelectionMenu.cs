@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -58,21 +59,108 @@ namespace TheConfectionRebirth.Hooks
 			c.Emit(OpCodes.Ldloc_1); // accumulatedHeight
 			c.Emit(OpCodes.Ldloc, 10); // usableWidthPercent
 			c.EmitDelegate((UIWorldCreation self, UIElement container, float accumulatedHeight, float usableWidthPercent) =>
-				AddUnderworldOptions(self, container, accumulatedHeight, ClickHallowedOption, "hallow",
+				AddHallowOptions(self, container, accumulatedHeight, ClickHallowedOption, "hallow",
 					usableWidthPercent));
 
 			// Copying IL for spacing and horizontal bar
 			c.Instrs.InsertRange(c.Index, c.Instrs.ToArray()[startOfSpacing..endOfSpacing]);
 		}
 
+		internal static void ILSetUpGamepadPoints(ILContext il)
+		{
+			var c = new ILCursor(il);
+			List<SnapPoint> snapGroupHallow = null;
+			UILinkPoint[] arrayUW = null;
+			c.GotoNext(MoveType.After, i => i.MatchLdarg0(), i => i.MatchLdloc1(), i => i.MatchLdstr("evil"), i => i.MatchCall<UIWorldCreation>("GetSnapGroup"), i => i.MatchStloc(10));
+			c.EmitLdloc1(); //snapPoints
+			c.EmitDelegate((List<SnapPoint> snapPoints) => {
+				snapGroupHallow = GetSnapGroup(snapPoints, "hallow");
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdloc(26), i => i.MatchLdloc(10), i => i.MatchCallvirt<List<SnapPoint>>("get_Count"), i => i.MatchBlt(out _));
+			c.EmitLdloc0(); //num
+			c.EmitLdloc(12); //uILinkPoint
+			c.EmitDelegate((int num, UILinkPoint uILinkPoint) =>
+			{
+				arrayUW = new UILinkPoint[snapGroupHallow.Count];
+				for (int l = 0; l < snapGroupHallow.Count; l++)
+				{
+					UILinkPointNavigator.SetPosition(num, snapGroupHallow[l].Position);
+					uILinkPoint = UILinkPointNavigator.Points[num];
+					uILinkPoint.Unlink();
+					arrayUW[l] = uILinkPoint;
+					num++;
+				}
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdloc(28), i => i.MatchLdloc(20), i => i.MatchLdlen(), i => i.MatchConvI4(), i => i.MatchBlt(out _));
+			c.EmitLdloc(20); //array3 //Evils button
+			c.EmitLdloc(12); //uILinkPoint2 //Create button
+			c.EmitDelegate((UILinkPoint[] array3, UILinkPoint uILinkPoint2) =>
+			{
+				LoopHorizontalLineLinks(arrayUW);
+				EstablishUpDownRelationship(array3, arrayUW);
+				for (int n = 0; n < arrayUW.Length; n++)
+				{
+					arrayUW[n].Down = uILinkPoint2.ID;
+				}
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdloc(12), i => i.MatchLdloc(20), i => i.MatchLdcI4(0), i => i.MatchLdelemRef(), i => i.MatchLdfld<UILinkPoint>("ID"), i => i.MatchStfld<UILinkPoint>("Up"));
+			c.EmitLdloc(20); //array3 //Evils button
+			c.EmitLdloc(13); //uILinkPoint3 //Back button
+			c.EmitLdloc(12); //uILinkPoint2 //Create button
+			c.EmitDelegate((UILinkPoint[] array3, UILinkPoint uILinkPoint3, UILinkPoint uILinkPoint2) =>
+			{
+				array3[^1].Down = arrayUW[^1].ID;
+				arrayUW[^1].Down = uILinkPoint3.ID;
+				uILinkPoint3.Up = arrayUW[^1].ID;
+				uILinkPoint2.Up = arrayUW[0].ID;
+			});
+		}
+
+		#region voidsFromUIWorldCreation
+		private static List<SnapPoint> GetSnapGroup(List<SnapPoint> ptsOnPage, string groupName) //Should just reflect the UIWorldCreation.GetSnapGroup method tbh
+		{
+			List<SnapPoint> list = ptsOnPage.Where((SnapPoint a) => a.Name == groupName).ToList();
+			list.Sort(SortPoints);
+			return list;
+		}
+
+		private static int SortPoints(SnapPoint a, SnapPoint b)
+		{
+			return a.Id.CompareTo(b.Id);
+		}
+
+		private static void LoopHorizontalLineLinks(UILinkPoint[] pointsLine)
+		{
+			for (int i = 1; i < pointsLine.Length - 1; i++)
+			{
+				pointsLine[i - 1].Right = pointsLine[i].ID;
+				pointsLine[i].Left = pointsLine[i - 1].ID;
+				pointsLine[i].Right = pointsLine[i + 1].ID;
+				pointsLine[i + 1].Left = pointsLine[i].ID;
+			}
+		}
+
+		private static void EstablishUpDownRelationship(UILinkPoint[] topSide, UILinkPoint[] bottomSide)
+		{
+			int num = Math.Max(topSide.Length, bottomSide.Length);
+			for (int i = 0; i < num; i++)
+			{
+				int num2 = Math.Min(i, topSide.Length - 1);
+				int num3 = Math.Min(i, bottomSide.Length - 1);
+				topSide[num2].Down = bottomSide[num3].ID;
+				bottomSide[num3].Up = topSide[num2].ID;
+			}
+		}
+		#endregion
+
 		public static void OnSetDefaultOptions(On_UIWorldCreation.orig_SetDefaultOptions orig, UIWorldCreation self)
 		{
 			orig(self);
 
 			ModContent.GetInstance<ConfectionWorldGeneration>().SelectedHallowOption = HallowOptions.Random;
-			foreach (GroupOptionButton<HallowOptions> underworldButton in HallowedButtons)
+			foreach (GroupOptionButton<HallowOptions> hallowButton in HallowedButtons)
 			{
-				underworldButton.SetCurrentOption(HallowOptions.Random);
+				hallowButton.SetCurrentOption(HallowOptions.Random);
 			}
 		}
 
@@ -89,12 +177,12 @@ namespace TheConfectionRebirth.Hooks
 			c.Emit(OpCodes.Ldloc_0); // localizedText
 			c.Emit(OpCodes.Ldarg_2); // listeningElement
 			c.EmitDelegate((LocalizedText localizedText, UIElement listeningElement) =>
-				listeningElement is not GroupOptionButton<HallowOptions> underworldButton ? localizedText : underworldButton.Description);
+				listeningElement is not GroupOptionButton<HallowOptions> hallowButton ? localizedText : hallowButton.Description);
 			c.Emit(OpCodes.Stloc_0);
 			c.Emit(OpCodes.Ldloc_0);
 		}
 
-		private static void AddUnderworldOptions(UIWorldCreation self, UIElement container, float accumulatedHeight,
+		private static void AddHallowOptions(UIWorldCreation self, UIElement container, float accumulatedHeight,
 												 UIElement.MouseEvent clickEvent, string tagGroup,
 												 float usableWidthPercent)
 		{
@@ -151,73 +239,10 @@ namespace TheConfectionRebirth.Hooks
 			var groupOptionButton = (GroupOptionButton<HallowOptions>)listeningElement;
 			ModContent.GetInstance<ConfectionWorldGeneration>().SelectedHallowOption = groupOptionButton.OptionValue;
 
-			foreach (GroupOptionButton<HallowOptions> underworldButton in HallowedButtons)
+			foreach (GroupOptionButton<HallowOptions> hallowButton in HallowedButtons)
 			{
-				underworldButton.SetCurrentOption(groupOptionButton.OptionValue);
+				hallowButton.SetCurrentOption(groupOptionButton.OptionValue);
 			}
-		}
-
-		public static void OnSetupGamepadPoints(On_UIWorldCreation.orig_SetupGamepadPoints orig, UIWorldCreation self, SpriteBatch spriteBatch)
-		{
-			orig(self, spriteBatch);
-			int num = 3006;
-			List<SnapPoint> snapPoints = self.GetSnapPoints();
-			List<SnapPoint> snapGroup = GetSnapGroup(self, snapPoints, "size");
-			List<SnapPoint> snapGroup2 = GetSnapGroup(self, snapPoints, "difficulty");
-			List<SnapPoint> snapGroup3 = GetSnapGroup(self, snapPoints, "evil");
-			num += snapGroup.Count + snapGroup2.Count;
-			List<SnapPoint> snapGroup4 = GetSnapGroup(self, snapPoints, "hallow");
-
-			UILinkPoint uILinkPoint;
-			UILinkPoint uILinkPoint2 = UILinkPointNavigator.Points[3000];
-			UILinkPoint uILinkPoint3 = UILinkPointNavigator.Points[3001];
-
-			UILinkPoint[] array = new UILinkPoint[snapGroup3.Count];
-			for (int l = 0; l < snapGroup4.Count; l++)
-			{
-				UILinkPointNavigator.SetPosition(num, snapGroup3[l].Position);
-				uILinkPoint = UILinkPointNavigator.Points[num];
-				array[l] = uILinkPoint;
-				num++;
-			}
-			UILinkPoint[] array2 = new UILinkPoint[snapGroup4.Count];
-			for (int l = 0; l < snapGroup4.Count; l++)
-			{
-				UILinkPointNavigator.SetPosition(num, snapGroup4[l].Position);
-				uILinkPoint = UILinkPointNavigator.Points[num];
-				uILinkPoint.Unlink();
-				array2[l] = uILinkPoint;
-				num++;
-			}
-
-			LoopHorizontalLineLinks(self, array2);
-			EstablishUpDownRelationship(self, array, array2);
-			for (int n = 0; n < array2.Length; n++)
-			{
-				array2[n].Down = uILinkPoint2.ID;
-			}
-
-			array2[^1].Down = uILinkPoint3.ID;
-			uILinkPoint3.Up = array2[^1].ID;
-			uILinkPoint2.Up = array2[0].ID;
-		}
-
-		private static List<SnapPoint> GetSnapGroup(UIWorldCreation self, List<SnapPoint> snapPoints, string group)
-		{
-			return (List<SnapPoint>)typeof(UIWorldCreation).GetMethod("GetSnapGroup", BindingFlags.NonPublic | BindingFlags.Instance)?
-				.Invoke(self, [snapPoints, group]);
-		}
-
-		private static void LoopHorizontalLineLinks(UIWorldCreation self, UILinkPoint[] pointsLine)
-		{
-			typeof(UIWorldCreation).GetMethod("LoopHorizontalLineLinks", BindingFlags.NonPublic | BindingFlags.Instance)?
-				.Invoke(self, [pointsLine]);
-		}
-
-		private static void EstablishUpDownRelationship(UIWorldCreation self, UILinkPoint[] topSide, UILinkPoint[] bottomSide)
-		{
-			typeof(UIWorldCreation).GetMethod("EstablishUpDownRelationship", BindingFlags.NonPublic | BindingFlags.Instance)?
-				.Invoke(self, [topSide, bottomSide]);
 		}
 	}
 }

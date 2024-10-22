@@ -24,6 +24,10 @@ using Terraria.GameContent.Events;
 using Terraria.DataStructures;
 using TheConfectionRebirth.Walls;
 using TheConfectionRebirth.Hooks;
+using Terraria.GameContent.UI.Elements;
+using Terraria.UI;
+using ReLogic.Content;
+using Terraria.GameContent.UI.States;
 
 namespace TheConfectionRebirth
 {
@@ -32,10 +36,19 @@ namespace TheConfectionRebirth
 		//Edit the following
 		//WorldGen.cs
 		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason - doesnt convert some purity grass correctly
-		//TileFrame - Vines dont properly convert - works only if fps is lower than 30 //Im not the only one having this issue it seems 
+		//TileFrame - Vines dont properly convert - works only if fps is lower than 30 //Im not the only one having this issue it seems //Update, issue with tml and the TileFrame method being too big
+
+		private Asset<Texture2D> texOuterHallow;
+		private Asset<Texture2D> texOuterConfection;
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
+
+			if (Main.netMode != NetmodeID.Server)
+			{
+				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
+				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
+			}
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
@@ -70,12 +83,13 @@ namespace TheConfectionRebirth
 			IL_Player.Update += TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += MossScapper;
 
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
-				ConfectionSelectionMenu.ILShowOptionDescription;
-			Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
-			Terraria.GameContent.UI.States.On_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.OnSetupGamepadPoints;
+			IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
+			IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
+			IL_UIWorldCreation.ShowOptionDescription += ConfectionSelectionMenu.ILShowOptionDescription;
+			On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
+			IL_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.ILSetUpGamepadPoints;
+
+			IL_UIGenProgressBar.DrawSelf += AddGoodToWorldgenBar;
 		}
 
 		public override void Unload() {
@@ -113,6 +127,33 @@ namespace TheConfectionRebirth
 			On_WorldGen.Convert -= Convert;
 			IL_Player.Update -= TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= MossScapper;
+			IL_UIGenProgressBar.DrawSelf -= AddGoodToWorldgenBar;
+		}
+
+		private void AddGoodToWorldgenBar(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdfld<UIGenProgressBar>("_texOuterCrimson"),
+				i => i.MatchCallvirt<Asset<Texture2D>>("get_Value"),
+				i => i.MatchLdloc(6),
+				i => i.MatchCall("Terraria.Utils", "TopLeft"));
+			c.EmitLdcI4(0); //new Rectange(0, 0, 340, 70)
+			c.EmitLdcI4(0);
+			c.EmitLdcI4(340);
+			c.EmitLdcI4(70);
+			c.EmitNewobj(typeof(Rectangle).GetConstructor([typeof(int), typeof(int), typeof(int), typeof(int)]));
+			c.GotoNext(MoveType.Before, i => i.MatchCallvirt<SpriteBatch>("Draw"));
+			c.Remove();
+			c.EmitDelegate((SpriteBatch spriteBatch, Texture2D tex, Vector2 topLeft, Rectangle rect, Color white) => {
+				spriteBatch.Draw(tex, topLeft, rect, white);
+				bool flag = ConfectionWorldGeneration.confectionorHallow;
+				if (WorldGen.drunkWorldGen && Main.rand.NextBool(2))
+				{
+					flag = !flag;
+				}
+				spriteBatch.Draw(flag ? texOuterConfection.Value : texOuterHallow.Value, topLeft, white);
+			}); //thanks alf for the delegate :sob:
 		}
 
 		#region PaintScrapperSupport
