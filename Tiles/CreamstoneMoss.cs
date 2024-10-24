@@ -26,6 +26,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(49, 242, 151);
 
@@ -68,6 +69,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = Color.SandyBrown;
 
@@ -110,6 +112,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = Color.IndianRed;
 
@@ -152,6 +155,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = Color.CornflowerBlue;
 
@@ -194,6 +198,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = Color.Purple;
 
@@ -237,6 +242,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(Color.DarkOrange.R, Color.DarkOrange.G, Color.DarkOrange.B, 0);
 
@@ -287,6 +293,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(Color.Lime.R, Color.Lime.G, Color.Lime.B, 0);
 
@@ -337,6 +344,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(145, 241, 247, 0);
 
@@ -387,6 +395,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(252, 135, 211, 0);
 
@@ -437,6 +446,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(223, 149, 251, 0);
 
@@ -487,6 +497,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			ConfectionIDs.Sets.IsTileCreamMoss[Type] = new Color(255, 255, 255, 0); //Gets RGB'd in the moss's drawing (im hardcoding because uh uh uhhhhh nunyabisness
 

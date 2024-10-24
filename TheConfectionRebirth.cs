@@ -138,9 +138,9 @@ namespace TheConfectionRebirth
 				i => i.MatchCallvirt<Asset<Texture2D>>("get_Value"),
 				i => i.MatchLdloc(6),
 				i => i.MatchCall("Terraria.Utils", "TopLeft"));
-			c.EmitLdcI4(0); //new Rectange(0, 0, 340, 70)
+			c.EmitLdcI4(0); //new Rectange(0, 0, 266, 70)
 			c.EmitLdcI4(0);
-			c.EmitLdcI4(340);
+			c.EmitLdcI4(266);
 			c.EmitLdcI4(70);
 			c.EmitNewobj(typeof(Rectangle).GetConstructor([typeof(int), typeof(int), typeof(int), typeof(int)]));
 			c.GotoNext(MoveType.Before, i => i.MatchCallvirt<SpriteBatch>("Draw"));

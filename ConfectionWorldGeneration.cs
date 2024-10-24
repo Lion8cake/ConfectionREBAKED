@@ -9,9 +9,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Chat;
+using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -198,13 +201,14 @@ namespace TheConfectionRebirth {
 		public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
 			ConfectionModCalling.UpdateFargoBoBW();
-			if (confectionorHallow && !(ConfectionModCalling.FargoBoBW || Main.drunkWorld))
+			if (confectionorHallow || ConfectionModCalling.FargoBoBW || Main.drunkWorld)
 			{
 				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
 				if (index4 != -1)
 				{
-					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix)));
-					list.RemoveAt(index4);
+					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix))); //Usure if finished
+					if (confectionorHallow && !(Main.drunkWorld && ConfectionModCalling.FargoBoBW))
+						list.RemoveAt(index4);
 				}
 			}
 			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
@@ -220,6 +224,20 @@ namespace TheConfectionRebirth {
 				{
 					list.Insert(index3 + 1, new PassLegacy("Hardmode Evil", new WorldGenLegacyMethod(ConfectionDrunkOuter)));
 					list.RemoveAt(index3);
+				}
+			}
+			int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Walls"));
+			if (index != -1)
+			{
+				list.Insert(index + 1, new PassLegacy("Confection Walls", new WorldGenLegacyMethod(ConfectionWalls)));
+			}
+			if (confectionorHallow || ((Main.drunkWorld || ConfectionModCalling.FargoBoBW) && WorldGen.genRand.NextBool(2)))
+			{
+				int index5 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Announcement"));
+				if (index5 != -1)
+				{
+					list.Insert(index5 + 1, new PassLegacy("Hardmode Announcement", new WorldGenLegacyMethod(AnnounceConfection)));
+					list.RemoveAt(index5);
 				}
 			}
 		}
@@ -955,6 +973,72 @@ namespace TheConfectionRebirth {
 					flag2 = false;
 				}
 			}
+		}
+		#endregion
+
+		#region Confection Walls
+		private static void ConfectionWalls(GenerationProgress progres, GameConfiguration configurations)
+		{
+			double num13 = (double)Main.maxTilesX / 4200.0;
+			int num10 = (int)(25.0 * num13);
+			ShapeData shapeData = new ShapeData();
+			int num11 = 0;
+			while (num10 > 0)
+			{
+				if (++num11 % 15000 == 0)
+				{
+					num10--;
+				}
+				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
+				Tile tile = Main.tile[point.X, point.Y];
+				Tile tile2 = Main.tile[point.X, point.Y - 1];
+				ushort num12 = 0;
+				if (ConfectionIDs.Sets.Confection[tile.TileType])
+				{
+					int randNum = WorldGen.genRand.Next(4);
+					if (randNum == 0)
+					{
+						num12 = (ushort)(ModContent.WallType<Creamstone2Wall>());
+					}
+					else if (randNum == 1)
+					{ 
+						num12 = (ushort)(ModContent.WallType<Creamstone3Wall>()); 
+					}
+					else if (randNum == 2)
+					{ 
+						num12 = (ushort)(ModContent.WallType<Creamstone4Wall>()); 
+					}
+					else
+					{
+						num12 = (ushort)(ModContent.WallType<Creamstone5Wall>());
+					}
+				}
+				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
+				{
+					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag)
+					{
+						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
+						num10--;
+					}
+					shapeData.Clear();
+				}
+			}
+		}
+		#endregion
+
+		#region Confection Hardmode Announcement
+		private static void AnnounceConfection(GenerationProgress progres, GameConfiguration configurations)
+		{
+			if (Main.netMode == NetmodeID.SinglePlayer)
+			{
+				Main.NewText(Language.GetTextValue("Mods.TheConfectionRebirth.HardmodeGeneration.Confection"), 50, 255, 130);
+			}
+			else if (Main.netMode == NetmodeID.Server)
+			{
+				ChatHelper.BroadcastChatMessage(NetworkText.FromKey(Language.GetTextValue("Mods.TheConfectionRebirth.HardmodeGeneration.Confection")), new Color(50, 255, 130));
+			}
+			AchievementsHelper.NotifyProgressionEvent(9);
 		}
 		#endregion
 

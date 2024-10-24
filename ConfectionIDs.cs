@@ -36,8 +36,15 @@ namespace TheConfectionRebirth {
 				ModContent.TileType<CreamstoneMossXenon>(),
 				ModContent.TileType<CreamstoneMossArgon>(),
 				ModContent.TileType<CreamstoneMossNeon>(),
-				ModContent.TileType<CreamstoneMossHelium>()
+				ModContent.TileType<CreamstoneMossHelium>(),
+				ModContent.TileType<CreamVines>(),
+				ModContent.TileType<CreamGrass_Foliage>()
 			};
+
+			/// <summary>
+			/// Used for Desert wall spread and for generating walls in the confection hardmode V
+			/// </summary>
+			public static bool[] Confection = TileID.Sets.Factory.CreateBoolSet();
 
 			/// <summary>
 			/// The blacklists confection items from appearing in recipes for certain items.

@@ -479,6 +479,8 @@ Mods: {
 			}
 		}
 
+		HardmodeGeneration.Confection: The forgotten flavors of sugar and spice have been unleashed!
+
 		Buffs: {
 			CookiestBlockBuff: {
 				DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"

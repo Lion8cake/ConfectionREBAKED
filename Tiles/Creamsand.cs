@@ -24,6 +24,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.FallingBlockProjectile[Type] = new TileID.Sets.FallingBlockProjectileInfo(ModContent.ProjectileType<CreamsandProjectile>(), 10);
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<CreamsandDust>();

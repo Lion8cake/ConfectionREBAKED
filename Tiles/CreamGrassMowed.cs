@@ -23,6 +23,8 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.SpreadOverground[Type] = true;
 			TileID.Sets.Grass[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CookieBlock>()] = true;

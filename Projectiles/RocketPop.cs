@@ -9,7 +9,12 @@ namespace TheConfectionRebirth.Projectiles
 {
     public class RocketPop : ModProjectile
     {
-        public override void SetDefaults()
+		public override void SetStaticDefaults()
+		{
+			Main.projFrames[Projectile.type] = 7;
+		}
+
+		public override void SetDefaults()
         {
             Projectile.width = 16;
             Projectile.height = 16;
@@ -27,6 +32,18 @@ namespace TheConfectionRebirth.Projectiles
 			{
 				Projectile.velocity.X *= 0.9f;
 				Projectile.velocity.Y *= 0.9f;
+				if (++Projectile.frameCounter >= 8)
+				{
+					Projectile.frameCounter = 0;
+					if (++Projectile.frame >= 8)
+					{
+						Projectile.frame = 0;
+					}
+				}
+			}
+			else
+			{
+				Projectile.frame = 0;
 			}
 			if ((Projectile.velocity.X < 0.01f && Projectile.velocity.X > -0.01f) || (Projectile.velocity.Y < 0.01f && Projectile.velocity.Y > -0.01f))
 			{

@@ -16,6 +16,7 @@ namespace TheConfectionRebirth.Tiles
 
 			TileID.Sets.Clouds[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			Main.tileMerge[Type][TileID.Cloud] = true;
 			Main.tileMerge[TileID.Cloud][Type] = true;

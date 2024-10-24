@@ -23,6 +23,7 @@ namespace TheConfectionRebirth.Tiles
 			//TileID.Sets.DrawFlipMode[Type] = 1;
 
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
 
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
