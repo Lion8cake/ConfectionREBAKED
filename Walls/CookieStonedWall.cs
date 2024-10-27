@@ -10,6 +10,7 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = false;
             AddMapEntry(new Color(70, 45, 28));
-        }
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+		}
     }
 }

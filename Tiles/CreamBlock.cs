@@ -24,6 +24,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 

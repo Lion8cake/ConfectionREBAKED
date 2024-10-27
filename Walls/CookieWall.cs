@@ -11,7 +11,8 @@ namespace TheConfectionRebirth.Walls
         {
 			WallID.Sets.Conversion.Dirt[Type] = true;
 			Main.wallHouse[Type] = false;
-            AddMapEntry(new Color(61, 39, 27));
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(61, 39, 27));
         }
     }
 }

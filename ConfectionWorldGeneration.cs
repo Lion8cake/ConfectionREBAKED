@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -34,20 +35,35 @@ namespace TheConfectionRebirth {
 	public class ConfectionWorldGeneration : ModSystem {
 
 		public static bool confectionorHallow;
-		public HallowOptions SelectedHallowOption { get; set; } = HallowOptions.Random;
-		public static int confectionTree;
 
+		public static int totalCandy;
+
+		public static int totalCandy2;
+
+		public static byte tCandy;
+
+		public HallowOptions SelectedHallowOption { get; set; } = HallowOptions.Random;
+
+		public static int confectionTree;
 
 		public override void Load()
 		{
 			On_WorldGen.GERunner += GERunnerEditer;
 			On_WorldGen.ConvertSkyIslands += On_WorldGen_ConvertSkyIslands;
+			On_WorldGen.hardUpdateWorld += On_WorldGen_hardUpdateWorld;
+			On_WorldGen.UpdateWorld_OvergroundTile += On_WorldGen_UpdateWorld_OvergroundTile;
+			On_WorldGen.UpdateWorld_UndergroundTile += On_WorldGen_UpdateWorld_UndergroundTile;
+			On_WorldGen.SpreadDesertWalls += On_WorldGen_SpreadDesertWalls;
 		}
 
 		public override void Unload()
 		{
 			On_WorldGen.GERunner -= GERunnerEditer;
 			On_WorldGen.ConvertSkyIslands -= On_WorldGen_ConvertSkyIslands;
+			On_WorldGen.hardUpdateWorld -= On_WorldGen_hardUpdateWorld;
+			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
+			On_WorldGen.UpdateWorld_UndergroundTile -= On_WorldGen_UpdateWorld_UndergroundTile;
+			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls;
 		}
 
 		public override void OnWorldLoad()
@@ -73,10 +89,46 @@ namespace TheConfectionRebirth {
 			tag["HasConfection"] = confectionorHallow;
 		}
 
+		public override void ClearWorld()
+		{
+			totalCandy = 0;
+			totalCandy2 = 0;
+			tCandy = 0;
+		}
+
 		public override void LoadWorldData(TagCompound tag)
 		{
 			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
 			confectionorHallow = tag.GetBool("TheConfectionRebirth:confectionorHallow");
+			//Love terraria hardcoding how % are caculated, re-caculated here because the current caculations earlier in the file saving are so early they cant caculate modded tiles (as modded tiles haddent loaded at that point)
+			for (int x = 0; x < Main.maxTilesX; x++)
+			{
+				for (int j = 0; j < Main.maxTilesY; j++)
+				{
+					int type = Main.tile[x, j].TileType;
+					if (type != -1)
+					{
+						if (j <= Main.worldSurface)
+						{
+							if (j <= Main.worldSurface)
+							{
+								WorldGen.tileCounts[type] += 1 * 5;
+							}
+							else
+							{
+								int num4 = (int)(Main.worldSurface - (double)j + 1.0);
+								int num5 = 1 - num4;
+								WorldGen.tileCounts[type] += num4 * 5 + num5;
+							}
+						}
+						else
+						{
+							WorldGen.tileCounts[type] += 1;
+						}
+					}
+				}
+			}
+			WorldGen.AddUpAlignmentCounts(true);
 
 			//World Converter (1.4.3 => 1.4.4)
 			//Also contains some explinations 
@@ -152,12 +204,14 @@ namespace TheConfectionRebirth {
 		public override void NetSend(BinaryWriter writer) 
 		{
 			writer.Write(confectionorHallow);
+			writer.Write(tCandy);
 			writer.Write(confectionTree);
 		}
 
 		public override void NetReceive(BinaryReader reader) 
 		{
 			confectionorHallow = reader.ReadBoolean();
+			tCandy = reader.ReadByte();
 			confectionTree = reader.ReadInt32();
 		}
 
@@ -207,7 +261,7 @@ namespace TheConfectionRebirth {
 				if (index4 != -1)
 				{
 					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix))); //Usure if finished
-					if (confectionorHallow && !(Main.drunkWorld && ConfectionModCalling.FargoBoBW))
+					if (confectionorHallow && !(Main.drunkWorld || ConfectionModCalling.FargoBoBW))
 						list.RemoveAt(index4);
 				}
 			}
@@ -369,46 +423,12 @@ namespace TheConfectionRebirth {
 			{
 				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
 			}
-			double num = (double)WorldGen.genRand.Next(300, 400) * 0.001;
-			double num2 = (double)WorldGen.genRand.Next(200, 300) * 0.001;
-			int num3 = (int)((double)Main.maxTilesX * num);
-			int num4 = (int)((double)Main.maxTilesX * (1.0 - num));
-			int num5 = 1;
-			if (WorldGen.genRand.Next(2) == 0)
-			{
-				num4 = (int)((double)Main.maxTilesX * num);
-				num3 = (int)((double)Main.maxTilesX * (1.0 - num));
-				num5 = -1;
-			}
-			int num6 = 1;
-			if (GenVars.dungeonX < Main.maxTilesX / 2)
-			{
-				num6 = -1;
-			}
-			if (num6 < 0)
-			{
-				if (num4 < num3)
-				{
-					num4 = (int)((double)Main.maxTilesX * num2);
-				}
-				else
-				{
-					num3 = (int)((double)Main.maxTilesX * num2);
-				}
-			}
-			else if (num4 > num3)
-			{
-				num4 = (int)((double)Main.maxTilesX * (1.0 - num2));
-			}
-			else
-			{
-				num3 = (int)((double)Main.maxTilesX * (1.0 - num2));
-			}
+			bool flag = (Main.drunkWorld || ConfectionModCalling.FargoBoBW) ? GenVars.dungeonX > Main.maxTilesX / 2 : GenVars.dungeonX < Main.maxTilesX / 2;
 			if (Main.remixWorld)
 			{
 				int num7 = Main.maxTilesX / 7;
 				int num8 = Main.maxTilesX / 14;
-				if (Main.dungeonX < Main.maxTilesX / 2)
+				if (flag)
 				{
 					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
 					{
@@ -471,8 +491,8 @@ namespace TheConfectionRebirth {
 				}
 				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
 				{
-					bool flag = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
-					if (shapeData.Count > 50 && flag)
+					bool flag2 = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
+					if (shapeData.Count > 50 && flag2)
 					{
 						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
 						num10--;
@@ -1104,6 +1124,7 @@ namespace TheConfectionRebirth {
 		}
 		#endregion
 
+		#region Creamstone Moss Rendering
 		public override void PostDrawTiles()
 		{
 			Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -1196,7 +1217,10 @@ namespace TheConfectionRebirth {
 			}
 			Main.spriteBatch.End();
 		}
+		#endregion
 
+		#region Actuation Color
+		//For some reason tml privates Tile.actColor and due to the size is much easier to copy the code and put it into a public static method
 		public static Color ActColor(Color oldColor, Tile tile)
 		{
 			if (!tile.IsActuated)
@@ -1206,7 +1230,9 @@ namespace TheConfectionRebirth {
 			double num = 0.4;
 			return new Color((int)(byte)(num * (double)(int)oldColor.R), (int)(byte)(num * (double)(int)oldColor.G), (int)(byte)(num * (double)(int)oldColor.B), (int)oldColor.A);
 		}
+		#endregion
 
+		#region Conversion - Confection
 		public static void ConfectionConvert(int i, int j, int size = 4) {
 			for (int k = i - size; k <= i + size; k++) {
 				for (int l = j - size; l <= j + size; l++) {
@@ -1534,7 +1560,513 @@ namespace TheConfectionRebirth {
 				}
 			}
 		}
+		#endregion
 
+		#region SpreadingDetours
+		private void On_WorldGen_SpreadDesertWalls(On_WorldGen.orig_SpreadDesertWalls orig, int wallDist, int i, int j)
+		{
+			orig.Invoke(wallDist, i, j);
+			if (WorldGen.InWorld(i, j, 10) || (WallID.Sets.Conversion.Sandstone[Main.tile[i, j].WallType] && (Main.tile[i, j].HasTile || TileID.Sets.Conversion.Sandstone[Main.tile[i, j].TileType]) && WallID.Sets.Conversion.HardenedSand[Main.tile[i, j].WallType]))
+			{
+				bool num = false;
+				int wall = Main.tile[i, j].WallType;
+				int type = Main.tile[i, j].TileType;
+				if (ConfectionIDs.Sets.IsNaturalConfectionWall[wall] || (ConfectionIDs.Sets.IsExtraConfectionWall[wall] && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread") || ConfectionIDs.Sets.IsNaturalConfectionTile[type] || (ConfectionIDs.Sets.IsExtraConfectionTile[type] && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread"))
+				{
+					num = true;
+				}
+				if (num == false)
+				{
+					return;
+				}
+				int num2 = i + WorldGen.genRand.Next(-2, 3);
+				int num3 = j + WorldGen.genRand.Next(-2, 3);
+				bool flag = false;
+				if (WallID.Sets.Conversion.PureSand[Main.tile[num2, num3].WallType])
+				{
+					if (num == true)
+					{
+						for (int num4 = i - wallDist; num4 < i + wallDist; num4++)
+						{
+							for (int num5 = j - wallDist; num5 < j + wallDist; num5++)
+							{
+								int type2 = Main.tile[num4, num5].TileType;
+								if (Main.tile[num4, num5].HasTile && (ConfectionIDs.Sets.IsNaturalConfectionTile[type2] || (ConfectionIDs.Sets.IsExtraConfectionTile[type2] && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread")))
+								{
+									flag = true;
+									break;
+								}
+							}
+							if (flag)
+							{
+								break;
+							}
+						}
+					}
+				}
+				if (!flag)
+				{
+					return;
+				}
+				ushort? num6 = null;
+				if (WallID.Sets.Conversion.Sandstone[Main.tile[num2, num3].WallType])
+				{
+					if (num == true)
+					{
+						num6 = (ushort)ModContent.WallType<HardenedCreamsandWall>();
+					}
+				}
+				if (WallID.Sets.Conversion.HardenedSand[Main.tile[num2, num3].WallType])
+				{
+					if (num == true)
+					{
+						num6 = (ushort)ModContent.WallType<CreamsandstoneWall>();
+					}
+				}
+				if (num6.HasValue && Main.tile[num2, num3].WallType != num6.Value)
+				{
+					Main.tile[num2, num3].WallType = num6.Value;
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendTileSquare(-1, num2, num3);
+					}
+				}
+			}
+		}
+
+		private void On_WorldGen_UpdateWorld_OvergroundTile(On_WorldGen.orig_UpdateWorld_OvergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist)
+		{
+			orig.Invoke(i, j, checkNPCSpawns, wallDist);
+			WallSpread(i, j, wallDist);
+		}
+
+		private void On_WorldGen_UpdateWorld_UndergroundTile(On_WorldGen.orig_UpdateWorld_UndergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist)
+		{
+			orig.Invoke(i, j, checkNPCSpawns, wallDist);
+			WallSpread(i, j, wallDist);
+		}
+
+		private void WallSpread(int i, int j, int wallDist)
+		{
+			if (WorldGen.AllowedToSpreadInfections)
+			{
+				if (Main.tile[i, j].WallType == ModContent.WallType<CreamGrassWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CreamGrass>() && Main.tile[i, j].HasTile))
+				{
+					int num30 = i + WorldGen.genRand.Next(-2, 3);
+					int num31 = j + WorldGen.genRand.Next(-2, 3);
+					if ((WorldGen.InWorld(num30, num31, 10) && Main.tile[num30, num31].WallType == 63) || Main.tile[num30, num31].WallType == 65 || Main.tile[num30, num31].WallType == 66 || Main.tile[num30, num31].WallType == 68)
+					{
+						bool flag4 = false;
+						for (int num32 = i - wallDist; num32 < i + wallDist; num32++)
+						{
+							for (int num33 = j - wallDist; num33 < j + wallDist; num33++)
+							{
+								if (Main.tile[num32, num33].HasTile)
+								{
+									int type6 = Main.tile[num32, num33].TileType;
+									if (type6 == ModContent.TileType<CreamGrass>() || type6 == ModContent.TileType<CreamGrass_Foliage>() || type6 == ModContent.TileType<CreamVines>() || type6 == ModContent.TileType<Creamsand>() || type6 == ModContent.TileType<Creamstone>() || type6 == ModContent.TileType<BlueIce>() || type6 == ModContent.TileType<HardenedCreamsand>() || type6 == ModContent.TileType<Creamsandstone>() || type6 == ModContent.TileType<CreamGrassMowed>())
+									{
+										flag4 = true;
+										break;
+									}
+								}
+							}
+						}
+						if (flag4)
+						{
+							Main.tile[num30, num31].WallType = (ushort)ModContent.WallType<CreamGrassWall>();
+							if (Main.netMode == 2)
+							{
+								NetMessage.SendTileSquare(-1, num30, num31);
+							}
+						}
+					}
+				}
+				if ((Main.tile[i, j].WallType == ModContent.WallType<CookieWall>() || (Main.tile[i, j].TileType == ModContent.TileType<CookieBlock>() && Main.tile[i, j].HasTile)) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread")
+				{
+					int num30 = i + WorldGen.genRand.Next(-2, 3);
+					int num31 = j + WorldGen.genRand.Next(-2, 3);
+					if (Main.tile[num30, num31].WallType == 2 || Main.tile[num30, num31].WallType == 16)
+					{
+						bool flag4 = false;
+						for (int num32 = i - wallDist; num32 < i + wallDist; num32++)
+						{
+							for (int num33 = j - wallDist; num33 < j + wallDist; num33++)
+							{
+								if (Main.tile[num32, num33].HasTile)
+								{
+									int type6 = Main.tile[num32, num33].TileType;
+									if (type6 == ModContent.TileType<CreamGrass>() || type6 == ModContent.TileType<CreamGrass_Foliage>() || type6 == ModContent.TileType<CreamVines>() || type6 == ModContent.TileType<Creamsand>() || type6 == ModContent.TileType<Creamstone>() || type6 == ModContent.TileType<BlueIce>() || type6 == ModContent.TileType<HardenedCreamsand>() || type6 == ModContent.TileType<Creamsandstone>() || type6 == ModContent.TileType<CreamGrassMowed>())
+									{
+										flag4 = true;
+										break;
+									}
+								}
+							}
+						}
+						if (flag4)
+						{
+							Main.tile[num30, num31].WallType = (ushort)ModContent.WallType<CookieWall>();
+							if (Main.netMode == 2)
+							{
+								NetMessage.SendTileSquare(-1, num30, num31);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		private void On_WorldGen_hardUpdateWorld(On_WorldGen.orig_hardUpdateWorld orig, int i, int j)
+		{
+			orig.Invoke(i, j);
+			if (Main.hardMode && !Main.tile[i, j].IsActuated)
+			{
+				int type = Main.tile[i, j].TileType;
+				if ((NPC.downedPlantBoss && WorldGen.genRand.NextBool(2)) || WorldGen.AllowedToSpreadInfections)
+				{
+					if (ConfectionIDs.Sets.IsNaturalConfectionTile[type] || (ConfectionIDs.Sets.IsExtraConfectionTile[type] && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread"))
+					{
+						bool flag4 = true;
+						while (flag4)
+						{
+							flag4 = false;
+							int num15 = i + WorldGen.genRand.Next(-3, 4);
+							int num16 = j + WorldGen.genRand.Next(-3, 4);
+							if (!WorldGen.InWorld(num15, num16, 10) || WorldGen.CountNearBlocksTypes(num15, num16, 2, 1, 27) > 0)
+							{
+								continue;
+							}
+							if (Main.tile[num15, num16].TileType == 2)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamGrass>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 477)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamGrassMowed>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 1 || Main.tileMoss[Main.tile[num15, num16].TileType])
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<Creamstone>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 53)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<Creamsand>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 396)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<Creamsandstone>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 397)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == 161)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag4 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<BlueIce>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+						}
+					}
+				}
+			}
+
+			if (Main.hardMode && !Main.tile[i, j].IsActuated)
+			{
+				int type = Main.tile[i, j].TileType;
+				if ((NPC.downedPlantBoss && WorldGen.genRand.NextBool(2)) || WorldGen.AllowedToSpreadInfections)
+				{
+					if ((ConfectionIDs.Sets.IsNaturalConfectionTile[type] || (ConfectionIDs.Sets.IsExtraConfectionTile[type]) && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread == "Full Spread") && ModContent.GetInstance<ConfectionServerConfig>().CookieSpread != "No Spread")
+					{
+						bool flag40 = true;
+						while (flag40)
+						{
+							flag40 = false;
+							int num15 = i + WorldGen.genRand.Next(-3, 4);
+							int num16 = j + WorldGen.genRand.Next(-3, 4);
+							if (!WorldGen.InWorld(num15, num16, 10) || WorldGen.CountNearBlocksTypes(num15, num16, 2, 1, 27) > 0)
+							{
+								continue;
+							}
+							if (Main.tile[num15, num16].TileType == TileID.Dirt)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CookieBlock>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.SnowBlock)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamBlock>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Cloud)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.RainCloud)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.SnowCloud)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							if (Main.tile[num15, num16].TileType == TileID.Amethyst)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Topaz)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Sapphire)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Emerald)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Ruby)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.Diamond)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.DirtiestBlock)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CookiestCookieBlock>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.GreenMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossGreen>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.BrownMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossBrown>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.RedMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossRed>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.BlueMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossBlue>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.PurpleMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossPurple>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.LavaMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossLava>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.KryptonMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossKrypton>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.XenonMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossXenon>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.ArgonMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossArgon>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.VioletMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossNeon>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+							else if (Main.tile[num15, num16].TileType == TileID.RainbowMoss)
+							{
+								if (WorldGen.genRand.NextBool(2))
+								{
+									flag40 = true;
+								}
+								Main.tile[num15, num16].TileType = (ushort)ModContent.TileType<CreamstoneMossHelium>();
+								WorldGen.SquareTileFrame(num15, num16);
+								NetMessage.SendTileSquare(-1, num15, num16);
+							}
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Reflections and other System type methods for tiles
 		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, finished, oasis plants finished
 		//TODO: convert mormal stalacs to these
 		public static bool GrowMoreVines(int x, int y) {
@@ -2169,5 +2701,6 @@ namespace TheConfectionRebirth {
 				//fail = true;
 			}
 		}
+		#endregion
 	}
 }

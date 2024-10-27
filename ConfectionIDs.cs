@@ -42,9 +42,33 @@ namespace TheConfectionRebirth {
 			};
 
 			/// <summary>
-			/// Used for Desert wall spread and for generating walls in the confection hardmode V
+			/// Used for generating walls in the confection hardmode V
 			/// </summary>
 			public static bool[] Confection = TileID.Sets.Factory.CreateBoolSet();
+
+			/// <summary>
+			/// Whether a tile is a normal confection tile
+			/// E.G. Creamstone, Creamgrass, etc
+			/// </summary>
+			public static bool[] IsNaturalConfectionTile = TileID.Sets.Factory.CreateBoolSet();
+
+			/// <summary>
+			/// Whether a tile is an extra confection tile
+			/// E.G. Cookie Block, Cream Block, etc
+			/// </summary>
+			public static bool[] IsExtraConfectionTile = TileID.Sets.Factory.CreateBoolSet();
+
+			/// <summary>
+			/// Whether a tile is a normal confection tile
+			/// E.G. Creamstone Wall, Creamgrass Wall, etc
+			/// </summary>
+			public static bool[] IsNaturalConfectionWall = WallID.Sets.Factory.CreateBoolSet();
+
+			/// <summary>
+			/// Whether a tile is an extra confection tile
+			/// E.G. Cookie Wall, Cream Wall, etc
+			/// </summary>
+			public static bool[] IsExtraConfectionWall = WallID.Sets.Factory.CreateBoolSet();
 
 			/// <summary>
 			/// The blacklists confection items from appearing in recipes for certain items.

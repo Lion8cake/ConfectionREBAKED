@@ -13,7 +13,8 @@ namespace TheConfectionRebirth.Walls
 			WallID.Sets.Conversion.NewWall3[Type] = true;
 			Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<SacchariteDust>();
-            AddMapEntry(new Color(91, 109, 103));
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(91, 109, 103));
         }
     }
 }

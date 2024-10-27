@@ -12,7 +12,8 @@ namespace TheConfectionRebirth.Walls
 			WallID.Sets.Conversion.HardenedSand[Type] = true;
 			WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn[Type] = true;
 			Main.wallHouse[Type] = false;
-            AddMapEntry(new Color(54, 30, 24));
+			ConfectionIDs.Sets.IsNaturalConfectionWall[Type] = true;
+			AddMapEntry(new Color(54, 30, 24));
         }
     }
 }

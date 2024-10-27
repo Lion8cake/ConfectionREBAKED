@@ -25,6 +25,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionTile[Type] = true;
 
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<CreamsandDust>();

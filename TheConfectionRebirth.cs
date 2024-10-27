@@ -28,6 +28,12 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using ReLogic.Content;
 using Terraria.GameContent.UI.States;
+using Terraria.IO;
+using static Terraria.UI.UIElement;
+using Steamworks;
+using Terraria.Localization;
+using static System.Net.Mime.MediaTypeNames;
+using Iced.Intel;
 
 namespace TheConfectionRebirth
 {
@@ -41,6 +47,8 @@ namespace TheConfectionRebirth
 		private Asset<Texture2D> texOuterHallow;
 		private Asset<Texture2D> texOuterConfection;
 
+		private bool[] ZenithSeedWorlds = new bool[Array.MaxLength];
+
 		public override void Load() {
 			ConfectionWindUtilities.Load();
 
@@ -48,6 +56,11 @@ namespace TheConfectionRebirth
 			{
 				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
 				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
+			}
+
+			for (int arr = 0; arr < Array.MaxLength; arr++)
+			{
+				ZenithSeedWorlds[arr] = false;
 			}
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
@@ -90,6 +103,10 @@ namespace TheConfectionRebirth
 			IL_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.ILSetUpGamepadPoints;
 
 			IL_UIGenProgressBar.DrawSelf += AddGoodToWorldgenBar;
+			On_UIWorldListItem.DrawSelf += ConfectionWorldIconEdit;
+			IL_Lang.GetDryadWorldStatusDialog += DryadWorldStatusEdit;
+			IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
+			IL_WorldGen.CountTiles += SettmodvilsandGoods;
 		}
 
 		public override void Unload() {
@@ -128,8 +145,358 @@ namespace TheConfectionRebirth
 			IL_Player.Update -= TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= MossScapper;
 			IL_UIGenProgressBar.DrawSelf -= AddGoodToWorldgenBar;
+			On_UIWorldListItem.DrawSelf -= ConfectionWorldIconEdit;
+			IL_Lang.GetDryadWorldStatusDialog -= DryadWorldStatusEdit;
+			IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
+			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
 		}
 
+		#region Dynamic Dryad Text
+		private void SettmodvilsandGoods(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdsfld<WorldGen>("totalGood2"), i => i.MatchStsfld<WorldGen>("totalGood"));
+			c.EmitDelegate(() =>
+			{
+				ConfectionWorldGeneration.totalCandy = ConfectionWorldGeneration.totalCandy2;
+			});
+			c.GotoNext(MoveType.After, i => i.MatchCall("System.Math", "Round"), i => i.MatchConvU1(), i => i.MatchStsfld<WorldGen>("tBlood"));
+			c.EmitDelegate(() =>
+			{
+				ConfectionWorldGeneration.tCandy = (byte)Math.Round((double)ConfectionWorldGeneration.totalCandy / (double)WorldGen.totalSolid * 100.0);
+				if (ConfectionWorldGeneration.tCandy == 0 && ConfectionWorldGeneration.totalCandy > 0)
+				{
+					ConfectionWorldGeneration.tCandy = 1;
+				}
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(0), i => i.MatchStsfld<WorldGen>("totalGood2"));
+			c.EmitDelegate(() =>
+			{
+				ConfectionWorldGeneration.totalCandy2 = 0;
+			});
+		}
+
+		private void AddUpAligmenttmodEvilsandGoods(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(0), i => i.MatchStsfld<WorldGen>("totalGood2"), i => i.MatchLdcI4(0), i => i.MatchStsfld<WorldGen>("totalBlood2"));
+			c.EmitDelegate(() =>
+			{
+				ConfectionWorldGeneration.totalCandy2 = 0;
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdloc2(), i => i.MatchLdsfld("Terraria.ID.TileID/Sets", "CrimsonCountCollection"), i => i.MatchCallvirt<List<int>>("get_Count"), i => i.MatchBlt(out _));
+			c.EmitDelegate(() =>
+			{
+				for (int l = 0; l < ConfectionIDs.Sets.ConfectCountCollection.Count; l++)
+				{
+					ConfectionWorldGeneration.totalCandy2 += WorldGen.tileCounts[ConfectionIDs.Sets.ConfectCountCollection[l]];
+				}
+			});
+			c.GotoNext(MoveType.Before, i => i.MatchLdsfld<WorldGen>("tileCounts"), i => i.MatchLdcI4(0), i => i.MatchLdsfld<WorldGen>("tileCounts"));
+			c.EmitDelegate(() =>
+			{
+				WorldGen.totalSolid2 +=
+				WorldGen.tileCounts[ModContent.TileType<Creamstone>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamGrass>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamGrassMowed>()] +
+				WorldGen.tileCounts[ModContent.TileType<Creamsand>()] +
+				WorldGen.tileCounts[ModContent.TileType<BlueIce>()] +
+				WorldGen.tileCounts[ModContent.TileType<Creamsandstone>()] +
+				WorldGen.tileCounts[ModContent.TileType<HardenedCreamsand>()] +
+				WorldGen.tileCounts[ModContent.TileType<CookieBlock>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamBlock>()] +
+				WorldGen.tileCounts[ModContent.TileType<PinkFairyFloss>()] +
+				WorldGen.tileCounts[ModContent.TileType<PurpleFairyFloss>()] +
+				WorldGen.tileCounts[ModContent.TileType<BlueFairyFloss>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneAmethyst>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneSaphire>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneTopaz>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneRuby>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneDiamond>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneEmerald>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossGreen>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossBrown>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossRed>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossBlue>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossPurple>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossLava>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossKrypton>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossXenon>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossArgon>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossNeon>()] +
+				WorldGen.tileCounts[ModContent.TileType<CreamstoneMossHelium>()];
+			});
+		}
+
+		private void DryadWorldStatusEdit(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel IL_01b2 = c.DefineLabel();
+			ILLabel IL_013f = c.DefineLabel();
+			c.GotoNext(MoveType.Before, i => i.MatchLdloc0(), i => i.MatchRet());
+			c.EmitBr(IL_013f);
+			c.GotoNext(MoveType.After, i => i.MatchLdstr("DryadSpecialText.WorldStatusHallow"), i => i.MatchLdsfld<Main>("worldName"), i => i.MatchLdloc1(), i => i.MatchBox(out _), i => i.MatchCall("Terraria.Localization.Language", "GetTextValue"), i => i.MatchStloc0());
+			c.MarkLabel(IL_013f);
+			c.GotoNext(MoveType.Before, i => i.MatchLdloc0(), i => i.MatchLdstr(" "), i => i.MatchLdloc(4));
+			c.EmitLdarg0();
+			c.EmitLdindU1();
+			c.EmitBrfalse(IL_01b2);
+			c.EmitLdloc0();
+			c.EmitRet();
+			c.MarkLabel(IL_01b2);
+			c.Goto(0);
+
+			//This adds the tgoods and tbads to the dialogs so dialogs such as "the world is in balance" or "you have more work to do" can function properly with modded edits to the dryad dialog system
+			c.GotoNext(MoveType.Before, i => i.MatchConvR8(), i => i.MatchLdcR8(1.2), i => i.MatchMul()); 
+			c.EmitDelegate(() =>
+			{
+				return tmodGoodCount() * 1.2;
+			});
+			c.EmitConvR8();
+			c.EmitAdd(); //(tGood + tmodGood) * 1.2
+			c.GotoNext(MoveType.Before, i => i.MatchConvR8(), i => i.MatchLdcR8(0.8), i => i.MatchMul());
+			c.EmitDelegate(() =>
+			{
+				return tmodGoodCount() * 0.8;
+			});
+			c.EmitConvR8();
+			c.EmitAdd(); //(tGood + tmodGood) * 0.8
+
+			//This commented out code is for the 'fairy tale' dialog, confection has its own text so we wont be needing to add the confection's onto the hallow's total
+			//Uncomment this code to allow your tGood to count towards the fairy tale dialog
+
+			//c.GotoNext(MoveType.After, i => i.MatchAdd(), i => i.MatchConvR8(), i => i.MatchBle(out _), i => i.MatchLdloc1());
+			//c.EmitDelegate(tmodGoodCount);
+			//c.EmitAdd(); //(tGood + tmodGood) >= tEvil + tBlood 
+
+			c.GotoNext(MoveType.After, i => i.MatchLdloc1(), i => i.MatchLdcI4(20), i => i.MatchAdd());
+			c.EmitDelegate(tmodGoodCount);
+			c.EmitAdd(); //(tEvil + tBlood > tGood + 20 + tmodGood)
+			c.Goto(0);
+
+			//Applies the addition of tmodEvil to tEvil and tBlood for each boolean check
+			for (int j = 0; j < 5; j++)
+			{
+				c.GotoNext(MoveType.After, i => i.MatchLdloc2(), i => i.MatchLdloc3(), i => i.MatchAdd());
+				c.EmitDelegate(tmodEvilCount);
+				c.EmitAdd();
+			}
+
+			//We add extra code for both the percentages display but also displaying our own world description too
+			c.GotoNext(MoveType.After, i => i.MatchLdstr("DryadSpecialText.WorldDescriptionBalanced"), i => i.MatchCall("Terraria.Localization.Language", "GetTextValue"), i => i.MatchStloc(4));
+			c.EmitLdarg(0);
+			c.EmitLdloca(0);
+			c.EmitLdarg(0);
+			c.EmitLdindU1();
+			//Percentage adder/editor
+			c.EmitDelegate((ref string text, bool worldIsEntirelyPure) => 
+			{
+				int tCandy = ConfectionWorldGeneration.tCandy;
+				bool flag = worldIsEntirelyPure;
+				if (flag)
+				{
+					if (tCandy > 0)
+					{
+						text = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandy", Main.worldName, tCandy);
+						flag = false;
+					}
+				}
+				else
+				{
+					if (tCandy > 0)
+					{
+						string localText;
+						string textStart = Main.worldName + Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusWorldNameIs");
+						string textEnd = text.Substring(textStart.Length);
+						if (text.Contains(Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusContainsAnd")))
+						{
+							localText = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandyComma", tCandy);
+						}
+						else
+						{
+							localText = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldStatusCandyAnd", tCandy);
+						}
+						text = textStart + localText + " " + textEnd;
+					}
+				}
+				return flag;
+			});
+			c.EmitStindI1();
+			c.EmitLdloca(4);
+			//description editor
+			c.EmitDelegate((ref string arg) => 
+			{
+				int tCandy = ConfectionWorldGeneration.tCandy;
+				int tEvil = WorldGen.tEvil;
+				int tBlood = WorldGen.tBlood;
+				if (arg != Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") && (tCandy >= tEvil + tBlood + 1))
+				{
+					arg = Language.GetTextValue("Mods.TheConfectionRebirth.DryadSpecialText.WorldDescriptionSweeterAir");
+				}
+			});
+		}
+
+		private int tmodEvilCount()
+		{
+			//How this works is that you combine all your tmodEvil stats into the return
+			//for example:
+			//return tEvil2 + tSick + tSpicy + tBlood2;
+			return 0;
+		}
+
+		private int tmodGoodCount()
+		{
+			int tCandy = ConfectionWorldGeneration.tCandy;
+			return tCandy;
+		}
+		#endregion
+
+		#region World Icon Edit
+		private void ConfectionWorldIconEdit(On_UIWorldListItem.orig_DrawSelf orig, UIWorldListItem self, SpriteBatch spriteBatch)
+		{
+			orig.Invoke(self, spriteBatch);
+			bool data = self.Data.TryGetHeaderData(ModContent.GetInstance<ConfectionWorldGeneration>(), out var _data);
+			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+			WorldIcon.RemoveAllChildren();
+			if (data)
+			{
+				#region RegularSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNormal"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region AnniversarySeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionAnniversary"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region DontStarveSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDontStarve"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region DrunkSeedIcon
+				if (!Data.RemixWorld && Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionDrunk"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region FTWSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionForTheWorthy"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region NotTheBeesSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionNotTheBees"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(0f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region NoTrapsSeedIcon
+				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionTrap"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region RemixSeedIcon
+				if (_data.GetBool("HasConfection") && Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
+				{
+					UIElement worldIcon = WorldIcon;
+					UIImage element = new UIImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionRemix"))
+					{
+						Top = new StyleDimension(0f, 0f),
+						Left = new StyleDimension(1f, 0f),
+						IgnoresMouseInteraction = true
+					};
+					worldIcon.Append(element);
+				}
+				#endregion
+
+				#region ZenithSeedIcon
+				if (Data.RemixWorld && Data.DrunkWorld)
+				{
+					UIElement worldIcon = WorldIcon;
+					Asset<Texture2D> obj = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/WorldIcons/ConfectionEverything", (AssetRequestMode)1);
+					int _glitchVariation = (int)typeof(AWorldListItem).GetField("_glitchVariation", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+					int _glitchFrame = (int)typeof(AWorldListItem).GetField("_glitchFrame", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+					int _glitchFrameCounter = (int)typeof(AWorldListItem).GetField("_glitchFrameCounter", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+					if (_glitchFrame == 0 && _glitchFrameCounter == 0 && _glitchVariation < 3)
+					{
+						ZenithSeedWorlds[worldIcon.UniqueId] = Main.rand.NextBool(2);
+					}
+					int width = ZenithSeedWorlds[worldIcon.UniqueId] ? 0 : _glitchVariation;
+					int height = ZenithSeedWorlds[worldIcon.UniqueId] ? 0 : _glitchFrame;
+					UIImageFramed uIImageFramed = new UIImageFramed(obj, obj.Frame(7, 16, width, height));
+					uIImageFramed.Left = new StyleDimension(0f, 0f);
+					worldIcon.Append(uIImageFramed);
+				}
+				#endregion
+			}
+		}
+		#endregion
+
+		#region worldgeneration bar edit
 		private void AddGoodToWorldgenBar(ILContext il)
 		{
 			ILCursor c = new(il);
@@ -155,6 +522,7 @@ namespace TheConfectionRebirth
 				spriteBatch.Draw(flag ? texOuterConfection.Value : texOuterHallow.Value, topLeft, white);
 			}); //thanks alf for the delegate :sob:
 		}
+		#endregion
 
 		#region PaintScrapperSupport
 		private void MossScapper(On_Player.orig_PlaceThing_PaintScrapper_LongMoss orig, Player self, int x, int y)
@@ -551,9 +919,9 @@ namespace TheConfectionRebirth
 			c.EmitLdarg0();
 			c.EmitLdfld(typeof(WaterfallManager).GetField("waterfalls", BindingFlags.NonPublic | BindingFlags.Instance));
 			c.EmitDelegate((int i, int j, ref int currentMax, int qualityMax, WaterfallData[] waterfalls) => {
-				Tile tile2 = Main.tile[i, j - 1];
+				Tile tile2 = Framing.GetTileSafely(i, j - 1);
 				if (Main.tile[i, j].TileType == ModContent.TileType<PurpleFairyFloss>()) {
-					Tile tile5 = Main.tile[i, j + 1];
+					Tile tile5 = Framing.GetTileSafely(i, j + 1);
 					if (!WorldGen.SolidTile(tile5) && tile5.Slope == 0 && currentMax < qualityMax) {
 						waterfalls[currentMax].type = ModContent.Find<ModWaterfallStyle>("TheConfectionRebirth/ChocolateRainWaterfallStyle").Slot;
 						waterfalls[currentMax].x = i;
@@ -562,7 +930,7 @@ namespace TheConfectionRebirth
 					}
 				}
 				if (Main.tile[i, j].TileType == ModContent.TileType <BlueFairyFloss>()) {
-					Tile tile6 = Main.tile[i, j + 1];
+					Tile tile6 = Framing.GetTileSafely(i, j + 1);
 					if (!WorldGen.SolidTile(tile6) && tile6.Slope == 0 && currentMax < qualityMax) {
 						waterfalls[currentMax].type = ModContent.Find<ModWaterfallStyle>("TheConfectionRebirth/CreamSnowWaterfallStyle").Slot;
 						waterfalls[currentMax].x = i;

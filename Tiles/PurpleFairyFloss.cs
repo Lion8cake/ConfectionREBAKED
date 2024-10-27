@@ -18,6 +18,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.Clouds[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
 
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			AddMapEntry(new Color(210, 90, 250));

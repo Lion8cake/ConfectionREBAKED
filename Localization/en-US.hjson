@@ -488,6 +488,21 @@ Mods: {
 			}
 		}
 
+		DryadSpecialText: {
+			WorldStatusWorldNameIs: " is "
+			#This is for any text used inbetween the world name and the first percentage of a world. This is the text that the modded percentages will be placed after and should not contain any percantage prefixes (ie spanish's "un {x}% de sagrado")
+			#for example: for english this is ' is ' while for spanish this is ' tiene '
+			WorldStatusContainsAnd: and
+			#used to check if there is 2 or more percentages already being displayed so there isn't weird overlapping of texts (for example 5% my awesome biome and 2% cirmson and 2% corruption)
+			
+			WorldStatusCandy: "{0} is {1}% confected."
+			#Formatted like other singualr percentage texts
+			WorldStatusCandyAnd: "{0}% confected, and"
+			#These 2 status texts are injected into the other localised text formats
+			WorldStatusCandyComma: "{0}% confected,"
+			WorldDescriptionSweeterAir: The air we breathe has become a lot sweeter.
+		}
+
 		HallowSelection: {
 			Random: {
 				Title: Random

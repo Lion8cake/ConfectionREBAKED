@@ -11,6 +11,7 @@ namespace TheConfectionRebirth.Walls
         {
 			WallID.Sets.Conversion.Sandstone[Type] = true;
             WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionWall[Type] = true;
 			Main.wallHouse[Type] = false;
             AddMapEntry(new Color(35, 21, 19));
         }

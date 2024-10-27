@@ -21,6 +21,7 @@ namespace TheConfectionRebirth.Tiles
 			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionTile[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;

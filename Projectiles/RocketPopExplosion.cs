@@ -29,21 +29,8 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnSpawn(IEntitySource source)
 		{
-			Projectile.localAI[0] = Main.rand.Next(1, 4);
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 			int iD = DustID.Torch;
-			switch (Projectile.localAI[0])
-			{
-				case 1:
-					iD = DustID.PinkTorch;
-					break;
-				case 2:
-					iD = DustID.Smoke;
-					break;
-				case 3:
-					iD = DustID.IceTorch;
-					break;
-			}
 			for (int i = 0; i < 15; i++)
 			{
 				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1f);
@@ -72,18 +59,6 @@ namespace TheConfectionRebirth.Projectiles
 		public override Color? GetAlpha(Color lightColor)
 		{
 			Color color = Color.White;
-			switch (Projectile.localAI[0])
-			{
-				case 1:
-					color = new Color(241, 97, 151);
-					break;
-				case 2:
-					color = new Color(205, 214, 235);
-					break;
-				case 3:
-					color = new Color(83, 210, 253);
-					break;
-			}
 			return color;
 		}
 

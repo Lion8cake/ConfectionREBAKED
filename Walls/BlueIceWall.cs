@@ -13,7 +13,8 @@ namespace TheConfectionRebirth.Walls
             WallID.Sets.Conversion.Ice[Type] = true;
             Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<OrangeIceDust>();
-            AddMapEntry(new Color(118, 72, 51));
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(118, 72, 51));
         }
     }
 }

@@ -13,7 +13,8 @@ namespace TheConfectionRebirth.Walls
             WallID.Sets.Conversion.Grass[Type] = true;
             Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<CreamGrassDust>();
-            AddMapEntry(new Color(100, 85, 54));
+			ConfectionIDs.Sets.IsNaturalConfectionWall[Type] = true;
+			AddMapEntry(new Color(100, 85, 54));
         }
     }
 }

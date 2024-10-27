@@ -13,7 +13,8 @@ namespace TheConfectionRebirth.Walls
 			WallID.Sets.Conversion.NewWall4[Type] = true;
 			Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<CreamstoneDust>();
-            AddMapEntry(new Color(124, 123, 111));
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(124, 123, 111));
         }
     }
 }

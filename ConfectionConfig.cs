@@ -9,7 +9,7 @@ namespace TheConfectionRebirth
 		[Header("ConfectionServersideConfig")]
 		[DrawTicks]
 		[OptionStrings(new string[] { "No Spread", "Partial Spread", "Full Spread" })]
-		[DefaultValue("Full Spread")]
+		[DefaultValue("Partial Spread")]
 		public string CookieSpread;
 	}
 }

@@ -24,6 +24,7 @@ namespace TheConfectionRebirth.Tiles
 
 			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
 			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionTile[Type] = true;
 
 			DustType = ModContent.DustType<CreamGrassDust>();
 			HitSound = SoundID.Grass;
