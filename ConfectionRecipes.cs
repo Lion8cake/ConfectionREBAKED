@@ -19,6 +19,12 @@ namespace TheConfectionRebirth
 			recipe.AddTile(TileID.AlchemyTable);
 			recipe.SortAfterFirstRecipesOf(ItemID.GreaterHealingPotion);
 			recipe.Register();
+
+			Recipe recipe2 = Recipe.Create(ItemID.HallowedBar);
+			recipe2.AddIngredient(ModContent.ItemType<HallowedOre>(), 5);
+			recipe2.AddTile(TileID.AdamantiteForge);
+			recipe2.SortBeforeFirstRecipesOf(ItemID.HallowedMask);
+			recipe2.Register();
 			#endregion
 
 			//Confection Recipes
@@ -454,6 +460,83 @@ namespace TheConfectionRebirth
 			DiamondCreamstoneWall2.SortAfter(DiamondCreamstoneWall);
 			DiamondCreamstoneWall2.Register();
 			#endregion
+
+			#region Ore Bricks Crafting Group
+			//hallowed ore bricks
+			Recipe HallowedBrick = Recipe.Create(ModContent.ItemType<HallowedBrick>(), 5);
+			HallowedBrick.AddIngredient(ItemID.StoneBlock, 5);
+			HallowedBrick.AddIngredient<HallowedOre>();
+			HallowedBrick.AddTile(TileID.Furnaces);
+			HallowedBrick.SortAfterFirstRecipesOf(ItemID.TitanstoneBlockWall);
+			HallowedBrick.Register();
+
+			//Hallowed ore brick wall
+			Recipe HallowedBrickWall = Recipe.Create(ModContent.ItemType<HallowedBrickWall>(), 4);
+			HallowedBrickWall.AddIngredient(ModContent.ItemType<HallowedBrick>());
+			HallowedBrickWall.AddTile(TileID.WorkBenches);
+			HallowedBrickWall.SortAfter(HallowedBrick);
+			HallowedBrickWall.Register();
+
+			Recipe HallowedBrickWall2 = Recipe.Create(ModContent.ItemType<HallowedBrick>());
+			HallowedBrickWall2.AddIngredient(ModContent.ItemType<HallowedBrickWall>(), 4);
+			HallowedBrickWall2.AddTile(TileID.WorkBenches);
+			HallowedBrickWall2.SortAfter(HallowedBrickWall);
+			HallowedBrickWall2.Register();
+
+			//Neapolinite ore Bricks
+			Recipe NeapoliniteBrick = Recipe.Create(ModContent.ItemType<NeapoliniteBrick>(), 5);
+			NeapoliniteBrick.AddIngredient(ItemID.StoneBlock, 5);
+			NeapoliniteBrick.AddIngredient<NeapoliniteOre>();
+			NeapoliniteBrick.AddTile(TileID.Furnaces);
+			NeapoliniteBrick.SortAfter(HallowedBrickWall2);
+			NeapoliniteBrick.Register();
+
+			//Neapolinite ore Brick Wall
+			Recipe NeapoliniteBrickWall = Recipe.Create(ModContent.ItemType<NeapoliniteBrickWall>(), 4);
+			NeapoliniteBrickWall.AddIngredient(ModContent.ItemType<NeapoliniteBrick>());
+			NeapoliniteBrickWall.AddTile(TileID.WorkBenches);
+			NeapoliniteBrickWall.SortAfter(NeapoliniteBrick);
+			NeapoliniteBrickWall.Register();
+
+			Recipe NeapoliniteBrickWall2 = Recipe.Create(ModContent.ItemType<NeapoliniteBrick>());
+			NeapoliniteBrickWall2.AddIngredient(ModContent.ItemType<NeapoliniteBrickWall>(), 4);
+			NeapoliniteBrickWall2.AddTile(TileID.WorkBenches);
+			NeapoliniteBrickWall2.SortAfter(NeapoliniteBrickWall);
+			NeapoliniteBrickWall2.Register();
+			#endregion
+
+			//Shell Wall
+			Recipe ShellBlockWall = Recipe.Create(ModContent.ItemType<ShellBlockWall>(), 4);
+			ShellBlockWall.AddIngredient(ModContent.ItemType<ShellBlock>());
+			ShellBlockWall.AddTile(TileID.WorkBenches);
+			ShellBlockWall.SortAfterFirstRecipesOf(ItemID.CrystalBlockWall);
+			ShellBlockWall.Register();
+
+			Recipe ShellBlockWall2 = Recipe.Create(ModContent.ItemType<ShellBlock>());
+			ShellBlockWall2.AddIngredient(ModContent.ItemType<ShellBlockWall>(), 4);
+			ShellBlockWall2.AddTile(TileID.WorkBenches);
+			ShellBlockWall2.SortAfter(ShellBlockWall);
+			ShellBlockWall2.Register();
+
+			//Pastry Wall
+			Recipe PastryBlockWall = Recipe.Create(ModContent.ItemType<PastryBlockWall>(), 4);
+			PastryBlockWall.AddIngredient(ModContent.ItemType<PastryBlock>());
+			PastryBlockWall.AddTile(TileID.WorkBenches);
+			PastryBlockWall.SortAfter(ShellBlockWall2);
+			PastryBlockWall.Register();
+
+			Recipe PastryBlockWall2 = Recipe.Create(ModContent.ItemType<PastryBlock>());
+			PastryBlockWall2.AddIngredient(ModContent.ItemType<PastryBlockWall>(), 4);
+			PastryBlockWall2.AddTile(TileID.WorkBenches);
+			PastryBlockWall2.SortAfter(PastryBlockWall);
+			PastryBlockWall2.Register();
+
+			//Neapolinite Bar
+			Recipe NeapoliniteBar = Recipe.Create(ModContent.ItemType<NeapoliniteBar>());
+			NeapoliniteBar.AddIngredient(ModContent.ItemType<NeapoliniteOre>(), 5);
+			NeapoliniteBar.AddTile(TileID.AdamantiteForge);
+			NeapoliniteBar.SortAfterFirstRecipesOf(ItemID.SuperStarCannon);
+			NeapoliniteBar.Register();
 		}
 	}
 }

@@ -26,6 +26,10 @@ Mods: {
 				MapEntry0: Confection Chest
 				MapEntry1: Locked Confection Chest
 			}
+
+			NeapoliniteOre.MapEntry: Neapolinite Ore
+			NeapoliniteBar.MapEntry: Neapolinite Bar
+			HallowedOre.MapEntry: Hallowed Ore
 		}
 
 		Items: {
@@ -413,6 +417,111 @@ Mods: {
 				DisplayName: Pop Rocket
 				Tooltip: ""
 			}
+
+			NeapoliniteOre: {
+				Tooltip: ""
+				DisplayName: Neapolinite Ore
+			}
+
+			NeapoliniteBrickWall: {
+				Tooltip: ""
+				DisplayName: Neapolinite Brick Wall
+			}
+
+			NeapoliniteBrick: {
+				Tooltip: ""
+				DisplayName: Neapolinite Brick
+			}
+
+			NeapoliniteBar: {
+				Tooltip: ""
+				DisplayName: Neapolinite Bar
+			}
+
+			HallowedOre: {
+				Tooltip: ""
+				DisplayName: Hallowed Ore
+			}
+
+			HallowedBrickWall: {
+				Tooltip: ""
+				DisplayName: Hallowed Brick Wall
+			}
+
+			HallowedBrick: {
+				Tooltip: ""
+				DisplayName: Hallowed Brick
+			}
+
+			HallowedGlobe: {
+				Tooltip: ""
+				DisplayName: Hallowed Globe
+			}
+
+			CanofMeat: {
+				DisplayName: Canof Meat
+				Tooltip: ""
+			}
+
+			Kazoo: {
+				DisplayName: Kazoo
+				Tooltip: ""
+			}
+
+			PastryBlock: {
+				DisplayName: Pastry Block
+				Tooltip: ""
+			}
+
+			PastryBlockWall: {
+				DisplayName: Pastry Block Wall
+				Tooltip: ""
+			}
+
+			PottedConfectionBamboo: {
+				DisplayName: Potted Confection Bamboo
+				Tooltip: ""
+			}
+
+			PottedConfectionCedar: {
+				DisplayName: Potted Confection Cedar
+				Tooltip: ""
+			}
+
+			PottedConfectionPalm: {
+				DisplayName: Potted Confection Palm
+				Tooltip: ""
+			}
+
+			PottedConfectionTree: {
+				DisplayName: Potted Confection Tree
+				Tooltip: ""
+			}
+
+			ShellBlock: {
+				DisplayName: Shell Block
+				Tooltip: ""
+			}
+
+			ShellBlockWall: {
+				DisplayName: Shell Block Wall
+				Tooltip: ""
+			}
+
+			SoulofDelight: {
+				DisplayName: Soulof Delight
+				Tooltip: ""
+			}
+
+			SoulofSpite: {
+				DisplayName: Soulof Spite
+				Tooltip: ""
+			}
+
+			GrandSlammer: {
+				DisplayName: Grand Slammer
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -436,6 +545,7 @@ Mods: {
 			PopRocket.DisplayName: Pop Rocket
 			RocketPop.DisplayName: Rocket Pop
 			RocketPopExplosion.DisplayName: Rocket Pop Explosion
+			HallowedGlobe.DisplayName: Hallowed Globe
 		}
 
 		Configs: {
@@ -519,5 +629,10 @@ Mods: {
 				Description: Cookies n' cream confection is guaranteed to be present in your world.
 			}
 		}
+
+		InConfection: Mods.TheConfectionRebirth.InConfection
+		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
+		TheConfection: Mods.TheConfectionRebirth.TheConfection
+		TheHallow: Mods.TheConfectionRebirth.TheHallow
 	}
 }

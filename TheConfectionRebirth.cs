@@ -34,6 +34,8 @@ using Steamworks;
 using Terraria.Localization;
 using static System.Net.Mime.MediaTypeNames;
 using Iced.Intel;
+using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
+using Terraria.GameContent.ItemDropRules;
 
 namespace TheConfectionRebirth
 {
@@ -56,11 +58,6 @@ namespace TheConfectionRebirth
 			{
 				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
 				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
-			}
-
-			for (int arr = 0; arr < Array.MaxLength; arr++)
-			{
-				ZenithSeedWorlds[arr] = false;
 			}
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
@@ -107,6 +104,7 @@ namespace TheConfectionRebirth
 			IL_Lang.GetDryadWorldStatusDialog += DryadWorldStatusEdit;
 			IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles += SettmodvilsandGoods;
+			On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 		}
 
 		public override void Unload() {
@@ -149,7 +147,31 @@ namespace TheConfectionRebirth
 			IL_Lang.GetDryadWorldStatusDialog -= DryadWorldStatusEdit;
 			IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
+			On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
 		}
+
+		#region TwinsDropDetour
+		private void On_ItemDropDatabase_RegisterBoss_Twins(On_ItemDropDatabase.orig_RegisterBoss_Twins orig, ItemDropDatabase self)
+		{
+			orig.Invoke(self);
+			LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.MissingTwin());
+			LeadingConditionRule leadingConditionRule2 = new LeadingConditionRule(new Conditions.NotExpert());
+			LeadingConditionRule leadingConditionRule3 = new LeadingConditionRule(new DrunkWorldIsNotActive());
+			LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
+			LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
+			LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
+			leadingConditionRule.OnSuccess(leadingConditionRule2);
+			leadingConditionRule2.OnSuccess(leadingConditionRule3);
+			leadingConditionRule3.OnSuccess(ConfectionCondition);
+			leadingConditionRule3.OnSuccess(HallowCondition);
+			leadingConditionRule2.OnSuccess(DrunkCondition);
+			ConfectionCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+			HallowCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+			DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+			DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+			self.RegisterToMultipleNPCs(leadingConditionRule, 126, 125);
+		}
+		#endregion
 
 		#region Dynamic Dryad Text
 		private void SettmodvilsandGoods(ILContext il)
