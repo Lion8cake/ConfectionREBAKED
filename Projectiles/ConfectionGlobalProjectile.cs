@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles.Trees;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -73,7 +74,7 @@ namespace TheConfectionRebirth.Projectiles
 		}
 
 		public override void OnKill(Projectile projectile, int timeLeft) {
-			/*if (projectile.type == ProjectileID.WorldGlobe) {
+			if (projectile.type == ProjectileID.WorldGlobe) {
 				Player player = Main.LocalPlayer;
 				if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
 					int rand = Main.rand.Next(4);
@@ -84,10 +85,10 @@ namespace TheConfectionRebirth.Projectiles
 					ConfectionWorldGeneration.confectionBG = rand;
 					NetMessage.SendData(MessageID.WorldData);
 				}
-			}*/
+			}
 			if (projectile.type == ProjectileID.TreeGlobe) {
 				Player player = Main.LocalPlayer;
-				//if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
+				if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
 					int rand = Main.rand.Next(3);
 					if (rand == ConfectionWorldGeneration.confectionTree)
 						rand++;
@@ -95,7 +96,7 @@ namespace TheConfectionRebirth.Projectiles
 						rand = 0;
 					ConfectionWorldGeneration.confectionTree = rand;
 					NetMessage.SendData(MessageID.WorldData);
-				//}
+				}
 			}
 		}
 	}

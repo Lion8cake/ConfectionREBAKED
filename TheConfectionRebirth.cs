@@ -36,6 +36,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Iced.Intel;
 using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
 using Terraria.GameContent.ItemDropRules;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth
 {
@@ -105,6 +106,7 @@ namespace TheConfectionRebirth
 			IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles += SettmodvilsandGoods;
 			On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
+			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
 		}
 
 		public override void Unload() {
@@ -148,7 +150,33 @@ namespace TheConfectionRebirth
 			IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
 			On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
+			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
 		}
+
+		#region MapBackgroundColorFixer
+		private void On_Main_DrawMapFullscreenBackground(On_Main.orig_DrawMapFullscreenBackground orig, Vector2 screenPosition, int screenWidth, int screenHeight)
+		{
+			if (Main.LocalPlayer.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+			{
+				Texture2D MapBGAsset = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground");
+				Color color = Color.White;
+				if ((double)screenPosition.Y > Main.worldSurface * 16.0)
+				{
+					MapBGAsset = Main.player[Main.myPlayer].ZoneDesert ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundDesertMapBackground") : ((!Main.player[Main.myPlayer].ZoneSnow) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundMapBackground") : (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionUndergroundIceMapBackground"));
+				}
+				else
+				{
+					color = Main.ColorOfTheSkies;
+					MapBGAsset = ((!Main.player[Main.myPlayer].ZoneDesert) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground") : ((Main.player[Main.myPlayer].ZoneSnow) ? (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionIceBiomeMapBackground") : (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground")));
+				}
+				Main.spriteBatch.Draw(MapBGAsset, new Rectangle(0, 0, screenWidth, screenHeight), color);
+			}
+			else
+			{
+				orig.Invoke(screenPosition, screenWidth, screenHeight);
+			}
+		}
+		#endregion
 
 		#region TwinsDropDetour
 		private void On_ItemDropDatabase_RegisterBoss_Twins(On_ItemDropDatabase.orig_RegisterBoss_Twins orig, ItemDropDatabase self)

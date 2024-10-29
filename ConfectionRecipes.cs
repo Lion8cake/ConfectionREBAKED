@@ -537,6 +537,38 @@ namespace TheConfectionRebirth
 			NeapoliniteBar.AddTile(TileID.AdamantiteForge);
 			NeapoliniteBar.SortAfterFirstRecipesOf(ItemID.SuperStarCannon);
 			NeapoliniteBar.Register();
+
+			//Confection Torch
+			Recipe ConfectionTorch = Recipe.Create(ModContent.ItemType<ConfectionTorch>(), 3);
+			ConfectionTorch.AddIngredient(ItemID.Torch, 3);
+			ConfectionTorch.AddIngredient(ModContent.ItemType<Creamstone>());
+			ConfectionTorch.SortBeforeFirstRecipesOf(ItemID.JungleTorch);
+			ConfectionTorch.Register();
+			Recipe ConfectionTorch2 = Recipe.Create(ModContent.ItemType<ConfectionTorch>(), 3);
+			ConfectionTorch2.AddIngredient(ItemID.Torch, 3);
+			ConfectionTorch2.AddIngredient(ModContent.ItemType<HardenedCreamsand>());
+			ConfectionTorch2.SortAfter(ConfectionTorch);
+			ConfectionTorch2.Register();
+			Recipe ConfectionTorch3 = Recipe.Create(ModContent.ItemType<ConfectionTorch>(), 3);
+			ConfectionTorch3.AddIngredient(ItemID.Torch, 3);
+			ConfectionTorch3.AddIngredient(ModContent.ItemType<OrangeIce>());
+			ConfectionTorch3.SortAfter(ConfectionTorch2);
+			ConfectionTorch3.Register();
+
+			//Confection Campfire
+			Recipe ConfectionCampfire = Recipe.Create(ModContent.ItemType<ConfectionCampfire>());
+			ConfectionCampfire.AddRecipeGroup(RecipeGroupID.Wood, 10);
+			ConfectionCampfire.AddIngredient(ModContent.ItemType<ConfectionTorch>(), 5);
+			ConfectionCampfire.SortAfterFirstRecipesOf(ItemID.HallowedCampfire);
+			ConfectionCampfire.Register();
+
+			//Shifting Creamsand Dye
+			Recipe ShiftingCreamsandsDye = Recipe.Create(ModContent.ItemType<ShiftingCreamsandsDye>());
+			ShiftingCreamsandsDye.AddIngredient(ItemID.ShiftingSandsDye);
+			ShiftingCreamsandsDye.AddIngredient(ModContent.ItemType<Saccharite>(), 20);
+			ShiftingCreamsandsDye.AddTile(TileID.DyeVat);
+			ShiftingCreamsandsDye.SortAfterFirstRecipesOf(ItemID.ShiftingPearlSandsDye);
+			ShiftingCreamsandsDye.Register();
 		}
 	}
 }

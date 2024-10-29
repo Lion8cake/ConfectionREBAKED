@@ -1,7 +1,9 @@
 ﻿using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
 
 namespace TheConfectionRebirth.Items
 {
@@ -64,6 +66,60 @@ namespace TheConfectionRebirth.Items
 					WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY, true);
 					SoundEngine.PlaySound(SoundID.Dig, player.position);
 					return true;
+				}
+			}
+			return null;
+		}
+
+		public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+		{
+			if (item.type == ItemID.WallOfFleshBossBag)
+			{
+				itemLoot.Remove(FindHammer(itemLoot));
+				//Moved the hammer outside of the WoF bag
+			}
+			if (item.type == ItemID.TwinsBossBag || item.type == ItemID.DestroyerBossBag || item.type == ItemID.SkeletronPrimeBossBag)
+			{
+				itemLoot.Remove(FindHallowedBars(itemLoot));
+
+				DrunkWorldIsNotActive NotDrunk = new DrunkWorldIsNotActive();
+
+				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+				itemLoot.Add(ConfectionCondition);
+
+				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
+				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+				itemLoot.Add(HallowCondition);
+
+				LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+				itemLoot.Add(DrunkCondition);
+			}
+		}
+
+		private static IItemDropRule FindHallowedBars(ItemLoot loot)
+		{
+			foreach (IItemDropRule item in loot.Get(false))
+			{
+				CommonDrop c = (CommonDrop)(object)((item is CommonDrop) ? item : null);
+				if (c != null && c.itemId == ItemID.HallowedBar)
+				{
+					return (IItemDropRule)(object)c;
+				}
+			}
+			return null;
+		}
+
+		private static IItemDropRule FindHammer(ItemLoot loot)
+		{
+			foreach (IItemDropRule item in loot.Get(false))
+			{
+				CommonDrop c = (CommonDrop)(object)((item is CommonDrop) ? item : null);
+				if (c != null && c.itemId == ItemID.Pwnhammer)
+				{
+					return (IItemDropRule)(object)c;
 				}
 			}
 			return null;

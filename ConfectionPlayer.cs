@@ -15,5 +15,13 @@ namespace TheConfectionRebirth
 		{
 			cookiestPet = false;
 		}
+
+		public override void GetDyeTraderReward(List<int> rewardPool)
+		{
+			rewardPool.Add(ModContent.ItemType<Items.CandyCornDye>());
+			rewardPool.Add(ModContent.ItemType<Items.FoaminWispDye>());
+			rewardPool.Add(ModContent.ItemType<Items.GummyWispDye>());
+			rewardPool.Add(ModContent.ItemType<Items.SwirllingChocolateDye>());
+		}
 	}
 }

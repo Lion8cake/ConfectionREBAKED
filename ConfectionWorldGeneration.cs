@@ -46,6 +46,12 @@ namespace TheConfectionRebirth {
 
 		public static int confectionTree;
 
+		public static int confectionBG;
+
+		public static int confectionUGBG;
+
+		public static int confectionUGBGSnow;
+
 		public override void Load()
 		{
 			On_WorldGen.GERunner += GERunnerEditer;
@@ -69,19 +75,28 @@ namespace TheConfectionRebirth {
 		public override void OnWorldLoad()
 		{
 			confectionorHallow = false;
+			confectionBG = 0;
 			confectionTree = 0;
+			confectionUGBG = 0;
+			confectionUGBGSnow = 0;
 		}
 
 		public override void OnWorldUnload() 
 		{
 			confectionorHallow = false;
+			confectionBG = 0;
 			confectionTree = 0;
+			confectionUGBG = 0;
+			confectionUGBGSnow = 0;
 		}
 
 		public override void SaveWorldData(TagCompound tag) 
 		{
-			tag["TheConfectionRebirth:confectionorHallow"] = confectionorHallow;
 			tag["TheConfectionRebirth:confectionTree"] = confectionTree;
+			tag["TheConfectionRebirth:confectionorHallow"] = confectionorHallow;
+			tag["TheConfectionRebirth:confectionBG"] = confectionBG;
+			tag["TheConfectionRebirth:confectionUGBG"] = confectionUGBG;
+			tag["TheConfectionRebirth:confectionUGBGSnow"] = confectionUGBGSnow;
 		}
 
 		public override void SaveWorldHeader(TagCompound tag)
@@ -100,6 +115,9 @@ namespace TheConfectionRebirth {
 		{
 			confectionTree = tag.GetInt("TheConfectionRebirth:confectionTree");
 			confectionorHallow = tag.GetBool("TheConfectionRebirth:confectionorHallow");
+			confectionBG = tag.GetInt("TheConfectionRebirth:confectionBG");
+			confectionUGBG = tag.GetInt("TheConfectionRebirth:confectionUGBG");
+			confectionUGBGSnow = tag.GetInt("TheConfectionRebirth:confectionUGBGSnow");
 			//Love terraria hardcoding how % are caculated, re-caculated here because the current caculations earlier in the file saving are so early they cant caculate modded tiles (as modded tiles haddent loaded at that point)
 			for (int x = 0; x < Main.maxTilesX; x++)
 			{
@@ -205,14 +223,20 @@ namespace TheConfectionRebirth {
 		{
 			writer.Write(confectionorHallow);
 			writer.Write(tCandy);
+			writer.Write(confectionBG);
 			writer.Write(confectionTree);
+			writer.Write(confectionUGBG);
+			writer.Write(confectionUGBGSnow);
 		}
 
 		public override void NetReceive(BinaryReader reader) 
 		{
 			confectionorHallow = reader.ReadBoolean();
 			tCandy = reader.ReadByte();
+			confectionBG = reader.ReadInt32();
 			confectionTree = reader.ReadInt32();
+			confectionUGBG = reader.ReadInt32();
+			confectionUGBGSnow = reader.ReadInt32();
 		}
 
 		public override void PreWorldGen() 
@@ -225,6 +249,9 @@ namespace TheConfectionRebirth {
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			confectionTree = Main.rand.Next(3);
+			confectionBG = Main.rand.Next(4);
+			confectionUGBG = Main.rand.Next(4);
+			confectionUGBGSnow = Main.rand.Next(2);
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)

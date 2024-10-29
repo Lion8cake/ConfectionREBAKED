@@ -8,11 +8,80 @@ using static Terraria.GameContent.ItemDropRules.Conditions;
 using TheConfectionRebirth.ModSupport;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.NPCs
 {
 	public class ConfectionGlobalNPC : GlobalNPC
 	{
+		#region Soul drop conditions
+		public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
+		{
+			public bool CanDrop(DropAttemptInfo info)
+			{
+				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				{
+					return info.player.InModBiome(ModContent.GetInstance<ConfectionBiome>());
+				}
+				return false;
+			}
+
+			public bool CanShowItemDropInUI()
+			{
+				return false;
+			}
+
+			public string GetConditionDescription()
+			{
+				return null;
+			}
+		}
+
+		public class SoulOfNightCorruption : IItemDropRuleCondition, IProvideItemConditionDescription
+		{
+			public bool CanDrop(DropAttemptInfo info)
+			{
+				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				{
+					return info.player.ZoneCorrupt;
+				}
+				return false;
+			}
+
+			public bool CanShowItemDropInUI()
+			{
+				return false;
+			}
+
+			public string GetConditionDescription()
+			{
+				return null;
+			}
+		}
+
+		public class SoulOfSpite : IItemDropRuleCondition, IProvideItemConditionDescription
+		{
+			public bool CanDrop(DropAttemptInfo info)
+			{
+				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				{
+					return info.player.ZoneCrimson;
+				}
+				return false;
+			}
+
+			public bool CanShowItemDropInUI()
+			{
+				return false;
+			}
+
+			public string GetConditionDescription()
+			{
+				return null;
+			}
+		}
+		#endregion
+
 		#region ConfectionDropRule
 		public class ConfectionDropRule : IItemDropRuleCondition
 		{
@@ -136,6 +205,18 @@ namespace TheConfectionRebirth.NPCs
 		}
 		#endregion
 
+		public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+		{
+			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
+			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
+
+			globalLoot.RemoveWhere(
+				rule => rule is ItemDropWithConditionRule drop
+					&& drop.itemId == ItemID.SoulofNight
+					&& drop.condition is Conditions.SoulOfNight
+			);
+		}
 
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
 		{
@@ -297,8 +378,8 @@ namespace TheConfectionRebirth.NPCs
 			return null;
 		}
 
-		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => true/*Main.LocalPlayer.InModBiome<ConfectionBiome>()*/);
-		public static Condition NotInConfection = new Condition("Mods.TheConfectionRebirth.NotInConfection", () => false/*!Main.LocalPlayer.InModBiome<ConfectionBiome>()*/);
+		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>());
+		public static Condition NotInConfection = new Condition("Mods.TheConfectionRebirth.NotInConfection", () => !Main.LocalPlayer.InModBiome<ConfectionBiome>());
 
 		public static Condition confectionworld = new Condition("Mods.TheConfectionRebirth.TheConfection", () => ConfectionWorldGeneration.confectionorHallow);
 

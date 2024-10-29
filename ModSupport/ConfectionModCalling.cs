@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using TheConfectionRebirth.Biomes;
 
 namespace TheConfectionRebirth.ModSupport
 {
@@ -94,7 +95,7 @@ namespace TheConfectionRebirth.ModSupport
 
 			static bool IsLavaActive()
 			{
-				return true;
+				return Main.LocalPlayer.InModBiome<ConfectionBiome>() && !Main.LocalPlayer.ZoneUnderworldHeight;
 			}
 
 			static bool lavafallGlowmask()

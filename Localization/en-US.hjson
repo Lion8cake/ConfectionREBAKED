@@ -30,6 +30,8 @@ Mods: {
 			NeapoliniteOre.MapEntry: Neapolinite Ore
 			NeapoliniteBar.MapEntry: Neapolinite Bar
 			HallowedOre.MapEntry: Hallowed Ore
+			ConfectionTorch.MapEntry: Confection Torch
+			ConfectionPylonTile.MapEntry: Confection Pylon Tile
 		}
 
 		Items: {
@@ -419,47 +421,51 @@ Mods: {
 			}
 
 			NeapoliniteOre: {
-				Tooltip: ""
 				DisplayName: Neapolinite Ore
+				Tooltip: ""
 			}
 
 			NeapoliniteBrickWall: {
-				Tooltip: ""
 				DisplayName: Neapolinite Brick Wall
+				Tooltip: ""
 			}
 
 			NeapoliniteBrick: {
-				Tooltip: ""
 				DisplayName: Neapolinite Brick
+				Tooltip: ""
 			}
 
 			NeapoliniteBar: {
-				Tooltip: ""
 				DisplayName: Neapolinite Bar
+				Tooltip: ""
 			}
 
 			HallowedOre: {
-				Tooltip: ""
 				DisplayName: Hallowed Ore
+				Tooltip: ""
 			}
 
 			HallowedBrickWall: {
-				Tooltip: ""
 				DisplayName: Hallowed Brick Wall
+				Tooltip: ""
 			}
 
 			HallowedBrick: {
-				Tooltip: ""
 				DisplayName: Hallowed Brick
+				Tooltip: ""
 			}
 
 			HallowedGlobe: {
-				Tooltip: ""
 				DisplayName: Hallowed Globe
+				Tooltip:
+					'''
+					Toss it to change which good looks after your world!
+					'Time for a change of scenery'
+					'''
 			}
 
 			CanofMeat: {
-				DisplayName: Canof Meat
+				DisplayName: Can of Meat
 				Tooltip: ""
 			}
 
@@ -509,17 +515,57 @@ Mods: {
 			}
 
 			SoulofDelight: {
-				DisplayName: Soulof Delight
-				Tooltip: ""
+				DisplayName: Soul of Delight
+				Tooltip: "'The essence of sweet creatures'"
 			}
 
 			SoulofSpite: {
-				DisplayName: Soulof Spite
-				Tooltip: ""
+				DisplayName: Soul of Spite
+				Tooltip: "'The essence of meat creatures'"
 			}
 
 			GrandSlammer: {
 				DisplayName: Grand Slammer
+				Tooltip: Strong enough to destroy Demon Altars
+			}
+
+			ConfectionCampfire: {
+				DisplayName: Confection Campfire
+				Tooltip: "{$ItemTooltip.Campfire}"
+			}
+
+			ConfectionTorch: {
+				DisplayName: Confection Torch
+				Tooltip: ""
+			}
+
+			CandyCornDye: {
+				DisplayName: Candy Corn Dye
+				Tooltip: ""
+			}
+
+			FoaminWispDye: {
+				DisplayName: Foamin' Wisp Dye
+				Tooltip: ""
+			}
+
+			ConfectionPylon: {
+				DisplayName: Confection Pylon
+				Tooltip: ""
+			}
+
+			ShiftingCreamsandsDye: {
+				DisplayName: Shifting Creamsands Dye
+				Tooltip: ""
+			}
+
+			SwirllingChocolateDye: {
+				DisplayName: Swirlling Chocolate Dye
+				Tooltip: ""
+			}
+
+			GummyWispDye: {
+				DisplayName: Gummy Wisp Dye
 				Tooltip: ""
 			}
 		}
@@ -634,5 +680,39 @@ Mods: {
 		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
 		TheConfection: Mods.TheConfectionRebirth.TheConfection
 		TheHallow: Mods.TheConfectionRebirth.TheHallow
+
+		Biomes: {
+			ConfectionBiome: {
+				DisplayName: Confection Biome
+				TownNPCDialogueName: the Confection Biome
+			}
+
+			ConfectionUndergroundBiome: {
+				DisplayName: Confection Underground Biome
+				TownNPCDialogueName: the Confection Underground Biome
+			}
+
+			IceConfectionSurfaceBiome: {
+				DisplayName: Ice Confection Surface Biome
+				TownNPCDialogueName: the Ice Confection Surface Biome
+			}
+
+			IceConfectionUndergroundBiome: {
+				DisplayName: Ice Confection Underground Biome
+				TownNPCDialogueName: the Ice Confection Underground Biome
+			}
+
+			SandConfectionSurfaceBiome: {
+				DisplayName: Sand Confection Surface Biome
+				TownNPCDialogueName: the Sand Confection Surface Biome
+			}
+
+			SandConfectionUndergroundBiome: {
+				DisplayName: Sand Confection Underground Biome
+				TownNPCDialogueName: the Sand Confection Underground Biome
+			}
+		}
+
+		Conditions.InConfection: Mods.TheConfectionRebirth.Conditions.InConfection
 	}
 }
