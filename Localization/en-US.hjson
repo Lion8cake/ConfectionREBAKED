@@ -3,6 +3,45 @@ Mods: {
 		common: {
 			Banner: " Banner"
 			Banner2: Nearby players get a bonus against:
+			R1: I
+			R2: II
+			R3: III
+			R4: IV
+			R5: V
+			VanillaValor: Vanilla Valor
+			SwirlySwarm: Swirly Swarm
+			StrawberryStrike: Strawberry Strike
+			ChocolateCharge: Chocolate Charge
+		}
+
+		SetBonus: {
+			CreamwoodHelmet: 1 defense
+			NeapoliniteMask:
+				'''
+				Every 80 damage dealt will increase critical strike chance by 2% for 5 seconds, 
+				once 10% critical strike chance has been reached defense is ignored when hitting 
+				a critical stike for 5 seconds.
+				'''
+			NeapoliniteHelmet:
+				'''
+				For every 10mph you go, damage is increased by 4% and critical strike chance
+				is increased by 2% which will last for 5 seconds.
+				This stacks up to 5 times.
+				'''
+			NeapoliniteHeadgear:
+				'''
+				For every 25 mana regenerated in 3 seconds a strawberry is summoned every second
+				for 5 seconds. These strawberries home in on enemies and damage for half of the
+				held item's damage.
+				Caps at 5 strawberries.
+				'''
+			NeapoliniteHat:
+				'''
+				Every 8 seconds without being hit a passive buff is given to the player capping at
+				5 strength. The first level will spawn a Swirl Minion that will clone one of the 
+				already spawned minions, the other 4 levels will both have one Swirl Minion and passive
+				increases to both whips and summons.
+				'''
 		}
 
 		Bestiary: {
@@ -568,6 +607,75 @@ Mods: {
 				DisplayName: Gummy Wisp Dye
 				Tooltip: ""
 			}
+
+			AncientNeapoliniteHat: {
+				DisplayName: Ancient Neapolinite Hat
+				Tooltip: "{$Mods.TheConfectionRebirth.Items.NeapoliniteHat.Tooltip}"
+			}
+
+			AncientNeapoliniteHeadgear: {
+				DisplayName: Ancient Neapolinite Headgear
+				Tooltip: "{$Mods.TheConfectionRebirth.Items.NeapoliniteHeadgear.Tooltip}"
+			}
+
+			AncientNeapoliniteHelmet: {
+				DisplayName: Ancient Neapolinite Helmet
+				Tooltip: "{$Mods.TheConfectionRebirth.Items.NeapoliniteHelmet.Tooltip}"
+			}
+
+			NeapoliniteConeMail: {
+				DisplayName: Neapolinite Cone Mail
+				Tooltip:
+					'''
+					5% increased critical strike chance
+					Changes falvor based on what helmet is worn
+					'''
+			}
+
+			NeapoliniteGreaves: {
+				DisplayName: Neapolinite Greaves
+				Tooltip:
+					'''
+					5% increased damage
+					7% increased movement speed
+					'''
+			}
+
+			NeapoliniteHat: {
+				DisplayName: Neapolinite Hat
+				Tooltip:
+					'''
+					8% increased summoner damage
+					Increases your max number of minions by 3
+					'''
+			}
+
+			NeapoliniteHeadgear: {
+				DisplayName: Neapolinite Headgear
+				Tooltip:
+					'''
+					6% increased magic damage
+					Increases maximum mana by 80
+					'''
+			}
+
+			NeapoliniteHelmet: {
+				DisplayName: Neapolinite Helmet
+				Tooltip:
+					'''
+					10% increased ranged damage
+					4% increased ranged critical strike chance
+					'''
+			}
+
+			NeapoliniteMask: {
+				DisplayName: Neapolinite Mask
+				Tooltip:
+					'''
+					7% increased melee damage 
+					Increases melee speed by 5%
+					'''
+			}
 		}
 
 		NPCs: {
@@ -592,6 +700,8 @@ Mods: {
 			RocketPop.DisplayName: Rocket Pop
 			RocketPopExplosion.DisplayName: Rocket Pop Explosion
 			HallowedGlobe.DisplayName: Hallowed Globe
+			StrawberryStrike.DisplayName: Strawberry
+			NeapoliniteCookies.DisplayName: Neapolinite Cookies
 		}
 
 		Configs: {
@@ -641,6 +751,106 @@ Mods: {
 			CookiestBlockBuff: {
 				DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"
 				Description: You can tell by all the extra cookie
+			}
+
+			VanillaValorI: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.VanillaValor} ({$Mods.TheConfectionRebirth.common.R1})"
+				Description: 2% increased critical strike chance
+			}
+
+			VanillaValorII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.VanillaValor} ({$Mods.TheConfectionRebirth.common.R2})"
+				Description: 4% increased critical strike chance
+			}
+
+			VanillaValorIII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.VanillaValor} ({$Mods.TheConfectionRebirth.common.R3})"
+				Description: 6% increased critical strike chance
+			}
+
+			VanillaValorIV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.VanillaValor} ({$Mods.TheConfectionRebirth.common.R4})"
+				Description: 8% increased critical strike chance
+			}
+
+			VanillaValorV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.VanillaValor} ({$Mods.TheConfectionRebirth.common.R5})"
+				Description: 10% increased critical strike chance and all melee crits ignore defense
+			}
+
+			ChocolateChargeI: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.ChocolateCharge} ({$Mods.TheConfectionRebirth.common.R1})"
+				Description: 4% increased ranged damage and 2% increased critical strike chance
+			}
+
+			ChocolateChargeII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.ChocolateCharge} ({$Mods.TheConfectionRebirth.common.R2})"
+				Description: 8% increased ranged damage and 4% increased critical strike chance
+			}
+
+			ChocolateChargeIII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.ChocolateCharge} ({$Mods.TheConfectionRebirth.common.R3})"
+				Description: 12% increased ranged damage and 6% increased critical strike chance
+			}
+
+			ChocolateChargeIV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.ChocolateCharge} ({$Mods.TheConfectionRebirth.common.R4})"
+				Description: 16% increased ranged damage and 8% increased critical strike chance
+			}
+
+			ChocolateChargeV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.ChocolateCharge} ({$Mods.TheConfectionRebirth.common.R5})"
+				Description: 20% increased ranged damage and 10% increased critical strike chance
+			}
+
+			StrawberryStrikeI: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.StrawberryStrike} ({$Mods.TheConfectionRebirth.common.R1})"
+				Description: Summons an attacking strawberry every second
+			}
+
+			StrawberryStrikeII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.StrawberryStrike} ({$Mods.TheConfectionRebirth.common.R2})"
+				Description: Summons two attacking strawberries every second
+			}
+
+			StrawberryStrikeIII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.StrawberryStrike} ({$Mods.TheConfectionRebirth.common.R3})"
+				Description: Summons three attacking strawberries every second
+			}
+
+			StrawberryStrikeIV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.StrawberryStrike} ({$Mods.TheConfectionRebirth.common.R4})"
+				Description: Summons four attacking strawberries every second
+			}
+
+			StrawberryStrikeV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.StrawberryStrike} ({$Mods.TheConfectionRebirth.common.R5})"
+				Description: Summons five attacking strawberries every second
+			}
+
+			SwirlySwarmI: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R1})"
+				Description: A chocolate swirl minion will fight for you
+			}
+
+			SwirlySwarmII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R2})"
+				Description: Summons a swirl minion and 10% increased whip speed
+			}
+
+			SwirlySwarmIII: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R3})"
+				Description: Summons a swirl minion, 10% increased whip speed and 5% increased summoner critical strike chance
+			}
+
+			SwirlySwarmIV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R4})"
+				Description: Summons a swirl minion, 20% increased whip speed and 10% increased summoner critical strike chance
+			}
+
+			SwirlySwarmV: {
+				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R5})"
+				Description: Summons a swirl summon and 20% increased whip speed, 10% increased summoner critical strike chance and damage
 			}
 		}
 

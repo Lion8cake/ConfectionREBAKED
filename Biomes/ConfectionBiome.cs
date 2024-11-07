@@ -5,6 +5,8 @@ using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
 using Terraria.ID;
+using Terraria.Graphics.Capture;
+using static Terraria.Graphics.Capture.CaptureBiome;
 
 namespace TheConfectionRebirth.Biomes;
 
@@ -160,6 +162,9 @@ public class ConfectionBiome : ModBiome
 	}
 
 	public override string BestiaryIcon => "TheConfectionRebirth/Biomes/BestiaryIcon1";
+
+	//public override TileColorStyle TileColorStyle => TileColorStyle.Confection;
+	//Why doesnt something like this exist, why must I have to IL edit to add my own tile colouring
 
 	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 125 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
 }

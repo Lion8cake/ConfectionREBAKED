@@ -37,6 +37,8 @@ using Iced.Intel;
 using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
 using Terraria.GameContent.ItemDropRules;
 using TheConfectionRebirth.Biomes;
+using static Terraria.Main;
+using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 
 namespace TheConfectionRebirth
 {
@@ -107,6 +109,7 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CountTiles += SettmodvilsandGoods;
 			On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
+			IL_Main.SetBackColor += ConfectionBiomeLightColor;
 		}
 
 		public override void Unload() {
@@ -151,7 +154,73 @@ namespace TheConfectionRebirth
 			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
 			On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
+			IL_Main.SetBackColor -= ConfectionBiomeLightColor;
 		}
+
+		#region BiomeColor
+		private void ConfectionBiomeLightColor(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(15), i => i.MatchStloc3());
+			c.EmitLdloca(1);
+			c.EmitLdarga(1);
+			c.EmitDelegate((ref Color bgColorToSet, ref Color sunColor) =>
+			{
+				float ConfectionBiomeInfluence = (float)ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount / (float)ConfectionBiomeTileCount.ConfectionTileMax;
+				if (ConfectionBiomeInfluence > 0f)
+				{
+					float num10 = ConfectionBiomeInfluence;
+					if (num10 > 1f)
+					{
+						num10 = 1f;
+					}
+					int r = bgColorToSet.R;
+					int g = bgColorToSet.G;
+					int b = bgColorToSet.B;
+					r -= (int)(10f * num10 * (bgColorToSet.R / 255f));
+					g -= (int)(60f * num10 * (bgColorToSet.G / 255f));
+					b -= (int)(40f * num10 * (bgColorToSet.B / 255f));
+					if (r < 15)
+					{
+						r = 15;
+					}
+					if (g < 15)
+					{
+						g = 15;
+					}
+					if (b < 15)
+					{
+						b = 15;
+					}
+					DontStarveSeed.FixBiomeDarkness(ref bgColorToSet, ref r, ref g, ref b);
+					bgColorToSet.R = (byte)r;
+					bgColorToSet.G = (byte)g;
+					bgColorToSet.B = (byte)b;
+					r = sunColor.R;
+					g = sunColor.G;
+					b = sunColor.B;
+					r -= (int)(100f * num10 * (sunColor.R / 255f));
+					g -= (int)(100f * num10 * (sunColor.G / 255f));
+					b -= (int)(0f * num10 * (sunColor.B / 255f));
+					if (r < 15)
+					{
+						r = 15;
+					}
+					if (g < 15)
+					{
+						g = 15;
+					}
+					if (b < 15)
+					{
+						b = 15;
+					}
+					sunColor.R = (byte)r;
+					sunColor.G = (byte)g;
+					sunColor.B = (byte)b;
+				}
+			});
+		}
+		#endregion
 
 		#region MapBackgroundColorFixer
 		private void On_Main_DrawMapFullscreenBackground(On_Main.orig_DrawMapFullscreenBackground orig, Vector2 screenPosition, int screenWidth, int screenHeight)

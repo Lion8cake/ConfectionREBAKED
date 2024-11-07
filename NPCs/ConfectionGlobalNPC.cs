@@ -9,13 +9,37 @@ using TheConfectionRebirth.ModSupport;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent.Personalities;
 
 namespace TheConfectionRebirth.NPCs
 {
 	public class ConfectionGlobalNPC : GlobalNPC
 	{
+		public override void SetStaticDefaults()
+		{
+			var nurseHappiness = NPCHappiness.Get(NPCID.Nurse);
+			var wizardHappiness = NPCHappiness.Get(NPCID.Wizard);
+			var partygirlHappiness = NPCHappiness.Get(NPCID.PartyGirl);
+			var tavernkeepHappiness = NPCHappiness.Get(NPCID.DD2Bartender);
+
+			var clothierHappiness = NPCHappiness.Get(NPCID.Clothier);
+			var witchdoctorHappiness = NPCHappiness.Get(NPCID.WitchDoctor);
+			var taxcollectorHappiness = NPCHappiness.Get(NPCID.TaxCollector);
+
+			nurseHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+			wizardHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+			partygirlHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+			tavernkeepHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Like);
+
+			clothierHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
+			witchdoctorHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
+			taxcollectorHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
+		}
+
 		#region Soul drop conditions
-		public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
+	public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
 		{
 			public bool CanDrop(DropAttemptInfo info)
 			{
@@ -376,6 +400,78 @@ namespace TheConfectionRebirth.NPCs
 				}
 			}
 			return null;
+		}
+
+		public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+		{
+			if (player.HasBuff(ModContent.BuffType<VanillaValorV>()) && !ConfectionIDs.Sets.IsEnemyVanillaCritImmune[npc.type])
+			{
+				modifiers.HideCombatText();
+				modifiers.Defense *= 0;
+			}
+		}
+		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+		{
+			if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()) && !ConfectionIDs.Sets.IsEnemyVanillaCritImmune[npc.type])
+			{
+				modifiers.HideCombatText();
+				modifiers.Defense *= 0;
+			}
+		}
+
+		public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
+		{
+			if (!ConfectionIDs.Sets.IsEnemyVanillaCritImmune[npc.type] && player.HasBuff(ModContent.BuffType<VanillaValorV>()))
+			{
+				if (hit.Crit)
+				{
+					Color color3 = new(230, 196, 125);
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color3, hit.Damage, true);
+				}
+				else
+				{
+					HitText(npc, hit);
+				}
+			}
+		}
+
+		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+		{
+			if (!ConfectionIDs.Sets.IsEnemyVanillaCritImmune[npc.type] && Main.player[projectile.owner].HasBuff(ModContent.BuffType<VanillaValorV>()))
+			{
+				if (hit.Crit)
+				{
+					Color color2 = new(230, 196, 125);
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color2, hit.Damage, true);
+				}
+				else
+				{
+					HitText(npc, hit);
+				}
+			}
+		}
+
+		private static void HitText(NPC npc, NPC.HitInfo hit)
+		{
+			double num = hit.Damage;
+			bool crit = hit.Crit;
+			if (hit.InstantKill)
+			{
+				num = ((npc.realLife > 0) ? Main.npc[npc.realLife].life : npc.life);
+			}
+			if (!hit.InstantKill && npc.lifeMax > 1 && !npc.HideStrikeDamage)
+			{
+				if (npc.friendly)
+				{
+					Color color = (crit ? CombatText.DamagedFriendlyCrit : CombatText.DamagedFriendly);
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color, (int)num, crit);
+				}
+				else
+				{
+					Color color2 = (crit ? CombatText.DamagedHostileCrit : CombatText.DamagedHostile);
+					CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color2, (int)num, crit);
+				}
+			}
 		}
 
 		public static Condition InConfection = new Condition("Mods.TheConfectionRebirth.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>());

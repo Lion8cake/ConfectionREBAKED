@@ -7,11 +7,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles.Trees;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using Terraria.Graphics.Shaders;
+using Terraria.ModLoader.IO;
+using TheConfectionRebirth.Items;
+using Terraria.DataStructures;
 
 namespace TheConfectionRebirth.Projectiles
 {
-	public class ConfectionGlobalProjectile : GlobalProjectile {
-
+	public class ConfectionGlobalProjectile : GlobalProjectile 
+	{
 		public override void AI(Projectile projectile) {
 			if (projectile.aiStyle == 6) {
 				bool flag23 = projectile.type == 1019;
@@ -98,6 +103,23 @@ namespace TheConfectionRebirth.Projectiles
 					NetMessage.SendData(MessageID.WorldData);
 				}
 			}
+		}
+
+		public override bool PreDraw(Projectile projectile, ref Color lightColor)
+		{
+			if (projectile.active)
+			{
+				Player player = Main.player[projectile.owner];
+				if (ConfectionPlayer.hasSwirlBuff(player))
+				{
+					if (player.GetModPlayer<ConfectionPlayer>().coneSummonID == projectile.whoAmI)
+					{
+						Main.instance.PrepareDrawnEntityDrawing(projectile, GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<SwirllingChocolateDye>()), projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
+						//Main.instance.PrepareDrawnEntityDrawing(projectile, GameShaders.Armor.GetShaderIdFromItemId(ItemID.RedAcidDye), projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
+					}
+				}
+			}
+			return true;
 		}
 	}
 }

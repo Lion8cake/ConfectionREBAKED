@@ -8,6 +8,9 @@ namespace TheConfectionRebirth.Biomes
     public class ConfectionBiomeTileCount : ModSystem
     {
         public int confectionBlockCount;
+
+		public static int ConfectionTileMax = 600;
+
         public int snowpylonConfectionCount;
 		public int desertpylonConfectionCount;
 

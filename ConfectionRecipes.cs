@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Weapons;
 
@@ -531,12 +532,77 @@ namespace TheConfectionRebirth
 			PastryBlockWall2.SortAfter(PastryBlockWall);
 			PastryBlockWall2.Register();
 
+			#region Neapolinite Creafting Group
 			//Neapolinite Bar
 			Recipe NeapoliniteBar = Recipe.Create(ModContent.ItemType<NeapoliniteBar>());
 			NeapoliniteBar.AddIngredient(ModContent.ItemType<NeapoliniteOre>(), 5);
 			NeapoliniteBar.AddTile(TileID.AdamantiteForge);
 			NeapoliniteBar.SortAfterFirstRecipesOf(ItemID.SuperStarCannon);
 			NeapoliniteBar.Register();
+
+			//Neapolinite Mask
+			Recipe NeapoliniteMask = Recipe.Create(ModContent.ItemType<NeapoliniteMask>());
+			NeapoliniteMask.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteMask.AddTile(TileID.MythrilAnvil);
+			NeapoliniteMask.SortAfter(NeapoliniteBar);
+			NeapoliniteMask.Register();
+
+			//Neapolinite Helmet
+			Recipe NeapoliniteHelmet = Recipe.Create(ModContent.ItemType<NeapoliniteHelmet>());
+			NeapoliniteHelmet.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteHelmet.AddTile(TileID.MythrilAnvil);
+			NeapoliniteHelmet.SortAfter(NeapoliniteMask);
+			NeapoliniteHelmet.Register();
+
+			//Neapolinite Headgear
+			Recipe NeapoliniteHeadgear = Recipe.Create(ModContent.ItemType<NeapoliniteHeadgear>());
+			NeapoliniteHeadgear.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteHeadgear.AddTile(TileID.MythrilAnvil);
+			NeapoliniteHeadgear.SortAfter(NeapoliniteHelmet);
+			NeapoliniteHeadgear.Register();
+
+			//Neapolinite Hat
+			Recipe NeapoliniteHat = Recipe.Create(ModContent.ItemType<NeapoliniteHat>());
+			NeapoliniteHat.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteHat.AddTile(TileID.MythrilAnvil);
+			NeapoliniteHat.SortAfter(NeapoliniteHeadgear);
+			NeapoliniteHat.Register();
+
+			//Neapolinite Cone Mail
+			Recipe NeapoliniteConeMail = Recipe.Create(ModContent.ItemType<NeapoliniteConeMail>());
+			NeapoliniteConeMail.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 24);
+			NeapoliniteConeMail.AddTile(TileID.MythrilAnvil);
+			NeapoliniteConeMail.SortAfter(NeapoliniteHat);
+			NeapoliniteConeMail.Register();
+
+			//Neapolinite Greaves
+			Recipe NeapoliniteGreaves = Recipe.Create(ModContent.ItemType<NeapoliniteGreaves>());
+			NeapoliniteGreaves.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 18);
+			NeapoliniteGreaves.AddTile(TileID.MythrilAnvil);
+			NeapoliniteGreaves.SortAfter(NeapoliniteConeMail);
+			NeapoliniteGreaves.Register();
+
+			//Ancient Neapolinite Helmet
+			Recipe AncientNeapoliniteHelmet = Recipe.Create(ModContent.ItemType<AncientNeapoliniteHelmet>());
+			AncientNeapoliniteHelmet.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			AncientNeapoliniteHelmet.AddTile(TileID.DemonAltar);
+			AncientNeapoliniteHelmet.SortAfter(NeapoliniteGreaves);
+			AncientNeapoliniteHelmet.Register();
+
+			//Anicent Neapolinite Headgear
+			Recipe AncientNeapoliniteHeadgear = Recipe.Create(ModContent.ItemType<AncientNeapoliniteHeadgear>());
+			AncientNeapoliniteHeadgear.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			AncientNeapoliniteHeadgear.AddTile(TileID.DemonAltar);
+			AncientNeapoliniteHeadgear.SortAfter(AncientNeapoliniteHelmet);
+			AncientNeapoliniteHeadgear.Register();
+
+			//Anicent Neapolinite Hat
+			Recipe AncientNeapoliniteHat = Recipe.Create(ModContent.ItemType<AncientNeapoliniteHat>());
+			AncientNeapoliniteHat.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			AncientNeapoliniteHat.AddTile(TileID.DemonAltar);
+			AncientNeapoliniteHat.SortAfter(AncientNeapoliniteHeadgear);
+			AncientNeapoliniteHat.Register();
+			#endregion
 
 			//Confection Torch
 			Recipe ConfectionTorch = Recipe.Create(ModContent.ItemType<ConfectionTorch>(), 3);

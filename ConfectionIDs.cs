@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace TheConfectionRebirth {
 	public class ConfectionIDs {
@@ -128,6 +129,11 @@ namespace TheConfectionRebirth {
 			/// <br/> Defaults to Null.
 			/// </summary>
 			public static Color?[] IsTileCreamMoss = TileID.Sets.Factory.CreateCustomSet<Color?>(null);
+
+			/// <summary>
+			/// Immunity for certain NPCs who shouldn't be effected by the Vanilla Valor defence ignoring capabilities.
+			/// </summary>
+			public static bool[] IsEnemyVanillaCritImmune = NPCID.Sets.Factory.CreateBoolSet(NPCID.DungeonGuardian);
 		}
 	}
 }
