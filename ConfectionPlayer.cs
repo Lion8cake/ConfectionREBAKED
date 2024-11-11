@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth
@@ -17,6 +18,8 @@ namespace TheConfectionRebirth
 	public class ConfectionPlayer : ModPlayer
 	{
 		public bool cookiestPet;
+
+		public bool SacchariteLashed;
 
 		public bool neapoliniteMelee;
 		public int meleeVanilla;
@@ -43,6 +46,8 @@ namespace TheConfectionRebirth
 		public override void ResetEffects()
 		{
 			cookiestPet = false;
+
+			SacchariteLashed = false;
 
 			if (!neapoliniteMelee)
 			{
@@ -84,6 +89,17 @@ namespace TheConfectionRebirth
 			neapoliniteMage = false;
 			neapoliniteSummoner = false;
 			neapolinitePowerLevel = 0;
+		}
+
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+		{
+			if (SacchariteLashed)
+			{
+				if (Main.rand.NextBool(4))
+				{
+					Dust.NewDust(Player.Center + new Vector2(Main.rand.NextFloat(-(Player.width / 2), Player.width / 2), Main.rand.NextFloat(-(Player.height / 2), Player.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
+				}
+			}
 		}
 
 		public override void PostUpdate()

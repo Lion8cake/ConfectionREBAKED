@@ -12,11 +12,41 @@ using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Personalities;
+using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Buffs;
 
 namespace TheConfectionRebirth.NPCs
 {
 	public class ConfectionGlobalNPC : GlobalNPC
 	{
+		public override bool InstancePerEntity => true;
+
+		public bool SacchariteLashed;
+
+		public override void ResetEffects(NPC npc)
+		{
+			SacchariteLashed = false;
+		}
+
+		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+		{
+			if (SacchariteLashed)
+			{
+				modifiers.Defense -= 4;
+			}
+		}
+
+		public override void DrawEffects(NPC npc, ref Color drawColor)
+		{
+			if (SacchariteLashed)
+			{
+				if (Main.rand.NextBool(4))
+				{
+					Dust.NewDust(npc.Center + new Vector2(Main.rand.NextFloat(-(npc.width / 2), npc.width / 2), Main.rand.NextFloat(-(npc.height / 2), npc.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
+				}
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			var nurseHappiness = NPCHappiness.Get(NPCID.Nurse);
@@ -417,6 +447,15 @@ namespace TheConfectionRebirth.NPCs
 				modifiers.HideCombatText();
 				modifiers.Defense *= 0;
 			}
+
+			if (!projectile.npcProj && !projectile.trap && projectile.IsMinionOrSentryRelated)
+			{
+				float projTagMultiplier = ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
+				if (npc.HasBuff<SacchariteLashTagDamage>())
+				{
+					modifiers.FlatBonusDamage += 10 * projTagMultiplier;
+				}
+			}
 		}
 
 		public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -547,6 +586,5 @@ namespace TheConfectionRebirth.NPCs
 				}, Condition.DownedPlantera);
 			}
 		}
-
 	}
 }

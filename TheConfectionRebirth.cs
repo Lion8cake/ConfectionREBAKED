@@ -1,17 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Tiles;
 using Terraria.ID;
 using MonoMod.Cil;
 using System.Reflection;
-using Terraria.ModLoader.Config;
 using Terraria.Utilities;
-using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
 using Terraria.Map;
 using TheConfectionRebirth.Tiles.Trees;
@@ -29,16 +24,14 @@ using Terraria.UI;
 using ReLogic.Content;
 using Terraria.GameContent.UI.States;
 using Terraria.IO;
-using static Terraria.UI.UIElement;
-using Steamworks;
 using Terraria.Localization;
-using static System.Net.Mime.MediaTypeNames;
-using Iced.Intel;
 using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
 using Terraria.GameContent.ItemDropRules;
 using TheConfectionRebirth.Biomes;
-using static Terraria.Main;
-using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using TheConfectionRebirth.Projectiles;
+using Terraria.Graphics;
+using TheConfectionRebirth.Items.Weapons;
+using static Terraria.Graphics.FinalFractalHelper;
 
 namespace TheConfectionRebirth
 {
@@ -52,7 +45,7 @@ namespace TheConfectionRebirth
 		private Asset<Texture2D> texOuterHallow;
 		private Asset<Texture2D> texOuterConfection;
 
-		private bool[] ZenithSeedWorlds = new bool[Array.MaxLength];
+		private bool[] ZenithSeedWorlds;
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
@@ -62,6 +55,10 @@ namespace TheConfectionRebirth
 				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
 				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
 			}
+
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
+			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
@@ -110,10 +107,17 @@ namespace TheConfectionRebirth
 			On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
 			IL_Main.SetBackColor += ConfectionBiomeLightColor;
+			IL_Projectile.Damage += CosmicCookieReflection;
+			On_Projectile.CanBeReflected += CosmicCookieCanBeReflect;
 		}
 
 		public override void Unload() {
 			ConfectionWindUtilities.Unload();
+
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
+			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
+
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
@@ -155,7 +159,37 @@ namespace TheConfectionRebirth
 			On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
 			IL_Main.SetBackColor -= ConfectionBiomeLightColor;
+			IL_Projectile.Damage -= CosmicCookieReflection;
+			On_Projectile.CanBeReflected -= CosmicCookieCanBeReflect;
 		}
+
+		#region Star Cannon Projectile addition
+		private bool CosmicCookieCanBeReflect(On_Projectile.orig_CanBeReflected orig, Projectile self)
+		{
+			if (self.active && self.friendly && !self.hostile && self.damage > 0)
+			{
+				if (self.type == ModContent.ProjectileType<CosmicCookie>())
+				{
+					return true;
+				}
+			}
+			return orig.Invoke(self);
+		}
+
+		private void CosmicCookieReflection(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel lable = c.DefineLabel();
+			c.GotoNext(MoveType.After, i => i.MatchLdarg0(), i => i.MatchLdfld<Projectile>("type"), i => i.MatchLdcI4(955), i => i.MatchBeq(out lable));
+			c.EmitLdarg0();
+			c.EmitLdfld(typeof(Projectile).GetField("type"));
+			c.EmitDelegate((int type) =>
+			{
+				return type == ModContent.ProjectileType<CosmicCookie>();
+			});
+			c.EmitBrtrue(lable);
+		}
+		#endregion
 
 		#region BiomeColor
 		private void ConfectionBiomeLightColor(ILContext il)

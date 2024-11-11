@@ -26,6 +26,14 @@ namespace TheConfectionRebirth
 			recipe2.AddTile(TileID.AdamantiteForge);
 			recipe2.SortBeforeFirstRecipesOf(ItemID.HallowedMask);
 			recipe2.Register();
+
+			Recipe recipe3 = Recipe.Create(ItemID.TerraBlade);
+			recipe3.AddIngredient(ItemID.TrueNightsEdge);
+			recipe3.AddIngredient(ModContent.ItemType<TrueSucrosa>());
+			recipe3.AddIngredient(ItemID.BrokenHeroSword);
+			recipe3.AddTile(TileID.MythrilAnvil);
+			recipe3.SortAfterFirstRecipesOf(ItemID.TerraBlade);
+			recipe3.Register();
 			#endregion
 
 			//Confection Recipes
@@ -602,6 +610,69 @@ namespace TheConfectionRebirth
 			AncientNeapoliniteHat.AddTile(TileID.DemonAltar);
 			AncientNeapoliniteHat.SortAfter(AncientNeapoliniteHeadgear);
 			AncientNeapoliniteHat.Register();
+
+			//Drixer
+			Recipe Drixer = Recipe.Create(ModContent.ItemType<Drixer>());
+			Drixer.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 18);
+			Drixer.AddIngredient(ItemID.SoulofSight);
+			Drixer.AddIngredient(ItemID.SoulofMight);
+			Drixer.AddIngredient(ItemID.SoulofFright);
+			Drixer.AddTile(TileID.MythrilAnvil);
+			Drixer.SortAfter(AncientNeapoliniteHat);
+			Drixer.Register();
+
+			//Pix
+			Recipe Pix = Recipe.Create(ModContent.ItemType<Pix>());
+			Pix.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 18);
+			Pix.AddIngredient(ItemID.SoulofSight);
+			Pix.AddIngredient(ItemID.SoulofMight);
+			Pix.AddIngredient(ItemID.SoulofFright);
+			Pix.AddTile(TileID.MythrilAnvil);
+			Pix.SortAfter(Drixer);
+			Pix.Register();
+
+			//Neapolinite Repeater
+			Recipe NeapoliniteRepeater = Recipe.Create(ModContent.ItemType<NeapoliniteRepeater>());
+			NeapoliniteRepeater.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteRepeater.AddTile(TileID.MythrilAnvil);
+			NeapoliniteRepeater.SortAfter(Pix);
+			NeapoliniteRepeater.Register();
+
+			//Sucrosa
+			Recipe Sucrosa = Recipe.Create(ModContent.ItemType<Sucrosa>());
+			Sucrosa.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			Sucrosa.AddTile(TileID.MythrilAnvil);
+			Sucrosa.SortAfter(NeapoliniteRepeater);
+			Sucrosa.Register();
+
+			//spear of cavendes
+			Recipe SpearofCavendes = Recipe.Create(ModContent.ItemType<SpearofCavendes>());
+			SpearofCavendes.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			SpearofCavendes.AddTile(TileID.MythrilAnvil);
+			SpearofCavendes.SortAfter(Sucrosa);
+			SpearofCavendes.Register();
+
+			//Neapolinite Jousting Lance
+			Recipe NeapoliniteJoustingLance = Recipe.Create(ModContent.ItemType<NeapoliniteJoustingLance>());
+			NeapoliniteJoustingLance.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			NeapoliniteJoustingLance.AddTile(TileID.MythrilAnvil);
+			NeapoliniteJoustingLance.SortAfter(SpearofCavendes);
+			NeapoliniteJoustingLance.Register();
+
+			//Saccharite Lash
+			Recipe SacchariteLash = Recipe.Create(ModContent.ItemType<SacchariteLash>());
+			SacchariteLash.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			SacchariteLash.AddTile(TileID.MythrilAnvil);
+			SacchariteLash.SortAfter(NeapoliniteJoustingLance);
+			SacchariteLash.Register();
+
+			//Cosmic Cookie Cannon
+			Recipe CosmicCookieCannon = Recipe.Create(ModContent.ItemType<CosmicCookieCannon>());
+			CosmicCookieCannon.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			CosmicCookieCannon.AddIngredient(ItemID.StarCannon, 1);
+			CosmicCookieCannon.AddTile(TileID.MythrilAnvil);
+			CosmicCookieCannon.SortAfter(SacchariteLash);
+			CosmicCookieCannon.Register();
 			#endregion
 
 			//Confection Torch
@@ -635,6 +706,14 @@ namespace TheConfectionRebirth
 			ShiftingCreamsandsDye.AddTile(TileID.DyeVat);
 			ShiftingCreamsandsDye.SortAfterFirstRecipesOf(ItemID.ShiftingPearlSandsDye);
 			ShiftingCreamsandsDye.Register();
+
+			//True Sucrosa
+			Recipe TrueSucrosa = Recipe.Create(ModContent.ItemType<TrueSucrosa>());
+			TrueSucrosa.AddIngredient<Sucrosa>();
+			TrueSucrosa.AddIngredient(ItemID.ChlorophyteBar, 24);
+			TrueSucrosa.AddTile(TileID.MythrilAnvil);
+			TrueSucrosa.SortAfterFirstRecipesOf(ItemID.TrueExcalibur);
+			TrueSucrosa.Register();
 		}
 	}
 }

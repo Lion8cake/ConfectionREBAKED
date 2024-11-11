@@ -676,6 +676,55 @@ Mods: {
 					Increases melee speed by 5%
 					'''
 			}
+
+			Drixer: {
+				DisplayName: Drixer
+				Tooltip: "'Not to be confused with a Drax'"
+			}
+
+			Pix: {
+				DisplayName: Pix
+				Tooltip: "'Not to be confused with a Paxel'"
+			}
+
+			NeapoliniteRepeater: {
+				DisplayName: Neapolinite Repeater
+				Tooltip: Shoots 3 arrows per shot
+			}
+
+			Sucrosa: {
+				DisplayName: Sucrosa
+				Tooltip: ""
+			}
+
+			SpearofCavendes: {
+				DisplayName: Spear of Cavendes
+				Tooltip: ""
+			}
+
+			NeapoliniteJoustingLance: {
+				DisplayName: Neapolinite Jousting Lance
+				Tooltip: "{$ItemTooltip.HallowJoustingLance}"
+			}
+
+			CosmicCookieCannon: {
+				DisplayName: Cosmic Cookie Cannon
+				Tooltip: "'But wait? Doesn't it shoot cosmic brownies instead?'"
+			}
+
+			SacchariteLash: {
+				DisplayName: Saccharite Lash
+				Tooltip:
+					'''
+					Your summons will focus stuck enemies
+					Shatters your foes' armour into pieces
+					'''
+			}
+
+			TrueSucrosa: {
+				DisplayName: True Sucrosa
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -702,6 +751,16 @@ Mods: {
 			HallowedGlobe.DisplayName: Hallowed Globe
 			StrawberryStrike.DisplayName: Strawberry
 			NeapoliniteCookies.DisplayName: Neapolinite Cookies
+			Drixer.DisplayName: "{$Mods.TheConfectionRebirth.Items.Drixer.DisplayName}"
+			SucrosaSlash.DisplayName: Sucrosa Slash
+			SpearofCavendes.DisplayName: Spearof Cavendes
+			SpearofCavendesBannana.DisplayName: Spearof Cavendes Bannana
+			NeapoliniteJoustingLance.DisplayName: Neapolinite Jousting Lance
+			CosmicCookie.DisplayName: Cosmic Brownie
+			SacchariteLash.DisplayName: Saccharite Lash
+			CosmicBrownie.DisplayName: Cosmic Neapolinite Star
+			TrueSucrosaBolt.DisplayName: True Sucrosa Bolt
+			TrueSucrosaSlash.DisplayName: True Sucrosa Slash
 		}
 
 		Configs: {
@@ -851,6 +910,16 @@ Mods: {
 			SwirlySwarmV: {
 				DisplayName: "{$Mods.TheConfectionRebirth.common.SwirlySwarm} ({$Mods.TheConfectionRebirth.common.R5})"
 				Description: Summons a swirl summon and 20% increased whip speed, 10% increased summoner critical strike chance and damage
+			}
+
+			SmashingLash: {
+				DisplayName: Smashing Lash
+				Description: Reduced defense
+			}
+
+			SacchariteLashTagDamage: {
+				DisplayName: Saccharite Lash NPC Debuff
+				Description: Saccharite Lash NPC Debuff
 			}
 		}
 
