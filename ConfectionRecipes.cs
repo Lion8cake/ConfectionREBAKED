@@ -714,6 +714,17 @@ namespace TheConfectionRebirth
 			TrueSucrosa.AddTile(TileID.MythrilAnvil);
 			TrueSucrosa.SortAfterFirstRecipesOf(ItemID.TrueExcalibur);
 			TrueSucrosa.Register();
+
+			#region Mech Confection Items Crafting Group
+			//Candlelighter
+			Recipe Candlelighter = Recipe.Create(ModContent.ItemType<Candlelighter>());
+			Candlelighter.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			Candlelighter.AddIngredient(ItemID.IllegalGunParts);
+			Candlelighter.AddIngredient(ItemID.SoulofFright, 20);
+			Candlelighter.AddTile(TileID.MythrilAnvil);
+			Candlelighter.SortAfterFirstRecipesOf(ItemID.FairyBell);
+			Candlelighter.Register();
+			#endregion
 		}
 	}
 }

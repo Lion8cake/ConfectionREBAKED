@@ -55,6 +55,18 @@ Mods: {
 			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
 		}
 
+		PlayerDeathReason: {
+			CandleFire: {
+				0: "{0} had thier skin melted off like wax."
+				1: "{0} didn't blow out the candle fast enough."
+				2: "{0} got lit like a candle."
+				3: "{0} went up in candle flames."
+				4: "{0} ran out of themselves to melt"
+				5: "{0} got placed on the cake top."
+				6: "{0} burnt all up."
+			}
+		}
+
 		Tiles: {
 			CreamSapling.MapEntry: Cream Sapling
 			CreamSnowSapling.MapEntry: Cream Snow Sapling
@@ -725,6 +737,17 @@ Mods: {
 				DisplayName: True Sucrosa
 				Tooltip: ""
 			}
+
+			Candlelighter: {
+				DisplayName: Candlelighter
+				Tooltip:
+					'''
+					'Yes, it's the tricky kind'
+					Uses gel as ammo
+					Ignites enemies, these flames will flicker occasionally.
+					Although the flames wont go out unless smuthered in water.
+					'''
+			}
 		}
 
 		NPCs: {
@@ -761,6 +784,7 @@ Mods: {
 			CosmicBrownie.DisplayName: Cosmic Neapolinite Star
 			TrueSucrosaBolt.DisplayName: True Sucrosa Bolt
 			TrueSucrosaSlash.DisplayName: True Sucrosa Slash
+			CandleFlames.DisplayName: Candle Flames
 		}
 
 		Configs: {
@@ -920,6 +944,11 @@ Mods: {
 			SacchariteLashTagDamage: {
 				DisplayName: Saccharite Lash NPC Debuff
 				Description: Saccharite Lash NPC Debuff
+			}
+
+			HumanCandle: {
+				DisplayName: Human Candle
+				Description: The flames flicker on and off ocasionally. Water should put it out!
 			}
 		}
 

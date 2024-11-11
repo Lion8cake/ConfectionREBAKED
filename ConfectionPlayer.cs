@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+using TheConfectionRebirth.Buffs;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Projectiles;
@@ -20,6 +24,8 @@ namespace TheConfectionRebirth
 		public bool cookiestPet;
 
 		public bool SacchariteLashed;
+		public bool candleFire;
+		public int candleFlameDelay = 0;
 
 		public bool neapoliniteMelee;
 		public int meleeVanilla;
@@ -47,8 +53,13 @@ namespace TheConfectionRebirth
 		{
 			cookiestPet = false;
 
+			if (!candleFire)
+			{
+				candleFlameDelay = 0;
+			}
 			SacchariteLashed = false;
-
+			candleFire = false;
+			
 			if (!neapoliniteMelee)
 			{
 				vanillaValorDamage = 0;
@@ -91,14 +102,70 @@ namespace TheConfectionRebirth
 			neapolinitePowerLevel = 0;
 		}
 
+		public override void UpdateDead()
+		{
+			SacchariteLashed = false;
+			candleFire = false;
+		}
+
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
 		{
 			if (SacchariteLashed)
 			{
 				if (Main.rand.NextBool(4))
 				{
-					Dust.NewDust(Player.Center + new Vector2(Main.rand.NextFloat(-(Player.width / 2), Player.width / 2), Main.rand.NextFloat(-(Player.height / 2), Player.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
+					int dust = Dust.NewDust(Player.Center + new Vector2(Main.rand.NextFloat(-(Player.width / 2), Player.width / 2), Main.rand.NextFloat(-(Player.height / 2), Player.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
+					drawInfo.DustCache.Add(dust);
 				}
+			}
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (Main.rand.Next(4) < 3)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X - 2f, Player.position.Y - 2f), Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+					dust.noGravity = true;
+					dust.velocity *= 1.8f;
+					dust.velocity.Y -= 0.5f;
+					if (Main.rand.NextBool(4))
+					{
+						dust.noGravity = false;
+						dust.scale *= 0.5f;
+					}
+					drawInfo.DustCache.Add(dust.dustIndex);
+				}
+				Lighting.AddLight((int)(Player.position.X / 16f), (int)(Player.position.Y / 16f + 1f), 1f, 0.3f, 0.1f);
+			}
+		}
+
+		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		{
+			if (candleFire)
+			{
+				WeightedRandom<string> deathmessage = new();
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.0", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.1", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.2", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.3", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.4", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.5", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.6", Player.name));
+				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+				return true;
+			}
+			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+		}
+
+
+		public override void UpdateBadLifeRegen()
+		{
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (Player.lifeRegen > 0)
+				{
+					Player.lifeRegen = 0;
+				}
+				Player.lifeRegenTime = 0f;
+				Player.lifeRegen -= 8;
 			}
 		}
 
@@ -273,6 +340,18 @@ namespace TheConfectionRebirth
 						Projectile.NewProjectile(new EntitySource_Misc(""), Player.Center, Vector2.Zero, ModContent.ProjectileType<NeapoliniteCookies>(), 0, 0, Player.whoAmI, j);
 					}
 				}
+			}
+			if (candleFire && Collision.WetCollision(Player.position, Player.width, Player.height))
+			{
+				Player.ClearBuff(ModContent.BuffType<HumanCandle>());
+			}
+			if (candleFire && Main.rand.NextBool(200))
+			{
+				candleFlameDelay = Main.rand.Next(40, 100);
+			}
+			if (candleFlameDelay > 0)
+			{
+				candleFlameDelay--;
 			}
 		}
 

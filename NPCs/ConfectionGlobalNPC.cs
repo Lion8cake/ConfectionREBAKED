@@ -22,10 +22,44 @@ namespace TheConfectionRebirth.NPCs
 		public override bool InstancePerEntity => true;
 
 		public bool SacchariteLashed;
+		public bool candleFire;
+		public int candleFlameDelay = 0;
 
 		public override void ResetEffects(NPC npc)
 		{
+			if (!candleFire)
+			{
+				candleFlameDelay = 0;
+			}
 			SacchariteLashed = false;
+			candleFire = false;
+
+			if (npc.noTileCollide)
+			{
+				if (candleFire && npc.boss && Main.netMode != NetmodeID.MultiplayerClient && Collision.WetCollision(npc.position, npc.width, npc.height))
+				{
+					for (int k = 0; k < NPC.maxBuffs; k++)
+					{
+						if (npc.buffType[k] == ModContent.BuffType<HumanCandle>())
+						{
+							npc.DelBuff(k);
+						}
+					}
+				}
+			}
+			else
+			{
+				if (candleFire && Main.netMode != NetmodeID.MultiplayerClient && Collision.WetCollision(npc.position, npc.width, npc.height))
+				{
+					for (int k = 0; k < NPC.maxBuffs; k++)
+					{
+						if (npc.buffType[k] == ModContent.BuffType<HumanCandle>())
+						{
+							npc.DelBuff(k);
+						}
+					}
+				}
+			}
 		}
 
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
@@ -45,6 +79,59 @@ namespace TheConfectionRebirth.NPCs
 					Dust.NewDust(npc.Center + new Vector2(Main.rand.NextFloat(-(npc.width / 2), npc.width / 2), Main.rand.NextFloat(-(npc.height / 2), npc.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
 				}
 			}
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (Main.rand.Next(4) < 3)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Torch, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+					dust.noGravity = true;
+					dust.velocity *= 1.8f;
+					dust.velocity.Y -= 0.5f;
+					if (Main.rand.NextBool(4))
+					{
+						dust.noGravity = false;
+						dust.scale *= 0.5f;
+					}
+				}
+				Lighting.AddLight((int)(npc.position.X / 16f), (int)(npc.position.Y / 16f + 1f), 1f, 0.3f, 0.1f);
+			}
+		}
+
+		public override void UpdateLifeRegen(NPC npc, ref int damage)
+		{
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 8;
+			}
+			if (npc.oiled && candleFire && candleFlameDelay <= 0)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 50;
+				if (damage < 10)
+				{
+					damage = 10;
+				}
+			}
+		}
+
+		public override bool PreAI(NPC npc)
+		{
+			if (candleFire && Main.rand.NextBool(200))
+			{
+				candleFlameDelay = Main.rand.Next(40, 100);
+			}
+			if (candleFlameDelay > 0)
+			{
+				candleFlameDelay--;
+			}
+			return true;
 		}
 
 		public override void SetStaticDefaults()
