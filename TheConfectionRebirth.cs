@@ -45,7 +45,7 @@ namespace TheConfectionRebirth
 		private Asset<Texture2D> texOuterHallow;
 		private Asset<Texture2D> texOuterConfection;
 
-		private bool[] ZenithSeedWorlds;
+		private Dictionary<int, bool> ZenithSeedWorlds = new Dictionary<int, bool>();
 
 		public override void Load() {
 			ConfectionWindUtilities.Load();
@@ -634,6 +634,10 @@ namespace TheConfectionRebirth
 					int _glitchVariation = (int)typeof(AWorldListItem).GetField("_glitchVariation", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
 					int _glitchFrame = (int)typeof(AWorldListItem).GetField("_glitchFrame", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
 					int _glitchFrameCounter = (int)typeof(AWorldListItem).GetField("_glitchFrameCounter", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+					if (!ZenithSeedWorlds.ContainsKey(worldIcon.UniqueId))
+					{
+						ZenithSeedWorlds.Add(worldIcon.UniqueId, false);
+					}
 					if (_glitchFrame == 0 && _glitchFrameCounter == 0 && _glitchVariation < 3)
 					{
 						ZenithSeedWorlds[worldIcon.UniqueId] = Main.rand.NextBool(2);

@@ -26,12 +26,13 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnSpawn(IEntitySource source)
 		{
-			Projectile.localAI[0] = Projectile.position.X;
-			Projectile.localAI[1] = Projectile.position.Y;
+			Projectile.localAI[0] = Projectile.Center.X;
+			Projectile.localAI[1] = Projectile.Center.Y;
 			Projectile.localAI[2] = 20;
-			SoundStyle style = SoundID.Item29;
-			style.Volume = 0.25f;
-			SoundEngine.PlaySound(style, Projectile.position);
+			SoundEngine.PlaySound(SoundID.Item29 with
+			{
+				Volume = 0.25f
+			}, Projectile.position);
 		}
 
 		public override void AI()

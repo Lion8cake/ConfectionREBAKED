@@ -18,6 +18,10 @@ namespace TheConfectionRebirth.Dusts
 			{
 				dust.velocity.Y += 0.05f;
 			}
+			else
+			{
+				dust.velocity.Y = 0f;
+			}
 			if (!dust.noLight && !dust.noLightEmittence)
 			{
 				float num66 = dust.scale * 1.4f;

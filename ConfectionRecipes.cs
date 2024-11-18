@@ -716,14 +716,65 @@ namespace TheConfectionRebirth
 			TrueSucrosa.Register();
 
 			#region Mech Confection Items Crafting Group
+			//Trifle
+			Recipe Trifle = Recipe.Create(ModContent.ItemType<Trifle>());
+			Trifle.AddIngredient(ItemID.ClockworkAssaultRifle);
+			Trifle.AddIngredient(ItemID.IllegalGunParts);
+			Trifle.AddIngredient<SoulofDelight>(15);
+			Trifle.AddIngredient<Sprinkles>(20);
+			Trifle.AddIngredient(ItemID.SoulofMight, 20);
+			Trifle.AddTile(TileID.MythrilAnvil);
+			Trifle.SortAfterFirstRecipesOf(ItemID.FairyBell);
+			Trifle.Register();
+
+			//Bakers Dozen
+			Recipe BakersDozen = Recipe.Create(ModContent.ItemType<BakersDozen>());
+			BakersDozen.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 20);
+			BakersDozen.AddIngredient(ModContent.ItemType<SoulofDelight>(), 15);
+			BakersDozen.AddIngredient(ItemID.SoulofMight, 25);
+			BakersDozen.AddTile(TileID.MythrilAnvil);
+			BakersDozen.SortAfter(Trifle);
+			BakersDozen.Register();
+
 			//Candlelighter
 			Recipe Candlelighter = Recipe.Create(ModContent.ItemType<Candlelighter>());
 			Candlelighter.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
 			Candlelighter.AddIngredient(ItemID.IllegalGunParts);
 			Candlelighter.AddIngredient(ItemID.SoulofFright, 20);
 			Candlelighter.AddTile(TileID.MythrilAnvil);
-			Candlelighter.SortAfterFirstRecipesOf(ItemID.FairyBell);
+			Candlelighter.SortAfter(BakersDozen);
 			Candlelighter.Register();
+
+			//Roller Cookie Staff
+			Recipe SweetStaff = Recipe.Create(ModContent.ItemType<SweetStaff>());
+			//SweetStaff.AddIngredient(ModContent.ItemType<ChocolateChunk>(), 1);
+			SweetStaff.AddIngredient(ModContent.ItemType<CookieDough>(), 10);
+			SweetStaff.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
+			SweetStaff.AddIngredient(ItemID.SoulofSight, 20);
+			SweetStaff.AddTile(TileID.MythrilAnvil);
+			SweetStaff.SortAfter(Candlelighter);
+			SweetStaff.Register();
+
+			//Icecream Bell
+			Recipe IcecreamBell = Recipe.Create(ModContent.ItemType<IcecreamBell>());
+			IcecreamBell.AddIngredient(ModContent.ItemType<Saccharite>(), 50);
+			IcecreamBell.AddIngredient(ModContent.ItemType<SoulofDelight>(), 12);
+			IcecreamBell.AddIngredient(ItemID.SoulofSight, 20);
+			IcecreamBell.AddIngredient(ItemID.Bell);
+			IcecreamBell.AddTile(TileID.MythrilAnvil);
+			IcecreamBell.SortAfter(SweetStaff);
+			IcecreamBell.Register();
+
+			//Cream Beam
+			Recipe CreamBeam = Recipe.Create(ModContent.ItemType<CreamBeam>());
+			CreamBeam.AddIngredient(ItemID.SoulofSight, 20);
+			CreamBeam.AddIngredient(ModContent.ItemType<SoulofDelight>(), 10);
+			CreamBeam.AddIngredient(ModContent.ItemType<Sprinkles>(), 60);
+			CreamBeam.AddIngredient(ModContent.ItemType<CookieDough>(), 6);
+			CreamBeam.AddIngredient(ModContent.ItemType<Saccharite>(), 60);
+			CreamBeam.AddTile(TileID.MythrilAnvil);
+			CreamBeam.SortAfter(IcecreamBell);
+			CreamBeam.Register();
 			#endregion
 		}
 	}

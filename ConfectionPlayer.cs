@@ -49,6 +49,8 @@ namespace TheConfectionRebirth
 
 		public int neapolinitePowerLevel;
 
+		public int bakersDozenHitCount = 0;
+
 		public override void ResetEffects()
 		{
 			cookiestPet = false;

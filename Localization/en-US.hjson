@@ -748,6 +748,36 @@ Mods: {
 					Although the flames wont go out unless smuthered in water.
 					'''
 			}
+
+			Trifle: {
+				DisplayName: Trifle
+				Tooltip: ""
+			}
+
+			BakersDozen: {
+				DisplayName: Baker's Dozen
+				Tooltip: Every 13 hits, the weapon hits 5 more times
+			}
+
+			SweetStaff: {
+				DisplayName: Sweet Staff
+				Tooltip: Summons roller cookies to fight for you
+			}
+
+			CookieDough: {
+				DisplayName: Cookie Dough
+				Tooltip: "'Let's bake some cookies!'"
+			}
+
+			IcecreamBell: {
+				DisplayName: Icecream Bell
+				Tooltip: ""
+			}
+
+			CreamBeam: {
+				DisplayName: Cream Beam
+				Tooltip: Fires a homing chocolate cream beam that splits twice
+			}
 		}
 
 		NPCs: {
@@ -768,9 +798,8 @@ Mods: {
 			SugarPowder.DisplayName: Sugar Powder
 			SugarWaterBottle.DisplayName: Sugar Water Bottle
 			CookiestCookieBlock.DisplayName: "{$Mods.TheConfectionRebirth.Items.CookiestBlock.DisplayName}"
-			PopRocket.DisplayName: Pop Rocket
 			RocketPop.DisplayName: Rocket Pop
-			RocketPopExplosion.DisplayName: Rocket Pop Explosion
+			RocketPopExplosion.DisplayName: Rocket Pop
 			HallowedGlobe.DisplayName: Hallowed Globe
 			StrawberryStrike.DisplayName: Strawberry
 			NeapoliniteCookies.DisplayName: Neapolinite Cookies
@@ -785,6 +814,11 @@ Mods: {
 			TrueSucrosaBolt.DisplayName: True Sucrosa Bolt
 			TrueSucrosaSlash.DisplayName: True Sucrosa Slash
 			CandleFlames.DisplayName: Candle Flames
+			BakersDozen.DisplayName: Bakers Dozen
+			BakersDozenSlash.DisplayName: Bakers Dozen Slash
+			RollerCookieSummon.DisplayName: Roller Cookie
+			IcecreamBall.DisplayName: Icecream Ball
+			CreamBolt.DisplayName: Chocolate Cream Beam
 		}
 
 		Configs: {
@@ -950,6 +984,11 @@ Mods: {
 				DisplayName: Human Candle
 				Description: The flames flicker on and off ocasionally. Water should put it out!
 			}
+
+			RollerCookieBuff: {
+				DisplayName: Roller Cookie
+				Description: The roller cookie will fight for you.
+			}
 		}
 
 		DryadSpecialText: {
@@ -984,40 +1023,40 @@ Mods: {
 			}
 		}
 
-		InConfection: Mods.TheConfectionRebirth.InConfection
-		NotInConfection: Mods.TheConfectionRebirth.NotInConfection
-		TheConfection: Mods.TheConfectionRebirth.TheConfection
-		TheHallow: Mods.TheConfectionRebirth.TheHallow
+		InConfection: In the Confection
+		NotInConfection: Not in the Confection
+		TheConfection: Confection
+		TheHallow: Hallow
 
 		Biomes: {
 			ConfectionBiome: {
-				DisplayName: Confection Biome
-				TownNPCDialogueName: the Confection Biome
+				DisplayName: the Confection
+				TownNPCDialogueName: The Confection
 			}
 
 			ConfectionUndergroundBiome: {
-				DisplayName: Confection Underground Biome
-				TownNPCDialogueName: the Confection Underground Biome
+				DisplayName: BestiaryUndergroundConfectionUnused
+				TownNPCDialogueName: unused
 			}
 
 			IceConfectionSurfaceBiome: {
-				DisplayName: Ice Confection Surface Biome
-				TownNPCDialogueName: the Ice Confection Surface Biome
+				DisplayName: BestiaryIceConfectionUnused
+				TownNPCDialogueName: unused
 			}
 
 			IceConfectionUndergroundBiome: {
-				DisplayName: Ice Confection Underground Biome
-				TownNPCDialogueName: the Ice Confection Underground Biome
+				DisplayName: BestiaryIceUndergroundConfectionUnused
+				TownNPCDialogueName: unused
 			}
 
 			SandConfectionSurfaceBiome: {
-				DisplayName: Sand Confection Surface Biome
-				TownNPCDialogueName: the Sand Confection Surface Biome
+				DisplayName: BestiarySandConfectionUnused
+				TownNPCDialogueName: unused
 			}
 
 			SandConfectionUndergroundBiome: {
-				DisplayName: Sand Confection Underground Biome
-				TownNPCDialogueName: the Sand Confection Underground Biome
+				DisplayName: BestiarySandUndergroundConfectionUnused
+				TownNPCDialogueName: unused
 			}
 		}
 
