@@ -10,6 +10,43 @@ namespace TheConfectionRebirth
 {
 	public class ConfectionRecipes : ModSystem
 	{
+		public override void PostAddRecipes()
+		{
+			for (int i = 0; i < Recipe.numRecipes; i++)
+			{
+				Recipe recipe = Main.recipe[i];
+				//if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer))
+				//{
+				//	recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
+				//}
+				if (recipe.HasResult(ItemID.GoldenShower) && recipe.HasIngredient(ItemID.SoulofNight))
+				{
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 15);
+				}
+				if (recipe.HasResult(4142) && recipe.HasIngredient(ItemID.SoulofNight))
+				{
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 10);
+				}
+				if (recipe.HasResult(ItemID.MechanicalWorm) && recipe.HasIngredient(ItemID.SoulofNight) && recipe.HasIngredient(ItemID.Vertebrae))
+				{
+					recipe.RemoveIngredient(ItemID.SoulofNight);
+					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 6);
+				}
+
+				if (recipe.HasResult(ItemID.Megashark))
+				{
+					recipe.AddIngredient(ItemID.SoulofLight, 15);
+				}
+				if (recipe.HasResult(ItemID.Flamethrower))
+				{
+					recipe.RemoveIngredient(ItemID.IronBar);
+					recipe.AddIngredient(ItemID.HallowedBar, 12);
+				}
+			}
+		}
+
 		public override void AddRecipes()
 		{
 			#region Vanilla Item Recipes
@@ -747,7 +784,7 @@ namespace TheConfectionRebirth
 
 			//Roller Cookie Staff
 			Recipe SweetStaff = Recipe.Create(ModContent.ItemType<SweetStaff>());
-			//SweetStaff.AddIngredient(ModContent.ItemType<ChocolateChunk>(), 1);
+			SweetStaff.AddIngredient(ModContent.ItemType<ChocolateChunk>(), 1);
 			SweetStaff.AddIngredient(ModContent.ItemType<CookieDough>(), 10);
 			SweetStaff.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 12);
 			SweetStaff.AddIngredient(ItemID.SoulofSight, 20);
@@ -757,24 +794,34 @@ namespace TheConfectionRebirth
 
 			//Icecream Bell
 			Recipe IcecreamBell = Recipe.Create(ModContent.ItemType<IcecreamBell>());
-			IcecreamBell.AddIngredient(ModContent.ItemType<Saccharite>(), 50);
-			IcecreamBell.AddIngredient(ModContent.ItemType<SoulofDelight>(), 12);
-			IcecreamBell.AddIngredient(ItemID.SoulofSight, 20);
 			IcecreamBell.AddIngredient(ItemID.Bell);
+			IcecreamBell.AddIngredient(ModContent.ItemType<Saccharite>(), 20);
+			IcecreamBell.AddIngredient(ModContent.ItemType<SoulofDelight>(), 8);
+			IcecreamBell.AddIngredient(ItemID.SoulofSight, 15);
 			IcecreamBell.AddTile(TileID.MythrilAnvil);
 			IcecreamBell.SortAfter(SweetStaff);
 			IcecreamBell.Register();
 
 			//Cream Beam
 			Recipe CreamBeam = Recipe.Create(ModContent.ItemType<CreamBeam>());
-			CreamBeam.AddIngredient(ItemID.SoulofSight, 20);
-			CreamBeam.AddIngredient(ModContent.ItemType<SoulofDelight>(), 10);
-			CreamBeam.AddIngredient(ModContent.ItemType<Sprinkles>(), 60);
-			CreamBeam.AddIngredient(ModContent.ItemType<CookieDough>(), 6);
-			CreamBeam.AddIngredient(ModContent.ItemType<Saccharite>(), 60);
+			CreamBeam.AddIngredient(ModContent.ItemType<Saccharite>(), 10);
+			CreamBeam.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
+			CreamBeam.AddIngredient(ModContent.ItemType<Sprinkles>(), 10);
+			CreamBeam.AddIngredient(ModContent.ItemType<SoulofDelight>(), 8);
+			CreamBeam.AddIngredient(ItemID.SoulofSight, 10);
 			CreamBeam.AddTile(TileID.MythrilAnvil);
 			CreamBeam.SortAfter(IcecreamBell);
 			CreamBeam.Register();
+
+			//Magical Kazoo
+			Recipe MagicalKazoo = Recipe.Create(ModContent.ItemType<MagicalKazoo>());
+			MagicalKazoo.AddIngredient(ModContent.ItemType<Kazoo>(), 1);
+			MagicalKazoo.AddIngredient(ModContent.ItemType<Sprinkles>(), 25);
+			MagicalKazoo.AddIngredient(ModContent.ItemType<SoulofDelight>(), 8);
+			MagicalKazoo.AddIngredient(ItemID.SoulofSight, 15);
+			MagicalKazoo.AddTile(TileID.MythrilAnvil);
+			MagicalKazoo.SortAfter(CreamBeam);
+			MagicalKazoo.Register();
 			#endregion
 		}
 	}

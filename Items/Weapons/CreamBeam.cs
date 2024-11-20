@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Item.staff[Item.type] = true;
+            Item.staff[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 

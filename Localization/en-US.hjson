@@ -778,6 +778,16 @@ Mods: {
 				DisplayName: Cream Beam
 				Tooltip: Fires a homing chocolate cream beam that splits twice
 			}
+
+			MagicalKazoo: {
+				DisplayName: Magical Kazoo
+				Tooltip: Summons a magical birdnana
+			}
+
+			ChocolateChunk: {
+				DisplayName: Chocolate Chunk
+				Tooltip: Summons a Rollercookie pet
+			}
 		}
 
 		NPCs: {
@@ -819,6 +829,8 @@ Mods: {
 			RollerCookieSummon.DisplayName: Roller Cookie
 			IcecreamBall.DisplayName: Icecream Ball
 			CreamBolt.DisplayName: Chocolate Cream Beam
+			BirdnanaLightPet.DisplayName: Birdnana Light Pet
+			RollerCookiePet.DisplayName: Roller Cookie Pet
 		}
 
 		Configs: {
@@ -988,6 +1000,16 @@ Mods: {
 			RollerCookieBuff: {
 				DisplayName: Roller Cookie
 				Description: The roller cookie will fight for you.
+			}
+
+			BirdnanaLightPetBuff: {
+				DisplayName: Shiny Birdnana
+				Description: A glowing birdnana is following you
+			}
+
+			RollerCookiePetBuff: {
+				DisplayName: Roller Cookie
+				Description: A little Rollercookie is rolling around with you
 			}
 		}
 

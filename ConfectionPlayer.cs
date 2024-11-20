@@ -22,6 +22,8 @@ namespace TheConfectionRebirth
 	public class ConfectionPlayer : ModPlayer
 	{
 		public bool cookiestPet;
+		public bool lightnana;
+		public bool rollerCookiePet;
 
 		public bool SacchariteLashed;
 		public bool candleFire;
@@ -54,6 +56,8 @@ namespace TheConfectionRebirth
 		public override void ResetEffects()
 		{
 			cookiestPet = false;
+			lightnana = false;
+			rollerCookiePet = false;
 
 			if (!candleFire)
 			{
