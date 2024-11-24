@@ -1001,11 +1001,16 @@ namespace TheConfectionRebirth
 			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.ConfectionBanners>()) {
 				sizeY = 3;
 			}
-			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) {
 				sizeX = 3;
 				sizeY = 3;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodLantern>())
+			{
+				sizeX = 1;
+				sizeY = 2;
+			}
+			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) {
 				sizeX = 3;
 				sizeY = 3;
 			}

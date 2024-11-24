@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Placeable;
+using TheConfectionRebirth.Items.Placeable.Furniture;
 using TheConfectionRebirth.Items.Weapons;
 
 namespace TheConfectionRebirth
@@ -45,6 +46,13 @@ namespace TheConfectionRebirth
 					recipe.AddIngredient(ItemID.HallowedBar, 12);
 				}
 			}
+		}
+
+		public override void AddRecipeGroups()
+		{
+			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<CreamWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Cherimoya>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<CocoaBeans>());
 		}
 
 		public override void AddRecipes()
@@ -823,6 +831,245 @@ namespace TheConfectionRebirth
 			MagicalKazoo.SortAfter(CreamBeam);
 			MagicalKazoo.Register();
 			#endregion
+
+			AddCreamWoodFurnitureArmorAndItems();
+
+			//Creamwood Platform
+			Recipe CreamwoodPlatform = Recipe.Create(ModContent.ItemType<CreamwoodPlatform>(), 2);
+			CreamwoodPlatform.AddIngredient(ModContent.ItemType<CreamWood>(), 1);
+			CreamwoodPlatform.SortAfterFirstRecipesOf(ItemID.EchoPlatform);
+			CreamwoodPlatform.Register();
+
+			Recipe CreamWood = Recipe.Create(ModContent.ItemType<CreamWood>());
+			CreamWood.AddIngredient(ModContent.ItemType<CreamwoodPlatform>(), 2);
+			CreamWood.SortAfter(CreamwoodPlatform);
+			CreamWood.Register();
+
+			//Trapped Creamwood Chest
+			Recipe CreamwoodTrappedChest = Recipe.Create(ModContent.ItemType<CreamwoodTrappedChest>());
+			CreamwoodTrappedChest.AddIngredient(ModContent.ItemType<CreamwoodChest>());
+			CreamwoodTrappedChest.AddIngredient(ItemID.Wire, 10);
+			CreamwoodTrappedChest.AddTile(TileID.HeavyWorkBench);
+			CreamwoodTrappedChest.SortAfterFirstRecipesOf(ItemID.Fake_AshWoodChest);
+			CreamwoodTrappedChest.Register();
+
+			//Creamwood Wall
+			Recipe CreamwoodWall = Recipe.Create(ModContent.ItemType<CreamwoodWall>(), 4);
+			CreamwoodWall.AddIngredient(ModContent.ItemType<CreamWood>());
+			CreamwoodWall.AddTile(TileID.WorkBenches);
+			CreamwoodWall.SortAfterFirstRecipesOf(ItemID.AshWoodWall);
+			CreamwoodWall.Register();
+
+			Recipe CreamWood2 = Recipe.Create(ModContent.ItemType<CreamWood>());
+			CreamWood2.AddIngredient(ModContent.ItemType<CreamwoodWall>(), 4);
+			CreamWood2.AddTile(TileID.WorkBenches);
+			CreamWood2.SortAfter(CreamWall);
+			CreamWood2.Register();
+
+			//Creamwood Fence
+			Recipe CreamwoodFence = Recipe.Create(ModContent.ItemType<CreamwoodFence>(), 4);
+			CreamwoodFence.AddIngredient(ModContent.ItemType<CreamWood>());
+			CreamwoodFence.AddTile(TileID.WorkBenches);
+			CreamwoodFence.SortAfterFirstRecipesOf(ItemID.AshWoodFence);
+			CreamwoodFence.Register();
+
+			Recipe CreamWood3 = Recipe.Create(ModContent.ItemType<CreamWood>());
+			CreamWood3.AddIngredient(ModContent.ItemType<CreamwoodFence>(), 4);
+			CreamWood3.AddTile(TileID.WorkBenches);
+			CreamWood3.SortAfter(CreamWall);
+			CreamWood3.Register();
+		}
+
+		private static void AddCreamWoodFurnitureArmorAndItems()
+		{
+			//Creamwood Helmet
+			Recipe CreamwoodHelmet = Recipe.Create(ModContent.ItemType<CreamwoodHelmet>());
+			CreamwoodHelmet.AddIngredient(ModContent.ItemType<CreamWood>(), 20);
+			CreamwoodHelmet.AddTile(TileID.WorkBenches);
+			CreamwoodHelmet.SortAfterFirstRecipesOf(ItemID.AshWoodToilet);
+			CreamwoodHelmet.Register();
+
+			//Creamwood Chestplate
+			Recipe CreamwoodBreastplate = Recipe.Create(ModContent.ItemType<CreamwoodBreastplate>());
+			CreamwoodBreastplate.AddIngredient(ModContent.ItemType<CreamWood>(), 30);
+			CreamwoodBreastplate.AddTile(TileID.WorkBenches);
+			CreamwoodBreastplate.SortAfter(CreamwoodHelmet);
+			CreamwoodBreastplate.Register();
+
+			//Creamwood Greaves
+			Recipe CreamwoodGreaves = Recipe.Create(ModContent.ItemType<CreamwoodGreaves>());
+			CreamwoodGreaves.AddIngredient(ModContent.ItemType<CreamWood>(), 25);
+			CreamwoodGreaves.AddTile(TileID.WorkBenches);
+			CreamwoodGreaves.SortAfter(CreamwoodBreastplate);
+			CreamwoodGreaves.Register();
+
+			//Creamwood Sword
+			Recipe CreamwoodSword = Recipe.Create(ModContent.ItemType<CreamwoodSword>());
+			CreamwoodSword.AddIngredient(ModContent.ItemType<CreamWood>(), 7);
+			CreamwoodSword.AddTile(TileID.WorkBenches);
+			CreamwoodSword.SortAfter(CreamwoodGreaves);
+			CreamwoodSword.Register();
+
+			//Creamwood Hammer
+			Recipe CreamwoodHammer = Recipe.Create(ModContent.ItemType<CreamwoodHammer>());
+			CreamwoodHammer.AddIngredient(ModContent.ItemType<CreamWood>(), 8);
+			CreamwoodHammer.AddTile(TileID.WorkBenches);
+			CreamwoodHammer.SortAfter(CreamwoodSword);
+			CreamwoodHammer.Register();
+
+			//Creamwood Bow
+			Recipe CreamwoodBow = Recipe.Create(ModContent.ItemType<CreamwoodBow>());
+			CreamwoodBow.AddIngredient(ModContent.ItemType<CreamWood>(), 8);
+			CreamwoodBow.AddTile(TileID.WorkBenches);
+			CreamwoodBow.SortAfter(CreamwoodHammer);
+			CreamwoodBow.Register();
+
+			//Creamwood Bath
+			Recipe CreamwoodBath = Recipe.Create(ModContent.ItemType<CreamwoodBath>());
+			CreamwoodBath.AddIngredient(ModContent.ItemType<CreamWood>(), 14);
+			CreamwoodBath.AddTile(TileID.Sawmill);
+			CreamwoodBath.SortAfter(CreamwoodBow);
+			CreamwoodBath.Register();
+
+			//Creamwood Bed
+			Recipe CreamwoodBed = Recipe.Create(ModContent.ItemType<CreamwoodBed>());
+			CreamwoodBed.AddIngredient(ModContent.ItemType<CreamWood>(), 15);
+			CreamwoodBed.AddIngredient(ItemID.Silk, 5);
+			CreamwoodBed.AddTile(TileID.Sawmill);
+			CreamwoodBed.SortAfter(CreamwoodBath);
+			CreamwoodBed.Register();
+
+			//Creamwood Bookcase
+			Recipe CreamwoodBookcase = Recipe.Create(ModContent.ItemType<CreamwoodBookcase>());
+			CreamwoodBookcase.AddIngredient(ModContent.ItemType<CreamWood>(), 20);
+			CreamwoodBookcase.AddIngredient(ItemID.Book, 10);
+			CreamwoodBookcase.AddTile(TileID.Sawmill);
+			CreamwoodBookcase.SortAfter(CreamwoodBed);
+			CreamwoodBookcase.Register();
+
+			//Creamwood Dresser
+			Recipe CreamwoodDresser = Recipe.Create(ModContent.ItemType<CreamwoodDresser>());
+			CreamwoodDresser.AddIngredient(ModContent.ItemType<CreamWood>(), 16);
+			CreamwoodDresser.AddTile(TileID.Sawmill);
+			CreamwoodDresser.SortAfter(CreamwoodBookcase);
+			CreamwoodDresser.Register();
+
+			//Creamwood Candelabra
+			Recipe CreamwoodCandelabra = Recipe.Create(ModContent.ItemType<CreamwoodCandelabra>());
+			CreamwoodCandelabra.AddIngredient(ModContent.ItemType<CreamWood>(), 5);
+			CreamwoodCandelabra.AddIngredient(ItemID.Torch, 3);
+			CreamwoodCandelabra.AddTile(TileID.WorkBenches);
+			CreamwoodCandelabra.SortAfter(CreamwoodDresser);
+			CreamwoodCandelabra.Register();
+
+			//Creamwood Candle
+			Recipe CreamwoodCandle = Recipe.Create(ModContent.ItemType<CreamwoodCandle>());
+			CreamwoodCandle.AddIngredient(ModContent.ItemType<CreamWood>(), 4);
+			CreamwoodCandle.AddIngredient(ItemID.Torch, 1);
+			CreamwoodCandle.AddTile(TileID.WorkBenches);
+			CreamwoodCandle.SortAfter(CreamwoodCandelabra);
+			CreamwoodCandle.Register();
+
+			//Creamwood Chair
+			Recipe CreamwoodChair = Recipe.Create(ModContent.ItemType<CreamwoodChair>());
+			CreamwoodChair.AddIngredient(ModContent.ItemType<CreamWood>(), 4);
+			CreamwoodChair.AddTile(TileID.WorkBenches);
+			CreamwoodChair.SortAfter(CreamwoodCandle);
+			CreamwoodChair.Register();
+
+			//Creamwood Chandelier
+			Recipe CreamwoodChandelier = Recipe.Create(ModContent.ItemType<CreamwoodChandelier>());
+			CreamwoodChandelier.AddIngredient(ModContent.ItemType<CreamWood>(), 4);
+			CreamwoodChandelier.AddIngredient(ItemID.Torch, 4);
+			CreamwoodChandelier.AddIngredient(ItemID.Chain, 1);
+			CreamwoodChandelier.AddTile(TileID.Anvils);
+			CreamwoodChandelier.SortAfter(CreamwoodChair);
+			CreamwoodChandelier.Register();
+
+			//Creamwood Chest
+			Recipe CreamwoodChest = Recipe.Create(ModContent.ItemType<CreamwoodChest>());
+			CreamwoodChest.AddIngredient(ModContent.ItemType<CreamWood>(), 8);
+			CreamwoodChest.AddRecipeGroup(RecipeGroupID.IronBar, 2);
+			CreamwoodChest.AddTile(TileID.WorkBenches);
+			CreamwoodChest.SortAfter(CreamwoodChandelier);
+			CreamwoodChest.Register();
+
+			//Creamwood Clock
+			Recipe CreamwoodClock = Recipe.Create(ModContent.ItemType<CreamwoodClock>());
+			CreamwoodClock.AddIngredient(ModContent.ItemType<CreamWood>(), 10);
+			CreamwoodClock.AddRecipeGroup(RecipeGroupID.IronBar, 3);
+			CreamwoodClock.AddIngredient(ItemID.Glass, 6);
+			CreamwoodClock.AddTile(TileID.Sawmill);
+			CreamwoodClock.SortAfter(CreamwoodChest);
+			CreamwoodClock.Register();
+
+			//Creamwood Door
+			Recipe CreamwoodDoor = Recipe.Create(ModContent.ItemType<CreamwoodDoor>());
+			CreamwoodDoor.AddIngredient(ModContent.ItemType<CreamWood>(), 6);
+			CreamwoodDoor.AddTile(TileID.WorkBenches);
+			CreamwoodDoor.SortAfter(CreamwoodClock);
+			CreamwoodDoor.Register();
+
+			//Creamwood Lamp
+			Recipe CreamwoodLamp = Recipe.Create(ModContent.ItemType<CreamwoodLamp>());
+			CreamwoodLamp.AddIngredient(ModContent.ItemType<CreamWood>(), 3);
+			CreamwoodLamp.AddIngredient(ItemID.Torch, 1);
+			CreamwoodLamp.AddTile(TileID.WorkBenches);
+			CreamwoodLamp.SortAfter(CreamwoodDoor);
+			CreamwoodLamp.Register();
+
+			//Creamwood Lantern
+			Recipe CreamwoodLantern = Recipe.Create(ModContent.ItemType<CreamwoodLantern>());
+			CreamwoodLantern.AddIngredient(ModContent.ItemType<CreamWood>(), 6);
+			CreamwoodLantern.AddIngredient(ItemID.Torch, 1);
+			CreamwoodLantern.AddTile(TileID.WorkBenches);
+			CreamwoodLantern.SortAfter(CreamwoodLamp);
+			CreamwoodLantern.Register();
+
+			//Creamwood Piano
+			Recipe CreamwoodPiano = Recipe.Create(ModContent.ItemType<CreamwoodPiano>());
+			CreamwoodPiano.AddIngredient(ModContent.ItemType<CreamWood>(), 15);
+			CreamwoodPiano.AddIngredient(ItemID.Bone, 4);
+			CreamwoodPiano.AddIngredient(ItemID.Book, 1);
+			CreamwoodPiano.AddTile(TileID.Sawmill);
+			CreamwoodPiano.SortAfter(CreamwoodLantern);
+			CreamwoodPiano.Register();
+
+			//Creamwood Sink
+			Recipe CreamwoodSink = Recipe.Create(ModContent.ItemType<CreamwoodSink>());
+			CreamwoodSink.AddIngredient(ModContent.ItemType<CreamWood>(), 6);
+			CreamwoodSink.AddIngredient(ItemID.WaterBucket, 1);
+			CreamwoodSink.AddTile(TileID.WorkBenches);
+			CreamwoodSink.SortAfter(CreamwoodPiano);
+			CreamwoodSink.Register();
+
+			//Creamwood Sofa
+			Recipe CreamwoodSofa = Recipe.Create(ModContent.ItemType<CreamwoodSofa>());
+			CreamwoodSofa.AddIngredient(ModContent.ItemType<CreamWood>(), 5);
+			CreamwoodSofa.AddIngredient(ItemID.Silk, 2);
+			CreamwoodSofa.AddTile(TileID.Sawmill);
+			CreamwoodSofa.SortAfter(CreamwoodSink);
+			CreamwoodSofa.Register();
+
+			//Creamwood Table
+			Recipe CreamwoodTable = Recipe.Create(ModContent.ItemType<CreamwoodTable>());
+			CreamwoodTable.AddIngredient(ModContent.ItemType<CreamWood>(), 8);
+			CreamwoodTable.AddTile(TileID.WorkBenches);
+			CreamwoodTable.SortAfter(CreamwoodSofa);
+			CreamwoodTable.Register();
+
+			//Creamwood Workbench
+			Recipe CreamwoodWorkbench = Recipe.Create(ModContent.ItemType<CreamwoodWorkbench>());
+			CreamwoodWorkbench.AddIngredient(ModContent.ItemType<CreamWood>(), 10);
+			CreamwoodWorkbench.SortAfter(CreamwoodTable);
+			CreamwoodWorkbench.Register();
+
+			//Creamwood Toilet
+			Recipe CreamwoodToilet = Recipe.Create(ModContent.ItemType<CreamwoodToilet>());
+			CreamwoodToilet.AddIngredient(ModContent.ItemType<CreamWood>(), 6);
+			CreamwoodToilet.AddTile(TileID.Sawmill);
+			CreamwoodToilet.SortAfter(CreamwoodWorkbench);
+			CreamwoodToilet.Register();
 		}
 	}
 }

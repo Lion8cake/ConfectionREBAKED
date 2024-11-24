@@ -83,6 +83,26 @@ Mods: {
 			HallowedOre.MapEntry: Hallowed Ore
 			ConfectionTorch.MapEntry: Confection Torch
 			ConfectionPylonTile.MapEntry: Confection Pylon Tile
+			CreamwoodBath.MapEntry: Bath
+			CreamwoodBed.MapEntry: Bed
+			CreamwoodBookcase.MapEntry: Bookcase
+			CreamwoodCandelabra.MapEntry: Candelabra
+			CreamwoodCandle.MapEntry: Candle
+			CreamwoodChair.MapEntry: Chair
+			CreamwoodChandelier.MapEntry: Chandelier
+			CreamwoodChest.MapEntry: Chest
+			CreamwoodClock.MapEntry: Clock
+			CreamwoodDoorOpen.MapEntry: Door
+			CreamwoodDresser.MapEntry: Dresser
+			CreamwoodLamp.MapEntry: Lamp
+			CreamwoodLantern.MapEntry: Lantern
+			CreamwoodPiano.MapEntry: Piano
+			CreamwoodSink.MapEntry: Sink
+			CreamwoodSofa.MapEntry: Sofa
+			CreamwoodTable.MapEntry: Table
+			CreamwoodToilet.MapEntry: Toilet
+			CreamwoodTrappedChest.MapEntry: Chest
+			CreamwoodWorkbench.MapEntry: Workbench
 		}
 
 		Items: {
@@ -788,6 +808,151 @@ Mods: {
 				DisplayName: Chocolate Chunk
 				Tooltip: Summons a Rollercookie pet
 			}
+
+			CreamwoodBreastplate: {
+				DisplayName: Creamwood Breastplate
+				Tooltip: ""
+			}
+
+			CreamwoodGreaves: {
+				DisplayName: Creamwood Greaves
+				Tooltip: ""
+			}
+
+			CreamwoodHelmet: {
+				DisplayName: Creamwood Helmet
+				Tooltip: ""
+			}
+
+			CreamwoodBow: {
+				DisplayName: Creamwood Bow
+				Tooltip: ""
+			}
+
+			CreamwoodHammer: {
+				DisplayName: Creamwood Hammer
+				Tooltip: ""
+			}
+
+			CreamwoodSword: {
+				DisplayName: Creamwood Sword
+				Tooltip: ""
+			}
+
+			CreamwoodFence: {
+				DisplayName: Creamwood Fence
+				Tooltip: ""
+			}
+
+			CreamwoodWall: {
+				DisplayName: Creamwood Wall
+				Tooltip: ""
+			}
+
+			CreamwoodBath: {
+				DisplayName: Creamwood Bath
+				Tooltip: ""
+			}
+
+			CreamwoodBed: {
+				DisplayName: Creamwood Bed
+				Tooltip: ""
+			}
+
+			CreamwoodBookcase: {
+				DisplayName: Creamwood Bookcase
+				Tooltip: ""
+			}
+
+			CreamwoodCandelabra: {
+				DisplayName: Creamwood Candelabra
+				Tooltip: ""
+			}
+
+			CreamwoodCandle: {
+				DisplayName: Creamwood Candle
+				Tooltip: ""
+			}
+
+			CreamwoodChair: {
+				DisplayName: Creamwood Chair
+				Tooltip: ""
+			}
+
+			CreamwoodChandelier: {
+				DisplayName: Creamwood Chandelier
+				Tooltip: ""
+			}
+
+			CreamwoodChest: {
+				DisplayName: Creamwood Chest
+				Tooltip: ""
+			}
+
+			CreamwoodClock: {
+				DisplayName: Creamwood Clock
+				Tooltip: ""
+			}
+
+			CreamwoodDoor: {
+				DisplayName: Creamwood Door
+				Tooltip: ""
+			}
+
+			CreamwoodDresser: {
+				DisplayName: Creamwood Dresser
+				Tooltip: ""
+			}
+
+			CreamwoodLamp: {
+				DisplayName: Creamwood Lamp
+				Tooltip: ""
+			}
+
+			CreamwoodLantern: {
+				DisplayName: Creamwood Lantern
+				Tooltip: ""
+			}
+
+			CreamwoodPiano: {
+				DisplayName: Creamwood Piano
+				Tooltip: ""
+			}
+
+			CreamwoodPlatform: {
+				DisplayName: Creamwood Platform
+				Tooltip: ""
+			}
+
+			CreamwoodSink: {
+				DisplayName: Creamwood Sink
+				Tooltip: ""
+			}
+
+			CreamwoodSofa: {
+				DisplayName: Creamwood Sofa
+				Tooltip: ""
+			}
+
+			CreamwoodTable: {
+				DisplayName: Creamwood Table
+				Tooltip: ""
+			}
+
+			CreamwoodToilet: {
+				DisplayName: Creamwood Toilet
+				Tooltip: ""
+			}
+
+			CreamwoodTrappedChest: {
+				DisplayName: Creamwood Trapped Chest
+				Tooltip: ""
+			}
+
+			CreamwoodWorkbench: {
+				DisplayName: Creamwood Workbench
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1082,6 +1247,6 @@ Mods: {
 			}
 		}
 
-		Conditions.InConfection: Mods.TheConfectionRebirth.Conditions.InConfection
+		Conditions.InConfection: In Confection
 	}
 }

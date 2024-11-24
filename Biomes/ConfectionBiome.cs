@@ -18,7 +18,7 @@ public class ConfectionBiome : ModBiome
 	{
 		get
 		{
-			if (Main.LocalPlayer.ZoneDesert)
+			if (Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneBeach)
 			{
 				return SceneEffectPriority.BiomeHigh;
 			}
