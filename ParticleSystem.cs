@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using static System.Formats.Asn1.AsnWriter;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace TheConfectionRebirth
 {
@@ -196,6 +199,21 @@ namespace TheConfectionRebirth
 			}
 			particle.OnSpawn();
 		}
+
+		public static void DrawExtra98Special(Vector2 position, Color color, float rotation, Vector2 scale, float timingPercent)
+		{
+			Texture2D texture = TextureAssets.Extra[98].Value;
+			Vector2 orig = texture.Size() / 2;
+			Rectangle? frame = new Rectangle?();
+			SpriteEffects sprite = SpriteEffects.None;
+			Color color2 = Color.White * 0.5f * 0.9f;
+			color2.A = (byte)(color2.A / 2);
+			Color color3 = color2 * 0.5f;
+			color *= 0.5f;
+			color *= timingPercent;
+			Main.EntitySpriteDraw(texture, position, frame, color, rotation, orig, scale, sprite);
+			Main.EntitySpriteDraw(texture, position, frame, color3, rotation, orig, scale * 0.6f, sprite);
+		}
 	}
 	public abstract class Particle : ModType
 	{
@@ -226,7 +244,7 @@ namespace TheConfectionRebirth
 		}
 	}
 
-	public class NeapoliniteSlash : Particle {
+	public class Spawn_Sucrosa : Particle {
 
 		public int timeleft = 0;
 
@@ -298,39 +316,24 @@ namespace TheConfectionRebirth
 			Vector2 newPos6 = pos - new Vector2(velocityAmount * TimeInWorld, -(velocityAmount * TimeInWorld));
 
 			//large outline
-			DrawExtra98Special(newPos, color6, rotation, scale2, percent);
-			DrawExtra98Special(newPos2, color6, rotation, scale2, percent);
-			DrawExtra98Special(newPos3, color4, rotation3, scale2, percent);
-			DrawExtra98Special(newPos4, color4, rotation3, scale2, percent);
-			DrawExtra98Special(newPos5, color2, rotation2, scale2, percent);
-			DrawExtra98Special(newPos6, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos, color6, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color6, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos3, color4, rotation3, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos4, color4, rotation3, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos5, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos6, color2, rotation2, scale2, percent);
 
 			//innard
-			DrawExtra98Special(newPos, color5, rotation, scale, percent);
-			DrawExtra98Special(newPos2, color5, rotation, scale, percent);
-			DrawExtra98Special(newPos4, color3, rotation3, scale, percent);
-			DrawExtra98Special(newPos3, color3, rotation3, scale, percent);
-			DrawExtra98Special(newPos6, color, rotation2, scale, percent);
-			DrawExtra98Special(newPos5, color, rotation2, scale, percent);
-		}
-
-		public static void DrawExtra98Special(Vector2 position, Color color, float rotation, Vector2 scale, float timingPercent)
-		{
-			Texture2D texture = TextureAssets.Extra[98].Value;
-			Vector2 orig = texture.Size() / 2;
-			Rectangle? frame = new Rectangle?();
-			SpriteEffects sprite = SpriteEffects.None;
-			Color color2 = Color.White * 0.5f * 0.9f;
-			color2.A = (byte)(color2.A / 2);
-			Color color3 = color2 * 0.5f;
-			color *= 0.5f;
-			color *= timingPercent;
-			Main.EntitySpriteDraw(texture, position, frame, color, rotation, orig, scale, sprite);
-			Main.EntitySpriteDraw(texture, position, frame, color3, rotation, orig, scale * 0.6f, sprite);
+			ParticleSystem.DrawExtra98Special(newPos, color5, rotation, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color5, rotation, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos4, color3, rotation3, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos3, color3, rotation3, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos6, color, rotation2, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos5, color, rotation2, scale, percent);
 		}
 	}
 
-	public class TrueNeapoliniteSlash : Particle {
+	public class Spawn_TrueSucrosa : Particle {
 
 		public int timeleft = 0;
 
@@ -419,128 +422,106 @@ namespace TheConfectionRebirth
 			Vector2 newPos8 = pos - new Vector2(0f, velocityAmount * TimeInWorld);
 
 			//large outline
-			DrawExtra98Special(newPos, color6, rotation, scale2, percent);
-			DrawExtra98Special(newPos2, color6, rotation, scale2, percent);
-			DrawExtra98Special(newPos3, color4, rotation3, scale2, percent);
-			DrawExtra98Special(newPos4, color4, rotation3, scale2, percent);
-			DrawExtra98Special(newPos5, color2, rotation2, scale2, percent);
-			DrawExtra98Special(newPos6, color2, rotation2, scale2, percent);
-			DrawExtra98Special(newPos7, color8, 0f, scale2 * 1.25f, percent);
-			DrawExtra98Special(newPos8, color8, 0f, scale2 * 1.25f, percent);
+			ParticleSystem.DrawExtra98Special(newPos, color6, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color6, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos3, color4, rotation3, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos4, color4, rotation3, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos5, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos6, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos7, color8, 0f, scale2 * 1.25f, percent);
+			ParticleSystem.DrawExtra98Special(newPos8, color8, 0f, scale2 * 1.25f, percent);
 
 			//innard
-			DrawExtra98Special(newPos, color5, rotation, scale, percent);
-			DrawExtra98Special(newPos2, color5, rotation, scale, percent);
-			DrawExtra98Special(newPos3, color3, rotation3, scale, percent);
-			DrawExtra98Special(newPos4, color3, rotation3, scale, percent);
-			DrawExtra98Special(newPos5, color, rotation2, scale, percent);
-			DrawExtra98Special(newPos6, color, rotation2, scale, percent);
-			DrawExtra98Special(newPos7, color7, 0f, scale * 1.25f, percent);
-			DrawExtra98Special(newPos8, color7, 0f, scale * 1.25f, percent);
-		}
-
-		public static void DrawExtra98Special(Vector2 position, Color color, float rotation, Vector2 scale, float timingPercent)
-		{
-			Texture2D texture = TextureAssets.Extra[98].Value;
-			Vector2 orig = texture.Size() / 2;
-			Rectangle? frame = new Rectangle?();
-			SpriteEffects sprite = SpriteEffects.None;
-			Color color2 = Color.White * 0.5f * 0.9f;
-			color2.A = (byte)(color2.A / 2);
-			Color color3 = color2 * 0.5f;
-			color *= 0.5f;
-			color *= timingPercent;
-			Main.EntitySpriteDraw(texture, position, frame, color, rotation, orig, scale, sprite);
-			Main.EntitySpriteDraw(texture, position, frame, color3, rotation, orig, scale * 0.6f, sprite);
+			ParticleSystem.DrawExtra98Special(newPos, color5, rotation, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color5, rotation, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos3, color3, rotation3, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos4, color3, rotation3, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos5, color, rotation2, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos6, color, rotation2, scale, percent);
+			ParticleSystem.DrawExtra98Special(newPos7, color7, 0f, scale * 1.25f, percent);
+			ParticleSystem.DrawExtra98Special(newPos8, color7, 0f, scale * 1.25f, percent);
 		}
 	}
 
-	public class BloodyNeedle : Particle {
-		protected int MoveToCentre = 10;
-
+	public class Spawn_DeathsRaze : Particle {
 		public override void Update() {
-			TimeInWorld += 1;
-			if (Main.timeForVisualEffects % 4 == 0) {
-				TimeInWorld += 1;
-			}
-
-			if (TimeInWorld > 26)
+			if (TimeInWorld > 20)
 				Active = false;
-
-			if (MoveToCentre > 0) {
-				MoveToCentre--;
-			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch) {
-			Texture2D texture = TextureAssets.Extra[98].Value;
-			Rectangle frame = texture.Frame();
-			Vector2 frameOrigin = frame.Size() / 2f;
-			Color color = new(223, 22, 49, TimeInWorld * 10);
-			Color color2 = new Color(255, 255, 255, TimeInWorld * 10)/* * 0.3f*/;
-			float realscale = 0.45f;
-			Vector2 size = new Vector2(1f, 2.5f) * realscale;
-			Vector2 size2 = new Vector2(0.8f, 2.3f) * realscale;
+			Vector2 pos = position - Main.screenPosition;
+			Vector2 pos2 = pos + new Vector2(-30, -45);
+			Vector2 pos3 = pos + new Vector2(30, -45);
+			float percent = (16 - TimeInWorld) / 4f; 
+			float velocityAmount = 3f;
 
-			Vector2 DrawPosLtoR = position - Main.screenPosition + new Vector2(-MoveToCentre * 2, -MoveToCentre * 2);
-			Vector2 DrawPosRtoL = position - Main.screenPosition - new Vector2(-MoveToCentre * 2, MoveToCentre * 2);
+			Color color = new Color(2.55f, 0.7f, 1f, 0.5f); //Blood Color
+			Color color2 = new Color(2.23f, 0.22f, 0.49f, 0.5f);
 
-			spriteBatch.Draw(texture, DrawPosLtoR, frame, color, -MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
-			spriteBatch.Draw(texture, DrawPosLtoR, frame, color2, -MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+			float time = TimeInWorld < 10 ? TimeInWorld : 10f;
+			float scaler = 1.25f;
+			Vector2 scale = new Vector2(0.1f, 0.4f) * 2f * scaler;
+			Vector2 scale2 = new Vector2(0.25f, 0.5f) * 1.1f * 2f * scaler;
 
-			spriteBatch.Draw(texture, DrawPosRtoL, frame, color, MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
-			spriteBatch.Draw(texture, DrawPosRtoL, frame, color2, MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+			float rotation = MathHelper.ToRadians(45f);
+			float rotation2 = MathHelper.ToRadians(-45f);
+
+			Vector2 newPos = pos2 + new Vector2(velocityAmount * time, velocityAmount * time);
+			Vector2 newPos2 = pos3 - new Vector2(velocityAmount * time, -(velocityAmount * time));
+
+			//large outline
+			ParticleSystem.DrawExtra98Special(newPos, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color2, rotation, scale2, percent);
+
+			//innard
+			ParticleSystem.DrawExtra98Special(newPos, color, rotation2, scale, percent / 2);
+			ParticleSystem.DrawExtra98Special(newPos2, color, rotation, scale, percent / 2);
 		}
 	}
 
-	public class TrueBloodyNeedle : Particle {
-		protected int MoveToCentre = 10;
-		protected int CentreNeedleMove = 10;
-
+	public class Spawn_TrueDeathsRaze : Particle {
 		public override void Update() {
-			TimeInWorld += 1;
-			if (Main.timeForVisualEffects % 4 == 0) {
-				TimeInWorld += 1;
-			}
-
-			if (TimeInWorld > 26)
+			if (TimeInWorld > 20)
 				Active = false;
-
-			if (MoveToCentre > 0) {
-				MoveToCentre--;
-			}
-
-			if (CentreNeedleMove > 0 && TimeInWorld > 16) {
-				CentreNeedleMove -= 2;
-			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch) {
-			Texture2D texture = TextureAssets.Extra[98].Value;
-			Rectangle frame = texture.Frame();
-			Vector2 frameOrigin = frame.Size() / 2f;
-			Color color = new(223, 22, 49, TimeInWorld * 10);
-			Color color2 = new Color(255, 255, 255, TimeInWorld * 10);
-			Color color3 = new Color(244, 191, 90, TimeInWorld * 10);
-			float realscale = 0.45f;
-			Vector2 size = new Vector2(1f, 2.5f) * realscale;
-			Vector2 size2 = new Vector2(0.8f, 2.3f) * realscale;
-			float realscale2 = 0.65f;
-			Vector2 size3 = new Vector2(1f, 2.5f) * realscale2;
-			Vector2 size4 = new Vector2(0.8f, 2.3f) * realscale2;
+			Vector2 pos = position - Main.screenPosition;
+			Vector2 pos2 = pos + new Vector2(-30, -45);
+			Vector2 pos3 = pos + new Vector2(30, -45);
+			Vector2 pos4 = pos + new Vector2(0, -60);
+			float percent = (16 - TimeInWorld) / 4f;
+			float velocityAmount = 3f;
+			float ichorNeedleScale = 1.5f;
 
-			Vector2 DrawPosLtoR = position - Main.screenPosition + new Vector2(-MoveToCentre * 2, -MoveToCentre * 2);
-			Vector2 DrawPosRtoL = position - Main.screenPosition - new Vector2(-MoveToCentre * 2, MoveToCentre * 2);
-			Vector2 DrawPosTtoB = position - Main.screenPosition - new Vector2(0, CentreNeedleMove * 2);
+			Color color = new Color(2.55f, 0.7f, 1f, 0.5f); //Blood Color
+			Color color2 = new Color(2.23f, 0.22f, 0.49f, 0.5f);
+			Color color3 = new Color(2.5f, 2.3f, 1.7f, 0.5f); //Ichor Color
+			Color color4 = new Color(2.55f, 2.24f, 0.5f, 0.75f);
 
-			spriteBatch.Draw(texture, DrawPosLtoR, frame, color, -MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
-			spriteBatch.Draw(texture, DrawPosLtoR, frame, color2, -MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+			float time = TimeInWorld < 10 ? TimeInWorld : 10f;
+			float scaler = 1.25f;
+			Vector2 scale = new Vector2(0.1f, 0.4f) * 2f * scaler;
+			Vector2 scale2 = new Vector2(0.25f, 0.5f) * 1.1f * 2f * scaler;
 
-			spriteBatch.Draw(texture, DrawPosRtoL, frame, color, MathHelper.PiOver4, frameOrigin, size, SpriteEffects.None, 0);
-			spriteBatch.Draw(texture, DrawPosRtoL, frame, color2, MathHelper.PiOver4, frameOrigin, size2, SpriteEffects.None, 0);
+			float rotation = MathHelper.ToRadians(45f);
+			float rotation2 = MathHelper.ToRadians(-45f);
 
-			spriteBatch.Draw(texture, DrawPosTtoB, frame, color3, 0, frameOrigin, size3, SpriteEffects.None, 0);
-			spriteBatch.Draw(texture, DrawPosTtoB, frame, color2, 0, frameOrigin, size4, SpriteEffects.None, 0);
+
+			Vector2 newPos = pos2 + new Vector2(velocityAmount * time, velocityAmount * time);
+			Vector2 newPos2 = pos3 - new Vector2(velocityAmount * time, -(velocityAmount * time));
+			Vector2 newPos3 = pos4 + new Vector2(0, (velocityAmount * ichorNeedleScale) * time);
+
+			//large outline
+			ParticleSystem.DrawExtra98Special(newPos, color2, rotation2, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos2, color2, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos3, color4, 0f, scale2 * ichorNeedleScale, percent);
+
+			//innard
+			ParticleSystem.DrawExtra98Special(newPos, color, rotation2, scale, percent / 2);
+			ParticleSystem.DrawExtra98Special(newPos2, color, rotation, scale, percent / 2);
+			ParticleSystem.DrawExtra98Special(newPos3, color3, 0f, scale * ichorNeedleScale, percent / 2);
 		}
 	}
 }

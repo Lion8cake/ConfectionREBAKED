@@ -16,10 +16,10 @@ namespace TheConfectionRebirth
 			for (int i = 0; i < Recipe.numRecipes; i++)
 			{
 				Recipe recipe = Main.recipe[i];
-				//if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer))
-				//{
-				//	recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
-				//}
+				if (recipe.HasResult(ItemID.NightsEdge) && recipe.HasIngredient(ItemID.BloodButcherer))
+				{
+					recipe.ReplaceResult(ModContent.ItemType<DeathsRaze>());
+				}
 				if (recipe.HasResult(ItemID.GoldenShower) && recipe.HasIngredient(ItemID.SoulofNight))
 				{
 					recipe.RemoveIngredient(ItemID.SoulofNight);
@@ -878,6 +878,54 @@ namespace TheConfectionRebirth
 			CreamWood3.AddTile(TileID.WorkBenches);
 			CreamWood3.SortAfter(CreamWall);
 			CreamWood3.Register();
+
+			//True Deaths Raze
+			Recipe TrueDeathsRaze = Recipe.Create(ModContent.ItemType<TrueDeathsRaze>());
+			TrueDeathsRaze.AddIngredient(ModContent.ItemType<DeathsRaze>());
+			TrueDeathsRaze.AddIngredient(ItemID.SoulofFright, 20);
+			TrueDeathsRaze.AddIngredient(ItemID.SoulofMight, 20);
+			TrueDeathsRaze.AddIngredient(ItemID.SoulofSight, 20);
+			TrueDeathsRaze.AddTile(TileID.MythrilAnvil);
+			TrueDeathsRaze.SortAfterFirstRecipesOf(ItemID.TrueNightsEdge);
+			TrueDeathsRaze.Register();
+
+			//Cream of Kickin'
+			Recipe CreamofKickin = Recipe.Create(ModContent.ItemType<CreamofKickin>());
+			CreamofKickin.AddIngredient(ModContent.ItemType<CanofMeat>());
+			CreamofKickin.AddIngredient(ModContent.ItemType<CreamPuff>());
+			CreamofKickin.AddIngredient(ModContent.ItemType<SoulofSpite>(), 7);
+			CreamofKickin.AddIngredient(ModContent.ItemType<SoulofDelight>(), 7);
+			CreamofKickin.AddTile(TileID.MythrilAnvil);
+			CreamofKickin.SortAfterFirstRecipesOf(ItemID.DaoofPow);
+			CreamofKickin.Register();
+
+			//Key of Delight
+			Recipe KeyofDelight = Recipe.Create(ModContent.ItemType<KeyofDelight>());
+			KeyofDelight.AddIngredient(ModContent.ItemType<SoulofDelight>(), 15);
+			KeyofDelight.AddTile(TileID.WorkBenches);
+			KeyofDelight.SortAfterFirstRecipesOf(ItemID.LightKey);
+			KeyofDelight.Register();
+
+			//Key of Spite
+			Recipe KeyofSpite = Recipe.Create(ModContent.ItemType<KeyofSpite>());
+			KeyofSpite.AddIngredient(ModContent.ItemType<SoulofSpite>(), 15);
+			KeyofSpite.AddTile(TileID.WorkBenches);
+			KeyofSpite.SortAfterFirstRecipesOf(ItemID.NightKey);
+			KeyofSpite.Register();
+
+			//Soul of Delight in a Bottle
+			Recipe SoulofDelightinaBottle = Recipe.Create(ModContent.ItemType<SoulofDelightinaBottle>());
+			SoulofDelightinaBottle.AddIngredient(ModContent.ItemType<SoulofDelight>());
+			SoulofDelightinaBottle.AddIngredient(ItemID.Bottle);
+			SoulofDelightinaBottle.SortAfterFirstRecipesOf(ItemID.SoulBottleLight);
+			SoulofDelightinaBottle.Register();
+
+			//Soul of Spite in a Bottle
+			Recipe SoulofSpiteinaBottle = Recipe.Create(ModContent.ItemType<SoulofSpiteinaBottle>());
+			SoulofSpiteinaBottle.AddIngredient(ModContent.ItemType<SoulofSpite>());
+			SoulofSpiteinaBottle.AddIngredient(ItemID.Bottle);
+			SoulofSpiteinaBottle.SortAfterFirstRecipesOf(ItemID.SoulBottleNight);
+			SoulofSpiteinaBottle.Register();
 		}
 
 		private static void AddCreamWoodFurnitureArmorAndItems()

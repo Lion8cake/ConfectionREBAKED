@@ -32,6 +32,7 @@ using TheConfectionRebirth.Projectiles;
 using Terraria.Graphics;
 using TheConfectionRebirth.Items.Weapons;
 using static Terraria.Graphics.FinalFractalHelper;
+using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth
 {
@@ -109,6 +110,8 @@ namespace TheConfectionRebirth
 			IL_Main.SetBackColor += ConfectionBiomeLightColor;
 			IL_Projectile.Damage += CosmicCookieReflection;
 			On_Projectile.CanBeReflected += CosmicCookieCanBeReflect;
+			On_Projectile.Shimmer += OnShimmer;
+			IL_NPC.BigMimicSummonCheck += PreventCrimsonMimics;
 		}
 
 		public override void Unload() {
@@ -161,7 +164,84 @@ namespace TheConfectionRebirth
 			IL_Main.SetBackColor -= ConfectionBiomeLightColor;
 			IL_Projectile.Damage -= CosmicCookieReflection;
 			On_Projectile.CanBeReflected -= CosmicCookieCanBeReflect;
+			On_Projectile.Shimmer -= OnShimmer;
+			IL_NPC.BigMimicSummonCheck -= PreventCrimsonMimics;
 		}
+
+		#region Stop Key of Night spawning Crimson Mimics and add modded keys
+		private void PreventCrimsonMimics(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel label = c.DefineLabel();
+			//key of light
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(0), i => i.MatchBle(out _));
+			c.EmitLdloc(0);
+			c.EmitLdloc(4);
+			c.EmitDelegate((int num, int i) =>
+			{
+				return Main.chest[num].item[i].type == ModContent.ItemType<KeyofDelight>() || Main.chest[num].item[i].type == ModContent.ItemType<KeyofSpite>();
+			});
+			c.EmitBrtrue(label);
+
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(3092), i => i.MatchBneUn(out _));
+			c.MarkLabel(label);
+
+			c.GotoNext(MoveType.After, i => i.MatchStloc1());
+			c.EmitLdloc(0);
+			c.EmitLdloc(4);
+			c.EmitLdarg(2);
+			c.EmitDelegate((int num, int i, Player user) =>
+			{
+				if (Main.chest[num].item[i].type == ModContent.ItemType<KeyofDelight>() || Main.chest[num].item[i].type == ModContent.ItemType<KeyofSpite>())
+				{
+					Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType = Main.chest[num].item[i].type;
+				}
+			});
+
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(475), i => i.MatchStloc(8));
+			c.EmitLdloca(8); //NPC type
+			c.EmitLdloca(2); //evil check
+			c.EmitLdloca(1); //good check
+			c.EmitLdarg(2);
+			c.EmitDelegate((ref int npcType, ref int isEvilMimic, ref int isGoodMimic, Player user) =>
+			{
+				if (isEvilMimic == 1)
+				{
+					npcType = NPCID.BigMimicCorruption; 
+				}
+				if (isGoodMimic == 1 && Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType > ItemID.None) //all modded keys go here because of weird logic the key of night's IL code is done by preventing easy access to making an 'or' statement
+				{
+					npcType = Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType == ModContent.ItemType<KeyofSpite>() ? NPCID.BigMimicCrimson : NPCID.GoldGoldfish;
+				}
+				isEvilMimic = 0;
+			});
+		}
+		#endregion
+
+		#region Projectile Shimmer Interactions
+		private void OnShimmer(On_Projectile.orig_Shimmer orig, Projectile self)
+		{
+			Projectile Projectile = self;
+			if ((Projectile.type == ModContent.ProjectileType<Projectiles.CreamofKickin>()) && (Projectile.ai[0] == 2f || Projectile.ai[0] == 4f))
+			{
+				return;
+			}
+			if (Projectile.type == ModContent.ProjectileType<Projectiles.CreamofKickin>())
+			{
+				if (Projectile.velocity.Y > 0f)
+				{
+					Projectile.velocity.Y *= -1f;
+					Projectile.netUpdate = true;
+				}
+				Projectile.velocity.Y -= 0.4f;
+				if (Projectile.velocity.Y < -8f)
+				{
+					Projectile.velocity.Y = -8f;
+				}
+			}
+			orig.Invoke(self);
+		}
+		#endregion
 
 		#region Star Cannon Projectile addition
 		private bool CosmicCookieCanBeReflect(On_Projectile.orig_CanBeReflected orig, Projectile self)
@@ -1019,13 +1099,13 @@ namespace TheConfectionRebirth
 			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) {
 				sizeY = 2;
-			}
+			}*/
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {
 				sizeY = 2;
 			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) {
 				sizeY = 2;
-			}*/
+			}
 			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
 		}
 		#endregion

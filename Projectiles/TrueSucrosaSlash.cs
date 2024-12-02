@@ -37,7 +37,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
-			ParticleSystem.AddParticle(new TrueNeapoliniteSlash(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
+			ParticleSystem.AddParticle(new Spawn_TrueSucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 
 			bool flag4 = false;
 			if (Projectile.DamageType.UseStandardCritCalcs && Main.rand.Next(100) < Projectile.CritChance) {
@@ -61,7 +61,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
-			ParticleSystem.AddParticle(new TrueNeapoliniteSlash(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
+			ParticleSystem.AddParticle(new Spawn_TrueSucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 		}
 
 		public override void AI() {

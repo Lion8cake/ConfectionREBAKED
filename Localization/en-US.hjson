@@ -103,6 +103,8 @@ Mods: {
 			CreamwoodToilet.MapEntry: Toilet
 			CreamwoodTrappedChest.MapEntry: Chest
 			CreamwoodWorkbench.MapEntry: Workbench
+			SoulofDelightinaBottle.MapEntry: Soulof Delightina Bottle
+			SoulofSpiteinaBottle.MapEntry: Soulof Spiteina Bottle
 		}
 
 		Items: {
@@ -537,7 +539,7 @@ Mods: {
 
 			CanofMeat: {
 				DisplayName: Can of Meat
-				Tooltip: ""
+				Tooltip: "'Sometimes carried by creatures in crimson deserts'"
 			}
 
 			Kazoo: {
@@ -953,6 +955,50 @@ Mods: {
 				DisplayName: Creamwood Workbench
 				Tooltip: ""
 			}
+
+			DeathsRaze: {
+				DisplayName: Deaths Raze
+				Tooltip: ""
+			}
+
+			TrueDeathsRaze: {
+				DisplayName: True Deaths Raze
+				Tooltip: ""
+			}
+
+			CreamofKickin: {
+				DisplayName: Cream of Kickin'
+				Tooltip:
+					'''
+					'It's time to open a can of woop!'
+					Fires a flail, with a flail attached to it
+					'''
+			}
+
+			CreamPuff: {
+				DisplayName: Cream Puff
+				Tooltip: "'Sometimes carried by creatures in desserts'"
+			}
+
+			KeyofSpite: {
+				DisplayName: Key of Spite
+				Tooltip: "'Charged with the essance of many souls'"
+			}
+
+			SoulofDelightinaBottle: {
+				DisplayName: Soul of Delight in a Bottle
+				Tooltip: ""
+			}
+
+			SoulofSpiteinaBottle: {
+				DisplayName: Soul of Spite in a Bottle
+				Tooltip: ""
+			}
+
+			KeyofDelight: {
+				DisplayName: Key of Delight
+				Tooltip: "'Charged with the essance of many souls'"
+			}
 		}
 
 		NPCs: {
@@ -996,6 +1042,11 @@ Mods: {
 			CreamBolt.DisplayName: Chocolate Cream Beam
 			BirdnanaLightPet.DisplayName: Birdnana Light Pet
 			RollerCookiePet.DisplayName: Roller Cookie Pet
+			DeathsSlash.DisplayName: Deaths Slash
+			TrueDeathsSlash.DisplayName: True Deaths Slash
+			CreamofKickinCookie.DisplayName: Creamof Kickin Cookie
+			CreamofKickinMeatball.DisplayName: Creamof Kickin Meatball
+			CreamofKickin.DisplayName: Cream of Kickin'
 		}
 
 		Configs: {

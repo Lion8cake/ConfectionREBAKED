@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace TheConfectionRebirth.Projectiles
 {
-    public class SucrosaSlash : ModProjectile
+    public class TrueDeathsSlash : ModProjectile
     {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 4;
@@ -27,21 +27,20 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
-            Projectile.penetrate = 2;
+            Projectile.penetrate = 3;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.ownerHitCheck = true;
             Projectile.ownerHitCheckDistance = 300f;
-            Projectile.usesLocalNPCImmunity = true;
 			Projectile.usesOwnerMeleeHitCD = true;
 			Projectile.stopsDealingDamageAfterPenetrateHits = true;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
-			ParticleSystem.AddParticle(new Spawn_Sucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
+			ParticleSystem.AddParticle(new Spawn_TrueDeathsRaze(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 
 			bool flag4 = false;
 			if (Projectile.DamageType.UseStandardCritCalcs && Main.rand.Next(100) < Projectile.CritChance) {
@@ -65,7 +64,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
-			ParticleSystem.AddParticle(new Spawn_Sucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
+			ParticleSystem.AddParticle(new Spawn_TrueDeathsRaze(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 		}
 
 		public override void AI()
@@ -73,26 +72,30 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.localAI[0] += 1f;
 			Player player = Main.player[Projectile.owner];
 			float num = Projectile.localAI[0] / Projectile.ai[1];
-			float num4 = Projectile.ai[0];
-			float num5 = Projectile.velocity.ToRotation();
-			float num6 = (Projectile.rotation = (float)Math.PI * num4 * num + num5 + num4 * (float)Math.PI + player.fullRotation);
-			float num7 = 0.2f;
-			float num8 = 1f;
-			num7 = 0.6f;
+			float num2 = Projectile.ai[0];
+			float num3 = Projectile.velocity.ToRotation();
+			float num4 = (Projectile.rotation = (float)Math.PI * num2 * num + num3 + num2 * (float)Math.PI + player.fullRotation);
+			float num5 = 1f;
+			float num6 = 1.2f;
 			Projectile.Center = player.RotatedRelativePoint(player.MountedCenter) - Projectile.velocity;
-			Projectile.scale = num8 + num * num7;
-			float num10 = Projectile.rotation + Main.rand.NextFloatDirection() * ((float)Math.PI / 2f) * 0.7f;
-			Vector2 vector2 = Projectile.Center + num10.ToRotationVector2() * 84f * Projectile.scale;
-			Vector2 vector3 = (num10 + Projectile.ai[0] * ((float)Math.PI / 2f)).ToRotationVector2();
-			if (Main.rand.NextFloat() * 2f < Projectile.Opacity) {
-				Dust dust8 = Dust.NewDustPerfect(Projectile.Center + num10.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), ModContent.DustType<NeapoliniteDust>(), vector3 * 1f);
-				dust8.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
-				dust8.noGravity = true;
-			}
-			if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity) {
-				Dust.NewDustPerfect(vector2, ModContent.DustType<NeapoliniteStrikeDust>(), vector3 * 1f);
-			}
-			//Projectile.scale *= Projectile.ai[2];
+			Projectile.scale = num6 + num * num5;
+				if (Math.Abs(num2) < 0.2f) {
+					Projectile.rotation += (float)Math.PI * 4f * num2 * 10f * num;
+					float num7 = Utils.Remap(Projectile.localAI[0], 10f, Projectile.ai[1] - 5f, 0f, 1f);
+					Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * (80f * num7);
+				Projectile.scale += num7 * 0.4f;
+				}
+				if (Main.rand.Next(2) == 0) {
+					float f = Projectile.rotation + Main.rand.NextFloatDirection() * ((float)Math.PI / 2f) * 0.7f;
+					Vector2 vector = Projectile.Center + f.ToRotationVector2() * 84f * Projectile.scale;
+					if (Main.rand.Next(5) == 0) {
+						Dust dust = Dust.NewDustPerfect(vector, 169, null, 150, default(Color), 1.4f);
+						dust.noLight = (dust.noLightEmittence = true);
+					}
+					if (Main.rand.Next(2) == 0) {
+						Dust.NewDustPerfect(vector, 169, new Vector2(player.velocity.X * 0.2f + (float)(player.direction * 3), player.velocity.Y * 0.2f), 100, default(Color), 1.4f).noGravity = true;
+					}
+				}
 			if (Projectile.localAI[0] >= Projectile.ai[1]) {
 				Projectile.Kill();
 			}
@@ -133,9 +136,6 @@ namespace TheConfectionRebirth.Projectiles
 			if (Projectile.npcProj) {
 				return;
 			}
-			Vector2 boxPosition = Projectile.position;
-			int boxWidth = Projectile.width;
-			int boxHeight = Projectile.height;
 			for (float num = -(float)Math.PI / 4f; num <= (float)Math.PI / 4f; num += (float)Math.PI / 2f) {
 				Rectangle r = Utils.CenteredRectangle(Projectile.Center + (Projectile.rotation + num).ToRotationVector2() * 70f * Projectile.scale, new Vector2(60f * Projectile.scale, 60f * Projectile.scale));
 				Projectile.EmitEnchantmentVisualsAt(r.TopLeft(), r.Width, r.Height);
@@ -153,14 +153,15 @@ namespace TheConfectionRebirth.Projectiles
 			float num2 = Projectile.localAI[0] / Projectile.ai[1];
 			float num3 = Utils.Remap(num2, 0f, 0.6f, 0f, 1f) * Utils.Remap(num2, 0.6f, 1f, 1f, 0f);
 			float num4 = 0.975f;
+			float amount = num3;
 			Color color6 = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
 			Vector3 val = color6.ToVector3();
 			float fromValue = val.Length() / (float)Math.Sqrt(3.0);
-			fromValue = Utils.Remap(fromValue, 0f, 1f, 0.2f, 1f);
-			Color color = new Color(224, 92, 165);
+			fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
+			Color color = Color.Lerp(new Color(255, 133, 46), new Color(193, 100, 38), amount);
 			Main.spriteBatch.Draw(asset.Value, vector, (Rectangle?)rectangle, color * fromValue * num3, Projectile.rotation + Projectile.ai[0] * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num, effects, 0f);
-			Color color2 = new Color(153, 96, 62);
-			Color color3 = new Color(230, 196, 125);
+			Color color2 = Color.Lerp(new Color(223, 22, 49), new Color(244, 191, 90), amount);
+			Color color3 = Color.Lerp(new Color(127, 0, 31), new Color(249, 233, 169), amount);
 			Color color4 = Color.White * num3 * 0.5f;
 			color4.A = (byte)(float)(int)(color4.A * (1f - fromValue));
 			Color color5 = color4 * fromValue * 0.5f;

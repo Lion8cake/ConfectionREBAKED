@@ -53,6 +53,11 @@ namespace TheConfectionRebirth
 
 		public int bakersDozenHitCount = 0;
 
+		/// <summary>
+		/// Used by the Mimic Chest Spawning to know what NPC to spawn when leaving the chest
+		/// </summary>
+		public int mimicSpawnKeyType = 0;
+
 		public override void ResetEffects()
 		{
 			cookiestPet = false;
@@ -106,6 +111,8 @@ namespace TheConfectionRebirth
 			neapoliniteMage = false;
 			neapoliniteSummoner = false;
 			neapolinitePowerLevel = 0;
+
+			mimicSpawnKeyType = 0;
 		}
 
 		public override void UpdateDead()
