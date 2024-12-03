@@ -33,6 +33,7 @@ using Terraria.Graphics;
 using TheConfectionRebirth.Items.Weapons;
 using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items;
+using Mono.Cecil;
 
 namespace TheConfectionRebirth
 {
@@ -112,6 +113,7 @@ namespace TheConfectionRebirth
 			On_Projectile.CanBeReflected += CosmicCookieCanBeReflect;
 			On_Projectile.Shimmer += OnShimmer;
 			IL_NPC.BigMimicSummonCheck += PreventCrimsonMimics;
+			IL_Player.TryGettingDevArmor += ConfectionDevSets;
 		}
 
 		public override void Unload() {
@@ -166,7 +168,30 @@ namespace TheConfectionRebirth
 			On_Projectile.CanBeReflected -= CosmicCookieCanBeReflect;
 			On_Projectile.Shimmer -= OnShimmer;
 			IL_NPC.BigMimicSummonCheck -= PreventCrimsonMimics;
+			IL_Player.TryGettingDevArmor -= ConfectionDevSets;
 		}
+
+		#region Drop Confection Dev Sets
+		private void ConfectionDevSets(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+			c.GotoNext(MoveType.After, i => i.MatchCall<Main>("get_rand"), i => i.MatchLdcI4(18));
+			c.EmitDelegate((int oldVal) => {
+				int currentDevsetCount = 1; //we only have 1 dev set
+				return oldVal + currentDevsetCount;
+			});
+			c.GotoNext(MoveType.After, i => i.MatchLdloc0(), i => i.MatchSwitch(out _));
+			c.EmitLdarg1();
+			c.EmitLdarg0();
+			c.EmitDelegate((IEntitySource source, Player player) => //emitting this delegate after the switch basically gives the switch a default to land to if no other options are chosen
+			{
+				//no need for a second switch as we only have 1 dev set
+				player.QuickSpawnItem(source, ModContent.ItemType<Items.Armor.SnickerDevOutfit.ConeHead>());
+				player.QuickSpawnItem(source, ModContent.ItemType<Items.Armor.SnickerDevOutfit.Knickercobbler>());
+				player.QuickSpawnItem(source, ModContent.ItemType<Items.Armor.SnickerDevOutfit.Unicookie>());
+			});
+		}
+		#endregion
 
 		#region Stop Key of Night spawning Crimson Mimics and add modded keys
 		private void PreventCrimsonMimics(ILContext il)

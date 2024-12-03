@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -52,6 +55,8 @@ namespace TheConfectionRebirth
 		public int neapolinitePowerLevel;
 
 		public int bakersDozenHitCount = 0;
+
+		public float snickerDevCookieRot = 0f;
 
 		/// <summary>
 		/// Used by the Mimic Chest Spawning to know what NPC to spawn when leaving the chest
@@ -476,35 +481,35 @@ namespace TheConfectionRebirth
 		{
 			Player drawPlayer = drawInfo.drawPlayer;
 			int HelmetType = 0;
-			if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHat>())
+			if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
 			{
 				HelmetType = 4;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHeadgear>())
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
 			{
 				HelmetType = 3;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHelmet>())
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
 			{
 				HelmetType = 2;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteMask>())
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
 			{
 				HelmetType = 1;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHat>())
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
 			{
 				HelmetType = 4;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHeadgear>())
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
 			{
 				HelmetType = 3;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHelmet>())
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
 			{
 				HelmetType = 2;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteMask>())
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
 			{
 				HelmetType = 1;
 			}
@@ -528,8 +533,8 @@ namespace TheConfectionRebirth
 			}
 			else if (drawinfo.drawPlayer.body > 0 && HelmetType > 0) //Old chestplate renderer, here incase some weird fucked up mod wants to use the old renderer
 			{
-				Texture2D male = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
-				Texture2D female = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
+				Texture2D male = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
+				Texture2D female = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 				Rectangle bodyFrame = drawinfo.drawPlayer.bodyFrame;
 				int num = drawinfo.armorAdjust;
 				bodyFrame.X += num;
@@ -565,7 +570,7 @@ namespace TheConfectionRebirth
 			{
 				if (!drawinfo.drawPlayer.invis)
 				{
-					Texture2D value = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
+					Texture2D value = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 					PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, CompositePlayerDrawContext.Torso, new DrawData(value, vector, drawinfo.compTorsoFrame, drawinfo.colorArmorBody, bodyRotation, drawinfo.bodyVect, 1f, drawinfo.playerEffect)
 					{
 						shader = drawinfo.cBody
@@ -603,7 +608,7 @@ namespace TheConfectionRebirth
 			}
 			else if (drawinfo.drawPlayer.body > 0 && HelmetType > 0) //Old hand rendering, again here for when other broken mods use the old renderer
 			{
-				Texture2D arms = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
+				Texture2D arms = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 				Rectangle bodyFrame = drawinfo.drawPlayer.bodyFrame;
 				int num = drawinfo.armorAdjust;
 				bodyFrame.X += num;
@@ -650,7 +655,7 @@ namespace TheConfectionRebirth
 			{
 				if (!drawinfo.drawPlayer.invis)
 				{
-					Texture2D value = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
+					Texture2D value = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 					for (int i = 0; i < 2; i++)
 					{
 						if (i == num2 && !drawinfo.hideCompositeShoulders)
@@ -686,7 +691,43 @@ namespace TheConfectionRebirth
 		}
 	}
 
-	/*public class TopCakeCandlesDrawing : PlayerDrawLayer
+	public class SnickersDevsetUnicookie : PlayerDrawLayer
+	{
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.Leggings);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (!drawPlayer.dead && ((drawPlayer.armor[12].type == ItemID.None && drawPlayer.armor[2].type == ModContent.ItemType<Items.Armor.SnickerDevOutfit.Unicookie>()) || drawPlayer.armor[12].type == ModContent.ItemType<Items.Armor.SnickerDevOutfit.Unicookie>()))
+			{
+				drawPlayer.GetModPlayer<ConfectionPlayer>().snickerDevCookieRot += (float)(drawPlayer.legFrame.Y > drawPlayer.legFrame.Height * 5 && !Main.gamePaused ? (Main.gameMenu ? 4f : drawPlayer.velocity.X) : 0f) * 0.075f;
+
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/SnickerDevOutfit/Unicookie_Wheel");
+				Vector2 val = drawInfo.Position + drawInfo.drawPlayer.Size * new Vector2(0.5f, 0.5f + 0.5f * drawInfo.drawPlayer.gravDir);
+				Vector2 position = val - Main.screenPosition + drawInfo.drawPlayer.legPosition + new Vector2(drawPlayer.direction, drawPlayer.gravDir == 1f ? -2 : -4);
+				if (drawInfo.isSitting)
+				{
+					position.Y += drawInfo.seatYOffset;
+				}
+				position += drawInfo.legsOffset;
+				position = position.Floor();
+				Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
+				Color color = drawInfo.colorArmorLegs;
+				float rotation = drawPlayer.GetModPlayer<ConfectionPlayer>().snickerDevCookieRot;
+				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+
+				DrawData drawData = new DrawData(texture, position, frame, color, rotation, origin, 1f, spriteEffects);
+				drawData.shader = drawInfo.cLegs;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
+
+	public class TopCakeCandlesDrawing : PlayerDrawLayer
 	{
 		public override Position GetDefaultPosition()
 		{
@@ -696,9 +737,10 @@ namespace TheConfectionRebirth
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
 			Player drawPlayer = drawInfo.drawPlayer;
-			if (!drawPlayer.dead && ((drawPlayer.armor[10].type == 0 && drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.TopCake>()) || drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.TopCake>()))
+			if (!drawPlayer.dead && ((drawPlayer.armor[10].type == ItemID.None && drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.BirthdayOutfit.TopCake>()) || drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.BirthdayOutfit.TopCake>()))
 			{
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/TopCake_Candles");
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/BirthdayOutfit/TopCake_Candles");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/BirthdayOutfit/TopCake_Candles_Glow");
 
 				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
 				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 - 5.5f;
@@ -708,10 +750,25 @@ namespace TheConfectionRebirth
 				float rotation = drawPlayer.headRotation;
 				SpriteEffects spriteEffects = drawInfo.playerEffect;
 
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorHead, rotation, origin, 1f, spriteEffects, 0);
+				DrawData drawData = new DrawData(texture, position, frame, drawInfo.colorArmorHead, rotation, origin, 1f, spriteEffects);
 				drawData.shader = drawInfo.cHead;
 				drawInfo.DrawDataCache.Add(drawData);
+
+				DrawData drawData2 = new DrawData(texture2, position, frame, Color.White, rotation, origin, 1f, spriteEffects);
+				drawData2.shader = drawInfo.cHead;
+				drawInfo.DrawDataCache.Add(drawData2);
+
+				if (Main.rand.NextBool(40))
+				{
+					Rectangle spawnPos = Utils.CenteredRectangle(drawInfo.Position + drawPlayer.Size / 2f + new Vector2(0f, drawPlayer.gravDir * -28f), new Vector2(14f, 4f));
+					int dustID = Dust.NewDust(spawnPos.TopLeft(), spawnPos.Width, spawnPos.Height, DustID.SpelunkerGlowstickSparkle, 0f);
+					Dust dust = Main.dust[dustID];
+					dust.fadeIn = 1f;
+					dust.velocity.Y = -2f;
+					dust.shader = GameShaders.Armor.GetSecondaryShader(drawPlayer.cHead, drawPlayer);
+					drawInfo.DustCache.Add(dustID);
+				}
 			}
 		}
-	}*/
+	}
 }

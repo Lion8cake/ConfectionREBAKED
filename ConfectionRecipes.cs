@@ -2,7 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Items;
-using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Armor.NeapoliniteSet;
+using TheConfectionRebirth.Items.Armor.CreamwoodSet;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Placeable.Furniture;
 using TheConfectionRebirth.Items.Weapons;

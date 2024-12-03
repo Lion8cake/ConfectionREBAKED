@@ -12,6 +12,7 @@ Mods: {
 			SwirlySwarm: Swirly Swarm
 			StrawberryStrike: Strawberry Strike
 			ChocolateCharge: Chocolate Charge
+			Impersonate: "'Great for impersonating Confection Creators'"
 		}
 
 		SetBonus: {
@@ -998,6 +999,101 @@ Mods: {
 			KeyofDelight: {
 				DisplayName: Key of Delight
 				Tooltip: "'Charged with the essance of many souls'"
+			}
+
+			ConeHead: {
+				DisplayName: Snicker's Cone Head
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Impersonate}"
+			}
+
+			Knickercobbler: {
+				DisplayName: Snicker's Knickercobbler
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Impersonate}"
+			}
+
+			Unicookie: {
+				DisplayName: Snicker's Unicookie
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Impersonate}"
+			}
+
+			AdmiralHat: {
+				DisplayName: Admiral Hat
+				Tooltip: "'It's a little sticky...'"
+			}
+
+			BirthdaySuit: {
+				DisplayName: Birthday Suit
+				Tooltip: ""
+			}
+
+			RightTrousers: {
+				DisplayName: Right Trousers
+				Tooltip: ""
+			}
+
+			TopCake: {
+				DisplayName: Top Cake
+				Tooltip: "'Shouldn't we blow the candles out first?'"
+			}
+
+			CookieMask: {
+				DisplayName: Cookie Mask
+				Tooltip: ""
+			}
+
+			CookiePants: {
+				DisplayName: Cookie Pants
+				Tooltip: ""
+			}
+
+			CookieShirt: {
+				DisplayName: Cookie Shirt
+				Tooltip: ""
+			}
+
+			WonkyCoat: {
+				DisplayName: Wonky Coat
+				Tooltip: ""
+			}
+
+			WonkyHat: {
+				DisplayName: Wonky Hat
+				Tooltip: ""
+			}
+
+			WonkyTrousers: {
+				DisplayName: Wonky Trousers
+				Tooltip: ""
+			}
+
+			CakeDress: {
+				DisplayName: Cake Dress
+				Tooltip: ""
+			}
+
+			CookieCorset: {
+				DisplayName: Cookie Corset
+				Tooltip: ""
+			}
+
+			CreamHat: {
+				DisplayName: Cream Hat
+				Tooltip: ""
+			}
+
+			GummyMask: {
+				DisplayName: Gummy Mask
+				Tooltip: ""
+			}
+
+			GummyPants: {
+				DisplayName: Gummy Pants
+				Tooltip: ""
+			}
+
+			GummyShirt: {
+				DisplayName: Gummy Shirt
+				Tooltip: ""
 			}
 		}
 
