@@ -1095,6 +1095,16 @@ Mods: {
 				DisplayName: Gummy Shirt
 				Tooltip: ""
 			}
+
+			DriversPermint: {
+				DisplayName: Driver's Permint
+				Tooltip: "'What a sweet ride!'"
+			}
+
+			YumBlockWall: {
+				DisplayName: Yum Block Wall
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1323,6 +1333,11 @@ Mods: {
 				DisplayName: Roller Cookie
 				Description: A little Rollercookie is rolling around with you
 			}
+
+			RollercycleBuff: {
+				DisplayName: Rollercycle Buff
+				Description: Press Up to pop a sick wheelie at high speeds!
+			}
 		}
 
 		DryadSpecialText: {
@@ -1391,6 +1406,23 @@ Mods: {
 			SandConfectionUndergroundBiome: {
 				DisplayName: BestiarySandUndergroundConfectionUnused
 				TownNPCDialogueName: unused
+			}
+		}
+
+		Achievements: {
+			DrixerMixer: {
+				Name: Drixer Mixer
+				Description: Craft a drixer or pix using neapolinite bars, and the souls of the three mechanical bosses.
+			}
+
+			TheBeamOfCream: {
+				Name: The Beam of Cream
+				Description: Obtain the Cream Beam.
+			}
+
+			BirthdayRide: {
+				Name: Birthday Ride
+				Description: Wear the full birthday suit while riding a Rollercycle.
 			}
 		}
 

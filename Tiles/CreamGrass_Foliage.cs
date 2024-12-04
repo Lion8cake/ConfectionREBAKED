@@ -39,7 +39,7 @@ namespace TheConfectionRebirth.Tiles
 
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Main.tile[i, j].TileFrameX == 144) {
-				yield return new Item(ModContent.ItemType<Items.YumDrop>());
+				yield return new Item(ModContent.ItemType<Items.Placeable.YumDrop>());
 			}
 		}
 	}

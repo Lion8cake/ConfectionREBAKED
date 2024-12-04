@@ -26,7 +26,7 @@ namespace TheConfectionRebirth
 					recipe.RemoveIngredient(ItemID.SoulofNight);
 					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 15);
 				}
-				if (recipe.HasResult(4142) && recipe.HasIngredient(ItemID.SoulofNight))
+				if (recipe.HasResult(ItemID.LesionStation) && recipe.HasIngredient(ItemID.SoulofNight))
 				{
 					recipe.RemoveIngredient(ItemID.SoulofNight);
 					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 10);
@@ -719,6 +719,18 @@ namespace TheConfectionRebirth
 			CosmicCookieCannon.AddTile(TileID.MythrilAnvil);
 			CosmicCookieCannon.SortAfter(SacchariteLash);
 			CosmicCookieCannon.Register();
+
+			//Drivers Permint
+			Recipe DriversPermint = Recipe.Create(ModContent.ItemType<DriversPermint>());
+			DriversPermint.AddIngredient(ModContent.ItemType<KeyofDelight>());
+			DriversPermint.AddIngredient(ModContent.ItemType<NeapoliniteBar>(), 30);
+			DriversPermint.AddIngredient(ModContent.ItemType<Sprinkles>(), 80);
+			DriversPermint.AddIngredient(ModContent.ItemType<CookieDough>(), 20);
+			DriversPermint.AddIngredient(ModContent.ItemType<Saccharite>(), 100);
+			DriversPermint.AddIngredient(ModContent.ItemType<SoulofDelight>(), 30);
+			DriversPermint.AddTile(TileID.MythrilAnvil);
+			DriversPermint.SortAfter(CosmicCookieCannon);
+			DriversPermint.Register();
 			#endregion
 
 			//Confection Torch
@@ -927,6 +939,19 @@ namespace TheConfectionRebirth
 			SoulofSpiteinaBottle.AddIngredient(ItemID.Bottle);
 			SoulofSpiteinaBottle.SortAfterFirstRecipesOf(ItemID.SoulBottleNight);
 			SoulofSpiteinaBottle.Register();
+
+			//Yum Wall
+			Recipe YumBlockWall = Recipe.Create(ModContent.ItemType<YumBlockWall>(), 4);
+			YumBlockWall.AddIngredient(ModContent.ItemType<PastryBlock>());
+			YumBlockWall.AddTile(TileID.WorkBenches);
+			YumBlockWall.SortAfterFirstRecipesOf(ItemID.MushroomWall);
+			YumBlockWall.Register();
+
+			Recipe YumBlockWall2 = Recipe.Create(ModContent.ItemType<YumDrop>());
+			YumBlockWall2.AddIngredient(ModContent.ItemType<YumBlockWall>(), 4);
+			YumBlockWall2.AddTile(TileID.WorkBenches);
+			YumBlockWall2.SortAfter(YumBlockWall);
+			YumBlockWall2.Register();
 		}
 
 		private static void AddCreamWoodFurnitureArmorAndItems()

@@ -38,9 +38,9 @@ namespace TheConfectionRebirth.ModSupport
                 return;
             }
 
-            //Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "BirthdayRide", AchievementCategory.Challenger, "TheConfectionRebirth/Assets/BirthdayRide", null, false, false, 8f, new string[] { "Event_BirthdaySuitRollerCookieRide" });
-            //Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "DrixerMixer", AchievementCategory.Collector, "TheConfectionRebirth/Assets/DrixerMixer", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.Drixer>() });
-			//Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "TheBeamOfCream", AchievementCategory.Collector, "TheConfectionRebirth/Assets/TheBeamOfCream", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.CreamBeam>() });
+            Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "DrixerMixer", AchievementCategory.Collector, "TheConfectionRebirth/Assets/DrixerMixer", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.Drixer>() });
+			Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "TheBeamOfCream", AchievementCategory.Collector, "TheConfectionRebirth/Assets/TheBeamOfCream", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.CreamBeam>() });
+			Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "BirthdayRide", AchievementCategory.Challenger, "TheConfectionRebirth/Assets/BirthdayRide", null, false, false, 8f, new string[] { "Event_BirthdaySuitRollerCookieRide" });
 		}
 
 		public override void Load()
