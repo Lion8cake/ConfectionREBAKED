@@ -7,6 +7,7 @@ using TheConfectionRebirth.Items.Armor.CreamwoodSet;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Placeable.Furniture;
 using TheConfectionRebirth.Items.Weapons;
+using TheConfectionRebirth.Items.Accessories;
 
 namespace TheConfectionRebirth
 {
@@ -952,6 +953,39 @@ namespace TheConfectionRebirth
 			YumBlockWall2.AddTile(TileID.WorkBenches);
 			YumBlockWall2.SortAfter(YumBlockWall);
 			YumBlockWall2.Register();
+
+			//Cream Wings
+			Recipe CreamWings = Recipe.Create(ModContent.ItemType<CreamWings>());
+			CreamWings.AddIngredient(ItemID.Feather, 10);
+			CreamWings.AddIngredient(ItemID.SoulofFlight, 20);
+			CreamWings.AddIngredient(ModContent.ItemType<SoulofDelight>(), 15);
+			CreamWings.AddTile(TileID.MythrilAnvil);
+			CreamWings.SortAfterFirstRecipesOf(ItemID.DemonWings);
+			CreamWings.Register();
+
+			//Sprinkle Wings
+			Recipe SprinkleWings = Recipe.Create(ModContent.ItemType<SprinkleWings>());
+			SprinkleWings.AddIngredient(ItemID.SoulofFlight, 20);
+			SprinkleWings.AddIngredient(ModContent.ItemType<Sprinkles>(), 99);
+			SprinkleWings.AddTile(TileID.MythrilAnvil);
+			SprinkleWings.SortAfterFirstRecipesOf(ItemID.FairyWings);
+			SprinkleWings.Register();
+
+			//Cookie Wings
+			Recipe CookieWings = Recipe.Create(ModContent.ItemType<CookieWings>());
+			CookieWings.AddIngredient(ItemID.SoulofFlight, 20);
+			CookieWings.AddIngredient(ModContent.ItemType<CookieDough>(), 25);
+			CookieWings.AddTile(TileID.MythrilAnvil);
+			CookieWings.SortAfter(SprinkleWings);
+			CookieWings.Register();
+
+			//Saccharite Wings
+			Recipe SacchariteWings = Recipe.Create(ModContent.ItemType<SacchariteWings>());
+			SacchariteWings.AddIngredient(ItemID.SoulofFlight, 20);
+			SacchariteWings.AddIngredient(ModContent.ItemType<Saccharite>(), 25);
+			SacchariteWings.AddTile(TileID.MythrilAnvil);
+			SacchariteWings.SortAfter(CookieWings);
+			SacchariteWings.Register();
 		}
 
 		private static void AddCreamWoodFurnitureArmorAndItems()

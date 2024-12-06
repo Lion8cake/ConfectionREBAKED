@@ -34,6 +34,7 @@ using TheConfectionRebirth.Items.Weapons;
 using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items;
 using Mono.Cecil;
+using TheConfectionRebirth.Items.Accessories;
 
 namespace TheConfectionRebirth
 {
@@ -114,6 +115,7 @@ namespace TheConfectionRebirth
 			On_Projectile.Shimmer += OnShimmer;
 			IL_NPC.BigMimicSummonCheck += PreventCrimsonMimics;
 			IL_Player.TryGettingDevArmor += ConfectionDevSets;
+			On_PlayerDrawLayers.DrawPlayer_09_Wings += PreventWingDrawing;
 		}
 
 		public override void Unload() {
@@ -169,7 +171,19 @@ namespace TheConfectionRebirth
 			On_Projectile.Shimmer -= OnShimmer;
 			IL_NPC.BigMimicSummonCheck -= PreventCrimsonMimics;
 			IL_Player.TryGettingDevArmor -= ConfectionDevSets;
+			On_PlayerDrawLayers.DrawPlayer_09_Wings -= PreventWingDrawing;
 		}
+
+		#region Prevent Wing Rendering (WHY DOES TMOD NOT SUPPORT THIS????)
+		private void PreventWingDrawing(On_PlayerDrawLayers.orig_DrawPlayer_09_Wings orig, ref PlayerDrawSet drawinfo)
+		{
+			if (drawinfo.drawPlayer.wings == ModContent.GetInstance<WildAiryBlue>().Item.wingSlot)
+			{
+				return;
+			}
+			orig.Invoke(ref drawinfo);
+		}
+		#endregion
 
 		#region Drop Confection Dev Sets
 		private void ConfectionDevSets(ILContext il)

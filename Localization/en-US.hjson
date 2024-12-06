@@ -1105,6 +1105,36 @@ Mods: {
 				DisplayName: Yum Block Wall
 				Tooltip: ""
 			}
+
+			CookieWings: {
+				DisplayName: Cookie Wings
+				Tooltip: Allows flight and slow fall
+			}
+
+			CreamWings: {
+				DisplayName: Cream Wings
+				Tooltip: Allows flight and slow fall
+			}
+
+			SacchariteWings: {
+				DisplayName: Saccharite Wings
+				Tooltip: Allows flight and slow fall
+			}
+
+			SprinkleWings: {
+				DisplayName: Sprinkle Wings
+				Tooltip: Allows flight and slow fall
+			}
+
+			WildAiryBlue: {
+				DisplayName: Wild Airy Blue
+				Tooltip:
+					'''
+					Allows flight and slow fall
+					Press Down to toggle hover
+					Press Up to deactivate hover
+					'''
+			}
 		}
 
 		NPCs: {
