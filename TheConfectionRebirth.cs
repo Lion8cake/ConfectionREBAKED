@@ -1120,7 +1120,8 @@ namespace TheConfectionRebirth
 			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.ConfectionBanners>()) {
 				sizeY = 3;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.CreamwoodChandelier>()) 
+			{
 				sizeX = 3;
 				sizeY = 3;
 			}
@@ -1129,20 +1130,30 @@ namespace TheConfectionRebirth
 				sizeX = 1;
 				sizeY = 2;
 			}
-			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteChandelier>()) 
+			{
 				sizeX = 3;
 				sizeY = 3;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.SacchariteLantern>())
+			{
+				sizeX = 1;
 				sizeY = 2;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) {
+			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) 
+			{
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) 
+			{
 				sizeY = 2;
 			}*/
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) 
+			{
 				sizeY = 2;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) {
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) 
+			{
 				sizeY = 2;
 			}
 			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);

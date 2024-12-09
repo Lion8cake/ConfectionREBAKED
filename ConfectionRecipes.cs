@@ -119,6 +119,13 @@ namespace TheConfectionRebirth
 			PipKebob.SortAfter(FrogInAPond);
 			PipKebob.Register();
 
+			//Pip Block
+			Recipe PipBlock = Recipe.Create(ModContent.ItemType<PipBlock>(), 30);
+			PipBlock.AddIngredient(ModContent.ItemType<Pip>());
+			PipBlock.AddTile(TileID.HeavyWorkBench);
+			PipBlock.SortAfter(PipKebob);
+			PipBlock.Register();
+
 			//Amethyst Creamstone Block
 			Recipe AmethystCreamstoneBlock = Recipe.Create(ModContent.ItemType<AmethystCreamstoneBlock>());
 			AmethystCreamstoneBlock.AddIngredient(ItemID.Amethyst);
@@ -239,12 +246,32 @@ namespace TheConfectionRebirth
 			#endregion
 
 			#region Echo Stone Walls Crafting Group
+			//Creamstone Brick
+			Recipe CreamstoneBrick = Recipe.Create(ModContent.ItemType<CreamstoneBrick>());
+			CreamstoneBrick.AddIngredient(ModContent.ItemType<Creamstone>(), 2);
+			CreamstoneBrick.AddTile(TileID.Furnaces);
+			CreamstoneBrick.SortAfterFirstRecipesOf(ItemID.Hallow4Echo);
+			CreamstoneBrick.Register();
+
+			//Creamstone Brick Wall
+			Recipe CreamstoneBrickWall = Recipe.Create(ModContent.ItemType<CreamstoneBrickWall>(), 4);
+			CreamstoneBrickWall.AddIngredient(ModContent.ItemType<CreamstoneBrick>());
+			CreamstoneBrickWall.AddTile(TileID.WorkBenches);
+			CreamstoneBrickWall.SortAfter(CreamstoneBrick);
+			CreamstoneBrickWall.Register();
+
+			Recipe CreamstoneBrick2 = Recipe.Create(ModContent.ItemType<CreamstoneBrick>());
+			CreamstoneBrick2.AddIngredient(ModContent.ItemType<CreamstoneWall>(), 4);
+			CreamstoneBrick2.AddTile(TileID.WorkBenches);
+			CreamstoneBrick2.SortAfter(CreamstoneBrickWall);
+			CreamstoneBrick2.Register();
+
 			//Creamstone Wall
 			Recipe CreamstoneWall = Recipe.Create(ModContent.ItemType<CreamstoneWall>(), 4);
 			CreamstoneWall.AddIngredient(ModContent.ItemType<Creamstone>());
 			CreamstoneWall.AddCondition(Condition.InGraveyard);
 			CreamstoneWall.AddTile(TileID.WorkBenches);
-			CreamstoneWall.SortAfterFirstRecipesOf(ItemID.Hallow4Echo);
+			CreamstoneWall.SortAfter(CreamstoneBrick2);
 			CreamstoneWall.Register();
 
 			Recipe CreamstoneWall2 = Recipe.Create(ModContent.ItemType<Creamstone>());
@@ -859,6 +886,17 @@ namespace TheConfectionRebirth
 			CreamWood.SortAfter(CreamwoodPlatform);
 			CreamWood.Register();
 
+			//Saccharite Platform
+			Recipe SaccharitePlatform = Recipe.Create(ModContent.ItemType<SaccharitePlatform>(), 2);
+			SaccharitePlatform.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 1);
+			SaccharitePlatform.SortAfter(CreamWood);
+			SaccharitePlatform.Register();
+
+			Recipe SacchariteBrick3 = Recipe.Create(ModContent.ItemType<SacchariteBrick>());
+			SacchariteBrick3.AddIngredient(ModContent.ItemType<SaccharitePlatform>(), 2);
+			SacchariteBrick3.SortAfter(SaccharitePlatform);
+			SacchariteBrick3.Register();
+
 			//Trapped Creamwood Chest
 			Recipe CreamwoodTrappedChest = Recipe.Create(ModContent.ItemType<CreamwoodTrappedChest>());
 			CreamwoodTrappedChest.AddIngredient(ModContent.ItemType<CreamwoodChest>());
@@ -866,6 +904,14 @@ namespace TheConfectionRebirth
 			CreamwoodTrappedChest.AddTile(TileID.HeavyWorkBench);
 			CreamwoodTrappedChest.SortAfterFirstRecipesOf(ItemID.Fake_AshWoodChest);
 			CreamwoodTrappedChest.Register();
+
+			//Trapped Saccharite Chest
+			Recipe SacchariteTrappedChest = Recipe.Create(ModContent.ItemType<SacchariteTrappedChest>());
+			SacchariteTrappedChest.AddIngredient(ModContent.ItemType<SacchariteChest>());
+			SacchariteTrappedChest.AddIngredient(ItemID.Wire, 10);
+			SacchariteTrappedChest.AddTile(TileID.HeavyWorkBench);
+			SacchariteTrappedChest.SortAfter(CreamwoodTrappedChest);
+			SacchariteTrappedChest.Register();
 
 			//Creamwood Wall
 			Recipe CreamwoodWall = Recipe.Create(ModContent.ItemType<CreamwoodWall>(), 4);
@@ -986,6 +1032,179 @@ namespace TheConfectionRebirth
 			SacchariteWings.AddTile(TileID.MythrilAnvil);
 			SacchariteWings.SortAfter(CookieWings);
 			SacchariteWings.Register();
+
+			//Saccharite Block
+			Recipe SacchariteBrick = Recipe.Create(ModContent.ItemType<SacchariteBrick>(), 5);
+			SacchariteBrick.AddIngredient(ItemID.StoneBlock, 5);
+			SacchariteBrick.AddIngredient(ModContent.ItemType<Saccharite>(), 1);
+			SacchariteBrick.AddTile(TileID.AdamantiteForge);
+			SacchariteBrick.SortAfterFirstRecipesOf(ItemID.CrystalBlockWall);
+			SacchariteBrick.Register();
+
+			//Saccharite Block Wall
+			Recipe SacchariteBlockWall = Recipe.Create(ModContent.ItemType<SacchariteBlockWall>(), 4);
+			SacchariteBlockWall.AddIngredient(ModContent.ItemType<SacchariteBrick>());
+			SacchariteBlockWall.AddTile(TileID.WorkBenches);
+			SacchariteBlockWall.SortAfter(SacchariteBrick);
+			SacchariteBlockWall.Register();
+
+			Recipe SacchariteBrick2 = Recipe.Create(ModContent.ItemType<SacchariteBrick>());
+			SacchariteBrick2.AddIngredient(ModContent.ItemType<SacchariteBlockWall>(), 4);
+			SacchariteBrick2.AddTile(TileID.WorkBenches);
+			SacchariteBrick2.SortAfter(SacchariteBlockWall);
+			SacchariteBrick2.Register();
+
+			AddSacchariteFurniture();
+		}
+
+		private static void AddSacchariteFurniture()
+		{
+			//Saccharite Bath
+			Recipe SacchariteBath = Recipe.Create(ModContent.ItemType<SacchariteBath>());
+			SacchariteBath.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 35);
+			SacchariteBath.AddTile(TileID.Sawmill);
+			SacchariteBath.SortAfterFirstRecipesOf(ItemID.CrystalWorkbench);
+			SacchariteBath.Register();
+
+			//Saccharite Bed
+			Recipe SacchariteBed = Recipe.Create(ModContent.ItemType<SacchariteBed>());
+			SacchariteBed.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 40);
+			SacchariteBed.AddIngredient(ItemID.Silk, 5);
+			SacchariteBed.AddTile(TileID.Sawmill);
+			SacchariteBed.SortAfter(SacchariteBath);
+			SacchariteBed.Register();
+
+			//Saccharite Bookcase
+			Recipe SacchariteBookcase = Recipe.Create(ModContent.ItemType<SacchariteBookcase>());
+			SacchariteBookcase.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 50);
+			SacchariteBookcase.AddIngredient(ItemID.Book, 10);
+			SacchariteBookcase.AddTile(TileID.Sawmill);
+			SacchariteBookcase.SortAfter(SacchariteBed);
+			SacchariteBookcase.Register();
+
+			//Saccharite Candelabra
+			Recipe SacchariteCandelabra = Recipe.Create(ModContent.ItemType<SacchariteCandelabra>());
+			SacchariteCandelabra.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 10);
+			SacchariteCandelabra.AddIngredient(ItemID.Torch, 3);
+			SacchariteCandelabra.AddTile(TileID.WorkBenches);
+			SacchariteCandelabra.SortAfter(SacchariteBookcase);
+			SacchariteCandelabra.Register();
+
+			//Saccharite Candle
+			Recipe SacchariteCandle = Recipe.Create(ModContent.ItemType<SacchariteCandle>());
+			SacchariteCandle.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 8);
+			SacchariteCandle.AddIngredient(ItemID.Torch, 1);
+			SacchariteCandle.AddTile(TileID.WorkBenches);
+			SacchariteCandle.SortAfter(SacchariteCandelabra);
+			SacchariteCandle.Register();
+
+			//Saccharite Chair
+			Recipe SacchariteChair = Recipe.Create(ModContent.ItemType<SacchariteChair>());
+			SacchariteChair.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 10);
+			SacchariteChair.AddTile(TileID.WorkBenches);
+			SacchariteChair.SortAfter(SacchariteCandle);
+			SacchariteChair.Register();
+
+			//Saccharite Chandelier
+			Recipe SacchariteChandelier = Recipe.Create(ModContent.ItemType<SacchariteChandelier>());
+			SacchariteChandelier.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 10);
+			SacchariteChandelier.AddIngredient(ItemID.Torch, 4);
+			SacchariteChandelier.AddIngredient(ItemID.Chain, 1);
+			SacchariteChandelier.AddTile(TileID.Anvils);
+			SacchariteChandelier.SortAfter(SacchariteChair);
+			SacchariteChandelier.Register();
+
+			//Saccharite Chest
+			Recipe SacchariteChest = Recipe.Create(ModContent.ItemType<SacchariteChest>());
+			SacchariteChest.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 20);
+			SacchariteChest.AddRecipeGroup(RecipeGroupID.IronBar, 2);
+			SacchariteChest.AddTile(TileID.WorkBenches);
+			SacchariteChest.SortAfter(SacchariteChandelier);
+			SacchariteChest.Register();
+
+			//Saccharite Clock
+			Recipe SacchariteClock = Recipe.Create(ModContent.ItemType<SacchariteClock>());
+			SacchariteClock.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 25);
+			SacchariteClock.AddRecipeGroup(RecipeGroupID.IronBar, 3);
+			SacchariteClock.AddIngredient(ItemID.Glass, 6);
+			SacchariteClock.AddTile(TileID.Sawmill);
+			SacchariteClock.SortAfter(SacchariteChest);
+			SacchariteClock.Register();
+
+			//Saccharite Door
+			Recipe SacchariteDoor = Recipe.Create(ModContent.ItemType<SacchariteDoor>());
+			SacchariteDoor.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 15);
+			SacchariteDoor.AddTile(TileID.WorkBenches);
+			SacchariteDoor.SortAfter(SacchariteClock);
+			SacchariteDoor.Register();
+
+			//Saccharite Dresser
+			Recipe SacchariteDresser = Recipe.Create(ModContent.ItemType<SacchariteDresser>());
+			SacchariteDresser.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 40);
+			SacchariteDresser.AddTile(TileID.Sawmill);
+			SacchariteDresser.SortAfter(SacchariteDoor);
+			SacchariteDresser.Register();
+
+			//Saccharite Lamp
+			Recipe SacchariteLamp = Recipe.Create(ModContent.ItemType<SacchariteLamp>());
+			SacchariteLamp.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 6);
+			SacchariteLamp.AddIngredient(ItemID.Torch, 1);
+			SacchariteLamp.AddTile(TileID.WorkBenches);
+			SacchariteLamp.SortAfter(SacchariteDresser);
+			SacchariteLamp.Register();
+
+			//Saccharite Lantern
+			Recipe SacchariteLantern = Recipe.Create(ModContent.ItemType<SacchariteLantern>());
+			SacchariteLantern.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 15);
+			SacchariteLantern.AddIngredient(ItemID.Torch, 1);
+			SacchariteLantern.AddTile(TileID.WorkBenches);
+			SacchariteLantern.SortAfter(SacchariteLamp);
+			SacchariteLantern.Register();
+
+			//Saccharite Piano
+			Recipe SaccharitePiano = Recipe.Create(ModContent.ItemType<SaccharitePiano>());
+			SaccharitePiano.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 40);
+			SaccharitePiano.AddIngredient(ItemID.Bone, 4);
+			SaccharitePiano.AddIngredient(ItemID.Book, 1);
+			SaccharitePiano.AddTile(TileID.Sawmill);
+			SaccharitePiano.SortAfter(SacchariteLantern);
+			SaccharitePiano.Register();
+
+			//Saccharite Sofa
+			Recipe SacchariteSofa = Recipe.Create(ModContent.ItemType<SacchariteSofa>());
+			SacchariteSofa.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 12);
+			SacchariteSofa.AddIngredient(ItemID.Silk, 2);
+			SacchariteSofa.AddTile(TileID.Sawmill);
+			SacchariteSofa.SortAfter(SaccharitePiano);
+			SacchariteSofa.Register();
+
+			//Saccharite Toilet
+			Recipe SacchariteToilet = Recipe.Create(ModContent.ItemType<SacchariteToilet>());
+			SacchariteToilet.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 15);
+			SacchariteToilet.AddTile(TileID.Sawmill);
+			SacchariteToilet.SortAfter(SacchariteSofa);
+			SacchariteToilet.Register();
+
+			//Saccharite Sink
+			Recipe SacchariteSink = Recipe.Create(ModContent.ItemType<SacchariteSink>());
+			SacchariteSink.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 15);
+			SacchariteSink.AddIngredient(ItemID.WaterBucket, 1);
+			SacchariteSink.AddTile(TileID.WorkBenches);
+			SacchariteSink.SortAfter(SacchariteToilet);
+			SacchariteSink.Register();
+
+			//Saccharite Table
+			Recipe SacchariteTable = Recipe.Create(ModContent.ItemType<SacchariteTable>());
+			SacchariteTable.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 20);
+			SacchariteTable.AddTile(TileID.WorkBenches);
+			SacchariteTable.SortAfter(SacchariteSink);
+			SacchariteTable.Register();
+
+			//Saccharite Workbench
+			Recipe SacchariteWorkbench = Recipe.Create(ModContent.ItemType<SacchariteWorkbench>());
+			SacchariteWorkbench.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 25);
+			SacchariteWorkbench.SortAfter(SacchariteTable);
+			SacchariteWorkbench.Register();
 		}
 
 		private static void AddCreamWoodFurnitureArmorAndItems()

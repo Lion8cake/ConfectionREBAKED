@@ -7,7 +7,8 @@ namespace TheConfectionRebirth.Walls
 {
 	public class YumBlockWall : ModWall
 	{
-		public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() 
+		{
 			Main.wallHouse[Type] = true;
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.YumBlockWall>());
 			DustType = ModContent.DustType<YumDust>();

@@ -106,6 +106,26 @@ Mods: {
 			CreamwoodWorkbench.MapEntry: Workbench
 			SoulofDelightinaBottle.MapEntry: Soulof Delightina Bottle
 			SoulofSpiteinaBottle.MapEntry: Soulof Spiteina Bottle
+			SacchariteBath.MapEntry: Saccharite Bath
+			SacchariteBed.MapEntry: Saccharite Bed
+			SacchariteBookcase.MapEntry: Saccharite Bookcase
+			SacchariteCandelabra.MapEntry: Saccharite Candelabra
+			SacchariteCandle.MapEntry: Saccharite Candle
+			SacchariteChair.MapEntry: Saccharite Chair
+			SacchariteChandelier.MapEntry: Saccharite Chandelier
+			SacchariteChest.MapEntry: Saccharite Chest
+			SacchariteClock.MapEntry: Saccharite Clock
+			SacchariteDoorOpen.MapEntry: Saccharite Door Open
+			SacchariteDresser.MapEntry: Saccharite Dresser
+			SacchariteLamp.MapEntry: Saccharite Lamp
+			SacchariteLantern.MapEntry: Saccharite Lantern
+			SaccharitePiano.MapEntry: Saccharite Piano
+			SacchariteSink.MapEntry: Saccharite Sink
+			SacchariteSofa.MapEntry: Saccharite Sofa
+			SacchariteTable.MapEntry: Saccharite Table
+			SacchariteToilet.MapEntry: Saccharite Toilet
+			SacchariteTrappedChest.MapEntry: Saccharite Trapped Chest
+			SacchariteWorkbench.MapEntry: Saccharite Workbench
 		}
 
 		Items: {
@@ -1134,6 +1154,136 @@ Mods: {
 					Press Down to toggle hover
 					Press Up to deactivate hover
 					'''
+			}
+
+			SacchariteBlockWall: {
+				DisplayName: Saccharite Block Wall
+				Tooltip: ""
+			}
+
+			SacchariteBrick: {
+				DisplayName: Saccharite Block
+				Tooltip: ""
+			}
+
+			CreamstoneBrick: {
+				DisplayName: Creamstone Brick
+				Tooltip: ""
+			}
+
+			CreamstoneBrickWall: {
+				DisplayName: Creamstone Brick Wall
+				Tooltip: ""
+			}
+
+			PipBlock: {
+				DisplayName: Pip Block
+				Tooltip: ""
+			}
+
+			SacchariteBath: {
+				DisplayName: Saccharite Bath
+				Tooltip: ""
+			}
+
+			SacchariteBed: {
+				DisplayName: Saccharite Bed
+				Tooltip: ""
+			}
+
+			SacchariteBookcase: {
+				DisplayName: Saccharite Bookcase
+				Tooltip: ""
+			}
+
+			SacchariteCandelabra: {
+				DisplayName: Saccharite Candelabra
+				Tooltip: ""
+			}
+
+			SacchariteCandle: {
+				DisplayName: Saccharite Candle
+				Tooltip: ""
+			}
+
+			SacchariteChair: {
+				DisplayName: Saccharite Chair
+				Tooltip: ""
+			}
+
+			SacchariteChandelier: {
+				DisplayName: Saccharite Chandelier
+				Tooltip: ""
+			}
+
+			SacchariteChest: {
+				DisplayName: Saccharite Chest
+				Tooltip: ""
+			}
+
+			SacchariteClock: {
+				DisplayName: Saccharite Clock
+				Tooltip: ""
+			}
+
+			SacchariteDoor: {
+				DisplayName: Saccharite Door
+				Tooltip: ""
+			}
+
+			SacchariteDresser: {
+				DisplayName: Saccharite Dresser
+				Tooltip: ""
+			}
+
+			SacchariteLamp: {
+				DisplayName: Saccharite Lamp
+				Tooltip: ""
+			}
+
+			SacchariteLantern: {
+				DisplayName: Saccharite Lantern
+				Tooltip: ""
+			}
+
+			SaccharitePiano: {
+				DisplayName: Saccharite Piano
+				Tooltip: ""
+			}
+
+			SaccharitePlatform: {
+				DisplayName: Saccharite Platform
+				Tooltip: ""
+			}
+
+			SacchariteSink: {
+				DisplayName: Saccharite Sink
+				Tooltip: ""
+			}
+
+			SacchariteSofa: {
+				DisplayName: Saccharite Sofa
+				Tooltip: ""
+			}
+
+			SacchariteTable: {
+				DisplayName: Saccharite Table
+				Tooltip: ""
+			}
+
+			SacchariteToilet: {
+				DisplayName: Saccharite Toilet
+				Tooltip: ""
+			}
+
+			SacchariteTrappedChest: {
+				DisplayName: Saccharite Trapped Chest
+				Tooltip: ""
+			}
+
+			SacchariteWorkbench: {
+				DisplayName: Saccharite Workbench
+				Tooltip: ""
 			}
 		}
 
