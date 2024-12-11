@@ -115,7 +115,6 @@ namespace TheConfectionRebirth.Projectiles
 					if (player.GetModPlayer<ConfectionPlayer>().coneSummonID == projectile.whoAmI)
 					{
 						Main.instance.PrepareDrawnEntityDrawing(projectile, GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<SwirllingChocolateDye>()), projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
-						//Main.instance.PrepareDrawnEntityDrawing(projectile, GameShaders.Armor.GetShaderIdFromItemId(ItemID.RedAcidDye), projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
 					}
 				}
 			}

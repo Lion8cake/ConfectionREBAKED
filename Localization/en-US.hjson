@@ -1285,6 +1285,30 @@ Mods: {
 				DisplayName: Saccharite Workbench
 				Tooltip: ""
 			}
+
+			SweetHook: {
+				DisplayName: Sweet Hook
+				Tooltip: ""
+			}
+
+			CookieCrumbler: {
+				DisplayName: Cookie Pike-let
+				Tooltip: ""
+			}
+
+			CreamSpray: {
+				DisplayName: Cookie Crumbler
+				Tooltip:
+					'''
+					Fires a cookie boulder to crush enemies.
+					'Thats just how the cookie crumbles.'
+					'''
+			}
+
+			SweetTooth: {
+				DisplayName: Sweet Tooth
+				Tooltip: "Enchants every 3rd arrow with the power of cream."
+			}
 		}
 
 		NPCs: {
@@ -1333,6 +1357,13 @@ Mods: {
 			CreamofKickinCookie.DisplayName: Creamof Kickin Cookie
 			CreamofKickinMeatball.DisplayName: Creamof Kickin Meatball
 			CreamofKickin.DisplayName: Cream of Kickin'
+			CookiePikelet.DisplayName: Cookie Pikelet
+			SweetHook.DisplayName: Sweet Hook
+			CookieBoulder.DisplayName: Cookie Boulder
+			CookieArrowMagnet.DisplayName: Cookie Arrow Magnet
+			CookieMagnetArrow.DisplayName: Cookie Magnet Arrow
+			SweetTooth.DisplayName: Sweet Tooth
+			CookieArrowEnchantment.DisplayName: Cookie Arrow Enchantment
 		}
 
 		Configs: {

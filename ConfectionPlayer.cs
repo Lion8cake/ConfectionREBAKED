@@ -14,6 +14,7 @@ using TheConfectionRebirth.Buffs;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.Mounts;
 using TheConfectionRebirth.Projectiles;
 
@@ -53,8 +54,9 @@ namespace TheConfectionRebirth
 
 		public int bakersDozenHitCount = 0;
 
-		public float snickerDevCookieRot = 0f;
+		public int sweetToothCounter = 0;
 
+		public float snickerDevCookieRot = 0f;
 		/// <summary>
 		/// Used by the Mimic Chest Spawning to know what NPC to spawn when leaving the chest
 		/// </summary>
