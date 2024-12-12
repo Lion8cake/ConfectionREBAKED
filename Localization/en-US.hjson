@@ -51,7 +51,7 @@ Mods: {
 			ChocolateBunny: A rabbit that has made itself appear as if its made out of pure chocolate.
 			ChocolateFrog: When it rains in the confection frogs will start to appear and look like they are coated in chocolate.
 			GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the land.
-			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. They have a particular sour taste.
+			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. Despite having a very sour taste, fish especially love these.
 			Pip: A very small bird that looks like marshmellow. Despite everything it can be quite amazing seeing the little wings carry its large body.
 			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
 		}
@@ -126,6 +126,15 @@ Mods: {
 			SacchariteToilet.MapEntry: Saccharite Toilet
 			SacchariteTrappedChest.MapEntry: Saccharite Trapped Chest
 			SacchariteWorkbench.MapEntry: Saccharite Workbench
+			CherryBugBottle.MapEntry: Cherry Bug Bottle
+			ChocolateBunnyCage.MapEntry: Chocolate Bunny Cage
+			ChocolateFrogCage.MapEntry: Chocolate Frog Cage
+			GummyWormCage.MapEntry: Sour Worm Cage
+			PipCage.MapEntry: Pip Cage
+			RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
+			Impact2.MapEntry: Painting
+			ConfectionMusicBox.MapEntry: Confection Music Box
+			ConfectionUGMusicBox.MapEntry: Confection U G Music Box
 		}
 
 		Items: {
@@ -262,7 +271,7 @@ Mods: {
 			}
 
 			GummyWorm: {
-				DisplayName: Gummy Worm
+				DisplayName: Sour Worm
 				Tooltip: ""
 			}
 
@@ -282,7 +291,11 @@ Mods: {
 
 			RoyalCherryBug: {
 				DisplayName: Royal Cherry Bug
-				Tooltip: ""
+				Tooltip:
+					'''
+					'Although a king of a race known for its taste, it has no flavor.' 
+					'You shouldn't kill a king, bad things may happen...'
+					'''
 			}
 
 			CocoaBeans: {
@@ -290,7 +303,7 @@ Mods: {
 				Tooltip:
 					'''
 					{$CommonItemTooltip.MediumStats}
-					'Legend has it that in a far away place, these grow on jungle wood'
+					'Legend has it that in a far away place, these grow on jungle logs'
 					'''
 			}
 
@@ -1307,7 +1320,62 @@ Mods: {
 
 			SweetTooth: {
 				DisplayName: Sweet Tooth
-				Tooltip: "Enchants every 3rd arrow with the power of cream."
+				Tooltip: Enchants every 3rd arrow with the power of cream.
+			}
+
+			CherryBugBottle: {
+				DisplayName: Cherry Bug Bottle
+				Tooltip: ""
+			}
+
+			ChocolateBunnyCage: {
+				DisplayName: Chocolate Bunny Cage
+				Tooltip: ""
+			}
+
+			ChocolateFrogCage: {
+				DisplayName: Chocolate Frog Cage
+				Tooltip: ""
+			}
+
+			GummyWormCage: {
+				DisplayName: Sour Worm Cage
+				Tooltip: ""
+			}
+
+			PipCage: {
+				DisplayName: Pip Cage
+				Tooltip: ""
+			}
+
+			RoyalCherryBugBottle: {
+				DisplayName: Royal Cherry Bug Bottle
+				Tooltip: ""
+			}
+
+			ConfectionPainting: {
+				DisplayName: The Desserted Land
+				Tooltip: "'S. Bobble'"
+			}
+
+			Impact2: {
+				DisplayName: Collision
+				Tooltip: "'L. Cake'"
+			}
+
+			SweetAndSavage: {
+				DisplayName: Sweet And Savage
+				Tooltip: "'Not V. Costa Moura'"
+			}
+
+			ConfectionMusicBox: {
+				DisplayName: Music Box (Confection)
+				Tooltip: ""
+			}
+
+			ConfectionUGMusicBox: {
+				DisplayName: Music Box (Underground Confection)
+				Tooltip: ""
 			}
 		}
 
@@ -1317,7 +1385,7 @@ Mods: {
 			ChocolateBunny.DisplayName: Chocolate Bunny
 			ChocolateFrog.DisplayName: Chocolate Frog
 			GrumbleBee.DisplayName: Grumble Bee
-			GummyWorm.DisplayName: Gummy Worm
+			GummyWorm.DisplayName: Sour Worm
 			Pip.DisplayName: Pip
 			RoyalCherryBug.DisplayName: Royal Cherry Bug
 		}
@@ -1638,5 +1706,6 @@ Mods: {
 		}
 
 		Conditions.InConfection: In Confection
+		NotInSeveralBiomes: Mods.TheConfectionRebirth.NotInSeveralBiomes
 	}
 }

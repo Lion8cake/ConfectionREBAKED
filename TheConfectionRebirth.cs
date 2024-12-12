@@ -1140,19 +1140,19 @@ namespace TheConfectionRebirth
 				sizeX = 1;
 				sizeY = 2;
 			}
-			/*else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.CherryBugBottle>()) 
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<CherryBugBottle>()) 
 			{
 				sizeY = 2;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.RoyalCherryBugBottle>()) 
-			{
-				sizeY = 2;
-			}*/
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofDelightinaBottle>()) 
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<RoyalCherryBugBottle>()) 
 			{
 				sizeY = 2;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.SoulofSpiteinaBottle>()) 
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<SoulofDelightinaBottle>()) 
+			{
+				sizeY = 2;
+			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<SoulofSpiteinaBottle>()) 
 			{
 				sizeY = 2;
 			}

@@ -361,7 +361,7 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
 		{
-			bool TwinsDrops(DropAttemptInfo info)
+			static bool TwinsDrops(DropAttemptInfo info)
 			{
 				NPC npc = info.npc;
 				if (npc is null)
@@ -607,6 +607,8 @@ namespace TheConfectionRebirth.NPCs
 
 		public static Condition hallowworld = new Condition("Mods.TheConfectionRebirth.TheHallow", () => !ConfectionWorldGeneration.confectionorHallow);
 
+		public static Condition paintingNotCondition = new Condition("Mods.TheConfectionRebirth.NotInSeveralBiomes", () => (!Main.LocalPlayer.ZoneJungle && !Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneSnow && !Main.bloodMoon));
+
 		public override void ModifyShop(NPCShop shop)
 		{
 			if (shop.NpcType == NPCID.Dryad)
@@ -671,6 +673,18 @@ namespace TheConfectionRebirth.NPCs
 				{
 					shopCustomPrice = Item.buyPrice(0, 3, 0, 0)
 				}, Condition.DownedPlantera);
+			}
+			if (shop.NpcType == NPCID.Painter && shop.Name == "Decor")
+			{
+				shop.InsertAfter(ItemID.Purity, new Item(ModContent.ItemType<ConfectionPainting>())
+				{
+					shopCustomPrice = Item.buyPrice(0, 1)
+				}, InConfection, paintingNotCondition);
+
+				if (shop.TryGetEntry(ItemID.TheLandofDeceivingLooks, out NPCShop.Entry entry))
+				{
+					entry.AddCondition(NotInConfection);
+				}
 			}
 		}
 	}

@@ -18,6 +18,7 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using TheConfectionRebirth.ModSupport;
@@ -60,6 +61,9 @@ namespace TheConfectionRebirth {
 			On_WorldGen.UpdateWorld_OvergroundTile += On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile += On_WorldGen_UpdateWorld_UndergroundTile;
 			On_WorldGen.SpreadDesertWalls += On_WorldGen_SpreadDesertWalls;
+			On_WorldGen.RandPictureTile += ImpactGeneration;
+			On_WorldGen.nearPicture2 += nearImpact2;
+			On_WorldGen.PlaceTile += placeImpact;
 		}
 
 		public override void Unload()
@@ -70,6 +74,9 @@ namespace TheConfectionRebirth {
 			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile -= On_WorldGen_UpdateWorld_UndergroundTile;
 			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls;
+			On_WorldGen.RandPictureTile -= ImpactGeneration;
+			On_WorldGen.nearPicture2 -= nearImpact2;
+			On_WorldGen.PlaceTile -= placeImpact;
 		}
 
 		public override void OnWorldLoad()
@@ -1256,6 +1263,59 @@ namespace TheConfectionRebirth {
 			}
 			double num = 0.4;
 			return new Color((int)(byte)(num * (double)(int)oldColor.R), (int)(byte)(num * (double)(int)oldColor.G), (int)(byte)(num * (double)(int)oldColor.B), (int)oldColor.A);
+		}
+		#endregion
+
+		#region Impact painting Generation
+		private PaintingEntry ImpactGeneration(On_WorldGen.orig_RandPictureTile orig)
+		{
+			PaintingEntry entryChosenVanilla = orig.Invoke();
+			if (entryChosenVanilla.tileType == TileID.Painting6X4 && entryChosenVanilla.style == 6 && WorldGen.genRand.NextBool(2))
+			{
+				entryChosenVanilla.tileType = ModContent.TileType<Impact2>();
+				entryChosenVanilla.style = 0;
+			}
+			return entryChosenVanilla;
+		}
+
+		private bool nearImpact2(On_WorldGen.orig_nearPicture2 orig, int x, int y)
+		{
+			if (!(Main.tile[x, y].WallType != 7 && Main.tile[x, y].WallType != 8 && Main.tile[x, y].WallType != 9))
+			{
+				for (int k = x - 15; k <= x + 15; k++)
+				{
+					for (int l = y - 10; l <= y + 10; l++)
+					{
+						if (Main.tile[k, l].HasTile && Main.tile[k, l].TileType == ModContent.TileType<Impact2>())
+						{
+							return true;
+						}
+					}
+				}
+			}
+			return orig.Invoke(x, y);
+		}
+
+		private bool placeImpact(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style)
+		{
+			bool flag = orig.Invoke(i, j, Type, mute, forced, plr, style);
+			int num = Type;
+			if (i >= 0 && j >= 0 && i < Main.maxTilesX && j < Main.maxTilesY)
+			{
+				Tile tile = Main.tile[i, j];
+				if (forced || Collision.EmptyTile(i, j) || !Main.tileSolid[num])
+				{
+					if (num == ModContent.TileType<Impact2>())
+					{
+						WorldGen.Place6x4Wall(i, j, (ushort)num, style);
+						if (tile.HasTile)
+						{
+							return true;
+						}
+					}
+				}
+			}
+			return flag;
 		}
 		#endregion
 

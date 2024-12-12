@@ -1055,6 +1055,48 @@ namespace TheConfectionRebirth
 			SacchariteBrick2.Register();
 
 			AddSacchariteFurniture();
+
+			//Cherry Bug Bottle
+			Recipe CherryBugBottle = Recipe.Create(ModContent.ItemType<CherryBugBottle>());
+			CherryBugBottle.AddIngredient(ModContent.ItemType<CherryBug>());
+			CherryBugBottle.AddIngredient(ItemID.Bottle);
+			CherryBugBottle.SortAfterFirstRecipesOf(ItemID.LightningBuginaBottle);
+			CherryBugBottle.Register();
+
+			//Royal Cherry Bug Bottle
+			Recipe RoyalCherryBugBottle = Recipe.Create(ModContent.ItemType<RoyalCherryBugBottle>());
+			RoyalCherryBugBottle.AddIngredient(ModContent.ItemType<RoyalCherryBug>());
+			RoyalCherryBugBottle.AddIngredient(ItemID.Bottle);
+			RoyalCherryBugBottle.SortAfter(CherryBugBottle);
+			RoyalCherryBugBottle.Register();
+
+			//Chocolate Bunny Cage
+			Recipe ChocolateBunnyCage = Recipe.Create(ModContent.ItemType<ChocolateBunnyCage>());
+			ChocolateBunnyCage.AddIngredient(ModContent.ItemType<ChocolateBunny>(), 1);
+			ChocolateBunnyCage.AddIngredient(ItemID.Terrarium, 1);
+			ChocolateBunnyCage.SortBeforeFirstRecipesOf(ItemID.GoldSeahorseCage);
+			ChocolateBunnyCage.Register();
+
+			//Chocolate Frog Cage
+			Recipe ChocolateFrogCage = Recipe.Create(ModContent.ItemType<ChocolateFrogCage>());
+			ChocolateFrogCage.AddIngredient(ModContent.ItemType<ChocolateFrog>(), 1);
+			ChocolateFrogCage.AddIngredient(ItemID.Terrarium, 1);
+			ChocolateFrogCage.SortAfter(ChocolateBunnyCage);
+			ChocolateFrogCage.Register();
+
+			//Pip Cage
+			Recipe PipCage = Recipe.Create(ModContent.ItemType<PipCage>());
+			PipCage.AddIngredient(ModContent.ItemType<Pip>(), 1);
+			PipCage.AddIngredient(ItemID.Terrarium, 1);
+			PipCage.SortAfter(ChocolateFrogCage);
+			PipCage.Register();
+
+			//Gummy Worm Cage
+			Recipe GummyWormCage = Recipe.Create(ModContent.ItemType<GummyWormCage>());
+			GummyWormCage.AddIngredient(ModContent.ItemType<GummyWorm>(), 1);
+			GummyWormCage.AddIngredient(ItemID.Terrarium, 1);
+			GummyWormCage.SortAfter(PipCage);
+			GummyWormCage.Register();
 		}
 
 		private static void AddSacchariteFurniture()
