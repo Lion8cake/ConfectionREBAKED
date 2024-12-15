@@ -1396,7 +1396,7 @@ Mods: {
 
 			SherbetCampfire: {
 				DisplayName: Sherbet Campfire
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 			}
 
 			SherbetFlare: {
