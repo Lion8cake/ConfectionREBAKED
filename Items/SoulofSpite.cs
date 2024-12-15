@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override Color? GetAlpha(Color lightColor) {
-			return Color.White;
+			return new Color(255, 255, 255, byte.MaxValue - 50);
 		}
 	}
 }

@@ -35,6 +35,7 @@ using static Terraria.Graphics.FinalFractalHelper;
 using TheConfectionRebirth.Items;
 using Mono.Cecil;
 using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth
 {
@@ -50,7 +51,22 @@ namespace TheConfectionRebirth
 
 		private Dictionary<int, bool> ZenithSeedWorlds = new Dictionary<int, bool>();
 
+		public int sherbertStyle;
+
+		public float sherbertStyleTimer;
+
+		public static int SherbR;
+
+		public static int SherbG;
+
+		public static int SherbB;
+
+		public static Color SherbertColor => new Color(SherbR, SherbG, SherbB);
+
+		public static TheConfectionRebirth instance = null;
+
 		public override void Load() {
+			instance = this;
 			ConfectionWindUtilities.Load();
 
 			if (Main.netMode != NetmodeID.Server)
@@ -116,9 +132,14 @@ namespace TheConfectionRebirth
 			IL_NPC.BigMimicSummonCheck += PreventCrimsonMimics;
 			IL_Player.TryGettingDevArmor += ConfectionDevSets;
 			On_PlayerDrawLayers.DrawPlayer_09_Wings += PreventWingDrawing;
+			IL_TileDrawing.DrawSingleTile += BetterDrawEffects;
+			IL_TileDrawing.DrawTiles_EmitParticles += TintTileSparkle;
+			IL_PlayerDrawLayers.DrawPlayer_27_HeldItem += SherbertTorchHeldFlameEdit;
+			On_Player.ItemCheck_ApplyHoldStyle_Inner += FlareGunHoldStyle;
 		}
 
 		public override void Unload() {
+			//instance = null;
 			ConfectionWindUtilities.Unload();
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -172,7 +193,152 @@ namespace TheConfectionRebirth
 			IL_NPC.BigMimicSummonCheck -= PreventCrimsonMimics;
 			IL_Player.TryGettingDevArmor -= ConfectionDevSets;
 			On_PlayerDrawLayers.DrawPlayer_09_Wings -= PreventWingDrawing;
+			IL_TileDrawing.DrawSingleTile -= BetterDrawEffects;
+			IL_TileDrawing.DrawTiles_EmitParticles -= TintTileSparkle;
+			IL_PlayerDrawLayers.DrawPlayer_27_HeldItem -= SherbertTorchHeldFlameEdit;
+			On_Player.ItemCheck_ApplyHoldStyle_Inner -= FlareGunHoldStyle;
 		}
+
+		#region Sherbet Flare Flare Gun hold out dust
+		private void FlareGunHoldStyle(On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player self, float mountOffset, Item sItem, Rectangle heldItemFrame)
+		{
+			orig.Invoke(self, mountOffset, sItem, heldItemFrame);
+			if (sItem.holdStyle == 1 && !self.pulley)
+			{
+				if (!Main.dedServ && sItem.type == ItemID.FlareGun)
+				{
+					float x = self.position.X + (float)(self.width / 2) + (float)(38 * self.direction);
+					if (self.direction == 1)
+					{
+						x -= 10f;
+					}
+					float y = self.MountedCenter.Y - 4f * self.gravDir;
+					if (self.gravDir == -1f)
+					{
+						y -= 8f;
+					}
+					self.RotateRelativePoint(ref x, ref y);
+					int num3 = 0;
+					for (int i = 54; i < 58; i++)
+					{
+						if (self.inventory[i].stack > 0 && self.inventory[i].ammo == 931)
+						{
+							num3 = self.inventory[i].type;
+							break;
+						}
+					}
+					if (num3 == 0)
+					{
+						for (int j = 0; j < 54; j++)
+						{
+							if (self.inventory[j].stack > 0 && self.inventory[j].ammo == 931)
+							{
+								num3 = self.inventory[j].type;
+								break;
+							}
+						}
+					}
+					if (num3 == ModContent.ItemType<Items.Weapons.SherbetFlare>())
+					{
+						int num4 = Dust.NewDust(new Vector2(x, y + self.gfxOffY), 6, 6, ModContent.DustType<SherbetDust>(), 0f, 0f, 100, default(Color), 1.6f);
+						Main.dust[num4].noGravity = true;
+						Main.dust[num4].velocity.Y -= 4f * self.gravDir;
+						Main.dust[num4].color = SherbertColor;
+						Main.dust[num4].scale *= 0.5f;
+						Dust obj = Main.dust[num4];
+						obj.velocity *= 0.75f;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Sherbert Torch Held Flame Edit
+		private void SherbertTorchHeldFlameEdit(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdcR4(0), i => i.MatchStloc(56));
+			c.EmitLdloc(1);
+			c.EmitLdloca(53);
+			c.EmitDelegate((int num, ref Color color4) =>
+			{
+				if (num == ModContent.ItemType<Items.Placeable.SherbetTorch>())
+				{
+					color4 = new Color(SherbR, SherbG, SherbB, 0);
+				}
+			});
+		}
+		#endregion
+
+		#region Tile sparkle tint
+		private void TintTileSparkle(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCall<Color>("get_White"),  i => i.MatchStloc(55));
+			c.EmitLdarg(1); //x
+			c.EmitLdarg(2); //y
+			c.EmitLdarg(3); //tileCache
+			c.EmitLdarg(4); //typeCache
+			c.EmitLdloca(55); //ref newColor
+			c.EmitDelegate((int i, int j, Tile tileCache, int typeCache, ref Color tileShineColor) =>
+			{
+				if (typeCache == ModContent.TileType<CreamstoneSaphire>())
+				{
+					tileShineColor = new Color(0, 0, 255, 255);
+				}
+				if (typeCache == ModContent.TileType<CreamstoneRuby>())
+				{
+					tileShineColor = new Color(255, 0, 0, 255);
+				}
+				if (typeCache == ModContent.TileType<CreamstoneEmerald>())
+				{
+					tileShineColor = new Color(0, 255, 0, 255);
+				}
+				if (typeCache == ModContent.TileType<CreamstoneTopaz>())
+				{
+					tileShineColor = new Color(255, 255, 0, 255);
+				}
+				if (typeCache == ModContent.TileType<CreamstoneAmethyst>())
+				{
+					tileShineColor = new Color(255, 0, 255, 255);
+				}
+				if (typeCache == ModContent.TileType<CreamstoneDiamond>())
+				{
+					tileShineColor = new Color(255, 255, 255, 255);
+				}
+				/*if (typeCache == ModContent.TileType<CreamstoneAmber>())
+				{
+					tileShineColor = new Color(255, 255, 0, 255);
+				}*/
+			});
+		}
+		#endregion
+
+		#region fix for DrawEffects being broken for ModTile
+		private void BetterDrawEffects(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<TileDrawInfo>("colorTint"), i => i.MatchCall<TileDrawing>("GetFinalLight"), i => i.MatchStfld<TileDrawInfo>("finalColor"));
+			c.EmitLdarg(6); //tileX
+			c.EmitLdarg(7); //tileY
+			c.EmitLdarg(1); //instanced TileDrawInfo type is gotten from
+			c.EmitLdfld(typeof(TileDrawInfo).GetField("typeCache")); //type
+			c.EmitLdarga(1); //drawData ref 
+			c.EmitDelegate((int i, int j, int type, ref TileDrawInfo drawdata) =>
+			{
+				//Use Main.spriteBatch for rendering
+				if (type == ModContent.TileType<SherbetBricks>())
+				{
+					Color color = new Color(SherbR, SherbG, SherbB, 255);
+					if (Main.tile[i, j].IsActuated)
+					{
+						color = ConfectionWorldGeneration.ActColor(color, Main.tile[i, j]);
+					}
+					drawdata.finalColor = color;
+				}
+			});
+		}
+		#endregion
 
 		#region Prevent Wing Rendering (WHY DOES TMOD NOT SUPPORT THIS????)
 		private void PreventWingDrawing(On_PlayerDrawLayers.orig_DrawPlayer_09_Wings orig, ref PlayerDrawSet drawinfo)
@@ -902,7 +1068,13 @@ namespace TheConfectionRebirth
 					Tile tile = Main.tile[k, l];
 					int type = tile.TileType;
 					int wall = tile.WallType;
-					if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<Walls.CookieStonedWallArtificial>()) {
+					if (wall == ModContent.WallType<CookieWall>() || wall == ModContent.WallType<CookieWallArtificial>())
+					{
+						Main.tile[k, l].WallType = WallID.DirtUnsafe;
+						WorldGen.SquareWallFrame(k, l);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else if (wall == ModContent.WallType<CookieStonedWall>() || wall == ModContent.WallType<CookieStonedWallArtificial>()) {
 						Main.tile[k, l].WallType = WallID.Cave6Unsafe;
 						WorldGen.SquareWallFrame(k, l);
 						NetMessage.SendTileSquare(-1, k, l, 1);

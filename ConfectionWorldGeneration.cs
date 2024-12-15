@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
+using Terraria.GameContent;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Generation;
 using Terraria.ID;

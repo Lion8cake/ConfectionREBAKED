@@ -5,6 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace TheConfectionRebirth.Items
 {
@@ -36,7 +38,7 @@ namespace TheConfectionRebirth.Items
 
 		public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White;
-        }
-    }
+            return new Color(255, 255, 255, byte.MaxValue - 50);
+		}
+	}
 }

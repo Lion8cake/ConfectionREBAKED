@@ -135,6 +135,7 @@ Mods: {
 			Impact2.MapEntry: Painting
 			ConfectionMusicBox.MapEntry: Confection Music Box
 			ConfectionUGMusicBox.MapEntry: Confection U G Music Box
+			SherbetTorch.MapEntry: Sherbet Torch
 		}
 
 		Items: {
@@ -1377,6 +1378,31 @@ Mods: {
 				DisplayName: Music Box (Underground Confection)
 				Tooltip: ""
 			}
+
+			SherbetBricks: {
+				DisplayName: Sherbet Brick
+				Tooltip: ""
+			}
+
+			SherbetWall: {
+				DisplayName: Sherbet Brick Wall
+				Tooltip: ""
+			}
+
+			SherbetTorch: {
+				DisplayName: Sherbet Torch
+				Tooltip: ""
+			}
+
+			SherbetCampfire: {
+				DisplayName: Sherbet Campfire
+				Tooltip: ""
+			}
+
+			SherbetFlare: {
+				DisplayName: Sherbet Flare
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1432,6 +1458,7 @@ Mods: {
 			CookieMagnetArrow.DisplayName: Cookie Magnet Arrow
 			SweetTooth.DisplayName: Sweet Tooth
 			CookieArrowEnchantment.DisplayName: Cookie Arrow Enchantment
+			SherbetFlare.DisplayName: Sherbet Flare
 		}
 
 		Configs: {

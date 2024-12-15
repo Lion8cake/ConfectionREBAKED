@@ -1097,6 +1097,40 @@ namespace TheConfectionRebirth
 			GummyWormCage.AddIngredient(ItemID.Terrarium, 1);
 			GummyWormCage.SortAfter(PipCage);
 			GummyWormCage.Register();
+
+			//Sherbet Wall
+			Recipe SherbetWall = Recipe.Create(ModContent.ItemType<SherbetWall>(), 4);
+			SherbetWall.AddIngredient(ModContent.ItemType<SherbetBricks>());
+			SherbetWall.AddTile(TileID.WorkBenches);
+			SherbetWall.SortAfterFirstRecipesOf(ItemID.RainbowBrickWall);
+			SherbetWall.Register();
+
+			Recipe SherbetBricks = Recipe.Create(ModContent.ItemType<SherbetBricks>());
+			SherbetBricks.AddIngredient(ModContent.ItemType<SherbetWall>(), 4);
+			SherbetBricks.AddTile(TileID.WorkBenches);
+			SherbetBricks.SortAfter(SherbetWall);
+			SherbetBricks.Register();
+
+			//Sherbet Torch
+			Recipe SherbetTorch = Recipe.Create(ModContent.ItemType<SherbetTorch>(), 10);
+			SherbetTorch.AddIngredient(ItemID.Torch, 10);
+			SherbetTorch.AddIngredient(ModContent.ItemType<SherbetBricks>());
+			SherbetTorch.SortAfterFirstRecipesOf(ItemID.RainbowTorch);
+			SherbetTorch.Register();
+
+			//Sherbet Campfire
+			Recipe SherbetCampfire = Recipe.Create(ModContent.ItemType<SherbetCampfire>());
+			SherbetCampfire.AddRecipeGroup(RecipeGroupID.Wood, 10);
+			SherbetCampfire.AddIngredient(ModContent.ItemType<SherbetTorch>(), 5);
+			SherbetCampfire.SortAfterFirstRecipesOf(ItemID.RainbowCampfire);
+			SherbetCampfire.Register();
+
+			//Sherbet Flare
+			Recipe SherbetFlare = Recipe.Create(ModContent.ItemType<SherbetFlare>(), 10);
+			SherbetFlare.AddIngredient(ItemID.Flare, 10);
+			SherbetFlare.AddIngredient(ModContent.ItemType<SherbetBricks>());
+			SherbetFlare.SortAfterFirstRecipesOf(ItemID.RainbowFlare);
+			SherbetFlare.Register();
 		}
 
 		private static void AddSacchariteFurniture()

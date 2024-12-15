@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace TheConfectionRebirth.Tiles {
 			}
 
 			if (j >= Main.worldSurface) {
-				if (Main.tile[i, j].LiquidAmount > 32) {
+				if (Main.tile[i, j].LiquidAmount > 32 && Main.tile[i, j].LiquidType == LiquidID.Water && !Main.tile[i, j].HasTile) {
 					if (WorldGen.genRand.NextBool(600)) {
 						WorldGen.PlaceTile(i, j, ModContent.TileType<CreamCattails>(), mute: true);
 						if (Main.netMode == NetmodeID.Server) {
@@ -342,6 +343,49 @@ namespace TheConfectionRebirth.Tiles {
 			if (Main.netMode == 2 && flag7) {
 				NetMessage.SendTileSquare(-1, i, j, 3);
 			}
+		}
+
+		public override void AnimateTile()
+		{
+			TheConfectionRebirth.instance.sherbertStyleTimer += 0.2f;
+			if (TheConfectionRebirth.instance.sherbertStyleTimer > 1.00f)
+			{
+				TheConfectionRebirth.instance.sherbertStyleTimer = 0;
+				TheConfectionRebirth.instance.sherbertStyle++;
+				if (TheConfectionRebirth.instance.sherbertStyle > 12)
+				{
+					TheConfectionRebirth.instance.sherbertStyle = 0;
+				}
+			}
+			Color[] sherbColors = new Color[13] {
+				new Color(213, 105, 89),
+				new Color(213, 136, 89),
+				new Color(213, 167, 89),
+				new Color(213, 198, 89),
+				new Color(198, 213, 89),
+				new Color(136, 213, 89),
+				new Color(89, 213, 136),
+				new Color(89, 198, 213),
+				new Color(89, 167, 213),
+				new Color(89, 136, 213),
+				new Color(105, 89, 213),
+				new Color(167, 89, 213),
+				new Color(213, 89, 213)
+			};
+			int previousStyle = TheConfectionRebirth.instance.sherbertStyle;
+			if (previousStyle <= 0)
+				previousStyle = 12;
+			else
+				previousStyle--;
+			Color newColor = sherbColors[TheConfectionRebirth.instance.sherbertStyle];
+			Color previousColor = sherbColors[previousStyle];
+			float lerpAmount = TheConfectionRebirth.instance.sherbertStyleTimer;
+			byte r = (byte)MathHelper.Lerp(previousColor.R, newColor.R, lerpAmount);
+			byte g = (byte)MathHelper.Lerp(previousColor.G, newColor.G, lerpAmount);
+			byte b = (byte)MathHelper.Lerp(previousColor.B, newColor.B, lerpAmount);
+			TheConfectionRebirth.SherbR = r;
+			TheConfectionRebirth.SherbG = g;
+			TheConfectionRebirth.SherbB = b;
 		}
 	}
 }
