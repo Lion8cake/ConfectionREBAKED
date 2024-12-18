@@ -88,6 +88,10 @@ namespace TheConfectionRebirth.Projectiles
 					if (rand > 3)
 						rand = 0;
 					ConfectionWorldGeneration.confectionBG = rand;
+					if (!Main.gameMenu)
+					{
+						ConfectionWorldGeneration.confectionBGFlash = 1f;
+					}
 					NetMessage.SendData(MessageID.WorldData);
 				}
 			}

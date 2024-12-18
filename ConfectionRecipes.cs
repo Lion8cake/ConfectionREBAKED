@@ -8,11 +8,74 @@ using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Placeable.Furniture;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.Items.Accessories;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth
 {
 	public class ConfectionRecipes : ModSystem
 	{
+		public static RecipeGroup SoulofLightRecipeGroup;
+		public static RecipeGroup SoulofNightRecipeGroup;
+		public static RecipeGroup DarkShardRecipeGroup;
+		public static RecipeGroup PixieDustRecipeGroup;
+		public static RecipeGroup UnicornHornRecipeGroup;
+		public static RecipeGroup CrystalShardRecipeGroup;
+		public static RecipeGroup HallowedBarRecipeGroup;
+		public static RecipeGroup PrincessFishRecipeGroup;
+		public static RecipeGroup PrismiteRecipeGroup;
+		public static RecipeGroup ChaosFishRecipeGroup;
+		public static RecipeGroup HallowedSeedsRecipeGroup;
+		public static RecipeGroup PearlstoneRecipeGroup;
+
+		public override void Unload()
+		{
+			SoulofLightRecipeGroup = null;
+			SoulofNightRecipeGroup = null;
+			DarkShardRecipeGroup = null;
+			PixieDustRecipeGroup = null;
+			UnicornHornRecipeGroup = null;
+			CrystalShardRecipeGroup = null;
+			HallowedBarRecipeGroup = null;
+			PrincessFishRecipeGroup = null;
+			PrismiteRecipeGroup = null;
+			ChaosFishRecipeGroup = null;
+			HallowedSeedsRecipeGroup = null;
+			PearlstoneRecipeGroup = null;
+		}
+
+		public override void AddRecipeGroups()
+		{
+			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<CreamWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Cherimoya>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<CocoaBeans>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Sand].ValidItems.Add(ModContent.ItemType<HardenedCreamsand>());
+
+			SoulofLightRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SoulofLight)}", ItemID.SoulofLight, ModContent.ItemType<SoulofDelight>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofLight), SoulofLightRecipeGroup);
+			SoulofNightRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SoulofNight)}", ItemID.SoulofNight, ModContent.ItemType<SoulofSpite>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofNight), SoulofNightRecipeGroup);
+			DarkShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.DarkShard)}", ItemID.DarkShard, ModContent.ItemType<CanofMeat>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.DarkShard), DarkShardRecipeGroup);
+			PixieDustRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PixieDust)}", ItemID.PixieDust, ModContent.ItemType<Sprinkles>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PixieDust), PixieDustRecipeGroup);
+			UnicornHornRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.UnicornHorn)}", ItemID.UnicornHorn, ModContent.ItemType<CookieDough>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.UnicornHorn), UnicornHornRecipeGroup);
+			CrystalShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.CrystalShard)}", ItemID.CrystalShard, ModContent.ItemType<Saccharite>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.CrystalShard), CrystalShardRecipeGroup);
+			HallowedBarRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.HallowedBar)}", ItemID.HallowedBar, ModContent.ItemType<NeapoliniteBar>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.HallowedBar), HallowedBarRecipeGroup);
+			PrincessFishRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PrincessFish)}", ItemID.PrincessFish, ModContent.ItemType<CookieCarp>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PrincessFish), PrincessFishRecipeGroup);
+			PrismiteRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Prismite)}", ItemID.Prismite, ModContent.ItemType<Cakekite>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.Prismite), PrismiteRecipeGroup);
+			ChaosFishRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.ChaosFish)}", ItemID.ChaosFish, ModContent.ItemType<SugarFish>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.ChaosFish), ChaosFishRecipeGroup);
+			HallowedSeedsRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.HallowedSeeds)}", ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.HallowedSeeds), HallowedSeedsRecipeGroup);
+			PearlstoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PearlstoneBlock)}", ItemID.PearlstoneBlock, ModContent.ItemType<Creamstone>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PearlstoneBlock), PearlstoneRecipeGroup);
+		}
+
 		public override void PostAddRecipes()
 		{
 			for (int i = 0; i < Recipe.numRecipes; i++)
@@ -37,7 +100,6 @@ namespace TheConfectionRebirth
 					recipe.RemoveIngredient(ItemID.SoulofNight);
 					recipe.AddIngredient(ModContent.ItemType<SoulofSpite>(), 6);
 				}
-
 				if (recipe.HasResult(ItemID.Megashark))
 				{
 					recipe.AddIngredient(ItemID.SoulofLight, 15);
@@ -47,14 +109,68 @@ namespace TheConfectionRebirth
 					recipe.RemoveIngredient(ItemID.IronBar);
 					recipe.AddIngredient(ItemID.HallowedBar, 12);
 				}
-			}
-		}
 
-		public override void AddRecipeGroups()
-		{
-			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<CreamWood>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Cherimoya>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<CocoaBeans>());
+				if (recipe.TryGetIngredient(ItemID.SoulofLight, out var SoL) && !ConfectionIDs.Sets.RecipeBlacklist.SoulofLightOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.SoulofLight), SoL.stack);
+					recipe.RemoveIngredient(SoL);
+				}
+				if (recipe.TryGetIngredient(ItemID.SoulofNight, out var SoN) && !ConfectionIDs.Sets.RecipeBlacklist.SoulofNightOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.SoulofNight), SoN.stack);
+					recipe.RemoveIngredient(SoN);
+				}
+				if (recipe.TryGetIngredient(ItemID.DarkShard, out var DS) && !ConfectionIDs.Sets.RecipeBlacklist.DarkShardOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.DarkShard), DS.stack);
+					recipe.RemoveIngredient(DS);
+				}
+				if (recipe.TryGetIngredient(ItemID.PixieDust, out var PD) && !ConfectionIDs.Sets.RecipeBlacklist.PixieDustOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PixieDust), PD.stack);
+					recipe.RemoveIngredient(PD);
+				}
+				if (recipe.TryGetIngredient(ItemID.UnicornHorn, out var UH) && !ConfectionIDs.Sets.RecipeBlacklist.UnicornHornOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.UnicornHorn), UH.stack);
+					recipe.RemoveIngredient(UH);
+				}
+				if (recipe.TryGetIngredient(ItemID.CrystalShard, out var CS) && !ConfectionIDs.Sets.RecipeBlacklist.CrystalShardOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.CrystalShard), CS.stack);
+					recipe.RemoveIngredient(CS);
+				}
+				if (recipe.TryGetIngredient(ItemID.HallowedBar, out var HB) && !ConfectionIDs.Sets.RecipeBlacklist.HallowedBarOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.HallowedBar), HB.stack);
+					recipe.RemoveIngredient(HB);
+				}
+				if (recipe.TryGetIngredient(ItemID.PrincessFish, out var PF) && !ConfectionIDs.Sets.RecipeBlacklist.PrincessFishOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PrincessFish), PF.stack);
+					recipe.RemoveIngredient(PF);
+				}
+				if (recipe.TryGetIngredient(ItemID.Prismite, out var Prismite) && !ConfectionIDs.Sets.RecipeBlacklist.PrismiteOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.Prismite), Prismite.stack);
+					recipe.RemoveIngredient(Prismite);
+				}
+				if (recipe.TryGetIngredient(ItemID.ChaosFish, out var CF) && !ConfectionIDs.Sets.RecipeBlacklist.ChaosFishOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.ChaosFish), CF.stack);
+					recipe.RemoveIngredient(CF);
+				}
+				if (recipe.TryGetIngredient(ItemID.HallowedSeeds, out var HS) && !ConfectionIDs.Sets.RecipeBlacklist.HallowedSeedsOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.HallowedSeeds), HS.stack);
+					recipe.RemoveIngredient(HS);
+				}
+				if (recipe.TryGetIngredient(ItemID.PearlstoneBlock, out var Pearlstone) && !ConfectionIDs.Sets.RecipeBlacklist.PearlstoneOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PearlstoneBlock), Pearlstone.stack);
+					recipe.RemoveIngredient(Pearlstone);
+				}
+			}
 		}
 
 		public override void AddRecipes()
@@ -81,6 +197,24 @@ namespace TheConfectionRebirth
 			recipe3.AddTile(TileID.MythrilAnvil);
 			recipe3.SortAfterFirstRecipesOf(ItemID.TerraBlade);
 			recipe3.Register();
+
+			Recipe recipe4 = Recipe.Create(ItemID.SeafoodDinner);
+			recipe4.AddIngredient(ModContent.ItemType<CookieCarp>(), 2);
+			recipe4.AddTile(TileID.CookingPots);
+			recipe4.SortAfterFirstRecipesOf(ItemID.SeafoodDinner);
+			recipe4.Register();
+
+			Recipe recipe5 = Recipe.Create(ItemID.SeafoodDinner);
+			recipe5.AddIngredient(ModContent.ItemType<SugarFish>(), 2);
+			recipe5.AddTile(TileID.CookingPots);
+			recipe5.SortAfterFirstRecipesOf(ItemID.SeafoodDinner);
+			recipe5.Register();
+
+			Recipe recipe6 = Recipe.Create(ItemID.SeafoodDinner);
+			recipe6.AddIngredient(ModContent.ItemType<Cakekite>(), 2);
+			recipe6.AddTile(TileID.CookingPots);
+			recipe6.SortAfterFirstRecipesOf(ItemID.SeafoodDinner);
+			recipe6.Register();
 			#endregion
 
 			//Confection Recipes
@@ -1131,6 +1265,49 @@ namespace TheConfectionRebirth
 			SherbetFlare.AddIngredient(ModContent.ItemType<SherbetBricks>());
 			SherbetFlare.SortAfterFirstRecipesOf(ItemID.RainbowFlare);
 			SherbetFlare.Register();
+
+			//Heavenly Forge
+			Recipe HeavensForge = Recipe.Create(ModContent.ItemType<HeavensForge>());
+			HeavensForge.AddIngredient(ItemID.CrystalShard, 10);
+			HeavensForge.AddIngredient(ItemID.PearlstoneBlock, 30);
+			HeavensForge.AddIngredient(ItemID.SoulofLight, 8);
+			HeavensForge.AddTile(TileID.DemonAltar);
+			HeavensForge.SortAfterFirstRecipesOf(ItemID.TitaniumForge);
+			HeavensForge.Register();
+			AddAndReplace<KeyofDelight>(ItemID.LightKey, HeavensForge);
+			AddAndReplace<ConfectionBiomeKey>(ItemID.HallowedKey, HeavensForge);
+			AddAndReplace<GrandSlammer>(ItemID.Pwnhammer, HeavensForge);
+			AddAndReplace<RoyalCherryBug>(ItemID.EmpressButterfly, HeavensForge);
+
+			//Dimensional Split
+			Recipe DimensionSplit = Recipe.Create(ModContent.ItemType<DimensionSplit>());
+			DimensionSplit.AddIngredient(ModContent.ItemType<BananawarpPeel>());
+			DimensionSplit.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
+			DimensionSplit.AddIngredient(ModContent.ItemType<Saccharite>(), 6);
+			DimensionSplit.AddIngredient(ItemID.Ectoplasm, 8);
+			DimensionSplit.AddTile(TileID.MythrilAnvil);
+			DimensionSplit.SortAfterFirstRecipesOf(ItemID.PumpkinMoonMedallion); //not final
+			DimensionSplit.Register();
+
+			Recipe DimensionSplit2 = Recipe.Create(ModContent.ItemType<DimensionSplit>());
+			DimensionSplit2.AddIngredient(ModContent.ItemType<BananawarpPeel>());
+			DimensionSplit2.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
+			DimensionSplit2.AddIngredient(ModContent.ItemType<Saccharite>(), 6);
+			DimensionSplit2.AddIngredient(ItemID.SoulofLight, 8);
+			DimensionSplit2.AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld);
+			DimensionSplit2.AddTile(TileID.Anvils);
+			DimensionSplit2.SortAfter(DimensionSplit);
+			DimensionSplit2.Register();
+
+			Recipe DimensionSplit3 = Recipe.Create(ModContent.ItemType<DimensionSplit>());
+			DimensionSplit3.AddIngredient(ModContent.ItemType<BananawarpPeel>());
+			DimensionSplit3.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
+			DimensionSplit3.AddIngredient(ModContent.ItemType<Saccharite>(), 6);
+			DimensionSplit3.AddIngredient(ModContent.ItemType<SoulofDelight>(), 8);
+			DimensionSplit3.AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld);
+			DimensionSplit3.AddTile(TileID.Anvils);
+			DimensionSplit3.SortAfter(DimensionSplit2);
+			DimensionSplit3.Register();
 		}
 
 		private static void AddSacchariteFurniture()
@@ -1473,6 +1650,22 @@ namespace TheConfectionRebirth
 			CreamwoodToilet.AddTile(TileID.Sawmill);
 			CreamwoodToilet.SortAfter(CreamwoodWorkbench);
 			CreamwoodToilet.Register();
+		}
+
+		private static void AddAndReplace<TConf>(int hall, Recipe heavenlyRecipe) where TConf : ModItem
+		{
+			Recipe recipe = Recipe.Create(hall);
+			recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
+			recipe.AddTile(ModContent.TileType<Tiles.HeavensForgeTile>());
+			recipe.DisableDecraft();
+			recipe.SortAfter(heavenlyRecipe);
+			recipe.Register();
+			recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
+			recipe.AddIngredient(hall);
+			recipe.AddTile(ModContent.TileType<Tiles.HeavensForgeTile>());
+			recipe.DisableDecraft();
+			recipe.SortAfter(heavenlyRecipe);
+			recipe.Register();
 		}
 	}
 }

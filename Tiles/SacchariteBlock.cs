@@ -18,6 +18,7 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<EnchantedSacchariteBlock>()] = true;
 
 			DustType = ModContent.DustType<SacchariteDust>();
 			HitSound = SoundID.Item27;
@@ -54,7 +55,7 @@ namespace TheConfectionRebirth.Tiles
 							NetMessage.SendTileSquare(1, i, j - 1, 3, TileChangeType.None);
 						}
 					}
-					/*if (WorldGen.genRand.NextBool(15)) {
+					if (WorldGen.genRand.NextBool(15)) {
 						if (placeSaccharite) {
 							tileBelow.TileType = (ushort)ModContent.TileType<EnchantedSacchariteBlock>();
 							tileBelow.HasTile = true;
@@ -71,7 +72,7 @@ namespace TheConfectionRebirth.Tiles
 								NetMessage.SendTileSquare(+1, i, j - 1, 3, TileChangeType.None);
 							}
 						}
-					}*/
+					}
 				}
 			}
 		}

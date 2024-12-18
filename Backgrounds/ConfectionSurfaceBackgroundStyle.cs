@@ -199,12 +199,10 @@ namespace TheConfectionRebirth.Backgrounds
 			if (flag2) {
 				pushBGTopHack -= num3;
 			}
-
-
-			/*Texture2D value = TextureAssets.MagicPixel.Value;
-			float flashPower = 1;//WorldGen.BackgroundsCache.GetFlashPower(backgroundAreaId);
+			Texture2D value = TextureAssets.MagicPixel.Value;
+			float flashPower = ConfectionWorldGeneration.confectionBGFlash;
 			Color color = Color.Black * flashPower;
-			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);*/
+			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
 			return false;
 		}
 

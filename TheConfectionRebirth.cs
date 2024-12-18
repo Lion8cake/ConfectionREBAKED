@@ -136,6 +136,8 @@ namespace TheConfectionRebirth
 			IL_TileDrawing.DrawTiles_EmitParticles += TintTileSparkle;
 			IL_PlayerDrawLayers.DrawPlayer_27_HeldItem += SherbertTorchHeldFlameEdit;
 			On_Player.ItemCheck_ApplyHoldStyle_Inner += FlareGunHoldStyle;
+			On_WorldGen.RandomizeBackgroundBasedOnPlayer += PreventOtherBackgroundChanges;
+			On_Sandstorm.ShouldSandstormDustPersist += On_Sandstorm_ShouldSandstormDustPersist;
 		}
 
 		public override void Unload() {
@@ -197,7 +199,49 @@ namespace TheConfectionRebirth
 			IL_TileDrawing.DrawTiles_EmitParticles -= TintTileSparkle;
 			IL_PlayerDrawLayers.DrawPlayer_27_HeldItem -= SherbertTorchHeldFlameEdit;
 			On_Player.ItemCheck_ApplyHoldStyle_Inner -= FlareGunHoldStyle;
+			On_WorldGen.RandomizeBackgroundBasedOnPlayer -= PreventOtherBackgroundChanges;
+			On_Sandstorm.ShouldSandstormDustPersist -= On_Sandstorm_ShouldSandstormDustPersist;
 		}
+
+		public override object Call(params object[] args)
+		{
+			//For Content creators: Message me (Lion8cake) on discord if you have any mod call suggestions
+			return args switch
+			{
+			["confectionorHallow"] => ConfectionWorldGeneration.confectionorHallow,
+			["SetconfectionorHallow", bool boolean] => ConfectionWorldGeneration.confectionorHallow = boolean,
+
+			//IDs
+			["ConvertsToConfection", int tileID, int num] => ConfectionIDs.Sets.ConvertsToConfection[tileID] = num,
+			["SoulofLightOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.SoulofLightOnlyItem[itemID] = flag,
+			["SoulofNightOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.SoulofNightOnlyItem[itemID] = flag,
+			["DarkShardOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.DarkShardOnlyItem[itemID] = flag,
+			["PixieDustOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PixieDustOnlyItem[itemID] = flag,
+			["UnicornHornOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.UnicornHornOnlyItem[itemID] = flag,
+			["CrystalShardOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.CrystalShardOnlyItem[itemID] = flag,
+			["HallowedBarOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.HallowedBarOnlyItem[itemID] = flag,
+			["PrincessFishOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PrincessFishOnlyItem[itemID] = flag,
+			["PrismiteOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PrismiteOnlyItem[itemID] = flag,
+			["ChaosFishOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.ChaosFishOnlyItem[itemID] = flag,
+			["HallowedSeedsOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.HallowedSeedsOnlyItem[itemID] = flag,
+			["PearlstoneOnlyItem", int itemID, bool flag] => ConfectionIDs.Sets.RecipeBlacklist.PearlstoneOnlyItem[itemID] = flag,
+				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
+			};
+		}
+
+		#region Prevent forest background randomising when in the confection
+		private void PreventOtherBackgroundChanges(On_WorldGen.orig_RandomizeBackgroundBasedOnPlayer orig, UnifiedRandom random, Player player)
+		{
+			if (player.InModBiome<ConfectionBiome>() && !player.ZoneDesert)
+			{
+				WorldGen.BackgroundsCache.UpdateCache();
+			}
+			else
+			{
+				orig.Invoke(random, player);
+			}
+		}
+		#endregion
 
 		#region Sherbet Flare Flare Gun hold out dust
 		private void FlareGunHoldStyle(On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player self, float mountOffset, Item sItem, Rectangle heldItemFrame)
@@ -1285,6 +1329,15 @@ namespace TheConfectionRebirth
 					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.HardenedCreamsand>()));
 			});
 		}
+
+		private bool On_Sandstorm_ShouldSandstormDustPersist(On_Sandstorm.orig_ShouldSandstormDustPersist orig)
+		{
+			if (Sandstorm.Happening && Main.LocalPlayer.ZoneSandstorm && (Main.bgStyle == 2 || Main.bgStyle == 5 || Main.bgStyle == ModContent.GetInstance<Backgrounds.ConfectionSandSurfaceBackgroundStyle>().Slot))
+			{
+				return Main.bgDelay < 50;
+			}
+			return orig.Invoke();
+		}
 		#endregion
 
 		#region WindEdits
@@ -2127,7 +2180,7 @@ namespace TheConfectionRebirth
 				if (tile != null) {
 					GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out var sandType);
 					if (Main.tile[i, j].TileType == TileID.Cactus && TileLoader.CanGrowModCactus(sandType) && sandType != 0 && sandType == ModContent.TileType<Creamsand>()) {
-						num5 = MapHelper.tileLookup[ModContent.TileType<SprinkleCactusDudTile>()];
+						num5 = MapHelper.tileLookup[ModContent.TileType<CreamOasisPlants>()];
 					}
 				}
 			});

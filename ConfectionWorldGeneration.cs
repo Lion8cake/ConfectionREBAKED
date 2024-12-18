@@ -54,6 +54,8 @@ namespace TheConfectionRebirth {
 
 		public static int confectionUGBGSnow;
 
+		public static float confectionBGFlash;
+
 		public override void Load()
 		{
 			On_WorldGen.GERunner += GERunnerEditer;
@@ -260,6 +262,12 @@ namespace TheConfectionRebirth {
 			confectionBG = Main.rand.Next(4);
 			confectionUGBG = Main.rand.Next(4);
 			confectionUGBGSnow = Main.rand.Next(2);
+		}
+
+		public override void PostUpdateEverything()
+		{
+			confectionBGFlash = MathHelper.Clamp(confectionBGFlash - 0.05f, 0f, 1f);
+			//Main.NewText(Main.LocalPlayer.ZoneDesert);
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)

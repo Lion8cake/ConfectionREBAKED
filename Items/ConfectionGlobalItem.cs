@@ -77,6 +77,26 @@ namespace TheConfectionRebirth.Items
 			return null;
 		}
 
+		public override bool IsAnglerQuestAvailable(int type)
+		{
+			if (ConfectionWorldGeneration.confectionorHallow)
+			{
+				if (type == ItemID.UnicornFish)
+				{
+					return false;
+				}
+				if (type == ItemID.Pixiefish)
+				{
+					return false;
+				}
+				if (type == ItemID.MirageFish)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
 		{
 			if (item.type == ItemID.WallOfFleshBossBag)

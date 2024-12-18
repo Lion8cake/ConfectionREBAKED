@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -10,10 +11,13 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Buffs;
 using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.Mounts;
 using TheConfectionRebirth.Projectiles;
@@ -25,10 +29,13 @@ namespace TheConfectionRebirth
 		public bool cookiestPet;
 		public bool lightnana;
 		public bool rollerCookiePet;
+		public bool toothfairyMinion;
 
 		public bool SacchariteLashed;
 		public bool candleFire;
 		public int candleFlameDelay = 0;
+		public Projectile DimensionalWarp;
+		public Projectile BananawarpPeelWarp;
 
 		public bool neapoliniteMelee;
 		public int meleeVanilla;
@@ -67,6 +74,7 @@ namespace TheConfectionRebirth
 			cookiestPet = false;
 			lightnana = false;
 			rollerCookiePet = false;
+			toothfairyMinion = false;
 
 			if (!candleFire)
 			{
@@ -169,9 +177,110 @@ namespace TheConfectionRebirth
 				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
 				return true;
 			}
+			if (damageSource.SourceCustomReason == "DimensionSplit")
+			{
+				WeightedRandom<string> deathmessage = new();
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.0", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.1", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.2", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.3", Player.name));
+				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+				return true;
+			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 
+		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+		{
+			bool corrupt = Player.ZoneCorrupt;	
+			bool crimson = Player.ZoneCrimson;
+			bool snow = Player.ZoneSnow;
+			bool dungeon = Player.ZoneDungeon;
+			bool desert = Player.ZoneDesert;
+			bool confection = Player.InModBiome<ConfectionBiome>();
+
+			if (!attempt.inHoney && !attempt.inLava)
+			{
+				if (attempt.rolledEnemySpawn > 0)
+				{
+					return;
+				}
+				if (attempt.crate) //crates
+				{
+					bool hardMode = Main.hardMode;
+					if (!dungeon && !(Player.ZoneBeach || (Main.remixWorld && attempt.heightLevel == 1 && (double)attempt.Y >= Main.rockLayer && Main.rand.NextBool(2))) && !corrupt && !crimson && attempt.rare && confection)
+					{
+						attempt.rolledItemDrop = (hardMode ? ModContent.ItemType<ConfectionCrate>() : ModContent.ItemType<BananaSplitCrate>());
+					}
+					return;
+				}
+				if (!dungeon)
+				{
+					if (!corrupt && !crimson && confection) //normal fishing items
+					{
+						if (desert && Main.rand.NextBool(2))
+						{
+							if (attempt.uncommon && attempt.questFish == ItemID.ScarabFish)
+							{
+								attempt.rolledItemDrop = ItemID.ScarabFish;
+							}
+							else if (attempt.uncommon && attempt.questFish == ItemID.ScorpioFish)
+							{
+								attempt.rolledItemDrop = ItemID.ScorpioFish;
+							}
+							else if (attempt.uncommon)
+							{
+								attempt.rolledItemDrop = ItemID.Oyster;
+							}
+							else if (Main.rand.NextBool(3))
+							{
+								attempt.rolledItemDrop = ItemID.RockLobster;
+							}
+							else
+							{
+								attempt.rolledItemDrop = ItemID.Flounder;
+							}
+						}
+						else if (attempt.legendary && Main.hardMode && snow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
+						{
+							attempt.rolledItemDrop = ItemID.ScalyTruffle;
+						}
+						else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2))
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<GummyStaff>(); //Biome fishing weapon
+						}
+						//else if (attempt.legendary && Main.hardMode && !Main.rand.NextBool(3)) //Confection nolonger has a fishing painting
+						//{
+						//	attempt.rolledItemDrop = ItemID.LadyOfTheLake;
+						//}
+						else if (attempt.heightLevel > 1 && attempt.veryrare)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<SugarFish>();
+						}
+						else if (attempt.heightLevel > 1 && attempt.uncommon && attempt.questFish == ModContent.ItemType<SacchariteBatFish>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<SacchariteBatFish>();
+						}
+						else if (attempt.heightLevel < 2 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Sprinklefish>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<Sprinklefish>();
+						}
+						else if (attempt.rare)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<Cakekite>();
+						}
+						else if (attempt.uncommon && attempt.questFish == ModContent.ItemType<CookieCutterShark>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<CookieCutterShark>();
+						}
+						else if (attempt.uncommon)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<CookieCarp>();
+						}
+					}
+				}
+			}
+		}
 
 		public override void UpdateBadLifeRegen()
 		{

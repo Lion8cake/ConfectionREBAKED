@@ -3,6 +3,9 @@ Mods: {
 		common: {
 			Banner: " Banner"
 			Banner2: Nearby players get a bonus against:
+			CaughtInConfection: Caught anywhere in the Confection
+			CaughtInConfectionSF: Caught anywhere in the Confection Surface
+			CaughtInConfectionUG: Caught anywhere in the Confection Underground
 			R1: I
 			R2: II
 			R3: III
@@ -56,6 +59,12 @@ Mods: {
 			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
 		}
 
+		ItemAnglerChat: {
+			CookieCutterShark: There's a living cookie cutter down in the deep Confection! Go and bring it back for me so I can make some living cookies!
+			SacchariteBatFish: The Underground Confection attracts a certain fish from Sweden that's flesh looks like gummies! Go bring me one to taste how sweet they really are!
+			Sprinklefish: Remember those piles of sprinkles in the confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!
+		}
+
 		PlayerDeathReason: {
 			CandleFire: {
 				0: "{0} had thier skin melted off like wax."
@@ -65,6 +74,13 @@ Mods: {
 				4: "{0} ran out of themselves to melt"
 				5: "{0} got placed on the cake top."
 				6: "{0} burnt all up."
+			}
+
+			DimensionSplit: {
+				0: "{0} got lost in a rift."
+				1: "{0} was split like a banana."
+				2: "{0} tried to banana all the time."
+				3: "{0} got split between dimensions."
 			}
 		}
 
@@ -136,6 +152,8 @@ Mods: {
 			ConfectionMusicBox.MapEntry: Confection Music Box
 			ConfectionUGMusicBox.MapEntry: Confection U G Music Box
 			SherbetTorch.MapEntry: Sherbet Torch
+			HeavensForgeTile.MapEntry: Heavens Forge Tile
+			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 		}
 
 		Items: {
@@ -1403,6 +1421,107 @@ Mods: {
 				DisplayName: Sherbet Flare
 				Tooltip: ""
 			}
+
+			HeavensForge: {
+				DisplayName: Heavenly Forge
+				Tooltip:
+					'''
+					Allows you to convert hallowed materials into their confection alternatives and vice versa
+					'A forge created from the both the lands of rainbows and candy'
+					'''
+			}
+
+			EnchantedSaccharite: {
+				DisplayName: Enchanted Saccharite
+				Tooltip: Summons Queen Slime
+			}
+
+			BananaSplitCrate: {
+				DisplayName: Banana Split Crate
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			ConfectionCrate: {
+				DisplayName: Confection Crate
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			CookieCutterShark: {
+				DisplayName: Cookie Cutter Shark
+				Tooltip: Caught in Confection
+			}
+
+			SacchariteBatFish: {
+				DisplayName: Sweetish Fish
+				Tooltip: Caught in Underground Confection
+			}
+
+			Sprinklefish: {
+				DisplayName: Sprinklefish
+				Tooltip: Caught in Surface Confection
+			}
+
+			Cakekite: {
+				DisplayName: Cakekite
+				Tooltip: ""
+			}
+
+			CookieCarp: {
+				DisplayName: Cookie Carp
+				Tooltip: ""
+			}
+
+			SugarFish: {
+				DisplayName: Warp Minnow
+				Tooltip: ""
+			}
+
+			GummyStaff: {
+				DisplayName: Fairy Tooth
+				Tooltip: Summons a Candy Fairy to protect you
+			}
+
+			BananawarpPeel: {
+				DisplayName: Bananawarp Peel
+				Tooltip: Places a portal at the break location, 2 are needed in order for it to work
+			}
+
+			Brownie: {
+				DisplayName: Brownie
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MajorStats} 
+					'A chocolate delight, filled with chocolate, topped with chocolate powder'
+					'''
+			}
+
+			CherryShells: {
+				DisplayName: Cherry Shells
+				Tooltip: "'Surprisingly explosive'"
+			}
+
+			PastryTart: {
+				DisplayName: Pastry Tart
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MediumStats}
+					'Once pastry is hot, fillings and frosting can cause burns'
+					'''
+			}
+
+			DimensionSplit: {
+				DisplayName: Dimension Split
+				Tooltip:
+					'''
+					Places portal's at the cursor.
+					When two portals are place, players and enemies can interact with them.
+					'''
+			}
+
+			LickitySplit: {
+				DisplayName: Lickity Split
+				Tooltip: "{$Mods.TheConfectionRebirth.Items.DimensionSplit.Tooltip}"
+			}
 		}
 
 		NPCs: {
@@ -1459,6 +1578,13 @@ Mods: {
 			SweetTooth.DisplayName: Sweet Tooth
 			CookieArrowEnchantment.DisplayName: Cookie Arrow Enchantment
 			SherbetFlare.DisplayName: Sherbet Flare
+			ToothFairy.DisplayName: Tooth Fairy
+			ToothFairyCrystal.DisplayName: Tooth Fairy Count
+			ToothFairyTooth.DisplayName: Tooth
+			BananawarpPeel.DisplayName: Bananawarp Peel
+			PeelWarp.DisplayName: Peel Warp
+			PeelWarp2.DisplayName: Peel Warp
+			DimensionalWarp.DisplayName: Dimensional Warp
 		}
 
 		Configs: {
@@ -1644,6 +1770,16 @@ Mods: {
 				DisplayName: Rollercycle Buff
 				Description: Press Up to pop a sick wheelie at high speeds!
 			}
+
+			ToothFairyBuff: {
+				DisplayName: Candy Fairy
+				Description: How many teeth can one fairy have?!
+			}
+
+			GoneBananas: {
+				DisplayName: Going Bananas
+				Description: Teleporting through rifts will take life
+			}
 		}
 
 		DryadSpecialText: {
@@ -1733,6 +1869,6 @@ Mods: {
 		}
 
 		Conditions.InConfection: In Confection
-		NotInSeveralBiomes: Mods.TheConfectionRebirth.NotInSeveralBiomes
+		NotInSeveralBiomes: Not in Snow, Desert, Jungles or during bloodmoons
 	}
 }
