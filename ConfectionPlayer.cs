@@ -29,6 +29,9 @@ namespace TheConfectionRebirth
 		public bool cookiestPet;
 		public bool lightnana;
 		public bool rollerCookiePet;
+		public bool creamsandWitchPet;
+		public bool meawzerPet;
+		public bool dudlingPet;
 		public bool toothfairyMinion;
 
 		public bool SacchariteLashed;
@@ -74,6 +77,9 @@ namespace TheConfectionRebirth
 			cookiestPet = false;
 			lightnana = false;
 			rollerCookiePet = false;
+			creamsandWitchPet = false;
+			meawzerPet = false;
+			dudlingPet = false;
 			toothfairyMinion = false;
 
 			if (!candleFire)

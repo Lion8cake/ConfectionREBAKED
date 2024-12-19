@@ -138,6 +138,7 @@ namespace TheConfectionRebirth
 			On_Player.ItemCheck_ApplyHoldStyle_Inner += FlareGunHoldStyle;
 			On_WorldGen.RandomizeBackgroundBasedOnPlayer += PreventOtherBackgroundChanges;
 			On_Sandstorm.ShouldSandstormDustPersist += On_Sandstorm_ShouldSandstormDustPersist;
+			On_Mount.Hover += RotatePixieMountHover;
 		}
 
 		public override void Unload() {
@@ -201,6 +202,7 @@ namespace TheConfectionRebirth
 			On_Player.ItemCheck_ApplyHoldStyle_Inner -= FlareGunHoldStyle;
 			On_WorldGen.RandomizeBackgroundBasedOnPlayer -= PreventOtherBackgroundChanges;
 			On_Sandstorm.ShouldSandstormDustPersist -= On_Sandstorm_ShouldSandstormDustPersist;
+			On_Mount.Hover -= RotatePixieMountHover;
 		}
 
 		public override object Call(params object[] args)
@@ -228,6 +230,26 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region Pixie Mount
+		private bool RotatePixieMountHover(On_Mount.orig_Hover orig, Mount self, Player mountedPlayer)
+		{
+			bool flag = orig.Invoke(self, mountedPlayer);
+			if (self._type == ModContent.MountType<Mounts.PixieStickMount>())
+			{
+				float value = (0f - mountedPlayer.velocity.Y) / self._data.dashSpeed;
+				value = MathHelper.Clamp(value, -1f, 1f);
+				float value2 = mountedPlayer.velocity.X / self._data.dashSpeed;
+				value2 = MathHelper.Clamp(value2, -1f, 1f);
+				float num12 = -(float)Math.PI / 16f * value * (float)mountedPlayer.direction;
+				float num3 = (float)Math.PI / 16f * value2;
+				float fullRotation3 = num12 + num3;
+				mountedPlayer.fullRotation = fullRotation3;
+				mountedPlayer.fullRotationOrigin = new Vector2((float)(mountedPlayer.width / 2), (float)mountedPlayer.height);
+			}
+			return flag;
+		}
+		#endregion
 
 		#region Prevent forest background randomising when in the confection
 		private void PreventOtherBackgroundChanges(On_WorldGen.orig_RandomizeBackgroundBasedOnPlayer orig, UnifiedRandom random, Player player)
@@ -1511,7 +1533,7 @@ namespace TheConfectionRebirth
 			}
 			_targets.Clear();
 		}
-#endregion
+		#endregion
 
 		#region LAAAAAAWWWWWWNNNNNMOWWWWWWAAAAAAA!!!!!
 		private void LawnSpawnPrevention(ILContext il) {

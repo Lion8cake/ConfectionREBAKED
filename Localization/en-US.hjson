@@ -1522,6 +1522,31 @@ Mods: {
 				DisplayName: Lickity Split
 				Tooltip: "{$Mods.TheConfectionRebirth.Items.DimensionSplit.Tooltip}"
 			}
+
+			CcretTicket: {
+				DisplayName: C-cret Ticket
+				Tooltip: Summons a Foamin' Float to float on
+			}
+
+			PixieStick: {
+				DisplayName: Pixie Stick
+				Tooltip: Summons a Pixie Stick to ride on
+			}
+
+			CreamySandwhich: {
+				DisplayName: Creamy Sandwhich
+				Tooltip: ""
+			}
+
+			TaffyApple: {
+				DisplayName: Taffy Apple
+				Tooltip: ""
+			}
+
+			ToastyToaster: {
+				DisplayName: Toasty Toaster
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1585,6 +1610,9 @@ Mods: {
 			PeelWarp.DisplayName: Peel Warp
 			PeelWarp2.DisplayName: Peel Warp
 			DimensionalWarp.DisplayName: Dimensional Warp
+			CreamsandWitchPet.DisplayName: Creamsand Witch Pet
+			DudlingPet.DisplayName: Dudling Pet
+			MeawzerPet.DisplayName: Meawzer Pet
 		}
 
 		Configs: {
@@ -1767,7 +1795,7 @@ Mods: {
 			}
 
 			RollercycleBuff: {
-				DisplayName: Rollercycle Buff
+				DisplayName: Rollercycle Mount
 				Description: Press Up to pop a sick wheelie at high speeds!
 			}
 
@@ -1779,6 +1807,31 @@ Mods: {
 			GoneBananas: {
 				DisplayName: Going Bananas
 				Description: Teleporting through rifts will take life
+			}
+
+			CcretBuff: {
+				DisplayName: Foamin' Float Mount
+				Description: "'Your Floating on a Foamin' Float'"
+			}
+
+			PixieStickBuff: {
+				DisplayName: Pixie Stick Mount
+				Description: "'Looks like wood, tastes like chocolate!'"
+			}
+
+			CreamsandWitchPet: {
+				DisplayName: Creamsand Witch Pet
+				Description: Mods.TheConfectionRebirth.Buffs.CreamsandWitchPet.Description
+			}
+
+			DudlingPet: {
+				DisplayName: Dudling Pet
+				Description: Mods.TheConfectionRebirth.Buffs.DudlingPet.Description
+			}
+
+			MeawzerPet: {
+				DisplayName: Meawzer Pet
+				Description: Mods.TheConfectionRebirth.Buffs.MeawzerPet.Description
 			}
 		}
 

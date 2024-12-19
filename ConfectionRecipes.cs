@@ -1286,7 +1286,7 @@ namespace TheConfectionRebirth
 			DimensionSplit.AddIngredient(ModContent.ItemType<Saccharite>(), 6);
 			DimensionSplit.AddIngredient(ItemID.Ectoplasm, 8);
 			DimensionSplit.AddTile(TileID.MythrilAnvil);
-			DimensionSplit.SortAfterFirstRecipesOf(ItemID.PumpkinMoonMedallion); //not final
+			DimensionSplit.SortBeforeFirstRecipesOf(ItemID.CopperCoin); //not final
 			DimensionSplit.Register();
 
 			Recipe DimensionSplit2 = Recipe.Create(ModContent.ItemType<DimensionSplit>());
