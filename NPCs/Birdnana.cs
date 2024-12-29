@@ -7,6 +7,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -23,7 +24,8 @@ namespace TheConfectionRebirth.NPCs
 
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
+			{
 				Position = new(0, -16f),
 				Velocity = 0.05f,
 				PortraitPositionYOverride = -35f,
@@ -47,7 +49,7 @@ namespace TheConfectionRebirth.NPCs
 			AnimationType = NPCID.Bird;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<BirdnanaBanner>();
-			//SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -61,7 +63,7 @@ namespace TheConfectionRebirth.NPCs
 			/*if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
 				return 1f;
 			}*/
-			return 0f;
+			return 0f; //look into critter spawning
 		}
 
 		public override void HitEffect(NPC.HitInfo hit) {

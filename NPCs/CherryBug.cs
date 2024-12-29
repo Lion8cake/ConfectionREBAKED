@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
 using Terraria;
@@ -7,6 +8,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Banners;
 
@@ -40,14 +42,15 @@ namespace TheConfectionRebirth.NPCs {
 			AnimationType = NPCID.LightningBug;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<CherryBugBanner>();
-			//SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-
+				new BestiaryBackground(ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionBiomeMapBackground"), new Color(35, 40, 40)),
+				new BestiaryBackgroundOverlay(Main.Assets.Request<Texture2D>("Images/MapBGOverlay4"), Color.White),
 				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.CherryBug")
 			});
 		}

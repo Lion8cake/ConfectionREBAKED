@@ -7,6 +7,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -23,7 +24,8 @@ namespace TheConfectionRebirth.NPCs
 
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
+			{
 				Position = new(0, -8f),
 				Velocity = 0.05f,
 				PortraitPositionXOverride = 0f,
@@ -48,7 +50,7 @@ namespace TheConfectionRebirth.NPCs
 			AnimationType = NPCID.Bird;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<PipBanner>();
-			//SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

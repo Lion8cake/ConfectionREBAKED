@@ -1721,7 +1721,7 @@ Mods: {
 
 			PastryStaff: {
 				DisplayName: Pastry Staff
-				Tooltip: "Summons mini meowzers to fight for you"
+				Tooltip: Summons mini meowzers to fight for you
 			}
 		}
 
@@ -2094,7 +2094,7 @@ Mods: {
 
 		Biomes: {
 			ConfectionBiome: {
-				DisplayName: the Confection
+				DisplayName: The Confection
 				TownNPCDialogueName: the Confection
 			}
 
