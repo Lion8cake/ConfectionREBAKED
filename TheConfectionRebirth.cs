@@ -139,6 +139,7 @@ namespace TheConfectionRebirth
 			On_WorldGen.RandomizeBackgroundBasedOnPlayer += PreventOtherBackgroundChanges;
 			On_Sandstorm.ShouldSandstormDustPersist += On_Sandstorm_ShouldSandstormDustPersist;
 			On_Mount.Hover += RotatePixieMountHover;
+			IL_ShopHelper.AddHappinessReportText += EditNPCHappiness;
 		}
 
 		public override void Unload() {
@@ -203,6 +204,7 @@ namespace TheConfectionRebirth
 			On_WorldGen.RandomizeBackgroundBasedOnPlayer -= PreventOtherBackgroundChanges;
 			On_Sandstorm.ShouldSandstormDustPersist -= On_Sandstorm_ShouldSandstormDustPersist;
 			On_Mount.Hover -= RotatePixieMountHover;
+			IL_ShopHelper.AddHappinessReportText -= EditNPCHappiness;
 		}
 
 		public override object Call(params object[] args)
@@ -230,6 +232,35 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region Edit Happiness text
+		private void EditNPCHappiness(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCall("Terraria.Localization.Language", "GetTextValueWith"), i => i.MatchStloc(1));
+			c.EmitLdloca(1);
+			c.EmitLdloc(0);
+			c.EmitLdarg(1);
+			c.EmitLdarg(2);
+			c.EmitDelegate((ref string textValueWith, string targetNPC, string textKeyInCategory, object substitutes) =>
+			{
+				string valueToCheck = substitutes == null ? "" : substitutes.ToString();
+				bool inConfection = valueToCheck.Contains(Language.GetTextValue("Mods.TheConfectionRebirth.Biomes.ConfectionBiome.TownNPCDialogueName"));
+				bool nurse = textKeyInCategory == "LikeBiome" && targetNPC == "TownNPCMood_Nurse";
+				bool bartender = textKeyInCategory == "LikeBiome" && targetNPC == "TownNPCMood_DD2Bartender";
+				bool partyGrill = textKeyInCategory == "LikeBiome" && targetNPC == "TownNPCMood_PartyGirl";
+				bool wizard = textKeyInCategory == "LikeBiome" && targetNPC == "TownNPCMood_Wizard";
+				bool clothier = textKeyInCategory == "DislikeBiome" && targetNPC == "TownNPCMood_Clothier";
+				bool witchDoctor = textKeyInCategory == "DislikeBiome" && targetNPC == "TownNPCMood_WitchDoctor";
+				bool taxCollector = textKeyInCategory == "DislikeBiome" && targetNPC == "TownNPCMood_TaxCollector";
+				
+				if ((nurse || bartender || partyGrill || wizard || clothier || witchDoctor || taxCollector) && inConfection)
+				{
+					textValueWith = Language.GetTextValueWith("Mods.TheConfectionRebirth." + targetNPC + "." + textKeyInCategory + "_Confection", substitutes);
+				}
+			});
+		}
+		#endregion
 
 		#region Pixie Mount
 		private bool RotatePixieMountHover(On_Mount.orig_Hover orig, Mount self, Player mountedPlayer)

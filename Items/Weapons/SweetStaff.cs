@@ -1,15 +1,7 @@
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Items.Placeable;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using TheConfectionRebirth.Projectiles;
 using TheConfectionRebirth.Buffs;
 using Terraria.DataStructures;
@@ -18,7 +10,7 @@ namespace TheConfectionRebirth.Items.Weapons
 {
     public class SweetStaff : ModItem
     {
-		public sealed override void SetStaticDefaults()
+		public override void SetStaticDefaults()
 		{
 			ItemID.Sets.StaffMinionSlotsRequired[Type] = 1;
 			ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
@@ -43,7 +35,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.UseSound = SoundID.Item44;
 		}
 
-		public sealed override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			if (player.altFunctionUse != 2)
 			{
@@ -54,7 +46,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			}
 		}
 
-		public sealed override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			return false;
 		}

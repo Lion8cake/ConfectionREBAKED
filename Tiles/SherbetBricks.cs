@@ -5,6 +5,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
@@ -56,6 +57,11 @@ namespace TheConfectionRebirth.Tiles
 				color = ConfectionWorldGeneration.ActColor(color, drawData.tileCache);
 			}
 			drawData.finalColor = color;
+		}
+
+		public override void ChangeWaterfallStyle(ref int style)
+		{
+			style = ModContent.GetInstance<SherbetWaterfallStyle>().Slot;
 		}
 	}
 }

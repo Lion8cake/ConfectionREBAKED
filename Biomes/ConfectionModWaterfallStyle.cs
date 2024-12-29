@@ -40,17 +40,17 @@ namespace TheConfectionRebirth.Biomes {
 			ILLabel IL_149d = null;
 			c.GotoNext( //Gets the IL_149d instruction lable
 				MoveType.After,
-				i => i.MatchLdloc(12),
-				i => i.MatchLdcI4(25),
-				i => i.MatchBneUn(out _),
-				i => i.MatchLdsfld<Main>("drewLava"),
-				i => i.MatchBrtrue(out IL_149d));
+				i => i.MatchLdloc(12),               //if (Main.drewLava || waterfalls[i].stopAtStep == 0)
+				i => i.MatchLdcI4(25),				 //{
+				i => i.MatchBneUn(out _),            //	   continue;
+				i => i.MatchLdsfld<Main>("drewLava"),//}
+				i => i.MatchBrtrue(out IL_149d)); //used to get the ILLable from the continue
 			c.GotoPrev( //Goes to after the intialisation of variables 3 through to 15. This is just before the drawing of lava, honey and shimmer waterfalls
 				MoveType.After,
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc(18),
-				i => i.MatchLdcI4(0),
-				i => i.MatchStloc(19),
+				i => i.MatchLdcI4(0),  //int num11 = 0;
+				i => i.MatchStloc(18), //int num13 = 0;
+				i => i.MatchLdcI4(0),  //int num14;
+				i => i.MatchStloc(19), //int num15;
 				i => i.MatchLdcI4(0),
 				i => i.MatchStloc(20));
 			c.EmitLdloc(10); //the current waterfall data type

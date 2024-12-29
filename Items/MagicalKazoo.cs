@@ -20,8 +20,8 @@ namespace TheConfectionRebirth.Items
 			Item.width = 20;
 			Item.height = 24;
 			Item.UseSound = null;
-			Item.useAnimation = 30;
-			Item.useTime = 30;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
 			Item.rare = ItemRarityID.Pink;
 			Item.noMelee = true;
 			Item.value = 250000;

@@ -33,6 +33,8 @@ namespace TheConfectionRebirth
 		public bool meawzerPet;
 		public bool dudlingPet;
 		public bool toothfairyMinion;
+		public bool meawzerMinion;
+		public bool gastropodMinion;
 
 		public bool SacchariteLashed;
 		public bool candleFire;
@@ -65,6 +67,7 @@ namespace TheConfectionRebirth
 		public int bakersDozenHitCount = 0;
 
 		public int sweetToothCounter = 0;
+		public int gummyWormWhipCounter = 0;
 
 		public float snickerDevCookieRot = 0f;
 		/// <summary>
@@ -81,6 +84,8 @@ namespace TheConfectionRebirth
 			meawzerPet = false;
 			dudlingPet = false;
 			toothfairyMinion = false;
+			gastropodMinion = false;
+			meawzerMinion = false;
 
 			if (!candleFire)
 			{

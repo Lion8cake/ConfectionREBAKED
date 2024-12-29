@@ -227,7 +227,7 @@ namespace TheConfectionRebirth
 
 			//Choco Rabbit Cupcake
 			Recipe ChocoRabbitCupcake = Recipe.Create(ModContent.ItemType<ChocoRabbitCupcake>());
-			ChocoRabbitCupcake.AddIngredient<ChocolateBunny>();
+			ChocoRabbitCupcake.AddIngredient(ModContent.ItemType<ChocolateBunny>());
 			ChocoRabbitCupcake.AddTile(TileID.CookingPots);
 			ChocoRabbitCupcake.SortAfterFirstRecipesOf(ItemID.PrismaticPunch);
 			ChocoRabbitCupcake.Register();
@@ -682,7 +682,7 @@ namespace TheConfectionRebirth
 			//hallowed ore bricks
 			Recipe HallowedBrick = Recipe.Create(ModContent.ItemType<HallowedBrick>(), 5);
 			HallowedBrick.AddIngredient(ItemID.StoneBlock, 5);
-			HallowedBrick.AddIngredient<HallowedOre>();
+			HallowedBrick.AddIngredient(ModContent.ItemType<HallowedOre>());
 			HallowedBrick.AddTile(TileID.Furnaces);
 			HallowedBrick.SortAfterFirstRecipesOf(ItemID.TitanstoneBlockWall);
 			HallowedBrick.Register();
@@ -703,7 +703,7 @@ namespace TheConfectionRebirth
 			//Neapolinite ore Bricks
 			Recipe NeapoliniteBrick = Recipe.Create(ModContent.ItemType<NeapoliniteBrick>(), 5);
 			NeapoliniteBrick.AddIngredient(ItemID.StoneBlock, 5);
-			NeapoliniteBrick.AddIngredient<NeapoliniteOre>();
+			NeapoliniteBrick.AddIngredient(ModContent.ItemType<NeapoliniteOre>());
 			NeapoliniteBrick.AddTile(TileID.Furnaces);
 			NeapoliniteBrick.SortAfter(HallowedBrickWall2);
 			NeapoliniteBrick.Register();
@@ -929,7 +929,7 @@ namespace TheConfectionRebirth
 
 			//True Sucrosa
 			Recipe TrueSucrosa = Recipe.Create(ModContent.ItemType<TrueSucrosa>());
-			TrueSucrosa.AddIngredient<Sucrosa>();
+			TrueSucrosa.AddIngredient(ModContent.ItemType<Sucrosa>());
 			TrueSucrosa.AddIngredient(ItemID.ChlorophyteBar, 24);
 			TrueSucrosa.AddTile(TileID.MythrilAnvil);
 			TrueSucrosa.SortAfterFirstRecipesOf(ItemID.TrueExcalibur);
@@ -940,8 +940,8 @@ namespace TheConfectionRebirth
 			Recipe Trifle = Recipe.Create(ModContent.ItemType<Trifle>());
 			Trifle.AddIngredient(ItemID.ClockworkAssaultRifle);
 			Trifle.AddIngredient(ItemID.IllegalGunParts);
-			Trifle.AddIngredient<SoulofDelight>(15);
-			Trifle.AddIngredient<Sprinkles>(20);
+			Trifle.AddIngredient(ModContent.ItemType<SoulofDelight>(), 15);
+			Trifle.AddIngredient(ModContent.ItemType<Sprinkles>(), 20);
 			Trifle.AddIngredient(ItemID.SoulofMight, 20);
 			Trifle.AddTile(TileID.MythrilAnvil);
 			Trifle.SortAfterFirstRecipesOf(ItemID.FairyBell);
@@ -1308,6 +1308,88 @@ namespace TheConfectionRebirth
 			DimensionSplit3.AddTile(TileID.Anvils);
 			DimensionSplit3.SortAfter(DimensionSplit2);
 			DimensionSplit3.Register();
+
+			//Cherry Bomb
+			Recipe CherryGrenade = Recipe.Create(ModContent.ItemType<CherryGrenade>(), 5);
+			CherryGrenade.AddIngredient(ItemID.Grenade, 5);
+			CherryGrenade.AddIngredient(ModContent.ItemType<CherryShells>());
+			CherryGrenade.AddTile(TileID.MythrilAnvil);
+			CherryGrenade.SortAfterFirstRecipesOf(ItemID.DirtStickyBomb);
+			CherryGrenade.Register();
+
+			//Chip Arrow
+			Recipe ChipArrow = Recipe.Create(ModContent.ItemType<ChipArrow>(), 150);
+			ChipArrow.AddIngredient(ItemID.WoodenArrow, 150);
+			ChipArrow.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
+			ChipArrow.AddTile(TileID.MythrilAnvil);
+			ChipArrow.SortAfterFirstRecipesOf(ItemID.HolyArrow);
+			ChipArrow.Register();
+
+			//Cherry Burst Arrow
+			Recipe CherryBurstArrow = Recipe.Create(ModContent.ItemType<CherryBurstArrow>(), 150);
+			CherryBurstArrow.AddIngredient(ItemID.WoodenArrow, 150);
+			CherryBurstArrow.AddIngredient(ModContent.ItemType<CherryShells>());
+			CherryBurstArrow.AddTile(TileID.MythrilAnvil);
+			CherryBurstArrow.SortAfter(ChipArrow);
+			CherryBurstArrow.Register();
+
+			//Saccharite Arrow
+			Recipe SacchariteArrow = Recipe.Create(ModContent.ItemType<SacchariteArrow>(), 100);
+			SacchariteArrow.AddIngredient(ItemID.WoodenArrow, 100);
+			SacchariteArrow.AddIngredient(ModContent.ItemType<Saccharite>());
+			SacchariteArrow.AddTile(TileID.MythrilAnvil);
+			SacchariteArrow.SortAfter(CherryBurstArrow);
+			SacchariteArrow.Register();
+
+			//Saccharite Bullet
+			Recipe SacchariteBullet = Recipe.Create(ModContent.ItemType<SacchariteBullet>(), 200);
+			SacchariteBullet.AddIngredient(ItemID.MusketBall, 200);
+			SacchariteBullet.AddIngredient(ModContent.ItemType<Saccharite>());
+			SacchariteBullet.AddTile(TileID.MythrilAnvil);
+			SacchariteBullet.SortAfterFirstRecipesOf(ItemID.CrystalBullet);
+			SacchariteBullet.Register();
+
+			//Saccharite Dart
+			Recipe SacchariteDart = Recipe.Create(ModContent.ItemType<SacchariteDart>(), 100);
+			SacchariteDart.AddIngredient(ModContent.ItemType<Saccharite>());
+			SacchariteDart.SortAfterFirstRecipesOf(ItemID.CrystalDart);
+			SacchariteDart.Register();
+
+			//Crunch Ball
+			Recipe CrunchBall = Recipe.Create(ModContent.ItemType<CrunchBall>());
+			CrunchBall.AddIngredient(ItemID.SpellTome);
+			CrunchBall.AddIngredient(ModContent.ItemType<Saccharite>(), 20);
+			CrunchBall.AddIngredient(ModContent.ItemType<SoulofDelight>(), 15);
+			CrunchBall.AddTile(TileID.Bookcases);
+			CrunchBall.SortAfterFirstRecipesOf(ItemID.CrystalStorm);
+			CrunchBall.Register();
+
+			//Confection Yoyo
+			Recipe YoyoCookie = Recipe.Create(ModContent.ItemType<YoyoCookie>());
+			YoyoCookie.AddIngredient(ItemID.WoodYoyo);
+			YoyoCookie.AddIngredient(ModContent.ItemType<Saccharite>(), 15);
+			YoyoCookie.AddIngredient(ModContent.ItemType<SoulofDelight>(), 10);
+			YoyoCookie.AddTile(TileID.MythrilAnvil);
+			YoyoCookie.SortAfterFirstRecipesOf(ItemID.Chik);
+			YoyoCookie.Register();
+
+			//Gastropod Staff
+			Recipe GastropodStaff = Recipe.Create(ModContent.ItemType<GastropodStaff>());
+			GastropodStaff.AddIngredient(ItemID.CrystalShard, 25);
+			GastropodStaff.AddIngredient(ItemID.SoulofLight, 10);
+			GastropodStaff.AddIngredient(ModContent.ItemType<ShellBlock>(), 80);
+			GastropodStaff.AddTile(TileID.MythrilAnvil);
+			GastropodStaff.SortAfterFirstRecipesOf(ItemID.CoolWhip);
+			GastropodStaff.Register();
+
+			//Pastry Staff
+			Recipe PastryStaff = Recipe.Create(ModContent.ItemType<PastryStaff>());
+			PastryStaff.AddIngredient(ModContent.ItemType<Saccharite>(), 25);
+			PastryStaff.AddIngredient(ModContent.ItemType<SoulofDelight>(), 10);
+			PastryStaff.AddIngredient(ModContent.ItemType<PastryBlock>(), 80);
+			PastryStaff.AddTile(TileID.MythrilAnvil);
+			PastryStaff.SortAfter(GastropodStaff);
+			PastryStaff.Register();
 		}
 
 		private static void AddSacchariteFurniture()

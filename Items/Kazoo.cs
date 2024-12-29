@@ -20,8 +20,8 @@ namespace TheConfectionRebirth.Items
         {
 			Item.rare = ItemRarityID.Orange;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useAnimation = 28;
-			Item.useTime = 28;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
 			Item.width = 20;
 			Item.height = 24;
 			Item.autoReuse = true;

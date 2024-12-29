@@ -40,13 +40,14 @@ namespace TheConfectionRebirth.PlayerLayers
 				{
 					int variant = Main.rand.Next(4);
 					bool grav = directions.Y < 0;
+					bool dir = directions.X < 0;
 					Vector2 pos = drawPlayer.position + new Vector2(-34 * drawPlayer.direction, grav ? -8 : 22);
 					pos += variant switch
 					{
-						0 => new Vector2(0, grav ? 12 : 0),
-						1 => new Vector2(0, grav ? 8 : 4),
-						2 => new Vector2(0, grav ? 4 : 8),
-						_ => new Vector2(0, grav ? 0 : 12)
+						0 => new Vector2(dir ? -8 : 18, grav ? 12 : 0),
+						1 => new Vector2(dir ? -4 : 16, grav ? 8 : 4),
+						2 => new Vector2(dir ? -2 : 10, grav ? 4 : 8),
+						_ => new Vector2(dir ? 4 : 8, grav ? 0 : 12)
 					};
 					Vector2 spawn = variant switch
 					{
@@ -57,15 +58,17 @@ namespace TheConfectionRebirth.PlayerLayers
 					};
 					Color color = variant switch
 					{
-						0 => new Color(162, 119, 249),
-						1 => new Color(157, 253, 186),
-						2 => new Color(254, 249, 214),
-						_ => new Color(254, 169, 231)
+						0 => new Color(162, 119, 249), //purple
+ 						1 => new Color(157, 253, 186), //green
+						2 => new Color(254, 249, 214), //yellow
+						_ => new Color(254, 169, 231)  //pink
 					};
 					Dust dust = Dust.NewDustDirect(pos, (int)spawn.X, (int)spawn.Y, ModContent.DustType<WildAiryTintDust>());
 					dust.color = color;
 					dust.fadeIn = 1f;
 					dust.shader = GameShaders.Armor.GetSecondaryShader(drawPlayer.cWings, drawPlayer);
+					dust.velocity = Vector2.Zero;
+					dust.velocity.X = dir ? 2f : -2f;
 					drawInfo.DustCache.Add(dust.dustIndex);
 				}
 				DrawData wing = new DrawData(TextureAssets.Wings[drawPlayer.wings].Value, (vector + new Vector2(-9, 2) * directions).Floor(), (Rectangle?)new Rectangle(0, TextureAssets.Wings[drawPlayer.wings].Height() / 4 * drawPlayer.wingFrame, TextureAssets.Wings[drawPlayer.wings].Width(), TextureAssets.Wings[drawPlayer.wings].Height() / 4), drawInfo.colorArmorBody, drawPlayer.bodyRotation, new Vector2((float)(TextureAssets.Wings[drawPlayer.wings].Width() / 2), (float)(TextureAssets.Wings[drawPlayer.wings].Height() / 4 / 2)), 1f, drawInfo.playerEffect, 0f);

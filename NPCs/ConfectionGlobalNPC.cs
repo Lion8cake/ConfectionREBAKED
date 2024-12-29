@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent.Personalities;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Buffs;
+using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -24,6 +25,7 @@ namespace TheConfectionRebirth.NPCs
 		public bool SacchariteLashed;
 		public bool candleFire;
 		public int candleFlameDelay = 0;
+		public bool sacchariteAmmoDebuff;
 
 		public override void ResetEffects(NPC npc)
 		{
@@ -33,6 +35,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			SacchariteLashed = false;
 			candleFire = false;
+			sacchariteAmmoDebuff = false;
 
 			if (npc.noTileCollide)
 			{
@@ -117,6 +120,30 @@ namespace TheConfectionRebirth.NPCs
 				if (damage < 10)
 				{
 					damage = 10;
+				}
+			}
+			if (sacchariteAmmoDebuff)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+
+				int count = 0;
+				for (int i = 0; i < 1000; i++)
+				{
+					Projectile projectile = Main.projectile[i];
+					if (projectile.active && (projectile.type == ModContent.ProjectileType<SacchariteArrow>() || projectile.type == ModContent.ProjectileType<SacchariteBullet>()) && projectile.ai[1] == npc.whoAmI)
+					{
+						count++;
+					}
+				}
+
+				float count2 = count * 0.2f;
+				npc.lifeRegen -= (int)(count2 * 4 * 20);
+				if (damage < count2 * 20)
+				{
+					damage = (int)(count2 * 20);
 				}
 			}
 		}
@@ -541,6 +568,10 @@ namespace TheConfectionRebirth.NPCs
 				if (npc.HasBuff<SacchariteLashTagDamage>())
 				{
 					modifiers.FlatBonusDamage += 10 * projTagMultiplier;
+				}
+				if (npc.HasBuff<GummyWormWhipTagDamage>())
+				{
+					modifiers.FlatBonusDamage += 8 * projTagMultiplier;
 				}
 			}
 		}

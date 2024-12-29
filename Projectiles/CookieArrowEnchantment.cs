@@ -59,7 +59,7 @@ namespace TheConfectionRebirth.Projectiles
 					float degree = 360 / 8 * i;
 					float radians = MathHelper.ToRadians(degree);
 					Vector2 velcoity = Vector2.One.RotatedBy(radians);
-					int num = Dust.NewDust(projectile.position, 1, 1, ModContent.DustType<TintableBakersDust>());
+					int num = Dust.NewDust(projectile.Center, 1, 1, ModContent.DustType<TintableBakersDust>());
 					Dust dust = Main.dust[num];
 					dust.noGravity = true;
 					dust.scale = 2f;

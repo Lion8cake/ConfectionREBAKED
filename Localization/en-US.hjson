@@ -24,7 +24,7 @@ Mods: {
 				'''
 				Every 80 damage dealt will increase critical strike chance by 2% for 5 seconds, 
 				once 10% critical strike chance has been reached defense is ignored when hitting 
-				a critical stike for 5 seconds.
+				a critical strike for 5 seconds.
 				'''
 			NeapoliniteHelmet:
 				'''
@@ -51,18 +51,18 @@ Mods: {
 		Bestiary: {
 			Birdnana: A creature disguised as a bird or banana to blend in with its surroundings. Is it a bird, or is it a banana?
 			CherryBug: A bug known for its distinguished cherry taste. Often used as food flavorings.
-			ChocolateBunny: A rabbit that has made itself appear as if its made out of pure chocolate.
-			ChocolateFrog: When it rains in the confection frogs will start to appear and look like they are coated in chocolate.
-			GrumbleBee: A happy and passive bee that looks after the confection's flora, pollinating the land.
+			ChocolateBunny: A rabbit that has made itself appear as if it's made out of pure chocolate.
+			ChocolateFrog: When it rains in the Confection frogs will start to appear and look like they are coated in chocolate.
+			GrumbleBee: A happy and passive bee that looks after the Confection's flora, pollinating the land.
 			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. Despite having a very sour taste, fish especially love these.
-			Pip: A very small bird that looks like marshmellow. Despite everything it can be quite amazing seeing the little wings carry its large body.
-			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when arround one of these creatures, you should never touch one of them.
+			Pip: A very small bird that looks like marshmallow. Despite everything it can be quite amazing seeing the little wings carry its large body.
+			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when around one of these creatures, you should never touch one of them.
 		}
 
 		ItemAnglerChat: {
 			CookieCutterShark: There's a living cookie cutter down in the deep Confection! Go and bring it back for me so I can make some living cookies!
-			SacchariteBatFish: The Underground Confection attracts a certain fish from Sweden that's flesh looks like gummies! Go bring me one to taste how sweet they really are!
-			Sprinklefish: Remember those piles of sprinkles in the confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!
+			SacchariteBatFish: The Underground Confection attracts a certain fish from Sweden that's flesh looks like gummies! Go bring me one so I can taste how sweet they really are!
+			Sprinklefish: Remember those piles of sprinkles in the Confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!
 		}
 
 		PlayerDeathReason: {
@@ -120,28 +120,28 @@ Mods: {
 			CreamwoodToilet.MapEntry: Toilet
 			CreamwoodTrappedChest.MapEntry: Chest
 			CreamwoodWorkbench.MapEntry: Workbench
-			SoulofDelightinaBottle.MapEntry: Soulof Delightina Bottle
-			SoulofSpiteinaBottle.MapEntry: Soulof Spiteina Bottle
-			SacchariteBath.MapEntry: Saccharite Bath
-			SacchariteBed.MapEntry: Saccharite Bed
-			SacchariteBookcase.MapEntry: Saccharite Bookcase
-			SacchariteCandelabra.MapEntry: Saccharite Candelabra
-			SacchariteCandle.MapEntry: Saccharite Candle
-			SacchariteChair.MapEntry: Saccharite Chair
-			SacchariteChandelier.MapEntry: Saccharite Chandelier
-			SacchariteChest.MapEntry: Saccharite Chest
-			SacchariteClock.MapEntry: Saccharite Clock
-			SacchariteDoorOpen.MapEntry: Saccharite Door Open
-			SacchariteDresser.MapEntry: Saccharite Dresser
-			SacchariteLamp.MapEntry: Saccharite Lamp
-			SacchariteLantern.MapEntry: Saccharite Lantern
-			SaccharitePiano.MapEntry: Saccharite Piano
-			SacchariteSink.MapEntry: Saccharite Sink
-			SacchariteSofa.MapEntry: Saccharite Sofa
-			SacchariteTable.MapEntry: Saccharite Table
-			SacchariteToilet.MapEntry: Saccharite Toilet
-			SacchariteTrappedChest.MapEntry: Saccharite Trapped Chest
-			SacchariteWorkbench.MapEntry: Saccharite Workbench
+			SoulofDelightinaBottle.MapEntry: Soul of Delight in a Bottle
+			SoulofSpiteinaBottle.MapEntry: Soul of Spite in a Bottle
+			SacchariteBath.MapEntry: Bath
+			SacchariteBed.MapEntry: Bed
+			SacchariteBookcase.MapEntry: Bookcase
+			SacchariteCandelabra.MapEntry: Candelabra
+			SacchariteCandle.MapEntry: Candle
+			SacchariteChair.MapEntry: Chair
+			SacchariteChandelier.MapEntry: Chandelier
+			SacchariteChest.MapEntry: Chest
+			SacchariteClock.MapEntry: Clock
+			SacchariteDoorOpen.MapEntry: Door
+			SacchariteDresser.MapEntry: Dresser
+			SacchariteLamp.MapEntry: Lamp
+			SacchariteLantern.MapEntry: Lantern
+			SaccharitePiano.MapEntry: Piano
+			SacchariteSink.MapEntry: Sink
+			SacchariteSofa.MapEntry: Sofa
+			SacchariteTable.MapEntry: Table
+			SacchariteToilet.MapEntry: Toilet
+			SacchariteTrappedChest.MapEntry: Trapped Chest
+			SacchariteWorkbench.MapEntry: Workbench
 			CherryBugBottle.MapEntry: Cherry Bug Bottle
 			ChocolateBunnyCage.MapEntry: Chocolate Bunny Cage
 			ChocolateFrogCage.MapEntry: Chocolate Frog Cage
@@ -149,8 +149,8 @@ Mods: {
 			PipCage.MapEntry: Pip Cage
 			RoyalCherryBugBottle.MapEntry: Royal Cherry Bug Bottle
 			Impact2.MapEntry: Painting
-			ConfectionMusicBox.MapEntry: Confection Music Box
-			ConfectionUGMusicBox.MapEntry: Confection U G Music Box
+			ConfectionMusicBox.MapEntry: Music Box
+			ConfectionUGMusicBox.MapEntry: Music Box
 			SherbetTorch.MapEntry: Sherbet Torch
 			HeavensForgeTile.MapEntry: Heavens Forge Tile
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
@@ -271,7 +271,7 @@ Mods: {
 				Tooltip:
 					'''
 					{$CommonItemTooltip.MediumStats}
-					'Its seems to have fallen into the Cupcake'
+					'It's seems to have fallen into the Cupcake'
 					'''
 			}
 
@@ -299,7 +299,7 @@ Mods: {
 				Tooltip:
 					'''
 					{$CommonItemTooltip.MediumStats}
-					'A classic fruit kebab with a marshmellow-y twist'
+					'A classic fruit kebab with a marshmallow-y twist'
 					'''
 			}
 
@@ -715,7 +715,7 @@ Mods: {
 				Tooltip:
 					'''
 					5% increased critical strike chance
-					Changes falvor based on what helmet is worn
+					Changes flavor based on what helmet is worn
 					'''
 			}
 
@@ -732,7 +732,7 @@ Mods: {
 				DisplayName: Neapolinite Hat
 				Tooltip:
 					'''
-					8% increased summoner damage
+					Increases summon damage by 8%
 					Increases your max number of minions by 3
 					'''
 			}
@@ -796,7 +796,7 @@ Mods: {
 
 			CosmicCookieCannon: {
 				DisplayName: Cosmic Cookie Cannon
-				Tooltip: "'But wait? Doesn't it shoot cosmic brownies instead?'"
+				Tooltip: "'But wait, Doesn't it shoot cosmic brownies instead?'"
 			}
 
 			SacchariteLash: {
@@ -804,7 +804,7 @@ Mods: {
 				Tooltip:
 					'''
 					Your summons will focus stuck enemies
-					Shatters your foes' armour into pieces
+					Shatters your foes' armor into pieces
 					'''
 			}
 
@@ -820,7 +820,7 @@ Mods: {
 					'Yes, it's the tricky kind'
 					Uses gel as ammo
 					Ignites enemies, these flames will flicker occasionally.
-					Although the flames wont go out unless smuthered in water.
+					Although the flames wont go out unless submerged in water.
 					'''
 			}
 
@@ -836,7 +836,7 @@ Mods: {
 
 			SweetStaff: {
 				DisplayName: Sweet Staff
-				Tooltip: Summons roller cookies to fight for you
+				Tooltip: Summons rollercookies to fight for you
 			}
 
 			CookieDough: {
@@ -861,7 +861,7 @@ Mods: {
 
 			ChocolateChunk: {
 				DisplayName: Chocolate Chunk
-				Tooltip: Summons a Rollercookie pet
+				Tooltip: Summons a rollercookie pet
 			}
 
 			CreamwoodBreastplate: {
@@ -1010,12 +1010,12 @@ Mods: {
 			}
 
 			DeathsRaze: {
-				DisplayName: Deaths Raze
+				DisplayName: Death's Raze
 				Tooltip: ""
 			}
 
 			TrueDeathsRaze: {
-				DisplayName: True Deaths Raze
+				DisplayName: True Death's Raze
 				Tooltip: ""
 			}
 
@@ -1023,8 +1023,8 @@ Mods: {
 				DisplayName: Cream of Kickin'
 				Tooltip:
 					'''
+					Fires a flail, with an additional flail attached to it
 					'It's time to open a can of woop!'
-					Fires a flail, with a flail attached to it
 					'''
 			}
 
@@ -1035,7 +1035,7 @@ Mods: {
 
 			KeyofSpite: {
 				DisplayName: Key of Spite
-				Tooltip: "'Charged with the essance of many souls'"
+				Tooltip: "'Charged with the essence of many souls'"
 			}
 
 			SoulofDelightinaBottle: {
@@ -1050,7 +1050,7 @@ Mods: {
 
 			KeyofDelight: {
 				DisplayName: Key of Delight
-				Tooltip: "'Charged with the essance of many souls'"
+				Tooltip: "'Charged with the essence of many souls'"
 			}
 
 			ConeHead: {
@@ -1333,7 +1333,7 @@ Mods: {
 				Tooltip:
 					'''
 					Fires a cookie boulder to crush enemies.
-					'Thats just how the cookie crumbles.'
+					'That's just how the cookie crumbles'
 					'''
 			}
 
@@ -1510,10 +1510,10 @@ Mods: {
 			}
 
 			DimensionSplit: {
-				DisplayName: Dimension Split
+				DisplayName: Dimensional Split
 				Tooltip:
 					'''
-					Places portal's at the cursor.
+					Places portals at the cursor.
 					When two portals are place, players and enemies can interact with them.
 					'''
 			}
@@ -1524,7 +1524,7 @@ Mods: {
 			}
 
 			CcretTicket: {
-				DisplayName: C-cret Ticket
+				DisplayName: C-Cret Ticket
 				Tooltip: Summons a Foamin' Float to float on
 			}
 
@@ -1534,18 +1534,194 @@ Mods: {
 			}
 
 			CreamySandwhich: {
-				DisplayName: Creamy Sandwhich
-				Tooltip: ""
+				DisplayName: Creamy Sandwich
+				Tooltip: Summons a little creamsand witch
 			}
 
 			TaffyApple: {
 				DisplayName: Taffy Apple
-				Tooltip: ""
+				Tooltip: Summons a pet dudly
 			}
 
 			ToastyToaster: {
 				DisplayName: Toasty Toaster
+				Tooltip: Summons an angry meowzer
+			}
+
+			#banner item names, will be properly formatted as each NPC is added
+			CherryBomberBanner: {
+				DisplayName: Cherry Bomber Banner
 				Tooltip: ""
+			}
+
+			ConfectionMimicBanner: {
+				DisplayName: Confection Mimic Banner
+				Tooltip: ""
+			}
+
+			CrazyConeBanner: {
+				DisplayName: Crazy Cone Banner
+				Tooltip: ""
+			}
+
+			CreamsandWitchBanner: {
+				DisplayName: Creamsand Witch Banner
+				Tooltip: ""
+			}
+
+			CreamSwollowerBanner: {
+				DisplayName: Cream Swollower Banner
+				Tooltip: ""
+			}
+
+			CrookedCookieBanner: {
+				DisplayName: Crooked Cookie Banner
+				Tooltip: ""
+			}
+
+			DudleyBanner: {
+				DisplayName: Dudley Banner
+				Tooltip: ""
+			}
+
+			FoaminFloatBanner: {
+				DisplayName: Foamin Float Banner
+				Tooltip: ""
+			}
+
+			GummyWyrmBanner: {
+				DisplayName: Gummy Wyrm Banner
+				Tooltip: ""
+			}
+
+			HungerBanner: {
+				DisplayName: Hunger Banner
+				Tooltip: ""
+			}
+
+			IcecreamGalBanner: {
+				DisplayName: Icecream Gal Banner
+				Tooltip: ""
+			}
+
+			IscreamerBanner: {
+				DisplayName: Iscreamer Banner
+				Tooltip: ""
+			}
+
+			MeowzerBanner: {
+				DisplayName: Meowzer Banner
+				Tooltip: ""
+			}
+
+			MintJrBanner: {
+				DisplayName: Mint Jr Banner
+				Tooltip: ""
+			}
+
+			ParfaitSlimeBanner: {
+				DisplayName: Parfait Slime Banner
+				Tooltip: ""
+			}
+
+			PricksterBanner: {
+				DisplayName: Prickster Banner
+				Tooltip: ""
+			}
+
+			RollerCookieBanner: {
+				DisplayName: Roller Cookie Banner
+				Tooltip: ""
+			}
+
+			SherbetSlimeBanner: {
+				DisplayName: Sherbet Slime Banner
+				Tooltip: ""
+			}
+
+			SprinklingBanner: {
+				DisplayName: Sprinkling Banner
+				Tooltip: ""
+			}
+
+			StripedPigronBanner: {
+				DisplayName: Striped Pigron Banner
+				Tooltip: ""
+			}
+
+			SweetGummyBanner: {
+				DisplayName: Sweet Gummy Banner
+				Tooltip: ""
+			}
+
+			TheUnfirmBanner: {
+				DisplayName: The Unfirm Banner
+				Tooltip: ""
+			}
+
+			WildWillyBanner: {
+				DisplayName: Wild Willy Banner
+				Tooltip: ""
+			}
+
+			CherryBurstArrow: {
+				DisplayName: Cherry Burst Arrow
+				Tooltip: Explodes into cherry shards that also explode
+			}
+
+			CherryGrenade: {
+				DisplayName: Cherry Bomb
+				Tooltip: Explodes into 8 additional smaller exploding pieces
+			}
+
+			ChipArrow: {
+				DisplayName: Chip Arrow
+				Tooltip: ""
+			}
+
+			SacchariteArrow: {
+				DisplayName: Saccharite Arrow
+				Tooltip: Sticks onto attackers and tiles
+			}
+
+			SacchariteBullet: {
+				DisplayName: Saccharite Bullet
+				Tooltip: Sticks onto attackers and tiles
+			}
+
+			SacchariteDart: {
+				DisplayName: Saccharite Dart
+				Tooltip: Chases after your enemies
+			}
+
+			CrunchBall: {
+				DisplayName: Crunch Ball
+				Tooltip: ""
+			}
+
+			GummyWormWhip: {
+				DisplayName: Friendly Gummy Worm
+				Tooltip: "'seems calm about you flinging it like a weapon'"
+			}
+
+			BearClaw: {
+				DisplayName: Bear Claw
+				Tooltip: If thrown right, can hit multiple times
+			}
+
+			YoyoCookie: {
+				DisplayName: The Macaron
+				Tooltip: ""
+			}
+
+			GastropodStaff: {
+				DisplayName: Gastropod Staff
+				Tooltip: Summons mini gastropods to fight for you
+			}
+
+			PastryStaff: {
+				DisplayName: Pastry Staff
+				Tooltip: "Summons mini meowzers to fight for you"
 			}
 		}
 
@@ -1573,46 +1749,56 @@ Mods: {
 			StrawberryStrike.DisplayName: Strawberry
 			NeapoliniteCookies.DisplayName: Neapolinite Cookies
 			Drixer.DisplayName: "{$Mods.TheConfectionRebirth.Items.Drixer.DisplayName}"
-			SucrosaSlash.DisplayName: Sucrosa Slash
-			SpearofCavendes.DisplayName: Spearof Cavendes
-			SpearofCavendesBannana.DisplayName: Spearof Cavendes Bannana
+			SucrosaSlash.DisplayName: Sucrosa
+			SpearofCavendes.DisplayName: Spear of Cavendes
+			SpearofCavendesBannana.DisplayName: Bannana
 			NeapoliniteJoustingLance.DisplayName: Neapolinite Jousting Lance
 			CosmicCookie.DisplayName: Cosmic Brownie
 			SacchariteLash.DisplayName: Saccharite Lash
 			CosmicBrownie.DisplayName: Cosmic Neapolinite Star
-			TrueSucrosaBolt.DisplayName: True Sucrosa Bolt
-			TrueSucrosaSlash.DisplayName: True Sucrosa Slash
+			TrueSucrosaBolt.DisplayName: True Sucrosa
+			TrueSucrosaSlash.DisplayName: True Sucrosa
 			CandleFlames.DisplayName: Candle Flames
-			BakersDozen.DisplayName: Bakers Dozen
-			BakersDozenSlash.DisplayName: Bakers Dozen Slash
-			RollerCookieSummon.DisplayName: Roller Cookie
+			BakersDozen.DisplayName: Baker's Dozen
+			BakersDozenSlash.DisplayName: Baker's Dozen
+			RollerCookieSummon.DisplayName: Rollercookie
 			IcecreamBall.DisplayName: Icecream Ball
 			CreamBolt.DisplayName: Chocolate Cream Beam
 			BirdnanaLightPet.DisplayName: Birdnana Light Pet
 			RollerCookiePet.DisplayName: Roller Cookie Pet
-			DeathsSlash.DisplayName: Deaths Slash
-			TrueDeathsSlash.DisplayName: True Deaths Slash
-			CreamofKickinCookie.DisplayName: Creamof Kickin Cookie
-			CreamofKickinMeatball.DisplayName: Creamof Kickin Meatball
+			DeathsSlash.DisplayName: Death's Raze
+			TrueDeathsSlash.DisplayName: True Death's Raze
 			CreamofKickin.DisplayName: Cream of Kickin'
-			CookiePikelet.DisplayName: Cookie Pikelet
+			CookiePikelet.DisplayName: Cookie Pike-let
 			SweetHook.DisplayName: Sweet Hook
 			CookieBoulder.DisplayName: Cookie Boulder
-			CookieArrowMagnet.DisplayName: Cookie Arrow Magnet
-			CookieMagnetArrow.DisplayName: Cookie Magnet Arrow
 			SweetTooth.DisplayName: Sweet Tooth
-			CookieArrowEnchantment.DisplayName: Cookie Arrow Enchantment
 			SherbetFlare.DisplayName: Sherbet Flare
 			ToothFairy.DisplayName: Tooth Fairy
-			ToothFairyCrystal.DisplayName: Tooth Fairy Count
+			ToothFairyCrystal.DisplayName: Tooth Fairy
 			ToothFairyTooth.DisplayName: Tooth
 			BananawarpPeel.DisplayName: Bananawarp Peel
-			PeelWarp.DisplayName: Peel Warp
-			PeelWarp2.DisplayName: Peel Warp
 			DimensionalWarp.DisplayName: Dimensional Warp
 			CreamsandWitchPet.DisplayName: Creamsand Witch Pet
 			DudlingPet.DisplayName: Dudling Pet
-			MeawzerPet.DisplayName: Meawzer Pet
+			MeawzerPet.DisplayName: Meowzer Pet
+			CherryBurstArrow.DisplayName: Cherry Burst Arrow
+			CherryGrenade.DisplayName: Cherry Grenade
+			ChipArrow.DisplayName: Chip Arrow
+			CherryShard.DisplayName: Cherry Shard
+			ChocolateChip.DisplayName: Chocolate Chip
+			SacchariteArrow.DisplayName: Saccharite Arrow
+			SacchariteBullet.DisplayName: Saccharite Bullet
+			SacchariteDart.DisplayName: Saccharite Dart
+			RockCandy.DisplayName: Rock Candy
+			RockCandyShard.DisplayName: Rock Candy Shard
+			GummyWormWhip.DisplayName: Friendly Gummy Worm
+			BearClaw.DisplayName: Bear Claw
+			YoyoCookieYoyo.DisplayName: The Macaron
+			GastropodSummonPinkLazer.DisplayName: Pink Lazer
+			GastropodSummon.DisplayName: Mini Gastropod
+			MeawzerSummonLazer.DisplayName: Toaster Lazer
+			MeawzerSummon.DisplayName: Mini Meowzer
 		}
 
 		Configs: {
@@ -1632,7 +1818,7 @@ Mods: {
 						'''
 						No Spread:
 							Special Confection Only tiles don't spread
-							World generation doesn't generate confection only tiles
+							World generation doesn't generate Confection Only tiles
 
 						Partial Spread:
 							Special Confection Only tiles only spread when near spreadable tiles
@@ -1776,12 +1962,12 @@ Mods: {
 
 			HumanCandle: {
 				DisplayName: Human Candle
-				Description: The flames flicker on and off ocasionally. Water should put it out!
+				Description: The flames flicker on and off occasionally. Water should put it out!
 			}
 
 			RollerCookieBuff: {
-				DisplayName: Roller Cookie
-				Description: The roller cookie will fight for you.
+				DisplayName: Rollercookie
+				Description: The rollercookie will fight for you
 			}
 
 			BirdnanaLightPetBuff: {
@@ -1790,8 +1976,8 @@ Mods: {
 			}
 
 			RollerCookiePetBuff: {
-				DisplayName: Roller Cookie
-				Description: A little Rollercookie is rolling around with you
+				DisplayName: Rollercookie
+				Description: A little rollercookie is rolling around with you
 			}
 
 			RollercycleBuff: {
@@ -1811,7 +1997,7 @@ Mods: {
 
 			CcretBuff: {
 				DisplayName: Foamin' Float Mount
-				Description: "'Your Floating on a Foamin' Float'"
+				Description: "'You're Floating on a Foamin' Float'"
 			}
 
 			PixieStickBuff: {
@@ -1820,18 +2006,38 @@ Mods: {
 			}
 
 			CreamsandWitchPet: {
-				DisplayName: Creamsand Witch Pet
-				Description: Mods.TheConfectionRebirth.Buffs.CreamsandWitchPet.Description
+				DisplayName: Little Creamsand Witch Pet
+				Description: Little magic from a little witch
 			}
 
 			DudlingPet: {
 				DisplayName: Dudling Pet
-				Description: Mods.TheConfectionRebirth.Buffs.DudlingPet.Description
+				Description: A dudly is oozing along with you
 			}
 
 			MeawzerPet: {
-				DisplayName: Meawzer Pet
-				Description: Mods.TheConfectionRebirth.Buffs.MeawzerPet.Description
+				DisplayName: Meowzer Pet
+				Description: Oh he's not happy
+			}
+
+			SacchariteAmmoInjection: {
+				DisplayName: Saccharite Ammo Injection
+				Description: Saccharite Ammo Injection
+			}
+
+			GummyWormWhipTagDamage: {
+				DisplayName: Gummy Worm NPC Debuff
+				Description: Gummy Worm NPC Debuff
+			}
+
+			GastropodSummonBuff: {
+				DisplayName: Mini Gastropod
+				Description: The mini gastropod will fight for you
+			}
+
+			MeawzerSummonBuff: {
+				DisplayName: Mini Meowzer
+				Description: The mini meowzer will fight for you
 			}
 		}
 
@@ -1850,6 +2056,14 @@ Mods: {
 			WorldDescriptionSweeterAir: The air we breathe has become a lot sweeter.
 		}
 
+		TownNPCMood_Nurse.LikeBiome_Confection: I like {BiomeName} because it helps the medicine go down.
+		TownNPCMood_DD2Bartender.LikeBiome_Confection: I like {BiomeName} as it keeps the customers hungry and thirsty.
+		TownNPCMood_PartyGirl.LikeBiome_Confection: Why do I like {BiomeName}? Because it has GIANT COOKIES!
+		TownNPCMood_Wizard.LikeBiome_Confection: I sense a magical essence within {BiomeName}. It draws me closer than anywhere else.
+		TownNPCMood_Clothier.DislikeBiome_Confection: I tried eating a cookie in {BiomeName}, but I got a mouthful of dirt instead.
+		TownNPCMood_WitchDoctor.DislikeBiome_Confection: The fabrications of {BiomeName} are apparent, this is nature dying before our very eyes!
+		TownNPCMood_TaxCollector.DislikeBiome_Confection: I can't go collecting around in {BiomeName}. my footwear gets stuck to the floor!
+
 		HallowSelection: {
 			Random: {
 				Title: Random
@@ -1867,6 +2081,12 @@ Mods: {
 			}
 		}
 
+		Emotes: {
+			ConfectionBiomeEmote: confection
+			DuchessEmote: duchess
+			GrandSlammerEmote: slammer
+		}
+
 		InConfection: In the Confection
 		NotInConfection: Not in the Confection
 		TheConfection: Confection
@@ -1875,7 +2095,7 @@ Mods: {
 		Biomes: {
 			ConfectionBiome: {
 				DisplayName: the Confection
-				TownNPCDialogueName: The Confection
+				TownNPCDialogueName: the Confection
 			}
 
 			ConfectionUndergroundBiome: {
@@ -1922,6 +2142,6 @@ Mods: {
 		}
 
 		Conditions.InConfection: In Confection
-		NotInSeveralBiomes: Not in Snow, Desert, Jungles or during bloodmoons
+		NotInSeveralBiomes: Not in Snow, Desert, Jungles or during Blood Moons
 	}
 }

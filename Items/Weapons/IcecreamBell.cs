@@ -60,9 +60,10 @@ namespace TheConfectionRebirth.Items.Weapons
 			}
 			num7 = (float)Math.Round(num7 * (float)Player.musicNotes);
 			num7 = (Main.musicPitch = num7 / (float)Player.musicNotes);
-			SoundEngine.PlaySound(SoundID.Item35 with
+			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/CandyBellUse") with
 			{
 				Pitch = num7,
+				MaxInstances = 0
 			}, player.position);
 			NetMessage.SendData(MessageID.InstrumentSound, -1, -1, null, player.whoAmI, num7);
 		}

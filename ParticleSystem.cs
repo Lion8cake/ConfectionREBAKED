@@ -524,4 +524,45 @@ namespace TheConfectionRebirth
 			ParticleSystem.DrawExtra98Special(newPos3, color3, 0f, scale * ichorNeedleScale, percent / 2);
 		}
 	}
+
+	public class Spawn_BearClaw : Particle
+	{
+		public override void OnSpawn()
+		{
+			color = Main.rand.NextBool() ? Color.White : Color.Black;
+		}
+
+		public override void Update()
+		{
+			if (TimeInWorld > 10)
+				Active = false;
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Vector2 pos = position - Main.screenPosition;
+			Vector2 pos2 = pos + new Vector2(-30, -45);
+			Vector2 pos3 = pos + new Vector2(30, -45);
+			float percent = (16 - TimeInWorld) / 4f;
+			float velocityAmount = 6f;
+
+			Color color1 = new Color(0.84f, 0.38f, 1.21f, 0.5f);
+			Color color2 = new Color(2.55f, 2.48f, 2.24f, 0.5f);
+
+			float scaler = 1.25f;
+			Vector2 scale = new Vector2(0.1f, 0.4f) * 2f * scaler;
+			Vector2 scale2 = new Vector2(0.25f, 0.5f) * 1.1f * 2f * scaler;
+
+			float rotation2 = MathHelper.ToRadians(45f);
+			float rotation3 = MathHelper.ToRadians(-45f);
+			float rotation = color == Color.White ? rotation2 : rotation3;
+
+			Vector2 newPos2 = pos2 + new Vector2(velocityAmount * TimeInWorld, velocityAmount * TimeInWorld);
+			Vector2 newPos3 = pos3 - new Vector2(velocityAmount * TimeInWorld, -(velocityAmount * TimeInWorld));
+			Vector2 newPos = color == Color.Black ? newPos2 : newPos3;
+			
+			ParticleSystem.DrawExtra98Special(newPos, color1, rotation, scale2, percent);
+			ParticleSystem.DrawExtra98Special(newPos, color2, rotation, scale, percent);
+		}
+	}
 }
