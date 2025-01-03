@@ -57,6 +57,10 @@ Mods: {
 			GummyWorm: Underneath rocks you can find small rainbow worms wriggling withing the cookie filled soil. Despite having a very sour taste, fish especially love these.
 			Pip: A very small bird that looks like marshmallow. Despite everything it can be quite amazing seeing the little wings carry its large body.
 			RoyalCherryBug: The king of all cherry bugs. A looming deathly aura fills the air when around one of these creatures, you should never touch one of them.
+			#enemies
+			Rollercookie: This double chunk chocolate cookie is a manifestation of the confection itself, controlled to throw out unwanted guests.
+			BirthdayCookie: Some rollercookies will twist into seasonal versions of themselves to seem more friendly to sneak up onto intruders.
+			Meowzer: A cat and pastry foe that uses its large tart cannon to blast away anyone who disturbs the confection at night. 50% cat, 50% pastry and 100% rainbow lazer fury.
 		}
 
 		ItemAnglerChat: {
@@ -152,7 +156,7 @@ Mods: {
 			ConfectionMusicBox.MapEntry: Music Box
 			ConfectionUGMusicBox.MapEntry: Music Box
 			SherbetTorch.MapEntry: Sherbet Torch
-			HeavensForgeTile.MapEntry: Heavens Forge Tile
+			HeavensForgeTile.MapEntry: Heaven's Forge
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
 		}
 
@@ -1734,6 +1738,10 @@ Mods: {
 			GummyWorm.DisplayName: Sour Worm
 			Pip.DisplayName: Pip
 			RoyalCherryBug.DisplayName: Royal Cherry Bug
+			Rollercookie.DisplayName: Rollercookie
+			BirthdayCookie.DisplayName: Birthday Cookie
+			Meowzer.DisplayName: Meowzer
+			MeowzerCannon.DisplayName: Meowzer Cannon
 		}
 
 		Projectiles: {
@@ -1799,6 +1807,7 @@ Mods: {
 			GastropodSummon.DisplayName: Mini Gastropod
 			MeawzerSummonLazer.DisplayName: Toaster Lazer
 			MeawzerSummon.DisplayName: Mini Meowzer
+			MeowzerBeam.DisplayName: Meowzer Beam
 		}
 
 		Configs: {
@@ -2143,5 +2152,29 @@ Mods: {
 
 		Conditions.InConfection: In Confection
 		NotInSeveralBiomes: Not in Snow, Desert, Jungles or during Blood Moons
+
+		CreditsRollCategory_ConfectionTeam: {
+			1: Confection REBAKED Team
+			2: Lion8cake
+			3: Snickerbobble
+			4: Delicious Saturn
+			5: Cyril
+			6: AstralGel
+			7: Cace �Basketcace�
+			8: Snacks
+			9: Ghasttear1
+			10: CastledKing2341
+			11: S0vr9000
+			12: Jeo �JeoHashtag1553�
+			13: Hariq �Hariq53�
+			14: Foxyboy55
+			15: Mddznyan
+			16: DakotaSpine
+			17: Miguel Noturn0
+			18: Neo �Neobind�
+			19: Splig �split0282�
+			20: Yreorel
+			21: BasicallyIAmFox
+		}
 	}
 }

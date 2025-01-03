@@ -36,6 +36,10 @@ using TheConfectionRebirth.Items;
 using Mono.Cecil;
 using TheConfectionRebirth.Items.Accessories;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.NPCs;
+using Terraria.GameContent.Skies.CreditsRoll;
+using Terraria.GameContent.Animations;
+using Terraria.GameContent.UI;
 
 namespace TheConfectionRebirth
 {
@@ -60,6 +64,10 @@ namespace TheConfectionRebirth
 		public static int SherbG;
 
 		public static int SherbB;
+
+		public static bool easter;
+
+		public static bool isConfectionerBirthday;
 
 		public static Color SherbertColor => new Color(SherbR, SherbG, SherbB);
 
@@ -140,6 +148,13 @@ namespace TheConfectionRebirth
 			On_Sandstorm.ShouldSandstormDustPersist += On_Sandstorm_ShouldSandstormDustPersist;
 			On_Mount.Hover += RotatePixieMountHover;
 			IL_ShopHelper.AddHappinessReportText += EditNPCHappiness;
+			On_Main.UpdateTime_StartDay += StartDay_SpecialDates;
+			On_NPC.BannerID += VariantBanners;
+			On_Main.DrawInfoAccs += ReplaceCounterLastHit;
+			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
+			IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
+			IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
+			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
 		}
 
 		public override void Unload() {
@@ -205,6 +220,13 @@ namespace TheConfectionRebirth
 			On_Sandstorm.ShouldSandstormDustPersist -= On_Sandstorm_ShouldSandstormDustPersist;
 			On_Mount.Hover -= RotatePixieMountHover;
 			IL_ShopHelper.AddHappinessReportText -= EditNPCHappiness;
+			On_Main.UpdateTime_StartDay -= StartDay_SpecialDates;
+			On_NPC.BannerID -= VariantBanners;
+			On_Main.DrawInfoAccs -= ReplaceCounterLastHit;
+			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
+			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
+			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
+			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
 		}
 
 		public override object Call(params object[] args)
@@ -232,6 +254,233 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region credits
+		private SegmentInforReport PlaySegment_ModdedTextRoll(CreditsRollComposer self, int startTime, string sourceCategory, Vector2 anchorOffset = default(Vector2))
+		{
+			//We have our own text roll segment due to tmodloader using Hjson instead of json meaning that sometimes the order of names becomes backwards
+			//if you want to use vanilla text for some reason i would recomend that you reflect CreditsRollComposer.PlaySegment_TextRoll
+			List<IAnimationSegment> _segments = (List<IAnimationSegment>)typeof(CreditsRollComposer).GetField("_segments", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			anchorOffset.Y -= 40f;
+			int num = 80;
+			LocalizedText[] array = Language.FindAll(Lang.CreateDialogFilter(sourceCategory + ".", null));
+			for (int i = 0; i < array.Length; i++)
+			{
+				_segments.Add(new Segments.LocalizedTextSegment(startTime + i * num, Language.GetText(sourceCategory + "." + (i + 1)), anchorOffset));
+			}
+			SegmentInforReport result = default(SegmentInforReport);
+			result.totalTime = array.Length * num + num * -1;
+			return result;
+		}
+
+		private SegmentInforReport PlaySegment_LionEightCake_HungryStyalist(CreditsRollComposer self, int startTime, Vector2 sceneAnchorPosition)
+		{
+			//Our own animation, reffer to the Terraria.GameContent.Skies.Credits.CreditsRollComposer for examples of used and unused animations
+			List<IAnimationSegment> _segments = (List<IAnimationSegment>)typeof(CreditsRollComposer).GetField("_segments", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			Vector2 _backgroundOffset = (Vector2)typeof(CreditsRollComposer).GetField("_backgroundOffset", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			Vector2 _originAtBottom = (Vector2)typeof(CreditsRollComposer).GetField("_originAtBottom", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			Vector2 _emoteBubbleOffsetWhenOnRight = (Vector2)typeof(CreditsRollComposer).GetField("_emoteBubbleOffsetWhenOnRight", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			Vector2 _emoteBubbleOffsetWhenOnLeft = (Vector2)typeof(CreditsRollComposer).GetField("_emoteBubbleOffsetWhenOnLeft", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(self);
+			Vector2 GetSceneFixVector = (Vector2)typeof(CreditsRollComposer).GetMethod("GetSceneFixVector", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(self, new object[] { });
+			//Reflection chunk for all the little trinkets that use it
+
+			sceneAnchorPosition += GetSceneFixVector;
+			int duration = startTime; //Set an initial time
+			sceneAnchorPosition.X += 10;
+			Asset<Texture2D> SceneAsset = ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/ConfectionScene", AssetRequestMode.ImmediateLoad);  //Make sure that its ImmediateLoad otherwise 90% of the time it wont load
+			Rectangle SceneAssetFrame = SceneAsset.Frame();
+			DrawData SceneAssetDrawData = new DrawData(SceneAsset.Value, Vector2.Zero, SceneAssetFrame, Color.White, 0f, SceneAssetFrame.Size() * new Vector2(0.5f, 1f) + new Vector2((float)10, -42f), 1f, (SpriteEffects)0);
+			Segments.AnimationSegmentWithActions<Segments.LooseSprite> SceneAssetSegment = new Segments.SpriteSegment(SceneAsset, duration, SceneAssetDrawData, sceneAnchorPosition + _backgroundOffset).UseShaderEffect(new Segments.SpriteSegment.MaskedFadeEffect()).Then(new Actions.Sprites.Fade(0f)).With(new Actions.Sprites.Fade(1f, 60));
+			_segments.Add(SceneAssetSegment); //Spawn the background
+			Segments.AnimationSegmentWithActions<NPC> StyalistNPCSegment = new Segments.NPCSegment(startTime, NPCID.Stylist, sceneAnchorPosition + new Vector2(-100f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(1))
+				.Then(new Actions.NPCs.Move(new(1.7f, 0f), 170)); //spawn the stylist moving right at a speed of 1.7
+			Segments.EmoteSegment HungryEmote = new Segments.EmoteSegment(EmoteID.Hungry, duration, 120, sceneAnchorPosition + new Vector2(-116f, 0f) + _emoteBubbleOffsetWhenOnLeft + new Vector2(1.7f, 0f) * (float)10, (SpriteEffects)1, new Vector2(1.7f, 0f));
+			//Emote with hungry (she is very hungry)
+			SceneAssetSegment.Then(new Actions.Sprites.Wait((int)StyalistNPCSegment.DedicatedTimeNeeded));
+			duration += (int)StyalistNPCSegment.DedicatedTimeNeeded;
+			StyalistNPCSegment.Then(new Actions.NPCs.Move(new(0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51)); //Fade and slow in movement after the movement duration
+			duration += 51;
+			StyalistNPCSegment.Then(new Actions.NPCs.Wait(90)).With(new Actions.NPCs.LookAt(-1)); //Make the styalist look left
+			duration += 90; //Wait a second and a half
+			StyalistNPCSegment.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 160)).With(new Actions.NPCs.Fade(-5, 51)); //move the the stylist right
+			Segments.EmoteSegment RUNEmote = new Segments.EmoteSegment(EmoteID.EmoteRun, duration, 120, sceneAnchorPosition + new Vector2(206f, 0f) + _emoteBubbleOffsetWhenOnRight + new Vector2(1.7f, 0f) * (float)10, (SpriteEffects)0, new Vector2(-1.7f, 0f));
+			//Emote with run (she is very scared)
+			duration += 30;
+			/*Segments.AnimationSegmentWithActions<NPC> hoardEnemy1 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.SweetGummy>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 130));
+			hoardEnemy1.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
+			duration += 7; //Spawn a sweet gummy and wait 7 frames
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy2 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.WildWilly>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 123));
+			hoardEnemy2.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
+			duration += 22; //Spawn a Wild Willy and wait 22 frames
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy3 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.IcecreamGal>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 101));
+			hoardEnemy3.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
+			duration += 20; //Spawn a Icecream Gal and wait 20 frames
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy4 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.CreamsandWitchPhase2>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 81));
+			hoardEnemy4.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));*/
+			duration += 24; //Spawn a Creamsand witch (standing npc) and wait 24 frames
+			Asset<Texture2D> rollerxCookieTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/NPCs/Rollercookie", AssetRequestMode.ImmediateLoad); //Make sure that its ImmediateLoad otherwise 90% of the time it wont load
+			int FrameCountX = 9; //For less repeated code
+			int FrameCountY = 4; //For less repeated code
+			Rectangle rollerCookieFrame = rollerxCookieTexture.Frame(FrameCountX, FrameCountY, 0, 0);
+			DrawData rollerCookieDrawData = new DrawData(rollerxCookieTexture.Value, Vector2.Zero, rollerCookieFrame, Color.White, 0f, (rollerxCookieTexture.Size() / new Vector2(FrameCountX, FrameCountY)) / 2f, 1f, (SpriteEffects)0);
+			Segments.AnimationSegmentWithActions<Segments.LooseSprite> hoardEnemy5 = new Segments.SpriteSegment(rollerxCookieTexture, duration, rollerCookieDrawData, sceneAnchorPosition + new Vector2(250f, -28f)).Then(new Actions.Sprites.Fade(0f)).With(new Actions.Sprites.Fade(1f, 51)).Then(new Actions.Sprites.SimulateGravity(new Vector2(-1.7f, 0f), Vector2.Zero, -1.7f * 0.05f, 57));
+			hoardEnemy5.Then(new Actions.Sprites.SimulateGravity(new Vector2(-0.8f, 0f), Vector2.Zero, -0.8f * 0.05f, 51)).With(new Actions.Sprites.Fade(0f, 51)); //We use Simulate Gravity to make the Roller cookie rotate and move
+			StyalistNPCSegment.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51)); //Final bits of movement for the Styalist
+			SceneAssetSegment.Then(new Actions.Sprites.Wait(230));
+			duration += 60;
+			SceneAssetSegment.Then(new Actions.Sprites.Wait(130)).With(new Actions.Sprites.Fade(0f, 127)); //Fade the background frame
+
+			_segments.Add(StyalistNPCSegment); //Spawn each element/segment 
+			_segments.Add(HungryEmote);
+			_segments.Add(RUNEmote);
+			/*_segments.Add(hoardEnemy1);
+			_segments.Add(hoardEnemy2);
+			_segments.Add(hoardEnemy3);
+			_segments.Add(hoardEnemy4);*/
+			_segments.Add(hoardEnemy5);
+			duration += 120; //Give a final duration time until the next part of the credits loads
+			SegmentInforReport FinalDurationTime = default(SegmentInforReport);
+			FinalDurationTime.totalTime = duration - startTime;
+			return FinalDurationTime; //Return the duration of the animation so the next text or animation can play fluently and straight after
+		}
+
+		private void FillCreditSegmentILEdit(ILContext il)
+		{
+			ILCursor c = new ILCursor(il); //place a IL Cursor
+			c.GotoNext(MoveType.Before, i => i.MatchLdloc0(), i => i.MatchLdarg0(), i => i.MatchLdloc0(), i => i.MatchLdstr("CreditsRollCategory_Creator"), i => i.MatchLdloc3());
+			//make sure all instructions match, movetype will place our code before the first instruction once all instructions match
+			c.EmitLdarg(0); //Emit ldarg_0 (self)
+			c.EmitLdloca(0); //Emit ldloc_0 (num)
+			c.EmitLdloca(2); //Emit ldloc_2 (num3)
+			c.EmitLdloca(3); //Emit ldloc_3 (vector2 or val2)
+			c.EmitDelegate((CreditsRollComposer self, ref int num, ref int num3, ref Vector2 vector2) => { //Get the needed variables and instance
+																										   //Edit inside here for more text and animations, shown here is just how to add 1 text and 1 animation
+				num += PlaySegment_ModdedTextRoll(self, num, "Mods.TheConfectionRebirth.CreditsRollCategory_ConfectionTeam", vector2).totalTime; //Play our credit text
+				num += num3; //wait
+				num += PlaySegment_LionEightCake_HungryStyalist(self, num, vector2).totalTime; //Play our custom animation
+				num += num3; //wait
+			});
+		}
+
+		private void CreditsRollIngameTimeDurationExtention(ILContext il)
+		{
+			ILCursor c = new ILCursor(il); //place a IL cursor
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(28800)); //Look for a LDC I4 instruction with 28800 (all timers use this)
+			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 35); //Adds ontop of the max duration to account for the custom credits
+		}
+		#endregion
+
+		#region NPCTypeVariantsFixes
+		private void ReplaceCounterLastHit(On_Main.orig_DrawInfoAccs orig, Main self)
+		{
+			if (Main.LocalPlayer.lastCreatureHit == ModContent.NPCType<BirthdayCookie>())
+			{
+				Main.LocalPlayer.lastCreatureHit = ModContent.NPCType<Rollercookie>();
+			}
+			orig.Invoke(self);
+		}
+
+		private int VariantBanners(On_NPC.orig_BannerID orig, NPC self)
+		{
+			int currentType = orig.Invoke(self);
+			if (currentType == ModContent.NPCType<BirthdayCookie>())
+			{
+				currentType = ModContent.NPCType<Rollercookie>();
+			}
+			return currentType;
+		}
+		#endregion
+
+		#region SpecialTimesandDates
+		public static void checkBirthdays()
+		{
+			DateTime now = DateTime.Now;
+			int day = now.Day;
+			int month = now.Month;
+
+			bool confectionBirthday = day == 3 && month == 12;
+			bool lionsBirthday = day == 2 && month == 10;
+			bool darkBirthday = day == 21 && month == 10;
+			bool larfBirthday = day == 19 && month == 8;
+			bool snickerBirthday = day == 9 && month == 9;
+			bool redsBirthday = day == 12 && month == 11;
+			bool cenxBirthday = day == 29 && month == 11;
+
+			if (confectionBirthday || lionsBirthday || darkBirthday || larfBirthday || snickerBirthday || redsBirthday || cenxBirthday)
+			{
+				isConfectionerBirthday = true;
+			}
+			else
+			{
+				isConfectionerBirthday = false;
+			}
+		}
+
+		public static void checkEaster()
+		{
+			DateTime now = DateTime.Now;
+			int year = now.Year;
+			int dayOfYear = now.DayOfYear;
+			FindEasterTime(year, out int dedDay, out int dedMonth);
+			int daySince0 = 0;
+			while (dedMonth > 0)
+			{
+				daySince0 = DateTime.DaysInMonth(year, dedMonth);
+				dedMonth--;
+			}
+			daySince0 += dedDay;
+			int rangeAround = 7; //puts a week surrounding before and after easter
+			int minDays = daySince0 - rangeAround;
+			int maxDays = daySince0 + rangeAround;
+
+			bool isFestiveDay = dayOfYear >= minDays && dayOfYear <= maxDays;
+
+			if (isFestiveDay)
+			{
+				easter = true;
+			}
+			else
+			{
+				easter = false;
+			}
+		}
+
+		public static void FindEasterTime(int year, out int easterDay, out int easterMonth)
+		{
+			//Used wikipedia for the calculations over this
+			//good greif
+			int a = year % 19;
+			int b = year % 4;
+			int c = year % 7;
+			int k = year / 100;
+			int p = (13 + 8 * k) / 25;
+			int q = k / 4;
+			int M = (15 - p + k - q) % 30;
+			int N = (4 + k - q) % 7;
+
+			int d = (19 * a + M) % 30;
+			int e = (2 * b + 4 * c + 6 * d + N) % 7;
+
+			easterDay = 22 + d + e;
+			easterMonth = 3;
+			if (easterDay > 31)
+			{
+				easterMonth++;
+				easterDay = d + e - 9;
+			}
+		}
+
+		private void StartDay_SpecialDates(On_Main.orig_UpdateTime_StartDay orig, ref bool stopEvents)
+		{
+			checkEaster();
+			checkBirthdays();
+			orig.Invoke(ref stopEvents);
+		}
+		#endregion
 
 		#region Edit Happiness text
 		private void EditNPCHappiness(ILContext il)

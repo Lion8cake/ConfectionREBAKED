@@ -20,6 +20,7 @@ using TheConfectionRebirth.Items.Accessories;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.Mounts;
+using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth
@@ -70,6 +71,8 @@ namespace TheConfectionRebirth
 		public int gummyWormWhipCounter = 0;
 
 		public float snickerDevCookieRot = 0f;
+
+		public int rollerCycleTimer;
 		/// <summary>
 		/// Used by the Mimic Chest Spawning to know what NPC to spawn when leaving the chest
 		/// </summary>
