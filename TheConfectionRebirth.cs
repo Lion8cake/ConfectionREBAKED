@@ -40,6 +40,7 @@ using TheConfectionRebirth.NPCs;
 using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.Animations;
 using Terraria.GameContent.UI;
+using Terraria.GameContent.Bestiary;
 
 namespace TheConfectionRebirth
 {
@@ -155,6 +156,7 @@ namespace TheConfectionRebirth
 			IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
+			On_NPCKillsTracker.GetKillCount_NPC += syncKillCount;
 		}
 
 		public override void Unload() {
@@ -227,6 +229,7 @@ namespace TheConfectionRebirth
 			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
+			On_NPCKillsTracker.GetKillCount_NPC -= syncKillCount;
 		}
 
 		public override object Call(params object[] args)
@@ -306,7 +309,7 @@ namespace TheConfectionRebirth
 			Segments.EmoteSegment RUNEmote = new Segments.EmoteSegment(EmoteID.EmoteRun, duration, 120, sceneAnchorPosition + new Vector2(206f, 0f) + _emoteBubbleOffsetWhenOnRight + new Vector2(1.7f, 0f) * (float)10, (SpriteEffects)0, new Vector2(-1.7f, 0f));
 			//Emote with run (she is very scared)
 			duration += 30;
-			/*Segments.AnimationSegmentWithActions<NPC> hoardEnemy1 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.SweetGummy>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy1 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.SweetGummy>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 130));
 			hoardEnemy1.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 7; //Spawn a sweet gummy and wait 7 frames
@@ -314,7 +317,7 @@ namespace TheConfectionRebirth
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 123));
 			hoardEnemy2.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 22; //Spawn a Wild Willy and wait 22 frames
-			Segments.AnimationSegmentWithActions<NPC> hoardEnemy3 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.IcecreamGal>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			/*Segments.AnimationSegmentWithActions<NPC> hoardEnemy3 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.IcecreamGal>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 101));
 			hoardEnemy3.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 20; //Spawn a Icecream Gal and wait 20 frames
@@ -337,9 +340,9 @@ namespace TheConfectionRebirth
 			_segments.Add(StyalistNPCSegment); //Spawn each element/segment 
 			_segments.Add(HungryEmote);
 			_segments.Add(RUNEmote);
-			/*_segments.Add(hoardEnemy1);
+			_segments.Add(hoardEnemy1);
 			_segments.Add(hoardEnemy2);
-			_segments.Add(hoardEnemy3);
+			/*_segments.Add(hoardEnemy3);
 			_segments.Add(hoardEnemy4);*/
 			_segments.Add(hoardEnemy5);
 			duration += 120; //Give a final duration time until the next part of the credits loads
@@ -377,9 +380,20 @@ namespace TheConfectionRebirth
 		#region NPCTypeVariantsFixes
 		private void ReplaceCounterLastHit(On_Main.orig_DrawInfoAccs orig, Main self)
 		{
-			if (Main.LocalPlayer.lastCreatureHit == ModContent.NPCType<BirthdayCookie>())
+			int lastHitType = Main.LocalPlayer.lastCreatureHit;
+			if (lastHitType == ModContent.NPCType<BirthdayCookie>())
 			{
 				Main.LocalPlayer.lastCreatureHit = ModContent.NPCType<Rollercookie>();
+			}
+			if (lastHitType == ModContent.NPCType<Sprinkler>() || 
+				lastHitType == ModContent.NPCType<Sprinkling_Halloween1>() || 
+				lastHitType == ModContent.NPCType<Sprinkler_Halloween1>() ||
+				lastHitType == ModContent.NPCType<Sprinkling_Halloween2>() ||
+				lastHitType == ModContent.NPCType<Sprinkler_Halloween2>() ||
+				lastHitType == ModContent.NPCType<Sprinkling_Xmas>() ||
+				lastHitType == ModContent.NPCType<Sprinkler_Xmas>())
+			{
+				Main.LocalPlayer.lastCreatureHit = ModContent.NPCType<Sprinkling>();
 			}
 			orig.Invoke(self);
 		}
@@ -391,7 +405,30 @@ namespace TheConfectionRebirth
 			{
 				currentType = ModContent.NPCType<Rollercookie>();
 			}
+			if (currentType == ModContent.NPCType<Sprinkling_Halloween1>() ||
+				currentType == ModContent.NPCType<Sprinkling_Halloween2>() ||
+				currentType == ModContent.NPCType<Sprinkling_Xmas>())
+			{
+				currentType = ModContent.NPCType<Sprinkling>();
+			}
+			if (currentType == ModContent.NPCType<Sprinkler>() || 
+				currentType == ModContent.NPCType<Sprinkler_Halloween1>() || 
+				currentType == ModContent.NPCType<Sprinkler_Halloween2>() || 
+				currentType == ModContent.NPCType<Sprinkler_Xmas>())
+			{
+				currentType = NPCID.None; //Prevents sprinklers from counting as a kill for sprinklings when killed
+			}
 			return currentType;
+		}
+
+		private int syncKillCount(On_NPCKillsTracker.orig_GetKillCount_NPC orig, NPCKillsTracker self, NPC npc)
+		{
+			int prevKills = orig.Invoke(self, npc);
+			if (npc.type == ModContent.NPCType<Sprinkling>() || npc.type == ModContent.NPCType<Sprinkler>())
+			{
+				prevKills = NPC.killCount[ModContent.NPCType<Sprinkling>()];
+			}
+			return prevKills;
 		}
 		#endregion
 

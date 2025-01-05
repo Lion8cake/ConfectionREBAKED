@@ -25,6 +25,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.autoReuse = true;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 4.5f;
+			Item.noMelee = true;
 			Item.value = 40000;
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;

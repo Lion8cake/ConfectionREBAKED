@@ -25,6 +25,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.width = 40;
 			Item.height = 40;
 			Item.damage = 79;
+			Item.noMelee = true;
 			Item.scale = 1f;
 			Item.UseSound = SoundID.Item1;
 			Item.rare = ItemRarityID.Yellow;

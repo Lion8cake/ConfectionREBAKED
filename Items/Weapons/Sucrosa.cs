@@ -24,6 +24,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.height = 40;
             Item.useTime = 20;
             Item.useAnimation = 20;
+            Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(silver: 460);

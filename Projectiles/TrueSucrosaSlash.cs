@@ -39,24 +39,7 @@ namespace TheConfectionRebirth.Projectiles
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
 			ParticleSystem.AddParticle(new Spawn_TrueSucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 
-			bool flag4 = false;
-			if (Projectile.DamageType.UseStandardCritCalcs && Main.rand.Next(100) < Projectile.CritChance) {
-				flag4 = true;
-			}
-
-			float num21 = Projectile.knockBack;
-
-			NPC.HitModifiers modifiers = target.GetIncomingStrikeModifiers(Projectile.DamageType, Projectile.direction);
-			int? num26 = Main.player[Projectile.owner].Center.X < target.Center.X ? 1 : -1;
-			modifiers.Knockback *= num21 / Projectile.knockBack;
-			if (num26.HasValue) {
-				modifiers.HitDirectionOverride = num26;
-			}
-			NPC.HitInfo strike = modifiers.ToHitInfo(Projectile.damage, flag4, num21, damageVariation: true, Main.player[Projectile.owner].luck);
-
-			if (Main.netMode != 0) {
-				NetMessage.SendStrikeNPC(target, in strike);
-			}
+			hit.HitDirection = (Main.player[Projectile.owner].Center.X < target.Center.X) ? 1 : (-1);
 		}
 
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {

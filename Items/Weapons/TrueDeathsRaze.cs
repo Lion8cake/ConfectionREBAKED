@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.UseSound = SoundID.Item1;
 			Item.shoot = ModContent.ProjectileType<DeathsSlash>();
 			Item.shootSpeed = 5f;
-			//Item.noMelee = true;
+			Item.noMelee = true;
 			Item.shootsEveryUse = true;
 		}
 

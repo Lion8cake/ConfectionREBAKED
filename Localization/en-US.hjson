@@ -61,6 +61,10 @@ Mods: {
 			Rollercookie: This double chunk chocolate cookie is a manifestation of the confection itself, controlled to throw out unwanted guests.
 			BirthdayCookie: Some rollercookies will twist into seasonal versions of themselves to seem more friendly to sneak up onto intruders.
 			Meowzer: A cat and pastry foe that uses its large tart cannon to blast away anyone who disturbs the confection at night. 50% cat, 50% pastry and 100% rainbow lazer fury.
+			SweetGummy: To preserve the dead for longer, these mummies are surrounded in gel making them look like bears in the process.
+			WildWilly: A rare zombie, the candy man, roams around in the confection, holding a special ticket.
+			Sprinkler: A pile of living sprikles devote to defending anyone from setting foot in the confection. They are quite easy to kill.
+			Sprinkling: When a sprinkler is killed they gain the ability to fly and chase after those who attacked them.
 		}
 
 		ItemAnglerChat: {
@@ -1742,6 +1746,16 @@ Mods: {
 			BirthdayCookie.DisplayName: Birthday Cookie
 			Meowzer.DisplayName: Meowzer
 			MeowzerCannon.DisplayName: Meowzer Cannon
+			SweetGummy.DisplayName: Sweet Gummy
+			WildWilly.DisplayName: Wild Willy
+			Sprinkler.DisplayName: Sprinkler
+			Sprinkler_Halloween1.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkler.DisplayName}"
+			Sprinkler_Halloween2.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkler.DisplayName}"
+			Sprinkler_Xmas.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkler.DisplayName}"
+			Sprinkling.DisplayName: Sprinkling
+			Sprinkling_Halloween1.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
+			Sprinkling_Halloween2.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
+			Sprinkling_Xmas.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
 		}
 
 		Projectiles: {
@@ -1808,6 +1822,11 @@ Mods: {
 			MeawzerSummonLazer.DisplayName: Toaster Lazer
 			MeawzerSummon.DisplayName: Mini Meowzer
 			MeowzerBeam.DisplayName: Meowzer Beam
+			DefenciveSprinkle.DisplayName: Defencive Sprinkle
+			SprinklingBall.DisplayName: Sprinkling Ball
+			SprinklingBallLarge.DisplayName: Sprinkling Ball Large
+			SprinklingBallSmall.DisplayName: Sprinkling Ball Small
+			SprinklerBall.DisplayName: Sprinkler Ball
 		}
 
 		Configs: {
@@ -2123,7 +2142,7 @@ Mods: {
 			}
 
 			SandConfectionSurfaceBiome: {
-				DisplayName: BestiarySandConfectionUnused
+				DisplayName: Confection Desert
 				TownNPCDialogueName: unused
 			}
 

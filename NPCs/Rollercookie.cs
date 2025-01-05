@@ -59,10 +59,8 @@ namespace TheConfectionRebirth.NPCs
             {
                 if (TheConfectionRebirth.isConfectionerBirthday || Main.rand.NextBool(100))
                 {
-					NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<BirthdayCookie>());
-                    NPC.active = false;
-                    NPC.type = NPCID.None;
-                }
+					NPC.SetDefaults(ModContent.NPCType<BirthdayCookie>());
+				}
                 else if (TheConfectionRebirth.easter)
                 {
                     NPC.localAI[1] = 10;
@@ -107,7 +105,7 @@ namespace TheConfectionRebirth.NPCs
             Rectangle frame = NPC.frame;
 			Vector2 orig = frame.Size() * new Vector2(0.5f, 0.5f);
 			Color color = drawColor;
-			Main.spriteBatch.Draw(texture, pos, (Rectangle?)frame, NPC.GetAlpha(color), NPC.rotation, orig, NPC.scale, (SpriteEffects)((int)(spriteEffects) ^ 1), 0f);
+			Main.spriteBatch.Draw(texture, pos, (Rectangle?)frame, NPC.GetAlpha(color), NPC.rotation, orig, NPC.scale, spriteEffects, 0f);
 			return false;
 		}
 
