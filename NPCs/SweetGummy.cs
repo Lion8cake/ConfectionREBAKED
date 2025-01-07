@@ -41,7 +41,7 @@ namespace TheConfectionRebirth.NPCs
 			AnimationType = NPCID.Mummy;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<SweetGummyBanner>();
-			SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
+			SpawnModBiomes = new int[2] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type, ModContent.GetInstance<SandConfectionUndergroundBiome>().Type };
 		}
 
 		public override void OnSpawn(IEntitySource source)
@@ -95,8 +95,8 @@ namespace TheConfectionRebirth.NPCs
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-
-                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SweetGummy")
+				new BestiaryBackground(ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground")),
+				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SweetGummy")
             });
         }
 

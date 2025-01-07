@@ -65,6 +65,11 @@ Mods: {
 			WildWilly: A rare zombie, the candy man, roams around in the confection, holding a special ticket.
 			Sprinkler: A pile of living sprikles devote to defending anyone from setting foot in the confection. They are quite easy to kill.
 			Sprinkling: When a sprinkler is killed they gain the ability to fly and chase after those who attacked them.
+			ParfaitSlime: Slimes disguised as parfait cakes. These creatures use any and all fruit stuck to them to launch at those they deem as a threat.
+			SherbetSlime: The rain water in the Confection reacts with the milk, sugar and hundreds of Confection flavours creating sherbet clumps, animated by gelanous beings.
+			StripedPigron: "{$CommonBestiaryFlavor.Pigron}"
+			CrazyCone: This drill was turned to life by the saccharite shards in the confection and would defend it with its life.
+			SugarGhoul: Ghouls baked by the Confection drip overly sweet spit that makes victims physically weak due to the sweetness.
 		}
 
 		ItemAnglerChat: {
@@ -1756,6 +1761,11 @@ Mods: {
 			Sprinkling_Halloween1.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
 			Sprinkling_Halloween2.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
 			Sprinkling_Xmas.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
+			ParfaitSlime.DisplayName: Parfait Slime
+			SherbetSlime.DisplayName: Sherbet Slime
+			StripedPigron.DisplayName: Striped Pigron
+			CrazyCone.DisplayName: Crazy Cone
+			SugarGhoul.DisplayName: Sugar Ghoul
 		}
 
 		Projectiles: {
@@ -1822,11 +1832,9 @@ Mods: {
 			MeawzerSummonLazer.DisplayName: Toaster Lazer
 			MeawzerSummon.DisplayName: Mini Meowzer
 			MeowzerBeam.DisplayName: Meowzer Beam
-			DefenciveSprinkle.DisplayName: Defencive Sprinkle
-			SprinklingBall.DisplayName: Sprinkling Ball
-			SprinklingBallLarge.DisplayName: Sprinkling Ball Large
-			SprinklingBallSmall.DisplayName: Sprinkling Ball Small
-			SprinklerBall.DisplayName: Sprinkler Ball
+			DefenciveSprinkle.DisplayName: Sprinkling Sprinkle
+			SprinklerBall.DisplayName: Large Sprinkle
+			ParfaitSpike.DisplayName: Parfait Fruit
 		}
 
 		Configs: {
@@ -2127,17 +2135,17 @@ Mods: {
 			}
 
 			ConfectionUndergroundBiome: {
-				DisplayName: BestiaryUndergroundConfectionUnused
+				DisplayName: Underground Confection
 				TownNPCDialogueName: unused
 			}
 
 			IceConfectionSurfaceBiome: {
-				DisplayName: BestiaryIceConfectionUnused
+				DisplayName: currently unused due to no more surface snow npcs
 				TownNPCDialogueName: unused
 			}
 
 			IceConfectionUndergroundBiome: {
-				DisplayName: BestiaryIceUndergroundConfectionUnused
+				DisplayName: Confection Ice
 				TownNPCDialogueName: unused
 			}
 
@@ -2147,7 +2155,7 @@ Mods: {
 			}
 
 			SandConfectionUndergroundBiome: {
-				DisplayName: BestiarySandUndergroundConfectionUnused
+				DisplayName: Confection Cave Desert
 				TownNPCDialogueName: unused
 			}
 		}

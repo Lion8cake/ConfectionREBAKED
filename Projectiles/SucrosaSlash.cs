@@ -42,7 +42,7 @@ namespace TheConfectionRebirth.Projectiles
 			Vector2 positionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox);
 			ParticleSystem.AddParticle(new Spawn_Sucrosa(), positionInWorld, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 1));
 
-			hit.HitDirection = (Main.player[Projectile.owner].Center.X < target.Center.X) ? 1 : (-1);
+			hit.HitDirection = (Main.player[Projectile.owner].Center.X < target.Center.X) ? 1 : -1;
 		}
 
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
