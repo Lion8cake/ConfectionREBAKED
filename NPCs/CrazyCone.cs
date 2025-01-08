@@ -21,10 +21,10 @@ namespace TheConfectionRebirth.NPCs
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
-                Position = new Vector2(-2f, 6f),
+                Position = new Vector2(0f, -8f),
                 Velocity = 1f,
-                PortraitPositionXOverride = -8f,
-                PortraitPositionYOverride = 2f
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = -24f
             });
         }
 

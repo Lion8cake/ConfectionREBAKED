@@ -41,6 +41,8 @@ using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.Animations;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.Bestiary;
+using Terraria.Graphics.Shaders;
+using Steamworks;
 
 namespace TheConfectionRebirth
 {
@@ -74,6 +76,8 @@ namespace TheConfectionRebirth
 
 		public static TheConfectionRebirth instance = null;
 
+		public static ShaderData GummyWyrmShaderData { get; private set; }
+
 		public override void Load() {
 			instance = this;
 			ConfectionWindUtilities.Load();
@@ -82,6 +86,10 @@ namespace TheConfectionRebirth
 			{
 				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
 				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
+			}
+			if (!Main.dedServ)
+			{
+				GummyWyrmShaderData = new(ModContent.Request<Effect>("TheConfectionRebirth/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad), "GummyWyrmPass");
 			}
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -157,6 +165,9 @@ namespace TheConfectionRebirth
 			IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
 			On_NPCKillsTracker.GetKillCount_NPC += syncKillCount;
+			IL_NPC.UpdateCollision += preventModdedSandsharkCollision;
+			On_NPC.ApplyTileCollision += SandsharkCollision;
+			On_CommonCode.ModifyItemDropFromNPC += ItemDropColors;
 		}
 
 		public override void Unload() {
@@ -230,6 +241,9 @@ namespace TheConfectionRebirth
 			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
 			On_NPCKillsTracker.GetKillCount_NPC -= syncKillCount;
+			IL_NPC.UpdateCollision -= preventModdedSandsharkCollision;
+			On_NPC.ApplyTileCollision -= SandsharkCollision;
+			On_CommonCode.ModifyItemDropFromNPC -= ItemDropColors;
 		}
 
 		public override object Call(params object[] args)
@@ -257,6 +271,47 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region SandsharkEdits
+		private void preventModdedSandsharkCollision(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel IL_0175 = c.DefineLabel();
+			c.GotoNext(MoveType.After, i => i.MatchLdarg(0), i => i.MatchLdfld<NPC>("type"), i => i.MatchLdcI4(72), i => i.MatchBeq(out IL_0175));
+			c.EmitLdarg0();
+			c.EmitDelegate((NPC self) =>
+			{
+				return self.type == ModContent.NPCType<SacchariteSharpnose>();
+			});
+			c.EmitBrtrue(IL_0175);
+		}
+
+		private void SandsharkCollision(On_NPC.orig_ApplyTileCollision orig, NPC self, bool fall, Vector2 cPosition, int cWidth, int cHeight)
+		{
+			if (self.type == ModContent.NPCType<SacchariteSharpnose>())
+			{
+				typeof(NPC).GetMethod("Collision_MoveSandshark", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(self, new object[] { fall, cPosition, cWidth, cHeight });
+			}
+			else
+			{
+				orig.Invoke(self, fall, cPosition, cWidth, cHeight);
+			}
+		}
+
+		private void ItemDropColors(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex)
+		{
+			Item item = Main.item[itemIndex];
+			if (item.type == ItemID.SharkFin && npc.type == ModContent.NPCType<SacchariteSharpnose>())
+			{
+				item.color = new Color(182, 115, 82, 255);
+				NetMessage.SendData(MessageID.ItemTweaker, -1, -1, null, itemIndex, 1f);
+			}
+			else
+			{
+				orig.Invoke(npc, itemIndex);
+			}
+		}
+		#endregion
 
 		#region credits
 		private SegmentInforReport PlaySegment_ModdedTextRoll(CreditsRollComposer self, int startTime, string sourceCategory, Vector2 anchorOffset = default(Vector2))

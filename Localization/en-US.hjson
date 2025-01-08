@@ -68,8 +68,10 @@ Mods: {
 			ParfaitSlime: Slimes disguised as parfait cakes. These creatures use any and all fruit stuck to them to launch at those they deem as a threat.
 			SherbetSlime: The rain water in the Confection reacts with the milk, sugar and hundreds of Confection flavours creating sherbet clumps, animated by gelanous beings.
 			StripedPigron: "{$CommonBestiaryFlavor.Pigron}"
-			CrazyCone: This drill was turned to life by the saccharite shards in the confection and would defend it with its life.
+			CrazyCone: This drill was turned to life by the saccharite shards in the confection and will defend the biome at all costs
 			SugarGhoul: Ghouls baked by the Confection drip overly sweet spit that makes victims physically weak due to the sweetness.
+			GummyWyrm: A dragonic-serpent made of gummies, they disguise themselves as a the similar looking Gummy Worm. When close, they will open their mouth to give you a big 'kiss'
+			SacchariteSharpnose: In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.
 		}
 
 		ItemAnglerChat: {
@@ -1766,6 +1768,10 @@ Mods: {
 			StripedPigron.DisplayName: Striped Pigron
 			CrazyCone.DisplayName: Crazy Cone
 			SugarGhoul.DisplayName: Sugar Ghoul
+			GummyWyrmBody.DisplayName: Gummy Wyrm
+			GummyWyrmHead.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmBody.DisplayName}"
+			GummyWyrmTail.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmBody.DisplayName}"
+			SacchariteSharpnose.DisplayName: Saccharite Sharpnose
 		}
 
 		Projectiles: {
