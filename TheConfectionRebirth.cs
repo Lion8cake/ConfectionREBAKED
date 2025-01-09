@@ -854,7 +854,7 @@ namespace TheConfectionRebirth
 				}
 				if (isGoodMimic == 1 && Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType > ItemID.None) //all modded keys go here because of weird logic the key of night's IL code is done by preventing easy access to making an 'or' statement
 				{
-					npcType = Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType == ModContent.ItemType<KeyofSpite>() ? NPCID.BigMimicCrimson : NPCID.GoldGoldfish;
+					npcType = Main.player[user.whoAmI].GetModPlayer<ConfectionPlayer>().mimicSpawnKeyType == ModContent.ItemType<KeyofSpite>() ? NPCID.BigMimicCrimson : ModContent.NPCType<BigMimicConfection>();
 				}
 				isEvilMimic = 0;
 			});

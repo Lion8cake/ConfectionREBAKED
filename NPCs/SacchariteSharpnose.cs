@@ -15,7 +15,8 @@ using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
 {
-    public class SacchariteSharpnose : ModNPC
+	[LegacyName("CreamSwollower")]
+	public class SacchariteSharpnose : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -31,19 +32,19 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetDefaults()
         {
-			NPC.noGravity = true;
-			NPC.width = 100;
-			NPC.height = 24;
-			NPC.aiStyle = 103;
-			NPC.damage = 58;
-			NPC.defense = 24;
-			NPC.lifeMax = 470;
-			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.value = 400f;
-			NPC.knockBackResist = 0.7f;
-			NPC.behindTiles = true;
-            Banner = Type;
+			NPC.width = 28;
+			NPC.height = 44;
+			NPC.aiStyle = 87;
+			NPC.damage = 90;
+			NPC.defense = 34;
+			NPC.lifeMax = 3500;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.value = 30000f;
+			NPC.knockBackResist = 0.1f;
+			NPC.rarity = 5;
+
+			Banner = Type;
             BannerItem = ModContent.ItemType<CreamSwollowerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
