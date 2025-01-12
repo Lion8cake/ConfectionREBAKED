@@ -68,11 +68,12 @@ Mods: {
 			ParfaitSlime: Slimes disguised as parfait cakes. These creatures use any and all fruit stuck to them to launch at those they deem as a threat.
 			SherbetSlime: The rain water in the Confection reacts with the milk, sugar and hundreds of Confection flavours creating sherbet clumps, animated by gelanous beings.
 			StripedPigron: "{$CommonBestiaryFlavor.Pigron}"
-			CrazyCone: This drill was turned to life by the saccharite shards in the confection and will defend the biome at all costs
+			CrazyCone: This drill was turned to life by the saccharite shards in the confection and will defend the biome at all costs.
 			SugarGhoul: Ghouls baked by the Confection drip overly sweet spit that makes victims physically weak due to the sweetness.
-			GummyWyrm: A dragonic-serpent made of gummies, they disguise themselves as a the similar looking Gummy Worm. When close, they will open their mouth to give you a big 'kiss'
+			GummyWyrm: A dragonic-serpent made of gummies, they disguise themselves as a the similar looking Gummy Worm. When close, they will open their mouth to give you a big 'kiss'.
 			SacchariteSharpnose: In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.
 			BigMimicConfection: Mimics that are engolthed by the Confection are made powerful by the sweet. They can be birthed from ordinary chests by force.
+			Iscreamer: Bananawarp powers from the Confection cause these living cones to come to life, but the surge of power is immense causing shrieks to emanate from the Iscreamers.
 		}
 
 		ItemAnglerChat: {
@@ -1774,6 +1775,7 @@ Mods: {
 			GummyWyrmTail.DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmBody.DisplayName}"
 			SacchariteSharpnose.DisplayName: Saccharite Sharpnose
 			BigMimicConfection.DisplayName: Confection Mimic
+			Iscreamer.DisplayName: Iscreamer
 		}
 
 		Projectiles: {
@@ -2107,6 +2109,7 @@ Mods: {
 		TownNPCMood_Clothier.DislikeBiome_Confection: I tried eating a cookie in {BiomeName}, but I got a mouthful of dirt instead.
 		TownNPCMood_WitchDoctor.DislikeBiome_Confection: The fabrications of {BiomeName} are apparent, this is nature dying before our very eyes!
 		TownNPCMood_TaxCollector.DislikeBiome_Confection: I can't go collecting around in {BiomeName}. my footwear gets stuck to the floor!
+		CaptureBiomeChoice.Confection: The Confection
 
 		HallowSelection: {
 			Random: {
