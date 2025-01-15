@@ -42,10 +42,7 @@ namespace TheConfectionRebirth.NPCs
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.npcSlots = 0.1f;
-
 			NPC.catchItem = ModContent.ItemType<Items.GummyWorm>();
-			AIType = NPCID.Worm;
-			AnimationType = NPCID.Worm;
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
@@ -56,6 +53,59 @@ namespace TheConfectionRebirth.NPCs
 
 				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.GummyWorm")
 			});
+		}
+
+		public override void FindFrame(int frameHeight)
+		{
+			NPC.localAI[0] = -2f;
+			if (NPC.velocity.Y == 0f)
+			{
+				NPC.rotation = 0f;
+				if (NPC.velocity.X == 0f)
+				{
+					NPC.frame.Y = frameHeight;
+					NPC.frameCounter = 0.0;
+				}
+				else
+				{
+					NPC.frameCounter += 1.0;
+					if (NPC.frameCounter > 12.0)
+					{
+						NPC.frameCounter = 0.0;
+						NPC.frame.Y += frameHeight;
+						if (NPC.frame.Y > frameHeight)
+						{
+							NPC.frame.Y = 0;
+						}
+					}
+				}
+			}
+			else
+			{
+				NPC.rotation += (float)NPC.direction * 0.1f;
+				NPC.frame.Y = frameHeight;
+			}
+			int x = (int)NPC.Center.X / 16;
+			int y = (int)NPC.position.Y / 16;
+			Tile tileSafely2 = Framing.GetTileSafely(x, y);
+			if (tileSafely2 != null)
+			{
+				if (tileSafely2.Slope == 0)
+				{
+					y++;
+					tileSafely2 = Framing.GetTileSafely(x, y);
+				}
+				if (tileSafely2.Slope == (SlopeType)1)
+				{
+					NPC.rotation = 0.785f;
+					NPC.localAI[0] = 0f;
+				}
+				else if (tileSafely2.Slope == (SlopeType)2)
+				{
+					NPC.rotation = -0.785f;
+					NPC.localAI[0] = 0f;
+				}
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
@@ -70,9 +120,20 @@ namespace TheConfectionRebirth.NPCs
 				return;
 			}
 
-			if (NPC.life <= 0) {
-				for (int i = 0; i < 10; i++) {
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>());
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Worm, 2 * hit.HitDirection, -2f, newColor: Main.DiscoColor);
+					if (Main.rand.NextBool(2))
+					{
+						Main.dust[dustID].noGravity = true;
+						Main.dust[dustID].scale = 1.2f * NPC.scale;
+					}
+					else
+					{
+						Main.dust[dustID].scale = 0.7f * NPC.scale;
+					}
 				}
 			}
 		}

@@ -74,6 +74,8 @@ Mods: {
 			SacchariteSharpnose: In ancient times, a saltwater river once ran through the desert. These powerful creatures evolved to survive in the now dry sand.
 			BigMimicConfection: Mimics that are engolthed by the Confection are made powerful by the sweet. They can be birthed from ordinary chests by force.
 			Iscreamer: Bananawarp powers from the Confection cause these living cones to come to life, but the surge of power is immense causing shrieks to emanate from the Iscreamers.
+			Dudley: A small chocolate pile given sentience by the sands. Don't be caught underneath one though.
+			Prickster: A pile of saccharite crystals may not be as it seem, as these tortoises have managed to blend into the confection underground to pierce their pray.
 		}
 
 		ItemAnglerChat: {
@@ -1776,6 +1778,8 @@ Mods: {
 			SacchariteSharpnose.DisplayName: Saccharite Sharpnose
 			BigMimicConfection.DisplayName: Confection Mimic
 			Iscreamer.DisplayName: Iscreamer
+			Dudley.DisplayName: Dudley
+			Prickster.DisplayName: Prickster
 		}
 
 		Projectiles: {

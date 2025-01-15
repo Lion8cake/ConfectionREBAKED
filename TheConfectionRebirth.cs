@@ -165,7 +165,7 @@ namespace TheConfectionRebirth
 			On_Mount.Hover += RotatePixieMountHover;
 			IL_ShopHelper.AddHappinessReportText += EditNPCHappiness;
 			On_Main.UpdateTime_StartDay += StartDay_SpecialDates;
-			//On_NPC.BannerID += VariantBanners;
+			On_NPC.BannerID += VariantBanners;
 			On_Main.DrawInfoAccs += ReplaceCounterLastHit;
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
 			IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
@@ -180,6 +180,7 @@ namespace TheConfectionRebirth
 			On_CaptureInterface.ModeChangeSettings.GetRect += increaseCaptureSettingsHeight;
 			IL_CaptureInterface.ModeChangeSettings.Draw += moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update += moveCaptureDefaultsHitbox;
+			On_NPC.UpdateNPC_CritterSounds += ModNPCCritterSounds;
 		}
 
 		public override void Unload() {
@@ -246,7 +247,7 @@ namespace TheConfectionRebirth
 			On_Mount.Hover -= RotatePixieMountHover;
 			IL_ShopHelper.AddHappinessReportText -= EditNPCHappiness;
 			On_Main.UpdateTime_StartDay -= StartDay_SpecialDates;
-			//On_NPC.BannerID -= VariantBanners;
+			On_NPC.BannerID -= VariantBanners;
 			On_Main.DrawInfoAccs -= ReplaceCounterLastHit;
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
 			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
@@ -261,6 +262,7 @@ namespace TheConfectionRebirth
 			On_CaptureInterface.ModeChangeSettings.GetRect -= increaseCaptureSettingsHeight;
 			IL_CaptureInterface.ModeChangeSettings.Draw -= moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update -= moveCaptureDefaultsHitbox;
+			On_NPC.UpdateNPC_CritterSounds -= ModNPCCritterSounds;
 		}
 
 		public override object Call(params object[] args)
@@ -288,6 +290,40 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region Friendly NPC Sounds
+		private void ModNPCCritterSounds(On_NPC.orig_UpdateNPC_CritterSounds orig, NPC self)
+		{
+			orig.Invoke(self);
+			if (self.type == ModContent.NPCType<NPCs.Birdnana>() || self.type == ModContent.NPCType<NPCs.Pip>())
+			{
+				if (!Main.dayTime || !(Main.time < 18000.0))
+				{
+					return;
+				}
+				int maxValue = 400;
+				if (!Main.rand.NextBool(maxValue))
+				{
+					return;
+				}
+				if (!Main.rand.NextBool(3))
+				{
+					SoundEngine.PlaySound(SoundID.Bird, self.position); //style 14, styles dont exist for sound ID 32 (bird)
+				}
+				else
+				{
+					SoundEngine.PlaySound(SoundID.Bird, self.position); //style 18, styles dont exist for sound ID 32 (bird)
+				}
+			}
+			else if (self.type == ModContent.NPCType<NPCs.ChocolateFrog>())
+			{
+				if ((double)Math.Abs(self.velocity.X) < 0.5 && (!Main.dayTime || (double)self.position.Y > Main.worldSurface * 16.0) && Main.rand.NextBool(200))
+				{
+					SoundEngine.PlaySound(SoundID.Frog, self.position);
+				}
+			}
+		}
+		#endregion
 
 		#region Capture Biome Icons
 		internal static int biomeCaptureCount = 1; //Confection, Confection Desert

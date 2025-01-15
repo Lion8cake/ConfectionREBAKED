@@ -229,6 +229,7 @@ namespace TheConfectionRebirth
 			Recipe ChocoRabbitCupcake = Recipe.Create(ModContent.ItemType<ChocoRabbitCupcake>());
 			ChocoRabbitCupcake.AddIngredient(ModContent.ItemType<ChocolateBunny>());
 			ChocoRabbitCupcake.AddTile(TileID.CookingPots);
+			ChocoRabbitCupcake.AddCondition(Condition.Hardmode);
 			ChocoRabbitCupcake.SortAfterFirstRecipesOf(ItemID.PrismaticPunch);
 			ChocoRabbitCupcake.Register();
 
@@ -243,6 +244,7 @@ namespace TheConfectionRebirth
 			Recipe FrogInAPond = Recipe.Create(ModContent.ItemType<FrogInAPond>());
 			FrogInAPond.AddIngredient(ModContent.ItemType<ChocolateFrog>());
 			FrogInAPond.AddTile(TileID.CookingPots);
+			FrogInAPond.AddCondition(Condition.Hardmode);
 			FrogInAPond.SortAfter(BirdnanaPops);
 			FrogInAPond.Register();
 

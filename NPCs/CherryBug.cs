@@ -26,7 +26,8 @@ namespace TheConfectionRebirth.NPCs {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 		}
 
-		public override void SetDefaults() {
+		public override void SetDefaults() 
+		{
 			NPC.width = 12;
 			NPC.height = 12;
 			NPC.aiStyle = -1;
@@ -37,9 +38,7 @@ namespace TheConfectionRebirth.NPCs {
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.npcSlots = 0.2f;
 			NPC.noGravity = true;
-
 			NPC.catchItem = ModContent.ItemType<Items.CherryBug>();
-			AnimationType = NPCID.LightningBug;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<CherryBugBanner>();
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
@@ -162,6 +161,28 @@ namespace TheConfectionRebirth.NPCs {
 			NPC.ai[1] = num13;
 		}
 
+		public override void FindFrame(int frameHeight)
+		{
+			NPC.spriteDirection = NPC.direction;
+			NPC.frameCounter += 1.0;
+			if (NPC.frameCounter < 4.0)
+			{
+				NPC.frame.Y = 0;
+			}
+			else
+			{
+				NPC.frame.Y = frameHeight;
+				if (NPC.frameCounter >= 7.0)
+				{
+					NPC.frameCounter = 0.0;
+				}
+			}
+			if (NPC.localAI[2] <= 0f)
+			{
+				NPC.frame.Y += frameHeight * 2;
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			//if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
 			//	return 2f;
@@ -169,14 +190,27 @@ namespace TheConfectionRebirth.NPCs {
 			return 0f;
 		}
 
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (Main.netMode == NetmodeID.Server) {
+		public override void HitEffect(NPC.HitInfo hit)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
 				return;
 			}
 
-			if (NPC.life <= 0) {
-				for (int i = 0; i < 10; i++) {
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>());
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.FireflyHit, 2 * hit.HitDirection, -2f);
+					if (Main.rand.NextBool(2))
+					{
+						Main.dust[dustID].noGravity = true;
+						Main.dust[dustID].scale = 1.5f * NPC.scale;
+					}
+					else
+					{
+						Main.dust[dustID].scale = 0.8f * NPC.scale;
+					}
 				}
 			}
 		}

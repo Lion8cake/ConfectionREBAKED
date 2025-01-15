@@ -32,18 +32,18 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetDefaults()
         {
-			NPC.width = 28;
-			NPC.height = 44;
-			NPC.aiStyle = 87;
-			NPC.damage = 90;
-			NPC.defense = 34;
-			NPC.lifeMax = 3500;
-			NPC.HitSound = SoundID.NPCHit4;
-			NPC.DeathSound = SoundID.NPCDeath6;
-			NPC.value = 30000f;
-			NPC.knockBackResist = 0.1f;
-			NPC.rarity = 5;
-
+			NPC.noGravity = true;
+			NPC.width = 100;
+			NPC.height = 24;
+			NPC.aiStyle = 103;
+			NPC.damage = 54;
+			NPC.defense = 26;
+			NPC.lifeMax = 450;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.value = 400f;
+			NPC.knockBackResist = 0.7f;
+			NPC.behindTiles = true;
 			Banner = Type;
             BannerItem = ModContent.ItemType<CreamSwollowerBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
@@ -67,64 +67,32 @@ namespace TheConfectionRebirth.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
-			float num305 = 0f;
-			float num306 = Main.NPCAddHeight(NPC);
-			Vector2 halfSize = new((float)(TextureAssets.Npc[Type].Width() / 2), (float)(TextureAssets.Npc[Type].Height() / Main.npcFrameCount[Type] / 2));
-			SpriteEffects spriteEffects = (SpriteEffects)0;
+			Vector2 frameSize = new Vector2(NPC.frame.Width, NPC.frame.Height);
+			Vector2 halfSize = new(frameSize.X / 2, frameSize.Y / 2);
+
+			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (NPC.spriteDirection == 1)
 			{
-				spriteEffects = (SpriteEffects)1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 
-			Texture2D value74 = TextureAssets.Npc[Type].Value;
-			Color color41 = Color.White;
-			float amount2 = 0f;
-			float amount3 = 0f;
-			int num268 = 0;
-			int num269 = 0;
-			int num270 = 1;
-			int num271 = 15;
-			float scale17 = NPC.scale;
-			float value75 = NPC.scale;
-			int num273 = 0;
-			float num274 = 0f;
-			float num275 = 0f;
-			float num276 = 0f;
-			Color color42 = drawColor;
-			Vector2 origin16 = halfSize;
+			int trailAmount = 6;
+			int trailIncrement = trailAmount / 2;
+			float trailColorMod = trailAmount * 2;
 
-			num268 = 6;
-			num269 = 3;
-			num271 = num268 * 2;
-			
-			for (int num289 = num270; num289 < num268; num289 += num269)
+			for (int i = 1; i < trailAmount; i += trailIncrement)
 			{
-				Color value77 = color42;
-				value77 = Color.Lerp(value77, color41, amount2);
-				value77 = NPC.GetAlpha(value77);
-				value77 *= (float)(num268 - num289) / (float)num271;
-				float scale18 = MathHelper.Lerp(scale17, value75, 1f - (float)(num268 - num289) / (float)num271);
-				Vector2 position26 = NPC.oldPos[num289] + new Vector2((float)NPC.width, (float)NPC.height) / 2f - screenPos;
-				position26 -= new Vector2((float)value74.Width, (float)(value74.Height / Main.npcFrameCount[Type])) * NPC.scale / 2f;
-				position26 += halfSize * NPC.scale + new Vector2(0f, num305 + num306 + NPC.gfxOffY);
-				spriteBatch.Draw(value74, position26, (Rectangle?)NPC.frame, value77, NPC.rotation, halfSize, scale18, spriteEffects, 0f);
+				Color color = NPC.GetAlpha(drawColor);
+				color *= (trailAmount - i) / trailColorMod;
+				Vector2 posTrail = NPC.oldPos[i] + new Vector2(NPC.width, NPC.height) / 2f - screenPos;
+				posTrail -= frameSize * NPC.scale / 2f;
+				posTrail += halfSize * NPC.scale + new Vector2(0f, NPC.gfxOffY);
+				spriteBatch.Draw(TextureAssets.Npc[Type].Value, posTrail, NPC.frame, color, NPC.rotation, halfSize, NPC.scale, spriteEffects, 0f);
 			}
-			for (int num290 = 0; num290 < num273; num290++)
-			{
-				Color value79 = drawColor;
-				value79 = Color.Lerp(value79, color41, amount2);
-				value79 = NPC.GetAlpha(value79);
-				value79 = Color.Lerp(value79, color41, amount3);
-				value79 *= 1f - num274;
-				Vector2 position27 = NPC.Center + ((float)num290 / (float)num273 * ((float)Math.PI * 2f) + NPC.rotation + num276).ToRotationVector2() * num275 * num274 - screenPos;
-				position27 -= new Vector2((float)value74.Width, (float)(value74.Height / Main.npcFrameCount[Type])) * NPC.scale / 2f;
-				position27 += halfSize * NPC.scale + new Vector2(0f, num305 + num306 + NPC.gfxOffY);
-				spriteBatch.Draw(value74, position27, (Rectangle?)NPC.frame, value79, NPC.rotation, origin16, NPC.scale, spriteEffects, 0f);
-			}
-			Vector2 vector68 = NPC.Center - screenPos;
-			vector68 -= new Vector2((float)value74.Width, (float)(value74.Height / Main.npcFrameCount[Type])) * NPC.scale / 2f;
-			vector68 += halfSize * NPC.scale + new Vector2(0f, num305 + num306 + NPC.gfxOffY);
-			spriteBatch.Draw(value74, vector68, (Rectangle?)NPC.frame, NPC.GetAlpha(color42), NPC.rotation, origin16, NPC.scale, spriteEffects, 0f);
+			Vector2 pos = NPC.Center - screenPos;
+			pos -= frameSize * NPC.scale / 2f;
+			pos += halfSize * NPC.scale + new Vector2(0f, NPC.gfxOffY);
+			spriteBatch.Draw(TextureAssets.Npc[Type].Value, pos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, halfSize, NPC.scale, spriteEffects, 0f);
 			return false;
 		}
 

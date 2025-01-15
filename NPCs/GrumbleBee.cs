@@ -26,7 +26,8 @@ namespace TheConfectionRebirth.NPCs
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 		}
 
-		public override void SetDefaults() {
+		public override void SetDefaults() 
+		{
 			NPC.width = 10;
 			NPC.height = 10;
 			NPC.aiStyle = 65;
@@ -37,10 +38,7 @@ namespace TheConfectionRebirth.NPCs
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.npcSlots = 0.25f;
 			NPC.noGravity = true;
-
 			NPC.catchItem = ModContent.ItemType<Items.GrumbleBee>();
-			AIType = NPCID.Butterfly;
-			AnimationType = NPCID.GoldButterfly;
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
@@ -51,6 +49,34 @@ namespace TheConfectionRebirth.NPCs
 			});
 		}
 
+		public override void FindFrame(int frameHeight)
+		{
+			int num = 7;
+			NPC.rotation = NPC.velocity.X * 0.3f;
+			NPC.spriteDirection = NPC.direction;
+			NPC.frameCounter = NPC.frameCounter + 1.0 + (double)((Math.Abs(NPC.velocity.X) + Math.Abs(NPC.velocity.Y)) / 2f);
+			if (NPC.frameCounter < (double)num)
+			{
+				NPC.frame.Y = 0;
+			}
+			else if (NPC.frameCounter < (double)(num * 2))
+			{
+				NPC.frame.Y = frameHeight;
+			}
+			else if (NPC.frameCounter < (double)(num * 3))
+			{
+				NPC.frame.Y = frameHeight * 2;
+			}
+			else
+			{
+				NPC.frame.Y = frameHeight;
+				if (NPC.frameCounter >= (double)(num * 4 - 1))
+				{
+					NPC.frameCounter = 0.0;
+				}
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			//if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && !spawnInfo.Player.ZoneDesert && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
 			//	return 1f;
@@ -58,14 +84,27 @@ namespace TheConfectionRebirth.NPCs
 			return 0f;
 		}
 
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (Main.netMode == NetmodeID.Server) {
+		public override void HitEffect(NPC.HitInfo hit) 
+		{
+			if (Main.netMode == NetmodeID.Server) 
+			{
 				return;
 			}
 
-			if (NPC.life <= 0) {
-				for (int i = 0; i < 10; i++) {
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>());
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>(), 2 * hit.HitDirection, -2f);
+					if (Main.rand.NextBool(2))
+					{
+						Main.dust[dustID].noGravity = true;
+						Main.dust[dustID].scale = 1.5f * NPC.scale;
+					}
+					else
+					{
+						Main.dust[dustID].scale = 0.8f * NPC.scale;
+					}
 				}
 			}
 		}

@@ -15,6 +15,7 @@ using Terraria.GameContent.Personalities;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Buffs;
 using TheConfectionRebirth.Projectiles;
+using Terraria.DataStructures;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -144,6 +145,21 @@ namespace TheConfectionRebirth.NPCs
 				if (damage < count2 * 20)
 				{
 					damage = (int)(count2 * 20);
+				}
+			}
+		}
+
+		public override void OnSpawn(NPC npc, IEntitySource source)
+		{
+			if (TheConfectionRebirth.easter)
+			{
+				if (npc.type == NPCID.Bunny)
+				{
+					npc.SetDefaults(ModContent.NPCType<ChocolateBunny>());
+				}
+				else if (npc.type == NPCID.Frog)
+				{
+					npc.SetDefaults(ModContent.NPCType<ChocolateFrog>());
 				}
 			}
 		}

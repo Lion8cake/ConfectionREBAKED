@@ -17,14 +17,16 @@ namespace TheConfectionRebirth.NPCs
 {
 	public class RoyalCherryBug : ModNPC
 	{
-		public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() 
+		{
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.LightningBug];
 			Main.npcCatchable[Type] = true;
 			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 		}
 
-		public override void SetDefaults() {
+		public override void SetDefaults() 
+		{
 			NPC.width = 12;
 			NPC.height = 12;
 			NPC.aiStyle = -1;
@@ -35,13 +37,12 @@ namespace TheConfectionRebirth.NPCs
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.npcSlots = 0.2f;
 			NPC.noGravity = true;
-
 			NPC.catchItem = ModContent.ItemType<Items.RoyalCherryBug>();
-			AnimationType = NPCID.LightningBug;
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionBiome>().Type };
 		}
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) 
+		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
@@ -51,7 +52,8 @@ namespace TheConfectionRebirth.NPCs
 			});
 		}
 
-		public override bool? CanBeHitByProjectile(Projectile projectile) {
+		public override bool? CanBeHitByProjectile(Projectile projectile) 
+		{
 			if (NPC.ai[2] > 0) {
 				return null;
 			}
@@ -193,36 +195,72 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
-		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) 
+		{
 			Texture2D ring = TextureAssets.Extra[ExtrasID.KeybrandRing].Value;
 			spriteBatch.Draw(ring, NPC.Center - Main.screenPosition - new Vector2(0, 6), new Rectangle(0, 0, ring.Width, ring.Height), new Color(128, 34, 12, 0) * NPC.ai[2] * NPC.Opacity, (float)Main.timeForVisualEffects * 0.001f, ring.Size() / 2f, (0.6f + (float)Math.Sin(Main.timeForVisualEffects * 0.05f) * 0.1f) * NPC.ai[2], SpriteEffects.None, 0);
 			spriteBatch.Draw(ring, NPC.Center - Main.screenPosition - new Vector2(0, 6), new Rectangle(0, 0, ring.Width, ring.Height), new Color(128, 34, 64, 0) * NPC.ai[2] * NPC.Opacity, (float)Main.timeForVisualEffects * 0.001f, ring.Size() / 2f, (0.5f + (float)Math.Sin(Main.timeForVisualEffects * 0.05f) * 0.14f) * NPC.ai[2], SpriteEffects.None, 0);
 			return true;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) 
+		{
 			Texture2D Sparkle = TextureAssets.Extra[ExtrasID.SharpTears].Value;
 			for (int i = 0; i < 2; i++)
 				spriteBatch.Draw(Sparkle, NPC.Center - Main.screenPosition - new Vector2(0, 4), new Rectangle(0, 0, Sparkle.Width, Sparkle.Height), new Color(138, 64, 94, 0) * NPC.Opacity * NPC.ai[2] * (float)(Math.Sin(Main.timeForVisualEffects * 0.1f) * 0.5f + 0.5f), (i * MathHelper.PiOver2) + (float)Main.timeForVisualEffects * -0.01f, Sparkle.Size() / 2f,
 					new Vector2((1.1f + (float)Math.Sin(Main.timeForVisualEffects * 0.03f) * 0.3f) * NPC.ai[2], (0.7f + (float)Math.Sin(Main.timeForVisualEffects * 0.1f) * 0.7f) * NPC.ai[2]), SpriteEffects.None, 0);
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			//if (spawnInfo.Player.ZoneOverworldHeight && (Main.remixWorld || (!Main.dayTime && Main.time < 16200.0)) && spawnInfo.Player.RollLuck(10) == 0 && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && NPC.downedPlantBoss && Main.hardMode && !spawnInfo.AnyInvasionActive() && !NPC.AnyNPCs(ModContent.NPCType<RoyalCherryBug>())) {
-			//	return 0.3f;
+
+		public override void FindFrame(int frameHeight)
+		{
+			NPC.spriteDirection = NPC.direction;
+			NPC.frameCounter += 1.0;
+			if (NPC.frameCounter < 4.0)
+			{
+				NPC.frame.Y = 0;
+			}
+			else
+			{
+				NPC.frame.Y = frameHeight;
+				if (NPC.frameCounter >= 7.0)
+				{
+					NPC.frameCounter = 0.0;
+				}
+			}
+			if (NPC.localAI[2] <= 0f)
+			{
+				NPC.frame.Y += frameHeight * 2;
+			}
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			//if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
+			//	return 2f;
 			//}
 			return 0f;
 		}
 
-		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0) {
-				if (!NPC.AnyNPCs(NPCID.HallowBoss)) {
-					int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)(NPC.Center.Y / 1.02), NPCID.HallowBoss);
-					if (Main.netMode == NetmodeID.Server) {
-						NetMessage.SendData(MessageID.SyncNPC, number: index);
+		public override void HitEffect(NPC.HitInfo hit)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.FireflyHit, 2 * hit.HitDirection, -2f);
+					if (Main.rand.NextBool(2))
+					{
+						Main.dust[dustID].noGravity = true;
+						Main.dust[dustID].scale = 1.5f * NPC.scale;
 					}
-				}
-				if (Main.netMode != NetmodeID.Server) {
-					for (int i = 0; i < 10; i++) {
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>());
+					else
+					{
+						Main.dust[dustID].scale = 0.8f * NPC.scale;
 					}
 				}
 			}
