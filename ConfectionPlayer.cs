@@ -36,10 +36,15 @@ namespace TheConfectionRebirth
 		public bool toothfairyMinion;
 		public bool meawzerMinion;
 		public bool gastropodMinion;
+		public bool shakenOffFoamin = true;
+		private int shakeCount = 0;
+		private int shakingTimer = 0;
+		private bool lastPressedLeft = false;
 
 		public bool SacchariteLashed;
 		public bool candleFire;
 		public int candleFlameDelay = 0;
+		public bool candySuffocation;
 		public Projectile DimensionalWarp;
 		public Projectile BananawarpPeelWarp;
 
@@ -96,7 +101,13 @@ namespace TheConfectionRebirth
 			}
 			SacchariteLashed = false;
 			candleFire = false;
+			candySuffocation = false;
 			
+			if (!Player.HasBuff(ModContent.BuffType<FoaminSuffocation>()))
+			{
+				shakenOffFoamin = true;
+			}
+
 			if (!neapoliniteMelee)
 			{
 				vanillaValorDamage = 0;
@@ -198,6 +209,15 @@ namespace TheConfectionRebirth
 				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.1", Player.name));
 				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.2", Player.name));
 				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.3", Player.name));
+				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+				return true;
+			}
+			if (damageSource.SourceCustomReason == "FoaminSuffocation")
+			{
+				WeightedRandom<string> deathmessage = new();
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.0", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.1", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.2", Player.name));
 				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
 				return true;
 			}
@@ -492,6 +512,44 @@ namespace TheConfectionRebirth
 			if (candleFlameDelay > 0)
 			{
 				candleFlameDelay--;
+			}
+			if (!shakenOffFoamin)
+			{
+				if (Player.controlLeft || Player.controlRight)
+				{
+					shakingTimer++;
+				}
+				if (shakingTimer > 0)
+				{
+					shakingTimer++;
+					if ((!lastPressedLeft && Player.controlLeft) || (lastPressedLeft && Player.controlRight))
+					{
+						if (Player.controlRight)
+						{
+							lastPressedLeft = false;
+						}
+						else if (Player.controlLeft)
+						{
+							lastPressedLeft = true;
+						}
+						shakeCount++;
+					}
+
+					if (shakingTimer >= 120)
+					{
+						if (shakeCount > 5)
+						{
+							shakenOffFoamin = true;
+							shakeCount = 0;
+							shakingTimer = 0;
+						}
+						else
+						{
+							shakeCount = 0;
+							shakingTimer = 0;
+						}
+					}
+				}
 			}
 		}
 

@@ -76,6 +76,7 @@ Mods: {
 			Iscreamer: Bananawarp powers from the Confection cause these living cones to come to life, but the surge of power is immense causing shrieks to emanate from the Iscreamers.
 			Dudley: A small chocolate pile given sentience by the sands. Don't be caught underneath one though.
 			Prickster: A pile of saccharite crystals may not be as it seem, as these tortoises have managed to blend into the confection underground to pierce their pray.
+			FoaminFloat: A cloud of foaming root beer. When enough presure in underground confection water pools explode and a foamin' float is created.
 		}
 
 		ItemAnglerChat: {
@@ -100,6 +101,12 @@ Mods: {
 				1: "{0} was split like a banana."
 				2: "{0} tried to banana all the time."
 				3: "{0} got split between dimensions."
+			}
+
+			ChokedOutByRootbeer: {
+				0: "{0} was choaked to death by rootbeer"
+				1: "{0} choaked to death on rootbeer foam"
+				2: "{0} couldn't shake off the foam"
 			}
 		}
 
@@ -1780,6 +1787,7 @@ Mods: {
 			Iscreamer.DisplayName: Iscreamer
 			Dudley.DisplayName: Dudley
 			Prickster.DisplayName: Prickster
+			FoaminFloat.DisplayName: Foamin' Float
 		}
 
 		Projectiles: {
@@ -1849,6 +1857,7 @@ Mods: {
 			DefenciveSprinkle.DisplayName: Sprinkling Sprinkle
 			SprinklerBall.DisplayName: Large Sprinkle
 			ParfaitSpike.DisplayName: Parfait Fruit
+			RootbeerSpray.DisplayName: Rootbeer Spray
 		}
 
 		Configs: {
@@ -2088,6 +2097,11 @@ Mods: {
 			MeawzerSummonBuff: {
 				DisplayName: Mini Meowzer
 				Description: The mini meowzer will fight for you
+			}
+
+			FoaminSuffocation: {
+				DisplayName: Foamin' Suffocation
+				Description: Shake left and right to free yourself.
 			}
 		}
 

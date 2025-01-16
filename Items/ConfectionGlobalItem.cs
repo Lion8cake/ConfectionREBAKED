@@ -111,18 +111,27 @@ namespace TheConfectionRebirth.Items
 				DrunkWorldIsNotActive NotDrunk = new DrunkWorldIsNotActive();
 
 				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
-				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(ConfectionCondition);
 
 				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
-				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
 				itemLoot.Add(HallowCondition);
 
 				LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
-				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
-				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
 				itemLoot.Add(DrunkCondition);
 			}
+		}
+
+		public override bool CanUseItem(Item item, Player player)
+		{
+			if (player.GetModPlayer<ConfectionPlayer>().candySuffocation && !Main.rand.NextBool(30))
+			{
+				return false;
+			}
+			return true;
 		}
 
 		private static IItemDropRule FindHallowedBars(ItemLoot loot)

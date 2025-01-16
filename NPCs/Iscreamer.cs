@@ -9,7 +9,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Weapons;

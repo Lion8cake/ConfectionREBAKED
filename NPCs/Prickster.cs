@@ -1,16 +1,11 @@
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
 using System;
 using Terraria;
-using Terraria.Cinematics;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Items;
-using TheConfectionRebirth.Items.Armor;
 using TheConfectionRebirth.Items.Banners;
 using TheConfectionRebirth.Items.Placeable;
 
@@ -31,7 +26,7 @@ namespace TheConfectionRebirth.NPCs
         {
 			NPC.width = 38;
 			NPC.height = 28;
-			NPC.aiStyle = -1; //-1
+			NPC.aiStyle = -1;
 			NPC.damage = 75;
             NPC.defense = 35;
 			NPC.lifeMax = 220;
