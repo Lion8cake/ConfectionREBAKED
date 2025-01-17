@@ -59,7 +59,7 @@ namespace TheConfectionRebirth.NPCs
             {
                 if (TheConfectionRebirth.isConfectionerBirthday || Main.rand.NextBool(100))
                 {
-					NPC.SetDefaults(ModContent.NPCType<BirthdayCookie>());
+					NPC.Transform(ModContent.NPCType<BirthdayCookie>());
 				}
                 else if (TheConfectionRebirth.easter)
                 {

@@ -155,11 +155,11 @@ namespace TheConfectionRebirth.NPCs
 			{
 				if (npc.type == NPCID.Bunny)
 				{
-					npc.SetDefaults(ModContent.NPCType<ChocolateBunny>());
+					npc.Transform(ModContent.NPCType<ChocolateBunny>());
 				}
 				else if (npc.type == NPCID.Frog)
 				{
-					npc.SetDefaults(ModContent.NPCType<ChocolateFrog>());
+					npc.Transform(ModContent.NPCType<ChocolateFrog>());
 				}
 			}
 		}

@@ -7,8 +7,10 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-	public class CreamGrass : ModTile {
-		public override void SetStaticDefaults() {
+	public class CreamGrass : ModTile 
+	{
+		public override void SetStaticDefaults() 
+		{
 			Main.tileBrick[Type] = true;
 			Main.tileShine[Type] = 9000;
 			Main.tileLighted[Type] = true;
@@ -46,7 +48,8 @@ namespace TheConfectionRebirth.Tiles
 			}
 		}
 
-		public override void RandomUpdate(int i, int j) {
+		public override void RandomUpdate(int i, int j) 
+		{
 			if (i > Main.worldSurface) {
 				if (ConfectionWorldGeneration.GrowMoreVines(i, j)) {
 					int maxValue3 = 60;
@@ -89,15 +92,20 @@ namespace TheConfectionRebirth.Tiles
 			}
 		}
 
-		public static void CreamGrassGrowth(int i, int j, int minI, int maxI, int minJ, int maxJ) {
-			if (i > Main.worldSurface) {
+		public static void CreamGrassGrowth(int i, int j, int minI, int maxI, int minJ, int maxJ) 
+		{
+			if (i > Main.worldSurface) 
+			{
 				int num2 = Main.tile[i, j].TileType;
-				if (!Main.tile[i, minJ].HasTile && Main.tile[i, minJ].LiquidAmount == 0) {
+				if (!Main.tile[i, minJ].HasTile && Main.tile[i, minJ].LiquidAmount == 0) 
+				{
 					int num9 = -1;
-					if (num2 == ModContent.TileType<CreamGrass>() && WorldGen.genRand.NextBool(10)) {
+					if (num2 == ModContent.TileType<CreamGrass>() && WorldGen.genRand.NextBool(10)) 
+					{
 						num9 = ModContent.TileType<CreamGrass_Foliage>();
 					}
-					if (num9 != -1 && WorldGen.PlaceTile(i, minJ, num9, mute: true)) {
+					if (num9 != -1 && WorldGen.PlaceTile(i, minJ, num9, mute: true)) 
+					{
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
 						if (Main.netMode == 2) {
 							NetMessage.SendTileSquare(-1, i, minJ);
@@ -105,45 +113,56 @@ namespace TheConfectionRebirth.Tiles
 					}
 				}
 				bool flag7 = false;
-				if (num2 == ModContent.TileType<CreamGrassMowed>()) {
+				if (num2 == ModContent.TileType<CreamGrassMowed>()) 
+				{
 					num2 = ModContent.TileType<CreamGrass>();
 				}
 				int grass = num2;
 				bool flag8 = WorldGen.AllowedToSpreadInfections && num2 == ModContent.TileType<CreamGrass>() && WorldGen.InWorld(i, j, 10);
-				for (int num11 = minI; num11 < maxI; num11++) {
-					for (int num13 = minJ; num13 < maxJ; num13++) {
-						if (!WorldGen.InWorld(num11, num13, 10) || (i == num11 && j == num13) || !Main.tile[num11, num13].HasTile) {
+				for (int num11 = minI; num11 < maxI; num11++) 
+				{
+					for (int num13 = minJ; num13 < maxJ; num13++) 
+					{
+						if (!WorldGen.InWorld(num11, num13, 10) || (i == num11 && j == num13) || !Main.tile[num11, num13].HasTile) 
+						{
 							continue;
 						}
 						int type2 = Main.tile[num11, num13].TileType;
 						TileColorCache color3 = Main.tile[i, j].BlockColorAndCoating();
-						if (type2 == 0 || ((num2 == ModContent.TileType<CreamGrass>() || num2 == ModContent.TileType<CreamGrassMowed>()) && (type2 == 2 || type2 == 477 || type2 == 23 || type2 == 199))) {
+						if (type2 == 0 || ((num2 == ModContent.TileType<CreamGrass>() || num2 == ModContent.TileType<CreamGrassMowed>()) && (type2 == 2 || type2 == 477 || type2 == 23 || type2 == 199))) 
+						{
 							WorldGen.SpreadGrass(num11, num13, 0, grass, repeat: false, color3);
-							if (Main.tile[num11, num13 - 1].TileType == 27) {
+							if (Main.tile[num11, num13 - 1].TileType == 27) 
+							{
 								if (num2 == ModContent.TileType<CreamGrass>()) {
 									WorldGen.SpreadGrass(num11, num13, 2, grass, repeat: false, color3);
 								}
-								if (num2 == ModContent.TileType<CreamGrassMowed>()) {
+								if (num2 == ModContent.TileType<CreamGrassMowed>()) 
+								{
 									WorldGen.SpreadGrass(num11, num13, 477, grass, repeat: false, color3);
 								}
-								if (num2 == ModContent.TileType<CreamGrass>()) {
+								if (num2 == ModContent.TileType<CreamGrass>()) 
+								{
 									WorldGen.SpreadGrass(num11, num13, 477, ModContent.TileType<CreamGrassMowed>(), repeat: false, color3);
 								}
-								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) {
+								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) 
+								{
 									WorldGen.SpreadGrass(num11, num13, 23, ModContent.TileType<CreamGrass>(), repeat: false, color3);
 								}
-								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) {
+								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) 
+								{
 									WorldGen.SpreadGrass(num11, num13, 199, ModContent.TileType<CreamGrass>(), repeat: false, color3);
 								}
 							}
-							if (Main.tile[num11, num13].TileType == num2) {
+							if (Main.tile[num11, num13].TileType == num2) 
+							{
 								WorldGen.SquareTileFrame(num11, num13);
 								flag7 = true;
 							}
 						}
 					}
 				}
-				if (Main.netMode == 2 && flag7) {
+				if (Main.netMode == NetmodeID.Server && flag7) {
 					NetMessage.SendTileSquare(-1, i, j, 3);
 				}
 			}

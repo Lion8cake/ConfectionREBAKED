@@ -40,6 +40,7 @@ namespace TheConfectionRebirth
 		private int shakeCount = 0;
 		private int shakingTimer = 0;
 		private bool lastPressedLeft = false;
+		public bool shaken;
 
 		public bool SacchariteLashed;
 		public bool candleFire;
@@ -107,6 +108,7 @@ namespace TheConfectionRebirth
 			{
 				shakenOffFoamin = true;
 			}
+			shaken = false;
 
 			if (!neapoliniteMelee)
 			{
@@ -518,6 +520,8 @@ namespace TheConfectionRebirth
 				if (Player.controlLeft || Player.controlRight)
 				{
 					shakingTimer++;
+					if ((!lastPressedLeft && Player.controlLeft) || (lastPressedLeft && Player.controlRight))
+						shaken = true;
 				}
 				if (shakingTimer > 0)
 				{
@@ -533,6 +537,7 @@ namespace TheConfectionRebirth
 							lastPressedLeft = true;
 						}
 						shakeCount++;
+						shaken = true;
 					}
 
 					if (shakingTimer >= 120)

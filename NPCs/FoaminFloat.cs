@@ -16,6 +16,7 @@ using Terraria.Audio;
 using TheConfectionRebirth.Projectiles;
 using TheConfectionRebirth.Buffs;
 using TheConfectionRebirth.Items.Armor.WonkyOutfit;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -23,6 +24,7 @@ namespace TheConfectionRebirth.NPCs
     {
 		public override void SetStaticDefaults()
         {
+			Main.npcFrameCount[Type] = 3;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Position = new(0f, 6f),
@@ -36,7 +38,7 @@ namespace TheConfectionRebirth.NPCs
 			NPC.noTileCollide = true;
 			NPC.width = 48;
 			NPC.height = 36;
-			NPC.aiStyle = -1; //22
+			NPC.aiStyle = -1;
 			NPC.damage = 45;
 			NPC.defense = 8;
 			NPC.lifeMax = 140;
@@ -162,7 +164,7 @@ namespace TheConfectionRebirth.NPCs
 							num858 = num854 / num858;
 							num855 *= num858;
 							num857 *= num858;
-							int num860 = 45;
+							int num860 = 45 / 2;
 							int num861 = ModContent.ProjectileType<RootbeerSpray>();
 							int num862 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector248.X, vector248.Y, num855, num857, num861, num860, 0f, Main.myPlayer);
 						}
@@ -376,10 +378,40 @@ namespace TheConfectionRebirth.NPCs
 						{
 							player.AddBuff(ModContent.BuffType<FoaminSuffocation>(), 2);
 						}
+						if (player.GetModPlayer<ConfectionPlayer>().shaken)
+						{
+							NPC.rotation = 0.75f * player.direction;
+						}
 					}
 				}
 				NPC.hide = NPC.ai[0] == 2f;
-				NPC.rotation = NPC.velocity.X * 0.1f;
+				if (NPC.ai[0] == 2)
+				{
+					if (NPC.rotation != 0)
+					{
+						float rotIncriment = 0.125f;
+						if (NPC.rotation > 0)
+						{
+							NPC.rotation -= rotIncriment;
+							if (NPC.rotation <= 0)
+							{
+								NPC.rotation = 0;
+							}
+						}
+						else if (NPC.rotation < 0)
+						{
+							NPC.rotation += rotIncriment;
+							if (NPC.rotation >= 0)
+							{
+								NPC.rotation = 0;
+							}
+						}
+					}
+				}
+				else
+				{
+					NPC.rotation = NPC.velocity.X * 0.1f;
+				}
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC npc = Main.npc[i];
@@ -415,6 +447,21 @@ namespace TheConfectionRebirth.NPCs
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CcretTicket>(), 100));
+		}
+
+		public override void FindFrame(int frameHeight)
+		{
+			bool isSuffocating = NPC.ai[3] >= 200 && NPC.ai[0] == 2;
+			if (++NPC.frameCounter > (isSuffocating ? 6 : 24))
+			{
+				NPC.frameCounter = 0;
+				int frame = NPC.frame.Y / frameHeight;
+				if (++frame >= Main.npcFrameCount[Type])
+				{
+					frame = 0;
+				}
+				NPC.frame.Y = frame * frameHeight;
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

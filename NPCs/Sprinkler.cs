@@ -56,7 +56,7 @@ namespace TheConfectionRebirth.NPCs
 				}
 				if (type != Type)
 				{
-					NPC.SetDefaults(type);
+					NPC.Transform(type);
 				}
 			}
 		}

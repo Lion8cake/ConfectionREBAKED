@@ -77,6 +77,7 @@ Mods: {
 			Dudley: A small chocolate pile given sentience by the sands. Don't be caught underneath one though.
 			Prickster: A pile of saccharite crystals may not be as it seem, as these tortoises have managed to blend into the confection underground to pierce their pray.
 			FoaminFloat: A cloud of foaming root beer. When enough presure in underground confection water pools explode and a foamin' float is created.
+			IcecreamGal: A lost child within the confection. Don't let her decieve you though as she is out to get you.
 		}
 
 		ItemAnglerChat: {
@@ -1788,6 +1789,7 @@ Mods: {
 			Dudley.DisplayName: Dudley
 			Prickster.DisplayName: Prickster
 			FoaminFloat.DisplayName: Foamin' Float
+			IcecreamGal.DisplayName: Icecream Gal
 		}
 
 		Projectiles: {
@@ -1858,6 +1860,7 @@ Mods: {
 			SprinklerBall.DisplayName: Large Sprinkle
 			ParfaitSpike.DisplayName: Parfait Fruit
 			RootbeerSpray.DisplayName: Rootbeer Spray
+			IcecreamStar.DisplayName: Icecream Star
 		}
 
 		Configs: {
