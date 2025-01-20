@@ -366,36 +366,17 @@ namespace TheConfectionRebirth.NPCs
 				return;
 			}
 
-			if (NPC.life <= 0)
+			for (int i = 0; i < (NPC.life <= 0 ? 26 : 5); i++)
 			{
-				for (int i = 0; i < 26; i++)
+				int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>(), 2 * hit.HitDirection, -2f);
+				if (Main.rand.NextBool(2))
 				{
-					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>(), 2 * hit.HitDirection, -2f);
-					if (Main.rand.NextBool(2))
-					{
-						Main.dust[dustID].noGravity = true;
-						Main.dust[dustID].scale = 1.2f * NPC.scale;
-					}
-					else
-					{
-						Main.dust[dustID].scale = 0.7f * NPC.scale;
-					}
+					Main.dust[dustID].noGravity = true;
+					Main.dust[dustID].scale = 1.2f * NPC.scale;
 				}
-			}
-			else
-			{
-				for (int i = 0; i < 5; i++)
+				else
 				{
-					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChocolateBlood>(), 2 * hit.HitDirection, -2f);
-					if (Main.rand.NextBool(2))
-					{
-						Main.dust[dustID].noGravity = true;
-						Main.dust[dustID].scale = 1.2f * NPC.scale;
-					}
-					else
-					{
-						Main.dust[dustID].scale = 0.7f * NPC.scale;
-					}
+					Main.dust[dustID].scale = 0.7f * NPC.scale;
 				}
 			}
 		}

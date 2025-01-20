@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,7 +38,7 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileMerge[Type][ModContent.TileType<CookieBlock>()] = true;
 
 			AddMapEntry(new Color(235, 207, 150));
-			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>(), 0);
 			DustType = ModContent.DustType<CreamGrassDust>();
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) 
@@ -50,32 +51,41 @@ namespace TheConfectionRebirth.Tiles
 
 		public override void RandomUpdate(int i, int j) 
 		{
-			if (i > Main.worldSurface) {
-				if (ConfectionWorldGeneration.GrowMoreVines(i, j)) {
+			if (i > Main.worldSurface) 
+			{
+				if (ConfectionWorldGeneration.GrowMoreVines(i, j)) 
+				{
 					int maxValue3 = 60;
-					if (Main.tile[i, j].TileType == ModContent.TileType<CreamVines>()) {
+					if (Main.tile[i, j].TileType == ModContent.TileType<CreamVines>()) 
+					{
 						maxValue3 = 20;
 					}
-					if (WorldGen.genRand.NextBool(maxValue3) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava) {
+					if (WorldGen.genRand.NextBool(maxValue3) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava) 
+					{
 						bool flag10 = false;
-						for (int num35 = j; num35 > j - 10; num35--) {
-							if (Main.tile[i, num35].BottomSlope) {
+						for (int num35 = j; num35 > j - 10; num35--) 
+						{
+							if (Main.tile[i, num35].BottomSlope) 
+							{
 								flag10 = false;
 								break;
 							}
-							if (Main.tile[i, num35].HasTile && Main.tile[i, num35].TileType == Type && !Main.tile[i, num35].BottomSlope) {
+							if (Main.tile[i, num35].HasTile && Main.tile[i, num35].TileType == Type && !Main.tile[i, num35].BottomSlope) 
+							{
 								flag10 = true;
 								break;
 							}
 						}
-						if (flag10) {
+						if (flag10) 
+						{
 							int num36 = j + 1;
 							Main.tile[i, num36].TileType = (ushort)ModContent.TileType<CreamVines>();
 							Tile tile = Main.tile[i, num36];
 							tile.HasTile = true;
 							Main.tile[i, num36].CopyPaintAndCoating(Main.tile[i, j]);
 							WorldGen.SquareTileFrame(i, num36);
-							if (Main.netMode == 2) {
+							if (Main.netMode == NetmodeID.Server) 
+							{
 								NetMessage.SendTileSquare(-1, i, num36);
 							}
 						}
@@ -107,7 +117,8 @@ namespace TheConfectionRebirth.Tiles
 					if (num9 != -1 && WorldGen.PlaceTile(i, minJ, num9, mute: true)) 
 					{
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
-						if (Main.netMode == 2) {
+						if (Main.netMode == NetmodeID.Server)
+						{
 							NetMessage.SendTileSquare(-1, i, minJ);
 						}
 					}
@@ -134,7 +145,8 @@ namespace TheConfectionRebirth.Tiles
 							WorldGen.SpreadGrass(num11, num13, 0, grass, repeat: false, color3);
 							if (Main.tile[num11, num13 - 1].TileType == 27) 
 							{
-								if (num2 == ModContent.TileType<CreamGrass>()) {
+								if (num2 == ModContent.TileType<CreamGrass>()) 
+								{
 									WorldGen.SpreadGrass(num11, num13, 2, grass, repeat: false, color3);
 								}
 								if (num2 == ModContent.TileType<CreamGrassMowed>()) 
@@ -162,7 +174,8 @@ namespace TheConfectionRebirth.Tiles
 						}
 					}
 				}
-				if (Main.netMode == NetmodeID.Server && flag7) {
+				if (Main.netMode == NetmodeID.Server && flag7) 
+				{
 					NetMessage.SendTileSquare(-1, i, j, 3);
 				}
 			}

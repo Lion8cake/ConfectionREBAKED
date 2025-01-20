@@ -78,6 +78,9 @@ Mods: {
 			Prickster: A pile of saccharite crystals may not be as it seem, as these tortoises have managed to blend into the confection underground to pierce their pray.
 			FoaminFloat: A cloud of foaming root beer. When enough presure in underground confection water pools explode and a foamin' float is created.
 			IcecreamGal: A lost child within the confection. Don't let her decieve you though as she is out to get you.
+			CrookedCookie: A small agile cookie that can't jump but uses its bounces to its advantage. It's a creation of the Creamsand Witch
+			MintJr: A flying mint cookie, due to its minty ability it slows any attacker it deems as a threat. It's a creation of the Creamsand Witch
+			Hunger: A sandwich cookie with a gooie center. It leaps similarly to mimics trying to catch threats in itself. It's a creation of the Creamsand Witch
 		}
 
 		ItemAnglerChat: {
@@ -1790,6 +1793,10 @@ Mods: {
 			Prickster.DisplayName: Prickster
 			FoaminFloat.DisplayName: Foamin' Float
 			IcecreamGal.DisplayName: Icecream Gal
+			CrookedCookie.DisplayName: Crooked Cookie
+			Hunger.DisplayName: Hunger
+			MintJr.DisplayName: Mint Jr.
+			CreamsandWitchFlying.DisplayName: Creamsand Witch Flying
 		}
 
 		Projectiles: {
