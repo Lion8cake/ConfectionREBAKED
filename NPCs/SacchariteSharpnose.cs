@@ -45,7 +45,7 @@ namespace TheConfectionRebirth.NPCs
 			NPC.knockBackResist = 0.7f;
 			NPC.behindTiles = true;
 			Banner = Type;
-            BannerItem = ModContent.ItemType<CreamSwollowerBanner>();
+            BannerItem = ModContent.ItemType<SacchariteSharpnoseBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
         }
 

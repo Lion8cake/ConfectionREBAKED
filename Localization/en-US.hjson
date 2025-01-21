@@ -263,8 +263,8 @@ Mods: {
 			}
 
 			ChocolateFrogBanner: {
-				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
-				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Birdnana.DisplayName}"
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.ChocolateFrog.DisplayName}"
 			}
 
 			ChocolateFrog: {
@@ -1578,120 +1578,119 @@ Mods: {
 				Tooltip: Summons an angry meowzer
 			}
 
-			#banner item names, will be properly formatted as each NPC is added
 			CherryBomberBanner: {
-				DisplayName: Cherry Bomber Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CherryBomber.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CherryBomber.DisplayName}"
 			}
 
 			ConfectionMimicBanner: {
-				DisplayName: Confection Mimic Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.BigMimicConfection.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.BigMimicConfection.DisplayName}"
 			}
 
 			CrazyConeBanner: {
-				DisplayName: Crazy Cone Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CrazyCone.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CrazyCone.DisplayName}"
 			}
 
 			CreamsandWitchBanner: {
-				DisplayName: Creamsand Witch Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CreamsandWitchFlying.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CreamsandWitchFlying.DisplayName}"
 			}
 
-			CreamSwollowerBanner: {
-				DisplayName: Cream Swollower Banner
-				Tooltip: ""
+			SacchariteSharpnoseBanner: {
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.SacchariteSharpnose.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.SacchariteSharpnose.DisplayName}"
 			}
 
 			CrookedCookieBanner: {
-				DisplayName: Crooked Cookie Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.CrookedCookie.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.CrookedCookie.DisplayName}"
 			}
 
 			DudleyBanner: {
-				DisplayName: Dudley Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Dudley.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Dudley.DisplayName}"
 			}
 
 			FoaminFloatBanner: {
-				DisplayName: Foamin Float Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.FoaminFloat.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.FoaminFloat.DisplayName}"
 			}
 
 			GummyWyrmBanner: {
-				DisplayName: Gummy Wyrm Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.GummyWyrmHead.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.GummyWyrmHead.DisplayName}"
 			}
 
 			HungerBanner: {
-				DisplayName: Hunger Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Hunger.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Hunger.DisplayName}"
 			}
 
 			IcecreamGalBanner: {
-				DisplayName: Icecream Gal Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.IcecreamGal.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.IcecreamGal.DisplayName}"
 			}
 
 			IscreamerBanner: {
-				DisplayName: Iscreamer Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Iscreamer.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Iscreamer.DisplayName}"
 			}
 
 			MeowzerBanner: {
-				DisplayName: Meowzer Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Meowzer.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Meowzer.DisplayName}"
 			}
 
 			MintJrBanner: {
-				DisplayName: Mint Jr Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.MintJr.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.MintJr.DisplayName}"
 			}
 
 			ParfaitSlimeBanner: {
-				DisplayName: Parfait Slime Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.ParfaitSlime.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.ParfaitSlime.DisplayName}"
 			}
 
 			PricksterBanner: {
-				DisplayName: Prickster Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Prickster.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Prickster.DisplayName}"
 			}
 
 			RollerCookieBanner: {
-				DisplayName: Roller Cookie Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Rollercookie.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Rollercookie.DisplayName}"
 			}
 
 			SherbetSlimeBanner: {
-				DisplayName: Sherbet Slime Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.SherbetSlime.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.SherbetSlime.DisplayName}"
 			}
 
 			SprinklingBanner: {
-				DisplayName: Sprinkling Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Sprinkling.DisplayName}"
 			}
 
 			StripedPigronBanner: {
-				DisplayName: Striped Pigron Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.StripedPigron.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.StripedPigron.DisplayName}"
 			}
 
 			SweetGummyBanner: {
-				DisplayName: Sweet Gummy Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.SweetGummy.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.SweetGummy.DisplayName}"
 			}
 
 			TheUnfirmBanner: {
-				DisplayName: The Unfirm Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.Unfirm.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.Unfirm.DisplayName}"
 			}
 
 			WildWillyBanner: {
-				DisplayName: Wild Willy Banner
-				Tooltip: ""
+				DisplayName: "{$Mods.TheConfectionRebirth.NPCs.WildWilly.DisplayName}{$Mods.TheConfectionRebirth.common.Banner}"
+				Tooltip: "{$Mods.TheConfectionRebirth.common.Banner2} {$Mods.TheConfectionRebirth.NPCs.WildWilly.DisplayName}"
 			}
 
 			CherryBurstArrow: {

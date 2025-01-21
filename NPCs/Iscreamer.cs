@@ -33,9 +33,9 @@ namespace TheConfectionRebirth.NPCs
             NPC.damage = 50;
             NPC.defense = 22;
             NPC.lifeMax = 400;
-			//NPC.HitSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Custom/IceScreamerHurt");
-			//NPC.DeathSound = new SoundStyle($"{nameof(TheConfectionRebirth)}/Sounds/Custom/IceScreamerDeath");
-            NPC.value = 600f;
+			NPC.HitSound = new SoundStyle("TheConfectionRebirth/Sounds/NPCs/IscreamerHit") { Volume = 0.75f, PitchVariance = 0.25f };
+			NPC.DeathSound = new SoundStyle("TheConfectionRebirth/Sounds/NPCs/IscreamerDeath");
+			NPC.value = 600f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.knockBackResist = 0.5f;
@@ -60,6 +60,13 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void AI()
 		{
+			if (!(NPC.shimmerTransparency > 0f))
+			{
+				if (Main.rand.NextBool(600) && !NPC.justHit)
+				{
+					SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/NPCs/IscreamerScream2") { PitchVariance = 0.25f }, NPC.position);
+				}
+			}
 			bool flag20 = false;
 			if (NPC.justHit)
 			{
@@ -302,6 +309,7 @@ namespace TheConfectionRebirth.NPCs
 					Vector2 newPos = new(chosenTile.X * 16f - (float)(NPC.width / 2), chosenTile.Y * 16f - (float)NPC.height);
 					NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
 					Teleport(NPC, newPos);
+					SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/NPCs/IscreamerScream1") { Volume = 0.75f, PitchVariance = 0.25f }, NPC.position);
 					return;
 				}
 				NPC.active = false;

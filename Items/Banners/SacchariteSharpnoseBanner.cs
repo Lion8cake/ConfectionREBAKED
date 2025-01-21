@@ -7,7 +7,8 @@ using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Items.Banners
 {
-    public class SprinklingBanner : ModItem
+	[LegacyName("CreamSwollowerBanner")]
+	public class SacchariteSharpnoseBanner : ModItem
     {
 		public override void SetStaticDefaults()
 		{
@@ -16,7 +17,7 @@ namespace TheConfectionRebirth.Items.Banners
 
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlaceableTile(ModContent.TileType<ConfectionBanners>(), (int)ConfectionBanners.StyleID.Sprinklering);
+			Item.DefaultToPlaceableTile(ModContent.TileType<ConfectionBanners>(), (int)ConfectionBanners.StyleID.SacchariteSharpnose);
 			Item.width = 10;
 			Item.height = 24;
 			Item.SetShopValues(ItemRarityColor.Blue1, Item.buyPrice(silver: 10));
