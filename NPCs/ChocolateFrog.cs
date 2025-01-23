@@ -49,11 +49,9 @@ namespace TheConfectionRebirth.NPCs
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			//if (spawnInfo.Player.ZoneOverworldHeight && Main.dayTime && spawnInfo.Player.ZoneJungle && spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive()) {
-			//	return 0.75f;
-			//}
-			return 0f;
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) 
+		{
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
 		}
 
 		public override void PostAI()

@@ -466,11 +466,8 @@ namespace TheConfectionRebirth.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            //if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
-            //    return 0.5f;
-            //}
-            return 0f;
-        }
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
 			if (NPC.ai[3] >= 200 && NPC.ai[0] == 2f) {

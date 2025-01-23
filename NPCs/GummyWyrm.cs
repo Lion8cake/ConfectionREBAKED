@@ -519,6 +519,11 @@ namespace TheConfectionRebirth.NPCs {
 			npcLoot.Add(ItemDropRule.Common(ItemID.WhoopieCushion, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GummyWormWhip>(), 100));
 		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 	}
 
 	public class GummyWyrmBody : ConfectionWorm {

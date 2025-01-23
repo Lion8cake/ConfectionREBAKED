@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,13 +53,10 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            //if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && spawnInfo.Player.ZoneDesert && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
-            //    return 1f;
-            //}
-            return 0f;
-        }
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{

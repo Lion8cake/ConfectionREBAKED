@@ -85,7 +85,8 @@ namespace TheConfectionRebirth
 
 		public static ShaderData GummyWyrmShaderData { get; private set; }
 
-		public override void Load() {
+		public override void Load() 
+		{
 			instance = this;
 			ConfectionWindUtilities.Load();
 

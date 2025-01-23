@@ -52,6 +52,7 @@ namespace TheConfectionRebirth.NPCs
 		public override void OnSpawn(IEntitySource source)
 		{
 			//Spawn variants when naturally spawned (how tf do we do that)
+			//Spawning has been added I should do the above ^ 
 			NPC.ai[3] = 261;
 		}
 
@@ -382,6 +383,11 @@ namespace TheConfectionRebirth.NPCs
 					}
 				}
 			}
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
 		}
 
 		internal int countSprinkles()
