@@ -161,6 +161,18 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
+		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+		{
+			SpawnNPC_ConfectionNPC(spawnInfo, 0, out bool blockVanillaSpawn);
+			if (blockVanillaSpawn)
+			{
+				if (pool.ContainsKey(0))
+				{
+					pool[0] = 0f;
+				}
+			}
+		}
+
 		private static int SpawnNPC_TryFindingProperGroundTileType(int spawnTileType, int x, int y)
 		{
 			if (!NPC.IsValidSpawningGroundTile(x, y))
@@ -184,6 +196,19 @@ namespace TheConfectionRebirth.NPCs
 		/// <returns></returns>
 		public static float SpawnNPC_ConfectionNPC(NPCSpawnInfo spawnInfo, int npcType)
 		{
+			return SpawnNPC_ConfectionNPC(spawnInfo, npcType, out _);
+		}
+
+		/// <summary>
+		/// Used to repeat less code and to have all the spawn conditions in 1 place, this is to get as close as possible to vanilla spawning
+		/// </summary>
+		/// <param name="spawnInfo"></param>
+		/// <param name="npcType"></param>
+		/// <param name="blockVanillaSpawn"></param>
+		/// <returns></returns>
+		public static float SpawnNPC_ConfectionNPC(NPCSpawnInfo spawnInfo, int npcType, out bool blockVanillaSpawn)
+		{
+			blockVanillaSpawn = false;
 			int x = spawnInfo.SpawnTileX;
 			int y = spawnInfo.SpawnTileY;
 			Player player = spawnInfo.Player;
@@ -252,7 +277,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 
 
-
+			//spawning, adapted from vanilla SpawnNPC method in NPC.cs
 			if (player.ZoneTowerNebula)
 			{
 			}
@@ -303,19 +328,22 @@ namespace TheConfectionRebirth.NPCs
 				}
 				else if (Main.hardMode && !Main.rand.NextBool(5))
 				{
-					List<int> list = new List<int>();
-					if (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+					//blockVanillaSpawn = true; //dont need to block
+					switch (Main.rand.Next(3))
 					{
-						list.Add(ModContent.NPCType<SugarGhoul>());
-						list.Add(ModContent.NPCType<SugarGhoul>());
-						list.Add(ModContent.NPCType<Dudley>());
+						case 0:
+							if (ModContent.NPCType<Dudley>() == npcType)
+							{
+								return 1f;
+							}
+							break;
+						default:
+							if (ModContent.NPCType<SugarGhoul>() == npcType)
+							{
+								return 1f;
+							}
+							break;
 					}
-					int type = Utils.SelectRandom(Main.rand, list.ToArray());
-					if (type == npcType)
-					{
-						return 1f;
-					}
-					list.Clear();
 				}
 			}
 			else if (Main.hardMode && spawnInfo.Water && player.ZoneJungle && !Main.rand.NextBool(3))
@@ -380,6 +408,7 @@ namespace TheConfectionRebirth.NPCs
 					{
 						return 0f;
 					}
+					blockVanillaSpawn = true;
 					bool flag27 = surface2;
 					if (Main.raining && y <= Main.UnderworldLayer)
 					{
@@ -606,6 +635,7 @@ namespace TheConfectionRebirth.NPCs
 						{
 							if ((Main.rand.NextBool(2) && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !NPC.AnyNPCs(ModContent.NPCType<BigMimicConfection>())))
 							{
+								blockVanillaSpawn = true;
 								if (npcType == ModContent.NPCType<BigMimicConfection>())
 								{
 									return 1f;
@@ -684,9 +714,13 @@ namespace TheConfectionRebirth.NPCs
 							{
 								if (!(Main.hardMode && tileType == TileID.Pearlsand && Main.rand.NextBool(3)))
 								{
-									if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(3) && npcType == ModContent.NPCType<SweetGummy>())
+									if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(3))
 									{
-										return 1f;
+										blockVanillaSpawn = true;
+										if (npcType == ModContent.NPCType<SweetGummy>())
+										{
+											return 1f;
+										}
 									}
 								}
 							}
@@ -695,15 +729,15 @@ namespace TheConfectionRebirth.NPCs
 				}
 				else
 				{
-					int sandsharkType = -1;
-					if (ConfectionIDs.Sets.Confection[tileType])
-					{
-						sandsharkType = ModContent.NPCType<SacchariteSharpnose>(); //use onspawn most likely 
-					}
-					if (sandsharkType == npcType)
-					{
-						return 1f;
-					}
+					//int sandsharkType = -1;
+					//if (ConfectionIDs.Sets.Confection[tileType])
+					//{
+					//	sandsharkType = ModContent.NPCType<SacchariteSharpnose>(); //use onspawn most likely 
+					//}
+					//if (sandsharkType == npcType)
+					//{
+					//	return 1f;
+					//}
 				}
 			}
 			else if (Main.hardMode && tileType == TileID.Sand && Main.rand.NextBool(3))
@@ -720,6 +754,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(2))
 			{
+				blockVanillaSpawn = true;
 				if (npcType == ModContent.NPCType<SweetGummy>())
 				{
 					return 1f;
@@ -730,6 +765,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if (Main.hardMode && !spawnInfo.Water && surface && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
 			{
+				blockVanillaSpawn = true;
 				if (NPC.downedPlantBoss && (Main.remixWorld || (!Main.dayTime && Main.time < 16200.0)) && surface2 && player.RollLuck(10) == 0 && !NPC.AnyNPCs(ModContent.NPCType<RoyalCherryBug>()))
 				{
 					if (npcType == ModContent.NPCType<RoyalCherryBug>())
@@ -787,6 +823,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if (!spawnInfo.PlayerSafe && Main.hardMode && Main.rand.NextBool(50) && !spawnInfo.Water && dirtLayer && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
 			{
+				blockVanillaSpawn = true;
 				if (npcType == ModContent.NPCType<CrazyCone>())
 				{
 					return 1f;
@@ -822,6 +859,7 @@ namespace TheConfectionRebirth.NPCs
 					int num3 = Math.Abs(x - Main.spawnTileX);
 					if (!spawnInfo.Water && num3 < Main.maxTilesX / 2 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
 					{
+						blockVanillaSpawn = true;
 						if (tileType == 147 || tileType == 161)
 						{
 						}
@@ -872,6 +910,7 @@ namespace TheConfectionRebirth.NPCs
 					}
 					else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.dayTime && Main.time < 18000.0 && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && Main.rand.NextBool(4) && (double)y <= Main.worldSurface && NPC.CountNPCS(ModContent.NPCType<Birdnana>()) + NPC.CountNPCS(ModContent.NPCType<Pip>()) < 6)
 					{
+						blockVanillaSpawn = true;
 						int num4 = Main.rand.Next(3);
 						if (player.RollLuck(NPC.goldCritterChance) == 0)
 						{
@@ -897,6 +936,7 @@ namespace TheConfectionRebirth.NPCs
 					}
 					else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
 					{
+						blockVanillaSpawn = true;
 						int num5 = Main.rand.Next(3);
 						if (player.RollLuck(NPC.goldCritterChance) == 0)
 						{
@@ -925,6 +965,7 @@ namespace TheConfectionRebirth.NPCs
 				{
 					if (!player.ZoneGraveyard && !NPC.TooWindyForButterflies && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && !Main.raining && Main.rand.NextBool(NPC.fireFlyChance) && (double)y <= Main.worldSurface)
 					{
+						blockVanillaSpawn = true;
 						if (npcType == ModContent.NPCType<CherryBug>())
 						{
 							if (Main.rand.NextBool(NPC.fireFlyMultiple))
@@ -965,6 +1006,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if ((tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.BlueIce>()) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8))
 			{
+				blockVanillaSpawn = true;
 				if (npcType == ModContent.NPCType<Iscreamer>())
 				{
 					return 1f;
@@ -981,6 +1023,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce || spawnTile == ModContent.TileType<Tiles.BlueIce>()) && !spawnInfo.PlayerSafe && Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(30))
 			{
+				//blockVanillaSpawn = true; //dont block
 				if (npcType == ModContent.NPCType<StripedPigron>())
 				{
 					return 1f;
@@ -1006,7 +1049,6 @@ namespace TheConfectionRebirth.NPCs
 			}
 			else if (!Main.rand.NextBool(2))
 			{
-
 				if (Main.hardMode && (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(2)))
 				{
 					if (npcType == ModContent.NPCType<ParfaitSlime>())
@@ -1022,6 +1064,7 @@ namespace TheConfectionRebirth.NPCs
 						{
 							if (Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
 							{
+								blockVanillaSpawn = true;
 								if (Main.rand.NextBool(5))
 								{
 									if (npcType == ModContent.NPCType<FoaminFloat>())
@@ -1069,6 +1112,13 @@ namespace TheConfectionRebirth.NPCs
 				else if (npc.type == NPCID.Frog)
 				{
 					npc.Transform(ModContent.NPCType<ChocolateFrog>());
+				}
+			}
+			if (npc.type == NPCID.SandShark)
+			{
+				if (ConfectionIDs.Sets.Confection[Main.tile[(int)((npc.position.X - 8) / 16), (int)(npc.position.Y / 16)].TileType])
+				{
+					npc.Transform(ModContent.NPCType<SacchariteSharpnose>());
 				}
 			}
 		}
