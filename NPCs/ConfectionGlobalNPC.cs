@@ -278,201 +278,93 @@ namespace TheConfectionRebirth.NPCs
 
 
 			//spawning, adapted from vanilla SpawnNPC method in NPC.cs
-			if (player.ZoneTowerNebula)
+			if (!((player.ZoneTowerNebula) || (player.ZoneTowerVortex) || (player.ZoneTowerStardust) || (player.ZoneTowerSolar) || (spawnInfo.Sky) || (spawnInfo.Invasion) || (wall == 244 && !Main.remixWorld) || (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].WallType == 62 || spawnInfo.SpiderCave)))
 			{
-			}
-			else if (player.ZoneTowerVortex)
-			{
-			}
-			else if (player.ZoneTowerStardust)
-			{
-			}
-			else if (player.ZoneTowerSolar)
-			{
-			}
-			else if (spawnInfo.Sky)
-			{
-			}
-			else if (spawnInfo.Invasion)
-			{
-			}
-			else if (wall == 244 && !Main.remixWorld)
-			{
-			}
-			else if (!NPC.savedBartender && DD2Event.ReadyToFindBartender && !NPC.AnyNPCs(579) && Main.rand.NextBool(80) && !spawnInfo.Water)
-			{
-			}
-			else if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].WallType == 62 || spawnInfo.SpiderCave)
-			{
-			}
-			else if ((NPC.SpawnTileOrAboveHasAnyWallInSet(x, y, WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn) || spawnInfo.DesertCave) && WorldGen.checkUnderground(x, y))
-			{
-				//spawn Sugar ghoul here
-				float num68 = 1.15f;
-				if ((double)y > (Main.rockLayer * 2.0 + (double)Main.maxTilesY) / 3.0)
+				if ((NPC.SpawnTileOrAboveHasAnyWallInSet(x, y, WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn) || spawnInfo.DesertCave) && WorldGen.checkUnderground(x, y))
 				{
-					num68 *= 0.5f;
-				}
-				else if ((double)y > Main.rockLayer)
-				{
-					num68 *= 0.85f;
-				}
-				if (Main.rand.NextBool(20) && !spawnInfo.Water && !NPC.savedGolfer && !NPC.AnyNPCs(589))
-				{
-				}
-				else if (Main.hardMode && Main.rand.NextBool((int)(45f * num68)) && !spawnInfo.Water && (double)y > Main.worldSurface + 100.0)
-				{
-				}
-				else if (Main.rand.NextBool((int)(45f * num68)) && !spawnInfo.Water && (double)y > Main.worldSurface + 100.0 && NPC.CountNPCS(513) == 0)
-				{
-				}
-				else if (Main.hardMode && !Main.rand.NextBool(5))
-				{
-					//blockVanillaSpawn = true; //dont need to block
-					switch (Main.rand.Next(3))
+					//spawn Sugar ghoul here
+					float num68 = 1.15f;
+					if ((double)y > (Main.rockLayer * 2.0 + (double)Main.maxTilesY) / 3.0)
 					{
-						case 0:
-							if (ModContent.NPCType<Dudley>() == npcType)
-							{
-								return 1f;
-							}
-							break;
-						default:
-							if (ModContent.NPCType<SugarGhoul>() == npcType)
-							{
-								return 1f;
-							}
-							break;
+						num68 *= 0.5f;
+					}
+					else if ((double)y > Main.rockLayer)
+					{
+						num68 *= 0.85f;
+					}
+					else if (Main.hardMode && !Main.rand.NextBool(5))
+					{
+						//blockVanillaSpawn = true; //dont need to block
+						switch (Main.rand.Next(3))
+						{
+							case 0:
+								if (ModContent.NPCType<Dudley>() == npcType)
+								{
+									return 1f;
+								}
+								break;
+							default:
+								if (ModContent.NPCType<SugarGhoul>() == npcType)
+								{
+									return 1f;
+								}
+								break;
+						}
 					}
 				}
-			}
-			else if (Main.hardMode && spawnInfo.Water && player.ZoneJungle && !Main.rand.NextBool(3))
-			{
-			}
-			else if (Main.hardMode && spawnInfo.Water && player.ZoneCrimson && !Main.rand.NextBool(3))
-			{
-			}
-			else if (Main.hardMode && spawnInfo.Water && player.ZoneCrimson && !Main.rand.NextBool(3))
-			{
-			}
-			else if ((!spawnInfo.PlayerInTown || (!NPC.savedAngler && !NPC.AnyNPCs(376))) && spawnInfo.Water && oceanBottom)
-			{
-			}
-			else if (!spawnInfo.Water && !NPC.savedAngler && !NPC.AnyNPCs(376) && (x < WorldGen.beachDistance || x > Main.maxTilesX - WorldGen.beachDistance) && Main.tileSand[tileType] && ((double)y < Main.worldSurface || Main.remixWorld))
-			{
-			}
-			else if (!spawnInfo.PlayerInTown && spawnInfo.Water && ((dirtLayer && Main.rand.NextBool(2)) || tileType == TileID.JungleGrass))
-			{
-			}
-			else if (!spawnInfo.PlayerInTown && spawnInfo.Water && (double)y > Main.worldSurface && Main.rand.NextBool(3))
-			{
-			}
-			else if (spawnInfo.Water && Main.rand.NextBool(4) && ((x > WorldGen.oceanDistance && x < Main.maxTilesX - WorldGen.oceanDistance) || (double)y > Main.worldSurface + 50.0))
-			{
-			}
-			else if (NPC.downedGoblins && player.RollLuck(20) == 0 && !spawnInfo.Water && dirtLayer && y < Main.maxTilesY - 210 && !NPC.savedGoblin && !NPC.AnyNPCs(105))
-			{
-			}
-			else if (Main.hardMode && player.RollLuck(20) == 0 && !spawnInfo.Water && dirtLayer && y < Main.maxTilesY - 210 && !NPC.savedWizard && !NPC.AnyNPCs(106))
-			{
-			}
-			else if (NPC.downedBoss3 && player.RollLuck(20) == 0 && !spawnInfo.Water && dirtLayer && y < Main.maxTilesY - 210 && !NPC.unlockedSlimeOldSpawn && !NPC.AnyNPCs(685))
-			{
-			}
-			else if (spawnInfo.PlayerInTown)
-			{
-				if (player.ZoneGraveyard)
+				else if (spawnInfo.PlayerInTown)
 				{
-				}
-				else if (!spawnInfo.SafeRangeX && beach)
-				{
-				}
-				else if ((tileType == 2 || tileType == 477 || tileType == 53) && !NPC.TooWindyForButterflies && Main.raining && Main.dayTime && Main.rand.NextBool(2) && ((double)y <= Main.worldSurface || Main.remixWorld) && NPC.FindCattailTop(x, y, out _, out _))
-				{
-				}
-				else if (spawnInfo.Water)
-				{
-				}
-				else if (tileType == 147 || tileType == 161)
-				{
-				}
-				else if (tileType == 60)
-				{
-				}
-				else if (tileType == 53)
-				{
-				}
-				else
-				{
-					if (tileType != ModContent.TileType<Tiles.CreamGrass>() && tileType != ModContent.TileType<Tiles.CreamGrassMowed>() && !((double)y > Main.worldSurface))
+					if (!((player.ZoneGraveyard) || (!spawnInfo.SafeRangeX && beach) || (spawnInfo.Water) || (tileType == TileID.SnowBlock || tileType == TileID.IceBlock) || (tileType == TileID.JungleGrass) || (tileType == TileID.Sand)))
 					{
-						return 0f;
-					}
-					blockVanillaSpawn = true;
-					bool flag27 = surface2;
-					if (Main.raining && y <= Main.UnderworldLayer)
-					{
-						if (dirtLayer && Main.rand.NextBool(5))
+						if (tileType != ModContent.TileType<Tiles.CreamGrass>() && tileType != ModContent.TileType<Tiles.CreamGrassMowed>() && !((double)y > Main.worldSurface))
 						{
+							return 0f;
 						}
-						else if (dirtLayer && Main.rand.NextBool(5))
+						blockVanillaSpawn = true;
+						bool flag27 = surface2;
+						if (Main.raining && y <= Main.UnderworldLayer)
 						{
-						}
-						else if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else if (!Main.rand.NextBool(3))
-						{
-							if (npcType == ModContent.NPCType<GummyWorm>())
+							if (!Main.rand.NextBool(3))
 							{
+								if (npcType == ModContent.NPCType<GummyWorm>())
+								{
+									return 1f;
+								}
+							}
+							else if (!Main.rand.NextBool(3))
+							{
+								if (npcType == ModContent.NPCType<ChocolateFrog>())
+								{
+									return 1f;
+								}
+							}
+						}
+						else if (!NPC.TooWindyForButterflies && !Main.dayTime && Main.rand.NextBool(NPC.fireFlyFriendly) && flag27)
+						{
+							if (npcType == ModContent.NPCType<CherryBug>())
+							{
+								if (Main.rand.NextBool(NPC.fireFlyMultiple))
+								{
+									NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 - 16, y * 16, npcType);
+								}
+								if (Main.rand.NextBool(NPC.fireFlyMultiple))
+								{
+									NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 + 16, y * 16, npcType);
+								}
+								if (Main.rand.NextBool(NPC.fireFlyMultiple))
+								{
+									NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 - 16, npcType);
+								}
+								if (Main.rand.NextBool(NPC.fireFlyMultiple))
+								{
+									NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 + 16, npcType);
+								}
 								return 1f;
 							}
 						}
-						else if (!Main.rand.NextBool(3))
+						else if (Main.dayTime && Main.time < 18000.0 && !Main.rand.NextBool(3) && flag27)
 						{
-							if (npcType == ModContent.NPCType<ChocolateFrog>())
-							{
-								return 1f;
-							}
-						}
-					}
-					else if (!Main.dayTime && Main.numClouds <= 55 && Main.cloudBGActive == 0f && Star.starfallBoost > 3f && flag27 && player.RollLuck(2) == 0)
-					{
-					}
-					else if (!NPC.TooWindyForButterflies && !Main.dayTime && Main.rand.NextBool(NPC.fireFlyFriendly) && flag27)
-					{
-						if (npcType == ModContent.NPCType<CherryBug>())
-						{
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 - 16, y * 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 + 16, y * 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 - 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 + 16, npcType);
-							}
-							return 1f;
-						}
-					}
-					else if (Main.cloudAlpha == 0f && !Main.dayTime && Main.rand.NextBool(5) && flag27)
-					{
-					}
-					else if (Main.dayTime && Main.time < 18000.0 && !Main.rand.NextBool(3) && flag27)
-					{
-						int num101 = Main.rand.Next(3);
-						if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else
-						{
+							int num101 = Main.rand.Next(3);
 							switch (num101)
 							{
 								case 0:
@@ -489,34 +381,16 @@ namespace TheConfectionRebirth.NPCs
 									break;
 							}
 						}
-					}
-					else if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.stinkBugChance) && flag27)
-					{
-					}
-					else if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance) && flag27)
-					{
-						if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else
+						else if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance) && flag27)
 						{
 							if (npcType == ModContent.NPCType<GrumbleBee>())
 							{
 								return 1f;
 							}
 						}
-					}
-					else if (NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance / 2) && flag27)
-					{
-					}
-					else if (Main.rand.NextBool(2) && flag27)
-					{
-						int num102 = Main.rand.Next(3);
-						if (player.RollLuck(NPC.goldCritterChance) == 0)
+						else if (Main.rand.NextBool(2) && flag27)
 						{
-						}
-						else
-						{
+							int num102 = Main.rand.Next(3);
 							switch (num102)
 							{
 								case 0:
@@ -533,110 +407,21 @@ namespace TheConfectionRebirth.NPCs
 									break;
 							}
 						}
-					}
-					else if (y > Main.UnderworldLayer)
-					{
-					}
-					else if (player.RollLuck(NPC.goldCritterChance) == 0)
-					{
-					}
-					else if (player.RollLuck(NPC.goldCritterChance) == 0 && flag27)
-					{
-					}
-					else if (Main.halloween && !Main.rand.NextBool(3))
-					{
-					}
-					else if (Main.xMas && !Main.rand.NextBool(3))
-					{
-					}
-					else if (BirthdayParty.PartyIsUp && !Main.rand.NextBool(3))
-					{
-					}
-					else if (Main.rand.NextBool(3))
-					{
-					}
-					else if (Main.remixWorld)
-					{
-						if ((double)y < Main.rockLayer && (double)y > Main.worldSurface)
+						else if (!(y > Main.UnderworldLayer))
 						{
-							if (npcType == ModContent.NPCType<ChocolateBunny>())
+							if (Main.remixWorld)
 							{
-								return 1f;
+								if ((double)y < Main.rockLayer && (double)y > Main.worldSurface)
+								{
+									if (npcType == ModContent.NPCType<ChocolateBunny>())
+									{
+										return 1f;
+									}
+								}
 							}
-						}
-					}
-					else if ((double)y >= Main.rockLayer && y <= Main.UnderworldLayer)
-					{
-					}
-					else
-					{
-						if (npcType == ModContent.NPCType<ChocolateBunny>())
-						{
-							return 1f;
-						}
-					}
-				}
-			}
-			else if (player.ZoneDungeon)
-			{
-			}
-			else if (player.ZoneMeteor)
-			{
-			}
-			else if (DD2Event.Ongoing && player.ZoneOldOneArmy)
-			{
-			}
-			else if ((Main.remixWorld || (double)y <= Main.worldSurface) && !Main.dayTime && Main.snowMoon)
-			{
-			}
-			else if ((Main.remixWorld || (double)y <= Main.worldSurface) && !Main.dayTime && Main.pumpkinMoon)
-			{
-			}
-			else if (((double)y <= Main.worldSurface || (Main.remixWorld && (double)y > Main.rockLayer)) && Main.dayTime && Main.eclipse) //eclipse, idk if this will get used since mothron can get SetDefault'd into the unfirm
-			{
-				//bool flag29 = false;
-				//if (downedMechBoss1 && downedMechBoss2 && downedMechBoss3)
-				//{
-				//	flag29 = true;
-				//}
-				//newNPC = ((downedPlantBoss && Main.rand.Next(80) == 0 && !AnyNPCs(477)) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 477) : ((Main.rand.Next(50) == 0 && !AnyNPCs(251)) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 251) : ((downedPlantBoss && Main.rand.Next(5) == 0 && !AnyNPCs(466)) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 466) : ((downedPlantBoss && Main.rand.Next(20) == 0 && !AnyNPCs(463)) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 463) : ((downedPlantBoss && Main.rand.Next(20) == 0 && CountNPCS(467) < 2) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 467) : ((Main.rand.Next(15) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 159) : ((flag29 && Main.rand.Next(13) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 253) : ((Main.rand.Next(8) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 469) : ((downedPlantBoss && Main.rand.Next(7) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 468) : ((downedPlantBoss && Main.rand.Next(5) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 460) : ((Main.rand.Next(4) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 162) : ((Main.rand.Next(3) == 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 461) : ((Main.rand.Next(2) != 0) ? NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 166) : NewNPC(GetSpawnSourceForNaturalSpawn(), num * 16 + 8, num24 * 16, 462))))))))))))));
-			}
-			//else if (NPC.SpawnNPC_CheckToSpawnUndergroundFairy(x, y, player.whoAmI))
-			//{
-			//}
-			else if (!Main.remixWorld && !spawnInfo.Water && (!Main.dayTime || Main.tile[x, y].WallType > 0) && Main.tile[num89, num100].WallType == 244 && !Main.eclipse && !Main.bloodMoon && player.RollLuck(30) == 0 && NPC.CountNPCS(624) <= Main.rand.Next(3))
-			{
-			}
-			else if (!player.ZoneCorrupt && !player.ZoneCrimson && !spawnInfo.Water && !Main.eclipse && !Main.bloodMoon && player.RollLuck(range) == 0 && ((!Main.remixWorld && (double)y >= Main.worldSurface * 0.800000011920929 && (double)y < Main.worldSurface * 1.100000023841858) || (Main.remixWorld && (double)y > Main.rockLayer && y < Main.maxTilesY - 350)) && NPC.CountNPCS(624) <= Main.rand.Next(3) && (!Main.dayTime || Main.tile[x, y].WallType > 0) && (Main.tile[x, y].WallType == 63 || Main.tile[x, y].WallType == 2 || Main.tile[x, y].WallType == 196 || Main.tile[x, y].WallType == 197 || Main.tile[x, y].WallType == 198 || Main.tile[x, y].WallType == 199))
-			{
-			}
-			else if (Main.hardMode && spawnTile == TileID.MushroomGrass && spawnInfo.Water)
-			{
-			}
-			else if (spawnTile == TileID.MushroomGrass && (double)y <= Main.worldSurface && !Main.rand.NextBool(3))
-			{
-			}
-			else if (spawnTile == TileID.MushroomGrass && Main.hardMode && (double)y >= Main.worldSurface && !Main.rand.NextBool(3) && (!Main.remixWorld || Main.getGoodWorld || y < Main.maxTilesY - 360))
-			{
-			}
-			else if (player.ZoneCorrupt && Main.rand.NextBool(maxValue) && !spawnInfo.PlayerSafe)
-			{
-			}
-			else if (Main.remixWorld && !Main.hardMode && (double)y > Main.worldSurface && player.RollLuck(100) == 0)
-			{
-			}
-			else if (Main.hardMode && (double)y > Main.worldSurface && player.RollLuck(Main.tenthAnniversaryWorld ? 25 : 75) == 0) //biome mimic
-			{
-				if (!(Main.rand.NextBool(2) && player.ZoneCorrupt && !NPC.AnyNPCs(NPCID.BigMimicCorruption)))
-				{
-					if (!(Main.rand.NextBool(2) && player.ZoneCrimson && !NPC.AnyNPCs(NPCID.BigMimicCrimson)))
-					{
-						if (!(Main.rand.NextBool(2) && player.ZoneHallow && !NPC.AnyNPCs(NPCID.BigMimicHallow)))
-						{
-							if ((Main.rand.NextBool(2) && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !NPC.AnyNPCs(ModContent.NPCType<BigMimicConfection>())))
+							else if (!((double)y >= Main.rockLayer && y <= Main.UnderworldLayer))
 							{
-								blockVanillaSpawn = true;
-								if (npcType == ModContent.NPCType<BigMimicConfection>())
+								if (npcType == ModContent.NPCType<ChocolateBunny>())
 								{
 									return 1f;
 								}
@@ -644,453 +429,278 @@ namespace TheConfectionRebirth.NPCs
 						}
 					}
 				}
-			}
-			else if (Main.hardMode && Main.tile[x, y].WallType == WallID.DirtUnsafe && Main.rand.NextBool(20))
-			{
-			}
-			else if (Main.hardMode && (double)y <= Main.worldSurface && !Main.dayTime && (Main.rand.NextBool(20) || (Main.rand.NextBool(5) && Main.moonPhase == 4)))
-			{
-			}
-			else if (Main.hardMode && Main.halloween && (double)y <= Main.worldSurface && !Main.dayTime && Main.rand.NextBool(10))
-			{
-			}
-			else if (tileType == TileID.JungleGrass && player.RollLuck(500) == 0 && !Main.dayTime)
-			{
-			}
-			else if (tileType == TileID.JungleGrass && (double)y > Main.worldSurface && Main.rand.NextBool(60))
-			{
-			}
-			else if ((double)y > Main.worldSurface && y < Main.maxTilesY - 210 && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneCorrupt && !player.ZoneJungle && !player.ZoneHallow && Main.rand.NextBool(8))
-			{
-			}
-			else if ((double)y > Main.worldSurface && y < Main.maxTilesY - 210 && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneCorrupt && !player.ZoneJungle && !player.ZoneHallow && Main.rand.NextBool(13))
-			{
-			}
-			else if ((double)y > Main.worldSurface && y < (Main.rockLayer + (double)Main.maxTilesY) / 2.0 && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneCorrupt && !player.ZoneHallow && Main.rand.NextBool(13))
-			{
-			}
-			else if (surface2 && player.ZoneJungle && !player.ZoneCrimson && !player.ZoneCorrupt && Main.rand.NextBool(7))
-			{
-			}
-			else if (tileType == TileID.Hive && Main.rand.NextBool(2))
-			{
-			}
-			else if (tileType == TileID.JungleGrass && Main.hardMode && !Main.rand.NextBool(3))
-			{
-			}
-			else if (((tileType == TileID.LihzahrdBrick || tileType == TileID.WoodenSpikes) && spawnInfo.Lihzahrd) || (Main.remixWorld && spawnInfo.Lihzahrd))
-			{
-			}
-			else if (wall == WallID.HiveUnsafe && !Main.rand.NextBool(8))
-			{
-			}
-			else if (tileType == TileID.JungleGrass && ((!Main.remixWorld && (double)y > (Main.worldSurface + Main.rockLayer) / 2.0) || (Main.remixWorld && ((double)y < Main.rockLayer || Main.rand.NextBool(2)))))
-			{
-			}
-			else if (tileType == TileID.JungleGrass && Main.rand.NextBool(4))
-			{
-			}
-			else if (tileType == TileID.JungleGrass && Main.rand.NextBool(8))
-			{
-			}
-			else if (Sandstorm.Happening && player.ZoneSandstorm && TileID.Sets.Conversion.Sand[tileType] && NPC.Spawning_SandstoneCheck(x, y)) //confection sandstorm
-			{
-				if (!NPC.downedBoss1 && !Main.hardMode)
+				else if (!((player.ZoneDungeon) || (player.ZoneMeteor) || (DD2Event.Ongoing && player.ZoneOldOneArmy) || ((Main.remixWorld || (double)y <= Main.worldSurface) && !Main.dayTime && Main.snowMoon) || ((Main.remixWorld || (double)y <= Main.worldSurface) && !Main.dayTime && Main.pumpkinMoon) || (((double)y <= Main.worldSurface || (Main.remixWorld && (double)y > Main.rockLayer)) && Main.dayTime && Main.eclipse) || (Main.hardMode && spawnTile == TileID.MushroomGrass && spawnInfo.Water)))
 				{
-				}
-				else if (Main.hardMode && Main.rand.NextBool(20) && !NPC.AnyNPCs(541))
-				{
-				}
-				else if (Main.hardMode && !spawnInfo.Water && Main.rand.NextBool(3) && NPC.CountNPCS(510) < 4)
-				{
-				}
-				else if (!Main.hardMode || spawnInfo.Water || !Main.rand.NextBool(2))
-				{
-					if (!(Main.hardMode && tileType == TileID.Sand && Main.rand.NextBool(3)))
+					if (Main.hardMode && (double)y > Main.worldSurface && player.RollLuck(Main.tenthAnniversaryWorld ? 25 : 75) == 0) //biome mimic
 					{
-						if (!(Main.hardMode && tileType == TileID.Ebonsand && Main.rand.NextBool(3)))
+						if (Main.rand.NextBool(2) && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !NPC.AnyNPCs(ModContent.NPCType<BigMimicConfection>()))
 						{
-							if (!(Main.hardMode && tileType == TileID.Crimsand && Main.rand.NextBool(3)))
+							blockVanillaSpawn = true;
+							if (npcType == ModContent.NPCType<BigMimicConfection>())
 							{
-								if (!(Main.hardMode && tileType == TileID.Pearlsand && Main.rand.NextBool(3)))
+								return 1f;
+							}
+						}
+					}
+					else if (!((((tileType == TileID.LihzahrdBrick || tileType == TileID.WoodenSpikes) && spawnInfo.Lihzahrd) || (Main.remixWorld && spawnInfo.Lihzahrd)) || (tileType == TileID.JungleGrass && ((!Main.remixWorld && (double)y > (Main.worldSurface + Main.rockLayer) / 2.0) || (Main.remixWorld && ((double)y < Main.rockLayer || Main.rand.NextBool(2)))))))
+					{
+						if (Sandstorm.Happening && player.ZoneSandstorm && TileID.Sets.Conversion.Sand[tileType] && NPC.Spawning_SandstoneCheck(x, y)) //confection sandstorm
+						{
+							if (!(!NPC.downedBoss1 && !Main.hardMode))
+							{
+								if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(3))
 								{
-									if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(3))
+									blockVanillaSpawn = true;
+									if (npcType == ModContent.NPCType<SweetGummy>())
 									{
-										blockVanillaSpawn = true;
-										if (npcType == ModContent.NPCType<SweetGummy>())
-										{
-											return 1f;
-										}
+										return 1f;
 									}
 								}
 							}
 						}
-					}
-				}
-				else
-				{
-					//int sandsharkType = -1;
-					//if (ConfectionIDs.Sets.Confection[tileType])
-					//{
-					//	sandsharkType = ModContent.NPCType<SacchariteSharpnose>(); //use onspawn most likely 
-					//}
-					//if (sandsharkType == npcType)
-					//{
-					//	return 1f;
-					//}
-				}
-			}
-			else if (Main.hardMode && tileType == TileID.Sand && Main.rand.NextBool(3))
-			{
-			}
-			else if (Main.hardMode && tileType == TileID.Ebonsand && Main.rand.NextBool(2))
-			{
-			}
-			else if (Main.hardMode && tileType == TileID.Crimsand && Main.rand.NextBool(2))
-			{
-			}
-			else if (Main.hardMode && tileType == TileID.Pearlsand && Main.rand.NextBool(2))
-			{
-			}
-			else if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(2))
-			{
-				blockVanillaSpawn = true;
-				if (npcType == ModContent.NPCType<SweetGummy>())
-				{
-					return 1f;
-				}
-			}
-			else if (Main.hardMode && !spawnInfo.Water && surface && (tileType == TileID.Pearlsand || tileType == TileID.Pearlstone || tileType == TileID.HallowedGrass || tileType == TileID.HallowedIce))
-			{
-			}
-			else if (Main.hardMode && !spawnInfo.Water && surface && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
-			{
-				blockVanillaSpawn = true;
-				if (NPC.downedPlantBoss && (Main.remixWorld || (!Main.dayTime && Main.time < 16200.0)) && surface2 && player.RollLuck(10) == 0 && !NPC.AnyNPCs(ModContent.NPCType<RoyalCherryBug>()))
-				{
-					if (npcType == ModContent.NPCType<RoyalCherryBug>())
-					{
-						return 1f;
-					}
-				}
-				else if (!raining || NPC.AnyNPCs(ModContent.NPCType<SherbetSlime>()) || !Main.rand.NextBool(12))
-				{
-					if (!Main.dayTime && Main.rand.NextBool(2))
-					{
-						if (player.RollLuck(500) == 0)
+						else if (Main.hardMode && tileType == ModContent.TileType<Tiles.Creamsand>() && Main.rand.NextBool(2))
 						{
-							if (npcType == ModContent.NPCType<WildWilly>())
+							blockVanillaSpawn = true;
+							if (npcType == ModContent.NPCType<SweetGummy>())
 							{
 								return 1f;
 							}
 						}
-						else
+						else if (!(Main.hardMode && !spawnInfo.Water && surface && (tileType == TileID.Pearlsand || tileType == TileID.Pearlstone || tileType == TileID.HallowedGrass || tileType == TileID.HallowedIce)))
 						{
-							if (npcType == ModContent.NPCType<Meowzer>())
-							{
-								return 1f;
-							}
-						}
-					}
-					else
-					{
-						if (!Main.rand.NextBool(10) && (!player.ZoneWaterCandle || !Main.rand.NextBool(10)))
-						{
-							if (npcType == ModContent.NPCType<Sprinkler>() || npcType == ModContent.NPCType<Sprinkling>())
-							{
-								return 1f;
-							}
-						}
-						else
-						{
-							if (npcType == ModContent.NPCType<Rollercookie>())
-							{
-								return 1f;
-							}
-						}
-					}
-				}
-				else
-				{
-					if (npcType == ModContent.NPCType<SherbetSlime>())
-					{
-						return 1f;
-					}
-				}
-			}
-			else if (!spawnInfo.PlayerSafe && Main.hardMode && Main.rand.NextBool(50) && !spawnInfo.Water && dirtLayer && (tileType == TileID.Pearlsand || tileType == TileID.Pearlstone || tileType == TileID.HallowedGrass || tileType == TileID.HallowedIce))
-			{
-			}
-			else if (!spawnInfo.PlayerSafe && Main.hardMode && Main.rand.NextBool(50) && !spawnInfo.Water && dirtLayer && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
-			{
-				blockVanillaSpawn = true;
-				if (npcType == ModContent.NPCType<CrazyCone>())
-				{
-					return 1f;
-				}
-			}
-			else if ((tileType == TileID.Crimtane && player.ZoneCrimson) || tileType == TileID.CrimsonGrass || tileType == TileID.FleshIce || tileType == TileID.Crimstone || tileType == TileID.Crimsand || tileType == TileID.CrimsonJungleGrass)
-			{
-			}
-			else if ((tileType == TileID.Demonite && player.ZoneCorrupt) || tileType == TileID.CorruptGrass || tileType == TileID.Ebonstone || tileType == TileID.Ebonsand || tileType == TileID.CorruptIce || tileType == TileID.CorruptJungleGrass)
-			{
-			}
-			else if (surface2)
-			{
-				bool flag32 = (float)Math.Abs(x - Main.maxTilesX / 2) / (float)(Main.maxTilesX / 2) > 0.33f;
-				if (flag32 && NPC.AnyDanger())
-				{
-					flag32 = false;
-				}
-				if (player.ZoneGraveyard && !spawnInfo.Water && (spawnTile == 2 || spawnTile == 477) && Main.rand.Next(10) == 0)
-				{
-				}
-				else if (player.ZoneSnow && Main.hardMode && raining && !NPC.AnyNPCs(243) && player.RollLuck(20) == 0)
-				{
-				}
-				else if (!player.ZoneSnow && Main.hardMode && raining && NPC.CountNPCS(250) < 2 && Main.rand.Next(10) == 0)
-				{
-				}
-				else if (flag32 && Main.hardMode && NPC.downedGolemBoss && ((!NPC.downedMartians && Main.rand.Next(100) == 0) || Main.rand.Next(400) == 0) && !NPC.AnyNPCs(399))
-				{
-				}
-				else if (!player.ZoneGraveyard && Main.dayTime)
-				{
-					int num3 = Math.Abs(x - Main.spawnTileX);
-					if (!spawnInfo.Water && num3 < Main.maxTilesX / 2 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
-					{
-						blockVanillaSpawn = true;
-						if (tileType == 147 || tileType == 161)
-						{
-						}
-						else if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.stinkBugChance) && surface2)
-						{
-						}
-						else if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance) && surface2)
-						{
-							if (npcType == ModContent.NPCType<GrumbleBee>())
-							{
-								return 1f;
-							}
-						}
-						else if (NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance / 2) && surface2)
-						{
-						}
-						else if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else if (player.RollLuck(NPC.goldCritterChance) == 0 && (double)y <= Main.worldSurface)
-						{
-						}
-						else if (Main.halloween && !Main.rand.NextBool(3))
-						{
-						}
-						else if (Main.xMas && !Main.rand.NextBool(3))
-						{
-						}
-						else if (BirthdayParty.PartyIsUp && !Main.rand.NextBool(3))
-						{
-						}
-						else if (Main.rand.NextBool(3) && (double)y <= Main.worldSurface)
-						{
-						}
-						else
-						{
-							if (npcType == ModContent.NPCType<ChocolateBunny>())
-							{
-								return 1f;
-							}
-						}
-					}
-					else if (!spawnInfo.Water && x > WorldGen.beachDistance && x < Main.maxTilesX - WorldGen.beachDistance && Main.rand.NextBool(12)&& tileType == TileID.Sand)
-					{
-					}
-					else if ((tileType == 2 || tileType == 477 || tileType == 53) && !NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && !Main.rand.NextBool(3) && ((double)y <= Main.worldSurface || Main.remixWorld) && NPC.FindCattailTop(x, y, out int cattailX, out int cattailY))
-					{
-					}
-					else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.dayTime && Main.time < 18000.0 && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && Main.rand.NextBool(4) && (double)y <= Main.worldSurface && NPC.CountNPCS(ModContent.NPCType<Birdnana>()) + NPC.CountNPCS(ModContent.NPCType<Pip>()) < 6)
-					{
-						blockVanillaSpawn = true;
-						int num4 = Main.rand.Next(3);
-						if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else
-						{
-							switch (num4)
-							{
-								case 0:
-									if (npcType == ModContent.NPCType<Pip>())
-									{
-										return 1f;
-									}
-									break;
-								default:
-									if (npcType == ModContent.NPCType<Birdnana>())
-									{
-										return 1f;
-									}
-									break;
-							}
-						}
-					}
-					else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
-					{
-						blockVanillaSpawn = true;
-						int num5 = Main.rand.Next(3);
-						if (player.RollLuck(NPC.goldCritterChance) == 0)
-						{
-						}
-						else
-						{
-							switch (num5)
-							{
-								case 0:
-									if (npcType == ModContent.NPCType<Pip>())
-									{
-										return 1f;
-									}
-									break;
-								default:
-									if (npcType == ModContent.NPCType<Birdnana>())
-									{
-										return 1f;
-									}
-									break;
-							}
-						}
-					}
-				}
-				else
-				{
-					if (!player.ZoneGraveyard && !NPC.TooWindyForButterflies && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && !Main.raining && Main.rand.NextBool(NPC.fireFlyChance) && (double)y <= Main.worldSurface)
-					{
-						blockVanillaSpawn = true;
-						if (npcType == ModContent.NPCType<CherryBug>())
-						{
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 - 16, y * 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 + 16, y * 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 - 16, npcType);
-							}
-							if (Main.rand.NextBool(NPC.fireFlyMultiple))
-							{
-								NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 + 16, npcType);
-							}
-							return 1f;
-						}
-					}
-				}
-			}
-			else if (surface)
-			{
-			}
-			else if (y > Main.maxTilesY - 190)
-			{
-			}
-			//else if (NPC.SpawnNPC_CheckToSpawnRockGolem(num, num24, k, num56))
-			//{
-			//}
-			else if (Main.rand.NextBool(60))
-			{
-			}
-			else if ((tileType == TileID.Pearlsand || tileType == TileID.Pearlstone || tileType == TileID.HallowedIce) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8))
-			{
-			}
-			else if ((tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.BlueIce>()) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8))
-			{
-				blockVanillaSpawn = true;
-				if (npcType == ModContent.NPCType<Iscreamer>())
-				{
-					return 1f;
-				}
-			}
-			else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce) && !spawnInfo.PlayerSafe && Main.hardMode && player.ZoneCorrupt && Main.rand.NextBool(30))
-			{
-			}
-			else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce) && !spawnInfo.PlayerSafe && Main.hardMode && player.ZoneHallow && Main.rand.NextBool(30))
-			{
-			}
-			else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce) && !spawnInfo.PlayerSafe && Main.hardMode && player.ZoneCrimson && Main.rand.NextBool(30))
-			{
-			}
-			else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce || spawnTile == ModContent.TileType<Tiles.BlueIce>()) && !spawnInfo.PlayerSafe && Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(30))
-			{
-				//blockVanillaSpawn = true; //dont block
-				if (npcType == ModContent.NPCType<StripedPigron>())
-				{
-					return 1f;
-				}
-			}
-			else if (Main.hardMode && player.ZoneSnow && Main.rand.NextBool(10))
-			{
-			}
-			else if (!spawnInfo.PlayerSafe && Main.rand.NextBool(100) && !player.ZoneHallow)
-			{
-			}
-			else if (player.ZoneSnow && Main.rand.NextBool(20))
-			{
-			}
-			else if ((!Main.hardMode && Main.rand.NextBool(10)) || (Main.hardMode && Main.rand.NextBool(20)))
-			{
-			}
-			else if (!Main.hardMode && Main.rand.NextBool(4))
-			{
-			}
-			else if (!Main.rand.NextBool(2))
-			{
-			}
-			else if (!Main.rand.NextBool(2))
-			{
-				if (Main.hardMode && (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(2)))
-				{
-					if (npcType == ModContent.NPCType<ParfaitSlime>())
-					{
-						return 1f;
-					}
-				}
-				else
-				{
-					if (!(player.ZoneJungle))
-					{
-						if (!(player.ZoneGlowshroom && (spawnTile == TileID.MushroomGrass || spawnTile == TileID.MushroomBlock)))
-						{
-							if (Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+							if (Main.hardMode && !spawnInfo.Water && surface && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
 							{
 								blockVanillaSpawn = true;
-								if (Main.rand.NextBool(5))
+								if (NPC.downedPlantBoss && (Main.remixWorld || (!Main.dayTime && Main.time < 16200.0)) && surface2 && player.RollLuck(10) == 0 && !NPC.AnyNPCs(ModContent.NPCType<RoyalCherryBug>()))
 								{
-									if (npcType == ModContent.NPCType<FoaminFloat>())
+									if (npcType == ModContent.NPCType<RoyalCherryBug>())
 									{
 										return 1f;
 									}
 								}
-								else if (Main.rand.NextBool(50) && !player.ZoneSnow)
+								else if (!raining || NPC.AnyNPCs(ModContent.NPCType<SherbetSlime>()) || !Main.rand.NextBool(12))
 								{
-									if (npcType == ModContent.NPCType<GummyWyrmHead>())
+									if (!Main.dayTime && Main.rand.NextBool(2))
 									{
-										return 1f;
+										if (player.RollLuck(500) == 0)
+										{
+											if (npcType == ModContent.NPCType<WildWilly>())
+											{
+												return 1f;
+											}
+										}
+										else
+										{
+											if (npcType == ModContent.NPCType<Meowzer>())
+											{
+												return 1f;
+											}
+										}
 									}
-								}
-								else if (Main.rand.NextBool(80))
-								{
-									if (npcType == ModContent.NPCType<IcecreamGal>())
+									else
 									{
-										return 1f;
+										if (!Main.rand.NextBool(10) && (!player.ZoneWaterCandle || !Main.rand.NextBool(10)))
+										{
+											if (npcType == ModContent.NPCType<Sprinkler>() || npcType == ModContent.NPCType<Sprinkling>())
+											{
+												return 1f;
+											}
+										}
+										else
+										{
+											if (npcType == ModContent.NPCType<Rollercookie>())
+											{
+												return 1f;
+											}
+										}
 									}
 								}
 								else
 								{
-									if (npcType == ModContent.NPCType<Prickster>())
+									if (npcType == ModContent.NPCType<SherbetSlime>())
 									{
 										return 1f;
+									}
+								}
+							}
+							else if (!spawnInfo.PlayerSafe && Main.hardMode && Main.rand.NextBool(50) && !spawnInfo.Water && dirtLayer && (tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.BlueIce>()))
+							{
+								blockVanillaSpawn = true;
+								if (npcType == ModContent.NPCType<CrazyCone>())
+								{
+									return 1f;
+								}
+							}
+							else if (!(((tileType == TileID.Crimtane && player.ZoneCrimson) || tileType == TileID.CrimsonGrass || tileType == TileID.FleshIce || tileType == TileID.Crimstone || tileType == TileID.Crimsand || tileType == TileID.CrimsonJungleGrass) || ((tileType == TileID.Demonite && player.ZoneCorrupt) || tileType == TileID.CorruptGrass || tileType == TileID.Ebonstone || tileType == TileID.Ebonsand || tileType == TileID.CorruptIce || tileType == TileID.CorruptJungleGrass)))
+							{
+								if (surface2)
+								{
+									bool flag32 = (float)Math.Abs(x - Main.maxTilesX / 2) / (float)(Main.maxTilesX / 2) > 0.33f;
+									if (flag32 && NPC.AnyDanger())
+									{
+										flag32 = false;
+									}
+									if (!player.ZoneGraveyard && Main.dayTime)
+									{
+										int num3 = Math.Abs(x - Main.spawnTileX);
+										if (!spawnInfo.Water && num3 < Main.maxTilesX / 2 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
+										{
+											blockVanillaSpawn = true;
+											if (!(tileType == TileID.SnowBlock || tileType == TileID.IceBlock))
+											{
+												if (!NPC.TooWindyForButterflies && !Main.raining && Main.dayTime && Main.rand.NextBool(NPC.butterflyChance) && surface2)
+												{
+													if (npcType == ModContent.NPCType<GrumbleBee>())
+													{
+														return 1f;
+													}
+												}
+												else
+												{
+													if (npcType == ModContent.NPCType<ChocolateBunny>())
+													{
+														return 1f;
+													}
+												}
+											}
+										}
+										else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.dayTime && Main.time < 18000.0 && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && Main.rand.NextBool(4) && (double)y <= Main.worldSurface && NPC.CountNPCS(ModContent.NPCType<Birdnana>()) + NPC.CountNPCS(ModContent.NPCType<Pip>()) < 6)
+										{
+											blockVanillaSpawn = true;
+											int num4 = Main.rand.Next(3);
+											switch (num4)
+											{
+												case 0:
+													if (npcType == ModContent.NPCType<Pip>())
+													{
+														return 1f;
+													}
+													break;
+												default:
+													if (npcType == ModContent.NPCType<Birdnana>())
+													{
+														return 1f;
+													}
+													break;
+											}
+										}
+										else if (!spawnInfo.Water && num3 < Main.maxTilesX / 3 && Main.rand.NextBool(15) && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()))
+										{
+											blockVanillaSpawn = true;
+											int num5 = Main.rand.Next(3);
+											switch (num5)
+											{
+												case 0:
+													if (npcType == ModContent.NPCType<Pip>())
+													{
+														return 1f;
+													}
+													break;
+												default:
+													if (npcType == ModContent.NPCType<Birdnana>())
+													{
+														return 1f;
+													}
+													break;
+											}
+										}
+									}
+									else
+									{
+										if (!player.ZoneGraveyard && !NPC.TooWindyForButterflies && (tileType == ModContent.TileType<Tiles.CreamGrass>() || tileType == ModContent.TileType<Tiles.CreamGrassMowed>()) && !Main.raining && Main.rand.NextBool(NPC.fireFlyChance) && (double)y <= Main.worldSurface)
+										{
+											blockVanillaSpawn = true;
+											if (npcType == ModContent.NPCType<CherryBug>())
+											{
+												if (Main.rand.NextBool(NPC.fireFlyMultiple))
+												{
+													NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 - 16, y * 16, npcType);
+												}
+												if (Main.rand.NextBool(NPC.fireFlyMultiple))
+												{
+													NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8 + 16, y * 16, npcType);
+												}
+												if (Main.rand.NextBool(NPC.fireFlyMultiple))
+												{
+													NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 - 16, npcType);
+												}
+												if (Main.rand.NextBool(NPC.fireFlyMultiple))
+												{
+													NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 8, y * 16 + 16, npcType);
+												}
+												return 1f;
+											}
+										}
+									}
+								}
+								else if (!((surface) || (y > Main.maxTilesY - 190)))
+								{
+									if ((tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.BlueIce>()) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8))
+									{
+										blockVanillaSpawn = true;
+										if (npcType == ModContent.NPCType<Iscreamer>())
+										{
+											return 1f;
+										}
+									}
+									else if ((spawnTile == TileID.SnowBlock || spawnTile == TileID.IceBlock || spawnTile == TileID.BreakableIce || spawnTile == TileID.CorruptIce || spawnTile == TileID.HallowedIce || spawnTile == TileID.FleshIce || spawnTile == ModContent.TileType<Tiles.BlueIce>()) && !spawnInfo.PlayerSafe && Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(30))
+									{
+										//blockVanillaSpawn = true; //dont block
+										if (npcType == ModContent.NPCType<StripedPigron>())
+										{
+											return 1f;
+										}
+									}
+									else if (!Main.rand.NextBool(2))
+									{
+										if (Main.hardMode && (player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && Main.rand.NextBool(2)))
+										{
+											if (npcType == ModContent.NPCType<ParfaitSlime>())
+											{
+												return 1f;
+											}
+										}
+										else
+										{
+											if (!(player.ZoneJungle))
+											{
+												if (!(player.ZoneGlowshroom && (spawnTile == TileID.MushroomGrass || spawnTile == TileID.MushroomBlock)))
+												{
+													if (Main.hardMode && player.InModBiome(ModContent.GetInstance<ConfectionBiome>()))
+													{
+														blockVanillaSpawn = true;
+														if (Main.rand.NextBool(5))
+														{
+															if (npcType == ModContent.NPCType<FoaminFloat>())
+															{
+																return 1f;
+															}
+														}
+														else if (Main.rand.NextBool(50) && !player.ZoneSnow)
+														{
+															if (npcType == ModContent.NPCType<GummyWyrmHead>())
+															{
+																return 1f;
+															}
+														}
+														else if (Main.rand.NextBool(80))
+														{
+															if (npcType == ModContent.NPCType<IcecreamGal>())
+															{
+																return 1f;
+															}
+														}
+														else
+														{
+															if (npcType == ModContent.NPCType<Prickster>())
+															{
+																return 1f;
+															}
+														}
+													}
+												}
+											}
+										}
 									}
 								}
 							}
