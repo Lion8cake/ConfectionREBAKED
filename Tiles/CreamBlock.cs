@@ -27,6 +27,7 @@ namespace TheConfectionRebirth.Tiles
 			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<BlueIce>()] = true;
 
 			AddMapEntry(new Color(219, 223, 234));
 			DustType = ModContent.DustType<CreamDust>();

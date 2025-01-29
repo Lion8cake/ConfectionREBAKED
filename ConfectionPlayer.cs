@@ -625,10 +625,10 @@ namespace TheConfectionRebirth
 
 		public override void GetDyeTraderReward(List<int> rewardPool)
 		{
-			rewardPool.Add(ModContent.ItemType<Items.CandyCornDye>());
-			rewardPool.Add(ModContent.ItemType<Items.FoaminWispDye>());
-			rewardPool.Add(ModContent.ItemType<Items.GummyWispDye>());
-			rewardPool.Add(ModContent.ItemType<Items.SwirllingChocolateDye>());
+			rewardPool.Add(ModContent.ItemType<CandyCornDye>());
+			rewardPool.Add(ModContent.ItemType<FoaminWispDye>());
+			rewardPool.Add(ModContent.ItemType<GummyWispDye>());
+			rewardPool.Add(ModContent.ItemType<SwirllingChocolateDye>());
 		}
 
 		public static void IncrimentNeapoliniteBuffPower(Player player, int Power, int BuffType = 0)

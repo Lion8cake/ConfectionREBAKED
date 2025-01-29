@@ -634,19 +634,19 @@ namespace TheConfectionRebirth
 			Segments.EmoteSegment RUNEmote = new Segments.EmoteSegment(EmoteID.EmoteRun, duration, 120, sceneAnchorPosition + new Vector2(206f, 0f) + _emoteBubbleOffsetWhenOnRight + new Vector2(1.7f, 0f) * (float)10, (SpriteEffects)0, new Vector2(-1.7f, 0f));
 			//Emote with run (she is very scared)
 			duration += 30;
-			Segments.AnimationSegmentWithActions<NPC> hoardEnemy1 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.SweetGummy>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy1 = new Segments.NPCSegment(duration, ModContent.NPCType<SweetGummy>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 130));
 			hoardEnemy1.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 7; //Spawn a sweet gummy and wait 7 frames
-			Segments.AnimationSegmentWithActions<NPC> hoardEnemy2 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.WildWilly>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy2 = new Segments.NPCSegment(duration, ModContent.NPCType<WildWilly>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 123));
 			hoardEnemy2.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 22; //Spawn a Wild Willy and wait 22 frames
-			/*Segments.AnimationSegmentWithActions<NPC> hoardEnemy3 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.IcecreamGal>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			Segments.AnimationSegmentWithActions<NPC> hoardEnemy3 = new Segments.NPCSegment(duration, ModContent.NPCType<IcecreamGal>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 101));
 			hoardEnemy3.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));
 			duration += 20; //Spawn a Icecream Gal and wait 20 frames
-			Segments.AnimationSegmentWithActions<NPC> hoardEnemy4 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.CreamsandWitchPhase2>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
+			/*Segments.AnimationSegmentWithActions<NPC> hoardEnemy4 = new Segments.NPCSegment(duration, ModContent.NPCType<NPCs.CreamsandWitchPhase2>(), sceneAnchorPosition + new Vector2(250f, 0f), _originAtBottom).Then(new Actions.NPCs.Fade(255)).With(new Actions.NPCs.Fade(-5, 51)).Then(new Actions.NPCs.LookAt(-1))
 				.Then(new Actions.NPCs.Move(new(-1.7f, 0f), 81));
 			hoardEnemy4.Then(new Actions.NPCs.Move(new(-0.6f, 0f), 51)).With(new Actions.NPCs.Fade(5, 51));*/
 			duration += 24; //Spawn a Creamsand witch (standing npc) and wait 24 frames

@@ -19,6 +19,7 @@ using Terraria.DataStructures;
 using System.Collections.Generic;
 using Terraria.GameContent.Events;
 using Steamworks;
+using Terraria.Localization;
 
 namespace TheConfectionRebirth.NPCs
 {
@@ -216,16 +217,9 @@ namespace TheConfectionRebirth.NPCs
 			int tileType = Main.tile[x, y].TileType; //num56
 			tileType = SpawnNPC_TryFindingProperGroundTileType(tileType, x, y);
 			int wall = Main.tile[x, y - 1].WallType; //num58
-			int num89 = (int)(player.position.X + (float)(player.width / 2)) / 16;
-			int num100 = (int)(player.position.Y + (float)(player.height / 2)) / 16;
 			if (Main.tile[x, y - 2].WallType == 244 || Main.tile[x, y].WallType == 244)
 			{
 				wall = 244;
-			}
-			int maxValue = 65;
-			if (Main.remixWorld && (double)(player.position.Y / 16f) < Main.worldSurface && (player.ZoneCorrupt || player.ZoneCrimson))
-			{
-				maxValue = 25;
 			}
 			//called surface yet gets above the ROCK layer not surface, this includes the dirt layer too
 			bool surface = (double)y <= Main.rockLayer; //num9
@@ -233,26 +227,18 @@ namespace TheConfectionRebirth.NPCs
 			bool surface2 = (double)y <= Main.worldSurface; //num13
 			bool dirtLayer = (double)y >= Main.rockLayer; //num14
 			bool raining = Main.cloudAlpha > 0f; //num17
-			bool oceanBottom = ((x < WorldGen.oceanDistance || x > Main.maxTilesX - WorldGen.oceanDistance) && Main.tileSand[tileType] && (double)y < Main.rockLayer) || (spawnTile == TileID.Sand && WorldGen.oceanDepths(x, y)); //num15
 			bool beach = (double)y <= Main.worldSurface && (x < WorldGen.beachDistance || x > Main.maxTilesX - WorldGen.beachDistance); //num16
-			int range = 10;
 			if (Main.remixWorld)
 			{
-				range = 5;
 				raining = Main.raining;
 				dirtLayer = ((double)y > Main.worldSurface && (double)y < Main.rockLayer);
 				surface = (double)y > Main.rockLayer && y <= Main.maxTilesY - 190;
 				if (player.ZoneCorrupt || player.ZoneCrimson)
 				{
-					oceanBottom = false;
 					beach = false;
 				}
 				if ((double)x < (double)Main.maxTilesX * 0.43 || (double)x > (double)Main.maxTilesX * 0.57)
 				{
-					if ((double)y > Main.rockLayer - 200.0 && y < Main.maxTilesY - 200 && Main.rand.Next(2) == 0)
-					{
-						oceanBottom = true;
-					}
 					if ((double)y > Main.rockLayer - 200.0 && y < Main.maxTilesY - 200 && Main.rand.Next(2) == 0)
 					{
 						beach = true;
@@ -275,7 +261,6 @@ namespace TheConfectionRebirth.NPCs
 					}
 				}
 			}
-
 
 			//spawning, adapted from vanilla SpawnNPC method in NPC.cs
 			if (!((player.ZoneTowerNebula) || (player.ZoneTowerVortex) || (player.ZoneTowerStardust) || (player.ZoneTowerSolar) || (spawnInfo.Sky) || (spawnInfo.Invasion) || (wall == 244 && !Main.remixWorld) || (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].WallType == 62 || spawnInfo.SpiderCave)))
@@ -635,7 +620,7 @@ namespace TheConfectionRebirth.NPCs
 								}
 								else if (!((surface) || (y > Main.maxTilesY - 190)))
 								{
-									if ((tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.BlueIce>()) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8))
+									if ((tileType == ModContent.TileType<Tiles.Creamsand>() || tileType == ModContent.TileType<Tiles.Creamstone>() || tileType == ModContent.TileType<Tiles.BlueIce>()) && Main.hardMode && !spawnInfo.PlayerSafe && Main.rand.NextBool(8) && NPC.CountNPCS(ModContent.NPCType<Iscreamer>()) < 3)
 									{
 										blockVanillaSpawn = true;
 										if (npcType == ModContent.NPCType<Iscreamer>())
@@ -767,34 +752,34 @@ namespace TheConfectionRebirth.NPCs
 			taxcollectorHappiness.SetBiomeAffection<ConfectionBiome>(AffectionLevel.Dislike);
 		}
 
-		#region Soul drop conditions
-	public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
+		#region Global Drop Conditions
+		public class SoulOfDelight : IItemDropRuleCondition, IProvideItemConditionDescription
 		{
 			public bool CanDrop(DropAttemptInfo info)
 			{
-				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				if (SoulOfWhateverConditionCanDrop(info))
 				{
-					return info.player.InModBiome(ModContent.GetInstance<ConfectionBiome>());
+					return info.player.InModBiome<ConfectionBiome>();
 				}
 				return false;
 			}
 
 			public bool CanShowItemDropInUI()
 			{
-				return false;
+				return true;
 			}
 
 			public string GetConditionDescription()
 			{
-				return null;
+				return Language.GetTextValue("Mods.TheConfectionRebirth.Bestiary_ItemDropConditions.SoulOfDelight");
 			}
 		}
 
-		public class SoulOfNightCorruption : IItemDropRuleCondition, IProvideItemConditionDescription
+		public class SoulOfNightCorrupt : IItemDropRuleCondition, IProvideItemConditionDescription
 		{
 			public bool CanDrop(DropAttemptInfo info)
 			{
-				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				if (SoulOfWhateverConditionCanDrop(info))
 				{
 					return info.player.ZoneCorrupt;
 				}
@@ -803,12 +788,12 @@ namespace TheConfectionRebirth.NPCs
 
 			public bool CanShowItemDropInUI()
 			{
-				return false;
+				return true;
 			}
 
 			public string GetConditionDescription()
 			{
-				return null;
+				return Language.GetTextValue("Mods.TheConfectionRebirth.Bestiary_ItemDropConditions.SoulOfSpite");
 			}
 		}
 
@@ -816,7 +801,7 @@ namespace TheConfectionRebirth.NPCs
 		{
 			public bool CanDrop(DropAttemptInfo info)
 			{
-				if (Conditions.SoulOfWhateverConditionCanDrop(info))
+				if (SoulOfWhateverConditionCanDrop(info))
 				{
 					return info.player.ZoneCrimson;
 				}
@@ -825,12 +810,34 @@ namespace TheConfectionRebirth.NPCs
 
 			public bool CanShowItemDropInUI()
 			{
-				return false;
+				return true;
 			}
 
 			public string GetConditionDescription()
 			{
-				return null;
+				return Language.GetTextValue("Mods.TheConfectionRebirth.Bestiary_ItemDropConditions.SoulOfNight");
+			}
+		}
+
+		public class ConfectionKeyCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+		{
+			public bool CanDrop(DropAttemptInfo info)
+			{
+				if (info.npc.value > 0f && Main.hardMode && !info.IsInSimulation)
+				{
+					return info.player.InModBiome<ConfectionBiome>();
+				}
+				return false;
+			}
+
+			public bool CanShowItemDropInUI()
+			{
+				return true;
+			}
+
+			public string GetConditionDescription()
+			{
+				return Language.GetTextValue("Mods.TheConfectionRebirth.Bestiary_ItemDropConditions.ConfectionKeyCondition");
 			}
 		}
 		#endregion
@@ -960,9 +967,10 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void ModifyGlobalLoot(GlobalLoot globalLoot)
 		{
-			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfDelight(), ModContent.ItemType<SoulofDelight>(), 5, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfSpite(), ModContent.ItemType<SoulofSpite>(), 5, 1, 1));
-			globalLoot.Add(ItemDropRule.ByCondition(new SoulOfNightCorruption(), ItemID.SoulofNight, 5, 1, 1));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<SoulofDelight>(), 5, 1, 1, new SoulOfDelight()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<SoulofSpite>(), 5, 1, 1, new SoulOfSpite()));
+			globalLoot.Add(new ItemDropWithConditionRule(ItemID.SoulofNight, 5, 1, 1, new SoulOfNightCorrupt()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<ConfectionBiomeKey>(), 2500, 1, 1, new ConfectionKeyCondition()));
 
 			globalLoot.RemoveWhere(
 				rule => rule is ItemDropWithConditionRule drop

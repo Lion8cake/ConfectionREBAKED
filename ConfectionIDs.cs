@@ -89,7 +89,7 @@ namespace TheConfectionRebirth {
 
 				public static bool[] CrystalShardOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.CrystalDart, ItemID.CrystalBullet, ItemID.CrystalBlock, ItemID.Chik, ItemID.MagicalHarp, ItemID.RainbowRod, ItemID.ShiftingPearlSandsDye, ItemID.CrystalStorm);
 
-				public static bool[] HallowedBarOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.AncientHallowedGreaves, ItemID.AncientHallowedPlateMail, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHelmet, ItemID.AncientHallowedHood, ItemID.HallowedGreaves, ItemID.HallowedPlateMail, ItemID.HallowedHeadgear, ItemID.HallowedHeadgear, ItemID.HallowedHelmet, ItemID.HallowedHood, ItemID.Drax, ItemID.PickaxeAxe, ItemID.HallowedRepeater, ItemID.Excalibur, ItemID.Gungnir, ItemID.HallowJoustingLance, ItemID.SwordWhip, ItemID.SuperStarCannon, ItemID.OpticStaff, ItemID.LightDisc);
+				public static bool[] HallowedBarOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.AncientHallowedGreaves, ItemID.AncientHallowedPlateMail, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHelmet, ItemID.AncientHallowedHood, ItemID.HallowedGreaves, ItemID.HallowedPlateMail, ItemID.HallowedHeadgear, ItemID.HallowedMask, ItemID.HallowedHelmet, ItemID.HallowedHood, ItemID.Drax, ItemID.PickaxeAxe, ItemID.HallowedRepeater, ItemID.Excalibur, ItemID.Gungnir, ItemID.HallowJoustingLance, ItemID.SwordWhip, ItemID.SuperStarCannon, ItemID.OpticStaff, ItemID.LightDisc);
 
 				public static bool[] PrincessFishOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.SeafoodDinner);
 

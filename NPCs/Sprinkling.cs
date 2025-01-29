@@ -54,6 +54,29 @@ namespace TheConfectionRebirth.NPCs
 			//Spawn variants when naturally spawned (how tf do we do that)
 			//Spawning has been added I should do the above ^ 
 			NPC.ai[3] = 261;
+			if (NPC.ai[0] <= 0)
+			{
+				if (Main.rand.NextBool(2))
+				{
+					int type = Type;
+					if (Main.halloween)
+					{
+						type = Main.rand.Next(0, 2) == 1 ? ModContent.NPCType<Sprinkling_Halloween1>() : ModContent.NPCType<Sprinkling_Halloween2>();
+					}
+					else if (Main.xMas)
+					{
+						type = ModContent.NPCType<Sprinkling_Xmas>();
+					}
+					if (type != Type)
+					{
+						NPC.Transform(type);
+					}
+				}
+			}
+			else
+			{
+				NPC.ai[0] = 0;
+			}
 		}
 
 		public override void FindFrame(int frameHeight) {

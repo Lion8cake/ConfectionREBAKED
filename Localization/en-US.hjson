@@ -2215,6 +2215,13 @@ Mods: {
 			}
 		}
 
+		Bestiary_ItemDropConditions: {
+			SoulOfDelight: Drops in Underground Confection
+			SoulOfSpite: Drops in Underground Crimson
+			SoulOfNight: Drops in Underground Corruption
+			ConfectionKeyCondition: Drops in the Hardmode Confection
+		}
+
 		Conditions.InConfection: In Confection
 		NotInSeveralBiomes: Not in Snow, Desert, Jungles or during Blood Moons
 
@@ -2223,23 +2230,21 @@ Mods: {
 			2: Lion8cake
 			3: Snickerbobble
 			4: Delicious Saturn
-			5: Cyril
-			6: AstralGel
-			7: Cace �Basketcace�
-			8: Snacks
+			5: Snacks
+			6: DakotaSpine
+			7: CastledKing2341
+			8: S0vr9000
 			9: Ghasttear1
-			10: CastledKing2341
-			11: S0vr9000
-			12: Jeo �JeoHashtag1553�
-			13: Hariq �Hariq53�
-			14: Foxyboy55
-			15: Mddznyan
-			16: DakotaSpine
-			17: Miguel Noturn0
-			18: Neo �Neobind�
-			19: Splig �split0282�
-			20: Yreorel
-			21: BasicallyIAmFox
+			10: Roton
+			11: Jeo "JeoHashtag155"
+			12: motai_
+			13: Miguel Noturn0
+			14: splig "split0282"
+			15: TerrorPenguin
+			16: Sampel
+			17: Fuffles
+			18: AstralGel
+			19: BasicallyIAmCat
 		}
 	}
 }

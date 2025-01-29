@@ -164,7 +164,7 @@ namespace TheConfectionRebirth.NPCs
 		public override void OnKill()
 		{
 			Vector2 spawnAt = NPC.Center + new Vector2(0f, NPC.height / 2f);
-			int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>());
+			int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnAt.X, (int)spawnAt.Y, ModContent.NPCType<Sprinkling>(), ai0: 1f);
 			if (Main.netMode == NetmodeID.Server)
 				NetMessage.SendData(MessageID.SyncNPC, number: index);
 		}
