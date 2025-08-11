@@ -1796,6 +1796,9 @@ Mods: {
 			Hunger.DisplayName: Hunger
 			MintJr.DisplayName: Mint Jr.
 			CreamsandWitchFlying.DisplayName: Creamsand Witch Flying
+			CreamsandWitchPhase1.DisplayName: Creamsand Witch Phase1
+			CreamsandWitchPhase2.DisplayName: Creamsand Witch Phase2
+			TheUnfirm.DisplayName: The Unfirm
 		}
 
 		Projectiles: {

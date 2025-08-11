@@ -67,7 +67,7 @@ public class ConfectionBiome : ModBiome
 	{
 		get
 		{
-			bool TOWMusicCheck = (bool)typeof(Main).GetField("swapMusic", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+			bool TOWMusicCheck = Main.swapMusic;
 			if (TOWMusicCheck == false && !Main.drunkWorld || TOWMusicCheck == true && Main.drunkWorld) {
 				if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))) {
 					if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {

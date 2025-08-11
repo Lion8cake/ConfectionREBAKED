@@ -1,55 +1,49 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
-using TheConfectionRebirth.Tiles;
-using Terraria.ID;
-using MonoMod.Cil;
 using System.Reflection;
-using Terraria.Utilities;
-using Microsoft.Xna.Framework;
-using Terraria.Map;
-using TheConfectionRebirth.Tiles.Trees;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent.Drawing;
-using Terraria.GameContent;
-using Mono.Cecil.Cil;
-using static Terraria.WaterfallManager;
-using Terraria.GameContent.Events;
+using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
-using TheConfectionRebirth.Walls;
-using TheConfectionRebirth.Hooks;
+using Terraria.GameContent;
+using Terraria.GameContent.Animations;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.Events;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Skies.CreditsRoll;
+using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.Elements;
-using Terraria.UI;
-using ReLogic.Content;
 using Terraria.GameContent.UI.States;
+using Terraria.Graphics;
+using Terraria.Graphics.Capture;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
-using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
-using Terraria.GameContent.ItemDropRules;
-using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Projectiles;
-using Terraria.Graphics;
-using TheConfectionRebirth.Items.Weapons;
-using static Terraria.Graphics.FinalFractalHelper;
-using TheConfectionRebirth.Items;
-using Mono.Cecil;
-using TheConfectionRebirth.Items.Accessories;
-using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.NPCs;
-using Terraria.GameContent.Skies.CreditsRoll;
-using Terraria.GameContent.Animations;
-using Terraria.GameContent.UI;
-using Terraria.GameContent.Bestiary;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics.Capture;
-using Terraria.Audio;
-using static Terraria.Graphics.Capture.CaptureInterface;
+using Terraria.Map;
+using Terraria.ModLoader;
+using Terraria.UI;
+using Terraria.Utilities;
 using TheConfectionRebirth.Backgrounds;
-using Terraria.GameInput;
-using Terraria.UI.Chat;
-using Newtonsoft.Json.Linq;
-using Microsoft.CodeAnalysis.FlowAnalysis;
+using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Hooks;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Items.Weapons;
+using TheConfectionRebirth.NPCs;
+using TheConfectionRebirth.Projectiles;
+using TheConfectionRebirth.Tiles;
+using TheConfectionRebirth.Walls;
+using static Terraria.Graphics.Capture.CaptureInterface;
+using static Terraria.Graphics.FinalFractalHelper;
+using static Terraria.WaterfallManager;
+using static TheConfectionRebirth.NPCs.ConfectionGlobalNPC;
 
 namespace TheConfectionRebirth
 {
@@ -59,6 +53,7 @@ namespace TheConfectionRebirth
 		//WorldGen.cs
 		//PlantCheck (done) (i think) - crimson mushrooms dont convert to yumdrops and vise versa for some dogshit reason - doesnt convert some purity grass correctly
 		//TileFrame - Vines dont properly convert - works only if fps is lower than 30 //Im not the only one having this issue it seems //Update, issue with tml and the TileFrame method being too big
+		//TODO: use tmods conversion set or smth idk havent used it before
 
 		private Asset<Texture2D> texOuterHallow;
 		private Asset<Texture2D> texOuterConfection;
@@ -326,7 +321,8 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
-		#region Capture Biome Icons
+		//TODO: (patch Il edits to be dynamic)
+		#region Capture Biome Icons 
 		internal static int biomeCaptureCount = 1; //Confection, Confection Desert
 
 		internal static int[] biomeCapturesIndexs = new int[biomeCaptureCount];
@@ -667,8 +663,8 @@ namespace TheConfectionRebirth
 			_segments.Add(RUNEmote);
 			_segments.Add(hoardEnemy1);
 			_segments.Add(hoardEnemy2);
-			/*_segments.Add(hoardEnemy3);
-			_segments.Add(hoardEnemy4);*/
+			_segments.Add(hoardEnemy3);
+			/*_segments.Add(hoardEnemy4);*/
 			_segments.Add(hoardEnemy5);
 			duration += 120; //Give a final duration time until the next part of the credits loads
 			SegmentInforReport FinalDurationTime = default(SegmentInforReport);
@@ -679,12 +675,16 @@ namespace TheConfectionRebirth
 		private void FillCreditSegmentILEdit(ILContext il)
 		{
 			ILCursor c = new ILCursor(il); //place a IL Cursor
-			c.GotoNext(MoveType.Before, i => i.MatchLdloc0(), i => i.MatchLdarg0(), i => i.MatchLdloc0(), i => i.MatchLdstr("CreditsRollCategory_Creator"), i => i.MatchLdloc3());
+			int num_varNum = -1;
+			int val2_varNum = -1; //we save the variable IDs to be used
+			int num3_varNum = -1; //variable numbers can shift if variables are added by tmodloader, so to prevent the code from being broken, we dynamically get and use the IDs
+			c.GotoNext(i => i.MatchLdcI4(210), i => i.MatchStloc(out num3_varNum));
+			c.GotoNext(MoveType.Before, i => i.MatchLdloc(out num_varNum), i => i.MatchLdarg0(), i => i.MatchLdloc(num_varNum), i => i.MatchLdstr("CreditsRollCategory_Creator"), i => i.MatchLdloc(out val2_varNum));
 			//make sure all instructions match, movetype will place our code before the first instruction once all instructions match
 			c.EmitLdarg(0); //Emit ldarg_0 (self)
-			c.EmitLdloca(0); //Emit ldloc_0 (num)
-			c.EmitLdloca(2); //Emit ldloc_2 (num3)
-			c.EmitLdloca(3); //Emit ldloc_3 (vector2 or val2)
+			c.EmitLdloca(num_varNum); //Emit ldloc_0 (num)
+			c.EmitLdloca(num3_varNum); //Emit ldloc_2 (num3)
+			c.EmitLdloca(val2_varNum); //Emit ldloc_3 (vector2 or val2)
 			c.EmitDelegate((CreditsRollComposer self, ref int num, ref int num3, ref Vector2 vector2) => { //Get the needed variables and instance
 																										   //Edit inside here for more text and animations, shown here is just how to add 1 text and 1 animation
 				num += PlaySegment_ModdedTextRoll(self, num, "Mods.TheConfectionRebirth.CreditsRollCategory_ConfectionTeam", vector2).totalTime; //Play our credit text
@@ -698,10 +698,11 @@ namespace TheConfectionRebirth
 		{
 			ILCursor c = new ILCursor(il); //place a IL cursor
 			c.GotoNext(MoveType.After, i => i.MatchLdcI4(28800)); //Look for a LDC I4 instruction with 28800 (all timers use this)
-			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 35); //Adds ontop of the max duration to account for the custom credits
+			c.EmitDelegate((int maxDuration) => maxDuration + 60 * 35); //Adds ontop of the max duration to account for the custom credits
 		}
 		#endregion
 
+		//Reminder, may be unstable (idk its been 6 months)
 		#region NPCTypeVariantsFixes
 		private void ReplaceCounterLastHit(On_Main.orig_DrawInfoAccs orig, Main self)
 		{
@@ -848,9 +849,12 @@ namespace TheConfectionRebirth
 		private void EditNPCHappiness(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.GotoNext(MoveType.After, i => i.MatchCall("Terraria.Localization.Language", "GetTextValueWith"), i => i.MatchStloc(1));
-			c.EmitLdloca(1);
-			c.EmitLdloc(0);
+			int textVW_numVar = -1;
+			int text_varNum = -1;
+			c.GotoNext(i => i.MatchLdloc(out text_varNum), i => i.MatchLdstr("Transformed"));
+			c.GotoNext(MoveType.After, i => i.MatchCall("Terraria.Localization.Language", "GetTextValueWith"), i => i.MatchStloc(out textVW_numVar));
+			c.EmitLdloca(textVW_numVar);
+			c.EmitLdloc(text_varNum);
 			c.EmitLdarg(1);
 			c.EmitLdarg(2);
 			c.EmitDelegate((ref string textValueWith, string targetNPC, string textKeyInCategory, object substitutes) =>
@@ -965,9 +969,15 @@ namespace TheConfectionRebirth
 		private void SherbertTorchHeldFlameEdit(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.GotoNext(MoveType.After, i => i.MatchLdcR4(0), i => i.MatchStloc(56));
-			c.EmitLdloc(1);
-			c.EmitLdloca(53);
+			int num_varNum = -1;
+			int color4_varNum = -1;
+			c.GotoNext(i => i.MatchLdloc(out _), i => i.MatchLdfld<Item>("type"), i => i.MatchStloc(out num_varNum));
+			c.GotoNext(MoveType.After, i => i.MatchLdloca(out color4_varNum), i => i.MatchLdcI4(100), i => i.MatchLdcI4(100), i => i.MatchLdcI4(100), i => i.MatchLdcI4(0), i => i.MatchCall<Color>(".ctor"), 
+				i => i.MatchLdcI4(7), i => i.MatchStloc(out _),
+				i => i.MatchLdcR4(1f), i => i.MatchStloc(out _),
+				i => i.MatchLdcR4(0), i => i.MatchStloc(out _));
+			c.EmitLdloc(num_varNum);
+			c.EmitLdloca(color4_varNum);
 			c.EmitDelegate((int num, ref Color color4) =>
 			{
 				if (num == ModContent.ItemType<Items.Placeable.SherbetTorch>())
@@ -982,12 +992,13 @@ namespace TheConfectionRebirth
 		private void TintTileSparkle(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.GotoNext(MoveType.After, i => i.MatchCall<Color>("get_White"),  i => i.MatchStloc(55));
+			int color_varNum = -1;
+			c.GotoNext(MoveType.After,i => i.MatchRet(), i => i.MatchCall<Color>("get_White"),  i => i.MatchStloc(out color_varNum));
 			c.EmitLdarg(1); //x
 			c.EmitLdarg(2); //y
 			c.EmitLdarg(3); //tileCache
 			c.EmitLdarg(4); //typeCache
-			c.EmitLdloca(55); //ref newColor
+			c.EmitLdloca(color_varNum); //ref newColor
 			c.EmitDelegate((int i, int j, Tile tileCache, int typeCache, ref Color tileShineColor) =>
 			{
 				if (typeCache == ModContent.TileType<CreamstoneSaphire>())
@@ -1022,6 +1033,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		//TODO: dynamically retrive var nums
 		#region fix for DrawEffects being broken for ModTile
 		private void BetterDrawEffects(ILContext il)
 		{
@@ -1068,7 +1080,7 @@ namespace TheConfectionRebirth
 				int currentDevsetCount = 1; //we only have 1 dev set
 				return oldVal + currentDevsetCount;
 			});
-			c.GotoNext(MoveType.After, i => i.MatchLdloc0(), i => i.MatchSwitch(out _));
+			c.GotoNext(MoveType.After, i => i.MatchLdloc(out _), i => i.MatchSwitch(out _));
 			c.EmitLdarg1();
 			c.EmitLdarg0();
 			c.EmitDelegate((IEntitySource source, Player player) => //emitting this delegate after the switch basically gives the switch a default to land to if no other options are chosen
@@ -1081,6 +1093,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		//TODO: dynamically retrive var nums
 		#region Stop Key of Night spawning Crimson Mimics and add modded keys
 		private void PreventCrimsonMimics(ILContext il)
 		{
@@ -1188,8 +1201,11 @@ namespace TheConfectionRebirth
 		private void ConfectionBiomeLightColor(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.GotoNext(MoveType.After, i => i.MatchLdcI4(15), i => i.MatchStloc3());
-			c.EmitLdloca(1);
+			int bgColorSet_varNum = -1;
+			c.GotoNext(i => i.MatchCall<Color>("get_White"), i => i.MatchStloc(out bgColorSet_varNum));
+			c.GotoNext(MoveType.After, i => i.MatchLdarg(2), i => i.MatchLdloc(out _), i => i.MatchConvU1(), i => i.MatchCall<Color>("set_B"),
+				i => i.MatchLdcI4(15), i => i.MatchStloc(out _));
+			c.EmitLdloca(bgColorSet_varNum);
 			c.EmitLdarga(1);
 			c.EmitDelegate((ref Color bgColorToSet, ref Color sunColor) =>
 			{
@@ -1297,6 +1313,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		//TODO: add dynamic varibale getters
 		#region Dynamic Dryad Text
 		private void SettmodvilsandGoods(ILContext il)
 		{
@@ -1653,7 +1670,7 @@ namespace TheConfectionRebirth
 			c.GotoNext(MoveType.After,
 				i => i.MatchLdfld<UIGenProgressBar>("_texOuterCrimson"),
 				i => i.MatchCallvirt<Asset<Texture2D>>("get_Value"),
-				i => i.MatchLdloc(6),
+				i => i.MatchLdloc(out _),
 				i => i.MatchCall("Terraria.Utils", "TopLeft"));
 			c.EmitLdcI4(0); //new Rectange(0, 0, 266, 70)
 			c.EmitLdcI4(0);
@@ -1661,7 +1678,6 @@ namespace TheConfectionRebirth
 			c.EmitLdcI4(70);
 			c.EmitNewobj(typeof(Rectangle).GetConstructor([typeof(int), typeof(int), typeof(int), typeof(int)]));
 			c.GotoNext(MoveType.Before, i => i.MatchCallvirt<SpriteBatch>("Draw"));
-			c.Remove();
 			c.EmitDelegate((SpriteBatch spriteBatch, Texture2D tex, Vector2 topLeft, Rectangle rect, Color white) => {
 				spriteBatch.Draw(tex, topLeft, rect, white);
 				bool flag = ConfectionWorldGeneration.confectionorHallow;
@@ -1671,6 +1687,19 @@ namespace TheConfectionRebirth
 				}
 				spriteBatch.Draw(flag ? texOuterConfection.Value : texOuterHallow.Value, topLeft, white);
 			}); //thanks alf for the delegate :sob:
+			c.EmitLdarg(1);
+			c.EmitDelegate(() =>
+			{
+				return TextureAssets.MagicPixel.Value;
+			});
+			c.EmitDelegate(() =>
+			{
+				return Vector2.Zero;
+			});
+			c.EmitDelegate(() =>
+			{
+				return Color.Transparent;
+			});
 		}
 		#endregion
 
@@ -1979,13 +2008,15 @@ namespace TheConfectionRebirth
 		#region Sandstorm
 		private void CreamsandSandstorm(ILContext il) {
 			ILCursor c = new(il);
+			int weightedRand_varNum = -1;
+			c.GotoNext(i => i.MatchNewobj<WeightedRandom<Color>> (".ctor"), i => i.MatchStloc(out weightedRand_varNum));
 			c.GotoNext(MoveType.Before,
 				i => i.MatchLdcR4(0.2f),
 				i => i.MatchLdcR4(0.35f),
 				i => i.MatchLdsfld<Sandstorm>("Severity"),
 				i => i.MatchCall("Microsoft.Xna.Framework.MathHelper", "Lerp"),
-				i => i.MatchStloc(18));
-			c.EmitLdloca(17);
+				i => i.MatchStloc(out _));
+			c.EmitLdloca(weightedRand_varNum);
 			c.EmitDelegate((ref WeightedRandom<Color> weightedRandom) => {
 				weightedRandom.Add(new Color(99, 57, 46),
 					Main.SceneMetrics.GetTileCount((ushort)ModContent.TileType<Tiles.Creamsand>()) +
@@ -1996,7 +2027,7 @@ namespace TheConfectionRebirth
 
 		private bool On_Sandstorm_ShouldSandstormDustPersist(On_Sandstorm.orig_ShouldSandstormDustPersist orig)
 		{
-			if (Sandstorm.Happening && Main.LocalPlayer.ZoneSandstorm && (Main.bgStyle == 2 || Main.bgStyle == 5 || Main.bgStyle == ModContent.GetInstance<Backgrounds.ConfectionSandSurfaceBackgroundStyle>().Slot))
+			if (Sandstorm.Happening && Main.LocalPlayer.ZoneSandstorm && (Main.bgStyle == 2 || Main.bgStyle == 5 || Main.bgStyle == ModContent.GetInstance<ConfectionSandSurfaceBackgroundStyle>().Slot))
 			{
 				return Main.bgDelay < 50;
 			}
@@ -2047,6 +2078,7 @@ namespace TheConfectionRebirth
 		}
 		#endregion
 
+		//TODO: from this point down, make variables dynamic
 		#region Rain&SnowClouds
 		private void TileFallDamage(ILContext il)
 		{

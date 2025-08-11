@@ -450,6 +450,10 @@ namespace TheConfectionRebirth.NPCs
 							{
 								return 1f;
 							}
+							else if (npcType == ModContent.NPCType<CreamsandWitchPhase1>() && Main.rand.NextBool(50)) //Temp, rework will have new spawning mechanics
+							{
+								return 1f;
+							}
 						}
 						else if (!(Main.hardMode && !spawnInfo.Water && surface && (tileType == TileID.Pearlsand || tileType == TileID.Pearlstone || tileType == TileID.HallowedGrass || tileType == TileID.HallowedIce)))
 						{

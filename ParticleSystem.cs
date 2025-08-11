@@ -1,18 +1,10 @@
-using Microsoft.CodeAnalysis.CSharp.Formatting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.UI;
-using Terraria.Graphics.Renderers;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
-using static System.Formats.Asn1.AsnWriter;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace TheConfectionRebirth
 {
