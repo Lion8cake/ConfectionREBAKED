@@ -2000,6 +2000,19 @@ namespace TheConfectionRebirth
 						WorldGen.SquareTileFrame(k, l, true);
 						NetMessage.SendTileSquare(-1, k, l, 1);
 					}
+					else if (Main.tile[k, l].TileType == (ushort)ModContent.TileType<SacchariteBlock>() || Main.tile[k, l].TileType == (ushort)ModContent.TileType<EnchantedSacchariteBlock>())
+					{
+						if (Main.rand.NextBool(3))
+						{
+							WorldGen.KillTile(k, l);
+						}
+						else
+						{
+							WorldGen.KillTile(k, l, noItem: true);
+						}
+						WorldGen.SquareTileFrame(k, l, true);
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
 				}
 			}
 		}

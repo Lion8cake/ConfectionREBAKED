@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,6 +35,11 @@ namespace TheConfectionRebirth.Tiles
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 65;
+		}
+
+		public override IEnumerable<Item> GetItemDrops(int i, int j)
+		{
+			yield return new Item(ItemID.Ruby, 1);
 		}
 	}
 }
