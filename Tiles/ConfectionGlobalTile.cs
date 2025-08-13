@@ -23,6 +23,8 @@ namespace TheConfectionRebirth.Tiles {
 			TileObjectData tileObjectData3 = TileObjectData.GetTileData(TileID.FallenLog, 0);
 			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrass>()).ToArray();
 			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<CreamGrassMowed>()).ToArray();
+			TileObjectData tileObjectData4 = TileObjectData.GetTileData(TileID.GemSaplings, 0);
+			tileObjectData4.AnchorValidTiles = tileObjectData.AnchorValidTiles.Append(ModContent.TileType<Creamstone>()).ToArray();
 		}
 
 		public override void Unload() {
@@ -32,6 +34,8 @@ namespace TheConfectionRebirth.Tiles {
 			tileObjectData2.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() }).ToArray();
 			TileObjectData tileObjectData3 = TileObjectData.GetTileData(TileID.FallenLog, 0);
 			tileObjectData3.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>() }).ToArray();
+			TileObjectData tileObjectData4 = TileObjectData.GetTileData(TileID.GemSaplings, 0);
+			tileObjectData4.AnchorValidTiles = tileObjectData.AnchorValidTiles.Except(new int[] { ModContent.TileType<Creamstone>() }).ToArray();
 		}
 
 		public override void RandomUpdate(int i, int j, int type) {
