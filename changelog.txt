@@ -1,0 +1,777 @@
+Beta v0.30.0
+=========================
+The COMPLETE mod rewrite
+everything has been remade from the ground up again
+this means that almost every single bit of content has been altered in someway
+join the discord if you want to read the almost 750+ changes
+
+Beta v0.21.1
+=========================
+Fixed multiplayer crash with Creamsand
+Fixed creamsand not emitting dusts when walked on
+
+Beta v0.21.0
+=========================
+Added Custom Credits for those who helped with the confection
+Remade the Rollercycle rainbow effect
+Added Tree Variants, Trees now come in three different flavours
+Added Sandstorm support, dusts now show up as brown when in a confection sandstorm
+Remade the Spreading Config, worldgen doesnt generate cookie blocks on No Spread and has partial spread type
+Added ConvertsToConfection ID set for those who want custom WorldGen Support
+Added ModCalls for outside mod support
+Added licensing
+Resprited Confection Tree Branches
+Fixed Key of Spite not being craftable
+Fixed Confection Crate not being shimmer-able into banna split crates
+Fixed Various critters having their names repeated in their tooltip
+Fixed Gummy Wyrm shader error
+Fixed Royal Cherry Bug Spawning to be the same as the Prismatic Lacewing
+Fixed confection wings not having any tooltips
+Fixed confection Campfires not having any tooltips
+Fixed World Globe sometime repeating the same background when used in the confection
+
+Beta v0.20.0.1
+=========================
+Creamgrass and Mowed Creamgrass now allow sunflowers, fallen logs and pumpkins to be placed ontop
+Gave correct credit to people who helped in the 0.20 update
+
+Beta v0.20.0
+=========================
+Added a system that automatically replaces item ingredients with confection recipe groups. This fixes incompatibilities with some items from other mods. Dedicated support for some modded items will still need to be added
+
+Added Gummy Whip Dye
+Added Foamin' Wisp Dye
+Added Candy Corn Dye
+Added Swirling Chocolate Dye
+Added Shifting Creamsands Dye
+Added the Gummy Wyrm
+Added Rocky Cookie Wall
+Added Sherbet Flare
+Added Chlorophyte extractanator support
+Added Choco-rabbit Cupcakes
+Added Frog in a pond
+Added Birdnana Pop
+Added Pip Kebob
+Added a special effect to royal cherry bugs
+Added Royal Cherry bug bottle
+Remade the Crazy Cone from the ground up
+Fixed the Desert Pylon not working in the confection
+Reworked the Trifle, now consumes the top 3 most ammo slots in sucsession
+Added 15 souls of light to the megashark recipe
+Remade the parfait slime from the ground up (prepare for spiked slime AI)
+Remade the Crooked Cookie from the ground up
+Remade the mint JR from the ground up
+Fixed the Confection mimic not having an afterimage
+Remade the hunger from the ground up
+Remade the foamin' float from the ground up
+Fixed the gummy worm-whip being a "broken mess"
+Turn The Crumbler into The Blossom Cookie and reworked the yoyo to be more than just a boring yoyo
+Rewrote the sky coloring code to longer break and be unreliable
+fixed creamsand stone having the hardened sand conversion
+Fixed Creamsand not crafting sand related items
+Fixed Creamsand not being able to be fired out of a sandgun
+Fixed the crunch ball sound not having a position
+Fixed spreading issues with biome specific blocks (cookie, cream, fairy floss blocks)
+Resprited the soul of spite in a bottle
+increased the arrow requirement and recipe amount of the Chip Arrow and Saccharite Arrows
+increased the bullet requirement and recipe amount of the Saccharite Bullets
+Fixed Otherwordly music never playing
+Changed how saccharite grows, now being more similar to thorns in generation and now also grow on walls
+Fixed artifical cookie wall not turning into natural dirt wall apon conversion
+Fixed Sherbet bricks not being animated
+Fixed sherbet bricks providing light
+Fixed sherbet bricks not having the stone mining sound
+Made Sherbet dusts now be animated
+Fixed the Sherbet brick item not being animated
+Fixed the sherbet wall item and tile being formatted horribly and animated incorrectly
+Fixed all torches not having a mouse hover over sprite
+Fixed the confection torches using the sherbet dust
+Changed the sherbet campfire to have rainbow flames in its tile and item sprite
+Fixed the saccharite shot having a massive hitbox
+Touched up the cherimoya sprite
+Rewrote all the critters from the ground up
+Fixed royal and normal cherry bugs lighting not working properly or at all
+Rewrote some critter bestiaries
+Removed bait amount from the royal cherry bug
+Fixed critters spawning during events
+Fixed the sherbet slime and gummy wyrm having swapped banner sprites
+Fixed Chocolate frogs not crafting the froggle bunwich
+Moved alot of files around, this may cause some item unloading issues although this most likely wont happen
+Removed 1.3 tiles deletion code (noone should be playing 1.3 anymore)
+Changed the Shiny Birdnana Pet AI
+Changed the sword swing use style of the kazoo and magical kazoo
+Resprited and remade the meowzer pet
+Fixed the Top Cake hat not having candles
+Optimised the neapolinite chestplate player layers which now makes most helmet swaps instantanious and fixes helmets not working in the social slots
+Fixed exploit of being able to change the a world's confection background by doing the following: have a new day happen, while loading into a world, with the confection menu open
+
+Beta v0.19.5
+=========================
+Readded Fairy Floss Rain waterfalls, curtesy of Basically i am cat
+Fixed foliage growing underwater
+Rewrote the otherworldly music code to nolonger need an detour
+Fixed yumdrops having incorrect dusts and a visual glitch that made the bottom of the stop drawing
+Added a map name to the enchanted saccharite which also fixes the metal detector localisation issue
+Added recipe to the soul of delight in a bottle
+Added soul of spite in a bottle
+Fixed Soul bottles not being able to be placed under platforms
+Fixed the confection spreading in pre-hardmode
+Fixed banners clipping through platforms when placed under them
+Fixed mech bosses dropping ore and a bag in expert mode
+Fixed Cream Blocks not having the correct hitting sound
+Fixed WoF not dropping any hammer in hallowed worlds
+Added drunk support for mech and WoF drops to now alternate or give both confection and hallow items
+Added Fargo Best of Both worlds support
+
+Beta v0.19.4
+=========================
+Completely rebuilt backgrounds from the ground up fixing parity issues
+Added variants to the underground background
+Fixed parity between evil/goods underground backgrounds and the confection underground background
+Fixed blue lines between the cavern layer and the lava layer
+Fixed the map background not obaying sky light
+Polished the Snickerbobble Dev vanity
+Completely remade the grass spreading and foliage growth for cream grass
+Attempted to fix syncing mods issue in multiplayer
+
+Beta v0.19.3
+===========================================
+Added several new emotes (/confection, /duchess, /slammer)
+Rewrote the World Icons to work with new tag saving system
+Removed old tag saving system and remove the icon config option
+Fixed multiplyer getting stuck on syncing mods when loading into a server
+Fixed banners not being able to be placed on platforms
+Fixed several multi-hanging tiles not having correct wing physics
+Fixed trees not having some content such as leaves, dusts, ect
+Added biomesight to several confected blocks, they glow a cream color
+Fixed the confection not generating on the DDU and GFB seeds
+Fixed the sucrosa AoE not having its AoE graphic in dark places
+Fixed scale size of the creamwood dust
+Fixed snow pylons not working in confected snow biomes
+Fixed eerie not playing when in the confection during a blood moon
+Fixed the aaccharite lash not having reforge and sell prices
+Fixed some items not having the correct stack value
+Fixed mowed cream grass not spreading onto cookie blocks
+Fixed bestiary entry for Icecream Gal
+Fixed the hallowed globe being underpriced
+Fixed muisc boxes getting reforges
+Fixed the pitch of the Confection and Underground Confection music tracks to match the pitch of the normal terraria music (thx to @anukwarrior)
+Fixed weird issue where closing, opening and closing creamwood and saccharite doors would not drop their items
+Fixed Dressers being a buggy mess
+Fixed some platforms and walls not being decraftable into their item forms
+Fixed inconsisitencies between the confection and other biome mimics
+Fixed several NPCs not appearing on the Life Form Analizer
+Fixed Enchanted saccharite not appearing on the metal detector 
+Fixed several typos
+
+Beta v0.19.2
+===========================================
+Fixed Blood, Evil and Candy % being swapped with each other in the dryad status text when all 4 biomes where in the same world
+Fixed typos in some npc bestiary entries
+Made the enchanted saccharite take double the time to grow
+Rebuilt the music in the confection from the ground up (including otherworldly)
+Fixed Creamwood and saccharite clock recipes to use the iron bar recipe group instead of just iron bars
+Fixed saplings not being able to be planted on mowed confection grass
+Fixed material type and map color for the cream saplings and the snow cream saplings
+Updated the creamwood chest tile opening sprite to better match the vanilla opening animations
+Fixed the royal cherry bug being called the royal cherry bug item 
+Fixed the cherimoya not havign the medium improvements to stats tooltip
+Fixed the sweetstaff not playing a sound when used
+Fixed the confection mimic using the same sounds as a zombie
+Fixed transmutations not existing such as sherbet torches to campfires torches and confection campfires to shimmer campfires
+Fixed flickering texture fighting with the confection underground backgrounds
+Added config option to the confection world icon tree to avoid mod conflicts crashing the game
+
+Beta v0.19.1
+===========================================
+Resprited the opening animation of the locked confection biome chest
+Fixed the item sprite of the confection biome chest to be the unlocked version instead of the locked version
+Rebuilt the confection fishing from the ground up to be both more persice and to have more loot
+Fixed typo in the biome world creation description
+Fixed Unsafe and echo creamstone walls not being able to be clentaminated
+Rebuilt the confection music to now properly account for the remix seed, wheather and otherworldly music
+Fixed orange ice having the tick mining sound instead of the ice block mining sound
+Fixed creamwood chest and saccharite chest requiring iron bars instead of the iron bar recipe group
+Fixed the hallow globe not being sold by the zoologist after planterra has been defeated
+Added shimmer transmutation to make the sugar powder convert into vicious powder and vise versa
+Made the sugar powder clense evil instead of spreading the confection
+
+Beta v0.19.0
+===========================================
+Made the confection use Otherworldly Hallow and Otherworldly Underground hallow for its otherworldly music
+Fixed Sound issue with icescreamers
+Added pitch to the kazoo and magic kazoo
+Removed Altlib requirement
+Added world creation screen
+Added world Icon tree overlay for confection worlds
+Added cream grass mowing
+Added Cream solution, sugar powder and sugar water conversion
+Added NPC shops replacing items instead of just adding items
+Added Mimic spawning
+Added Neapolinite ore, hallowed ore and grand slammer to boss drops
+Fixed Hallowed ore not having a recipe to turn them into Hallowed bars
+Added Hallowed Globe
+Changed alternating backgrounds
+Made the Confection menu change between confection backgrounds
+Updated 2nd and 3rd Confection Background textures
+Added Dryad status text for the confection under confectry %
+Added Hardmode spreading
+Added conversion for mosses from normal mosses
+Added config to make cookie blocks, cream blocks and other misc tiles/walls to not spread
+Added Drunk worldgen
+Updated drunk worldgen icon overlay
+Added Sucrosa and True Sucrosa to the zenith projectile
+Gave descriptionless buffs buff descriptions
+Remade some bestiary descriptions
+Renamed the Cream Swallower to the Saccharite Sharpnose
+Renamed the Icing spray to the Icing tome
+Fixed error when using the lickety split or dimensional split
+Update english localisation to work on 1.4.4.9
+Fixed being able to decraft some confection items into hallowed items
+Fixed cream beans not being consumable and creating a tile instead of converting tiles
+Fixed some tiles not dropping
+Made the cream wings require 15 souls of delight instead of 30
+Made some NPC banners require less kills to get such as Unfirm, wild willy, Icecream Gal, Creamsand withc and Confection Mimic
+Made the cream solution only buy-able when the steampunker is in the confection biome or in the hallow biome while in a graveyard
+Made cream bricks nolonger require creamsand to make
+Fixed Saccharite taking 10x as long to grow beyond 1 tile
+Made Saccharite grow on creamsand stone and hardened creamsand
+Made the dimensional split and lickety split glow similar to the soul of delight
+Changed the glow of soul of delight to be less intense
+Updated the candle lighter to now be more similar to the flamethrower
+Fixed Candle lighter requiring 20 souls of sight instead of fright
+Nerfed the Sucrosa and True sucrosa damage
+Made the Baker's dozen glow
+Remade the Sucrosa and true sucrosa AoE
+Added a particle system for the Sucrosa, true sucrosa, death's raze and true death's raze
+Updated the DPS requirement for the Vanilla Valor V to be 1750 instead of 400
+Made the Vanilla valor now only ignore defence on crits and made crits that ignore defence have a vanilla color
+Gave the Cookie pike-let and the spear of cavendes an extention similar to the Gunginir
+Updated the spear of cavendes banana
+Updated the neapolinite female chestplate texture to better reflect the forum post
+Removed all unused neapolinite glowmasks
+Made the neapolinite chestplate change texture depending on helmet equiped
+Removed the following items: Creamy fox pet, blueberry tree tops and branches, blue berry background, two roller cookie sprites and ancient cosmic cookie cannon
+Added Royal Cherry bug
+Added Enchanted Saccharite
+Added Sweet and Savage Painting by oogely_boogely
+Readded the Can of meat, soul of spite, key of spite, death's raze and true death's raze
+Removed multiple unused items/projectiles
+Added Cherimoya and creamwood to the fruit and wood recipe group respectivly
+Added recipes for the Terra blade that includes the True Sucrosa and True Death's Raze
+Made the night's edge recipe with the bloody butcherer be replaces with the death's rae
+Made most item's stack size 9999
+Made the key of night only spawn the Corruption Mimic
+Changed the Soul of delight tooltip
+Made the cool whip craftable with souls of delight
+Reworked the Sprinkler and sprinkling AI to be more unqiue
+Fixed Sprinler dropping coins
+Changed the Confection and Sherbet Campfires to be more like their vanilla counterparts
+Added CelebrationMK10 Island worldgen
+Updated all spawn for confection npcs
+Made the steam punker sell the blue solution when in the confection when in a graveyard
+Made the dryad sell the world's opposite good seed when in a graveyard
+Fixed Music boxes not emitting music notes when activated
+Fixed the Confection water fountain not being functional
+Fixed Creamgrass and Mowed Creamgrass not actually being grass
+Fixed the Cookiest cookie pet constantly despawning when touching a tile and not going away when disabling the buff
+Fixed Creamsand witch pet sprite sheet having mixels
+Added player preview to all pets
+Fixed Confection chest not unlocking after planterra
+
+Beta v0.18.4
+===========================================
+Removed altlib as it was taken down from the workshop
+these features have been removed until altlib is put back up or we add the code ourselves
+Worldgen
+worldspread
+World Icons
+Perworld drops (neapolinite bars)
+Mowed Grass
+Solution conversion
+Confection Mimic spawn
+
+Beta v0.18.2
+===========================================
+Fixed Chocolate Charge (V) tooltip saying 8% critical strike chance instead of 10% critical strike chance.
+Fixed Underground Confection Music Box being named Confection U G Music Box.
+Now you can craft Desert Torches using Hardened Creamsand and Torches.
+Fixed Confection NPCs being able to spawn during event moons.
+Now you can craft Ice Torches using Orange Ice and Torches.
+Fixed Sprinkler not being able to shoot Sprinkling Balls.
+Fixed Foamin' Float not being able to shoot Cream Spray.
+Fixed ultra far background sometimes being weird.
+Fixed Sprinkler being too high off the ground.
+Slight changes in localization for biomes.
+Made True Sucrosa true melee.
+Added Sucrosa sword AoE.
+Added True Sucrosa AoE.
+=======
+Fixed desert torches not being craftable from confected sand
+Fixed ice torches not being craftable from orange ice
+Fixed name for the underground music box
+Removed the old archived items
+Updated some textures to match 1.4.4.9's texture changes
+Completely changed the kazoo and magic kazoo
+Fixed biome loading in confection not working underground
+Fixed map backgrounds not changing off the regular confection background
+Removed unused pigron sound
+Updated sounds for crunch ball
+Updated sounds for ice screamer
+Changed creamy spray to icing spray
+
+Added Chinese Transaltion by Cyril
+Added Russian Translation by AstralGel
+
+===========================================
+Beta v0.18.1
+===========================================
+Fixed issue whenever game tries to draw Sprinkler.
+
+===========================================
+Beta v0.18.0
+===========================================
+All archived items now actually get replaced with whatever they got replaced. (for example, Soul of Spite will automatically get converted to Soul of Night)
+Now you can uncraft Confectionary Crystals Walls, Melting Confection Walls, Cracked Confection Walls and Lined Confection Walls back into Creamstone.
+Renamed Chocolate Bunny, Chocolate Frog, Gummy Worm Cage into Chocolate Bunny, Chocolate Frog, Gummy Worm Terrarium correspodently.
+Neapolinite Brick now requires 5 Stone Blocks and 1 Neapolinite Ore instead of 1 Creamstone and 1 Neapolinite Ore to craft.
+Confection Key tooltip now will be "It has been cursed by a powerful Jungle creature" if Plantera isn't defeated in world.
+Hallowed Brick now requires 5 Stone Blocks and 1 Hallowed Ore instead of 1 Pearlstone and 1 Hallowed Ore to craft.
+Fixed Iscreamers having 0.02% (0.025% in Expert) to drop Dimensional Split. Now its 0.2% and 0.25% in Expert.
+Added `changelog.txt` file, which contains every changelog since very first snapshot of Confection for 1.4.
+Made Iscreamer "inability to teleport NPCs above certain health" affected by Journey Mode difficulty scale.
+Saccharite Blocks now require 5 Stone Blocks, 1 Saccharite and an Adamantite/Titanium Forge to craft.
+Renamed Blue, Pink, Purple Fairy Floss into Blue, Pink, Purple Fairy Floss Block correspondently.
+Localized most hardcoded stuff. Now, you officially can translate Confection to other languages!
+Now Candlelighter inflicts `Hellfire` for 20 seconds, instead of `On Fire!` for 4mil seconds.
+Now you can't use Dimensional Split to teleport NPCs those have more than 1000 max health. 
+Added Gummy Worm-whip. Sprite credit goes to splig. (the whip is unobtainable as now tho)
+Updated homepage to be https://terrariamods.wiki.gg/wiki/Confection_Rebaked instead.
+Now Banana Split Crate and Confection Crate internally do count as fishing crates.
+Now Cream of Kickin' properly affected by damage prefixes/modifiers.
+Made Baker's Dozen projectile variations visible for other players.
+Increased the max stack size of nearly all stackable items to 9999.
+Made Secret Confection background slightly more common. (by ~10x)
+Renamed Confection Biome Chest Item into Confection Biome Chest.
+Dimensional Split now has 1% to drop in Celebrationmk10 worlds.
+Made Chocolate Bunny Cage (item) researchable in Journey Mode.
+Drastically decreased droprate of C-cret Ticket and Wonky set.
+Made Chocolate Frog Cage (item) researchable in Journey Mode.
+Creamstone Brick now cost 2 creamstone to craft instead of 1.
+Meowzer now has 5% to drop Toasty Toaster instead of 100%.
+Fixed all Confection's biomes in bestiary being "unknown".
+Fixed sell values for Creamwood/Saccharite furniture sets.
+Fixed Sherbet Slime bestiary entry being slightly offset.
+Fixed Parfait Slime bestiary entry being slightly offset.
+Made Gummy Worm Cage (item) researchable in Journey Mode.
+Made Chocolate Bunny (item) researchable in Journey Mode.
+Renamed Hardened Creamsand into Hardened Creamsand Block.
+Increased amount of Pastry Blocks that Meowzer can drop.
+Made Chocolate Frog (item) researchable in Journey Mode.
+Renamed Saccharite Workbench into Saccharite Work Bench.
+Fixed Strawberry Strike buff being named Vanilla Valor.
+Cream Solution now costs 15 silver coins instead of 25.
+Chocolate Bunny bestiary portrait is no longer static.
+Renamed Creamwood Workbench into Creamwood Work Bench.
+Made Saccharite Bat Fish researchable in Journey Mode.
+Cherimoya and Star Fruit now drop slightly more often.
+Creamsand Witch bestiary portrait is no longer static.
+Added all Rollercookie sprite variations from forums.
+Made Banana Split Crate researchable in Journey Mode.
+Chocolate Frog bestiary portrait is no longer static.
+Made Grumble Bee (item) researchable in Journey Mode.
+Made Dimensional Split researchable in Journey Mode.
+Added all Sweet Gummy sprite variations from forums.
+Made Saccharite Bullet researchable in Journey Mode.
+Made The Deserted Land researchable in Journey Mode.
+Slighty moved up Crooked Cookie's bestiary portrait.
+Crafting confection bricks now give 5 instead of 2.
+Made Confection Crate researchable in Journey Mode.
+Made Confection Pylon researchable in Journey Mode.
+Made Cream of Kickin' researchable in Journey Mode.
+Made Saccharite Arrow researchable in Journey Mode.
+Icecream Gal bestiary portrait is no longer static.
+Sweet Gummy bestiary portrait is no longer static.
+Made Birdnana (item) researchable in Journey Mode.
+Added all Iscreamer sprite variations from forums.
+Fixed typos in Neapolinite Mask set bonus tooltip.
+Made Birdnana (item) researchable in Journey Mode.
+Made Saccharite Dart researchable in Journey Mode.
+Made Chocolate Fudge researchable in Journey Mode.
+Grumble Bee bestiary portrait is no longer static.
+Slighty lowered Foamin' Float's bestiary portrait.
+Cherry Bug bestiary portrait is no longer static.
+Gummy Worm bestiary portrait is no longer static.
+Sprinkling now can drop Fast Clock and Megaphone.
+Made Heavenly Forge researchable in Journey Mode.
+Wild Willy bestiary portrait is no longer static.
+Renamed Creamsandstone into Creamsandstone Block.
+Slightly lowered Sprinkling's bestiary portrait.
+Made True Sucrosa researchable in  Journey Mode.
+Made Candlelighter researchable in Journey Mode.
+Fixed typo in Neapolinite Hat set bonus tooltip.
+Fixed a typo in Striped Pigron's bestiary entry.
+Birdnana bestiary portrait is no longer static.
+Made Sprinklefish researchable in Journey Mode.
+Made Sugar Water researchable in Journey Mode.
+Made Crunch Ball researchable in Journey Mode.
+Made Soda Potion researchable in Journey Mode.
+Fixed typo in Crooked Cookie's bestiary entry.
+Cream Grass Wall now can be bought from Dryad.
+Fixed typo in Parfait Slime's bestiary entry.
+Added Sprinkling/Sprinkler sprite variations.
+Made Pip (item) researchable in Journey Mode.
+Renamed Sherbet Wall into Sherbet Brick Wall.
+Made Chip Arrow researchable in Journey Mode.
+Fixed a typo in Neapolinite Headgear tooltip.
+Variations of some enemies now single entity.
+Slighty lowered Mint Jr's bestiary portrait.
+Nerfed YumDrop's sell price to be 1 silver.
+Fixed typo in Gastropod Staff buff tooltip.
+Shell Blocks now drop slightly more common.
+Pip bestiary portrait is no longer static.
+Fixed typos in Prickster's bestiary entry.
+Fixed Potted Confection Bamboo sell price.
+Fixed Candlelighter not having any offset.
+Fixed typo in Saccharite Bullet's tooltip.
+Pastry Blocks now drop slightly more rare.
+Cream Swallower now actually drops stuff.
+Fixed Potted Confection Cedar sell price.
+Renamed Orange Ice into Orange Ice Block.
+Fixed typo in Iscreamer's bestiary entry.
+Made Impact researchable in Journey Mode.
+Fixed typo in Creamwood Helmet set bonus.
+Renamed Creamstone into Creamstone Block.
+Fixed mixels in Striped Pigron's sprite.
+Fixed Potted Confection Palm sell price.
+Fixed Cream Swallower bestiary portrait.
+Fixed typo in Pastry Staff buff tooltip.
+Fixed Potted Confection Tree sell price.
+Fixed Striped Pigron bestiary portrait.
+Parfait Slime now can drop Slime Staff.
+Fixed 1 pixel in Rollercookie's sprite.
+Renamed Creamsand into Creamsand Block.
+Fixed typo in Meowzer's bestiary entry.
+Fixed typo in Candlelighter's tooltip.
+Fixed 1 pixel in Parfait Slime sprite.
+Fixed banners not having any tooltips.
+Made Birthday set slightly more rare.
+Updated Striped Pigron's loot table.
+Ultra far background now less laggy.
+Fixed Sugar Ghoul bestiary portrait.
+Fixed typo in Pop Rocket's tooltip.
+Fixed Crazy Cone bestiary portrait.
+Nerfed Creamwood Breastplate price.
+Fixed bug with Dimensional Split.
+Taffy Apple now drops more rare.
+Now Sherbet Bricks cost nothing.
+Cream Swallower now has banner.
+Nerfed Creamwood Greaves price.
+Nerfed Creamwood Helmet price.
+Renamed YumDrop into Yumdrop.
+Removed Meety Mummy Banner.
+Improved mod compatibility.
+Increased version number.
+Added The Cookiest Block.
+Removed Cream of Kickin'.
+Fixed Sweet Tooth rarity.
+Added The Cookiest Block.
+Removed True Ichor Bolt.
+Removed Can of Meat.
+Added Lickity Split.
+Removed Cream Puff.
+Added Brownie.
+
+===========================================
+Beta v0.17.0
+===========================================
+Fixed all Confection NPCs being able to spawn during OOA event, lunar towers event and invasions.
+Made sky in the Confection pinkish.
+Added Potted Confection Bamboo.
+Added Potted Confection Cedar.
+Added Potted Confection Tree.
+Added Potted Confection Palm.
+Added Confection Campfire.
+Resprited Creamy Fox pet.
+Added Sherbet Campfire.
+
+===========================================
+Beta v0.16.1
+===========================================
+Fixed issue where having more than 1 Jousting lance would cause you to bypass the stopping of the item when hit.
+Added recipes for old Crimson items to convert them to Corruption/Crimson items.
+Removed unused Saccharite Lash buff and explosion projectile.
+Replaced Gummy Staff with Fairy Tooth.
+
+===========================================
+Beta v0.16.0
+===========================================
+Added Creamwood Work Bench and Saccharite Work Bench although are unobtainable, but can still be used to place the Creamwood Workbench and Saccharite Workbench.
+Readded Key of Spite, Death's Raze, True Death's Raze and Soul of Spite although are not obtainable.
+Updated texures of gemstone filled Creamstone to correctly match the current Creamstone texture.
+Updated texture of the Creamstone Wall to properly match the current Creamstone texture.
+Changed single top tree background to better tessellate with other backgrounds.
+Added Graveyard items and walls for the new and old naturally generating walls.
+Allowed artificial walls to count as a valid wall for NPC housing.
+Made all platforms no longer require work bench to be crafted.
+New naturally generating walls now actually generate.
+Fixed Gemstone Creamstone blocks not generating.
+Added and altered crafting recipes for walls.
+Fixed Sherbet Brick Wall not being rainbow.
+Changed colors on the map for some walls.
+Added Ancient Neapolinite Headgear.
+Made Saccharite grow on Orange Ice.
+Added Soul of Delight in a Bottle.
+All platforms now stack up to 999.
+Added Neapolinite Jousting Lance.
+Added Confectionary Crystal Wall.
+Added Ancient Neapolinite Helmet.
+Added Lined Confection Gem Wall.
+Added Creaking Confection Wall.
+Added Confection Mimic Banner.
+Added Ancient Neapolinite Hat.
+Added Melting Confection Wall.
+Readded Yum Block Wall.
+Added Saccharite Lash.
+
+===========================================
+Beta v0.15.0
+===========================================
+Fixed being able to see pink lines while confection trees are swinging while it s windy while being at max zoom.
+Fixed the cookie wheel sprite sheet being off by alot and not hiding the players legs.
+Fixed Neapolinite set bonus descriptions taking up only one line instead of multiple.
+Fixed wings being uncraftable, having incorrect acceleration, rarity and sell price.
+Fixed Sweet Hook not letting the player reach the top of the hook when grappling.
+Moved folder for the Kazoo item. (this won t affect anything in game)
+Fixed banners not giving the banner buff for the Confection NPCs.
+Fixed misspell in Creamy Sandwich name being Creamy sandwhich.
+Readded item sprites from the 1.3 version for banners.
+Fixed ores not being able to generate in Creamstone.
+Fixed Shiney Birdnana glowing red instead of yellow.
+Readded 2 other quest fish from the 1.3 version.
+Readded the Heavenly Bag although unobtainable.
+Readded the Gastropod Staff / Gastropod summon.
+Readded the Gummy Staff / Gummy Fish summon.
+Readded the Pastry Staff / Meawzer summon.
+Doubled the damage of the Cookie Pike-let.
+Added animation to the Gastropod summon.
+Fixed Sweet Gummy set sprite sheets.
+Changed Sweet Tooth sprite.
+Readded Rollercookie pet.
+Readded Creamy Sandwich.
+Readded Creamy Fox pet.
+Reworked Sweet Tooth.
+Readded Dudling pet.
+Readded Meawzer pet.
+
+===========================================
+Beta v0.14.1
+===========================================
+Fixed issue where swinging a weapon caused all Confection Critters to instantly die.
+Finally made Iscreamers properly teleport once 10 seconds have past.
+Also fixed crashed caused by killing literally any NPC.
+Fixed Iscreamers being able to teleport Target Dummies.
+Made Iscreamer teleportation speed much slower.
+Made Pop Soda stackable.
+
+===========================================
+Beta v0.14.0
+===========================================
+Nerfed True Death's Raze projectile to no longer have infinite piercing and instead has a shorter duration time.
+Made the Sugar Water summon it's own tile converting projectile instead of using the Cream Solution projectile.
+Changed Cream of Kickin' meatball to spin around the player like regular flails but with higher damage.
+Updated Confection Snow Surface Background to be in par with the 4 layer changes last update.
+Removed Soul of Spite, Death's Raze and True Death's Raze as they have been added to AltLib.
+Fixed Confection track being too gritty in some places after the loadness increase.
+Changed the Cream of Kickin' cookie to instantly shoot out with much lower damage.
+Finally merged BasicallyIAmFox's changes to alternating and 4 layered backgrounds.
+Fixed not being able to craft Terra Blade with True Sucrosa and True Death's Raze.
+Changed True Death's Raze to be in par with the current 1.3 version of itself.
+Changed True Sucrosa to be in par with the current 1.3 version of itself.
+Ported the rest of the weapons those weren't included in the 1.4 version.
+Updated Cream of Kickin' description to properly reflect new changes.
+Fixed Chain texture for the Cream of Kickin'.
+Made Forest Pylon not work in the Confection.
+Increased damage for the True Death's Raze.
+Decreased damage for the True Sucrosa.
+Fixed the Spear of Cavendes.
+Fixed Neapolinite Repeater.
+Readded the Candlelighter.
+Added Confection Pylon.
+Nerfed Icecream Bell.
+Fixed Pop Rocket.
+
+===========================================
+Beta v0.13.0
+===========================================
+Added Ultra Rare background. (you can get it randomly with 1/trilling chance)
+Made all Confection backgrounds 4 layered apart from Programmer Art menu.
+Added the first food item into the Confection.
+Replaced Cookie Crumbler with Cookie Pike-let.
+Added Alternating Backgrounds.
+Overhauled Baker's Dozen.
+Added Confection Torch.
+Nerfed Bear Claws.
+
+===========================================
+Beta v0.12.0
+===========================================
+Fixed saccharite spawning on the surface and flooding the area while growing due to the increased area.
+Add rainbow trait effect and some effect when hitting top speeds when on the Rollercycle Mount.
+Fixed Soul of Delight not glowing like normal souls and not having a glowmask overtop.
+Fixed Cream Droplets showing their sprite sheet instead of their actual animation.
+Now you can craft Mechanical Skull and Mechanical Eye using Souls of Delight.
+Fixed Soul of Spite s tooltip to not include a random capital for bloody.
+Fixed Wild Willy not being able to be killed because of invalid gores.
+Fixed Neapolinite armor sprite showing skin between the arm and body.
+Fixed Confection music playing overtop Confection Underground music.
+Made Iscreamers not teleport NPCs above a certain health a NPC has.
+Fixed Confection and Underground Confection tracks being too soft.
+Added Confection Moss, which can be acquired by converting moss.
+Fixed Confection not working in the outer thirds of the world.
+Readded separate buffs for each Neapolinite armor piece.
+Fixed Banana Split Crate being available in Hardmode.
+Fixed Grand Slammer not dropping from Wall of Flesh.
+Added night time background to the confection menu.
+Added Summoner's Shine compatibility by Yreorel.
+Added rotation to the Rollercycle when jumping.
+Fixed Sweethook's chain texture not showing up.
+Fixed Saccharite growing way too fast.
+Fixed and buffed Rollercycle Mount.
+Fixed and nerfed Pixie Stick Mount.
+Readded Neapolinite armor recipes.
+Fixed Kazoo having a broken sound.
+Fixed Soul of Delight's tooltip.
+Added better Creamstone texture.
+Fixed and nerfed C-cret Mount.
+Added Saccharite break sound.
+Reworked Neapolinite armor.
+
+===========================================
+Beta v0.11.2
+===========================================
+Changed the bestiary name for the Confection Ice Underground from Confection Ice Cave to Confection Ice due to Confection Surface Ice being unused.
+Finally fixed Soul of Delight not dropping as intended.
+Fixed bestiary biome name for the Confection biome.
+Fixed Cream Vines not growing more than one tile.
+Changed name of the Confection biome.
+Fixed Saccharite not spawning.
+
+===========================================
+Beta v0.11.0 and Beta v0.11.1
+===========================================
+Removed unnecessary unneeded tree code from Cream Grass, Mowed Cream Grass, Cream Block and Creamsand.
+Partly fixed crash happening when trying to load Prickster drops.
+Improved Iscreamer's AI. (thanks to Yreorel for the better AI)
+Fixed tiles changing states when using green solution.
+Added Prickly Pear texture for the Prinkle Cactus.
+Added Oasis textures for the Cream Palm tree.
+Added Iscreamer snow alternative.
+Ported Prickster from 1.3 to 1.4.
+Ported Dudley from 1.3 to 1.4.
+Readded support for biome lib.
+Fixed Cream Palm tree.
+Fixed Cream Snow tree.
+Fixed Sprinkle Cactus.
+Fixed Cream Sapling.
+Fixed Cream tree.
+Fixed Sounds.
+
+===========================================
+Beta v0.10.0
+===========================================
+Renamed the file ConfectionBiome to ConfectionAltBiome to cause less confusion between the Confection Biome and the Confection AltLib biome support.
+Fixed gores spawning 3x more than they should. This change doesn't affects cloud gore NPCs.
+Fixed typo in Cream Swallower's name. (Cream Swollower -> Cream Swallower)
+Renamed Sugar Ghoul gore from the gore texture ID to SugarGhoulGore(1-4).
+Fixed mixel on The Confection background and Confection Menu Background.
+Completely overhauled how the main confection Biome is registered.
+Changed NPC bestiaries to fit with more recent biome changes.
+Fixed cloud gores for every NPC apart from Creamsand Witch.
+Updated Crazy Cone's sprite to match 1.3 version.
+Fixed Meowzer's Tail not dropping any gore.
+Added gores to Creamsand Witch's broom.
+Changed how tiles register biomes.
+Changed NPC spawning conditions.
+Fixed Confection Mimic gores.
+Fixed Cream Swallower gores.
+Fixed Birthday Cookie gores.
+Fixed Creamsand Witch drops.
+Fixed Creamsand Witch's AI.
+Fixed Crooked Cookie gores.
+Fixed Sherbet Slime gores.
+Fixed Parfait Slime gores.
+Fixed Rollercookie gores.
+Fixed Sugar Ghoul gores.
+Fixed Critter spawning.
+Fixed The Unfirm gores.
+Fixed Wild Willy gores.
+Fixed Crazy Cone gores.
+Fixed Sprinkler's AI.
+Fixed Critter gores.
+
+===========================================
+Beta v0.9.0
+===========================================
+???.
+
+===========================================
+Beta v0.8.0
+===========================================
+Readded Confection Menu. (accessed by clicked the text at the bottom of the screen on the main menu)
+Fixed all Creamwood Furniture tiles and Items.
+Added Cosmic Cookie Cannon.
+Fixed some tiles.
+Changed Icon.
+
+===========================================
+Beta v0.7.0
+===========================================
+Added Alternative Biome Library support.
+Removed key of decay and key of smite.
+Fixed few things.
+???.
+
+===========================================
+Beta v0.4.0
+===========================================
+Fixed warning with cream waterfall.
+Fixed desert biome background.
+Fixed creamstone stalagmites.
+Fixed the broken snow biome.
+Fixed mutiplayer crash.
+???.
+
+===========================================
+Beta v0.3 / Release
+===========================================
+Bugged Trees although they still drop creamwood. (this is a bug with tModLoader 1.4)
+Removed Neaplonite armor set bonus. (the tool tip is still there though)
+Added bestiary entries for some confection npcs.
+Removed most of the Creamwood furniture.
+Changed the way how the biome registers.
+Removed functionality of some weapons.
+Added journey mode dupilation amount.
+Removed creamstone stalagmites.
+Changed a few minor changes.
+Removed furniture tiles.
+Changed folders around.
+Removed all summons.
+Removed all pets.
+Removed foliage.
+???.
+
+===========================================
+Beta v0.1.2
+===========================================
+Added Creamstone Stalagmites.
+Added Creamstone Stalacmites.
+Added Rollercookie.
+Added Creamstone.
+Added Creamwood.
+
+===========================================
+Beta v0.1
+===========================================
+Ported most armor from 1.3 to 1.4.
+Ported all wings from 1.3 to 1.4.
