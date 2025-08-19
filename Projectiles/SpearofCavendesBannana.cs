@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Gores;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -30,9 +31,10 @@ namespace TheConfectionRebirth.Projectiles
         {
             for (int k = 0; k < 15; k++)
             {
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<BananaWarpDust>(), Projectile.oldVelocity.X * 0.2f, Projectile.oldVelocity.Y * 0.2f);
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<CreamDust>(), Projectile.oldVelocity.X * 0.2f, Projectile.oldVelocity.Y * 0.2f);
 			}
+            int goreID = Gore.NewGore(new EntitySource_Death(Projectile), Projectile.position + (Projectile.velocity / 2), Vector2.Zero, ModContent.GoreType<BanannaPeel>());
+            Main.gore[goreID].rotation = Projectile.rotation + MathHelper.Pi;
         }
     }
 }
