@@ -681,13 +681,13 @@ namespace TheConfectionRebirth.Tiles.Trees
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			spriteBatch.End();
-			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
 			DrawTrees(i, j, spriteBatch);
 			spriteBatch.End();
 			spriteBatch.Begin(); //No params as PostDraw doesn't use spritebatch with params
 		}
 
-		private static void ShakeTree(int i, int j)
+		public static void ShakeTree(int i, int j)
 		{
 			FieldInfo numTreeShakesReflect = typeof(WorldGen).GetField("numTreeShakes", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance);
 			int numTreeShakes = (int)numTreeShakesReflect.GetValue(null);
@@ -757,7 +757,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type, num2);
 			}
 			else if (genRand.NextBool(15)) {
-				int type2 = Main.rand.NextFromList(new short[4] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>(), NPCID.Squirrel, NPCID.SquirrelRed });
+				int type2 = Main.rand.NextFromList(new short[4] { (short)ModContent.NPCType<NPCs.Pip>(), (short)ModContent.NPCType<NPCs.Birdnana>(), NPCID.Squirrel, NPCID.SquirrelRed });
 				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
 					type2 = ((!genRand.NextBool(2)) ? NPCID.SquirrelGold : NPCID.GoldBird);
 				}
@@ -774,7 +774,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Point point;
 				for (int l = 0; l < 5; l++) {
 					point = new(x + Main.rand.Next(-2, 2), y - 1 + Main.rand.Next(-2, 2));
-					int type4 = ((Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) != 0f) ? Main.rand.NextFromList(new short[2] { (short)ModContent.NPCType<NPCs.Critters.Pip>(), (short)ModContent.NPCType<NPCs.Critters.Birdnana>() }) : NPCID.GoldBird);
+					int type4 = ((Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) != 0f) ? Main.rand.NextFromList(new short[2] { (short)ModContent.NPCType<NPCs.Pip>(), (short)ModContent.NPCType<NPCs.Birdnana>() }) : NPCID.GoldBird);
 					NPC obj3 = Main.npc[NPC.NewNPC(new EntitySource_ShakeTree(x, y), point.X * 16, point.Y * 16, type4)];
 					obj3.velocity = Main.rand.NextVector2CircularEdge(3f, 3f);
 					obj3.netUpdate = true;
@@ -784,7 +784,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, NPCID.Seagull2);
 			}*/
 			else if (genRand.NextBool(20) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) {
-				int type5 = ModContent.NPCType<NPCs.Critters.GrumbleBee>();
+				int type5 = ModContent.NPCType<NPCs.GrumbleBee>();
 				if (Player.GetClosestRollLuck(x, y, NPC.goldCritterChance) == 0f) {
 					type5 = NPCID.GoldButterfly ;
 				}
@@ -795,7 +795,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}*/
 			else if (genRand.NextBool(12)) {
-				int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<Cherimoya>() : ItemID.Starfruit);
+				int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<Cherimoya>() : ModContent.ItemType<CocoaBeans>());
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}
 			if (Main.netMode == NetmodeID.Server)
@@ -808,7 +808,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			}
 		}
 
-		private static void EmitCreamLeaves(int tilePosX, int tilePosY, int grassPosX, int grassPosY)
+		public static void EmitCreamLeaves(int tilePosX, int tilePosY, int grassPosX, int grassPosY)
 		{
 			bool _isActiveAndNotPaused = (bool)typeof(TileDrawing).GetField("_isActiveAndNotPaused", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			int _leafFrequency = (int)typeof(TileDrawing).GetField("_leafFrequency", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
@@ -958,10 +958,12 @@ namespace TheConfectionRebirth.Tiles.Trees
 		{
 			double _treeWindCounter = (double)typeof(TileDrawing).GetField("_treeWindCounter", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
-			Vector2 zero = Vector2.Zero;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen) {
+				zero = Vector2.Zero;
+			}
 			float num15 = 0.08f;
 			float num16 = 0.06f;
-			int PositioningFix = CaptureManager.Instance.IsCapturing ? 0 : 192; //Fix to the positioning to the Branches and Tops being 192 pixels to the top and left
 			int x = k;
 			int y = l;
 			Tile tile = Main.tile[x, y];
@@ -988,7 +990,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, grassPosX, floorY3);
 							byte tileColor3 = tile.TileColor;
 							Texture2D treeTopTexture = GetTreeTopTexture(Type, 0, tileColor3);
-							Vector2 vector = new Vector2((float)(x * 16 - (int)unscaledPosition.X + 8 + PositioningFix), (float)(y * 16 - (int)unscaledPosition.Y + 16 + PositioningFix)) + zero;
+							Vector2 vector = new Vector2((float)(x * 16 - (int)unscaledPosition.X + 8), (float)(y * 16 - (int)unscaledPosition.Y + 16)) + zero;
 							float num7 = 0f;
 							if (!flag)
 							{
@@ -1015,7 +1017,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, num21 + num2, floorY2);
 							byte tileColor2 = tile.TileColor;
 							Texture2D treeBranchTexture2 = GetTreeBranchTexture(Type, 0, tileColor2);
-							Vector2 position2 = new Vector2((float)(x * 16) + PositioningFix, (float)(y * 16) + PositioningFix) - unscaledPosition.Floor() + zero + new Vector2(16f, 12f);
+							Vector2 position2 = new Vector2((float)(x * 16), (float)(y * 16)) - unscaledPosition.Floor() + zero + new Vector2(16f, 12f);
 							float num4 = 0f;
 							if (!flag)
 							{
@@ -1045,7 +1047,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 							EmitCreamLeaves(x, y, num17 + num18, floorY);
 							byte tileColor = tile.TileColor;
 							Texture2D treeBranchTexture = GetTreeBranchTexture(Type, 0, tileColor);
-							Vector2 position = new Vector2((float)(x * 16) + PositioningFix, (float)(y * 16) + PositioningFix) - unscaledPosition.Floor() + zero + new Vector2(0f, 18f);
+							Vector2 position = new Vector2((float)(x * 16), (float)(y * 16)) - unscaledPosition.Floor() + zero + new Vector2(0f, 18f);
 							float num20 = 0f;
 							if (!flag)
 							{

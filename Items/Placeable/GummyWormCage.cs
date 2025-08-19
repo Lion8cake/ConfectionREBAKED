@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 namespace TheConfectionRebirth.Items.Placeable
 {
 	[LegacyName("GummyWormCageItem")]
-	internal class GummyWormCage : ModItem
+	public class GummyWormCage : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,13 +18,16 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.WormCage);
-            Item.createTile = ModContent.TileType<Tiles.GummyWormCage>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.GummyWorm>(), 1).AddIngredient(ItemID.Terrarium, 1).Register();
+			Item.useStyle = 1;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 12;
+			Item.createTile = ModContent.TileType<Tiles.GummyWormCage>();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = Item.buyPrice(0, 0, 15, 0);
             Item.rare = ItemRarityID.Orange;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
         }
     }

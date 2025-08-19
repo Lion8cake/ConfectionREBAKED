@@ -11,7 +11,6 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             ItemID.Sets.IsFishingCrate[Type] = true;
-
             Item.ResearchUnlockCount = 5;
         }
 
@@ -23,11 +22,10 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.height = 34;
             Item.rare = ItemRarityID.Green;
             Item.createTile = ModContent.TileType<Tiles.BananaSplitCrate>();
-            Item.placeStyle = 0;
             Item.useAnimation = 10;
             Item.useTime = 10;
             Item.value = Item.sellPrice(gold: 1);
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
         }
 
         public override bool CanRightClick()

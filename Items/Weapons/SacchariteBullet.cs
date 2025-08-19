@@ -25,13 +25,5 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.shootSpeed = 16f;
 			Item.ammo = AmmoID.Bullet;
 		}
-
-		public override void AddRecipes() {
-			CreateRecipe(200)
-				.AddIngredient(ItemID.MusketBall, 200)
-				.AddIngredient<Saccharite>()
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-		}
 	}
 }

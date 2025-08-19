@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
-            DustType = ModContent.DustType<SacchariteCrystals>();
+            DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.Beds };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
@@ -33,8 +33,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
 
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(32, 174, 221), name);
+            AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -50,7 +49,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
         public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info)
         {
-            info.VisualOffset.Y += 2f;
+            info.VisualOffset.Y += -2f;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

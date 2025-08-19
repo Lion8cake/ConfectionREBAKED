@@ -23,15 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 7;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createWall = ModContent.WallType<Walls.GraveyardWalls.ConfectionaryCrystalWall>();
-        }
-        public override void AddRecipes()
-        {
-            CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<Creamstone>())
-                .AddCondition(Condition.InGraveyard)
-                .AddTile(TileID.WorkBenches)
-                .Register();
+            Item.createWall = ModContent.WallType<Walls.ConfectionaryCrystalWall>();
         }
     }
 }

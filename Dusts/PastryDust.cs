@@ -3,14 +3,12 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Dusts
 {
-    public class PastryDust : ModDust
-    {
-        public override void OnSpawn(Dust dust)
-        {
-            dust.velocity *= 0.4f;
-            // dust.noGravity = false;
-            dust.noLight = true;
-            dust.scale *= 1f;
-        }
-    }
+	public class PastryDust : ModDust
+	{
+		public override void OnSpawn(Dust dust) {
+			dust.noGravity = false;
+			dust.noLight = true;
+			dust.scale *= 1f;
+		}
+	}
 }

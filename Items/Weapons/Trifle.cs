@@ -32,7 +32,7 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item31;
             Item.autoReuse = true;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 16f;
             Item.value = 300000;
             Item.useAmmo = AmmoID.Bullet;
@@ -103,17 +103,5 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return false;
 		}
-
-		public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.ClockworkAssaultRifle)
-                .AddIngredient(ItemID.IllegalGunParts)
-                .AddIngredient<SoulofDelight>(15)
-                .AddIngredient<Sprinkles>(20)
-                .AddIngredient(ItemID.SoulofMight, 20)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
     }
 }

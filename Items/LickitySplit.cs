@@ -13,6 +13,7 @@ namespace TheConfectionRebirth.Items
         {
             Item.ResearchUnlockCount = 1;
         }
+		
         public override void SetDefaults()
         {
             Item.useTime = 25;
@@ -20,9 +21,9 @@ namespace TheConfectionRebirth.Items
             Item.width = 30;
             Item.height = 30;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.value = Item.buyPrice(0, 2, 50, 0);
             Item.rare = ItemRarityID.Lime;
-            Item.shoot = ModContent.ProjectileType<LickWarp>();
+            Item.shoot = ModContent.ProjectileType<DimensionalWarp>();
             Item.UseSound = SoundID.Item8;
             Item.autoReuse = true;
         }
@@ -36,19 +37,34 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
-            int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
-            int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
-            if (modPlayer.DimensionalWarp == null && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
-            {
-                Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
-            }
-            else if (modPlayer.DimensionalWarp != null && player.ownedProjectileCounts[ModContent.ProjectileType<LickWarp2>()] == 0)
-            {
-                Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<LickWarp2>(), 1, knockback, player.whoAmI);
-            }
-            return false;
-        }
-    }
+		{
+			ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
+			int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
+			int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
+			if (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType])
+			{
+				if (player.ownedProjectileCounts[ModContent.ProjectileType<DimensionalWarp>()] < 1)
+				{
+					Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, type, 0, 0, player.whoAmI, 2);
+				}
+				else if (player.ownedProjectileCounts[ModContent.ProjectileType<DimensionalWarp>()] < 2)
+				{
+					Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, type, 0, 0, player.whoAmI, 3);
+				}
+				else
+				{
+					for (int i = 0; i < Main.maxProjectiles; i++)
+					{
+						Projectile projectile = Main.projectile[i];
+						if (projectile.active && (projectile.ai[0] == 1 || projectile.ai[0] == 3) && projectile.type == ModContent.ProjectileType<DimensionalWarp>())
+						{
+							projectile.Kill();
+							Projectile.NewProjectile(source, Main.MouseWorld, Vector2.Zero, type, 0, 0, player.whoAmI, 3);
+						}
+					}
+				}
+			}
+			return false;
+		}
+	}
 }

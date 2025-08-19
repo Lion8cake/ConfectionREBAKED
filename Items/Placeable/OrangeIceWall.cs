@@ -23,12 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 7;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createWall = ModContent.WallType<Walls.GraveyardWalls.BlueIceWallArtificial>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<OrangeIce>()).AddCondition(Condition.InGraveyard).AddTile(TileID.WorkBenches).Register();
+            Item.createWall = ModContent.WallType<Walls.BlueIceWallArtificial>();
         }
     }
 }

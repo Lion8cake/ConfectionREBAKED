@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,8 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
+
+			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.DarkShard, 1);
 		}
 
 		public override void SetDefaults()
@@ -18,17 +21,6 @@ namespace TheConfectionRebirth.Items
 			Item.value = 4500;
 			Item.rare = ItemRarityID.Green;
 			Item.maxStack = 9999;
-		}
-
-		public override void AddRecipes() {
-			Recipe.Create(ItemID.DarkShard)
-				.AddIngredient<CanofMeat>()
-				.AddTile(TileID.DemonAltar)
-				.Register();
-			CreateRecipe()
-				.AddIngredient(ItemID.DarkShard)
-				.AddTile(TileID.DemonAltar)
-				.Register();
 		}
 	}
 }

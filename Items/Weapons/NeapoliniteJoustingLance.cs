@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.DefaultToSpear(ModContent.ProjectileType<Projectiles.NeapoliniteJoustingLanceProjectile>(), 1f, 24);
+            Item.DefaultToSpear(ModContent.ProjectileType<Projectiles.NeapoliniteJoustingLance>(), 1f, 24);
 
             Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.SetWeaponValues(80, 12f, 0);
@@ -27,13 +27,5 @@ namespace TheConfectionRebirth.Items.Weapons
         }
 
 		public override bool MeleePrefix() => true;
-
-		public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<NeapoliniteBar>(12)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
     }
 }

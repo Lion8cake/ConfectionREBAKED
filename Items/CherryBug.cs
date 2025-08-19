@@ -7,7 +7,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using TheConfectionRebirth.NPCs.Critters;
 
 namespace TheConfectionRebirth.Items
 {
@@ -30,7 +29,7 @@ namespace TheConfectionRebirth.Items
 			Item.height = 12;
 			Item.noUseGraphic = true;
 			Item.bait = 35;
-			Item.makeNPC = ModContent.NPCType<NPCs.Critters.CherryBug>();
+			Item.makeNPC = ModContent.NPCType<NPCs.CherryBug>();
 			Item.value = Item.sellPrice(0, 0, 5);
 		}
 	}

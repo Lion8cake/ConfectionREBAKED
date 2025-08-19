@@ -20,29 +20,21 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.noUseGraphic = true;
             Item.autoReuse = true;
             Item.useAnimation = 14;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 14;
             Item.knockBack = 7.5f;
             Item.UseSound = SoundID.Item1;
             Item.DamageType = DamageClass.Melee;
             Item.height = 38;
             Item.value = Item.buyPrice(0, 10);
-            Item.rare = 4;
-            Item.shoot = Mod.Find<ModProjectile>("BearClaw").Type;
+			Item.rare = ItemRarityID.LightRed;
+			Item.shoot = ModContent.ProjectileType<Projectiles.BearClaw>();
             Item.shootSpeed = 16f;
         }
 
         public override bool CanUseItem(Player player)
         {
-            int stack = Item.stack;
-            bool canuse = true;
-            for (int m = 0; m < 1000; m++)
-            {
-                if (Main.projectile[m].active && Main.projectile[m].owner == Main.myPlayer && Main.projectile[m].type == Item.shoot)
-                    stack -= 1;
-            }
-            if (stack <= 0) canuse = false;
-            return canuse;
+            return player.ownedProjectileCounts[Item.shoot] < 1;
         }
     }
 }

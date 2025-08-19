@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,8 +26,7 @@ namespace TheConfectionRebirth.Items
 
 		public override void SetDefaults() {
 			Item.DefaultToFood(22, 22, BuffID.WellFed2, 72000);
-			Item.value = Item.buyPrice(0, 3);
-			Item.rare = ItemRarityID.Orange;
+			Item.SetShopValues(ItemRarityColor.Orange3, Item.buyPrice(0, 3));
 		}
 	}
 }

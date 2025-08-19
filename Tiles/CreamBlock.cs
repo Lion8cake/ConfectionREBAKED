@@ -6,32 +6,32 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class CreamBlock : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("BlueIce").Type] = true;
-            Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
-            TileID.Sets.Snow[Type] = true;
-            DustType = ModContent.DustType<CreamSnowDust>();
-            AddMapEntry(new Color(219, 223, 234));
+	public class CreamBlock : ModTile
+	{
+		public override void SetStaticDefaults()
+		{
+			Main.tileMergeDirt[Type] = true;
+			Main.tileSolid[Type] = true;
+			Main.tileBrick[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileBlockLight[Type] = true;
+			
+			TileID.Sets.Conversion.Snow[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
+			TileID.Sets.Snow[Type] = true;
+			TileID.Sets.IcesSnow[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
+
+			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<BlueIce>()] = true;
+
+			AddMapEntry(new Color(219, 223, 234));
+			DustType = ModContent.DustType<CreamDust>();
 			HitSound = SoundID.Item48;
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = (fail ? 1 : 3);
-        }
-
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
-			return true;
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace TheConfectionRebirth.Items.Weapons
 	public class ChipArrow : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			Item.ResearchUnlockCount = 99;
 		}
 
 		public override void SetDefaults() {
@@ -23,14 +23,6 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<Projectiles.ChipArrow>();
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;
-		}
-
-		public override void AddRecipes() {
-			CreateRecipe(150)
-				.AddIngredient(ItemID.WoodenArrow, 150)
-				.AddIngredient(ModContent.ItemType<CookieDough>(), 2)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
 		}
 	}
 }

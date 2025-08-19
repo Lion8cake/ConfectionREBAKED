@@ -14,14 +14,8 @@ namespace TheConfectionRebirth.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             AddMapEntry(new Color(136, 136, 160));
-            DustType = 84;
-
+            DustType = DustID.Platinum;
             HitSound = SoundID.Tink;
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
         }
     }
 }

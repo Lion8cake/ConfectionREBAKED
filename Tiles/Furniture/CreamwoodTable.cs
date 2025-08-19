@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
@@ -15,12 +14,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Main.tileTable[Type] = true;
             Main.tileSolidTop[Type] = true;
             Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.IgnoredByNpcStepUp[Type] = true;
 
-            DustType = ModContent.DustType<Dusts.ChipDust>();
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Tables };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
@@ -30,9 +29,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
-            LocalizedText name = CreateMapEntryName();
-            //name.SetDefault("Table");
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)

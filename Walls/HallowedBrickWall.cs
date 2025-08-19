@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Walls
@@ -9,14 +10,8 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-			RegisterItemDrop(ModContent.ItemType<Items.Placeable.HallowedBrickWall>());
-            DustType = 84;
+            DustType = DustID.Platinum;
             AddMapEntry(new Color(59, 59, 73));
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
         }
     }
 }

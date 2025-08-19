@@ -25,13 +25,5 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;
 		}
-
-		public override void AddRecipes() {
-			CreateRecipe(250)
-				.AddIngredient(ItemID.WoodenArrow, 250)
-				.AddIngredient<Saccharite>()
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-		}
 	}
 }

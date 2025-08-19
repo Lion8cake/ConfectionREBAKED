@@ -25,10 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.value = 0;
             Item.createTile = ModContent.TileType<Tiles.Furniture.CreamwoodToilet>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 6).AddTile(TileID.Sawmill).Register();
-        }
     }
 }

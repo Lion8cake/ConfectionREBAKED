@@ -4,11 +4,11 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
 {
-
     public class Hunger : ModNPC
     {
         public override void SetStaticDefaults()
@@ -25,7 +25,6 @@ namespace TheConfectionRebirth.NPCs
             NPC.lifeMax = 500;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.value = 60f;
             NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = -1;
             AnimationType = NPCID.PresentMimic;
@@ -45,7 +44,8 @@ namespace TheConfectionRebirth.NPCs
 		public override void AI() {
 			if (NPC.ai[0] == 0f) {
 				NPC.TargetClosest();
-				if (Main.netMode == 1) {
+				if (Main.netMode == NetmodeID.MultiplayerClient)
+				{
 					return;
 				}
 				if (NPC.velocity.X != 0f || NPC.velocity.Y < 0f || (double)NPC.velocity.Y > 0.3) {
@@ -103,19 +103,33 @@ namespace TheConfectionRebirth.NPCs
                 return;
             }
 
-            if (NPC.life <= 0)
-            {
-                var entitySource = NPC.GetSource_Death();
-
-                for (int i = 0; i < 3; i++)
-                {
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 13);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 12);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 11);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("HungerGore").Type);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("HungerGore").Type);
-                }
-            }
-        }
+			if (NPC.life > 0)
+			{
+				for (int i = 0; (double)i < hit.Damage / (double)NPC.lifeMax * 50.0; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CreamDust>());
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CreamDust>());
+				}
+				int goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hit.HitDirection, 0f), 61, NPC.scale);
+				Gore gore = Main.gore[goreID];
+				gore.velocity *= 0.3f;
+				goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2((float)hit.HitDirection, 0f), 62, NPC.scale);
+				gore = Main.gore[goreID];
+				gore.velocity *= 0.3f;
+				goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 10f), new Vector2((float)hit.HitDirection, 0f), 63, NPC.scale);
+				gore = Main.gore[goreID];
+				gore.velocity *= 0.3f;
+				for (int i = 0; i < 2; i++)
+				{
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("HungerGore").Type);
+				}
+			}
+		}
     }
 }

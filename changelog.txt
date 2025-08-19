@@ -1,3 +1,10 @@
+Beta v0.30.0
+=========================
+The COMPLETE mod rewrite
+everything has been remade from the ground up again
+this means that almost every single bit of content has been altered in someway
+join the discord if you want to read the almost 750+ changes
+
 Beta v0.21.1
 =========================
 Fixed multiplayer crash with Creamsand

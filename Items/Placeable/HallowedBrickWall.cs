@@ -24,10 +24,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.HallowedBrickWall>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<HallowedBrick>()).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

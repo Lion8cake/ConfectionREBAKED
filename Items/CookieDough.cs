@@ -1,8 +1,6 @@
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items
 {
@@ -19,7 +17,7 @@ namespace TheConfectionRebirth.Items
             Item.height = 12;
             Item.value = 15000;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
     }
 }

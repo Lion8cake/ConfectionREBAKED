@@ -30,14 +30,5 @@ namespace TheConfectionRebirth.Items
 			Item.rare = ItemRarityID.Orange;
 			Item.dye = dye;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ShiftingSandsDye);
-			recipe.AddIngredient(ModContent.ItemType<Placeable.Saccharite>(), 20);
-			recipe.AddTile(TileID.DyeVat);
-			recipe.Register();
-		}
 	}
 }

@@ -14,8 +14,17 @@ namespace TheConfectionRebirth.Items
 
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(ItemID.LizardEgg);
-			Item.shoot = ModContent.ProjectileType<Projectiles.CreamsandWitchPetProjectile>();
+			Item.damage = 0;
+			Item.useStyle = 1;
+			Item.width = 16;
+			Item.height = 30;
+			Item.UseSound = SoundID.Item2;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
+			Item.rare = ItemRarityID.Orange;
+			Item.noMelee = true;
+			Item.value = Item.sellPrice(0, 2);
+			Item.shoot = ModContent.ProjectileType<Projectiles.CreamsandWitchPet>();
 			Item.buffType = ModContent.BuffType<Buffs.CreamsandWitchPet>();
 		}
 

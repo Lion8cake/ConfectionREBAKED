@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Buffs
 		{
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = ModContent.ProjectileType<Projectiles.CookiestBlockPro>();
+			int projType = ModContent.ProjectileType<Projectiles.CookiestCookieBlock>();
 
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
 			{

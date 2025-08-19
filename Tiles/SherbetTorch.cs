@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -17,8 +18,6 @@ namespace TheConfectionRebirth.Tiles
     {
 		private Asset<Texture2D> flameTexture;
 
-		private int tileFrame = 0;
-
 		public override void SetStaticDefaults() {
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -29,8 +28,6 @@ namespace TheConfectionRebirth.Tiles
 			TileID.Sets.FramesOnKillWall[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
-
-			AnimationFrameHeight = 22;
 
 			DustType = ModContent.DustType<SherbetDust>();
 			AdjTiles = new int[] { TileID.Torches };
@@ -68,91 +65,15 @@ namespace TheConfectionRebirth.Tiles
 			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.SherbetTorch>();
 		}
 
-		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			frameCounter++;
-			if (frameCounter > 5) {
-				frameCounter = 0;
-				frame++;
-				if (frame > 12) {
-					frame = 0;
-				}
-			}
-			tileFrame = frame;
-		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];
 
 			if (tile.TileFrameX < 66) {
-				switch (tileFrame) {
-					case 0:
-						r = 1.92f;
-						g = 0.26f;
-						b = 0.26f;
-						break;
-					case 1:
-						r = 1.93f;
-						g = 0.68f;
-						b = 0.26f;
-						break;
-					case 2:
-						r = 2.53f;
-						g = 0.91f;
-						b = 0.03f;
-						break;
-					case 3:
-						r = 2.52f;
-						g = 1.58f;
-						b = 0.03f;
-						break;
-					case 4:
-						r = 1.99f;
-						g = 1.67f;
-						b = 0.15f;
-						break;
-					case 5:
-						r = 1.04f;
-						g = 1.57f;
-						b = 0.15f;
-						break;
-					case 6:
-						r = 0.23f;
-						g = 1.07f;
-						b = 0.29f;
-						break;
-					case 7:
-						r = 0.23f;
-						g = 1.06f;
-						b = 1.06f;
-						break;
-					case 8:
-						r = 0.29f;
-						g = 0.8f;
-						b = 1.31f;
-						break;
-					case 9:
-						r = 0.37f;
-						g = 0.57f;
-						b = 2.27f;
-						break;
-					case 10:
-						r = 0.66f;
-						g = 0.37f;
-						b = 2.26f;
-						break;
-					case 11:
-						r = 1.01f;
-						g = 0.36f;
-						b = 1.62f;
-						break;
-					case 12:
-						r = 1.62f;
-						g = 0.36f;
-						b = 1.58f;
-						break;
-				}
+				r = (float)TheConfectionRebirth.SherbR / 255f;
+				g = (float)TheConfectionRebirth.SherbG / 255f;
+				b = (float)TheConfectionRebirth.SherbB / 255f;
 			}
 		}
 
@@ -175,12 +96,12 @@ namespace TheConfectionRebirth.Tiles
 			}
 
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
-			Color color = new Color(100, 100, 100, 0);
+			Color color = new Color((float)TheConfectionRebirth.SherbR / 255f, (float)TheConfectionRebirth.SherbG / 255f, (float)TheConfectionRebirth.SherbB / 255f, 0f);
 			int width = 20;
 			int height = 20;
 			var tile = Main.tile[i, j];
 			int frameX = tile.TileFrameX;
-			int frameY = AnimationFrameHeight * tileFrame;
+			int frameY = AnimationFrameHeight;
 
 			for (int k = 0; k < 7; k++) {
 				float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;

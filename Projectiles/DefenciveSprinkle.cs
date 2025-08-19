@@ -28,17 +28,10 @@ namespace TheConfectionRebirth.Projectiles
             {
                 Projectile.rotation += MathHelper.Pi;
             }
-			Projectile.localAI[1] = 0f;
 			Projectile.velocity.Y += 0.205f;
 			if (Projectile.velocity.Y < -5f) {
 				Projectile.velocity.Y = -5f;
 			}
 		}
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            Projectile.ai[0] += 0.1f;
-            Projectile.velocity *= 0.75f;
-        }
 	}
 }

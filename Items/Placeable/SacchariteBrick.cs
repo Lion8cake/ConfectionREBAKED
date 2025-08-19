@@ -25,12 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.SacchariteBrick>();
         }
-
-        public override void AddRecipes()
-        {
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<SacchariteBlockWall>(), 4).Register();
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Furniture.SaccharitePlatform>(), 2).Register();
-			CreateRecipe(5).AddIngredient(ItemID.StoneBlock, 5).AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 1).AddTile(TileID.AdamantiteForge).Register();
-        }
     }
 }

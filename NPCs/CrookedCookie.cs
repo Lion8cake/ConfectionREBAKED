@@ -1,9 +1,13 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
@@ -12,7 +16,7 @@ namespace TheConfectionRebirth.NPCs
     {
 		public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Position = new(0, -5f),
                 PortraitPositionYOverride = -20f
@@ -43,36 +47,52 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-		
-
         public override void AI()
         {
-			float num142 = 12f;
+			
+            if (NPC.collideX || NPC.collideY)
+            {
+				if (NPC.velocity.X != NPC.oldVelocity.X)
+				{
+					NPC.velocity.X = NPC.oldVelocity.X * -0.9f;
+				}
+				if (NPC.velocity.Y != NPC.oldVelocity.Y && NPC.oldVelocity.Y > 3f)
+				{
+					NPC.velocity.Y = NPC.oldVelocity.Y * -0.9f;
+				}
+			}
+			float speed = 12f;
 			NPC.TargetClosest();
-			Vector2 vector91 = Main.player[NPC.target].Center - NPC.Center;
-			vector91.Normalize();
-			vector91 *= num142;
-			int num144 = 200;
-			NPC.velocity.X = (NPC.velocity.X * (float)(num144 - 1) + vector91.X) / (float)num144;
-			if (NPC.velocity.Length() > 16f) {
+			Vector2 pos = Main.player[NPC.target].Center - NPC.Center;
+			pos.Normalize();
+			pos *= speed;
+			int offset = 200;
+			NPC.velocity.X = (NPC.velocity.X * (float)(offset - 1) + pos.X) / (float)offset;
+			if (NPC.velocity.Length() > 16f)
+			{
 				NPC.velocity.Normalize();
 				NPC.velocity *= 16f;
 			}
-			if (NPC.localAI[0] > 0f) {
-				NPC.localAI[0] -= 1f;
-			}
-			if (NPC.localAI[0] == 0f) {
-				NPC.localAI[0] = 60f;
-				if (NPC.collideY == true) {
-					NPC.velocity.Y -= 8f;
+			NPC.ai[0] += 1f;
+			if (NPC.ai[0] > 5f)
+			{
+				NPC.ai[0] = 5f;
+				if (NPC.velocity.Y == 0f && NPC.velocity.X != 0f)
+				{
+					NPC.velocity.X *= 0.97f;
+					if ((double)NPC.velocity.X > -0.01 && (double)NPC.velocity.X < 0.01)
+					{
+						NPC.velocity.X = 0f;
+						NPC.netUpdate = true;
+					}
 				}
+				NPC.velocity.Y += 0.2f;
 			}
-			NPC.rotation += NPC.velocity.X * 0.05f;
-			if (NPC.velocity.Y > 16f) {
+			NPC.rotation += NPC.velocity.X * 0.1f;
+
+			if (NPC.velocity.Y > 16f)
+			{
 				NPC.velocity.Y = 16f;
-			}
-			if (NPC.velocity.X < 0.1f && NPC.velocity.X > -0.1f && NPC.velocity.Y > -0.1f) {
-				NPC.localAI[0] = 0f;
 			}
 		}
 
@@ -83,16 +103,24 @@ namespace TheConfectionRebirth.NPCs
                 return;
             }
 
-            if (NPC.life <= 0)
-            {
-                var entitySource = NPC.GetSource_Death();
-
-                for (int i = 0; i < 1; i++)
-                {
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("CrookedCookieGore1").Type);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("CrookedCookieGore2").Type);
-                }
-            }
-        }
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 50; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CreamstoneDust>(), 2.5f * (float)hit.HitDirection, -2.5f);
+				}
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("CrookedCookieGore1").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("CrookedCookieGore2").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("CrookedCookieGore3").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("CrookedCookieGore4").Type);
+			}
+			else
+			{
+				for (int i = 0; i < hit.Damage / (double)NPC.lifeMax * 10.0; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CreamstoneDust>(), hit.HitDirection, -1f);
+				}
+			}
+		}
     }
 }

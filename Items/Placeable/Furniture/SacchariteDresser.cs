@@ -22,13 +22,8 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = Terraria.Item.sellPrice(silver: 60);
-            Item.createTile = Mod.Find<ModTile>("SacchariteDresser").Type;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(null, "SacchariteBrick", 16).AddTile(TileID.Sawmill).Register();
+            Item.value = Terraria.Item.sellPrice(copper: 60);
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteDresser>();
         }
     }
 }

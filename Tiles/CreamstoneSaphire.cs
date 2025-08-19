@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,87 +7,39 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class CreamstoneSaphire : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HallowedOre").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("NeapoliniteOre").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("SacchariteBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamBlock").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("BlueIce").Type] = true;
-			TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
+	public class CreamstoneSaphire : ModTile
+	{
+		public override void SetStaticDefaults() 
+		{
+			Main.tileMergeDirt[Type] = true;
+			Main.tileSolid[Type] = true;
+			Main.tileStone[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 9000;
+			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
+
+			TileID.Sets.ChecksForMerge[Type] = true;
+			ConfectionIDs.Sets.CanGrowSaccharite[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
+
+			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CreamstoneStalactite>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<BlueIceStalactite>()] = true;
+
+			DustType = ModContent.DustType<CreamstoneDust>();
 			RegisterItemDrop(ItemID.Sapphire);
-            DustType = ModContent.DustType<CreamDust>();
-            AddMapEntry(new Color(188, 168, 120));
+			AddMapEntry(new Color(188, 168, 120));
+			HitSound = SoundID.Tink;
+			MineResist = 2f;
+			MinPick = 65;
+		}
 
-            HitSound = SoundID.Tink;
-            MinPick = 65;
-        }
-
-        /*private bool SpawnRocks(int i, int j)
-	{
-		if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
+		public override IEnumerable<Item> GetItemDrops(int i, int j)
 		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamstoneStalagmites>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j + 1].type == 0 && Main.tile[i, j + 2].type == 0 && Main.rand.Next(4) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamstoneStalacmites>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(6) == 0)
-		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<CreamstoneStalagmites2>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(4) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<CreamstoneStalacmites2>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(2) == 0)
-		{
-			WorldGen.PlaceTile(i, j + 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(20) == 0)
-		{
-			WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SacchariteBlock>(), mute: true);
-			return true;
-		}
-		return false;
-	}
-	
-	public override void RandomUpdate(int i, int j)
-	{
-		if (Main.rand.Next(8) == 0)
-		   {
-			    bool spawned = false;
-			    if (!spawned)
-			    {
-				    spawned = SpawnRocks(i, j);
-			    }
-		    }
-	    }*/
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
-			return true;
+			yield return new Item(ItemID.Sapphire, 1);
 		}
 	}
 }

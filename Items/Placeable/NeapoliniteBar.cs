@@ -1,6 +1,7 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -16,7 +17,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             Item.width = 20;
             Item.height = 20;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 20000;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
@@ -25,13 +26,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.autoReuse = true;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.NeapoliniteBar>();
-            Item.placeStyle = 0;
             Item.rare = ItemRarityID.LightRed;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<NeapoliniteOre>(), 5).AddTile(TileID.AdamantiteForge).Register();
         }
     }
 }

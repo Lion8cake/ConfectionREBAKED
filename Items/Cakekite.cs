@@ -20,13 +20,5 @@ namespace TheConfectionRebirth.Items
             Item.rare = ItemRarityID.Orange;
             Item.maxStack = 9999;
         }
-
-        public override void AddRecipes()
-        {
-			Recipe.Create(ItemID.SeafoodDinner)
-			   .AddIngredient(this, 2)
-			   .AddTile(TileID.CookingPots)
-			   .Register();
-		}
     }
 }

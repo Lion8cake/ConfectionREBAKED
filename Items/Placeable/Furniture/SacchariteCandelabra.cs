@@ -1,6 +1,6 @@
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Items.Placeable.Furniture
 {
@@ -20,15 +20,10 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
-            Item.consumable = true;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 3);
-            Item.createTile = Mod.Find<ModTile>("SacchariteCandel").Type;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 5).AddIngredient(8, 3).AddTile(TileID.WorkBenches).Register();
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteCandelabra>();
         }
     }
 }

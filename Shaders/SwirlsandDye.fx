@@ -16,39 +16,31 @@ float2 uImageSize1;
 float4 uLegacyArmorSourceRect;
 float2 uLegacyArmorSheetSize;
 
-const float a = 1.0;
-const float b = 0.1759;
-const float Pi = 3.14159265359;
-const float Tau = 6.28318530718;
-
-float spiralSDF(float2 p) {
-    float t = atan2(p.y, p.x) + uTime * 8.0;
-    float r = length(p);
-    
-    float n = (log(r / a) / b - t) / 2.0 / Pi;
-
-    float upper_r = a * exp(b * (t + Tau * ceil(n)));
-    float lower_r = a * exp(b * (t + Tau * floor(n)));
-    
-    float val = min(abs(upper_r - r), abs(r - lower_r));
-    
-    return val;
-}
-
-float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
+float PI = 3.1415926535;
+float4 hsv_to_rgb(float h, float s, float v, float a)
 {
-    float2 playerCoords = coords * uImageSize0 - uSourceRect.xy;
-    float d = spiralSDF(playerCoords);
-    
-    float4 color = tex2D(uImage0, coords);
-    color.rgb = saturate(color.rgb * pow(d, 1.52) * 0.28);
-    color.rgb *= uColor;
-    
-    color *= sampleColor;
-    
+    float c = v * s;
+    h = fmod((h * 6.0), 6.0);
+    float x = c * (1.0 - abs(fmod(h, 2.0) - 1.0));
+    float4 color = float4(0., 0., 0., 0.);
+    color.rgb += v - c;
+    color = lerp(color, float4(0.4, 0.1, 0., 1.), 0.5);
     return color;
 }
-
+float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
+{
+    float4 col2 = tex2D(uImage0, coords);
+    col2.rgb *= float3(0.55, 0.35, 0.25);
+    float2 uv = (coords * uImageSize0 - uSourceRect.xy) / uSourceRect.zw;
+    uv = uv * 2 - 1;
+    float r = length(float2(uv.x, uv.y));
+    float angle = atan2(uv.x, uv.y) - r / 200.0 + 1.0 * uTime;
+    float intensity = 0.5 + 0.25 * sin(15.0 * angle); 
+    float4 col = hsv_to_rgb(angle / PI, intensity, 1.0, 0.5);
+    float alpha = (col2.r + col2.g + col2.b) / 3;
+    float4 color = col * sampleColor * alpha;
+    return col2 * sampleColor + color;
+}
 technique Technique1
 {
     pass SwirlsandDyeShaderPass

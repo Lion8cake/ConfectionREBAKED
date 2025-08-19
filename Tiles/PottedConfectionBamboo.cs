@@ -6,7 +6,7 @@ using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles
 {
-    class PottedConfectionBamboo : ModTile
+    public class PottedConfectionBamboo : ModTile
     {
         public override void SetStaticDefaults()
         {

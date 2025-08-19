@@ -34,24 +34,13 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.noUseGraphic = true;
 
             Item.UseSound = SoundID.Item1;
-            Item.shoot = ModContent.ProjectileType<SpearofCavendesProj>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.SpearofCavendes>();
             Item.shootSpeed = 10f;
         }
 
         public override bool CanUseItem(Player player)
         {
             return player.ownedProjectileCounts[Item.shoot] < 1;
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<SpearofCavendesProj>(), damage, knockback, player.whoAmI);
-            return false;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
         }
     }
 }

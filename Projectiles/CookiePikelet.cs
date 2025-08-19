@@ -12,9 +12,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class CookiePikelet : ModProjectile
 	{
-		protected virtual float HoldoutRangeMin => 120f;
-		protected virtual float HoldoutRangeMax => 260f;
-
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 		}
@@ -41,7 +38,10 @@ namespace TheConfectionRebirth.Projectiles
 				progress = (duration - Projectile.timeLeft) / halfDuration;
 			}
 
-			Projectile.Center = player.MountedCenter + Vector2.SmoothStep(Projectile.velocity * this.HoldoutRangeMin, Projectile.velocity * this.HoldoutRangeMax, progress);
+			float rangeMin = 120f;
+			float rangeMax = 260f;
+
+			Projectile.Center = player.MountedCenter + Vector2.SmoothStep(Projectile.velocity * rangeMin, Projectile.velocity * rangeMax, progress);
 
 			if (Projectile.spriteDirection == -1) {
 				Projectile.rotation += MathHelper.ToRadians(45f);
@@ -50,23 +50,13 @@ namespace TheConfectionRebirth.Projectiles
 				Projectile.rotation += MathHelper.ToRadians(135f);
 			}
 
-			if (!Main.dedServ) {
-				if (Main.rand.NextBool(3)) {
-					Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CookieCrumbs>(), Projectile.velocity.X * 2f, Projectile.velocity.Y * 2f, Alpha: 128, Scale: 1.2f);
-				}
-
-				if (Main.rand.NextBool(4)) {
-					Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CookieCrumbs>(), Alpha: 128, Scale: 0.3f);
-				}
-			}
-
 			SpearExtraLength(out var _);
 
 			return false;
 		}
 
 		public bool SpearExtraLength(out Rectangle extensionBox) {
-			extensionBox = default(Rectangle);
+			extensionBox = default;
 			Player player = Main.player[Projectile.owner];
 			if (player.itemAnimation < player.itemAnimationMax / 3) {
 				return false;
@@ -122,18 +112,22 @@ namespace TheConfectionRebirth.Projectiles
 			Rectangle value = asset.Frame();
 			Rectangle rect = Projectile.getRect();
 			Vector2 vector = Vector2.Zero;
-			if (player.direction > 0) {
-				dir = (SpriteEffects)1;
+			if (player.direction > 0)
+			{
+				dir = SpriteEffects.FlipHorizontally;
 				vector.X = asset.Width();
 				num -= (float)Math.PI / 2f;
 			}
-			if (player.gravDir == -1f) {
-				if (Projectile.direction == 1) {
+			if (player.gravDir == -1f)
+			{
+				if (Projectile.direction == 1)
+				{
 					dir = (SpriteEffects)3;
 					vector = new((float)asset.Width(), (float)asset.Height());
 					num -= (float)Math.PI / 2f;
 				}
-				else if (Projectile.direction == -1) {
+				else if (Projectile.direction == -1)
+				{
 					dir = (SpriteEffects)2;
 					vector = new(0f, (float)asset.Height());
 					num += (float)Math.PI / 2f;
@@ -142,7 +136,8 @@ namespace TheConfectionRebirth.Projectiles
 			Vector2.Lerp(vector, value.Center.ToVector2(), 0.25f);
 			float num2 = 0f;
 			Vector2 vector2 = Projectile.Center + new Vector2(0f, Projectile.gfxOffY);
-			if (SpearExtraLength(out var extensionBox)) {
+			if (SpearExtraLength(out var extensionBox))
+			{
 				Vector2 value2 = player.RotatedRelativePoint(player.MountedCenter, reverseRotation: false, addGfxOffY: false);
 				Vector2 val = extensionBox.Size();
 				float num8 = val.Length();
@@ -157,29 +152,29 @@ namespace TheConfectionRebirth.Projectiles
 				Texture2D value3 = TextureAssets.Extra[98].Value;
 				Vector2 origin = value3.Size() / 2f;
 				Color color = new Color(255, 255, 255, 0) * 0.5f;
-				color = new(128, 72, 49, 20);
+
+				color = new(128, 72, 49, 15);
+
 				float num6 = num - (float)Math.PI / 4f * (float)Projectile.spriteDirection;
-				if (player.gravDir < 0f) {
-					if (player.direction > 0) {
-						num6 -= (float)Math.PI / 2f * ((float)Projectile.spriteDirection * MathHelper.Pi);
-					}
-					else {
-						num6 -= (float)Math.PI / 2f * (float)Projectile.spriteDirection;
-					}
+				if (player.gravDir < 0f)
+				{
+					num6 -= (float)Math.PI / 2f * (float)Projectile.spriteDirection;
 				}
-				if (player.direction > 0) {
-					num6 = num - (float)Math.PI / 4f * ((float)Projectile.spriteDirection * MathHelper.Pi);
+				if (player.direction > 0f)
+				{
+					num6 += MathHelper.ToRadians(90f);
 				}
 				Main.EntitySpriteDraw(value3, Vector2.Lerp(vector3, vector2, 0.5f) - Main.screenPosition, null, color * num5, num6, origin, new Vector2(num5 * num3, num3) * Projectile.scale * num3, dir);
 				Main.EntitySpriteDraw(value3, Vector2.Lerp(vector3, vector2, 1f) - Main.screenPosition, null, color * num5, num6, origin, new Vector2(num5 * num3, num3 * 1.5f) * Projectile.scale * num3, dir);
 				Main.EntitySpriteDraw(value3, Vector2.Lerp(value2, vector2, num4 * 1.5f - 0.5f) - Main.screenPosition + new Vector2(0f, 2f), null, color * num5, num6, origin, new Vector2(num5 * num3 * 1f * num5, num3 * 2f * num5) * Projectile.scale * num3, dir);
-				for (float num7 = 0.4f; num7 <= 1f; num7 += 0.1f) {
+				for (float num7 = 0.4f; num7 <= 1f; num7 += 0.1f)
+				{
 					Vector2 vector4 = Vector2.Lerp(value2, vector3, num7 + 0.2f);
 					Main.EntitySpriteDraw(value3, vector4 - Main.screenPosition + new Vector2(0f, 2f), null, color * num5 * 0.75f * num7, num6, origin, new Vector2(num5 * num3 * 1f * num5, num3 * 2f * num5) * Projectile.scale * num3, dir);
 				}
 				extensionBox.Offset((int)(0f - Main.screenPosition.X), (int)(0f - Main.screenPosition.Y));
 			}
-			Main.EntitySpriteDraw(asset.Value, vector2 - Main.screenPosition, value, Projectile.GetAlpha(Lighting.GetColor((int)((double)Projectile.position.X + (double)Projectile.width * 0.5) / 16, (int)(((double)Projectile.position.Y + (double)Projectile.height * 0.5) / 16.0))), num, vector, Projectile.scale, dir);
+			Main.EntitySpriteDraw(asset.Value, vector2 - Main.screenPosition, value, Projectile.GetAlpha(lightColor), num, vector, Projectile.scale, dir);
 			rect.Offset((int)(0f - Main.screenPosition.X), (int)(0f - Main.screenPosition.Y));
 			Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, rect, Color.White * num2);
 			return false;

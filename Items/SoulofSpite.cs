@@ -20,10 +20,8 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override void SetDefaults() {
-			Item refItem = new();
-			refItem.SetDefaults(ItemID.SoulofNight);
-			Item.width = refItem.width;
-			Item.height = refItem.height;
+			Item.width = 18;
+			Item.height = 18;
 			Item.value = Item.sellPrice(silver: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 9999;
@@ -34,7 +32,7 @@ namespace TheConfectionRebirth.Items
 		}
 
 		public override Color? GetAlpha(Color lightColor) {
-			return Color.White;
+			return new Color(255, 255, 255, byte.MaxValue - 50);
 		}
 	}
 }

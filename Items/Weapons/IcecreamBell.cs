@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Terraria.GameContent.Creative;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Items.Weapons
@@ -22,14 +22,14 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.mana = 4;
             Item.width = 40;
             Item.height = 40;
-            Item.useTime = 30;
-            Item.useAnimation = 25;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
             Item.useStyle = 1;
             Item.noMelee = true;
             Item.knockBack = 5;
             Item.value = 200000;
             Item.rare = ItemRarityID.Pink;
-            Item.UseSound = SoundID.Item35;
+			Item.UseSound = null;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<IcecreamBall>();
             Item.shootSpeed = 7.5f;
@@ -37,15 +37,35 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override Vector2? HoldoutOffset() => new Vector2(-4f, 4f);
 
-		public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<Saccharite>(50)
-                .AddIngredient<SoulofDelight>(12)
-                .AddIngredient(ItemID.SoulofSight, 20)
-                .AddIngredient(ItemID.Bell)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
-    }
+		public override void UseAnimation(Player player)
+		{
+			Vector2 vector2 = new Vector2(player.position.X + (float)player.width * 0.5f, player.position.Y + (float)player.height * 0.5f);
+			float num5 = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+			float num6 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
+			float num7 = (float)Math.Sqrt(num5 * num5 + num6 * num6);
+			float num8 = (float)Main.screenHeight / Main.GameViewMatrix.Zoom.Y;
+			num7 /= num8 / 2f;
+			if (num7 > 1f)
+			{
+				num7 = 1f;
+			}
+			num7 = num7 * 2f - 1f;
+			if (num7 < -1f)
+			{
+				num7 = -1f;
+			}
+			if (num7 > 1f)
+			{
+				num7 = 1f;
+			}
+			num7 = (float)Math.Round(num7 * (float)Player.musicNotes);
+			num7 = (Main.musicPitch = num7 / (float)Player.musicNotes);
+			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/CandyBellUse") with
+			{
+				Pitch = num7,
+				MaxInstances = 0
+			}, player.position);
+			NetMessage.SendData(MessageID.InstrumentSound, -1, -1, null, player.whoAmI, num7);
+		}
+	}
 }

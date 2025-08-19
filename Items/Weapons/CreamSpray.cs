@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -11,26 +12,27 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-        }
+			Item.staff[Type] = true;
+		}
 
         public override void SetDefaults()
         {
-            Item.damage = 21;
+            Item.damage = 44;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 8;
+            Item.mana = 16;
             Item.width = 28;
             Item.height = 30;
-            Item.useTime = 6;
+            Item.useTime = 26;
             Item.useAnimation = 26;
-            Item.useStyle = 5;
-            Item.noMelee = true;
-            Item.knockBack = 2f;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.noMelee = true;
+            Item.knockBack = 6f;
             Item.value = 400000;
             Item.rare = ItemRarityID.Pink;
-            Item.UseSound = SoundID.Item17;
-            Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<CreamySpray>();
-            Item.shootSpeed = 16f;
-        }
+            Item.UseSound = SoundID.Item69;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<CookieBoulder>();
+            Item.shootSpeed = 10f;
+		}
     }
 }

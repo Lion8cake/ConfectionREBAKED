@@ -1,17 +1,12 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Terraria.Enums;
+using Terraria.ID;
 
-namespace TheConfectionRebirth.Items.Placeable {
+namespace TheConfectionRebirth.Items.Placeable 
+{
 	[LegacyName("SoulofDelightinaBottleItem")]
-	internal class SoulofDelightinaBottle : ModItem
+	public class SoulofDelightinaBottle : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,15 +15,17 @@ namespace TheConfectionRebirth.Items.Placeable {
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.SoulBottleLight);
-            Item.createTile = ModContent.TileType<Tiles.SoulofDelightinaBottle>();
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 28;
+			Item.value = 1000;
+			Item.createTile = ModContent.TileType<Tiles.SoulofDelightinaBottle>();
         }
-
-		public override void AddRecipes() {
-			CreateRecipe(1)
-				.AddIngredient(ModContent.ItemType<Items.SoulofDelight>())
-				.AddIngredient(ItemID.Bottle)
-				.Register();
-		}
 	}
 }

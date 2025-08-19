@@ -7,7 +7,6 @@ namespace TheConfectionRebirth.Dusts
     {
 		public override void OnSpawn(Dust dust) {
 			dust.noLight = true;
-			dust.scale *= 0.75f;
 		}
 	}
 }

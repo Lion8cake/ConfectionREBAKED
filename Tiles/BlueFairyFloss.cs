@@ -1,28 +1,36 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class BlueFairyFloss : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("PurpleFairyFloss").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("PinkFairyFloss").Type] = true;
-            Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
-            AddMapEntry(new Color(78, 191, 252));
-        }
+	public class BlueFairyFloss : ModTile
+	{
+		public override void SetStaticDefaults()
+		{
+			Main.tileSolid[Type] = true;
+			Main.tileNoSunLight[Type] = true;
 
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
+			TileID.Sets.MergesWithClouds[Type] = true;
+			TileID.Sets.Clouds[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsExtraConfectionTile[Type] = true;
+
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			AddMapEntry(new Color(78, 191, 252));
+			DustType = ModContent.DustType<FairyFlossSnowDust>();
+		}
+
+		public override bool HasWalkDust() {
 			return true;
+		}
+
+		public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color) {
+			dustType = DustType;
 		}
 	}
 }

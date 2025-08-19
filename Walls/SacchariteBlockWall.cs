@@ -11,13 +11,8 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = true;
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.SacchariteBlockWall>());
-            DustType = ModContent.DustType<SacchariteCrystals>();
+            DustType = ModContent.DustType<SacchariteDust>();
             AddMapEntry(new Color(72, 120, 123));
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
         }
     }
 }

@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.ID;
 
@@ -13,22 +11,24 @@ namespace TheConfectionRebirth.Items
     {
 		public float pitch;
 
+		public override void SetStaticDefaults()
+        {
+			Item.staff[Type] = true;
+			Item.ResearchUnlockCount = 1;
+		}
         public override void SetDefaults()
         {
-            Item.width = 40;
-            Item.height = 40;
-            Item.useTime = 15;
-            Item.useAnimation = 20;
-            Item.useStyle = 1;
-            Item.value = Item.buyPrice(gold: 1);
+			Item.rare = ItemRarityID.Orange;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
+			Item.width = 20;
+			Item.height = 24;
+			Item.autoReuse = true;
+			Item.noMelee = true;
+			Item.value = 10000;
 			Item.UseSound = null;
-            Item.autoReuse = true;
-        }
-
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-        }
+		}
 
 		public override void UseAnimation(Player player) 
 		{
@@ -50,10 +50,13 @@ namespace TheConfectionRebirth.Items
 			}
 			num7 = (float)Math.Round(num7 * (float)Player.musicNotes);
 			num7 = (Main.musicPitch = num7 / (float)Player.musicNotes);
-			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/KazooSound") {
+			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/KazooSound")
+			{
 				Pitch = num7,
+				Volume = 0.75f,
+				MaxInstances = 0
 			}, player.position);
-			NetMessage.SendData(58, -1, -1, null, player.whoAmI, num7);
+			NetMessage.SendData(MessageID.InstrumentSound, -1, -1, null, player.whoAmI, num7);
 		}
 	}
 }

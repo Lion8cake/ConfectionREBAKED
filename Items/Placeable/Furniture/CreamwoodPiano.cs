@@ -25,10 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 60);
             Item.createTile = ModContent.TileType<Tiles.Furniture.CreamwoodPiano>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.CreamWood>(), 15).AddIngredient(154, 4).AddIngredient(149, 1).AddTile(TileID.Sawmill).Register();
-        }
     }
 }

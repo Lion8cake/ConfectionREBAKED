@@ -1,72 +1,211 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using TheConfectionRebirth.Biomes;
-using TheConfectionRebirth.Util;
+using TheConfectionRebirth.Buffs;
+using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
+using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Items;
+using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Weapons;
-using System.Reflection.Metadata;
+using TheConfectionRebirth.Mounts;
+using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Projectiles;
-using Terraria.Localization;
-using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria.ID;
 
-namespace TheConfectionRebirth {
-	public class ConfectionPlayer : ModPlayer {
-		public bool RollerCookiePet;
-		public bool CreamsandWitchPet;
-		public bool minitureCookie;
-		public bool littleMeawzer;
-		public bool miniGastropod;
-		public bool flyingGummyFish;
-		public bool birdnanaLightPet;
-		public bool MeawzerPet;
-		public bool DudlingPet;
-		public bool FoxPet;
-		public bool NeapoliniteMagicSet;
-		public bool NeapoliniteSummonerSet;
-		public bool cookiePet;
-		public bool CandySuffocation;
+namespace TheConfectionRebirth
+{
+	public class ConfectionPlayer : ModPlayer
+	{
+		public bool cookiestPet;
+		public bool lightnana;
+		public bool rollerCookiePet;
+		public bool creamsandWitchPet;
+		public bool meawzerPet;
+		public bool dudlingPet;
+		public bool toothfairyMinion;
+		public bool meawzerMinion;
+		public bool gastropodMinion;
+		public bool shakenOffFoamin = true;
+		private int shakeCount = 0;
+		private int shakingTimer = 0;
+		private bool lastPressedLeft = false;
+		public bool shaken;
 
+		public bool SacchariteLashed;
+		public bool candleFire;
+		public int candleFlameDelay = 0;
+		public bool candySuffocation;
 		public Projectile DimensionalWarp;
 		public Projectile BananawarpPeelWarp;
 
-		public float neapoliniteSummonTimer;
+		public bool neapoliniteMelee;
+		public int meleeVanilla;
+		public bool neapoliniteRanger;
+		public bool neapoliniteMage;
+		public int mageStrawberry;
+		public bool neapoliniteSummoner;
+		public int summonerCone;
 
-		public BinaryHeap<TimerData> Timer;
-		public int VanillaValorDamageDealt;
-		public int ManaConsumed;
-		public bool StrawberryStrikeOnCooldown;
+		public int vanillaValorDamage;
+		public int vanillaTimer;
 
-		public override void OnEnterWorld() {
-			Timer = new(TimerData.Comparer);
-			VanillaValorDamageDealt = 0;
-			ManaConsumed = 0;
-			StrawberryStrikeOnCooldown = false;
+		public int strawberryManaHealed;
+		public int strawberryTimer;
+		public int strawberryStartingMana;
+		public int strawberrySpawnStrawTimer;
+
+		public int coneTimer;
+		public int coneSummonID;
+		public static bool hasSwirlBuff(Player player) => player.HasBuff(ModContent.BuffType<SwirlySwarmI>()) || player.HasBuff(ModContent.BuffType<SwirlySwarmII>()) || player.HasBuff(ModContent.BuffType<SwirlySwarmIII>()) || player.HasBuff(ModContent.BuffType<SwirlySwarmIV>()) || player.HasBuff(ModContent.BuffType<SwirlySwarmV>());
+
+		public int neapolinitePowerLevel;
+
+		public int bakersDozenHitCount = 0;
+
+		public int sweetToothCounter = 0;
+		public int gummyWormWhipCounter = 0;
+
+		public float snickerDevCookieRot = 0f;
+
+		public int rollerCycleTimer;
+		/// <summary>
+		/// Used by the Mimic Chest Spawning to know what NPC to spawn when leaving the chest
+		/// </summary>
+		public int mimicSpawnKeyType = 0;
+
+		public override void ResetEffects()
+		{
+			cookiestPet = false;
+			lightnana = false;
+			rollerCookiePet = false;
+			creamsandWitchPet = false;
+			meawzerPet = false;
+			dudlingPet = false;
+			toothfairyMinion = false;
+			gastropodMinion = false;
+			meawzerMinion = false;
+
+			if (!candleFire)
+			{
+				candleFlameDelay = 0;
+			}
+			SacchariteLashed = false;
+			candleFire = false;
+			candySuffocation = false;
+			
+			if (!Player.HasBuff(ModContent.BuffType<FoaminSuffocation>()))
+			{
+				shakenOffFoamin = true;
+			}
+			shaken = false;
+
+			if (!neapoliniteMelee)
+			{
+				vanillaValorDamage = 0;
+				vanillaTimer = 0;
+				meleeVanilla = -1;
+			}
+			if (vanillaTimer <= 0)
+			{
+				vanillaValorDamage = 0;
+			}
+			if (!neapoliniteMage)
+			{
+				strawberryManaHealed = 0;
+				strawberryTimer = 0;
+				strawberryStartingMana = 0;
+				strawberrySpawnStrawTimer = 0;
+				mageStrawberry = -1;
+			}
+			if (strawberryTimer <= 0)
+			{
+				strawberryManaHealed = 0;
+			}
+			if (!neapoliniteSummoner)
+			{
+				coneTimer = 0;
+				summonerCone = -1;
+			}
+			if (!hasSwirlBuff(Player))
+			{
+				if (coneSummonID > -1)
+				{
+					Main.projectile[coneSummonID].Kill();
+					coneSummonID = -1;
+				}
+			}
+			neapoliniteMelee = false;
+			neapoliniteRanger = false;
+			neapoliniteMage = false;
+			neapoliniteSummoner = false;
+			neapolinitePowerLevel = 0;
+
+			mimicSpawnKeyType = 0;
 		}
-		public override void ResetEffects() {
-			RollerCookiePet = false;
-			CreamsandWitchPet = false;
-			minitureCookie = false;
-			littleMeawzer = false;
-			miniGastropod = false;
-			flyingGummyFish = false;
-			birdnanaLightPet = false;
-			MeawzerPet = false;
-			DudlingPet = false;
-			FoxPet = false;
-			CandySuffocation = false;
-			NeapoliniteMagicSet = false;
-			NeapoliniteSummonerSet = false;
-			cookiePet = false;
+
+		public override void UpdateDead()
+		{
+			SacchariteLashed = false;
+			candleFire = false;
 		}
 
-		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-			if (damageSource.SourceCustomReason == "DimensionSplit") {
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+		{
+			if (SacchariteLashed)
+			{
+				if (Main.rand.NextBool(4))
+				{
+					int dust = Dust.NewDust(Player.Center + new Vector2(Main.rand.NextFloat(-(Player.width / 2), Player.width / 2), Main.rand.NextFloat(-(Player.height / 2), Player.height / 2)), 10, 10, ModContent.DustType<SacchariteDust>());
+					drawInfo.DustCache.Add(dust);
+				}
+			}
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (Main.rand.Next(4) < 3)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X - 2f, Player.position.Y - 2f), Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+					dust.noGravity = true;
+					dust.velocity *= 1.8f;
+					dust.velocity.Y -= 0.5f;
+					if (Main.rand.NextBool(4))
+					{
+						dust.noGravity = false;
+						dust.scale *= 0.5f;
+					}
+					drawInfo.DustCache.Add(dust.dustIndex);
+				}
+				Lighting.AddLight((int)(Player.position.X / 16f), (int)(Player.position.Y / 16f + 1f), 1f, 0.3f, 0.1f);
+			}
+		}
+
+		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		{
+			if (candleFire)
+			{
+				WeightedRandom<string> deathmessage = new();
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.0", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.1", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.2", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.3", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.4", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.5", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.CandleFire.6", Player.name));
+				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+				return true;
+			}
+			if (damageSource.SourceCustomReason == "DimensionSplit")
+			{
 				WeightedRandom<string> deathmessage = new();
 				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.0", Player.name));
 				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.DimensionSplit.1", Player.name));
@@ -75,535 +214,505 @@ namespace TheConfectionRebirth {
 				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
 				return true;
 			}
+			if (damageSource.SourceCustomReason == "FoaminSuffocation")
+			{
+				WeightedRandom<string> deathmessage = new();
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.0", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.1", Player.name));
+				deathmessage.Add(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer.2", Player.name));
+				damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+				return true;
+			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 
-		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-			bool inWater = !attempt.inLava && !attempt.inHoney;
-			bool inConfectionSurfaceBiome = Player.InModBiome(ModContent.GetInstance<ConfectionBiome>());
+		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+		{
+			bool corrupt = Player.ZoneCorrupt;	
+			bool crimson = Player.ZoneCrimson;
+			bool snow = Player.ZoneSnow;
+			bool dungeon = Player.ZoneDungeon;
+			bool desert = Player.ZoneDesert;
+			bool confection = Player.InModBiome<ConfectionBiome>();
 
-			if (inWater && inConfectionSurfaceBiome) {
-				if (Player.ZoneDesert && Main.rand.NextBool(2)) {
-					if (attempt.uncommon && attempt.questFish == 4393) {
-						itemDrop = 4393;
+			if (!attempt.inHoney && !attempt.inLava)
+			{
+				if (attempt.rolledEnemySpawn > 0)
+				{
+					return;
+				}
+				if (attempt.crate) //crates
+				{
+					bool hardMode = Main.hardMode;
+					if (!dungeon && !(Player.ZoneBeach || (Main.remixWorld && attempt.heightLevel == 1 && (double)attempt.Y >= Main.rockLayer && Main.rand.NextBool(2))) && !corrupt && !crimson && attempt.rare && confection)
+					{
+						attempt.rolledItemDrop = (hardMode ? ModContent.ItemType<ConfectionCrate>() : ModContent.ItemType<BananaSplitCrate>());
 					}
-					else if (attempt.uncommon && attempt.questFish == 4394) {
-						itemDrop = 4394;
-					}
-					else if (attempt.uncommon) {
-						itemDrop = 4410;
-					}
-					else if (Main.rand.NextBool(3)) {
-						itemDrop = 4402;
-					}
-					else {
-						itemDrop = 4401;
-					}
+					return;
 				}
-				else if (attempt.legendary && Main.hardMode && Player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)) {
-					itemDrop = 2429;
-				}
-				else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
-					itemDrop = ModContent.ItemType<Items.Weapons.Minions.DuchessPrincess.GummyStaff>();
-				}
-				else if (attempt.rare && attempt.crate) {
-					itemDrop = (Main.hardMode ? ModContent.ItemType<Items.Placeable.ConfectionCrate>() : ModContent.ItemType<Items.Placeable.BananaSplitCrate>());
-				}
-				else if (attempt.legendary && Main.hardMode && !Main.rand.NextBool(3)) {
-					itemDrop = ModContent.ItemType<Items.Placeable.SweetAndSavage>();
-				}
-				else if (attempt.heightLevel > 1 && attempt.veryrare) {
-					itemDrop = ModContent.ItemType<Items.SugarFish>();
-				}
-				else if (attempt.heightLevel > 1 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.SacchariteBatFish>()) {
-					itemDrop = ModContent.ItemType<Items.SacchariteBatFish>();
-				}
-				else if (attempt.heightLevel < 2 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.Sprinklefish>()) {
-					itemDrop = ModContent.ItemType<Items.Sprinklefish>();
-				}
-				else if (attempt.rare) {
-					itemDrop = ModContent.ItemType<Items.Cakekite>();
-				}
-				else if (attempt.uncommon && attempt.questFish == ModContent.ItemType<Items.CookieCutterShark>()) {
-					itemDrop = ModContent.ItemType<Items.CookieCutterShark>();
-				}
-				else if (attempt.uncommon) {
-					itemDrop = ModContent.ItemType<Items.CookieCarp>();
-				}
-			}
-		}
-		const int oneStageNeapolioniteSummoner = 8 * 60;
-		public override void PostUpdate() {
-			if (NeapoliniteSummonerSet) {
-				neapoliniteSummonTimer++;
-				float progress = neapoliniteSummonTimer / oneStageNeapolioniteSummoner;
-				int rank = (int)progress;
-				int timer = (int)(oneStageNeapolioniteSummoner - neapoliniteSummonTimer % oneStageNeapolioniteSummoner);
-				StackableBuffData.SwirlySwarm.AscendBuff(Player, rank - 1, timer, rank == 5);
-				if (neapoliniteSummonTimer >= 2400) {
-					neapoliniteSummonTimer = 2400;
-				}
-				if (NeapoliniteSummonerSet == false) {
-					neapoliniteSummonTimer = 0;
-				}
-			}
-
-			Timer ??= new(TimerData.Comparer);
-			while (Timer.items.Count > 0 && Timer.items[0].endTime == Main.GameUpdateCount) {
-				TimerData top = Timer.Pop();
-				switch (top.type) {
-					case TimerDataType.MeleeDamage:
-						VanillaValorDamageDealt -= top.value;
-						break;
-					case TimerDataType.MagicManaRegeneration:
-						ManaConsumed -= top.value;
-						break;
-					case TimerDataType.StrawberryStrikeDelay:
-						StrawberryStrikeOnCooldown = false;
-						break;
-				}
-			}
-			//Main.NewText(VanillaValorDamageDealt);
-		}
-
-		public override void GetDyeTraderReward(List<int> rewardPool) {
-			rewardPool.Add(ModContent.ItemType<Items.CandyCornDye>());
-			rewardPool.Add(ModContent.ItemType<Items.FoaminWispDye>());
-			rewardPool.Add(ModContent.ItemType<Items.GummyWispDye>());
-			rewardPool.Add(ModContent.ItemType<Items.SwirllingChocolateDye>());
-		}
-
-		public override void OnConsumeMana(Item item, int manaConsumed) {
-			if (item.CountsAsClass(DamageClass.Magic)) {
-				ManaConsumed += manaConsumed;
-				Timer.Add(new(manaConsumed, 180, TimerDataType.MagicManaRegeneration));
-			}
-		}
-
-		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (item.CountsAsClass(DamageClass.Melee))
-				AddDamage(hit.Damage);
-		}
-
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (proj.CountsAsClass(DamageClass.Melee))
-				AddDamage(hit.Damage);
-		}
-
-		/*public override void OnHurt(Player.HurtInfo info) {
-			//if (info.DamageSource.SourceItem.CountsAsClass(DamageClass.Melee)) {
-				AddDamage(info.Damage);
-			//}
-			//Note due to HitInfo not having SourceProjectile melee projectiles may break
-		}*/
-
-		void AddDamage(int damage) {
-			this.VanillaValorDamageDealt += damage;
-			Timer.Add(new(damage, 300, TimerDataType.MeleeDamage));
-		}
-
-		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo) {
-			StackableBuffData.SwirlySwarm.DeleteBuff(Player);
-			neapoliniteSummonTimer = Math.Max(neapoliniteSummonTimer - (neapoliniteSummonTimer % oneStageNeapolioniteSummoner) - oneStageNeapolioniteSummoner * 2, 0);
-		}
-	}
-
-	public class SpiteMimicSpawning : ModPlayer {
-		public int LastChest;
-
-		public override void PreUpdateBuffs() {
-			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				if (Player.chest == -1 && LastChest >= 0 && Main.chest[LastChest] != null) {
-					int x2 = Main.chest[LastChest].x;
-					int y2 = Main.chest[LastChest].y;
-					ChestItemSummonCheck(x2, y2, Mod);
-				}
-				LastChest = Player.chest;
-			}
-		}
-
-		public override void UpdateAutopause() {
-			LastChest = Player.chest;
-		}
-
-		public static bool ChestItemSummonCheck(int x, int y, Mod mod) {
-			if (Main.netMode == NetmodeID.MultiplayerClient || !Main.hardMode) {
-				return false;
-			}
-			int num = Chest.FindChest(x, y);
-			if (num < 0) {
-				return false;
-			}
-			int numberKeyofDelight = 0;
-			int numberOtherItems = 0;
-			ushort tileType = Main.tile[Main.chest[num].x, Main.chest[num].y].TileType;
-			int tileStyle = (int)(Main.tile[Main.chest[num].x, Main.chest[num].y].TileFrameX / 36);
-			if (TileID.Sets.BasicChest[tileType] && (tileStyle < 5 || tileStyle > 6)) {
-				for (int i = 0; i < 40; i++) {
-					if (Main.chest[num].item[i] != null && Main.chest[num].item[i].type > ItemID.None) {
-						if (Main.chest[num].item[i].type == ModContent.ItemType<Items.KeyofSpite>()) {
-							numberKeyofDelight += Main.chest[num].item[i].stack;
-						}
-						else {
-							numberOtherItems++;
-						}
-					}
-				}
-			}
-			if (numberOtherItems == 0 && numberKeyofDelight == 1) {
-				if (TileID.Sets.BasicChest[Main.tile[x, y].TileType]) {
-					if (Main.tile[x, y].TileFrameX % 36 != 0) {
-						x--;
-					}
-					if (Main.tile[x, y].TileFrameY % 36 != 0) {
-						y--;
-					}
-					int number = Chest.FindChest(x, y);
-					for (int j = x; j <= x + 1; j++) {
-						for (int k = y; k <= y + 1; k++) {
-							if (TileID.Sets.BasicChest[Main.tile[j, k].TileType]) {
-								Tile tile = Main.tile[j, k];
-								tile.HasTile = false;
+				if (!dungeon)
+				{
+					if (!corrupt && !crimson && confection) //normal fishing items
+					{
+						if (desert && Main.rand.NextBool(2))
+						{
+							if (attempt.uncommon && attempt.questFish == ItemID.ScarabFish)
+							{
+								attempt.rolledItemDrop = ItemID.ScarabFish;
+							}
+							else if (attempt.uncommon && attempt.questFish == ItemID.ScorpioFish)
+							{
+								attempt.rolledItemDrop = ItemID.ScorpioFish;
+							}
+							else if (attempt.uncommon)
+							{
+								attempt.rolledItemDrop = ItemID.Oyster;
+							}
+							else if (Main.rand.NextBool(3))
+							{
+								attempt.rolledItemDrop = ItemID.RockLobster;
+							}
+							else
+							{
+								attempt.rolledItemDrop = ItemID.Flounder;
 							}
 						}
+						else if (attempt.legendary && Main.hardMode && snow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
+						{
+							attempt.rolledItemDrop = ItemID.ScalyTruffle;
+						}
+						else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2))
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<GummyStaff>(); //Biome fishing weapon
+						}
+						//else if (attempt.legendary && Main.hardMode && !Main.rand.NextBool(3)) //Confection nolonger has a fishing painting
+						//{
+						//	attempt.rolledItemDrop = ItemID.LadyOfTheLake;
+						//}
+						else if (attempt.heightLevel > 1 && attempt.veryrare)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<SugarFish>();
+						}
+						else if (attempt.heightLevel > 1 && attempt.uncommon && attempt.questFish == ModContent.ItemType<SacchariteBatFish>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<SacchariteBatFish>();
+						}
+						else if (attempt.heightLevel < 2 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Sprinklefish>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<Sprinklefish>();
+						}
+						else if (attempt.rare)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<Cakekite>();
+						}
+						else if (attempt.uncommon && attempt.questFish == ModContent.ItemType<CookieCutterShark>())
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<CookieCutterShark>();
+						}
+						else if (attempt.uncommon)
+						{
+							attempt.rolledItemDrop = ModContent.ItemType<CookieCarp>();
+						}
 					}
-					for (int l = 0; l < 40; l++) {
-						Main.chest[num].item[l] = new Item();
-					}
-					Chest.DestroyChest(x, y);
-					NetMessage.SendData(MessageID.ChestUpdates, -1, -1, null, 1, (float)x, (float)y, 0f, number, 0, 0);
-					NetMessage.SendTileSquare(-1, x, y, 3);
 				}
-				int npcToSpawn = NPCID.BigMimicCrimson;
-				int npcIndex = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), x * 16 + 16, y * 16 + 32, npcToSpawn, 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[npcIndex].whoAmI = npcIndex;
-				NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npcIndex, 0f, 0f, 0f, 0, 0, 0);
-				Main.npc[npcIndex].BigMimicSpawnSmoke();
 			}
-			return false;
 		}
-	}
 
-	public abstract class NeapoliniteArmourDrawLayer : PlayerDrawLayer {
-		public virtual int NeapoliniteHelmetNumber(ref PlayerDrawSet drawInfo) {
+		public override void UpdateBadLifeRegen()
+		{
+			if (candleFire && candleFlameDelay <= 0)
+			{
+				if (Player.lifeRegen > 0)
+				{
+					Player.lifeRegen = 0;
+				}
+				Player.lifeRegenTime = 0f;
+				Player.lifeRegen -= 8;
+			}
+		}
+
+		public override void PostUpdate()
+		{
+			if (neapoliniteMelee)
+			{
+				int rank = Math.Min(vanillaValorDamage, 1750) / 350 - 1;
+				if (rank != meleeVanilla)
+				{
+					vanillaTimer = 300;
+				}
+				meleeVanilla = rank;
+
+				IncrimentNeapoliniteBuffPower(Player, meleeVanilla);
+				if (vanillaTimer > 0)
+					vanillaTimer--;
+			}
+			if (neapoliniteRanger)
+			{
+				int rank;
+				float vel = Player.velocity.Length();
+				if (vel >= 11f)
+					rank = 4;
+				else
+				{
+					float speed = vel / 2.2f;
+					rank = (int)(speed - 1);
+				}
+				IncrimentNeapoliniteBuffPower(Player, rank, 1);
+			}
+			if (neapoliniteMage)
+			{
+				int rank = (int)(strawberryManaHealed / 25);
+				IncrimentNeapoliniteBuffPower(Player, rank - 1, 2);
+				if (strawberryTimer > 0)
+					strawberryTimer--;
+
+				if (Player.statMana != Player.statManaMax2)
+				{
+					if (Player.manaRegenDelay == 0)
+					{
+						if (strawberryManaHealed <= 0 && strawberryTimer <= 0)
+						{
+							strawberryTimer = 180;
+							strawberryStartingMana = Player.statMana;
+						}
+						if (strawberryTimer > 0)
+						{
+							strawberryManaHealed += (Player.statMana - strawberryStartingMana);
+						}
+						strawberryStartingMana = Player.statMana;
+					}
+				}
+
+				if (strawberrySpawnStrawTimer > 60)
+				{
+					strawberrySpawnStrawTimer = 0;
+
+					for (int i = 0; i <= mageStrawberry; i++)
+					{
+						int damage = 1;
+						if (Player.HeldItem.DamageType == DamageClass.Magic)
+						{
+							damage = Player.HeldItem.damage / 2;
+						}
+						Vector2 pointPoisition = Player.RotatedRelativePoint(Player.MountedCenter);
+						float mouseX = (float)Main.mouseX + Main.screenPosition.X - pointPoisition.X;
+						float mouseY = (float)Main.mouseY + Main.screenPosition.Y - pointPoisition.Y;
+						float f = Main.rand.NextFloat() * ((float)Math.PI * 2f);
+						float width = 20f;
+						float height = 60f;
+						Vector2 pos2 = pointPoisition + f.ToRotationVector2() * MathHelper.Lerp(width, height, Main.rand.NextFloat());
+						for (int avaliablePos = 0; avaliablePos < 50; avaliablePos++)
+						{
+							pos2 = pointPoisition + f.ToRotationVector2() * MathHelper.Lerp(width, height, Main.rand.NextFloat());
+							if (Collision.CanHit(pointPoisition, 0, 0, pos2 + (pos2 - pointPoisition).SafeNormalize(Vector2.UnitX) * 8f, 0, 0))
+							{
+								break;
+							}
+							f = Main.rand.NextFloat() * ((float)Math.PI * 2f);
+						}
+						Vector2 velc = Main.MouseWorld - pos2;
+						Vector2 pos = Utils.SafeNormalize(new Vector2(mouseX, mouseY), Vector2.UnitY) * 14f;
+						velc = velc.SafeNormalize(pos) * 14f;
+						velc = Vector2.Lerp(velc, pos, 0.25f);
+						Projectile.NewProjectile(new EntitySource_Misc(""), pos2, velc, ModContent.ProjectileType<StrawberryStrike>(), damage, Player.HeldItem.knockBack, Player.whoAmI);
+					}
+				}
+			}
+			if (neapoliniteSummoner)
+			{
+				int rank = summonerCone;
+				IncrimentNeapoliniteBuffPower(Player, rank, 3);
+				coneTimer++;
+				if (summonerCone < 4)
+				{
+					if (coneTimer >= 60 * 8)
+					{
+						summonerCone++;
+						coneTimer = 0;
+					}
+				}
+				if (coneTimer > 60 * 8)
+				{
+					coneTimer = 60 * 8;
+				}
+				if (summonerCone < -1)
+					summonerCone = -1;
+			}
+			if (hasSwirlBuff(Player))
+			{
+				List<int> validSummonIDs = new List<int>();
+				for (int i = 0; i < Main.maxProjectiles; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.active && proj.minion && proj.owner == Player.whoAmI)
+					{
+						validSummonIDs.Add(i);
+					}
+				}
+				if (coneSummonID <= -1)
+				{
+					if (validSummonIDs.Count != 0)
+					{
+						int num;
+						if (validSummonIDs.Count > 1)
+							num = Main.rand.Next(0, validSummonIDs.Count);
+						else
+							num = 0;
+						Projectile ghost = Main.projectile[validSummonIDs[num]];
+						int ghostProjID = Projectile.NewProjectile(new EntitySource_Misc(""), Player.position, Vector2.Zero, ghost.type, ghost.damage, ghost.knockBack, Player.whoAmI);
+						Projectile ghostProj = Main.projectile[ghostProjID];
+						ghostProj.minionSlots = 0;
+						ghostProj.minion = false;
+						ghostProj.minionPos = validSummonIDs.Count;
+						coneSummonID = ghostProjID;
+					}
+					else
+					{
+						Player.GetDamage(DamageClass.Summon) += 0.1f;
+					}
+				}
+				else
+				{
+					Projectile proj = Main.projectile[coneSummonID];
+					if (!proj.active)
+					{
+						coneSummonID = -1;
+					}
+					else
+					{
+						proj.minionPos = validSummonIDs.Count;
+					}
+				}
+			}
+			if (neapolinitePowerLevel > 0)
+			{
+				for (int j = 0; j < neapolinitePowerLevel; j++)
+				{
+					bool alreadyExists = false;
+					for (int i = 0; i < Main.maxProjectiles; i++)
+					{
+						Projectile proj = Main.projectile[i];
+						if (proj.active && proj.type == ModContent.ProjectileType<NeapoliniteCookies>() && proj.ai[0] == j && proj.owner == Player.whoAmI)
+						{
+							alreadyExists = true;
+						}
+					}
+					if (!alreadyExists)
+					{
+						Projectile.NewProjectile(new EntitySource_Misc(""), Player.Center, Vector2.Zero, ModContent.ProjectileType<NeapoliniteCookies>(), 0, 0, Player.whoAmI, j);
+					}
+				}
+			}
+			if (candleFire && Collision.WetCollision(Player.position, Player.width, Player.height))
+			{
+				Player.ClearBuff(ModContent.BuffType<HumanCandle>());
+			}
+			if (candleFire && Main.rand.NextBool(200))
+			{
+				candleFlameDelay = Main.rand.Next(40, 100);
+			}
+			if (candleFlameDelay > 0)
+			{
+				candleFlameDelay--;
+			}
+			if (!shakenOffFoamin)
+			{
+				if (Player.controlLeft || Player.controlRight)
+				{
+					shakingTimer++;
+					if ((!lastPressedLeft && Player.controlLeft) || (lastPressedLeft && Player.controlRight))
+						shaken = true;
+				}
+				if (shakingTimer > 0)
+				{
+					shakingTimer++;
+					if ((!lastPressedLeft && Player.controlLeft) || (lastPressedLeft && Player.controlRight))
+					{
+						if (Player.controlRight)
+						{
+							lastPressedLeft = false;
+						}
+						else if (Player.controlLeft)
+						{
+							lastPressedLeft = true;
+						}
+						shakeCount++;
+						shaken = true;
+					}
+
+					if (shakingTimer >= 120)
+					{
+						if (shakeCount > 5)
+						{
+							shakenOffFoamin = true;
+							shakeCount = 0;
+							shakingTimer = 0;
+						}
+						else
+						{
+							shakeCount = 0;
+							shakingTimer = 0;
+						}
+					}
+				}
+			}
+		}
+
+		public override void PreUpdateMovement()
+		{
+			Player player = Player;
+			if (player.wingsLogic == ModContent.GetInstance<WildAiryBlue>().Item.wingSlot && player.TryingToHoverDown && player.controlJump && player.wingTime > 0f && !player.merman)
+			{
+				float num82 = 0.9f;
+				player.velocity.Y *= num82;
+				if (player.velocity.Y > -2f && player.velocity.Y < 1f)
+				{
+					player.velocity.Y = 1E-05f;
+				}
+			}
+		}
+
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			if (neapoliniteMelee)
+			{
+				if (item.CountsAsClass(DamageClass.Melee))
+					OnHitValor(hit.Damage);
+			}
+		}
+
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			if (neapoliniteMelee)
+			{
+				if (proj.CountsAsClass(DamageClass.Melee))
+					OnHitValor(hit.Damage);
+			}
+		}
+
+		public void OnHitValor(int damage)
+		{
+			if (neapoliniteMelee)
+			{
+				if (vanillaValorDamage <= 0)
+				{
+					vanillaTimer = 300;
+				}
+				if (vanillaTimer > 0)
+				{
+					vanillaValorDamage += damage;
+				}
+			}
+		}
+
+		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+		{
+			if (neapoliniteSummoner)
+			{
+				coneTimer = 0;
+				summonerCone -= 2;
+			}
+		}
+
+		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+		{
+			if (neapoliniteSummoner)
+			{
+				coneTimer = 0;
+				summonerCone -= 2;
+			}
+		}
+
+		public override void GetDyeTraderReward(List<int> rewardPool)
+		{
+			rewardPool.Add(ModContent.ItemType<CandyCornDye>());
+			rewardPool.Add(ModContent.ItemType<FoaminWispDye>());
+			rewardPool.Add(ModContent.ItemType<GummyWispDye>());
+			rewardPool.Add(ModContent.ItemType<SwirllingChocolateDye>());
+		}
+
+		public static void IncrimentNeapoliniteBuffPower(Player player, int Power, int BuffType = 0)
+		{
+			if (Power < 0 || Power > 4)
+			{
+				return; 
+			}
+
+			int time = 300;
+			int type = 0;
+			int[][] validTypes = new int[4][] {
+				new int[5] { ModContent.BuffType<VanillaValorI>(), ModContent.BuffType<VanillaValorII>(), ModContent.BuffType<VanillaValorIII>(), ModContent.BuffType<VanillaValorIV>(), ModContent.BuffType<VanillaValorV>() },
+				new int[5] { ModContent.BuffType<ChocolateChargeI>(), ModContent.BuffType<ChocolateChargeII>(), ModContent.BuffType<ChocolateChargeIII>(), ModContent.BuffType<ChocolateChargeIV>(), ModContent.BuffType<ChocolateChargeV>() },
+				new int[5] { ModContent.BuffType<StrawberryStrikeI>(), ModContent.BuffType<StrawberryStrikeII>(), ModContent.BuffType<StrawberryStrikeIII>(), ModContent.BuffType<StrawberryStrikeIV>(), ModContent.BuffType<StrawberryStrikeV>() },
+				new int[5] { ModContent.BuffType<SwirlySwarmI>(), ModContent.BuffType<SwirlySwarmII>(), ModContent.BuffType<SwirlySwarmIII>(), ModContent.BuffType<SwirlySwarmIV>(), ModContent.BuffType<SwirlySwarmV>() }
+			};
+			type = validTypes[BuffType][Power];
+
+			for (int j = 0; j < Player.MaxBuffs; j++)
+			{
+				for (int k = 0; k < 5; k++)
+				{
+					if (player.buffType[j] == validTypes[BuffType][k])
+					{
+						if (k > Power)
+						{
+							return;
+						}
+					}
+				}
+			}
+
+			if (type != 0)
+			{
+				if (Power > 0)
+				{
+					for (int i = 0; i < Power; i++)
+					{
+						if (player.HasBuff(validTypes[BuffType][i]))
+							player.ClearBuff(validTypes[BuffType][i]);
+					}
+				}
+				player.AddBuff(type, time);
+			}
+		}
+
+		public static int NeapoliniteHelmetNumber(PlayerDrawSet drawInfo)
+		{
 			Player drawPlayer = drawInfo.drawPlayer;
 			int HelmetType = 0;
-			if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHat>()) {
+			if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
+			{
 				HelmetType = 4;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHeadgear>()) {
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
+			{
 				HelmetType = 3;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteHelmet>()) {
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
+			{
 				HelmetType = 2;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteMask>()) {
+			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
+			{
 				HelmetType = 1;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHat>()) {
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
+			{
 				HelmetType = 4;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHeadgear>()) {
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
+			{
 				HelmetType = 3;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteHelmet>()) {
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
+			{
 				HelmetType = 2;
 			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteMask>()) {
+			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
+			{
 				HelmetType = 1;
 			}
 			return HelmetType;
 		}
-
-		public override Position GetDefaultPosition() {
-			return new AfterParent(PlayerDrawLayers.Torso);
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-		}
 	}
-	
-	public class NeapoliniteConeMailDrawing : NeapoliniteArmourDrawLayer {
-		public override Position GetDefaultPosition() {
-			return new AfterParent(PlayerDrawLayers.Torso);
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			int HelmetType = NeapoliniteHelmetNumber(ref drawInfo);
-			if (drawInfo.drawPlayer.dead || HelmetType == 0) {
-				return;
-			}
-			if ((drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) || drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
-
-				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-				Vector2 origin = drawInfo.bodyVect;
-				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-				Rectangle frame = new(0, 0, 40, 56);
-				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56)) {
-					frame = new(0, 2, 40, 56); //walking bop
-				}
-				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 6, 40, 56)) {
-					frame = new(40, 0, 40, 56); //jumping frame
-				}
-				if (!drawPlayer.Male) {
-					frame = new(0, 112, 40, 56);
-					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56)) {
-						frame = new(0, 114, 40, 56); //walking bop
-					}
-					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 6, 40, 56)) {
-						frame = new(40, 112, 40, 56); //jumping frame
-					}
-				}
-				float rotation = drawPlayer.bodyRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.cBody;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}
-	public class NeapoliniteGlenohumeralJointDrawing : NeapoliniteArmourDrawLayer { //Shoulder Drawing
-		public override Position GetDefaultPosition() {
-			return new AfterParent(PlayerDrawLayers.ArmOverItem);
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			int HelmetType = NeapoliniteHelmetNumber(ref drawInfo);
-			if (drawInfo.drawPlayer.dead || HelmetType == 0) {
-				return;
-			}
-			if ((drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) || drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
-
-				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-				Vector2 origin = drawInfo.bodyVect;
-				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-				Rectangle frame = new(0, 56, 40, 56);
-				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56)) {
-					frame = new(0, 58, 40, 56); //walking bop
-				}
-				if (!drawPlayer.Male) {
-					frame = new(0, 168, 40, 56);
-					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56)) {
-						frame = new(0, 170, 40, 56); //walking bop
-					}
-				}
-				float rotation = drawPlayer.bodyRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.cBody;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}
-
-	public class NeapoliniteUpperLimbDrawing : NeapoliniteArmourDrawLayer { //Arm Drawing
-		public override Position GetDefaultPosition() {
-			return new AfterParent(PlayerDrawLayers.ArmOverItem);
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			int HelmetType = NeapoliniteHelmetNumber(ref drawInfo);
-			if (drawInfo.drawPlayer.dead || HelmetType == 0) {
-				return;
-			}
-			if ((drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) || drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NeapoliniteConeMail>()) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteConeMail_Body_" + HelmetType);
-
-				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
-				Vector2 origin = drawInfo.bodyVect;
-				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
-				Rectangle frame;
-				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 5, 40, 56)) {
-					frame = new(80, 56, 40, 56); //Jumping
-				}
-				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 1, 40, 56)) {
-					frame = new(120, 0, 40, 56); //Use1
-				}
-				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 2, 40, 56)) {
-					frame = new(160, 0, 40, 56); //Use2
-				}
-				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 3, 40, 56)) {
-					frame = new(200, 0, 40, 56); //Use3
-				}
-				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 4, 40, 56)) {
-					frame = new(240, 0, 40, 56); //Use4
-				}
-				else {
-					frame = new(0, 0, 0, 0); //None
-				}
-				float rotation = drawPlayer.bodyRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.cBody;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}
-	public class TopCakeCandlesDrawing : PlayerDrawLayer {
-		public override Position GetDefaultPosition() {
-			return new AfterParent(PlayerDrawLayers.Head);
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			if (!drawPlayer.dead && ((drawPlayer.armor[10].type == 0 && drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.TopCake>()) || drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.TopCake>())) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/TopCake_Candles");
-
-				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
-				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 - 5.5f;
-				Vector2 origin = drawInfo.headVect;
-				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.headPosition - Main.screenPosition;
-				Rectangle frame = drawPlayer.bodyFrame;
-				float rotation = drawPlayer.headRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorHead, rotation, origin, 1f, spriteEffects, 0);
-				drawData.shader = drawInfo.cHead;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}
-	/*public class NeapoliniteCookieDrawing : PlayerDrawLayer {
-
-		public static int CookieSpinTimer = 0;
-
-		public static bool CookieReturn = false;
-
-		public static int CookieTurnAdditive = 0;
-
-		public static int CookieUpTimer = 0;
-
-		public static bool CookieUpReturn = false;
-
-		public override Position GetDefaultPosition() {
-			return PlayerDrawLayers.AfterLastVanillaLayer;
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-
-			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
-				return;
-			}
-
-			Player drawPlayer = drawInfo.drawPlayer;
-
-			if (drawPlayer.HasBuff(ModContent.BuffType<Buffs.NeapoliniteBuffs.ChocolateChargeI>())) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/NeapoliniteCookies");
-
-				if (CookieReturn == false) {
-					CookieSpinTimer++;
-				}	
-				else if (CookieReturn == true) {
-					CookieSpinTimer--;
-				}
-
-				if (CookieSpinTimer > 60) {
-					CookieReturn = true;
-				}
-				else if (CookieSpinTimer < 0) {
-					CookieReturn = false;
-				}
-
-				CookieSpinTimer = CookieSpinTimer * (CookieTurnAdditive / 10);
-
-				if (CookieReturn == false) {
-					if (CookieSpinTimer >= 0 && CookieSpinTimer <= 2) {
-						CookieTurnAdditive++;
-					}
-					else if (CookieSpinTimer >= 58 && CookieSpinTimer <= 60) {
-						CookieTurnAdditive--;
-					}
-				}
-				else {
-					if (CookieSpinTimer >= 0 && CookieSpinTimer <= 2) {
-						CookieTurnAdditive--;
-					}
-					else if (CookieSpinTimer >= 58 && CookieSpinTimer <= 60) {
-						CookieTurnAdditive++;
-					}
-				}
-				if (CookieUpReturn == false) {
-					CookieUpTimer++;
-				}
-				else if (CookieUpReturn == true) {
-					CookieUpTimer--;
-				}
-
-				if (CookieUpTimer > 30) {
-					CookieUpReturn = true;
-				}
-				else if (CookieUpTimer < -30) {
-					CookieUpReturn = false;
-				}
-
-				Main.NewText(CookieSpinTimer);
-
-				float drawX = ((int)drawInfo.Position.X + drawPlayer.width / 2) - 20;
-				float drawY = ((int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f) + 32;
-				Vector2 origin = drawInfo.bodyVect;
-				Vector2 position = new Vector2((float)(drawX + (CookieSpinTimer)), drawY + (CookieUpTimer / 8)) + drawPlayer.bodyPosition - Main.screenPosition;
-				Rectangle frame = new(0, 0, 14, 14);
-				float rotation = drawPlayer.bodyRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-
-				float scale = 1f;
-
-				if (CookieReturn == true) {
-					scale = 0f;
-				}
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, scale, spriteEffects, 0);
-				drawData.shader = drawInfo.cBody;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}
-
-	public class NeapoliniteCookieBehindDrawing : PlayerDrawLayer {
-
-		public override Position GetDefaultPosition() {
-			return PlayerDrawLayers.BeforeFirstVanillaLayer;
-		}
-
-		protected override void Draw(ref PlayerDrawSet drawInfo) {
-
-			if (drawInfo.shadow != 0f || drawInfo.drawPlayer.dead) {
-				return;
-			}
-
-			Player drawPlayer = drawInfo.drawPlayer;
-
-			if (drawPlayer.HasBuff(ModContent.BuffType<Buffs.NeapoliniteBuffs.ChocolateChargeI>())) {
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Assets/NeapoliniteCookies");
-
-				float drawX = ((int)drawInfo.Position.X + drawPlayer.width / 2) - 20;
-				float drawY = ((int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f) + 32;
-				Vector2 origin = drawInfo.bodyVect;
-				Vector2 position = new Vector2((float)(drawX + (NeapoliniteCookieDrawing.CookieSpinTimer)), drawY + (NeapoliniteCookieDrawing.CookieUpTimer / 8)) + drawPlayer.bodyPosition - Main.screenPosition;
-				Rectangle frame = new(0, 0, 14, 14);
-				float rotation = drawPlayer.bodyRotation;
-				SpriteEffects spriteEffects = drawInfo.playerEffect;
-				float scale = 0f;
-
-				if (NeapoliniteCookieDrawing.CookieReturn == true) {
-					scale = 1f;
-				}
-
-				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, scale, spriteEffects, 0);
-				drawData.shader = drawInfo.cBody;
-				drawInfo.DrawDataCache.Add(drawData);
-			}
-		}
-	}*/
 }

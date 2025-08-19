@@ -11,13 +11,9 @@ namespace TheConfectionRebirth.Walls
         {
             Main.wallHouse[Type] = true;
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.PinkFairyFlossWall>());
-            DustType = ModContent.DustType<FairyFlossDust1>();
-            AddMapEntry(new Color(126, 71, 127));
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
+            DustType = ModContent.DustType<FairyFlossDust>();
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(126, 71, 127));
         }
     }
 }

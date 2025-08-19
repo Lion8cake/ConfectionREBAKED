@@ -73,11 +73,11 @@ namespace TheConfectionRebirth.Backgrounds
 
 			string TexturePath = "TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1";
 			string TexturePath2 = "TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose2";
-			string TexturePath3 = "TheConfectionRebirth/Projectiles/CreamBolt";
+			string TexturePath3 = null;
 			if (ConfectionWorldGeneration.confectionBG == 0) {
 				TexturePath = "TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1";
 				TexturePath2 = "TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose2";
-				TexturePath3 = "TheConfectionRebirth/Projectiles/CreamBolt";
+				TexturePath3 = null;
 			}
 			if (ConfectionWorldGeneration.confectionBG == 1) {
 				TexturePath = "TheConfectionRebirth/Backgrounds/ConfectionSurface1Close1";
@@ -131,22 +131,27 @@ namespace TheConfectionRebirth.Backgrounds
 				pushBGTopHack += num3;
 			}
 			if (flag) {
-				bgScale = 1.25f;
-				bgParallax = 0.4;
-				bgTopY = (int)(backgroundTopMagicNumber * 1800.0 + 1500.0) + (int)scAdj + pushBGTopHack;
-				//Main.instance.SetBackgroundOffsets((Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1"), backgroundTopMagicNumber, pushBGTopHack);
-				bgScale *= bgGlobalScaleMultiplier;
-				//Main.instance.LoadBackground(ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1").Value);
-				bgWidthScaled = (int)((float)ModContent.Request<Texture2D>(TexturePath3).Width() * bgScale);
-				SkyManager.Instance.DrawToDepth(Main.spriteBatch, 1.2f / (float)bgParallax);
-				bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (double)(bgWidthScaled / 2));
-				if (Main.gameMenu)
-					bgTopY = 320 + pushBGTopHack;
+				if (TexturePath3 != null)
+				{
+					bgScale = 1.25f;
+					bgParallax = 0.4;
+					bgTopY = (int)(backgroundTopMagicNumber * 1800.0 + 1500.0) + (int)scAdj + pushBGTopHack;
+					//Main.instance.SetBackgroundOffsets((Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1"), backgroundTopMagicNumber, pushBGTopHack);
+					bgScale *= bgGlobalScaleMultiplier;
+					//Main.instance.LoadBackground(ModContent.Request<Texture2D>("TheConfectionRebirth/Backgrounds/ConfectionSurfaceClose1").Value);
+					bgWidthScaled = (int)((float)ModContent.Request<Texture2D>(TexturePath3).Width() * bgScale);
+					SkyManager.Instance.DrawToDepth(Main.spriteBatch, 1.2f / (float)bgParallax);
+					bgStartX = (int)(0.0 - Math.IEEERemainder((double)Main.screenPosition.X * bgParallax, bgWidthScaled) - (double)(bgWidthScaled / 2));
+					if (Main.gameMenu)
+						bgTopY = 320 + pushBGTopHack;
 
-				bgLoops = Main.screenWidth / bgWidthScaled + 2;
-				if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0) {
-					for (int i = 0; i < bgLoops; i++) {
-						Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(TexturePath3), new Vector2(bgStartX + bgWidthScaled * i, bgTopY), new Rectangle(0, 0, ModContent.Request<Texture2D>(TexturePath3).Width(), ModContent.Request<Texture2D>(TexturePath3).Height()), ColorOfSurfaceBackgroundsModified, 0f, default(Vector2), bgScale, SpriteEffects.None, 0f);
+					bgLoops = Main.screenWidth / bgWidthScaled + 2;
+					if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
+					{
+						for (int i = 0; i < bgLoops; i++)
+						{
+							Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(TexturePath3), new Vector2(bgStartX + bgWidthScaled * i, bgTopY), new Rectangle(0, 0, ModContent.Request<Texture2D>(TexturePath3).Width(), ModContent.Request<Texture2D>(TexturePath3).Height()), ColorOfSurfaceBackgroundsModified, 0f, default(Vector2), bgScale, SpriteEffects.None, 0f);
+						}
 					}
 				}
 
@@ -194,12 +199,10 @@ namespace TheConfectionRebirth.Backgrounds
 			if (flag2) {
 				pushBGTopHack -= num3;
 			}
-
-
-			/*Texture2D value = TextureAssets.MagicPixel.Value;
-			float flashPower = 1;//WorldGen.BackgroundsCache.GetFlashPower(backgroundAreaId);
+			Texture2D value = TextureAssets.MagicPixel.Value;
+			float flashPower = ConfectionWorldGeneration.confectionBGFlash;
 			Color color = Color.Black * flashPower;
-			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);*/
+			Main.spriteBatch.Draw(value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
 			return false;
 		}
 

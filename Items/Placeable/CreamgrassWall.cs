@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.value = Item.sellPrice(copper: 50);
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createWall = ModContent.WallType<Walls.GraveyardWalls.CreamGrassWallArtificial>();
+            Item.createWall = ModContent.WallType<Walls.CreamGrassWallArtificial>();
         }
     }
 }

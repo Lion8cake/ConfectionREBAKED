@@ -1,8 +1,8 @@
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using Terraria;
+using Microsoft.Xna.Framework;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
@@ -11,26 +11,26 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 13));
 		}
 
         public override void SetDefaults()
         {
-            Item.width = 12;
-            Item.height = 12;
-            Item.maxStack = 9999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 7;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.SherbetWall>();
-        }
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 7;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 12;
+			Item.rare = ItemRarityID.Blue;
+		}
 
-        public override void AddRecipes()
-        {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<SherbetBricks>()).AddTile(TileID.WorkBenches).Register();
-        }
-    }
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return new Color((byte)TheConfectionRebirth.SherbR, (byte)TheConfectionRebirth.SherbG, (byte)TheConfectionRebirth.SherbB, byte.MaxValue);
+		}
+	}
 }

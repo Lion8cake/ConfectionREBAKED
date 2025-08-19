@@ -4,13 +4,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.ID;
-using TheConfectionRebirth.NPCs.Critters;
-using TheConfectionRebirth.Items;
 
 namespace TheConfectionRebirth.Tiles.Trees
 {
@@ -30,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 
 		public override void SetStaticDefaults()
         {
-            GrowsOnTileId = new int[3] { ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>(), ModContent.TileType<CreamTree>() }; //Creamtree is here so trees don't combust when converting into their custom tile type
+            GrowsOnTileId = [ModContent.TileType<CreamGrass>(), ModContent.TileType<CreamGrassMowed>(), ModContent.TileType<CreamTree>()]; //Creamtree is here so trees don't combust when converting into their custom tile type
 		}
 
         public override bool Shake(int x, int y, ref bool createLeaves)
@@ -69,7 +62,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 
         public override int DropWood()
         {
-            return ModContent.ItemType<Items.Placeable.CreamWood>();
+			return ModContent.ItemType<Items.Placeable.CreamWood>();
         }
 	}
 }

@@ -1,8 +1,9 @@
+using Newtonsoft.Json.Linq;
+using System.Threading.Channels;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheConfectionRebirth.Items.Placeable;
 
 namespace TheConfectionRebirth.Items.Weapons
 {
@@ -15,37 +16,24 @@ namespace TheConfectionRebirth.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 34;
-            Item.DamageType = DamageClass.Melee;
-            Item.width = 20;
-            Item.height = 12;
-            Item.useTime = 5;
-            Item.useAnimation = 35;
-            Item.channel = true;
-            Item.noUseGraphic = true;
-            Item.noMelee = true;
-            Item.axe = 22;
-            Item.pick = 200;
-            Item.tileBoost++;
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.knockBack = 6;
-            Item.value = Item.sellPrice(silver: 440);
-            Item.rare = ItemRarityID.LightRed;
-            Item.UseSound = SoundID.Item23;
-            Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<Projectiles.Drixer>();
-            Item.shootSpeed = 40f;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<NeapoliniteBar>(18)
-                .AddIngredient(ItemID.SoulofSight)
-                .AddIngredient(ItemID.SoulofMight)
-                .AddIngredient(ItemID.SoulofFright)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useAnimation = 25;
+			Item.useTime = 7;
+			Item.shootSpeed = 36f;
+			Item.knockBack = 4.75f;
+			Item.width = 20;
+			Item.height = 12;
+			Item.damage = 38;
+			Item.pick = 200;
+			Item.axe = 22;
+			Item.UseSound = SoundID.Item23;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Drixer>();
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = 220000;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.DamageType = DamageClass.Melee;
+			Item.channel = true;
+		}
     }
 }

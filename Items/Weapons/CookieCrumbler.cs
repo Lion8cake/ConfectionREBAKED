@@ -17,8 +17,8 @@ namespace TheConfectionRebirth.Items.Weapons
         {
             Item.damage = 40;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = 18;
-            Item.useTime = 24;
+            Item.useAnimation = 28;
+            Item.useTime = 28;
             Item.shootSpeed = 3.7f;
             Item.knockBack = 6.5f;
             Item.width = 32;

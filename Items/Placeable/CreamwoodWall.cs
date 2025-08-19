@@ -24,10 +24,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.CreamwoodWall>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<CreamWood>()).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

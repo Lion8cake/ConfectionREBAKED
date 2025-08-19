@@ -16,9 +16,9 @@ namespace TheConfectionRebirth.Items.Armor
 
         public override void SetDefaults()
         {
-            Item.width = 18;
-            Item.height = 18;
-            Item.rare = ItemRarityID.White;
+            Item.width = 24;
+            Item.height = 14;
+            Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }
     }

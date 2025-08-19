@@ -1,6 +1,5 @@
-using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace TheConfectionRebirth.Items
 {
@@ -13,17 +12,11 @@ namespace TheConfectionRebirth.Items
 
         public override void SetDefaults()
         {
-            Item.width = 10;
-            Item.height = 12;
-            Item.maxStack = 9999;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<SoulofDelight>(15)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
+		}
     }
 }

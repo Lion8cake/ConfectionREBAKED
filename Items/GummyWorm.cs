@@ -7,7 +7,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using TheConfectionRebirth.NPCs.Critters;
 
 namespace TheConfectionRebirth.Items
 {
@@ -31,7 +30,7 @@ namespace TheConfectionRebirth.Items
 			Item.noUseGraphic = true;
 			Item.bait = 25;
 
-			Item.makeNPC = ModContent.NPCType<NPCs.Critters.GummyWorm>();
+			Item.makeNPC = ModContent.NPCType<NPCs.GummyWorm>();
 			Item.value = Item.sellPrice(0, 0, 5);
 		}
 	}

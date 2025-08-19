@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,7 +11,6 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 13));
 		}
 
 		public override void SetDefaults() {
@@ -27,11 +27,9 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.value = 7;
 		}
 
-		public override void AddRecipes() {
-			CreateRecipe(10)
-				.AddIngredient(ItemID.Flare, 10)
-				.AddIngredient<SherbetBricks>()
-				.Register();
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return new Color((byte)TheConfectionRebirth.SherbR, (byte)TheConfectionRebirth.SherbG, (byte)TheConfectionRebirth.SherbB, byte.MaxValue);
 		}
 	}
 }

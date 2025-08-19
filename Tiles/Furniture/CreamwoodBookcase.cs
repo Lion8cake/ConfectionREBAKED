@@ -1,13 +1,14 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Localization;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
-    class CreamwoodBookcase : ModTile
+    public class CreamwoodBookcase : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -20,10 +21,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 3);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            //name.SetDefault("Bookcase");
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { 101 };
-            AddMapEntry(new Color(106, 65, 51), name);
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
     }
 }

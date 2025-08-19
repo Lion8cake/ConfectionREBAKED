@@ -1,47 +1,25 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.IO;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Items;
-using TheConfectionRebirth.Items.Armor;
+using TheConfectionRebirth.Items.Armor.GummyOutfit;
 using TheConfectionRebirth.Items.Banners;
 
 namespace TheConfectionRebirth.NPCs
 {
 	public class SweetGummy : ModNPC
     {
-        private sbyte Index;
-
-		public override void Load()
-        {
-            string[] a = { "Green", "Red", "Blue", "Yellow", "Amber", "Pink", "Onyx", "Diamond", "Purple", "Skeleton", "Bunny", "Headless" };
-            Func<bool>[] b = new Func<bool>[a.Length];
-            b[9] = b[10] = b[11] = () => Main.halloween;
-
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] == "Green")
-                {
-                    VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture));
-                    continue;
-				}
-
-                VariationManager<SweetGummy>.AddGroup(a[i], ModContent.Request<Texture2D>(Texture + '_' + a[i]), b[i]);
-            }
-        }
-
-		public override void Unload() => VariationManager<SweetGummy>.Clear();
-
 		public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 16;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Velocity = 0.5f
             });
@@ -49,69 +27,92 @@ namespace TheConfectionRebirth.NPCs
 
         public override void SetDefaults()
         {
-            NPC.width = 18;
-            NPC.height = 40;
-            NPC.damage = 60;
-            NPC.defense = 26;
-            NPC.lifeMax = 180;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath6;
-            //Sound 3 and 4 
-            NPC.value = 60f;
-            NPC.knockBackResist = 0.5f;
-            NPC.aiStyle = 3;
-            AIType = NPCID.Mummy;
-            AnimationType = NPCID.Mummy;
-            Banner = NPC.type;
-            BannerItem = ModContent.ItemType<SweetGummyBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type };
-            Index = -1;
-        }
+			NPC.width = 18;
+			NPC.height = 40;
+			NPC.aiStyle = 3;
+			NPC.damage = 55;
+			NPC.defense = 18;
+			NPC.lifeMax = 200;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.knockBackResist = 0.55f;
+			NPC.value = 700f;
+			AIType = NPCID.Mummy;
+			AnimationType = NPCID.Mummy;
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<SweetGummyBanner>();
+			SpawnModBiomes = new int[2] { ModContent.GetInstance<SandConfectionSurfaceBiome>().Type, ModContent.GetInstance<SandConfectionUndergroundBiome>().Type };
+		}
 
-        public override bool PreAI()
-        {
-            if (Index == -1)
+		public override void OnSpawn(IEntitySource source)
+		{
+			NPC.localAI[0] = Main.rand.Next(0, 9);
+            if (Main.rand.NextBool(2))
             {
-                Index = VariationManager<SweetGummy>.GetRandomGroup().Index;
-
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                if (TheConfectionRebirth.easter)
+                {
+					NPC.localAI[0] = 12 + Main.rand.Next(0, 3);
+				}
+                else if (Main.halloween)
+                {
+                    NPC.localAI[0] = 9 + Main.rand.Next(0, 3);
+                }
             }
+		}
 
-            return true;
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.IsABestiaryIconDummy)
-                return true;
-
-            DS.DrawNPC(NPC, VariationManager<SweetGummy>.GetByIndex(Index).Get().Value, spriteBatch, screenPos, drawColor);
-            return false;
+            Texture2D texture;
+            if (NPC.localAI[0] <= 0) 
+            { 
+                texture = TextureAssets.Npc[Type].Value;
+            }
+            else
+            {
+                texture = ModContent.Request<Texture2D>(Texture + "_" + NPC.localAI[0]).Value;
+            }
+			SpriteEffects spriteEffects = 0;
+			if (NPC.spriteDirection == 1)
+			{
+				spriteEffects = (SpriteEffects)1;
+			}
+			Vector2 halfSize = new((float)(TextureAssets.Npc[NPC.type].Width() / 2), (float)(TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type] / 2));
+			Rectangle frame = NPC.frame;
+            if (NPC.localAI[0] >= 12)
+            {
+                //Gummy Bunnies are 6 extra pixels in height, here we manipulate the frame to include the extra pixels
+                int height = frame.Height + 6;
+				int y = (frame.Y / frame.Height) * (height);
+                frame.Y = y;
+                frame.Height = height;
+            }
+			float num305 = 0f;
+			float num306 = Main.NPCAddHeight(NPC);
+			spriteBatch.Draw(texture, new Vector2(NPC.position.X - screenPos.X + (float)(NPC.width / 2) - (float)texture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + (float)NPC.height - (float)texture.Height * NPC.scale / (float)Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + num306 + num305 + NPC.gfxOffY), (Rectangle?)frame, NPC.GetAlpha(drawColor), NPC.rotation, halfSize, NPC.scale, spriteEffects, 0f);
+			return false;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-
-                new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SweetGummy")
+				new BestiaryBackground(ModContent.Request<Texture2D>("TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground")),
+				new FlavorTextBestiaryInfoElement("Mods.TheConfectionRebirth.Bestiary.SweetGummy")
             });
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.LightShard, 10));
-            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.TrifoldMap, 100, 50));
-            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(95, ModContent.ItemType<GummyMask>(), ModContent.ItemType<GummyShirt>(), ModContent.ItemType<GummyPants>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GummyMask>(), 75));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GummyShirt>(), 75));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GummyPants>(), 75));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CreamPuff>(), 10));
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.TrifoldMap, 100));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && spawnInfo.Player.ZoneDesert && !spawnInfo.Player.ZoneRockLayerHeight && !spawnInfo.Player.ZoneUnderworldHeight) {
-                return 0.31f;
-            }
-            return 0f;
-        }
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -120,21 +121,35 @@ namespace TheConfectionRebirth.NPCs
                 return;
             }
 
-            if (NPC.life <= 0)
+            if (NPC.life > 0)
             {
-                var entitySource = NPC.GetSource_Death();
-
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; (double)i < hit.Damage / (double)NPC.lifeMax * 50.0; i++)
                 {
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 13);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 12);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 11);
+                    int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+                    Dust dust = Main.dust[dustID];
+                    dust.velocity *= 2f;
+                    dust.noGravity = true;
                 }
             }
-        }
-
-        public override void SendExtraAI(BinaryWriter writer) => writer.Write(Index);
-
-        public override void ReceiveExtraAI(BinaryReader reader) => Index = reader.ReadSByte();
+            else
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+                    Dust dust = Main.dust[dustID];
+                    dust.velocity *= 2f;
+                    dust.noGravity = true;
+                }
+                int goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hit.HitDirection, 0f), 61, NPC.scale);
+                Gore gore = Main.gore[goreID];
+                gore.velocity *= 0.3f;
+                goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2((float)hit.HitDirection, 0f), 62, NPC.scale);
+                gore = Main.gore[goreID];
+                gore.velocity *= 0.3f;
+                goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 10f), new Vector2((float)hit.HitDirection, 0f), 63, NPC.scale);
+                gore = Main.gore[goreID];
+                gore.velocity *= 0.3f;
+            }
+		}
     }
 }

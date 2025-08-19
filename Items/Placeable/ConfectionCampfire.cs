@@ -7,8 +7,13 @@ namespace TheConfectionRebirth.Items.Placeable
 {
     public class ConfectionCampfire : ModItem
     {
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
+		}
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             Item.width = 32;
             Item.height = 18;
@@ -21,17 +26,6 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.ConfectionCampfire>();
-        }
-
-        public override void SetStaticDefaults()
-        {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
-		}
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 10).AddIngredient(ModContent.ItemType<ConfectionTorch>(), 5).Register();
         }
     }
 }

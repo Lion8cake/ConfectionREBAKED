@@ -1,18 +1,12 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
 	[LegacyName("SoulofSpiteinaBottleItem")]
-	internal class SoulofSpiteinaBottle : ModItem
+	public class SoulofSpiteinaBottle : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,16 +15,17 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.SoulBottleNight);
-			Item.placeStyle = 0;
-            Item.createTile = ModContent.TileType<Tiles.SoulofSpiteinaBottle>();
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 28;
+			Item.value = 1000;
+			Item.createTile = ModContent.TileType<Tiles.SoulofSpiteinaBottle>();
         }
-
-		public override void AddRecipes() {
-			CreateRecipe(1)
-				.AddIngredient(ModContent.ItemType<Items.SoulofSpite>())
-				.AddIngredient(ItemID.Bottle)
-				.Register();
-		}
 	}
 }

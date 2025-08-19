@@ -5,6 +5,7 @@ using TheConfectionRebirth.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -12,42 +13,57 @@ namespace TheConfectionRebirth.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			Projectile.CloneDefaults(30);
-			AIType = 30;
-			Projectile.timeLeft = 200;
 			Projectile.width = 8;
 			Projectile.height = 8;
+			Projectile.aiStyle = 2;
+			Projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Ranged;
 		}
-	
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+
+		public override bool? CanHitNPC(NPC target)
 		{
-			fallThrough = false;
+			if (Projectile.ai[2] > 0)
+			{
+				Projectile.ai[2]--;
+				return false;
+			}
 			return true;
 		}
-	
-		public override void Kill(int timeLeft)
+
+		public override void OnKill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-			for (int i = 0; i < 15; i++)
+			SoundEngine.PlaySound(in SoundID.Item14, Projectile.position);
+			for (int i = 0; i < 7; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-				Dust obj = Main.dust[dustIndex];
-				obj.velocity *= 1.4f;
+				int dustID = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
+				Dust dust = Main.dust[dustID];
+				dust.velocity *= 0.8f;
+
+				if (i % 3 == 0)
+				{
+					dustID = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default(Color), 2.5f);
+					dust = Main.dust[dustID];
+					dust.noGravity = true;
+					dust.velocity *= 2.5f;
+					dustID = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default(Color), 1.5f);
+					dust = Main.dust[dustID];
+					dust.velocity *= 1.5f;
+				}
 			}
-			for (int j = 0; j < 10; j++)
-			{
-				int dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-				Main.dust[dustIndex2].noGravity = true;
-				Dust obj2 = Main.dust[dustIndex2];
-				obj2.velocity *= 5f;
-				dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-				Dust obj3 = Main.dust[dustIndex2];
-				obj3.velocity *= 3f;
-			}
-			if (Main.myPlayer != Projectile.owner)
-			{
-				return;
-			}
+			Vector2 pos = new Vector2(Projectile.position.X, Projectile.position.Y);
+			int goreID = Gore.NewGore(Projectile.GetSource_Death(), pos, default(Vector2), Main.rand.Next(61, 64));
+			Gore gore = Main.gore[goreID];
+			gore.velocity *= 0.2f;
+			gore.velocity.X += Main.rand.Next(-1, 2);
+			gore.velocity.Y += Main.rand.Next(-1, 2);
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 100;
+			Projectile.height = 100;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.penetrate = -1;
+			Projectile.Damage();
 		}
 	}
 }

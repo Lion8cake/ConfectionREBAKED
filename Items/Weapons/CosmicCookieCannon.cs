@@ -23,23 +23,14 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.knockBack = 20;
+            Item.knockBack = 6;
             Item.value = Item.sellPrice(silver: 400);
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item9;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Projectiles.CosmicCookie>();
             Item.shootSpeed = 18f;
             Item.useAmmo = AmmoID.FallenStar;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12)
-                .AddIngredient(ItemID.StarCannon, 1)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
         }
 
         public override Vector2? HoldoutOffset()

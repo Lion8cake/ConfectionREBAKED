@@ -11,12 +11,6 @@ namespace TheConfectionRebirth.Biomes
 
         public override string BackgroundPath => "TheConfectionRebirth/Biomes/ConfectionIceBiomeMapBackground";
 
-        public override Color? BackgroundColor => base.BackgroundColor;
-
         public override string MapBackground => BackgroundPath;
-
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSnowSurfaceBackgroundStyle>();
-
-        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<ConfectionUndergroundSnowBackgroundStyle>();
     }
 }

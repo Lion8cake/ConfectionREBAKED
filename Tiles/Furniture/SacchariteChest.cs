@@ -23,16 +23,15 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileOreFinderPriority[Type] = 500;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            DustType = ModContent.DustType<SacchariteCrystals>();
+            DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.Containers };
-            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.SacchariteChest>());
 
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(32, 174, 221), name, MapChestName);
+            AddMapEntry(new Color(32, 174, 221), CreateMapEntryName(), MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -41,14 +40,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
             TileObjectData.newTile.StyleHorizontal = true;
-            // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
         }
 
-		public override LocalizedText DefaultContainerName(int frameX, int frameY) => Language.GetOrRegister("Saccharite Chest");
-
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
+        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -95,7 +91,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
         {
             Player player = Main.LocalPlayer;
             Tile tile = Main.tile[i, j];
-            // Main.mouseRightRelease = false;
             int left = i;
             int top = j;
             if (tile.TileFrameX % 36 != 0)
@@ -112,21 +107,18 @@ namespace TheConfectionRebirth.Tiles.Furniture
             {
                 SoundEngine.PlaySound(SoundID.MenuClose);
                 player.sign = -1;
-                // Main.editSign = false;
                 Main.npcChatText = "";
             }
 
             if (Main.editChest)
             {
                 SoundEngine.PlaySound(SoundID.MenuTick);
-                // Main.editChest = false;
                 Main.npcChatText = "";
             }
 
             if (player.editedChestName)
             {
                 NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f);
-                // player.editedChestName = false;
             }
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -159,7 +151,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
                         {
                             player.chest = chest;
                             Main.playerInventory = true;
-                            // Main.recBigList = false;
                             player.chestX = left;
                             player.chestY = top;
                             SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);

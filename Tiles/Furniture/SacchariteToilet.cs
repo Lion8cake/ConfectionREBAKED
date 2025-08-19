@@ -5,7 +5,6 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
@@ -14,13 +13,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
 {
     public class SacchariteToilet : ModTile
     {
-        public const int NextStyleHeight = 40;
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeSatOnForNPCs[Type] = true;
             TileID.Sets.CanBeSatOnForPlayers[Type] = true;
@@ -28,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
-            DustType = ModContent.DustType<SacchariteCrystals>();
+            DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.Toilets };
 
             AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
@@ -45,11 +42,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -70,13 +62,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             info.AnchorTilePosition.X = i;
             info.AnchorTilePosition.Y = j;
+			if (tile.TileFrameY % 40 == 0)
+			{
+				info.AnchorTilePosition.Y++;
+			}
 
-            if (tile.TileFrameY % NextStyleHeight == 0)
-            {
-                info.AnchorTilePosition.Y++;
-            }
-
-            if (info.RestingEntity is Player player && player.HasBuff(BuffID.Stinky))
+			if (info.RestingEntity is Player player && player.HasBuff(BuffID.Stinky))
             {
                 info.VisualOffset = Main.rand.NextVector2Circular(2, 2);
             }
@@ -119,7 +110,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Tile tile = Main.tile[i, j];
 
             int spawnX = i;
-            int spawnY = j - (tile.TileFrameY % NextStyleHeight) / 18;
+            int spawnY = j - (tile.TileFrameY % 40) / 18;
 
             Wiring.SkipWire(spawnX, spawnY);
             Wiring.SkipWire(spawnX, spawnY + 1);

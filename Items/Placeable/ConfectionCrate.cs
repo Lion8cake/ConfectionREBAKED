@@ -25,12 +25,11 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.height = 34;
             Item.rare = ItemRarityID.Green;
             Item.createTile = ModContent.TileType<Tiles.ConfectionCrate>();
-            Item.placeStyle = 0;
             Item.useAnimation = 10;
             Item.useTime = 10;
             Item.value = Item.sellPrice(gold: 1);
-            Item.useStyle = 1;
-        }
+			Item.useStyle = ItemUseStyleID.Swing;
+		}
 
         public override bool CanRightClick()
         {

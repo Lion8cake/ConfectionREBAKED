@@ -17,15 +17,14 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileTable[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.Platforms[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             AddMapEntry(new Color(106, 65, 51));
 
-            DustType = ModContent.DustType<ChipDust>();
-            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodPlatform>());
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Platforms };
 
             TileObjectData.newTile.CoordinateHeights = new[] { 16 };
@@ -34,8 +33,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleMultiplier = 27;
             TileObjectData.newTile.StyleWrapLimit = 27;
-            // TileObjectData.newTile.UsesCustomCanPlace = false;
-            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
         }
 

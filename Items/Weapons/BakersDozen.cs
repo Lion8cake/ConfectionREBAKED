@@ -10,8 +10,6 @@ namespace TheConfectionRebirth.Items.Weapons
 {
     public class BakersDozen : ModItem
     {
-        private int uses;
-
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -20,7 +18,7 @@ namespace TheConfectionRebirth.Items.Weapons
         public override void SetDefaults()
         {
             Item.width = 38;
-            Item.damage = 32;
+            Item.damage = 38;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;
@@ -32,15 +30,14 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.DamageType = DamageClass.Melee;
             Item.height = 38;
             Item.value = 600000;
-            Item.rare = 5;
-            Item.shoot = Mod.Find<ModProjectile>("BakersDozen").Type;
+            Item.rare = ItemRarityID.Pink;
+            Item.shoot = ModContent.ProjectileType<Projectiles.BakersDozen>();
             Item.shootSpeed = 16f;
-            Item.maxStack = 13;
         }
 
         public override bool CanUseItem(Player player)
         {
-            int stack = Item.stack;
+            int stack = 13;
             bool canuse = true;
             for (int m = 0; m < 1000; m++)
             {
@@ -50,35 +47,5 @@ namespace TheConfectionRebirth.Items.Weapons
             if (stack <= 0) canuse = false;
             return canuse;
         }
-
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-		{
-            int index = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-            Main.projectile[index].frame = uses++ % 4;
-			return false;
-		}
-
-		public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 15)
-                .AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 20)
-                .AddIngredient(ItemID.SoulofMight, 20)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
-
-		public override void SaveData(TagCompound tag) => tag[nameof(uses)] = uses;
-
-		public override void LoadData(TagCompound tag) => uses = tag.GetInt(nameof(uses));
-
-		public override ModItem Clone(Item newEntity)
-		{
-            var bakersDozen = (BakersDozen)base.Clone(newEntity);
-            bakersDozen.uses = uses;
-			return bakersDozen;
-		}
-
-		protected override bool CloneNewInstances => true;
 	}
 }

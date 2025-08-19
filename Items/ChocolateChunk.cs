@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
+using Newtonsoft.Json.Linq;
 
 namespace TheConfectionRebirth.Items
 {
@@ -14,9 +15,17 @@ namespace TheConfectionRebirth.Items
 
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(ItemID.LizardEgg);
-			Item.shoot = ModContent.ProjectileType<Projectiles.RollerCookiePetProjectile>();
-			Item.buffType = ModContent.BuffType<Buffs.RollerCookiePet>();
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.width = 16;
+			Item.height = 16;
+			Item.UseSound = SoundID.Item2;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
+			Item.rare = ItemRarityID.Orange;
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.RollerCookiePet>();
+			Item.value = Item.sellPrice(0, 2, 0, 0);
+			Item.buffType = ModContent.BuffType<Buffs.RollerCookiePetBuff>();
 		}
 
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {

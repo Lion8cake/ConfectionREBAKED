@@ -29,7 +29,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.Torch[Type] = true;
 
-            DustType = ModContent.DustType<NeapoliniteJoustingDust>();
+            DustType = DustID.IceTorch;
             AdjTiles = new int[] { TileID.Torches };
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

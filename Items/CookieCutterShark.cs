@@ -36,7 +36,7 @@ namespace TheConfectionRebirth.Items
         public override void AnglerQuestChat(ref string description, ref string catchLocation)
         {
             description = Language.GetTextValue("Mods.TheConfectionRebirth.ItemAnglerChat.CookieCutterShark");
-            catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.Common.CaughtInConfection");
+            catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.common.CaughtInConfection");
         }
     }
 }

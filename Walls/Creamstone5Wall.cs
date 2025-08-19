@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
 
@@ -9,14 +10,11 @@ namespace TheConfectionRebirth.Walls
     {
         public override void SetStaticDefaults()
         {
-            Main.wallHouse[Type] = false;
-            DustType = ModContent.DustType<CreamDust>();
-            AddMapEntry(new Color(124, 123, 111));
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
+			WallID.Sets.Conversion.NewWall4[Type] = true;
+			Main.wallHouse[Type] = false;
+            DustType = ModContent.DustType<CreamstoneDust>();
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(124, 123, 111));
         }
     }
 }

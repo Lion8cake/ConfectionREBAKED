@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,28 +19,27 @@ namespace TheConfectionRebirth.NPCs
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 6;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
-                Position = new Vector2(-2f, 6f),
+                Position = new Vector2(0f, -8f),
                 Velocity = 1f,
-                PortraitPositionXOverride = -8f,
-                PortraitPositionYOverride = 2f
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = -24f
             });
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 36;
-            NPC.height = 36;
-            NPC.damage = 80;
-            NPC.defense = 18;
-            NPC.lifeMax = 200;
-            NPC.HitSound = SoundID.NPCHit4;
-            NPC.DeathSound = SoundID.NPCDeath6;
-            NPC.value = 60f;
-            NPC.knockBackResist = 0.5f;
+			NPC.width = 40;
+			NPC.height = 40;
 			NPC.aiStyle = -1;
-            AnimationType = NPCID.EnchantedSword;
+			NPC.damage = 80;
+			NPC.defense = 18;
+			NPC.lifeMax = 200;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.value = 1000f;
+			NPC.knockBackResist = 0.4f;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrazyConeBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
@@ -123,13 +125,43 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.Nazar, 100, 50));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			SpriteEffects spriteEffects = (SpriteEffects)0;
+			if (NPC.spriteDirection == 1)
+			{
+				spriteEffects = (SpriteEffects)1;
+			}
+			float num35 = 0f;
+			float num36 = Main.NPCAddHeight(NPC);
+			Vector2 halfSize = new Vector2(TextureAssets.Npc[Type].Width() / 2, TextureAssets.Npc[Type].Height() / Main.npcFrameCount[Type] / 2);
+			spriteBatch.Draw(TextureAssets.Npc[Type].Value, new Vector2(NPC.position.X - screenPos.X + (float)(NPC.width / 2) - (float)TextureAssets.Npc[Type].Width() * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + (float)NPC.height - (float)TextureAssets.Npc[Type].Height() * NPC.scale / (float)Main.npcFrameCount[Type] + 4f + halfSize.Y * NPC.scale + num36 + num35), NPC.frame, Color.White, NPC.rotation, halfSize, NPC.scale, spriteEffects, 0f);
+		}
+
+		public override void FindFrame(int frameHeight)
+		{
+			if (NPC.ai[0] == 2f)
+			{
+				NPC.frameCounter = 0.0;
+				NPC.frame.Y = 0;
+				return;
+			}
+			NPC.frameCounter += 1.0;
+			if (NPC.frameCounter >= 4.0)
+			{
+				NPC.frameCounter = 0.0;
+				NPC.frame.Y += frameHeight;
+				if (NPC.frame.Y / frameHeight >= Main.npcFrameCount[NPC.type])
+				{
+					NPC.frame.Y = 0;
+				}
+			}
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
-                return 0.08f;
-            }
-            return 0f;
-        }
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -138,17 +170,33 @@ namespace TheConfectionRebirth.NPCs
                 return;
             }
 
-            if (NPC.life <= 0)
-            {
-                var entitySource = NPC.GetSource_Death();
-
-                for (int i = 0; i < 3; i++)
-                {
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 13);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 12);
-                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 11);
-                }
-            }
-        }
+			if (NPC.life > 0)
+			{
+				for (int i = 0; (double)i < hit.Damage / (double)NPC.lifeMax * 50.0; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+					Main.dust[dustID].noGravity = true;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					int dustID = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+					Dust dust = Main.dust[dustID];
+					dust.velocity *= 2f;
+					dust.noGravity = true;
+				}
+				int goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 61, NPC.scale);
+				Gore gore = Main.gore[goreID];
+				gore.velocity *= 0.5f;
+				goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 61, NPC.scale);
+				gore = Main.gore[goreID];
+				gore.velocity *= 0.5f;
+				goreID = Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 61, NPC.scale);
+				gore = Main.gore[goreID];
+				gore.velocity *= 0.5f;
+			}
+		}
     }
 }

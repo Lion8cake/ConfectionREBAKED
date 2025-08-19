@@ -8,6 +8,9 @@ namespace TheConfectionRebirth.Biomes
     public class ConfectionBiomeTileCount : ModSystem
     {
         public int confectionBlockCount;
+
+		public static int ConfectionTileMax = 600;
+
         public int snowpylonConfectionCount;
 		public int desertpylonConfectionCount;
 
@@ -28,6 +31,20 @@ namespace TheConfectionRebirth.Biomes
                 + tileCounts[ModContent.TileType<Creamsand>()]
                 + tileCounts[ModContent.TileType<HardenedCreamsand>()]
                 + tileCounts[ModContent.TileType<Creamsandstone>()];
-        }
+
+			Main.SceneMetrics.EvilTileCount -= confectionBlockCount;
+			if (Main.SceneMetrics.EvilTileCount < 0)
+				Main.SceneMetrics.EvilTileCount = 0;
+			Main.SceneMetrics.BloodTileCount -= confectionBlockCount;
+			if (Main.SceneMetrics.BloodTileCount < 0)
+				Main.SceneMetrics.BloodTileCount = 0;
+
+			Main.SceneMetrics.SnowTileCount += tileCounts[ModContent.TileType<CreamBlock>()]
+				+ tileCounts[ModContent.TileType<BlueIce>()];
+
+			Main.SceneMetrics.SandTileCount += tileCounts[ModContent.TileType<Creamsand>()]
+				+ tileCounts[ModContent.TileType<HardenedCreamsand>()]
+				+ tileCounts[ModContent.TileType<Creamsandstone>()];
+		}
     }
 }

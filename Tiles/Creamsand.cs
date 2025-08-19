@@ -1,49 +1,43 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI;
+using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Projectiles;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class Creamsand : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolid[Type] = true;
-            Main.tileBrick[Type] = true;
-            Main.tileMergeDirt[Type] = true;
-            Main.tileBlockLight[Type] = true;
-            Main.tileSand[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamstoneBrick").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("HardenedCreamsand").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamsandstone").Type] = true;
-			TileID.Sets.Suffocate[Type] = true;
-            TileID.Sets.Conversion.Sand[Type] = true;
-            TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
-            TileID.Sets.Falling[Type] = true;
-            AddMapEntry(new Color(99, 57, 46));
+	public class Creamsand : ModTile
+	{
+		public override void SetStaticDefaults() {
+			Main.tileBrick[Type] = true;
+			Main.tileSand[Type] = true;
+			Main.tileBlockLight[Type] = true;
+			Main.tileSolid[Type] = true;
+			Main.tileMergeDirt[Type] = true;
+
+			TileID.Sets.Conversion.Sand[Type] = true; 
+			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
-			TileID.Sets.FallingBlockProjectile[Type] = new TileID.Sets.FallingBlockProjectileInfo(ModContent.ProjectileType<CreamsandProjectile>());
+			TileID.Sets.Falling[Type] = true;
+			TileID.Sets.Suffocate[Type] = true;
+			TileID.Sets.FallingBlockProjectile[Type] = new TileID.Sets.FallingBlockProjectileInfo(ModContent.ProjectileType<CreamsandProjectile>(), 10);
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			TileID.Sets.GeneralPlacementTiles[Type] = false;
-			TileID.Sets.ChecksForMerge[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true;
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionTile[Type] = true;
+
+			MineResist = 0.5f;
+			DustType = ModContent.DustType<CreamsandDust>();
+			AddMapEntry(new Color(99, 57, 46));
 		}
 
-		public override bool HasWalkDust() => Main.rand.NextBool(3);
+		public override bool HasWalkDust() {
+			return Main.rand.NextBool(3);
+		}
 
 		public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color) {
 			dustType = DustType;
-		}
-
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
-			return true;
 		}
 	}
 }

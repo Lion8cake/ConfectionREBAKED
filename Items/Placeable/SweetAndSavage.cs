@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Placeable
@@ -7,6 +8,7 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ConfectionPainting>();
         }
 
         public override void SetDefaults()
@@ -22,7 +24,6 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.value = 10000;
             Item.createTile = ModContent.TileType<Tiles.SweetAndSavage>();
-            Item.placeStyle = 0;
         }
     }
 }

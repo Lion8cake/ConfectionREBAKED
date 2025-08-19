@@ -7,13 +7,13 @@ namespace TheConfectionRebirth.Buffs.NeapoliniteBuffs
     {
         public override void SetStaticDefaults()
         {
-            Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetCritChance(DamageClass.Generic) += 10f;
-        }
+			player.GetModPlayer<ConfectionPlayer>().neapolinitePowerLevel = 5;
+		}
     }
 }

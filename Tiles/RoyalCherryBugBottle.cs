@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles
 {
-    internal class RoyalCherryBugBottle : ModTile
+    public class RoyalCherryBugBottle : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -24,8 +24,6 @@ namespace TheConfectionRebirth.Tiles
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(39, 21, 12), name);
         }
-
-        private readonly int animationFrameWidth = 18;
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			bool intoRenderTargets = true;
@@ -61,7 +59,7 @@ namespace TheConfectionRebirth.Tiles
             if (i % 4 == 0)
                 uniqueAnimationFrame += 3;
             uniqueAnimationFrame %= 6;
-            frameXOffset = uniqueAnimationFrame * animationFrameWidth;
+            frameXOffset = uniqueAnimationFrame * 18;
         }
 
         public override void AnimateTile(ref int frame, ref int frameCounter)

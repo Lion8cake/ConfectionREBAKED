@@ -25,9 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.PastryBlock>();
         }
-
-		public override void AddRecipes() {
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<PastryBlockWall>(), 4).Register();
-		}
 	}
 }

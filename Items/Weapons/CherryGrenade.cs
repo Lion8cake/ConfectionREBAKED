@@ -1,4 +1,4 @@
-/*using TheConfectionRebirth.Projectiles;
+using TheConfectionRebirth.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,39 +9,27 @@ namespace TheConfectionRebirth.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cherry Bomb");
-			Tooltip.SetDefault("After detonation cherry shards with come out and explode.");
-			SacrificeTotal = 99;
+			Item.ResearchUnlockCount = 99;
 		}
 	
 		public override void SetDefaults()
 		{
-			item.damage = 52;
-			item.width = 14;
-			item.height = 20;
-			item.maxStack = 1;
-			item.consumable = true;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Orange;
-			item.maxStack = 9999;
-			item.UseSound = SoundID.Item1;
-			item.useAnimation = 44;
-			item.useTime = 44;
-			item.value = 200;
-			item.noUseGraphic = true;
-			item.melee = false;
-			item.ranged = true;
-			item.shoot = mod.ProjectileType("CherryGrenade");
-			item.shootSpeed = 7.5f;
-		}
-		
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<CherryShells>(), 1);
-			recipe.AddIngredient(ItemID.Grenade, 5);
-			recipe.SetResult(this, 5);
-			recipe.AddRecipe();
+			Item.damage = 52;
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 1;
+			Item.consumable = true;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 9999;
+			Item.UseSound = SoundID.Item1;
+			Item.useAnimation = 44;
+			Item.useTime = 44;
+			Item.value = 200;
+			Item.noUseGraphic = true;
+			Item.DamageType = DamageClass.Ranged;
+			Item.shoot = ModContent.ProjectileType<Projectiles.CherryGrenade>();
+			Item.shootSpeed = 7.5f;
 		}
 	}
-}*/
+}

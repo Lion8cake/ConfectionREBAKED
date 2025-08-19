@@ -21,25 +21,10 @@ namespace TheConfectionRebirth.NPCs
 
     public class ParfaitSlime : ModNPC
     {
-        private enum Variation : byte
-        {
-            None = 0,
-            Normal = 1,
-            Snow = 2
-        }
-
-        private Variation variation;
-
-        private static Asset<Texture2D> SnowTexture;
-
-		public override void Load() => SnowTexture = ModContent.Request<Texture2D>(Texture + "_Snow");
-
-		public override void Unload() => SnowTexture = null;
-
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 2;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Position = new(2f, 0f)
             });
@@ -61,7 +46,6 @@ namespace TheConfectionRebirth.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ParfaitSlimeBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<ConfectionUndergroundBiome>().Type };
-            variation = Variation.None;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -72,27 +56,24 @@ namespace TheConfectionRebirth.NPCs
             });
         }
 
-		public override bool PreAI()
-        {
-            if (variation == Variation.None)
-            {
-                variation = Variation.Normal;
-                if (Main.SceneMetrics.EnoughTilesForSnow)
-                    variation = Variation.Snow;
-
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-            }
-
-            return true;
-        }
+		public override void OnSpawn(IEntitySource source)
+		{
+			NPC.localAI[1] = 0f;
+			if (Main.rand.NextBool(2))
+			{
+				if (Main.xMas)
+				{
+					NPC.localAI[1] = 1f;
+				}
+			}
+		}
 
 		public override void AI() {
 			bool flag = true;
 			if (NPC.localAI[0] > 0f) {
 				NPC.localAI[0] -= 1f;
 			}
-			int ShotProjectile = ModContent.ProjectileType<ParfaitStrawberry>();
+			int ShotProjectile = ModContent.ProjectileType<ParfaitSpike>();
 			if (!NPC.wet && !Main.player[NPC.target].npcTypeNoAggro[NPC.type]) {
 				Vector2 vector7 = new(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
 				float num21 = Main.player[NPC.target].position.X + (float)Main.player[NPC.target].width * 0.5f - vector7.X;
@@ -106,19 +87,12 @@ namespace TheConfectionRebirth.NPCs
 					if (Main.netMode != 1 && NPC.localAI[0] == 0f) {
 						Vector2 vector8;
 						for (int l = 0; l < 5; l++) {
-							if (Main.rand.NextBool(2)) {
-								ShotProjectile = ModContent.ProjectileType<ParfaitBlueberry>();
-							}
-							else {
-								ShotProjectile = ModContent.ProjectileType<ParfaitStrawberry>();
-							}
 							vector8 = new((float)(l - 2), -2f);
 							vector8.X *= 1f + (float)Main.rand.Next(-50, 51) * 0.02f;
 							vector8.Y *= 1f + (float)Main.rand.Next(-50, 51) * 0.02f;
 							vector8.Normalize();
 							vector8 *= 3f + (float)Main.rand.Next(-50, 51) * 0.01f;
-							int attackDamage_ForProjectiles3 = NPC.GetAttackDamage_ForProjectiles(35f, 35f);
-							Projectile.NewProjectile(new EntitySource_Misc(""), vector7.X, vector7.Y, vector8.X, vector8.Y, ShotProjectile, attackDamage_ForProjectiles3, 0f, Main.myPlayer);
+							Projectile.NewProjectile(new EntitySource_Misc(""), vector7.X, vector7.Y, vector8.X, vector8.Y, ShotProjectile, 55 / 4, 0f, Main.myPlayer);
 							NPC.localAI[0] = 40f;
 						}
 					}
@@ -129,12 +103,6 @@ namespace TheConfectionRebirth.NPCs
 						NPC.velocity.X *= 0.9f;
 					}
 					if (Main.netMode != 1 && NPC.localAI[0] == 0f) {
-						if (Main.rand.NextBool(2)) {
-							ShotProjectile = ModContent.ProjectileType<ParfaitBlueberry>();
-						}
-						else {
-							ShotProjectile = ModContent.ProjectileType<ParfaitStrawberry>();
-						}
 						num22 = Main.player[NPC.target].position.Y - vector7.Y - (float)Main.rand.Next(-30, 20);
 						num22 -= num24 * 0.15f;
 						num21 = Main.player[NPC.target].position.X - vector7.X - (float)Main.rand.Next(-20, 20);
@@ -143,7 +111,7 @@ namespace TheConfectionRebirth.NPCs
 						num21 *= num24;
 						num22 *= num24;
 						NPC.localAI[0] = 32f;
-						Projectile.NewProjectile(new EntitySource_Misc(""), vector7.X, vector7.Y, num21, num22, ShotProjectile, 35, 0f, Main.myPlayer);
+						Projectile.NewProjectile(new EntitySource_Misc(""), vector7.X, vector7.Y, num21, num22, ShotProjectile, 65 / 4, 0f, Main.myPlayer);
 					}
 				}
 			}
@@ -256,9 +224,9 @@ namespace TheConfectionRebirth.NPCs
 
             Texture2D texture = TextureAssets.Npc[Type].Value;
             Rectangle f = NPC.frame;
-            if (variation is Variation.Snow)
+            if (NPC.localAI[1] == 1f)
             {
-                texture = SnowTexture.Value;
+                texture = ModContent.Request<Texture2D>(Texture + "_Xmas").Value;
                 f.Width = 44;
                 f.Height = 34;
                 f.Y = (f.Y / 48) * 34;
@@ -270,18 +238,15 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 3));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
+			npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Brownie>(), 150));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, maximumDropped: 2));
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.SlimeStaff, 10000, 7000));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<ConfectionBiome>()) && !spawnInfo.AnyInvasionActive() && Main.hardMode && (spawnInfo.Player.ZoneRockLayerHeight || spawnInfo.Player.ZoneUnderworldHeight)) {
-                return 1.0f;
-            }
-            return 0f;
-        }
+			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		}
 
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -290,17 +255,32 @@ namespace TheConfectionRebirth.NPCs
                 return;
             }
 
-            if (NPC.life <= 0)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CreamDust>());
-                }
-            }
-        }
+			if (NPC.life > 0)
+			{
+				for (int i = 0; (double)i < hit.Damage / (double)NPC.lifeMax * 100.0; i++)
+				{
+					int type = ModContent.DustType<CreamsandDust>();
+					if (i % 3 == 0)
+						type = ModContent.DustType<CreamDust>();
+					else if (i % 3 == 1)
+						type = ModContent.DustType<CreamstoneDust>();
 
-        public override void SendExtraAI(BinaryWriter writer) => writer.Write((byte)variation);
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, hit.HitDirection, -1f);
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 50; i++)
+				{
+					int type = ModContent.DustType<CreamsandDust>();
+					if (i % 3 == 0)
+						type = ModContent.DustType<CreamDust>();
+					else if (i % 3 == 1)
+						type = ModContent.DustType<CreamstoneDust>();
 
-        public override void ReceiveExtraAI(BinaryReader reader) => variation = (Variation)reader.ReadByte();
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, type, 2 * hit.HitDirection, -2f);
+				}
+			}
+		}
     }
 }

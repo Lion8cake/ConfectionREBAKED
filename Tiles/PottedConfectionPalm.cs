@@ -6,7 +6,7 @@ using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles
 {
-    class PottedConfectionPalm : ModTile
+    public class PottedConfectionPalm : ModTile
     {
         public override void SetStaticDefaults()
         {

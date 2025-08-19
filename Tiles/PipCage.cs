@@ -8,14 +8,16 @@ using Terraria.ObjectData;
 
 namespace TheConfectionRebirth.Tiles
 {
-    class PipCage : ModTile
+    public class PipCage : ModTile
     {
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileLavaDeath[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.StyleSmallCage);
+			Main.tileNoAttach[Type] = false;
+			Main.tileSolidTop[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.StyleSmallCage);
             TileObjectData.addTile(Type);
 
             AnimationFrameHeight = 36;
@@ -24,7 +26,12 @@ namespace TheConfectionRebirth.Tiles
             AddMapEntry(new Color(122, 217, 232), name);
         }
 
-        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+            return false;
+		}
+
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
         {
             Tile tile = Main.tile[i, j];
             Main.critterCage = true;

@@ -25,15 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.NeapoliniteBrick>();
         }
-
-        public override void AddRecipes()
-        {
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<NeapoliniteBrickWall>(), 4).Register();
-			CreateRecipe(5)
-                .AddIngredient(ItemID.StoneBlock, 5)
-                .AddIngredient<NeapoliniteOre>()
-                .AddTile(TileID.Furnaces)
-                .Register();
-        }
     }
 }

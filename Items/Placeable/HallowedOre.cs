@@ -28,13 +28,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.value = 3000;
             Item.rare = ItemRarityID.LightRed;
         }
-
-        public override void AddRecipes()
-        {
-			Recipe.Create(ItemID.HallowedBar)
-				.AddIngredient(this, 5)
-				.AddTile(TileID.AdamantiteForge)
-				.Register();
-		}
     }
 }

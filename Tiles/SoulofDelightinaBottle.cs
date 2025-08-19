@@ -18,10 +18,17 @@ namespace TheConfectionRebirth.Tiles
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
-			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.Platform, TileObjectData.newTile.Width, 0);
-			TileObjectData.addTile(Type);
-            TileID.Sets.SwaysInWindBasic[Type] = true;
+			
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.DrawYOffset = -2;
+			TileObjectData.newTile.StyleWrapLimit = 6;
+			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+			TileObjectData.newAlternate.AnchorTop = new AnchorData(AnchorType.Platform, TileObjectData.newTile.Width, 0);
+			TileObjectData.newAlternate.DrawYOffset = -10;
+            TileObjectData.addAlternate(0);
+            TileObjectData.addTile(Type);
+
+			TileID.Sets.SwaysInWindBasic[Type] = true;
 
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(215, 188, 106), name);
@@ -40,11 +47,16 @@ namespace TheConfectionRebirth.Tiles
 			return false;
 		}
 
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+            return false;
+		}
+
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			if ((Framing.GetTileSafely(i, j - 1).HasTile && TileID.Sets.Platforms[Framing.GetTileSafely(i, j - 1).TileType]) ||
 				(Framing.GetTileSafely(i, j - 2).HasTile && TileID.Sets.Platforms[Framing.GetTileSafely(i, j - 2).TileType]) ||
 				(Framing.GetTileSafely(i, j - 3).HasTile && TileID.Sets.Platforms[Framing.GetTileSafely(i, j - 3).TileType])) {
-				offsetY += 0;
+				offsetY += 2;
 			}
 		}
 
@@ -57,7 +69,7 @@ namespace TheConfectionRebirth.Tiles
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
         {
-            if (i % 2 == 1)
+            if (i % 2 == 0)
                 spriteEffects = SpriteEffects.FlipHorizontally;
         }
 

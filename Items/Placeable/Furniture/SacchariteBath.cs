@@ -25,10 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 60);
             Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteBath>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 14).AddTile(TileID.Sawmill).Register();
-        }
     }
 }

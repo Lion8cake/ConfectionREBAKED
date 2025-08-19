@@ -8,6 +8,11 @@ namespace TheConfectionRebirth.Items.Weapons
 {
     public class SacchariteDart : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 99;
+        }
+
         public override void SetDefaults()
         {
 
@@ -18,24 +23,12 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.consumable = true;
             Item.height = 30;
 
-            Item.shoot = ModContent.ProjectileType<SacchariteDartPro>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.SacchariteDart>();
             Item.shootSpeed = 22f;
             Item.knockBack = 4;
             Item.value = 10;
             Item.rare = ItemRarityID.Orange;
             Item.ammo = 283;
-        }
-
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 99;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(100)
-                .AddIngredient<Saccharite>()
-                .Register();
         }
     }
 }

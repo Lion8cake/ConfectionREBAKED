@@ -58,15 +58,5 @@ namespace TheConfectionRebirth.Items.Weapons
 		{
 			return new Vector2(0, -2);
 		}
-		
-		public override void AddRecipes() 
-		{
-			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<Items.Placeable.NeapoliniteBar>(), 12)
-				.AddIngredient(ItemID.IllegalGunParts)
-				.AddIngredient(ItemID.SoulofFright, 20)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-		}
 	}
 }

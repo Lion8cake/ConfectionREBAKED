@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -17,9 +19,9 @@ namespace TheConfectionRebirth.Tiles
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.StyleHorizontal = true;
-            // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
+            DustType = ModContent.DustType<NeapoliniteDust>();
             AddMapEntry(new Color(186, 134, 75), CreateMapEntryName());
         }
     }

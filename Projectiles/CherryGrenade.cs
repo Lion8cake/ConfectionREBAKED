@@ -1,58 +1,172 @@
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using TheConfectionRebirth;
-using TheConfectionRebirth.Projectiles;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Projectiles
 {
 	public class CherryGrenade : ModProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[Type] = true;
+			ProjectileID.Sets.Explosive[Type] = true;
+		}
+
 		public override void SetDefaults()
 		{
-			Projectile.CloneDefaults(30);
-			AIType = 30;
-			Projectile.timeLeft = 200;
-			Projectile.DamageType = DamageClass.Throwing;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.aiStyle = 16;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Ranged;
 		}
-	
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+
+		public override void OnSpawn(IEntitySource source)
 		{
-			fallThrough = false;
-			return true;
+			if (Projectile.owner == Main.myPlayer)
+			{
+				Projectile.timeLeft = 180;
+			}
 		}
-	
-		public override void Kill(int timeLeft)
+
+		public override bool PreAI()
 		{
-			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-			for (int i = 0; i < 15; i++)
+			if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-				Dust obj = Main.dust[dustIndex];
-				obj.velocity *= 1.4f;
+				Projectile.hide = true;
+				PrepareBombToBlow();
 			}
-			for (int j = 0; j < 10; j++)
+			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] > 10f)
 			{
-				int dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-				Main.dust[dustIndex2].noGravity = true;
-				Dust obj2 = Main.dust[dustIndex2];
-				obj2.velocity *= 5f;
-				dustIndex2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-				Dust obj3 = Main.dust[dustIndex2];
-				obj3.velocity *= 3f;
+				Projectile.ai[0] = 10f;
+				if (Projectile.velocity.Y == 0f && Projectile.velocity.X != 0f)
+				{
+					Projectile.velocity.X *= 0.97f;
+					if ((double)Projectile.velocity.X > -0.01 && (double)Projectile.velocity.X < 0.01)
+					{
+						Projectile.velocity.X = 0f;
+						Projectile.netUpdate = true;
+					}
+				}
+				Projectile.velocity.Y += 0.2f;
 			}
-			if (Main.myPlayer != Projectile.owner)
+			Projectile.rotation += Projectile.velocity.X * 0.1f;
+			return false;
+		}
+
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+		{
+			if (Main.expertMode)
 			{
-				return;
+				modifiers.FinalDamage /= 5;
+			}
+		}
+
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+		{
+			if (Main.expertMode)
+			{
+				modifiers.FinalDamage /= 5;
+			}
+		}
+
+		public override void PrepareBombToBlow()
+		{
+			Projectile.Resize(128, 128);
+			Projectile.knockBack = 8f;
+		}
+
+		public override void OnKill(int timeLeft)
+		{
+			SoundEngine.PlaySound(in SoundID.Item14, Projectile.position);
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			int type = DustID.Torch;
+			for (int i = 0; i < 20; i++)
+			{
+				int dustID = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
+				Dust dust = Main.dust[dustID];
+				dust.velocity *= 1.4f;
+				if (i % 2 == 0)
+				{
+					dustID = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 2.5f);
+					dust = Main.dust[dustID];
+					dust.noGravity = true;
+					dust.velocity *= 5f;
+					dustID = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 1.5f);
+					dust = Main.dust[dustID];
+					dust.velocity *= 3f;
+				}
+			}
+			Vector2 pos = Projectile.position;
+			int goreID = Gore.NewGore(Projectile.GetSource_Death(), pos, default(Vector2), Main.rand.Next(61, 64));
+			Gore gore = Main.gore[goreID];
+			gore.velocity *= 0.4f;
+			gore.velocity.X += 1f;
+			gore.velocity.Y += 1f;
+			goreID = Gore.NewGore(Projectile.GetSource_Death(), pos, default(Vector2), Main.rand.Next(61, 64));
+			gore = Main.gore[goreID];
+			gore.velocity *= 0.4f;
+			gore.velocity.X -= 1f;
+			gore.velocity.Y += 1f;
+			goreID = Gore.NewGore(Projectile.GetSource_Death(), pos, default(Vector2), Main.rand.Next(61, 64));
+			gore = Main.gore[goreID];
+			gore.velocity *= 0.4f;
+			gore.velocity.X += 1f;
+			gore.velocity.Y -= 1f;
+			goreID = Gore.NewGore(Projectile.GetSource_Death(), pos, default(Vector2), Main.rand.Next(61, 64));
+			gore = Main.gore[goreID];
+			gore.velocity *= 0.4f;
+			gore.velocity.X -= 1f;
+			gore.velocity.Y -= 1f;
+
+			for (int i = 0; i < 8; i++)
+			{
+				float degree = 360 / 8 * i;
+				float radians = MathHelper.ToRadians(degree);
+				float speed = 6f;
+				Vector2 speedSquared = new Vector2(speed, speed);
+				Vector2 velocity = speedSquared.RotatedBy(radians);
+				int projID = Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, velocity, ModContent.ProjectileType<CherryShard>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, ai2: 30);
 			}
 
-			for (int i = 0; i < 5; i++)
+			if (Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(new EntitySource_Misc("Cherry shard from cherry bomb"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CherryShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
+				int radius = 4;
+				Vector2 center = Projectile.Center;
+				int minX = (int)(center.X / 16f - (float)radius);
+				int maxX = (int)(center.X / 16f + (float)radius);
+				int minY = (int)(center.Y / 16f - (float)radius);
+				int maxY = (int)(center.Y / 16f + (float)radius);
+				if (minX < 0)
+				{
+					minX = 0;
+				}
+				if (maxX > Main.maxTilesX)
+				{
+					maxX = Main.maxTilesX;
+				}
+				if (minY < 0)
+				{
+					minY = 0;
+				}
+				if (maxY > Main.maxTilesY)
+				{
+					maxY = Main.maxTilesY;
+				}
+				Projectile.ExplodeCrackedTiles(center, radius, minX, maxX, minY, maxY);
 			}
 		}
 	}

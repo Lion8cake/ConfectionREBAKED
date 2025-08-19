@@ -20,15 +20,10 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 6);
-            Item.createTile = Mod.Find<ModTile>("SacchariteChandelier").Type;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 4).AddIngredient(8, 4).AddIngredient(85, 1).AddTile(TileID.Anvils).Register();
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteChandelier>();
         }
     }
 }

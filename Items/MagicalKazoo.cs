@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
@@ -11,33 +10,22 @@ namespace TheConfectionRebirth.Items
 	public class MagicalKazoo : ModItem
 	{
 		public override void SetStaticDefaults() {
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.staff[Type] = true;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
-			Item.damage = 0;
-			Item.useStyle = 1;
-			Item.shoot = ModContent.ProjectileType<Projectiles.BirdnanaLightPetProjectile>();
-			Item.width = 16;
-			Item.height = 30;
-			Item.useAnimation = 20;
-			Item.useTime = 20;
-			Item.rare = ItemRarityID.Yellow;
-			Item.noMelee = true;
-			Item.value = Item.sellPrice(0, 5, 50);
-			Item.buffType = ModContent.BuffType<Buffs.BirdnanaLightPetBuff>();
+			Item.channel = true;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.width = 20;
+			Item.height = 24;
 			Item.UseSound = null;
-		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Sprinkles>(), 80);
-			recipe.AddIngredient(ModContent.ItemType<Items.SoulofDelight>(), 12);
-			recipe.AddIngredient(ItemID.SoulofSight, 20);
-			recipe.AddIngredient(ModContent.ItemType<Items.Kazoo>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Item.useAnimation = 12;
+			Item.useTime = 12;
+			Item.rare = ItemRarityID.Pink;
+			Item.noMelee = true;
+			Item.value = 250000;
+			Item.buffType = ModContent.BuffType<Buffs.BirdnanaLightPetBuff>();
 		}
 
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
@@ -67,8 +55,10 @@ namespace TheConfectionRebirth.Items
 			num7 = (Main.musicPitch = num7 / (float)Player.musicNotes);
 			SoundEngine.PlaySound(new SoundStyle("TheConfectionRebirth/Sounds/Items/KazooSound") {
 				Pitch = num7,
+				Volume = 0.75f,
+				MaxInstances = 0
 			}, player.position);
-			NetMessage.SendData(58, -1, -1, null, player.whoAmI, num7);
+			NetMessage.SendData(MessageID.InstrumentSound, -1, -1, null, player.whoAmI, num7);
 		}
 	}
 }

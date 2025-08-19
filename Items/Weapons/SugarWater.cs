@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,18 +13,19 @@ namespace TheConfectionRebirth.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			Item.ResearchUnlockCount = 99;
+			ItemID.Sets.SortingPriorityTerraforming[Type] = 90;
 		}
 	
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.shootSpeed = 14f;
+			Item.shootSpeed = 9f;
 			Item.rare = ItemRarityID.Orange;
 			Item.damage = 20;
 			Item.shoot = ModContent.ProjectileType<SugarWaterBottle>();
 			Item.width = 18;
 			Item.height = 20;
-			Item.maxStack = 999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.consumable = true;
 			Item.knockBack = 3f;
 			Item.UseSound = SoundID.Item1;
@@ -32,15 +34,6 @@ namespace TheConfectionRebirth.Items.Weapons
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.value = 200;
-		}
-		
-		public override void AddRecipes() 
-		{
-			CreateRecipe(10)
-				.AddIngredient<Sprinkles>(3)
-				.AddIngredient<CreamBeans>()
-				.AddIngredient(ItemID.BottledWater, 10)
-				.Register();
 		}
 	}
 }

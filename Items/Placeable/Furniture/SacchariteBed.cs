@@ -23,12 +23,7 @@ namespace TheConfectionRebirth.Items.Placeable.Furniture
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 4);
-            Item.createTile = Mod.Find<ModTile>("SacchariteBed").Type;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.SacchariteBrick>(), 15).AddIngredient(225, 5).AddTile(TileID.Sawmill).Register();
+            Item.createTile = ModContent.TileType<Tiles.Furniture.SacchariteBed>();
         }
     }
 }

@@ -5,6 +5,8 @@ using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
 using Terraria.ID;
+using Terraria.Graphics.Capture;
+using static Terraria.Graphics.Capture.CaptureBiome;
 
 namespace TheConfectionRebirth.Biomes;
 
@@ -12,7 +14,17 @@ public class ConfectionBiome : ModBiome
 {
     public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("TheConfectionRebirth/CreamWaterStyle");
 
-    public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
+    public override SceneEffectPriority Priority
+	{
+		get
+		{
+			if (Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneBeach)
+			{
+				return SceneEffectPriority.BiomeHigh;
+			}
+			return SceneEffectPriority.BiomeMedium;
+		}
+	}
 
 	public override int BiomeTorchItemType => ModContent.ItemType<Items.Placeable.ConfectionTorch>();
 	public override int BiomeCampfireItemType => ModContent.ItemType<Items.Placeable.ConfectionCampfire>();
@@ -22,10 +34,10 @@ public class ConfectionBiome : ModBiome
 		get
 		{
 			if (Main.LocalPlayer.ZoneDesert) {
-				return ModContent.GetInstance<SandConfectionSurfaceBiome>().SurfaceBackgroundStyle;
+				return ModContent.GetInstance<ConfectionSandSurfaceBackgroundStyle>();
 			}
 			else if (Main.LocalPlayer.ZoneSnow) {
-				return ModContent.GetInstance<IceConfectionSurfaceBiome>().SurfaceBackgroundStyle;
+				return ModContent.GetInstance<ConfectionSnowSurfaceBackgroundStyle>();
 			}
 			return ModContent.GetInstance<ConfectionSurfaceBackgroundStyle>();
 		}
@@ -43,7 +55,7 @@ public class ConfectionBiome : ModBiome
 			}
 			else if ((double)(Main.screenPosition.Y / 16f) > Main.rockLayer + 60.0 && (double)(Main.screenPosition.Y / 16f) < num2 - 60.0) {
 				if (Main.player[Main.myPlayer].ZoneSnow) {
-					return ModContent.GetInstance<IceConfectionSurfaceBiome>().UndergroundBackgroundStyle;
+					return ModContent.GetInstance<ConfectionUndergroundSnowBackgroundStyle>();
 				}
 				return ModContent.GetInstance<ConfectionUndergroundBackgroundStyle>();
 			}
@@ -55,7 +67,7 @@ public class ConfectionBiome : ModBiome
 	{
 		get
 		{
-			bool TOWMusicCheck = (bool)typeof(Main).GetField("swapMusic", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+			bool TOWMusicCheck = Main.swapMusic;
 			if (TOWMusicCheck == false && !Main.drunkWorld || TOWMusicCheck == true && Main.drunkWorld) {
 				if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))) {
 					if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2)) {
@@ -151,7 +163,8 @@ public class ConfectionBiome : ModBiome
 
 	public override string BestiaryIcon => "TheConfectionRebirth/Biomes/BestiaryIcon1";
 
-	public override Color? BackgroundColor => base.BackgroundColor;
+	//public override TileColorStyle TileColorStyle => TileColorStyle.Confection;
+	//Why doesnt something like this exist, why must I have to IL edit to add my own tile colouring
 
-	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 120 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
+	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 125 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
 }

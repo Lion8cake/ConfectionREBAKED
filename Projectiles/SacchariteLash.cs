@@ -23,25 +23,15 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.WhipSettings.RangeMultiplier = 1.75f;
 		}
 
-		private float Timer {
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
-
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<SacchariteLashTagDamage>(), 240);
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
+			target.AddBuff(ModContent.BuffType<SmashingLash>(), 3 * 60);
 		}
 
-		public override void Kill(int timeLeft)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
-			if (Main.myPlayer != Projectile.owner)
-			{
-				return;
-			}
-			for (int i = 0; i < 2; i++)
-			{
-				Projectile.NewProjectile(new EntitySource_Misc("Rock candy shard from saccharite lash"), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<RockCandyShard>(), 24, 1f, Main.myPlayer, 0f, 0f);
-			}
+			target.AddBuff(ModContent.BuffType<SmashingLash>(), 3 * 60);
 		}
 
 		private void DrawLine(List<Vector2> list) {
@@ -87,7 +77,7 @@ namespace TheConfectionRebirth.Projectiles
 					frame.Height = 24;
 
 					Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out int _, out float _);
-					float t = Timer / timeToFlyOut;
+					float t = Projectile.ai[0] / timeToFlyOut;
 					scale = MathHelper.Lerp(0.5f, 1.5f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
 				}
 				else if (i > 10) {

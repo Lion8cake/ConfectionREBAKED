@@ -4,11 +4,9 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
-using TheConfectionRebirth.Items.Placeable.Furniture;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
@@ -18,7 +16,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileSolid[Type] = false;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoSunLight[Type] = true;
             TileID.Sets.HousingWalls[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
@@ -26,13 +24,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-            DustType = ModContent.DustType<ChipDust>();
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
-			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<CreamwoodDoorClosed>();
+            TileID.Sets.CloseDoorID[Type] = ModContent.TileType<CreamwoodDoorClosed>();
 
-            LocalizedText name = CreateMapEntryName();
-            //name.SetDefault("Creamwood Door");
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDoor>(), 0);
 
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 3;
@@ -85,17 +82,12 @@ namespace TheConfectionRebirth.Tiles.Furniture
             num = 1;
         }
 
-		public override bool CanDrop(int i, int j) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<CreamwoodDoor>());
-			return false;
-		}
-
-		public override void MouseOver(int i, int j)
+        public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<CreamwoodDoor>();
+            player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDoor>();
         }
     }
 }

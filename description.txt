@@ -1,76 +1,71 @@
-===========================================
-Confection REBAKED (Alternate Hallowed mod)
-===========================================
-The Confection nolonger uses Alternate Libraries mod to be able to be compatible with other alternate biome mods due to the mod being taken off the modbrowser/workshop
-Worlds can now be converted to 1.4.4 from 1.4.3 when opened
+=========================================
+The Confection REBAKED (Alternate Hallow)
+=========================================
+Confection version 0.30.0 (Rewrite Major Update)
+Welcome to THE CONFECTION
+The Confection REBAKED is a mod that adds in an altenate biome to the hallowed called the Confection. This works similarly to how the corruption and crimson works in the game.
+This mod replaces some content found within the hallow while there are still some bits of content missing, a full playthrough is able to be played in the confection.
+The confection is a biome filled with lots of sweet treats ranging from icescream trees to coco powder sand. It even effects what items the mech bosses drop.
 
-This mod supported Chinese and Russian translations (due to 1.4.4 translation this is currently unavailable)
+The Confection was a concept made back in 2014 by Snickerbobble that contains sprites and very well made concepts for lots of the confection's content. In June 2021 this concept would be picked up by Lion8cake and worked on ever since to bring the first ever fully finished alternate hallow to terraria/tmodloader.
+The people behind the Confection has also made a fully finished mod called the Depths, it does a very similar thing to the Confection but replaces the underworld instead of the hallow.
 
-This mod has Achievement Mod Support, download and use the Achievement Mod to see achievements for this mod
-This mod has Fargo's Best of Both World Support, When enabled you can now have both the confection and the hallow infect normal worlds
+This mod contains some mod support features, the supported mods are below
+Achievement Mod - download and use the Achievement Mod to see three new achievements to collect
+Fargo's Best of Both Worlds - download and use Fargo's BoBW, this allows for the creation of dual good worlds without the use of a drunk seed
+Biome Lava - download and use the Biome Lava mod to have the confection have its own special lava texture
 
-If you have bugs to report please report in our discord so we can betterly handle these bugs
-Discord: https://discord.gg/JwEKrVhjA6
-===========================================
-Changelog
-===========================================
-v0.21.1
-=======
-Fixed multiplayer crash with Creamsand
-Fixed creamsand not emitting dusts when walked on
+Various notes:
+Drunk seed allows for you to use both the Confection and Hallow if entirely replacing a biome is not your thing
+Full Don't dig up and other seed support for any playthrough you might enjoy
+This mod contains various systems that allow for dynamic support with Modded Items, NPCs, Bosses and more allowing for most mods to be automatically compatible
+Custom world creation texture to tell you which good you got apon creating a world
+Full controller support - if your mouse is broken, fear not you can play on a console controller
+Full Multiplayer support - feel free to eat well with a friend
 
-v0.21.0
-=======
-Added Custom Credits for those who helped with the confection
-Remade the Rollercycle rainbow effect
-Added Tree Variants, Trees now come in three different flavours
-Added Sandstorm support, dusts now show up as brown when in a confection sandstorm
-Remade the Spreading Config, worldgen doesnt generate cookie blocks on No Spread and has partial spread type
-Added ConvertsToConfection ID set for those who want custom WorldGen Support
-Added ModCalls for outside mod support
-Added licensing
-Resprited Confection Tree Branches
-Fixed Key of Spite not being craftable
-Fixed Confection Crate not being shimmer-able into banna split crates
-Fixed Various critters having their names repeated in their tooltip
-Fixed Gummy Wyrm shader error
-Fixed Royal Cherry Bug Spawning to be the same as the Prismatic Lacewing
-Fixed confection wings not having any tooltips
-Fixed confection Campfires not having any tooltips
-Fixed World Globe sometime repeating the same background when used in the confection
+Links:
+Original Concept Forum: https://forums.terraria.org/index.php?threads/sprites-the-confection-the-desserted-land-an-alternate-hallow.6352/
+Alternate Biomes Discord: https://discord.gg/JwEKrVhjA6
+The Confection's Wiki: https://terrariamods.wiki.gg/wiki/Confection_Rebaked
+
+==========================================
+-=Credits - Translators=-
+==========================================
+No-one yet, if you'd like to translate for this mod, send a DM my way (Lion8cake on discord or steam)
 
 ===========================================
-Credit - Programmers
+-=Credits=-
 ===========================================
-Lion8cake - Main dev 
-Cace - the 1.3 very tricky tile spreading code, the RoD alt and much cleaner 1.3 biome code
-Yreorel - For much of the reworks for different items as well as making the Icescreamer AI
-Ghasttear1 - For the menu UI
-Hariq - Polished backend code
-CastledKing2341 - For the awesome and very polished Meowzer NPC
-sOvr9000 - For the awesome and very polished Icecream Gal NPC
-foxyboy55 - many bug fixes and a few texture changes
-JeoHashtag1553 - Particle system allowing for particles and other cool drawing effects and Royal Cherry bug effects
-BasicallyIAmFox - cleaning up backend code and npc variation code & adding fairy floss raining code, gummy wyrm and swirling chocolate shader code
+-=Developers=-
+==============
+Lion8cake - The Main Developer behind the mod
+Ghasttear1 - World creation menu edits
+CastledKing2341 - Main developer for the meowzer AI
+sOvr9000 - Main developer for the Icecream Gal AI
+Roton - new Swirl dye shader
+JeoHashtage1553 - Particle System, foamin' float animation and Royal Cherry bug effects
+BasicallyIAmCat - Gummy Wyrm coloring shader
 
-===========================================
-Credit - Artists
-===========================================
-SnickerBobble - Original concept creator of the Confection
-Delicios Satern - Music
-mddznyan - Creating textures for some items and the new logo
-Snacks - Several 1.4 textures including the furniture toilets, saccharite furniture sprites and Cosmic cookie cannon
-DakotaSpine - The amazing New background for the confection
-AstralGel - For all the sounds used from the 0.18.2 update and above
-Neobind - Textures for a few things
-Miguel Noturn0 - Confection Tree icons
-splig - for Gummy Worm-whip sprite
-WumblyBee - Making the Confection Charm sprite
+===========
+-=Artists=-
+===========
+Snickerbobble - Concept creator and artist
+Delicious Saturn - Artist behind all current Confection music
+Snacks - Various sprites and ideas for 1.4 content
+DakotaSpine - The chocolate and icecream scoup background
+Miguel Noturn0 - Confection World Icons
+splig - Gummy worm-whip sprites and concept
+TerrorPenguin - Polished Creamstone tile texture
+motai_ - most sounds for the confection
+AstralGel - the crunch ball break sound
+Fuffles - Hallow world creation bar texture
+Sampel - Pop rocket animation
 
-===========================================
-Credit - Translators
-===========================================
-Cyril - for Chinese translation
-AstralGel - for Russian translation
-
-And to all the people that helped me out with coding problems and other issues, thank you!
+===============
+-=Legacy Devs=-
+===============
+Hariq - old polished backend code
+foxyboy55 - old bugfixes for content
+mddznyan - old icons for the mod 
+Neobind - old Confecton Mimic sprite
+Basketcace - old spreading code and bug fixes

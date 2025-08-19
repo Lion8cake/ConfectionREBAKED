@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using TheConfectionRebirth.Dusts;
 using Terraria.DataStructures;
+using Mono.Cecil;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -31,26 +32,32 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 	
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Player player = Main.LocalPlayer;
-			ConfectionPlayer modPlayer = player.GetModPlayer<ConfectionPlayer>();
-			int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
-			int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
-			if (modPlayer.BananawarpPeelWarp == null)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<DimensionalWarp>()] <= 0)
 			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y + -12f, 0, 0, ModContent.ProjectileType<PeelWarp>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), new Vector2(Projectile.position.X + (Projectile.width / 2), Projectile.position.Y - 8), Vector2.Zero, ModContent.ProjectileType<DimensionalWarp>(), 0, 0, Projectile.owner, 0f);
 			}
-			else if (modPlayer.BananawarpPeelWarp != null && player.ownedProjectileCounts[ModContent.ProjectileType<PeelWarp2>()] == 0)
+			else if (player.ownedProjectileCounts[ModContent.ProjectileType<DimensionalWarp>()] == 1) 
 			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y + -12f, 0, 0, ModContent.ProjectileType<PeelWarp2>(), 1, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), new Vector2(Projectile.position.X + (Projectile.width / 2), Projectile.position.Y - 8), Vector2.Zero, ModContent.ProjectileType<DimensionalWarp>(), 0, 0, Projectile.owner, 1f);
 			}
-			else if (modPlayer.BananawarpPeelWarp != null && player.ownedProjectileCounts[ModContent.ProjectileType<PeelWarp2>()] == 1)
-            {
-				for (int k = 0; k < 5; k++)
+			else
+			{
+				for (int i = 0; i < Main.maxProjectiles; i++)
 				{
-					Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<BananaWarpDust>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
+					Projectile projectile = Main.projectile[i];
+					if (projectile.active && (projectile.ai[0] == 1 || projectile.ai[0] == 3) && projectile.type == ModContent.ProjectileType<DimensionalWarp>())
+					{
+						projectile.Kill();
+						Projectile.NewProjectile(Projectile.GetSource_Death(), new Vector2(Projectile.position.X + (Projectile.width / 2), Projectile.position.Y - 8), Vector2.Zero, ModContent.ProjectileType<DimensionalWarp>(), 0, 0, Projectile.owner, 1f);
+					}
 				}
+			}
+			for (int k = 0; k < 5; k++)
+			{
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<BananaWarpDust>(), Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
 			}
 		}
 	}

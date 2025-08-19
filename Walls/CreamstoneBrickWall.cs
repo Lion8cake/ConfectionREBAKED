@@ -10,14 +10,9 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            DustType = ModContent.DustType<CreamDust>();
+            DustType = ModContent.DustType<CreamstoneDust>();
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CreamstoneBrickWall>());
             AddMapEntry(new Color(90, 78, 51));
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
         }
     }
 }

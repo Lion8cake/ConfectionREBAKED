@@ -1,213 +1,184 @@
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
-    public class CreamGrass : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrassMowed").Type] = true;
-			Main.tileSolid[Type] = true;
-			Main.tileBlendAll[Type] = true;
-			Main.tileMergeDirt[Type] = true;
-			Main.tileSolid[Type] = true;
+	public class CreamGrass : ModTile 
+	{
+		public override void SetStaticDefaults() 
+		{
 			Main.tileBrick[Type] = true;
+			Main.tileShine[Type] = 9000;
+			Main.tileLighted[Type] = true;
+			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			TileID.Sets.Grass[Type] = true;
-			TileID.Sets.ChecksForMerge[Type] = true;
-			TileID.Sets.ForcedDirtMerging[Type] = true;
+
 			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.ForcedDirtMerging[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
+			TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = true;
+			TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
+			TileID.Sets.SpreadOverground[Type] = true;
+			TileID.Sets.SpreadUnderground[Type] = true;
+			TileID.Sets.Grass[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			TileID.Sets.GrassSpecial[Type] = true;
+			ConfectionIDs.Sets.ConfectionBiomeSight[Type] = true; 
+			ConfectionIDs.Sets.Confection[Type] = true;
+			ConfectionIDs.Sets.IsNaturalConfectionTile[Type] = true;
+
+			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<CookieBlock>()] = true;
+
 			AddMapEntry(new Color(235, 207, 150));
-			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>());
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.CookieBlock>(), 0);
+			DustType = ModContent.DustType<CreamGrassDust>();
+		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) 
+		{
+			if(fail && !effectOnly) 
+			{
+				Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
+			}
 		}
 
-		public override void RandomUpdate(int i, int j) {
-			int minI = i - 1;
-			int maxI = i + 2;
-			int minJ = j - 1;
-			int maxJ = j + 2;
-
-			if (!WorldGen.InWorld(i, j, 10)) {
-				return;
-			}
-			if (j > Main.rockLayer) {
-				int type = Main.tile[i, j].TileType;
-				int num12 = -1;
-				int num19 = type;
-				int num20 = -1;
-				int num = ModContent.TileType<CookieBlock>();
-				int num18 = ModContent.TileType<CreamGrass_Foliage>();
-				if (WorldGen.genRand.NextBool(12)) {
-					num18 = ModContent.TileType<YumDrop>();
-				}
-				int maxValue = 2;
-				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.NextBool(maxValue) && Main.tile[i, minJ].LiquidType <= -1) {
-					if (WorldGen.PlaceTile(i, minJ, num18, mute: true)) {
-						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
+		public override void RandomUpdate(int i, int j) 
+		{
+			if (i > Main.worldSurface) 
+			{
+				if (ConfectionWorldGeneration.GrowMoreVines(i, j)) 
+				{
+					int maxValue3 = 60;
+					if (Main.tile[i, j].TileType == ModContent.TileType<CreamVines>()) 
+					{
+						maxValue3 = 20;
 					}
-					if (Main.netMode == 2 && Main.tile[i, minJ].HasTile) {
-						NetMessage.SendTileSquare(-1, i, minJ);
-					}
-				}
-				if (num != -1) {
-					bool flag3 = false;
-					TileColorCache color = Main.tile[i, j].BlockColorAndCoating();
-					for (int k = minI; k < maxI; k++) {
-						for (int l = minJ; l < maxJ; l++) {
-							if (!WorldGen.InWorld(k, l, 10) || (i == k && j == l) || !Main.tile[k, l].HasTile) {
-								continue;
+					if (WorldGen.genRand.NextBool(maxValue3) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava) 
+					{
+						bool flag10 = false;
+						for (int num35 = j; num35 > j - 10; num35--) 
+						{
+							if (Main.tile[i, num35].BottomSlope) 
+							{
+								flag10 = false;
+								break;
 							}
-							if (Main.tile[k, l].TileType == num) {
-								WorldGen.SpreadGrass(k, l, num, num19, repeat: false, color);
-								if (Main.tile[k, l].TileType == num19) {
-									WorldGen.SquareTileFrame(k, l);
-									flag3 = true;
-								}
+							if (Main.tile[i, num35].HasTile && Main.tile[i, num35].TileType == Type && !Main.tile[i, num35].BottomSlope) 
+							{
+								flag10 = true;
+								break;
 							}
-							else if (num12 > -1 && num20 > -1 && Main.tile[k, l].TileType == num12) {
-								WorldGen.SpreadGrass(k, l, num12, num20, repeat: false, color);
-								if (Main.tile[k, l].TileType == num20) {
-									WorldGen.SquareTileFrame(k, l);
-									flag3 = true;
-								}
+						}
+						if (flag10) 
+						{
+							int num36 = j + 1;
+							Main.tile[i, num36].TileType = (ushort)ModContent.TileType<CreamVines>();
+							Tile tile = Main.tile[i, num36];
+							tile.HasTile = true;
+							Main.tile[i, num36].CopyPaintAndCoating(Main.tile[i, j]);
+							WorldGen.SquareTileFrame(i, num36);
+							if (Main.netMode == NetmodeID.Server) 
+							{
+								NetMessage.SendTileSquare(-1, i, num36);
 							}
 						}
 					}
-					if (Main.netMode == 2 && flag3) {
-						NetMessage.SendTileSquare(-1, i, j, 3);
-					}
+				}
+				if (Main.tile[i, j].HasUnactuatedTile)
+				{
+					int num = i - 1;
+					int num11 = i + 2;
+					int num22 = j - 1;
+					int num33 = j + 2;
+					CreamGrassGrowth(i, j, num, num11, num22, num33);
 				}
 			}
-			else {
+		}
+
+		public static void CreamGrassGrowth(int i, int j, int minI, int maxI, int minJ, int maxJ) 
+		{
+			if (i > Main.worldSurface) 
+			{
 				int num2 = Main.tile[i, j].TileType;
-
-				if (!Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(10) == 0 && Main.tile[i, minJ].LiquidType < LiquidID.Water) {
-					int placedgrass = ModContent.TileType<CreamGrass_Foliage>();
-					if (WorldGen.genRand.Next(12) == 0) {
-						placedgrass = ModContent.TileType<YumDrop>();
+				if (!Main.tile[i, minJ].HasTile && Main.tile[i, minJ].LiquidAmount == 0) 
+				{
+					int num9 = -1;
+					if (num2 == ModContent.TileType<CreamGrass>() && WorldGen.genRand.NextBool(10)) 
+					{
+						num9 = ModContent.TileType<CreamGrass_Foliage>();
 					}
-					WorldGen.PlaceTile(i, minJ, placedgrass, mute: true);
-					if (Main.tile[i, minJ].HasTile) {
+					if (num9 != -1 && WorldGen.PlaceTile(i, minJ, num9, mute: true)) 
+					{
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
-					}
-					if (Main.netMode == 2 && Main.tile[i, minJ].HasTile) {
-						NetMessage.SendTileSquare(-1, i, minJ);
+						if (Main.netMode == NetmodeID.Server)
+						{
+							NetMessage.SendTileSquare(-1, i, minJ);
+						}
 					}
 				}
-				TileColorCache color2 = Main.tile[i, j].BlockColorAndCoating();
-				bool flag6 = false;
-				for (int num3 = minI; num3 < maxI; num3++) {
-					for (int num4 = minJ; num4 < maxJ; num4++) {
-						if ((i != num3 || j != num4) && Main.tile[num3, num4].HasTile && Main.tile[num3, num4].TileType == ModContent.TileType<CookieBlock>()) {
-							WorldGen.SpreadGrass(num3, num4, ModContent.TileType<CookieBlock>(), num2, repeat: false, color2);
-							if (Main.tile[num3, num4].TileType == num2) {
-								WorldGen.SquareTileFrame(num3, num4);
-								flag6 = true;
+				bool flag7 = false;
+				if (num2 == ModContent.TileType<CreamGrassMowed>()) 
+				{
+					num2 = ModContent.TileType<CreamGrass>();
+				}
+				int grass = num2;
+				bool flag8 = WorldGen.AllowedToSpreadInfections && num2 == ModContent.TileType<CreamGrass>() && WorldGen.InWorld(i, j, 10);
+				for (int num11 = minI; num11 < maxI; num11++) 
+				{
+					for (int num13 = minJ; num13 < maxJ; num13++) 
+					{
+						if (!WorldGen.InWorld(num11, num13, 10) || (i == num11 && j == num13) || !Main.tile[num11, num13].HasTile) 
+						{
+							continue;
+						}
+						int type2 = Main.tile[num11, num13].TileType;
+						TileColorCache color3 = Main.tile[i, j].BlockColorAndCoating();
+						if (type2 == 0 || ((num2 == ModContent.TileType<CreamGrass>() || num2 == ModContent.TileType<CreamGrassMowed>()) && (type2 == 2 || type2 == 477 || type2 == 23 || type2 == 199))) 
+						{
+							WorldGen.SpreadGrass(num11, num13, 0, grass, repeat: false, color3);
+							if (Main.tile[num11, num13 - 1].TileType == 27) 
+							{
+								if (num2 == ModContent.TileType<CreamGrass>()) 
+								{
+									WorldGen.SpreadGrass(num11, num13, 2, grass, repeat: false, color3);
+								}
+								if (num2 == ModContent.TileType<CreamGrassMowed>()) 
+								{
+									WorldGen.SpreadGrass(num11, num13, 477, grass, repeat: false, color3);
+								}
+								if (num2 == ModContent.TileType<CreamGrass>()) 
+								{
+									WorldGen.SpreadGrass(num11, num13, 477, ModContent.TileType<CreamGrassMowed>(), repeat: false, color3);
+								}
+								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) 
+								{
+									WorldGen.SpreadGrass(num11, num13, 23, ModContent.TileType<CreamGrass>(), repeat: false, color3);
+								}
+								if ((num2 == ModContent.TileType<CreamGrassMowed>() || num2 == ModContent.TileType<CreamGrass>()) && WorldGen.AllowedToSpreadInfections) 
+								{
+									WorldGen.SpreadGrass(num11, num13, 199, ModContent.TileType<CreamGrass>(), repeat: false, color3);
+								}
+							}
+							if (Main.tile[num11, num13].TileType == num2) 
+							{
+								WorldGen.SquareTileFrame(num11, num13);
+								flag7 = true;
 							}
 						}
 					}
 				}
-				if (Main.netMode == 2 && flag6) {
+				if (Main.netMode == NetmodeID.Server && flag7) 
+				{
 					NetMessage.SendTileSquare(-1, i, j, 3);
 				}
 			}
-
-			Tile tile = Main.tile[i, j];
-			if (GrowMoreVines(i, j)) {
-				int maxValue6 = 70;
-				tile = Main.tile[i, j];
-				if (tile.TileType == ModContent.TileType<CreamVines>()) {
-					maxValue6 = 7;
-				}
-				if (WorldGen.genRand.Next(maxValue6) == 0) {
-					tile = Main.tile[i, j + 1];
-					if (!tile.HasTile) {
-						tile = Main.tile[i, j + 1];
-						if (tile.LiquidType != LiquidID.Lava) {
-							bool flag3 = false;
-							for (int num41 = j; num41 > j - 10; num41--) {
-								tile = Main.tile[i, num41];
-								if (tile.BottomSlope) {
-									flag3 = false;
-									break;
-								}
-								tile = Main.tile[i, num41];
-								if (tile.HasTile) {
-									tile = Main.tile[i, num41];
-									if (tile.TileType == Type) {
-										tile = Main.tile[i, num41];
-										if (!tile.BottomSlope) {
-											flag3 = true;
-											break;
-										}
-									}
-								}
-							}
-							if (flag3) {
-								int num42 = j + 1;
-								tile = Main.tile[i, num42];
-								tile.TileType = (ushort)ModContent.TileType<CreamVines>();
-								tile = Main.tile[i, num42];
-								tile.HasTile = true;
-								tile = Main.tile[i, num42];
-								tile.CopyPaintAndCoating(Main.tile[i, j]);
-								WorldGen.SquareTileFrame(i, num42);
-								if (Main.netMode == 2) {
-									NetMessage.SendTileSquare(-1, i, num42);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public static bool GrowMoreVines(int x, int y) {
-			if (!WorldGen.InWorld(x, y, 30)) {
-				return false;
-			}
-			int num = 4;
-			int num2 = 6;
-			int num3 = 10;
-			int num4 = 60;
-			int num5 = 0;
-			if (Main.tile[x, y].TileType == 528) {
-				num4 /= 5;
-			}
-			for (int i = x - num; i <= x + num; i++) {
-				for (int j = y - num2; j <= y + num3; j++) {
-					if (TileID.Sets.IsVine[Main.tile[i, j].TileType]) {
-						num5++;
-						if (j > y && Collision.CanHitLine(new Vector2((float)(x * 16), (float)(y * 16)), 1, 1, new Vector2((float)(i * 16), (float)(j * 16)), 1, 1)) {
-							num5 = ((Main.tile[i, j].TileType != 528) ? (num5 + (j - y) * 2) : (num5 + (j - y) * 20));
-						}
-						if (num5 > num4) {
-							return false;
-						}
-					}
-				}
-			}
-			return true;
-		}
-
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-            if (fail && !effectOnly)
-            {
-                Main.tile[i, j].TileType = (ushort)ModContent.TileType<CookieBlock>();
-            }
-        }
-
-		public override bool IsTileBiomeSightable(int i, int j, ref Color sightColor) {
-			sightColor = new Color(210, 196, 145);
-			return true;
 		}
 	}
 }

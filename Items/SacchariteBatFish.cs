@@ -30,8 +30,8 @@ namespace TheConfectionRebirth.Items
 
 		public override void AnglerQuestChat(ref string description, ref string catchLocation)
 		{
-			description = Language.GetTextValue("Mods.TheConfectionRebirth.ItemAnglerChat.SacchariteBatFish");
-			catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.Common.CaughtInConfectionUG");
+			description = Language.GetTextValue("Mods.TheConfectionRebirth.ItemAnglerChat.SweetGummyFish");
+			catchLocation = Language.GetTextValue("Mods.TheConfectionRebirth.common.CaughtInConfectionUG");
 		}
 	}
 }

@@ -1,6 +1,8 @@
-﻿using Terraria;
-using Terraria.Enums;
+﻿using Terraria.Enums;
 using Terraria.ModLoader;
+using Terraria;
+using TheConfectionRebirth.Projectiles;
+using TheConfectionRebirth.Buffs;
 
 namespace TheConfectionRebirth.Items
 {
@@ -13,10 +15,10 @@ namespace TheConfectionRebirth.Items
 
 		public override void SetDefaults()
 		{
-			Item.DefaultToVanitypet(ModContent.ProjectileType<Projectiles.CookiestBlockPro>(), ModContent.BuffType<Buffs.CookiestBlockBuff>());
+			Item.DefaultToVanitypet(ModContent.ProjectileType<CookiestCookieBlock>(), ModContent.BuffType<CookiestBlockBuff>());
 			Item.width = 16;
 			Item.height = 16;
-			Item.SetShopValues(ItemRarityColor.Orange3, Item.buyPrice(0, 0, 25, 0));
+			Item.SetShopValues(ItemRarityColor.Blue1, Item.buyPrice(0, 0, 10));
 		}
 	}
 }

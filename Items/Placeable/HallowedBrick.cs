@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Items.Placeable
         {
             Item.width = 12;
             Item.height = 12;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -24,15 +24,6 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.HallowedBrick>();
-        }
-
-		public override void AddRecipes() {
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<HallowedBrickWall>(), 4).Register();
-			CreateRecipe(5)
-                .AddIngredient(ItemID.StoneBlock, 5)
-                .AddIngredient<HallowedOre>()
-                .AddTile(TileID.Furnaces)
-                .Register();
         }
     }
 }

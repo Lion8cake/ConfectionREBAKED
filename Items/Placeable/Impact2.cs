@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Placeable
@@ -7,7 +8,9 @@ namespace TheConfectionRebirth.Items.Placeable
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
-        }
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Impact;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Impact] = Type;
+		}
 
         public override void SetDefaults()
         {
@@ -22,7 +25,6 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.value = 5000;
             Item.createTile = ModContent.TileType<Tiles.Impact2>();
-            Item.placeStyle = 0;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using TheConfectionRebirth.Tiles.Pylon;
-using Terraria.Enums;
+﻿using Terraria.Enums;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Tiles.Pylons;
 
 namespace TheConfectionRebirth.Items.Placeable
 {

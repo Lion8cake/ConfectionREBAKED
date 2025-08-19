@@ -11,9 +11,9 @@ namespace TheConfectionRebirth.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.Yoyo[Item.type] = true;
-            ItemID.Sets.GamepadExtraRange[Item.type] = 15;
-            ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
+            ItemID.Sets.Yoyo[Type] = true;
+            ItemID.Sets.GamepadExtraRange[Type] = 15;
+            ItemID.Sets.GamepadSmartQuickReach[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 
@@ -25,8 +25,8 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.useAnimation = 25;
             Item.useTime = 25;
             Item.shootSpeed = 16f;
-            Item.knockBack = 2.5f;
-            Item.damage = 62;
+            Item.knockBack = 3f;
+            Item.damage = 42;
             Item.rare = ItemRarityID.LightRed;
 
             Item.DamageType = DamageClass.Melee;
@@ -37,16 +37,6 @@ namespace TheConfectionRebirth.Items.Weapons
             Item.UseSound = SoundID.Item1;
             Item.value = Item.sellPrice(silver: 400);
             Item.shoot = ModContent.ProjectileType<YoyoCookieYoyo>();
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.WoodYoyo)
-                .AddIngredient(ModContent.ItemType<Saccharite>(), 15)
-                .AddIngredient(ModContent.ItemType<SoulofDelight>(), 10)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
         }
     }
 }

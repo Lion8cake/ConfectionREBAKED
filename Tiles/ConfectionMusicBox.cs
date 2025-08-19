@@ -16,7 +16,6 @@ namespace TheConfectionRebirth.Tiles
             Main.tileObsidianKill[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
-            // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
@@ -32,7 +31,8 @@ namespace TheConfectionRebirth.Tiles
             player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ConfectionMusicBox>();
         }
 
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) 
+		{
 			if (Main.tile[i, j].TileFrameX == 36 && (int)Main.timeForVisualEffects % 7 == 0 && Main._rand.NextBool(3)) {
 				int MusicNote = Main._rand.Next(570, 573);
 				Vector2 SpawnPosition = new((float)(i * 16 + 8), (float)(j * 16 - 8));
@@ -49,7 +49,8 @@ namespace TheConfectionRebirth.Tiles
 			}
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) 
+		{
 			if (frameX >= 36) {
 				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ConfectionMusicBox>());
 			}

@@ -25,16 +25,5 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.CreamstoneBrick>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<Creamstone>(2)
-                .AddTile(TileID.Furnaces)
-                .Register();
-            CreateRecipe()
-                .AddIngredient<CreamstoneBrickWall>(4)
-                .Register();
-        }
     }
 }

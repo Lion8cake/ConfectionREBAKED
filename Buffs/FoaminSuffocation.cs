@@ -12,6 +12,7 @@ namespace TheConfectionRebirth.Buffs
         {
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
+            Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.LongerExpertDebuff[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
@@ -20,8 +21,8 @@ namespace TheConfectionRebirth.Buffs
         {
 			player.cursed = true;
 			player.sticky = true;
-			player.GetModPlayer<ConfectionPlayer>().CandySuffocation = true;
-			player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.TheConfectionRebirth.PlayerDeathReason.ChokedOutByRootbeer", player.name)), 5, 0);
+			player.GetModPlayer<ConfectionPlayer>().candySuffocation = true;
+			player.Hurt(PlayerDeathReason.ByCustomReason("FoaminSuffocation"), 5, 0);
         }
     }
 }

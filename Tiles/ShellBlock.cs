@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
 
@@ -11,14 +12,17 @@ namespace TheConfectionRebirth.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamGrass").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("Creamstone").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CreamWood").Type] = true;
-            TheConfectionRebirth.tileMerge[Type, Mod.Find<ModTile>("CookieBlock").Type] = true;
             Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
+            Main.tileLighted[Type] = true;
             AddMapEntry(new Color(84, 28, 187));
-            DustType = ModContent.DustType<ShellBlockDust>();
+            DustType = DustID.Gastropod;
         }
-    }
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+            r = 0.4f;
+            g = 0;
+            b = 0.25f;
+		}
+	}
 }

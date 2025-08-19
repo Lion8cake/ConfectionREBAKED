@@ -5,7 +5,6 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
@@ -14,8 +13,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 {
     public class CreamwoodChair : ModTile
     {
-        public const int NextStyleHeight = 40;
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -28,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
-            DustType = ModContent.DustType<ChipDust>();
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Chairs };
 
             AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
@@ -67,15 +64,14 @@ namespace TheConfectionRebirth.Tiles.Furniture
                 info.TargetDirection = 1;
             }
 
-
             info.AnchorTilePosition.X = i;
             info.AnchorTilePosition.Y = j;
 
-            if (tile.TileFrameY % NextStyleHeight == 0)
-            {
-                info.AnchorTilePosition.Y++;
-            }
-        }
+			if (tile.TileFrameY % 40 == 0)
+			{
+				info.AnchorTilePosition.Y++;
+			}
+		}
 
         public override bool RightClick(int i, int j)
         {

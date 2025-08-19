@@ -20,12 +20,7 @@ namespace TheConfectionRebirth.Tiles
             Main.tileFrameImportant[Type] = true;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(120, 85, 60), name);
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
+            AddMapEntry(new Color(99, 50, 30), name);
         }
     }
 }

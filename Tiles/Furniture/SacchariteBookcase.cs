@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Localization;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
-    class SacchariteBookcase : ModTile
+    public class SacchariteBookcase : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -21,10 +21,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 3);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
+            DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { 101 };
-            AddMapEntry(new Color(32, 174, 221), name);
-            DustType = ModContent.DustType<SacchariteCrystals>();
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
         }
     }
 }

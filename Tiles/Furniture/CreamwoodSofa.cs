@@ -4,20 +4,18 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
-    class CreamwoodSofa : ModTile
+    public class CreamwoodSofa : ModTile
     {
-        public const int NextStyleHeight = 20;
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -25,11 +23,10 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             TileID.Sets.CanBeSatOnForPlayers[Type] = true;
-            LocalizedText name = CreateMapEntryName();
-            //name.SetDefault("Sofa");
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
+            DustType = ModContent.DustType<CreamwoodDust>();
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -52,12 +49,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             info.AnchorTilePosition.X = i;
             info.AnchorTilePosition.Y = j;
-
-            if (tile.TileFrameY % NextStyleHeight == 0)
-            {
-                info.AnchorTilePosition.Y++;
-            }
-        }
+			if (tile.TileFrameY % 40 == 0)
+			{
+				info.AnchorTilePosition.Y++;
+			}
+		}
 
         public override bool RightClick(int i, int j)
         {

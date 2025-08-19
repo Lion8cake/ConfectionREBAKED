@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -14,10 +14,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.Clock[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
-            DustType = ModContent.DustType<ChipDust>();
+			DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.GrandfatherClocks };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -28,7 +29,17 @@ namespace TheConfectionRebirth.Tiles.Furniture
             AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
 
-        public override bool RightClick(int x, int y)
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.player[Main.myPlayer];
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.CreamwoodClock>();
+		}
+
+		public override bool RightClick(int x, int y)
         {
             string text = "AM";
             double time = Main.time;

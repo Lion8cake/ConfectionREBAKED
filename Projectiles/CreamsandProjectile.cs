@@ -1,15 +1,23 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Terraria;
-using Terraria.ModLoader;
-using TheConfectionRebirth.Dusts;
+using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
+using TheConfectionRebirth.Tiles;
 
 namespace TheConfectionRebirth.Projectiles {
-    public class CreamsandProjectile : ModProjectile {
-
+	public class CreamsandProjectile : ModProjectile {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.FallingBlockDoesNotFallThroughPlatforms[Type] = true;
+			ProjectileID.Sets.ForcePlateDetection[Type] = true;
+			ProjectileID.Sets.FallingBlockTileItem[Type] = new(ModContent.TileType<Creamsand>(), ModContent.ItemType<Items.Placeable.Creamsand>());
 		}
+
 		public override void SetDefaults() {
 			Projectile.knockBack = 6f;
 			Projectile.width = 10;
@@ -22,7 +30,7 @@ namespace TheConfectionRebirth.Projectiles {
 
 		public override void AI() {
 			if (Main.rand.NextBool(2)) {
-				int i = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Dusts.ChipDust>(), 0f, Projectile.velocity.Y * 0.5f);
+				int i = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Dusts.CreamsandDust>(), 0f, Projectile.velocity.Y * 0.5f);
 				Main.dust[i].velocity.X *= 0.2f;
 			}
 			Projectile.velocity.Y += 0.41f;
@@ -32,18 +40,37 @@ namespace TheConfectionRebirth.Projectiles {
 			}
 		}
 
-		public override void Kill(int timeLeft) {
-            int i = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-            int j = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
-            if (!WorldGen.InWorld(i, j) || Main.tile[i, j].HasTile) {
-                return;
-            }
+		public override void OnKill(int timeLeft) {
+			Point p = Projectile.Center.ToTileCoordinates();
+			if (p.X >= 0 && p.X < Main.maxTilesX && p.Y >= 0 && p.Y < Main.maxTilesY) {
+				Tile t = Main.tile[p.X, p.Y];
+				if (t.IsHalfBlock && Projectile.velocity.Y > 0f && Math.Abs(Projectile.velocity.Y) > Math.Abs(Projectile.velocity.X)) {
+					t = Main.tile[p.X, --p.Y];
+				}
+				if (Main.tileCut[t.TileType]) {
+					WorldGen.KillTile(p.X, p.Y);
+				}
+				if (!Main.tileSolid[t.TileType] || TileID.Sets.IsATreeTrunk[t.TileType]) {
+					Item.NewItem(WorldGen.GetItemSource_FromTileBreak(p.X, p.Y), p.X * 16, p.Y * 16, 16, 16, ModContent.ItemType<Items.Placeable.Creamsand>());
+					SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+				}
+				if (!t.HasTile && t.TileType != TileID.MinecartTrack) {
+					Tile tBelow = Main.tile[p.X, p.Y + 1];
+					if (tBelow.Slope != SlopeType.Solid) {
+						tBelow.Slope = SlopeType.Solid;
+					}
+					if (tBelow.IsHalfBlock) 
+						tBelow.IsHalfBlock = false;
+					WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<Tiles.Creamsand>(), forced: true);
+					WorldGen.SquareTileFrame(p.X, p.Y);
+				}
+			}
+		}
 
-            int tileType = ModContent.TileType<Tiles.Creamsand>();
-            WorldGen.PlaceTile(i, j, tileType, forced: true);
-            if (Main.netMode == NetmodeID.MultiplayerClient) {
-                NetMessage.SendData(MessageID.TileManipulation, number: 1, number2: i, number3: j, number4: tileType);
-            }
-        }
-    }
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = !ProjectileID.Sets.FallingBlockDoesNotFallThroughPlatforms[Projectile.type];
+			return true;
+		}
+		public override bool? CanDamage() => Projectile.localAI[1] != -1f;
+	}
 }

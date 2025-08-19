@@ -60,7 +60,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 		
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
 			for (int num394 = 4; num394 < 24; num394++)
 			{

@@ -11,10 +11,6 @@ namespace TheConfectionRebirth.Projectiles
 {
 	public class SherbetFlare : ModProjectile
 	{
-		public override void SetStaticDefaults() {
-			Main.projFrames[Projectile.type] = 13;
-		}
-
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
 			Projectile.width = 6;
@@ -81,13 +77,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 			Projectile.rotation = (float)Math.Atan2(Projectile.ai[1], Projectile.ai[0]) + 1.57f;
 
-			if (++Projectile.frameCounter >= 5) {
-				Projectile.frameCounter = 0;
-				if (++Projectile.frame >= Main.projFrames[Projectile.type])
-					Projectile.frame = 0;
-			}
-			LightColor(out float r, out float g, out float b);
-			Lighting.AddLight(Projectile.position, r, g, b);
+			Lighting.AddLight(Projectile.position, (float)(TheConfectionRebirth.SherbR) / 255, (float)(TheConfectionRebirth.SherbG) / 255, (float)(TheConfectionRebirth.SherbB) / 255);
 			return false;
 		}
 
@@ -109,77 +99,9 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		private void LightColor(out float red, out float green, out float blue) {
-			red = 0;
-			green = 0;
-			blue = 0;
-			switch (Projectile.frame) {
-				case 0:
-					red = 1.92f;
-					green = 0.26f;
-					blue = 0.26f;
-					break;
-				case 1:
-					red = 1.93f;
-					green = 0.68f;
-					blue = 0.26f;
-					break;
-				case 2:
-					red = 2.53f;
-					green = 0.91f;
-					blue = 0.03f;
-					break;
-				case 3:
-					red = 2.52f;
-					green = 1.58f;
-					blue = 0.03f;
-					break;
-				case 4:
-					red = 1.99f;
-					green = 1.67f;
-					blue = 0.15f;
-					break;
-				case 5:
-					red = 1.04f;
-					green = 1.57f;
-					blue = 0.15f;
-					break;
-				case 6:
-					red = 0.23f;
-					green = 1.07f;
-					blue = 0.29f;
-					break;
-				case 7:
-					red = 0.23f;
-					green = 1.06f;
-					blue = 1.06f;
-					break;
-				case 8:
-					red = 0.29f;
-					green = 0.8f;
-					blue = 1.31f;
-					break;
-				case 9:
-					red = 0.37f;
-					green = 0.57f;
-					blue = 2.27f;
-					break;
-				case 10:
-					red = 0.66f;
-					green = 0.37f;
-					blue = 2.26f;
-					break;
-				case 11:
-					red = 1.01f;
-					green = 0.36f;
-					blue = 1.62f;
-					break;
-				case 12:
-					red = 1.62f;
-					green = 0.36f;
-					blue = 1.58f;
-					break;
-			}
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return new Color((byte)TheConfectionRebirth.SherbR, (byte)TheConfectionRebirth.SherbG, (byte)TheConfectionRebirth.SherbB, byte.MaxValue);
 		}
 	}
 }

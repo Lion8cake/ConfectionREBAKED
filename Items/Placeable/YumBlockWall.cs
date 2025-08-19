@@ -9,7 +9,7 @@ namespace TheConfectionRebirth.Items.Placeable
 		public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
@@ -17,13 +17,6 @@ namespace TheConfectionRebirth.Items.Placeable
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.createWall = ModContent.WallType<Walls.YumBlockWall>();
-		}
-
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe(4);
-			recipe.AddIngredient(ModContent.ItemType<YumBlock>());
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -51,44 +52,108 @@ namespace TheConfectionRebirth.Tiles.Trees
             AdjTiles = new int[] { TileID.Saplings };
         }
 
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
+		public override void RandomUpdate(int i, int j)
+		{
+			if (!WorldGen.genRand.NextBool(20))
+			{
+				return;
+			}
 
-        public override void RandomUpdate(int i, int j)
-        {
-            if (!WorldGen.genRand.NextBool(20))
-            {
-                return;
-            }
+			Tile tile = Framing.GetTileSafely(i, j);
+			bool growSucess;
 
-            Tile tile = Framing.GetTileSafely(i, j);
-            bool growSucess;
+			tile = Main.tile[i, j];
+			if (tile.HasUnactuatedTile)
+			{
+				if (j > Main.rockLayer)
+				{
+					if (WorldGen.genRand.NextBool(5))
+					{
+						AttemptToGrowCreamSnowTreeFromSapling(i, j);
+					}
+				}
+				else
+				{
+					if (WorldGen.genRand.NextBool(20))
+					{
+						AttemptToGrowCreamSnowTreeFromSapling(i, j);
+					}
+				}
+			}
+			growSucess = false;
 
-            if (tile.TileFrameX < 54)
-            {
-                growSucess = WorldGen.GrowTree(i, j);
-            }
-            else
-            {
-                growSucess = WorldGen.GrowPalmTree(i, j);
-            }
+			bool isPlayerNear = WorldGen.PlayerLOS(i, j);
 
-            bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+			if (growSucess && isPlayerNear)
+			{
+				WorldGen.TreeGrowFXCheck(i, j);
+			}
+		}
 
-            if (growSucess && isPlayerNear)
-            {
-                WorldGen.TreeGrowFXCheck(i, j);
-            }
-        }
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
+		{
+			if (i % 2 == 1)
+			{
+				effects = SpriteEffects.FlipHorizontally;
+			}
+		}
 
-        public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
-        {
-            if (i % 2 == 1)
-            {
-                effects = SpriteEffects.FlipHorizontally;
-            }
-        }
-    }
+		public static bool AttemptToGrowCreamSnowTreeFromSapling(int x, int y)
+		{
+			if (Main.netMode == 1)
+			{
+				return false;
+			}
+			if (!WorldGen.InWorld(x, y, 2))
+			{
+				return false;
+			}
+			Tile tile = Main.tile[x, y];
+			if (tile == null || !tile.HasTile)
+			{
+				return false;
+			}
+			bool flag = CreamTree.GrowModdedTreeWithSettings(x, y, CreamSnowTree.Tree_CreamSnow);
+			if (flag && WorldGen.PlayerLOS(x, y))
+			{
+				GrowCreamSnowTreeFXCheck(x, y);
+			}
+			return flag;
+		}
+
+		public static void GrowCreamSnowTreeFXCheck(int x, int y)
+		{
+			int treeHeight = 1;
+			for (int num = -1; num > -100; num--)
+			{
+				Tile tile = Main.tile[x, y + num];
+				if (!tile.HasTile || !TileID.Sets.GetsCheckedForLeaves[tile.TileType])
+				{
+					break;
+				}
+				treeHeight++;
+			}
+			for (int i = 1; i < 5; i++)
+			{
+				Tile tile2 = Main.tile[x, y + i];
+				if (tile2.HasTile && TileID.Sets.GetsCheckedForLeaves[tile2.TileType])
+				{
+					treeHeight++;
+					continue;
+				}
+				break;
+			}
+			if (treeHeight > 0)
+			{
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<CreamTreeLeaf>());
+				}
+				if (Main.netMode == 0)
+				{
+					WorldGen.TreeGrowFX(x, y, treeHeight, ModContent.GoreType<CreamTreeLeaf>());
+				}
+			}
+		}
+	}
 }

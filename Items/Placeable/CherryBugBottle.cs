@@ -11,7 +11,7 @@ using Terraria.ObjectData;
 namespace TheConfectionRebirth.Items.Placeable
 {
 	[LegacyName("CherryBugBottleItem")]
-	internal class CherryBugBottle : ModItem
+	public class CherryBugBottle : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,15 +20,16 @@ namespace TheConfectionRebirth.Items.Placeable
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.FireflyinaBottle);
+			Item.useStyle = 1;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 28;
             Item.createTile = ModContent.TileType<Tiles.CherryBugBottle>();
         }
-
-		public override void AddRecipes() {
-			CreateRecipe()
-				.AddIngredient<Items.CherryBug>()
-				.AddIngredient(ItemID.Bottle)
-				.Register();
-		}
 	}
 }

@@ -1,78 +1,67 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
-    class CreamwoodLantern : ModTile
+    public class CreamwoodLantern : ModTile
     {
-        private Asset<Texture2D> flameTexture;
-
         public override void SetStaticDefaults()
         {
-            Main.tileLighted[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-            Main.tileLavaDeath[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.StyleWrapLimit = 36; ;
-            TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            //name.SetDefault("Lantern");
-            TileID.Sets.DisableSmartCursor[Type] = true;
-            if (!Main.dedServ)
-            {
-                flameTexture = ModContent.Request<Texture2D>("TheConfectionRebirth/Tiles/Furniture/CreamwoodLantern_flame");
-            }
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            AddMapEntry(new Color(106, 65, 51), name);
-        }
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Height = 2;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.StyleWrapLimit = 111;
+			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.addTile(Type);
+			Main.tileLighted[Type] = true;
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
+            DustType = ModContent.DustType<CreamwoodDust>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodLantern>());
+		}
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		public override void HitWire(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int topY = j - tile.TileFrameY / 18 % 2;
+			short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
+			Main.tile[i, topY].TileFrameX += frameAdjustment;
+			Main.tile[i, topY + 1].TileFrameX += frameAdjustment;
+			Wiring.SkipWire(i, topY);
+			Wiring.SkipWire(i, topY + 1);
+			NetMessage.SendTileSquare(-1, i, topY + 1, 2, TileChangeType.None);
+		}
+
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			bool intoRenderTargets = true;
+			bool flag = intoRenderTargets || Main.LightingEveryFrame;
+
+			if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 36 == 0 && flag)
+			{
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
+			}
+
+			return false;
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.TileFrameX < 88)
+            if (tile.TileFrameX == 0)
             {
-                r = 2f;
-                g = 1f;
-                b = 1f;
-            }
-        }
-
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
-        {
-            SpriteEffects effects = SpriteEffects.None;
-
-            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-
-            if (Main.drawToScreen)
-            {
-                zero = Vector2.Zero;
-            }
-
-            Tile tile = Main.tile[i, j];
-            int width = 16;
-            int offsetY = 0;
-            int height = 16;
-            short frameX = tile.TileFrameX;
-            short frameY = tile.TileFrameY;
-
-            TileLoader.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref frameX, ref frameY);
-
-            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
-
-            for (int c = 0; c < 7; c++)
-            {
-                float shakeX = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
-                float shakeY = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
-
-                spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + shakeX, j * 16 - (int)Main.screenPosition.Y + offsetY + shakeY) + zero, new Rectangle(frameX, frameY, width, height), new Color(100, 100, 100, 0), 0f, default, 1f, effects, 0f);
+                r = 2.34f;
+                g = 1.11f;
+                b = 1.29f;
             }
         }
     }

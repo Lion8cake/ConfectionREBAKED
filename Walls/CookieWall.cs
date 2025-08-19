@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Walls
@@ -8,8 +9,10 @@ namespace TheConfectionRebirth.Walls
     {
         public override void SetStaticDefaults()
         {
-            Main.wallHouse[Type] = false;
-            AddMapEntry(new Color(61, 39, 27));
+			WallID.Sets.Conversion.Dirt[Type] = true;
+			Main.wallHouse[Type] = false;
+			ConfectionIDs.Sets.IsExtraConfectionWall[Type] = true;
+			AddMapEntry(new Color(61, 39, 27));
         }
     }
 }

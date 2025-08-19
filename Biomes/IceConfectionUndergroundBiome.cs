@@ -10,10 +10,6 @@ namespace TheConfectionRebirth.Biomes
 
         public override string BackgroundPath => "TheConfectionRebirth/Biomes/ConfectionUndergroundIceMapBackground";
 
-        public override Color? BackgroundColor => base.BackgroundColor;
-
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ConfectionUnderground");
-
         public override string MapBackground => BackgroundPath;
     }
 }

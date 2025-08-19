@@ -25,7 +25,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
-            DustType = ModContent.DustType<ChipDust>();
+            DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Beds };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
@@ -33,8 +33,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
 
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(106, 65, 51), name);
+            AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

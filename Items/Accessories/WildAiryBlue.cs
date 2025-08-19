@@ -6,13 +6,13 @@ using Terraria.ModLoader;
 
 namespace TheConfectionRebirth.Items.Accessories
 {
-    [AutoloadEquip(new EquipType[] { EquipType.Wings })]
+    [AutoloadEquip(EquipType.Wings )]
     public class WildAiryBlue : ModItem
     {
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(145, 15f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(180, 8f, 1f, hasHoldDownHoverFeatures: true, 10f, 10f);
         }
 
         public override void SetDefaults()
@@ -24,37 +24,31 @@ namespace TheConfectionRebirth.Items.Accessories
             Item.accessory = true;
         }
 
-        public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
-            ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
+        public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {
-            ascentWhenFalling = 0.85f;
-            ascentWhenRising = 0.15f;
-            maxCanAscendMultiplier = 1f;
-            maxAscentMultiplier = 3f;
-            constantAscend = 0.135f;
-        }
+            maxAscentMultiplier = 2.5f;
+			if (player.TryingToHoverDown && !player.controlLeft && !player.controlRight)
+			{
+				player.wingTime += 0.5f; //-= 1 is normally applied, but we want -= 0.5f, so we add += 0.5f instead to combat -= 1
+			}
+            //Hovering itself is found in ConfectionPlayer.PreUpdateMovement
+		}
 
         public override bool WingUpdate(Player player, bool inUse)
         {
-            int WingTicks = ((!inUse) ? 8 : 6);
-            if (player.velocity.Y != 0f)
+			bool newInUse = (player.controlJump && player.TryingToHoverDown && player.wingTime > 0f) ? true : inUse;
+			player.wingFrameCounter++;
+            if (player.wingFrameCounter > ((!newInUse) ? 8 : 6))
             {
-                player.wingFrameCounter++;
-                if (player.wingFrameCounter > WingTicks)
+                player.wingFrame++;
+                player.wingFrameCounter = 0;
+                if (player.wingFrame >= 3)
                 {
-                    player.wingFrame++;
-                    player.wingFrameCounter = 0;
-                    if (player.wingFrame >= 3)
-                    {
-                        player.wingFrame = 0;
-                    }
+                    player.wingFrame = 0;
                 }
             }
-            else
-            {
-                player.wingFrame = 4;
-            }
-            return true;
+			//Manual rendering is split off into a detour in TheConfectionRebirth.cs and PlayerDrawLayer class, ConfectionWingRenderer
+			return true;
         }
     }
 }

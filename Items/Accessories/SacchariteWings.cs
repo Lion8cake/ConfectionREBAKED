@@ -1,8 +1,12 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Items.Accessories
 {
@@ -12,7 +16,7 @@ namespace TheConfectionRebirth.Items.Accessories
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(67, 10f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(130, 6.75f);
         }
 
         public override void SetDefaults()
@@ -24,23 +28,49 @@ namespace TheConfectionRebirth.Items.Accessories
             Item.accessory = true;
         }
 
-        public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
-            ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
-        {
-            ascentWhenFalling = 0.85f;
-            ascentWhenRising = 0.15f;
-            maxCanAscendMultiplier = 1f;
-            maxAscentMultiplier = 3f;
-            constantAscend = 0.135f;
-        }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Saccharite>(), 25);
-            recipe.AddIngredient(ItemID.SoulofFlight, 20);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
-        }
-    }
+		public override bool WingUpdate(Player player, bool inUse)
+		{
+			int dustType = ModContent.DustType<NeapoliniteCrumbs>();
+			bool noLightEmittence = player.wingsLogic != player.wings;
+			if (!inUse)
+			{
+				if (player.wingsLogic > 0 && player.controlJump && player.velocity.Y > 0f && !player.mount.CanHover() && !(player.mount.CanFly() && player.controlJump && player.jump == 0) && !(player.slowFall && !player.TryingToHoverDown) && !(player.rocketDelay > 0))
+				{
+					if (player.velocity.Y > 0f)
+					{
+						if (Main.rand.NextBool(10))
+						{
+							int addedPos = 4;
+							if (player.direction == 1)
+							{
+								addedPos = -40;
+							}
+							int dustID = Dust.NewDust(new Vector2(player.position.X + (float)(player.width / 2) + (float)addedPos, player.position.Y + (float)(player.height / 2) - 12f), 30, 20, dustType, 0f, 0f);
+							Dust dust = Main.dust[dustID];
+							dust.noLightEmittence = noLightEmittence;
+							dust.velocity *= 0.3f;
+							dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+						}
+					}
+				}
+			}
+			else
+			{
+				if (Main.rand.NextBool(4))
+				{
+					int addedPos = 4;
+					if (player.direction == 1)
+					{
+						addedPos = -40;
+					}
+					int dustID = Dust.NewDust(new Vector2(player.position.X + (float)(player.width / 2) + (float)addedPos, player.position.Y + (float)(player.height / 2) - 15f), 30, 30, dustType, 0f, 0f);
+					Dust dust = Main.dust[dustID];
+					dust.velocity *= 0.3f;
+					dust.noLightEmittence = noLightEmittence;
+					dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+				}
+			}
+			return false;
+		}
+	}
 }

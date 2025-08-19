@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -12,8 +11,8 @@ using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles.Furniture
 {
-    public class CreamwoodDresser : ModTile
-    {
+	public class CreamwoodDresser : ModTile
+	{
 		public override void SetStaticDefaults() {
 			Main.tileSolidTop[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -30,8 +29,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			AdjTiles = new int[] { TileID.Dressers };
 			DustType = ModContent.DustType<CreamwoodDust>();
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(106, 65, 51), name);
+			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
@@ -44,7 +42,6 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			};
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
-			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodDresser>());
 		}
 
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) {
@@ -211,5 +208,5 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
 			return name + ": " + Main.chest[chest].name;
 		}
-    }
+	}
 }

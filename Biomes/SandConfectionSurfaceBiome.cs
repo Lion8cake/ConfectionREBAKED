@@ -11,10 +11,6 @@ namespace TheConfectionRebirth.Biomes
 
         public override string BackgroundPath => "TheConfectionRebirth/Biomes/ConfectionDesertBiomeMapBackground";
 
-        public override Color? BackgroundColor => base.BackgroundColor;
-
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<ConfectionSandSurfaceBackgroundStyle>();
-
         public override string MapBackground => BackgroundPath;
     }
 }

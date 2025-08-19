@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheConfectionRebirth.Dusts;
@@ -15,10 +14,11 @@ namespace TheConfectionRebirth.Tiles.Furniture
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.Clock[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
-            DustType = ModContent.DustType<SacchariteCrystals>();
+			DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.GrandfatherClocks };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -26,11 +26,20 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
             TileObjectData.addTile(Type);
 
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(32, 174, 221), name);
+            AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
         }
 
-        public override bool RightClick(int x, int y)
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.player[Main.myPlayer];
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.SacchariteClock>();
+		}
+
+		public override bool RightClick(int x, int y)
         {
             string text = "AM";
             double time = Main.time;

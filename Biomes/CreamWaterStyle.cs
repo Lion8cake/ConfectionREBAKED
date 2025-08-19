@@ -4,6 +4,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Dusts;
+using TheConfectionRebirth.Gores;
 
 namespace TheConfectionRebirth.Biomes
 {
@@ -16,22 +17,21 @@ namespace TheConfectionRebirth.Biomes
 
         public override int GetSplashDust()
         {
-            return ModContent.DustType<CreamSolution>();
+            return ModContent.DustType<CreamWaterSplash>();
         }
 
         public override int GetDropletGore()
         {
-            return ModContent.Find<ModGore>("TheConfectionRebirth/CreamDroplet").Type;
+            return ModContent.GoreType<CreamDroplet>();
         }
 
-		public override void LightColorMultiplier(ref float r, ref float g, ref float b)
-        {
-            r = 1f;
-            g = 1f;
-            b = 1f;
-        }
+		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
+			r = 1f - 0.0186f;
+			g = 1f - 0.0154f;
+			b = 1f - 0.0119f;
+		}
 
-        public override Color BiomeHairColor()
+		public override Color BiomeHairColor()
         {
             return new(186, 154, 119);
         }

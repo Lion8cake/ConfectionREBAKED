@@ -1,60 +1,32 @@
-using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
+using Terraria;
+using Terraria.GameContent;
 
 namespace TheConfectionRebirth.Items.Placeable
 {
-    public class Creamstone : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 100;
+	public class Creamstone : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 
 			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.StoneBlock, 1);
 		}
 
-        public override void SetDefaults()
-        {
-            Item.width = 12;
-            Item.height = 12;
-            Item.maxStack = 9999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
-            Item.createTile = ModContent.TileType<Tiles.Creamstone>();
-        }
-
-		public override void AddRecipes()
+		public override void SetDefaults()
 		{
-            CreateRecipe()
-                .AddIngredient<ConfectionaryCrystalsWall>(4)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient<MeltingConfectionWall>(4)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient<CrackedConfectionWall>(4)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient<LinedConfectionGemWall>(4)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-
-			CreateRecipe()
-				.AddIngredient<CreamstoneWall>(4)
-				.AddTile(TileID.WorkBenches)
-				.Register();
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<Tiles.Creamstone>();
+			Item.width = 12;
+			Item.height = 12;
 		}
 	}
 }

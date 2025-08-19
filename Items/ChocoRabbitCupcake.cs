@@ -28,12 +28,5 @@ namespace TheConfectionRebirth.Items
 			Item.value = Item.buyPrice(0, 0, 7, 50);
 			Item.rare = ItemRarityID.LightRed;
 		}
-
-		public override void AddRecipes() {
-			CreateRecipe()
-				.AddIngredient<ChocolateBunny>()
-				.AddTile(TileID.CookingPots)
-				.Register();
-		}
 	}
 }
