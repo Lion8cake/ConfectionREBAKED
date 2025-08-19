@@ -91,6 +91,8 @@ namespace TheConfectionRebirth {
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
 				ConfectionSelectionMenu.ILShowOptionDescription;
+			Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
+			Terraria.GameContent.UI.States.On_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.OnSetupGamepadPoints;
 
 			On_UIWorldListItem.DrawSelf += (orig, self, spriteBatch) => {
 				orig(self, spriteBatch);
