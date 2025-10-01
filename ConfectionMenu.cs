@@ -3,7 +3,6 @@ using ReLogic.Content;
 using Terraria.ModLoader;
 using TheConfectionRebirth.Backgrounds;
 using Terraria;
-using Terraria.Localization;
 
 namespace TheConfectionRebirth {
 	public class ConfectionMenu : ModMenu {
@@ -11,10 +10,12 @@ namespace TheConfectionRebirth {
 
 		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Confection");
 
+		public int menuScreenTint = 0; 
+
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle {
 			get {
 				if (Main.time < 100 && Main.dayTime && !Main.lockMenuBGChange) {
-					ConfectionWorldGeneration.confectionBG = Main.rand.Next(4);
+					ConfectionWorldGeneration.confectionBG = Main.rand.Next(5);
 				}
 				int bgType = ConfectionWorldGeneration.confectionBG;
 				if (bgType == 0) {
@@ -28,6 +29,9 @@ namespace TheConfectionRebirth {
 				}
 				else if (bgType == 3) {
 					return ModContent.GetInstance<ConfectionMenuStyle3>();
+				}
+				else if (bgType == 4) {
+					return ModContent.GetInstance<ConfectionMenuStyle4>();
 				}
 				return ModContent.GetInstance<ConfectionMenuStyle0>();
 			}

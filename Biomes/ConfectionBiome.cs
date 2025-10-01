@@ -109,7 +109,7 @@ public class ConfectionBiome : ModBiome
 						}
 						return MusicID.OtherworldlyHallow;
 					}
-					return MusicID.OtherworldlyUGHallow;
+					return MusicLoader.GetMusicSlot(Mod, "Sounds/Music/OtherworldlyConfectionUnderground");
 				}
 				else if (Main.dayTime) {
 					if (Main.cloudAlpha > 0f && !Main.gameMenu) {
@@ -166,5 +166,16 @@ public class ConfectionBiome : ModBiome
 	//public override TileColorStyle TileColorStyle => TileColorStyle.Confection;
 	//Why doesnt something like this exist, why must I have to IL edit to add my own tile colouring
 
-	public override bool IsBiomeActive(Player player) => ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount >= 125 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
+	public override bool IsBiomeActive(Player player) => InModBiome(player);
+
+	public static bool InModBiome(Player player) => CheckIfTileCountisNull() >= 125 && (player.ZoneOverworldHeight || player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneSkyHeight);
+
+	private static int CheckIfTileCountisNull()
+	{
+		if (ModContent.GetInstance<ConfectionBiomeTileCount>() != null)
+		{
+			return ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount;
+		}
+		return 0;
+	}
 }

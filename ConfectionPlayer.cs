@@ -235,18 +235,23 @@ namespace TheConfectionRebirth
 			bool desert = Player.ZoneDesert;
 			bool confection = Player.InModBiome<ConfectionBiome>();
 
+			
+
 			if (!attempt.inHoney && !attempt.inLava)
 			{
+				
 				if (attempt.rolledEnemySpawn > 0)
 				{
 					return;
 				}
+				
 				if (attempt.crate) //crates
 				{
+					
 					bool hardMode = Main.hardMode;
 					if (!dungeon && !(Player.ZoneBeach || (Main.remixWorld && attempt.heightLevel == 1 && (double)attempt.Y >= Main.rockLayer && Main.rand.NextBool(2))) && !corrupt && !crimson && attempt.rare && confection)
 					{
-						attempt.rolledItemDrop = (hardMode ? ModContent.ItemType<ConfectionCrate>() : ModContent.ItemType<BananaSplitCrate>());
+						itemDrop = (hardMode ? ModContent.ItemType<ConfectionCrate>() : ModContent.ItemType<BananaSplitCrate>());
 					}
 					return;
 				}
@@ -258,60 +263,60 @@ namespace TheConfectionRebirth
 						{
 							if (attempt.uncommon && attempt.questFish == ItemID.ScarabFish)
 							{
-								attempt.rolledItemDrop = ItemID.ScarabFish;
+								itemDrop = ItemID.ScarabFish;
 							}
 							else if (attempt.uncommon && attempt.questFish == ItemID.ScorpioFish)
 							{
-								attempt.rolledItemDrop = ItemID.ScorpioFish;
+								itemDrop = ItemID.ScorpioFish;
 							}
 							else if (attempt.uncommon)
 							{
-								attempt.rolledItemDrop = ItemID.Oyster;
+								itemDrop = ItemID.Oyster;
 							}
 							else if (Main.rand.NextBool(3))
 							{
-								attempt.rolledItemDrop = ItemID.RockLobster;
+								itemDrop = ItemID.RockLobster;
 							}
 							else
 							{
-								attempt.rolledItemDrop = ItemID.Flounder;
+								itemDrop = ItemID.Flounder;
 							}
 						}
 						else if (attempt.legendary && Main.hardMode && snow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
 						{
-							attempt.rolledItemDrop = ItemID.ScalyTruffle;
+							itemDrop = ItemID.ScalyTruffle;
 						}
 						else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2))
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<GummyStaff>(); //Biome fishing weapon
+							itemDrop = ModContent.ItemType<GummyStaff>(); //Biome fishing weapon
 						}
 						//else if (attempt.legendary && Main.hardMode && !Main.rand.NextBool(3)) //Confection nolonger has a fishing painting
 						//{
-						//	attempt.rolledItemDrop = ItemID.LadyOfTheLake;
+						//	itemDrop = ItemID.LadyOfTheLake;
 						//}
 						else if (attempt.heightLevel > 1 && attempt.veryrare)
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<SugarFish>();
+							itemDrop = ModContent.ItemType<SugarFish>();
 						}
 						else if (attempt.heightLevel > 1 && attempt.uncommon && attempt.questFish == ModContent.ItemType<SacchariteBatFish>())
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<SacchariteBatFish>();
+							itemDrop = ModContent.ItemType<SacchariteBatFish>();
 						}
 						else if (attempt.heightLevel < 2 && attempt.uncommon && attempt.questFish == ModContent.ItemType<Sprinklefish>())
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<Sprinklefish>();
+							itemDrop = ModContent.ItemType<Sprinklefish>();
 						}
 						else if (attempt.rare)
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<Cakekite>();
+							itemDrop = ModContent.ItemType<Cakekite>();
 						}
 						else if (attempt.uncommon && attempt.questFish == ModContent.ItemType<CookieCutterShark>())
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<CookieCutterShark>();
+							itemDrop = ModContent.ItemType<CookieCutterShark>();
 						}
 						else if (attempt.uncommon)
 						{
-							attempt.rolledItemDrop = ModContent.ItemType<CookieCarp>();
+							itemDrop = ModContent.ItemType<CookieCarp>();
 						}
 					}
 				}

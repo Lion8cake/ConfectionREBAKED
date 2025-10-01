@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Achievements;
 using Terraria.Chat;
 using Terraria.GameContent;
 using Terraria.GameContent.Achievements;
@@ -20,8 +21,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.UI;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using TheConfectionRebirth.Achievements;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.ModSupport;
 using TheConfectionRebirth.Tiles;
 using TheConfectionRebirth.Walls;
@@ -259,7 +263,7 @@ namespace TheConfectionRebirth {
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			confectionTree = Main.rand.Next(3);
-			confectionBG = Main.rand.Next(4);
+			confectionBG = Main.rand.Next(5);
 			confectionUGBG = Main.rand.Next(4);
 			confectionUGBGSnow = Main.rand.Next(2);
 		}
@@ -267,7 +271,6 @@ namespace TheConfectionRebirth {
 		public override void PostUpdateEverything()
 		{
 			confectionBGFlash = MathHelper.Clamp(confectionBGFlash - 0.05f, 0f, 1f);
-			//Main.NewText(Main.LocalPlayer.ZoneDesert);
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
@@ -1171,10 +1174,10 @@ namespace TheConfectionRebirth {
 		public override void PostDrawTiles()
 		{
 			Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-			int scrMinX = (int)Main.screenPosition.X / 16;
-			int scrMinY = (int)Main.screenPosition.Y / 16;
-			int scrWid = Main.screenWidth / 16;
-			int scrHei = Main.screenHeight / 16;
+			int scrMinX = (int)Math.Round((Main.screenPosition.X) / 16f) - 1;
+			int scrMinY = (int)Math.Round((Main.screenPosition.Y) / 16f) - 1;
+			int scrWid = (int)Math.Round((Main.screenWidth) / 16f) + 2;
+			int scrHei = (int)Math.Round((Main.screenHeight) / 16f) + 2;
 			int scrMaxX = scrMinX + scrWid;
 			int scrMaxY = scrMinY + scrHei;
 			for (int i = scrMinX; i < scrMaxX; i++)

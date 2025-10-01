@@ -146,94 +146,38 @@ namespace TheConfectionRebirth.Tiles {
 			if (tile.TileType == ModContent.TileType<CreamSeaOats>() && tileBelow.TileType != ModContent.TileType<Creamsand>()) {
 				tile.TileType = (ushort)TileID.SeaOats;
 			}
-			/*if (TileID.Sets.IsVine[tile.TileType]) {
-				int num = tile.TileType;
-				int up = -1;
-				Tile tile10 = Main.tile[i, j - 1];
-				int nullium = 0;
-				WorldGen.TileMergeAttempt(0, TileID.Sets.Dirt, ref up, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium, ref nullium);
-				up = ((tile10 == null) ? num : ((!tile10.HasUnactuatedTile) ? (-1) : ((!tile10.BottomSlope) ? tile10.TileType : (-1))));
-				if (num != up) {
-					bool num48 = up == 60 || up == 62;
-					bool num49 = up == 109 || up == 115;
-					bool flag17 = up == 23 || up == 636 || up == 661;
-					bool flag2 = up == 199 || up == 205 || up == 662;
-					bool flag3 = up == 2 || up == 52;
-					bool flag4 = up == 382;
-					bool num50 = up == 70 || up == 528;
-					bool num51 = up == 633 || up == 638;
-					ushort num37 = 0;
-					if (num51) {
-						num37 = 638;
-					}
-					if (num50) {
-						num37 = 528;
-					}
-					if (num49) {
-						num37 = 115;
-					}
-					if (num48) {
-						num37 = 62;
-					}
-					if (flag17) {
-						num37 = 636;
-					}
-					if (flag2) {
-						num37 = 205;
-					}
-					if (flag3 && num != 382) {
-						num37 = 52;
-					}
-					if (flag4) {
-						num37 = 382;
-					}
-					if (up == ModContent.TileType<CreamGrass>() || up == ModContent.TileType<CreamVines>()) {
-						num37 = (ushort)ModContent.TileType<CreamVines>();
-					}
-					if (num37 != 0 && num37 != num) {
-						tile.TileType = num37;
-						WorldGen.SquareTileFrame(i, j);
-						return false;
-					}
+
+
+			if (!TileID.Sets.IsVine[type])
+			{
+				return true;
+			}
+
+			Tile tileAbove = Main.tile[i, j - 1];
+
+			int aboveTileType = tileAbove.HasUnactuatedTile && !tileAbove.BottomSlope ? tileAbove.TileType : -1;
+
+			if (type != aboveTileType)
+			{
+				if ((aboveTileType == ModContent.TileType<CreamGrass>() || aboveTileType == ModContent.TileType<CreamGrassMowed>() || aboveTileType == ModContent.TileType<CreamVines>()) && type != ModContent.TileType<CreamVines>())
+				{
+					tile.TileType = (ushort)ModContent.TileType<CreamVines>();
+					WorldGen.SquareTileFrame(i, j);
+					return true;
 				}
-				if (up != num) {
-					bool flag5 = false;
-					//if (num == ModContent.TileType<CreamVines>() && up != ModContent.TileType<CreamGrass>()) {
-					//	flag5 = true;
-					//}
-					if (up == -1) {
-						flag5 = true;
-					}
-					if (num == 52 && up != 2 && up != 192) {
-						flag5 = true;
-					}
-					if (num == 382 && up != 2 && up != 192) {
-						flag5 = true;
-					}
-					if (num == 62 && up != 60) {
-						flag5 = true;
-					}
-					if (num == 115 && up != 109) {
-						flag5 = true;
-					}
-					if (num == 528 && up != 70) {
-						flag5 = true;
-					}
-					if (num == 636 && up != 23 && up != 661) {
-						flag5 = true;
-					}
-					if (num == 205 && up != 199 && up != 662) {
-						flag5 = true;
-					}
-					if (num == 638 && up != 633) {
-						flag5 = true;
-					}
-					if (flag5) {
+
+				if (type == ModContent.TileType<CreamVines>() && aboveTileType != ModContent.TileType<CreamGrassMowed>() && aboveTileType != ModContent.TileType<CreamGrass>())
+				{
+					if (aboveTileType == -1)
+					{
 						WorldGen.KillTile(i, j);
 					}
+					else
+					{
+						tile.TileType = TileID.Vines;
+					}
 				}
-				return false;
-			}*/
+			}
 			return true;
 		}
 

@@ -82,10 +82,10 @@ namespace TheConfectionRebirth.Projectiles
 			if (projectile.type == ProjectileID.WorldGlobe) {
 				Player player = Main.LocalPlayer;
 				if (Main.netMode != NetmodeID.MultiplayerClient && player.InModBiome<ConfectionBiome>()) {
-					int rand = Main.rand.Next(4);
+					int rand = Main.rand.Next(5);
 					if (rand == ConfectionWorldGeneration.confectionBG)
 						rand++;
-					if (rand > 3)
+					if (rand > 4)
 						rand = 0;
 					ConfectionWorldGeneration.confectionBG = rand;
 					if (!Main.gameMenu)

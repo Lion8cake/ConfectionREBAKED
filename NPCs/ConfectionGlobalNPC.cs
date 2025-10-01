@@ -301,7 +301,7 @@ namespace TheConfectionRebirth.NPCs
 				{
 					if (!((player.ZoneGraveyard) || (!spawnInfo.SafeRangeX && beach) || (spawnInfo.Water) || (tileType == TileID.SnowBlock || tileType == TileID.IceBlock) || (tileType == TileID.JungleGrass) || (tileType == TileID.Sand)))
 					{
-						if (tileType != ModContent.TileType<Tiles.CreamGrass>() && tileType != ModContent.TileType<Tiles.CreamGrassMowed>() && !((double)y > Main.worldSurface))
+						if ((tileType != ModContent.TileType<Tiles.CreamGrass>() && tileType != ModContent.TileType<Tiles.CreamGrassMowed>()) || !((double)y > Main.worldSurface))
 						{
 							return 0f;
 						}

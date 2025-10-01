@@ -15,7 +15,6 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileShine[Type] = 4500;
 			
 			TileID.Sets.ChecksForMerge[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<EnchantedSacchariteBlock>()] = true;

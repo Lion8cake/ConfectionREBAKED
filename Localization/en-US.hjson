@@ -85,7 +85,7 @@ Mods: {
 
 		ItemAnglerChat: {
 			CookieCutterShark: There's a living cookie cutter down in the deep Confection! Go and bring it back for me so I can make some living cookies!
-			SacchariteBatFish: The Underground Confection attracts a certain fish from Sweden that's flesh looks like gummies! Go bring me one so I can taste how sweet they really are!
+			SweetGummyFish: The Underground Confection attracts a certain fish from Sweden that's flesh looks like gummies! Go bring me one so I can taste how sweet they really are!
 			Sprinklefish: Remember those piles of sprinkles in the Confection? Well turns out sometimes some of those sprinkles grow fins and swim away. Go catch me one so I can eat it!
 		}
 
@@ -707,7 +707,7 @@ Mods: {
 
 			ConfectionPylon: {
 				DisplayName: Confection Pylon
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.TeleportationPylon}"
 			}
 
 			ShiftingCreamsandsDye: {
@@ -1795,9 +1795,9 @@ Mods: {
 			CrookedCookie.DisplayName: Crooked Cookie
 			Hunger.DisplayName: Hunger
 			MintJr.DisplayName: Mint Jr.
-			CreamsandWitchFlying.DisplayName: Creamsand Witch Flying
-			CreamsandWitchPhase1.DisplayName: Creamsand Witch Phase1
-			CreamsandWitchPhase2.DisplayName: Creamsand Witch Phase2
+			CreamsandWitchFlying.DisplayName: Creamsand Witch
+			CreamsandWitchPhase1.DisplayName: Creamsand Witch
+			CreamsandWitchPhase2.DisplayName: Creamsand Witch
 			TheUnfirm.DisplayName: The Unfirm
 		}
 
@@ -2205,16 +2205,19 @@ Mods: {
 			DrixerMixer: {
 				Name: Drixer Mixer
 				Description: Craft a drixer or pix using neapolinite bars, and the souls of the three mechanical bosses.
+				FriendlyName: "{$Mods.TheConfectionRebirth.Achievements.DrixerMixer.Name}"
 			}
 
 			TheBeamOfCream: {
 				Name: The Beam of Cream
-				Description: Obtain the Cream Beam.
+				Description: Obtain a Cream Beam.
+				FriendlyName: "{$Mods.TheConfectionRebirth.Achievements.TheBeamOfCream.Name}"
 			}
 
 			BirthdayRide: {
 				Name: Birthday Ride
 				Description: Wear the full birthday suit while riding a Rollercycle.
+				FriendlyName: "{$Mods.TheConfectionRebirth.Achievements.BirthdayRide.Name}"
 			}
 		}
 
@@ -2233,21 +2236,23 @@ Mods: {
 			2: Lion8cake
 			3: Snickerbobble
 			4: Delicious Saturn
-			5: Snacks
-			6: DakotaSpine
-			7: CastledKing2341
-			8: S0vr9000
-			9: Ghasttear1
-			10: Roton
-			11: Jeo "JeoHashtag155"
-			12: motai_
-			13: Miguel Noturn0
-			14: splig "split0282"
-			15: TerrorPenguin
-			16: Sampel
-			17: Fuffles
-			18: AstralGel
-			19: BasicallyIAmCat
+			5: Sumire
+			6: Snacks
+			7: DakotaSpine
+			8: CastledKing2341
+			9: S0vr9000
+			10: Ghasttear1
+			11: Roton
+			12: Jeo "JeoHashtag155"
+			13: motai_
+			14: Miguel Noturn0
+			15: splig "split0282"
+			16: TerrorPenguin
+			17: EduaRRdo
+			18: Sampel
+			19: Fuffles
+			20: AstralGel
+			21: BasicallyIAmCat
 		}
 	}
 }

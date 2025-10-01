@@ -32,13 +32,7 @@ namespace TheConfectionRebirth.Tiles
 		}
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			bool intoRenderTargets = true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
-
-			if (flag) {
-				Main.instance.TilesRenderer.CrawlToTopOfVineAndAddSpecialPoint(j, i);
-			}
-
+			Main.instance.TilesRenderer.CrawlToTopOfVineAndAddSpecialPoint(j, i);
 			return false;
 		}
 

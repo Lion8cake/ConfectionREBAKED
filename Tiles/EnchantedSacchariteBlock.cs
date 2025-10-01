@@ -18,7 +18,6 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileOreFinderPriority[Type] = 675;
 
 			TileID.Sets.ChecksForMerge[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 
 			Main.tileMerge[Type][ModContent.TileType<Creamstone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<SacchariteBlock>()] = true;

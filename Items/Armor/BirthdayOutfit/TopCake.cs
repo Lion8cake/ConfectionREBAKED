@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Achievements;
 using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth.Items.Armor.BirthdayOutfit
@@ -48,10 +49,7 @@ namespace TheConfectionRebirth.Items.Armor.BirthdayOutfit
         {
 			if (player.HasBuff<Buffs.RollercycleBuff>())
 			{
-				if (ConfectionModCalling.Achievements != null)
-				{
-					ConfectionModCalling.Achievements.Call("Event", "BirthdaySuitRollerCookieRide");
-				}
+				ModContent.GetInstance<BirthdayRide>().BirthdaySuitRollerCookieRide.Complete();
 			}
 		}
 	}

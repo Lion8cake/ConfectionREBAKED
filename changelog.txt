@@ -1,3 +1,36 @@
+Beta v0.30.1.0
+=========================
+Added a 5th confection background variant "Donut Valley"
+Added Drixer Mixer achievement
+Added The Beam of Cream achievement
+Added Birthday Ride achievement
+Added chroma keyboard support for several biomes
+Added a new music track
+Removed Achievement mod support (achievements are now included in base tmod)
+Fixed true death's raze being unable to craft the terra blade
+Fixed greater healing potions being decraftable
+Fixed ores being able to generate over saccharite
+Fixed confection critters spawning in underground towns with no confection nearby
+Fixed cream moss rendering stopping slightly before the screen resolution on some devices
+Fixed fishing in the confection no granting items
+Fixed foliage being unable to generate outside of the tile being creamgrass
+Fixed Confection pylon not having a tooltip
+Fixed Sweet Gummyfish's angler quote not having proper localisation
+Fixed creamsand witch's name not having proper localisation
+Fixed items being listed as materials even though they don't craft anything
+Fixed Neapolinite bars being able to craft ancient hallowed masks
+Fixed all other overlays being removed on the world select screen icon
+Adjusted the 3rd background variant's colors to be less saturated "Neapolitan Tree Forest"
+Optimised background rendering for both confected deserts and normal backgrounds
+Rewrote how the confection menu is handled
+Changed the confection tag to now cycle every day on drunk seeds similar to the evil tag
+
+Beta v0.30.0.1
+=========================
+Updated to v2025.07
+Fixed Vine conversion
+Fixed Convert using the wrong overload when detouring
+
 Beta v0.30.0
 =========================
 The COMPLETE mod rewrite

@@ -181,6 +181,7 @@ namespace TheConfectionRebirth
 			recipe.AddIngredient(ModContent.ItemType<Saccharite>());
 			recipe.AddIngredient(ItemID.BottledWater, 3);
 			recipe.AddTile(TileID.AlchemyTable);
+			recipe.DisableDecraft();
 			recipe.SortAfterFirstRecipesOf(ItemID.GreaterHealingPotion);
 			recipe.Register();
 
@@ -197,6 +198,22 @@ namespace TheConfectionRebirth
 			recipe3.AddTile(TileID.MythrilAnvil);
 			recipe3.SortAfterFirstRecipesOf(ItemID.TerraBlade);
 			recipe3.Register();
+
+			Recipe recipe7 = Recipe.Create(ItemID.TerraBlade);
+			recipe7.AddIngredient(ModContent.ItemType<TrueDeathsRaze>());
+			recipe7.AddIngredient(ModContent.ItemType<TrueSucrosa>());
+			recipe7.AddIngredient(ItemID.BrokenHeroSword);
+			recipe7.AddTile(TileID.MythrilAnvil);
+			recipe7.SortAfterFirstRecipesOf(ItemID.TerraBlade);
+			recipe7.Register();
+
+			Recipe recipe8 = Recipe.Create(ItemID.TerraBlade);
+			recipe8.AddIngredient(ModContent.ItemType<TrueDeathsRaze>());
+			recipe8.AddIngredient(ItemID.TrueExcalibur);
+			recipe8.AddIngredient(ItemID.BrokenHeroSword);
+			recipe8.AddTile(TileID.MythrilAnvil);
+			recipe8.SortAfterFirstRecipesOf(ItemID.TerraBlade);
+			recipe8.Register();
 
 			Recipe recipe4 = Recipe.Create(ItemID.SeafoodDinner);
 			recipe4.AddIngredient(ModContent.ItemType<CookieCarp>(), 2);

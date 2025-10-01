@@ -1,7 +1,7 @@
 =========================================
 The Confection REBAKED (Alternate Hallow)
 =========================================
-Confection version 0.30.0 (Rewrite Major Update)
+Confection version 0.30.1.0 (v2025.08 hotfix)
 Welcome to THE CONFECTION
 The Confection REBAKED is a mod that adds in an altenate biome to the hallowed called the Confection. This works similarly to how the corruption and crimson works in the game.
 This mod replaces some content found within the hallow while there are still some bits of content missing, a full playthrough is able to be played in the confection.
@@ -11,7 +11,6 @@ The Confection was a concept made back in 2014 by Snickerbobble that contains sp
 The people behind the Confection has also made a fully finished mod called the Depths, it does a very similar thing to the Confection but replaces the underworld instead of the hallow.
 
 This mod contains some mod support features, the supported mods are below
-Achievement Mod - download and use the Achievement Mod to see three new achievements to collect
 Fargo's Best of Both Worlds - download and use Fargo's BoBW, this allows for the creation of dual good worlds without the use of a drunk seed
 Biome Lava - download and use the Biome Lava mod to have the confection have its own special lava texture
 
@@ -20,6 +19,7 @@ Drunk seed allows for you to use both the Confection and Hallow if entirely repl
 Full Don't dig up and other seed support for any playthrough you might enjoy
 This mod contains various systems that allow for dynamic support with Modded Items, NPCs, Bosses and more allowing for most mods to be automatically compatible
 Custom world creation texture to tell you which good you got apon creating a world
+Adds 3 new achievements to collect in your playthroughs
 Full controller support - if your mouse is broken, fear not you can play on a console controller
 Full Multiplayer support - feel free to eat well with a friend
 
@@ -50,12 +50,14 @@ BasicallyIAmCat - Gummy Wyrm coloring shader
 -=Artists=-
 ===========
 Snickerbobble - Concept creator and artist
-Delicious Saturn - Artist behind all current Confection music
+Delicious Saturn - Artist behind all normal Confection music
+Sumire - Artist behind the Confection Otherworldly underground music
 Snacks - Various sprites and ideas for 1.4 content
 DakotaSpine - The chocolate and icecream scoup background
 Miguel Noturn0 - Confection World Icons
 splig - Gummy worm-whip sprites and concept
 TerrorPenguin - Polished Creamstone tile texture
+EduaRRdo - Current Drixer Mixer achievement icon
 motai_ - most sounds for the confection
 AstralGel - the crunch ball break sound
 Fuffles - Hallow world creation bar texture

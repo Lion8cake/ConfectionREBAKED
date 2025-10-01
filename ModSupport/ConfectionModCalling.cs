@@ -12,8 +12,6 @@ namespace TheConfectionRebirth.ModSupport
 {
     public class ConfectionModCalling : ModSystem
     {
-		public static readonly Mod? Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
-
 		public static readonly Mod? FargoSeeds = ModLoader.TryGetMod("FargoSeeds", out Mod obtainedMod) ? obtainedMod : null;
 
 		public static readonly Mod? BiomeLava = ModLoader.TryGetMod("BiomeLava", out Mod obtainedMod) ? obtainedMod : null;
@@ -29,18 +27,6 @@ namespace TheConfectionRebirth.ModSupport
 		public static void UpdateFargoBoBW()
 		{
 			FargoBoBW = ModContent.GetInstance<FargoSeedConfectionConfiguration>().BothGoods && FargoSeeds != null;
-		}
-
-		public override void PostSetupContent()
-		{
-            if (Achievements == null)
-            {
-                return;
-            }
-
-            Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "DrixerMixer", AchievementCategory.Collector, "TheConfectionRebirth/Assets/DrixerMixer", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.Drixer>() });
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "TheBeamOfCream", AchievementCategory.Collector, "TheConfectionRebirth/Assets/TheBeamOfCream", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.CreamBeam>() });
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheConfectionRebirth>(), "BirthdayRide", AchievementCategory.Challenger, "TheConfectionRebirth/Assets/BirthdayRide", null, false, false, 8f, new string[] { "Event_BirthdaySuitRollerCookieRide" });
 		}
 
 		public override void Load()

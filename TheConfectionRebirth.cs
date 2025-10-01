@@ -3,10 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.Content;
+using ReLogic.Peripherals.RGB;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.Achievements;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -15,6 +17,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.RGB;
 using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.Elements;
@@ -27,8 +30,10 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.Net;
 using Terraria.UI;
 using Terraria.Utilities;
+using TheConfectionRebirth.Achievements;
 using TheConfectionRebirth.Backgrounds;
 using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
@@ -38,6 +43,7 @@ using TheConfectionRebirth.Items.Accessories;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Projectiles;
+using TheConfectionRebirth.RGB;
 using TheConfectionRebirth.Tiles;
 using TheConfectionRebirth.Walls;
 using static Terraria.Graphics.Capture.CaptureInterface;
@@ -83,7 +89,7 @@ namespace TheConfectionRebirth
 		public override void Load() 
 		{
 			instance = this;
-			ConfectionWindUtilities.Load();
+			ConfectionReflectionUtilities.Load();
 
 			if (Main.netMode != NetmodeID.Server)
 			{
@@ -99,14 +105,21 @@ namespace TheConfectionRebirth
 			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
 			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
 
+			Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.InConfectionMenu, ShaderLayer.Menu);
+			Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.SurfaceBiome.Confection, ShaderLayer.BiomeModifier);
+			Main.Chroma.RegisterShader(new UndergroundConfectionShader(), ConfectionConditions.UndergroundBiome.Confection, ShaderLayer.Biome);
+			Main.Chroma.RegisterShader(new IceShader(new Color(60, 25, 10), new Color(230, 90, 20)), ConfectionConditions.UndergroundBiome.ConfectionIce, ShaderLayer.BiomeModifier);
+			Main.Chroma.RegisterShader(new DesertShader(new Color(17, 11, 10), new Color(200, 90, 50)), ConfectionConditions.UndergroundBiome.ConfectionDesert, ShaderLayer.BiomeModifier);
+
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
 			IL_Liquid.DelWater += BurnGrass;
 			IL_WorldGen.PlantCheck += PlantTileFrameIL;
 			On_Player.DoBootsEffect_PlaceFlowersOnTile += FlowerBootsEdit;
 			On_WorldGen.IsFitToPlaceFlowerIn += Flowerplacement;
+
 			On_WorldGen.PlaceTile += PlaceTile;
-			IL_WorldGen.TileFrame += VineTileFrame;
+			//IL_WorldGen.TileFrame += VineTileFrame; //gets garbage collected, useless
 			IL_MapHelper.CreateMapTile += CactusMapColor;
 			On_WorldGen.PlaceLilyPad += LilyPadPreventer;
 			IL_WorldGen.CheckCatTail += CheckCattailEdit;
@@ -123,12 +136,12 @@ namespace TheConfectionRebirth
 			On_WorldGen.PlaceOasisPlant += PlantOasisPlantEdit;
 			On_Player.MowGrassTile += LAWWWWNNNNMOOOWWWWWWAAAAAA;
 			On_SmartCursorHelper.Step_LawnMower += SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
-			IL_NPC.SpawnNPC += LawnSpawnPrevention;
+			//IL_NPC.SpawnNPC += LawnSpawnPrevention; //gets garbage collected, useless
 			On_SmartCursorHelper.Step_GrassSeeds += CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust += CreamsandSandstorm;
-			On_WorldGen.Convert += Convert;
+			On_WorldGen.Convert_int_int_int_int += Convert;
 			IL_Player.Update += TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += MossScapper;
 
@@ -139,7 +152,7 @@ namespace TheConfectionRebirth
 			IL_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.ILSetUpGamepadPoints;
 
 			IL_UIGenProgressBar.DrawSelf += AddGoodToWorldgenBar;
-			On_UIWorldListItem.DrawSelf += ConfectionWorldIconEdit;
+			On_UIWorldListItem.ctor += ConfectionWorldIconEdit;
 			IL_Lang.GetDryadWorldStatusDialog += DryadWorldStatusEdit;
 			IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles += SettmodvilsandGoods;
@@ -177,17 +190,18 @@ namespace TheConfectionRebirth
 			IL_CaptureInterface.ModeChangeSettings.Draw += moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update += moveCaptureDefaultsHitbox;
 			On_NPC.UpdateNPC_CritterSounds += ModNPCCritterSounds;
+
+			IL_AchievementAdvisor.Initialize += EditAchievementRecomendations;
+			//Edit the init BEFORE calling
+			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+			Main.AchievementAdvisor.Initialize();
+
+			On_AchievementAdvisorCard.IsAchievableInWorld += IsAchieveableInConfectionWorld;
+			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
+
 		}
 
 		public override void Unload() {
-			//instance = null;
-			ConfectionWindUtilities.Unload();
-
-			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
-			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
-
-
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids -= KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill -= PickaxeKillTile;
 			IL_Liquid.DelWater -= BurnGrass;
@@ -195,7 +209,7 @@ namespace TheConfectionRebirth
 			On_Player.DoBootsEffect_PlaceFlowersOnTile -= FlowerBootsEdit;
 			On_WorldGen.IsFitToPlaceFlowerIn -= Flowerplacement;
 			On_WorldGen.PlaceTile -= PlaceTile;
-			IL_WorldGen.TileFrame -= VineTileFrame;
+			//IL_WorldGen.TileFrame -= VineTileFrame;
 			IL_MapHelper.CreateMapTile -= CactusMapColor;
 			On_WorldGen.PlaceLilyPad -= LilyPadPreventer;
 			IL_WorldGen.CheckCatTail -= CheckCattailEdit;
@@ -212,16 +226,16 @@ namespace TheConfectionRebirth
 			On_WorldGen.PlaceOasisPlant -= PlantOasisPlantEdit;
 			On_Player.MowGrassTile -= LAWWWWNNNNMOOOWWWWWWAAAAAA;
 			On_SmartCursorHelper.Step_LawnMower -= SMARTLAWWWWWWNNNNNMOWWWWAAAAASSSSS;
-			IL_NPC.SpawnNPC -= LawnSpawnPrevention;
+			//IL_NPC.SpawnNPC -= LawnSpawnPrevention;
 			On_SmartCursorHelper.Step_GrassSeeds -= CreamBeansSmartCursor;
 			IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust -= CreamsandSandstorm;
-			On_WorldGen.Convert -= Convert;
+			On_WorldGen.Convert_int_int_int_int -= Convert;
 			IL_Player.Update -= TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= MossScapper;
 			IL_UIGenProgressBar.DrawSelf -= AddGoodToWorldgenBar;
-			On_UIWorldListItem.DrawSelf -= ConfectionWorldIconEdit;
+			On_UIWorldListItem.ctor -= ConfectionWorldIconEdit;
 			IL_Lang.GetDryadWorldStatusDialog -= DryadWorldStatusEdit;
 			IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
 			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
@@ -259,6 +273,20 @@ namespace TheConfectionRebirth
 			IL_CaptureInterface.ModeChangeSettings.Draw -= moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update -= moveCaptureDefaultsHitbox;
 			On_NPC.UpdateNPC_CritterSounds -= ModNPCCritterSounds;
+
+			IL_AchievementAdvisor.Initialize -= EditAchievementRecomendations;
+			//Edit the init BEFORE calling
+			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+			Main.AchievementAdvisor.Initialize();
+
+			On_AchievementAdvisorCard.IsAchievableInWorld -= IsAchieveableInConfectionWorld;
+			IL_Recipe.UpdateWhichItemsAreMaterials -= RemoveMaterialFromUnusedRecipeGroups;
+
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			fractalProfiles.Remove(ModContent.ItemType<TrueSucrosa>());
+			fractalProfiles.Remove(ModContent.ItemType<Sucrosa>());
+
+			ConfectionReflectionUtilities.Unload();
 		}
 
 		public override object Call(params object[] args)
@@ -286,6 +314,74 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region RecipeGroupMaterialTextPatcher
+		private void RemoveMaterialFromUnusedRecipeGroups(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel IL_0099 = null;
+			int groupItem_varNum = -1;
+			int recipeGround_varNum = -1;
+
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<RecipeGroup>("ValidItems"), i => i.MatchCallvirt(out _), i => i.MatchStloc(out _), i => i.MatchBr(out IL_0099), i => i.MatchLdloca(out recipeGround_varNum), i => i.MatchCall(out _), i => i.MatchStloc(out groupItem_varNum));
+			c.EmitLdloca(groupItem_varNum);
+			c.EmitLdloca(recipeGround_varNum);
+			c.EmitDelegate((ref int item, ref RecipeGroup value) =>
+			{
+				bool isActuallyUsed = false;
+				for (int i = 0; i < Recipe.numRecipes; i++)
+				{
+					if (Main.recipe[i].HasRecipeGroup(value))
+					{
+						isActuallyUsed = true;
+						break;
+					}
+				}
+				if (isActuallyUsed)
+				{
+					ItemID.Sets.IsAMaterial[item] = true;
+				}
+			});
+			c.EmitBr(IL_0099);
+		}
+		#endregion
+
+		#region Achievement edits
+		private bool IsAchieveableInConfectionWorld(On_AchievementAdvisorCard.orig_IsAchievableInWorld orig, AchievementAdvisorCard self)
+		{
+			if (self.achievement.Name == ModContent.GetInstance<DrixerMixer>().Achievement.Name)
+			{
+				return ConfectionWorldGeneration.confectionorHallow;
+			}
+			else if (self.achievement.Name == "DRAX_ATTAX")
+			{
+				return !ConfectionWorldGeneration.confectionorHallow;
+			}
+			return orig.Invoke(self);
+		}
+
+		private void EditAchievementRecomendations(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+			int achievementIndex_varNum = -1;
+
+			c.EmitLdarga(0);
+			c.EmitDelegate((ref AchievementAdvisor self) =>
+			{
+				self.SetCards(new List<AchievementAdvisorCard>());
+			});
+
+			c.GotoNext(MoveType.Before, i => i.MatchLdarg(0), i => i.MatchLdfld<AchievementAdvisor>("_cards"), i => i.MatchCall<Main>("get_Achievements"), i => i.MatchLdstr("DRAX_ATTAX"), i => i.MatchCallvirt<AchievementManager>("GetAchievement"), i => i.MatchLdloc(out achievementIndex_varNum));
+			c.EmitLdloca(achievementIndex_varNum);
+			c.EmitLdarga(0);
+			c.EmitDelegate((ref float num, ref AchievementAdvisor self) =>
+			{
+				List<AchievementAdvisorCard> _cards = self.GetCards();
+				_cards.Add(new AchievementAdvisorCard(ModContent.GetInstance<DrixerMixer>().Achievement, num++));
+				self.SetCards(_cards);
+			});
+		}
+		#endregion
 
 		#region Friendly NPC Sounds
 		private void ModNPCCritterSounds(On_NPC.orig_UpdateNPC_CritterSounds orig, NPC self)
@@ -841,6 +937,10 @@ namespace TheConfectionRebirth
 		{
 			checkEaster();
 			checkBirthdays();
+			if (Main.drunkWorld && Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				ConfectionWorldGeneration.confectionorHallow = !ConfectionWorldGeneration.confectionorHallow;
+			}
 			orig.Invoke(ref stopEvents);
 		}
 		#endregion
@@ -1210,6 +1310,26 @@ namespace TheConfectionRebirth
 			c.EmitDelegate((ref Color bgColorToSet, ref Color sunColor) =>
 			{
 				float ConfectionBiomeInfluence = (float)ModContent.GetInstance<ConfectionBiomeTileCount>().confectionBlockCount / (float)ConfectionBiomeTileCount.ConfectionTileMax;
+				if (MenuLoader.CurrentMenu.Name == ModContent.GetInstance<ConfectionMenu>().Name)
+				{
+					ModContent.GetInstance<ConfectionMenu>().menuScreenTint += 20;
+					if (ModContent.GetInstance<ConfectionMenu>().menuScreenTint >= ConfectionBiomeTileCount.ConfectionTileMax)
+					{
+						ModContent.GetInstance<ConfectionMenu>().menuScreenTint = ConfectionBiomeTileCount.ConfectionTileMax;
+					}
+				}
+				else
+				{
+					ModContent.GetInstance<ConfectionMenu>().menuScreenTint -= 20;
+					if (ModContent.GetInstance<ConfectionMenu>().menuScreenTint < 0)
+					{
+						ModContent.GetInstance<ConfectionMenu>().menuScreenTint = 0;
+					}
+				}
+				if (Main.gameMenu)
+				{
+					ConfectionBiomeInfluence = (float)ModContent.GetInstance<ConfectionMenu>().menuScreenTint / (float)ConfectionBiomeTileCount.ConfectionTileMax;
+				}
 				if (ConfectionBiomeInfluence > 0f)
 				{
 					float num10 = ConfectionBiomeInfluence;
@@ -1515,14 +1635,13 @@ namespace TheConfectionRebirth
 		#endregion
 
 		#region World Icon Edit
-		private void ConfectionWorldIconEdit(On_UIWorldListItem.orig_DrawSelf orig, UIWorldListItem self, SpriteBatch spriteBatch)
+		private void ConfectionWorldIconEdit(On_UIWorldListItem.orig_ctor orig, UIWorldListItem self, WorldFileData data, int orderInList, bool canBePlayed)
 		{
-			orig.Invoke(self, spriteBatch);
-			bool data = self.Data.TryGetHeaderData(ModContent.GetInstance<ConfectionWorldGeneration>(), out var _data);
+			orig.Invoke(self, data, orderInList, canBePlayed);
+			bool confData = self.Data.TryGetHeaderData(ModContent.GetInstance<ConfectionWorldGeneration>(), out var _data);
 			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
 			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			WorldIcon.RemoveAllChildren();
-			if (data)
+			if (confData)
 			{
 				#region RegularSeedIcon
 				if (_data.GetBool("HasConfection") && !Data.RemixWorld && !Data.DrunkWorld && !Data.Anniversary && !Data.DontStarve && !Data.ForTheWorthy && !Data.ZenithWorld && !Data.NotTheBees && !Data.NoTrapsWorld && Data.IsHardMode)
@@ -1786,7 +1905,7 @@ namespace TheConfectionRebirth
 		#endregion
 
 		#region solution Conversion
-		private void Convert(On_WorldGen.orig_Convert orig, int i, int j, int conversionType, int size) {
+		private void Convert(On_WorldGen.orig_Convert_int_int_int_int orig, int i, int j, int conversionType, int size) {
 			//Conversion Type:
 			//7 = Forest
 			//6 = Snow
@@ -3011,17 +3130,14 @@ namespace TheConfectionRebirth
 
 		#region Creamgrass and foliage
 		private bool Flowerplacement(On_WorldGen.orig_IsFitToPlaceFlowerIn orig, int x, int y, int typeAttemptedToPlace) {
-			if (y < 1 || y > Main.maxTilesY - 1) {
-				return false;
-			}
+			bool flag = orig.Invoke(x, y, typeAttemptedToPlace);
 			Tile tile = Main.tile[x, y + 1];
 			if (tile.HasTile && tile.Slope == 0 && !tile.IsHalfBlock) {
-				if ((tile.TileType != ModContent.TileType<CreamGrass>() && tile.TileType != ModContent.TileType<CreamGrassMowed>()) || typeAttemptedToPlace != ModContent.TileType<CreamGrass_Foliage>()) {
-					return false;
+				if ((tile.TileType == ModContent.TileType<CreamGrass>() || tile.TileType == ModContent.TileType<CreamGrassMowed>()) && typeAttemptedToPlace != ModContent.TileType<CreamGrass_Foliage>()) {
+					flag = false;
 				}
-				return true;
 			}
-			return orig.Invoke(x, y, typeAttemptedToPlace);
+			return flag;
 		}
 
 		private bool FlowerBootsEdit(On_Player.orig_DoBootsEffect_PlaceFlowersOnTile orig, Player self, int X, int Y) {

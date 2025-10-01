@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Reflection;
 using System;
 using Terraria.Graphics.Effects;
 using Terraria;
@@ -43,15 +41,15 @@ namespace TheConfectionRebirth.Backgrounds
 
 		public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
 		{
-			float bgScale = (float)typeof(Main).GetField("bgScale", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-			float screenOff = (float)typeof(Main).GetField("screenOff", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			double bgParallax = (double)typeof(Main).GetField("bgParallax", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			int bgTopY = (int)typeof(Main).GetField("bgTopY", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			float scAdj = (float)typeof(Main).GetField("scAdj", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			int bgWidthScaled = (int)typeof(Main).GetField("bgWidthScaled", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-			int bgStartX = (int)typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			int bgLoops = (int)typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Main.instance);
-			Color ColorOfSurfaceBackgroundsModified = (Color)typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+			float bgScale = Main.instance.GetBGScale();
+			float screenOff = Main.instance.GetScreenOff();
+			double bgParallax = Main.instance.GetBGParallax();
+			int bgTopY = Main.instance.GetBGTopY();
+			float scAdj = Main.instance.GetSCAdj();
+			int bgWidthScaled = Main.instance.GetBGWidthScaled();
+			int bgStartX = Main.instance.GetBGStartX();
+			int bgLoops = Main.instance.GetBGLoops();
+			Color ColorOfSurfaceBackgroundsModified = Main.instance.GetColorOFSurfaceBackgroundsModified();
 
 			string TexturePath = "TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceClose1";
 			string TexturePath2 = "TheConfectionRebirth/Backgrounds/ConfectionSandSurfaceClose2";
