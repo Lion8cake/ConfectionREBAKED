@@ -1,7 +1,7 @@
 =========================================
 The Confection REBAKED (Alternate Hallow)
 =========================================
-Confection version 0.30.1.0 (v2025.08 hotfix)
+Confection version 0.30.1.2 (Otherworldly music box localisation patch)
 Welcome to THE CONFECTION
 The Confection REBAKED is a mod that adds in an altenate biome to the hallowed called the Confection. This works similarly to how the corruption and crimson works in the game.
 This mod replaces some content found within the hallow while there are still some bits of content missing, a full playthrough is able to be played in the confection.

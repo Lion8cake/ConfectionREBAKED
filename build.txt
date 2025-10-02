@@ -1,5 +1,5 @@
 displayName = The Confection REBAKED (Hallow Alternative)
 author = Lion8cake & Snickerbobble
-version = 0.30.1.0
+version = 0.30.1.2
 includeSource = true
 includePDB = true

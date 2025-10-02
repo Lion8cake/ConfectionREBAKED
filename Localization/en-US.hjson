@@ -184,6 +184,7 @@ Mods: {
 			SherbetTorch.MapEntry: Sherbet Torch
 			HeavensForgeTile.MapEntry: Heaven's Forge
 			EnchantedSacchariteBlock.MapEntry: Enchanted Saccharite
+			ConfectionUndergroundOtherworldlyMusicBox.MapEntry: Music Box
 		}
 
 		Items: {
@@ -1751,6 +1752,11 @@ Mods: {
 			PastryStaff: {
 				DisplayName: Pastry Staff
 				Tooltip: Summons mini meowzers to fight for you
+			}
+
+			ConfectionUndergroundOtherworldlyMusicBox: {
+				DisplayName: Otherworldly Music Box (Underground Confection)
+				Tooltip: ""
 			}
 		}
 

@@ -91,25 +91,22 @@ namespace TheConfectionRebirth
 			instance = this;
 			ConfectionReflectionUtilities.Load();
 
-			if (Main.netMode != NetmodeID.Server)
+			if (!Main.dedServ)
 			{
 				texOuterHallow = Assets.Request<Texture2D>("Assets/Loading/Outer_Hallow");
 				texOuterConfection = Assets.Request<Texture2D>("Assets/Loading/Outer_Confection");
-			}
-			if (!Main.dedServ)
-			{
 				GummyWyrmShaderData = new(ModContent.Request<Effect>("TheConfectionRebirth/Shaders/GummyWyrmShader", AssetRequestMode.ImmediateLoad), "GummyWyrmPass");
+				Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.InConfectionMenu, ShaderLayer.Menu);
+				Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.SurfaceBiome.Confection, ShaderLayer.BiomeModifier);
+				Main.Chroma.RegisterShader(new UndergroundConfectionShader(), ConfectionConditions.UndergroundBiome.Confection, ShaderLayer.Biome);
+				Main.Chroma.RegisterShader(new IceShader(new Color(60, 25, 10), new Color(230, 90, 20)), ConfectionConditions.UndergroundBiome.ConfectionIce, ShaderLayer.BiomeModifier);
+				Main.Chroma.RegisterShader(new DesertShader(new Color(17, 11, 10), new Color(200, 90, 50)), ConfectionConditions.UndergroundBiome.ConfectionDesert, ShaderLayer.BiomeModifier);
 			}
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 			fractalProfiles.Add(ModContent.ItemType<TrueSucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the True Sucrosa with a pink trail
 			fractalProfiles.Add(ModContent.ItemType<Sucrosa>(), new FinalFractalProfile(70f, new Color(224, 92, 165))); //Add the Sucrosa with a pink trail
 
-			Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.InConfectionMenu, ShaderLayer.Menu);
-			Main.Chroma.RegisterShader(new ConfectionSurfaceShader(), ConfectionConditions.SurfaceBiome.Confection, ShaderLayer.BiomeModifier);
-			Main.Chroma.RegisterShader(new UndergroundConfectionShader(), ConfectionConditions.UndergroundBiome.Confection, ShaderLayer.Biome);
-			Main.Chroma.RegisterShader(new IceShader(new Color(60, 25, 10), new Color(230, 90, 20)), ConfectionConditions.UndergroundBiome.ConfectionIce, ShaderLayer.BiomeModifier);
-			Main.Chroma.RegisterShader(new DesertShader(new Color(17, 11, 10), new Color(200, 90, 50)), ConfectionConditions.UndergroundBiome.ConfectionDesert, ShaderLayer.BiomeModifier);
 
 			On_Player.PlaceThing_Tiles_PlaceIt_KillGrassForSolids += KillConjoinedGrass_PlaceThing;
 			On_Player.DoesPickTargetTransformOnKill += PickaxeKillTile;
@@ -193,8 +190,11 @@ namespace TheConfectionRebirth
 
 			IL_AchievementAdvisor.Initialize += EditAchievementRecomendations;
 			//Edit the init BEFORE calling
-			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
-			Main.AchievementAdvisor.Initialize();
+			if (!Main.dedServ)
+			{
+				Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+				Main.AchievementAdvisor.Initialize();
+			}
 
 			On_AchievementAdvisorCard.IsAchievableInWorld += IsAchieveableInConfectionWorld;
 			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
@@ -276,8 +276,11 @@ namespace TheConfectionRebirth
 
 			IL_AchievementAdvisor.Initialize -= EditAchievementRecomendations;
 			//Edit the init BEFORE calling
-			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
-			Main.AchievementAdvisor.Initialize();
+			if (!Main.dedServ)
+			{
+				Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+				Main.AchievementAdvisor.Initialize();
+			}
 
 			On_AchievementAdvisorCard.IsAchievableInWorld -= IsAchieveableInConfectionWorld;
 			IL_Recipe.UpdateWhichItemsAreMaterials -= RemoveMaterialFromUnusedRecipeGroups;

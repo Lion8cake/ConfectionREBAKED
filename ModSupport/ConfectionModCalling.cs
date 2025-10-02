@@ -26,7 +26,7 @@ namespace TheConfectionRebirth.ModSupport
 		/// </summary>
 		public static void UpdateFargoBoBW()
 		{
-			FargoBoBW = ModContent.GetInstance<FargoSeedConfectionConfiguration>().BothGoods && FargoSeeds != null;
+			FargoBoBW = FargoSeeds != null && ModContent.GetInstance<FargoSeedConfectionConfiguration>().BothGoods;
 		}
 
 		public override void Load()
