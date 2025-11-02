@@ -1758,6 +1758,11 @@ Mods: {
 				DisplayName: Otherworldly Music Box (Underground Confection)
 				Tooltip: ""
 			}
+
+			ConfectionLavaFountain: {
+				Tooltip: ""
+				DisplayName: Confection Lava Fountain
+			}
 		}
 
 		NPCs: {

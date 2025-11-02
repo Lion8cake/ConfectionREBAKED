@@ -58,7 +58,7 @@ namespace TheConfectionRebirth.ModSupport
 
 			Func<bool> lavafallGlowmaskDelegate = lavafallGlowmask;
 
-			Func<Player, NPC, int, Action> InflictDebuffDelegate = InflictDebuff;
+			Action<Player, NPC, int> InflictDebuffDelegate = InflictDebuff;
 
 			Func<bool> InflictsOnFireDelegate = InflictsOnFire;
 
@@ -89,9 +89,8 @@ namespace TheConfectionRebirth.ModSupport
 				return false;
 			}
 
-			static Action InflictDebuff(Player player, NPC npc, int onfireDuration)
+			static void InflictDebuff(Player player, NPC npc, int onfireDuration)
 			{
-				return null;
 			}
 
 			static bool InflictsOnFire()

@@ -8,6 +8,7 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheConfectionRebirth.Dusts;
 
 namespace TheConfectionRebirth.Tiles
 {
@@ -33,7 +34,8 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.addTile(Type);
             AnimationFrameHeight = 72;
             AddMapEntry(new Color(188, 168, 120));
-        }
+			DustType = ModContent.DustType<CreamstoneDust>();
+		}
 
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (Main.tile[i, j].TileFrameX >= 36) {

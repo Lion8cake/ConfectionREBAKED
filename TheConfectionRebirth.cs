@@ -17,6 +17,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Liquid;
 using Terraria.GameContent.RGB;
 using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.UI;
@@ -198,7 +199,6 @@ namespace TheConfectionRebirth
 
 			On_AchievementAdvisorCard.IsAchievableInWorld += IsAchieveableInConfectionWorld;
 			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
-
 		}
 
 		public override void Unload() {
@@ -291,6 +291,7 @@ namespace TheConfectionRebirth
 
 			ConfectionReflectionUtilities.Unload();
 		}
+
 
 		public override object Call(params object[] args)
 		{
