@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Tiles;
 
@@ -59,7 +60,7 @@ namespace TheConfectionRebirth.Projectiles {
 			if (Projectile.owner == Main.myPlayer) {
 				int i2 = (int)(Projectile.position.X + (float)(Projectile.width / 2)) / 16;
 				int j2 = (int)(Projectile.position.Y + (float)(Projectile.height / 2)) / 16;
-				ConfectionWorldGeneration.ConfectionConvert(i2, j2);
+				WorldGen.Convert(i2, j2, ModContent.GetInstance<ConfectionBiomeConversion>().Type, tiles: true, walls: true);
 			}
 		}
 	}

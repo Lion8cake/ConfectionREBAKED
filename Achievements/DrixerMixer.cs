@@ -14,5 +14,7 @@ namespace TheConfectionRebirth.Achievements
 		}
 
 		public override Position GetDefaultPosition() => new After("DRAX_ATTAX");
+
+		public override Position GetAdvisorPosition() => new After("DRAX_ATTAX");
 	}
 }

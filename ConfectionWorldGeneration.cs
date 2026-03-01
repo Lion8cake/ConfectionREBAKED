@@ -482,11 +482,11 @@ namespace TheConfectionRebirth {
 						{
 							if (i > Main.maxTilesX - num7)
 							{
-								ConfectionConvert(i, j, 1);
+								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
 							}
 							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
 							{
-								ConfectionConvert(i, j, 1);
+								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
 							}
 						}
 					}
@@ -499,11 +499,11 @@ namespace TheConfectionRebirth {
 						{
 							if (k < num7)
 							{
-								ConfectionConvert(k, l, 1);
+								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
 							}
 							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
 							{
-								ConfectionConvert(k, l, 1);
+								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
 							}
 						}
 					}
@@ -1138,7 +1138,7 @@ namespace TheConfectionRebirth {
 							{
 								WorldGen.KillTile(k, l - 1);
 							}
-							ConfectionConvert(k, l, 1);
+							WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
 							ushort type = tile3.TileType;
 							if ((uint)(type - 82) <= 1u || (uint)(type - 185) <= 2u || type == 227)
 							{
@@ -1328,336 +1328,6 @@ namespace TheConfectionRebirth {
 				}
 			}
 			return flag;
-		}
-		#endregion
-
-		#region Conversion - Confection
-		public static void ConfectionConvert(int i, int j, int size = 4) {
-			for (int k = i - size; k <= i + size; k++) {
-				for (int l = j - size; l <= j + size; l++) {
-					if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size)) {
-						int type = Main.tile[k, l].TileType;
-						int wall = Main.tile[k, l].WallType;
-
-						#region Walls
-						if (WallID.Sets.Conversion.Stone[wall] && wall != ModContent.WallType<CreamstoneWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneWall>();
-							WorldGen.SquareWallFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.Snow[wall] && wall != ModContent.WallType<CreamWall>()) 
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.Dirt[wall] && wall != ModContent.WallType<CookieWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CookieWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.HardenedSand[wall] && wall != ModContent.WallType<CreamsandstoneWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamsandstoneWall>();
-							WorldGen.SquareWallFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.Sandstone[wall] && wall != ModContent.WallType<HardenedCreamsandWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<HardenedCreamsandWall>();
-							WorldGen.SquareWallFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.Grass[wall] && wall != ModContent.WallType<CreamGrassWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamGrassWall>();
-							WorldGen.SquareWallFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (WallID.Sets.Conversion.Ice[wall] && wall != ModContent.WallType<BlueIceWall>()) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<BlueIceWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (WallID.Sets.Conversion.NewWall1[wall] && wall != ModContent.WallType<Creamstone2Wall>())
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone2Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (WallID.Sets.Conversion.NewWall2[wall] && wall != ModContent.WallType<Creamstone3Wall>())
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone3Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (WallID.Sets.Conversion.NewWall3[wall] && wall != ModContent.WallType<Creamstone4Wall>())
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone4Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (WallID.Sets.Conversion.NewWall4[wall] && wall != ModContent.WallType<Creamstone5Wall>())
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<Creamstone5Wall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (wall == WallID.Cloud)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<PinkFairyFlossWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (wall == WallID.Cave6Unsafe || wall == WallID.Cave6Echo) {
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CookieStonedWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-							break;
-						}
-						else if (wall == WallID.Cave4Unsafe || wall == WallID.Cave4Echo)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<BlueCreamyMossyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.Cave2Unsafe || wall == WallID.Cave2Echo)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<BrownCreamyMossyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.CaveUnsafe || wall == WallID.Cave1Echo)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<GreenCreamyMossyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.Cave5Unsafe || wall == WallID.Cave5Echo)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<PurpleCreamyMossyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.Cave3Unsafe || wall == WallID.Cave3Echo)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<RedCreamyMossyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.AmethystUnsafe || wall == WallID.AmethystEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneAmethystWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.TopazUnsafe || wall == WallID.TopazEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneTopazWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.SapphireUnsafe || wall == WallID.SapphireEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneSapphireWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.EmeraldUnsafe || wall == WallID.EmeraldEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneEmeraldWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.RubyUnsafe || wall == WallID.RubyEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneRubyWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (wall == WallID.DiamondUnsafe || wall == WallID.DiamondEcho)
-						{
-							Main.tile[k, l].WallType = (ushort)ModContent.WallType<CreamstoneDiamondWall>();
-							WorldGen.SquareWallFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						#endregion
-
-						#region TileIDConversions
-						if (TileID.Sets.Conversion.Stone[type] && type != ModContent.TileType<Creamstone>()) {
-							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<Creamstone>());
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Creamstone>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Sand[type] && type != ModContent.TileType<Creamsand>()) {
-							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<Creamsand>());
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Creamsand>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Grass[type] && type != ModContent.TileType<CreamGrass>() && type != ModContent.TileType<CreamGrassMowed>()) {
-							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CreamGrass>());
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamGrass>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Ice[type] && type != ModContent.TileType<BlueIce>()) {
-							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<BlueIce>());
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<BlueIce>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Sandstone[type] && type != ModContent.TileType<Creamsandstone>()) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Creamsandstone>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.HardenedSand[type] && type != ModContent.TileType<HardenedCreamsand>()) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<HardenedCreamsand>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Dirt[type] && type != ModContent.TileType<CookieBlock>()) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CookieBlock>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Snow[type] && type != ModContent.TileType<CreamBlock>()) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamBlock>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.GolfGrass[type] && type != ModContent.TileType<CreamGrassMowed>()) {
-							WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CreamGrassMowed>());
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamGrassMowed>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (TileID.Sets.Conversion.Thorn[type]) {
-							WorldGen.KillTile(k, l);
-							if (Main.netMode == NetmodeID.MultiplayerClient) {
-								NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, k, l);
-							}
-						}
-						#endregion
-
-						#region ManualTileConverting
-						else if (Main.tile[k, l].TileType == TileID.Ruby) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneRuby>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Sapphire) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneSaphire>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Diamond) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneDiamond>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Emerald) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneEmerald>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Amethyst) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneAmethyst>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Topaz) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneTopaz>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.Cloud) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PinkFairyFloss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.RainCloud) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<PurpleFairyFloss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.SnowCloud) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<BlueFairyFloss>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.GreenMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossGreen>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.BrownMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossBrown>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.RedMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossRed>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.BlueMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossBlue>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.PurpleMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossPurple>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.LavaMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossLava>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.KryptonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossKrypton>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.XenonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossXenon>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.ArgonMoss) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossArgon>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.VioletMoss)
-						{
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossNeon>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else if (Main.tile[k, l].TileType == TileID.RainbowMoss)
-						{
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CreamstoneMossHelium>();
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-
-						if (type == TileID.Mud && (Main.tile[k - 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k + 1, l].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l - 1].TileType == ModContent.TileType<CreamGrass>() || Main.tile[k, l + 1].TileType == ModContent.TileType<CreamGrass>())) {
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<CookieBlock>();
-							WorldGen.SquareTileFrame(k, l);
-							NetMessage.SendTileSquare(-1, k, l);
-						}
-						#endregion
-					}
-				}
-			}
 		}
 		#endregion
 

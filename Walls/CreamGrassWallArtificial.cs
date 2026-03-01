@@ -11,6 +11,7 @@ namespace TheConfectionRebirth.Walls
         public override void SetStaticDefaults()
         {
 			WallID.Sets.Conversion.Grass[Type] = true;
+			WallID.Sets.AllowsPlantsToGrow[Type] = true;
 			Main.wallHouse[Type] = true;
             DustType = ModContent.DustType<CreamGrassDust>();
             AddMapEntry(new Color(100, 85, 54));

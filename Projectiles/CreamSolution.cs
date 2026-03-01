@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Biomes;
 using TheConfectionRebirth.Tiles;
 //using TheConfectionRebirth.Walls;
 
@@ -30,7 +31,7 @@ namespace TheConfectionRebirth.Projectiles
 			int dustType = ModContent.DustType<Dusts.CreamSolution>();
 
 			if (Projectile.owner == Main.myPlayer) {
-				ConfectionWorldGeneration.ConfectionConvert((int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+				WorldGen.Convert((int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 2, true, true);
 			}
 
 			if (Projectile.timeLeft > 133) {

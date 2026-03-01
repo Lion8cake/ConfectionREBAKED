@@ -66,45 +66,63 @@ namespace TheConfectionRebirth
 		public static FieldInfo _addColorOfSurfaceBackgroundsModified;
 
 		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type) {
-			if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions) {
-				if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount) {
-					_specialPositions[type][_specialsCount[type]++] = new Point(x, y);
+			if (_addSpecialPointSpecialPositions != null && _addSpecialPointSpecialsCount != null)
+			{
+				if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions)
+				{
+					if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount)
+					{
+						_specialPositions[type][_specialsCount[type]++] = new Point(x, y);
+					}
 				}
 			}
 		}
 
 		public static void CrawlToTopOfVineAndAddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int j, int i) {
-			if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions) {
-				int y = j;
-				for (int num = j - 1; num > 0; num--) {
-					Tile tile = Main.tile[i, num];
-					if (WorldGen.SolidTile(i, num) || !tile.HasTile) {
-						y = num + 1;
-						break;
+			if (_addVineRootPositions != null)
+			{
+				if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions)
+				{
+					int y = j;
+					for (int num = j - 1; num > 0; num--)
+					{
+						Tile tile = Main.tile[i, num];
+						if (WorldGen.SolidTile(i, num) || !tile.HasTile)
+						{
+							y = num + 1;
+							break;
+						}
 					}
-				}
-				Point item = new(i, y);
-				if (!_vineRootsPositions.Contains(item)) {
-					_vineRootsPositions.Add(item);
-					Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
+					Point item = new(i, y);
+					if (!_vineRootsPositions.Contains(item))
+					{
+						_vineRootsPositions.Add(item);
+						Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
+					}
 				}
 			}
 		}
 
 		public static bool GetIsLoading()
 		{
-			if (_addIsLoading != null && _addIsLoading.GetValue(null) is bool isLoading)
+			if (_addIsLoading != null)
 			{
-				return isLoading;
+				if (_addIsLoading != null && _addIsLoading.GetValue(null) is bool isLoading)
+				{
+					return isLoading;
+				}
 			}
 			return true;
 		}
 
 		public static List<AchievementAdvisorCard> GetCards(this AchievementAdvisor self)
 		{
-			if (_addCards.GetValue(self) is List<AchievementAdvisorCard> _cards)
+			if (_addCards != null)
 			{
-				return _cards;
+				if (_addCards.GetValue(self) is List<AchievementAdvisorCard> _cards)
+				{
+					return _cards;
+				}
 			}
 			return null;
 		}
@@ -119,81 +137,108 @@ namespace TheConfectionRebirth
 
 		public static float GetBGScale(this Main self)
 		{
-			if (_addBGScale.GetValue(null) is float bgScale)
+			if (_addBGScale != null)
 			{
-				return bgScale;
+				if (_addBGScale.GetValue(null) is float bgScale)
+				{
+					return bgScale;
+				}
 			}
 			return 1f;
 		}
 
 		public static float GetScreenOff(this Main self)
 		{
-			if (_addScreenOff.GetValue(self) is float screenOff)
+			if (_addScreenOff != null)
 			{
-				return screenOff;
+				if (_addScreenOff.GetValue(self) is float screenOff)
+				{
+					return screenOff;
+				}
 			}
 			return 1f;
 		}
 
 		public static double GetBGParallax(this Main self)
 		{
-			if (_addBGParallax.GetValue(self) is double bgParallax)
+			if (_addBGParallax != null)
 			{
-				return bgParallax;
+				if (_addBGParallax.GetValue(self) is double bgParallax)
+				{
+					return bgParallax;
+				}
 			}
 			return 1.0;
 		}
 
 		public static int GetBGTopY(this Main self)
 		{
-			if (_addBGTopY.GetValue(self) is int bgTopY)
+			if (_addBGTopY != null)
 			{
-				return bgTopY;
+				if (_addBGTopY.GetValue(self) is int bgTopY)
+				{
+					return bgTopY;
+				}
 			}
 			return 1;
 		}
 
 		public static float GetSCAdj(this Main self)
 		{
-			if (_addSCAdj.GetValue(self) is float scAdj)
+			if (_addSCAdj != null)
 			{
-				return scAdj;
+				if (_addSCAdj.GetValue(self) is float scAdj)
+				{
+					return scAdj;
+				}
 			}
 			return 1f;
 		}
 
 		public static int GetBGWidthScaled(this Main self)
 		{
-			if (_addBGWidthScaled.GetValue(null) is int bgWidthScaled)
+			if (_addBGWidthScaled != null)
 			{
-				return bgWidthScaled;
+				if (_addBGWidthScaled.GetValue(null) is int bgWidthScaled)
+				{
+					return bgWidthScaled;
+				}
 			}
 			return 1;
 		}
 
 		public static int GetBGStartX(this Main self)
 		{
-			if (_addBGStartX.GetValue(self) is int bgStartX)
+			if (_addBGStartX != null)
 			{
-				return bgStartX;
+				if (_addBGStartX.GetValue(self) is int bgStartX)
+				{
+					return bgStartX;
+				}
 			}
 			return 1;
 		}
 
 		public static int GetBGLoops(this Main self)
 		{
-			if (_addBGLoops.GetValue(self) is int bgLoops)
+			if (_addBGLoops != null)
 			{
-				return bgLoops;
+				if (_addBGLoops.GetValue(self) is int bgLoops)
+				{
+					return bgLoops;
+				}
 			}
 			return 1;
 		}
 
 		public static Color GetColorOFSurfaceBackgroundsModified(this Main self)
 		{
-			if (_addColorOfSurfaceBackgroundsModified.GetValue(null) is Color ColorOfSurfaceBackgroundsModified)
+			if (_addColorOfSurfaceBackgroundsModified != null)
 			{
-				return ColorOfSurfaceBackgroundsModified;
+				if (_addColorOfSurfaceBackgroundsModified.GetValue(null) is Color ColorOfSurfaceBackgroundsModified)
+				{
+					return ColorOfSurfaceBackgroundsModified;
+				}
 			}
 			return Color.White;
 		}
