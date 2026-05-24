@@ -7,6 +7,11 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <Reference Include="AltLibrary">
+	    <HintPath>..\ModAssemblies\AltLibrary_v2.1.1.3.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 
 	<!-- References -->
 

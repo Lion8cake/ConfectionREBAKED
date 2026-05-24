@@ -2141,6 +2141,7 @@ Mods: {
 			#These 2 status texts are injected into the other localised text formats
 			WorldStatusCandyComma: "{0}% confected,"
 			WorldDescriptionSweeterAir: The air we breathe has become a lot sweeter.
+			AltlibConfectionText: confected
 		}
 
 		TownNPCMood_Nurse.LikeBiome_Confection: I like {BiomeName} because it helps the medicine go down.
@@ -2155,7 +2156,7 @@ Mods: {
 		HallowSelection: {
 			Random: {
 				Title: Random
-				Description: Let nature decide whether hallow or confection defends your world.
+				Description: Let nature decide whether hallow or confection guards your world.
 			}
 
 			Hallow: {
@@ -2264,6 +2265,29 @@ Mods: {
 			19: Fuffles
 			20: AstralGel
 			21: BasicallyIAmCat
+		}
+
+		AltBiomes: {
+			ConfectionBiomeAlt: {
+				DisplayName: Confection Biome Alt
+				Description: Confection Biome Alt
+				GenPassName: Confection Biome Alt
+				DryadTextDescriptor: Confection Biome Alt
+			}
+
+			Mods: {
+				TheConfectionRebirth: {
+					HallowSelection: {
+						Confection: {
+							Title: {
+								DisplayName: Mods. The Confection Rebirth. Hallow Selection. Confection. Title
+								GenPassName: Mods. The Confection Rebirth. Hallow Selection. Confection. Title
+								DryadTextDescriptor: Mods. The Confection Rebirth. Hallow Selection. Confection. Title
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

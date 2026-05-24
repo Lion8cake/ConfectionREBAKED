@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using TheConfectionRebirth.ModSupport;
 
 namespace TheConfectionRebirth.Projectiles
 {
@@ -30,10 +31,14 @@ namespace TheConfectionRebirth.Projectiles
 			{
 				if (ConfectionWorldGeneration.confectionorHallow)
 				{
+					if (ConfectionModCalling.AltLibrary != null)
+						ConfectionModCalling.ConfectionChangeCOHVariable(false);
 					ConfectionWorldGeneration.confectionorHallow = false;
 				}
 				else
 				{
+					if (ConfectionModCalling.AltLibrary != null)
+						ConfectionModCalling.ConfectionChangeCOHVariable(true);
 					ConfectionWorldGeneration.confectionorHallow = true;
 				}
 				NetMessage.SendData(MessageID.WorldData);

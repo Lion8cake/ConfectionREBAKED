@@ -1069,7 +1069,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 
 			var entries = npcLoot.Get(false);
-			if (npc.type == NPCID.WallofFlesh)
+			if (npc.type == NPCID.WallofFlesh && ConfectionModCalling.AltLibrary == null)
 			{
 				foreach (var entry in entries)
 				{

@@ -62,7 +62,10 @@ namespace TheConfectionRebirth {
 
 		public override void Load()
 		{
-			On_WorldGen.GERunner += GERunnerEditer;
+			if (ConfectionModCalling.AltLibrary == null)
+			{
+				On_WorldGen.GERunner += GERunnerEditer;
+			}
 			On_WorldGen.ConvertSkyIslands += On_WorldGen_ConvertSkyIslands;
 			On_WorldGen.hardUpdateWorld += On_WorldGen_hardUpdateWorld;
 			On_WorldGen.UpdateWorld_OvergroundTile += On_WorldGen_UpdateWorld_OvergroundTile;
@@ -75,7 +78,10 @@ namespace TheConfectionRebirth {
 
 		public override void Unload()
 		{
-			On_WorldGen.GERunner -= GERunnerEditer;
+			if (ConfectionModCalling.AltLibrary == null)
+			{
+				On_WorldGen.GERunner -= GERunnerEditer;
+			}
 			On_WorldGen.ConvertSkyIslands -= On_WorldGen_ConvertSkyIslands;
 			On_WorldGen.hardUpdateWorld -= On_WorldGen_hardUpdateWorld;
 			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
@@ -231,6 +237,8 @@ namespace TheConfectionRebirth {
 			{
 				ModContent.GetInstance<TheConfectionRebirth>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
 			}
+			if (ConfectionModCalling.AltLibrary != null)
+				ConfectionModCalling.ConvertConfectionSaveData();
 		}
 
 		public override void NetSend(BinaryWriter writer) 
@@ -266,11 +274,15 @@ namespace TheConfectionRebirth {
 			confectionBG = Main.rand.Next(5);
 			confectionUGBG = Main.rand.Next(4);
 			confectionUGBGSnow = Main.rand.Next(2);
+			if (ConfectionModCalling.AltLibrary != null)
+				ConfectionModCalling.SetCoHVariable();
 		}
 
 		public override void PostUpdateEverything()
 		{
 			confectionBGFlash = MathHelper.Clamp(confectionBGFlash - 0.05f, 0f, 1f);
+			if (ConfectionModCalling.AltLibrary != null)
+				ConfectionModCalling.SetCoHVariable();
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
@@ -482,11 +494,17 @@ namespace TheConfectionRebirth {
 						{
 							if (i > Main.maxTilesX - num7)
 							{
-								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								if (ConfectionModCalling.AltLibrary == null)
+									WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								else 
+									ConfectionModCalling.ConfectionConvert(i, j, 1);
 							}
 							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
 							{
-								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								if (ConfectionModCalling.AltLibrary == null)
+									WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								else
+									ConfectionModCalling.ConfectionConvert(i, j, 1);
 							}
 						}
 					}
@@ -499,11 +517,17 @@ namespace TheConfectionRebirth {
 						{
 							if (k < num7)
 							{
-								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								if (ConfectionModCalling.AltLibrary == null)
+									WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								else
+									ConfectionModCalling.ConfectionConvert(k, l, 1);
 							}
 							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
 							{
-								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								if (ConfectionModCalling.AltLibrary == null)
+									WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+								else
+									ConfectionModCalling.ConfectionConvert(k, l, 1);
 							}
 						}
 					}
@@ -1138,7 +1162,10 @@ namespace TheConfectionRebirth {
 							{
 								WorldGen.KillTile(k, l - 1);
 							}
-							WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+							if (ConfectionModCalling.AltLibrary == null)
+								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
+							else
+								ConfectionModCalling.ConfectionConvert(k, l, 1);
 							ushort type = tile3.TileType;
 							if ((uint)(type - 82) <= 1u || (uint)(type - 185) <= 2u || type == 227)
 							{

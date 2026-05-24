@@ -42,6 +42,7 @@ using TheConfectionRebirth.Hooks;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Accessories;
 using TheConfectionRebirth.Items.Weapons;
+using TheConfectionRebirth.ModSupport;
 using TheConfectionRebirth.NPCs;
 using TheConfectionRebirth.Projectiles;
 using TheConfectionRebirth.RGB;
@@ -139,21 +140,24 @@ namespace TheConfectionRebirth
 			IL_WaterfallManager.FindWaterfalls += CloudWaterfalls;
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust += CreamsandSandstorm;
-			On_WorldGen.Convert_int_int_int_int_bool_bool += Convert;
 			IL_Player.Update += TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += MossScapper;
 
-			IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
-			IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
-			IL_UIWorldCreation.ShowOptionDescription += ConfectionSelectionMenu.ILShowOptionDescription;
-			On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
-			IL_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.ILSetUpGamepadPoints;
+			if (ConfectionModCalling.AltLibrary == null)
+			{
+				IL_UIWorldCreation.BuildPage += ConfectionSelectionMenu.ILBuildPage;
+				IL_UIWorldCreation.MakeInfoMenu += ConfectionSelectionMenu.ILMakeInfoMenu;
+				IL_UIWorldCreation.ShowOptionDescription += ConfectionSelectionMenu.ILShowOptionDescription;
+				On_UIWorldCreation.SetDefaultOptions += ConfectionSelectionMenu.OnSetDefaultOptions;
+				IL_UIWorldCreation.SetupGamepadPoints += ConfectionSelectionMenu.ILSetUpGamepadPoints;
+				On_UIWorldListItem.ctor += ConfectionWorldIconEdit;
+				On_WorldGen.Convert_int_int_int_int_bool_bool += Convert;
+				IL_Lang.GetDryadWorldStatusDialog += DryadWorldStatusEdit;
+				IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
+				IL_WorldGen.CountTiles += SettmodvilsandGoods;
+			}
 
 			IL_UIGenProgressBar.DrawSelf += AddGoodToWorldgenBar;
-			On_UIWorldListItem.ctor += ConfectionWorldIconEdit;
-			IL_Lang.GetDryadWorldStatusDialog += DryadWorldStatusEdit;
-			IL_WorldGen.AddUpAlignmentCounts += AddUpAligmenttmodEvilsandGoods;
-			IL_WorldGen.CountTiles += SettmodvilsandGoods;
 			On_ItemDropDatabase.RegisterBoss_Twins += On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground += On_Main_DrawMapFullscreenBackground;
 			IL_Main.SetBackColor += ConfectionBiomeLightColor;
@@ -223,14 +227,17 @@ namespace TheConfectionRebirth
 			IL_WaterfallManager.FindWaterfalls -= CloudWaterfalls;
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 			IL_Sandstorm.EmitDust -= CreamsandSandstorm;
-			On_WorldGen.Convert_int_int_int_int_bool_bool -= Convert;
 			IL_Player.Update -= TileFallDamage;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= MossScapper;
 			IL_UIGenProgressBar.DrawSelf -= AddGoodToWorldgenBar;
-			On_UIWorldListItem.ctor -= ConfectionWorldIconEdit;
-			IL_Lang.GetDryadWorldStatusDialog -= DryadWorldStatusEdit;
-			IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
-			IL_WorldGen.CountTiles -= SettmodvilsandGoods;
+			if (ConfectionModCalling.AltLibrary == null)
+			{
+				On_WorldGen.Convert_int_int_int_int_bool_bool -= Convert;
+				On_UIWorldListItem.ctor -= ConfectionWorldIconEdit;
+				IL_Lang.GetDryadWorldStatusDialog -= DryadWorldStatusEdit;
+				IL_WorldGen.AddUpAlignmentCounts -= AddUpAligmenttmodEvilsandGoods;
+				IL_WorldGen.CountTiles -= SettmodvilsandGoods;
+			}
 			On_ItemDropDatabase.RegisterBoss_Twins -= On_ItemDropDatabase_RegisterBoss_Twins;
 			On_Main.DrawMapFullscreenBackground -= On_Main_DrawMapFullscreenBackground;
 			IL_Main.SetBackColor -= ConfectionBiomeLightColor;

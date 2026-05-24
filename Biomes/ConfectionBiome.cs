@@ -206,7 +206,7 @@ public class ConfectionBiome : ModBiome
 			}
 			else if (Main._shouldUseWindyDayMusic && !Main.remixWorld)
 			{
-				newMusic = MusicID.MorningRain;
+				newMusic = MusicID.WindyDay;
 			}
 			else
 			{

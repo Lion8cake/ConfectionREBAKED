@@ -1,12 +1,21 @@
-using Terraria.ModLoader;
-using Terraria.Achievements;
-using System;
-using Terraria;
+using AltLibrary;
+using AltLibrary.Common;
+using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Systems;
+using AltLibrary.Core;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Achievements;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TheConfectionRebirth.Biomes;
+using TheConfectionRebirth.ModSupport.Altlib;
+using static AltLibrary.AltLibrary;
 
 namespace TheConfectionRebirth.ModSupport
 {
@@ -15,6 +24,8 @@ namespace TheConfectionRebirth.ModSupport
 		public static readonly Mod? FargoSeeds = ModLoader.TryGetMod("FargoSeeds", out Mod obtainedMod) ? obtainedMod : null;
 
 		public static readonly Mod? BiomeLava = ModLoader.TryGetMod("BiomeLava", out Mod obtainedMod) ? obtainedMod : null;
+
+		public static readonly Mod? AltLibrary = ModLoader.TryGetMod("AltLibrary", out Mod obtainedMod) ? obtainedMod : null;
 
 		/// <summary>
 		/// Checks if fargos best of both worlds is enabled
@@ -27,6 +38,74 @@ namespace TheConfectionRebirth.ModSupport
 		public static void UpdateFargoBoBW()
 		{
 			FargoBoBW = FargoSeeds != null && ModContent.GetInstance<FargoSeedConfectionConfiguration>().BothGoods;
+		}
+
+		[JITWhenModsEnabled("AltLibrary")]
+		public static void ConvertConfectionSaveData()
+		{
+			if (ConfectionWorldGeneration.confectionorHallow)
+			{
+				WorldBiomeManager.WorldHallowBiome = ModContent.GetInstance<ConfectionBiomeAlt>();
+			}
+		}
+
+		[JITWhenModsEnabled("AltLibrary")]
+		public static void SetCoHVariable()
+		{
+			if (WorldBiomeManager.WorldHallowBiome == ModContent.GetInstance<ConfectionBiomeAlt>())
+			{
+				ConfectionWorldGeneration.confectionorHallow = true;
+			}
+			else
+			{
+				ConfectionWorldGeneration.confectionorHallow = false;
+			}
+		}
+
+		[JITWhenModsEnabled("AltLibrary")]
+		public static void ConfectionSolutionConvert(Projectile projectile)
+		{
+			ALConvert.SimulateSolution<ConfectionBiomeAlt>(projectile);
+		}
+
+		[JITWhenModsEnabled("AltLibrary")]
+		public static void ConfectionConvert(int x, int y, int size = 4)
+		{
+			ALConvert.Convert<ConfectionBiomeAlt>(x, y, size);
+		}
+
+		[JITWhenModsEnabled("AltLibrary")]
+		public static void ConfectionChangeCOHVariable(bool enableConfection)
+		{
+			if (enableConfection)
+			{
+				WorldBiomeManager.WorldHallowBiome = ModContent.GetInstance<ConfectionBiomeAlt>();
+			}
+			else
+			{
+				List<AltBiome> list = new List<AltBiome>();
+				for (int i = 0; i < AllBiomes.Count; i++)
+				{
+					if (AllBiomes[i].BiomeType == BiomeType.Hallow && AllBiomes[i].Selectable)
+						list.Add(AllBiomes[i]);
+				}
+				AltBiome selectedBiome = null;
+				int num = 0;
+				int num2 = num = Main.rand.Next(list.Count);
+				while (selectedBiome == null)
+				{
+					if (num >= list.Count)
+						num = 0;
+					if (list[num] == ModContent.GetInstance<ConfectionBiomeAlt>())
+						num++;
+					else
+						selectedBiome = list[num];
+
+					if (num == num2 && selectedBiome == null)
+						selectedBiome = ModContent.GetInstance<ConfectionBiomeAlt>(); // Prevents inf loops where incase no appropriate biome can be found
+				}
+				WorldBiomeManager.WorldHallowBiome = selectedBiome;
+			}
 		}
 
 		public override void Load()
