@@ -92,13 +92,15 @@ namespace TheConfectionRebirth {
 
 				public static bool[] DarkShardOnlyItem = ItemID.Sets.Factory.CreateNamedSet("DarkShardOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.DaoofPow);
 
+				public static bool[] LightShardOnlyItem = ItemID.Sets.Factory.CreateNamedSet("LightShardOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.DaoofPow);
+
 				public static bool[] PixieDustOnlyItem = ItemID.Sets.Factory.CreateNamedSet("PixieDustOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.HolyWater, ItemID.HolyArrow, ItemID.FairyBell, ItemID.RainbowRod, ItemID.FairyWings);
 
 				public static bool[] UnicornHornOnlyItem = ItemID.Sets.Factory.CreateNamedSet("UnicornHornOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.HolyArrow, ItemID.RainbowRod);
 
 				public static bool[] CrystalShardOnlyItem = ItemID.Sets.Factory.CreateNamedSet("CrystalShardOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.CrystalDart, ItemID.CrystalBullet, ItemID.CrystalBlock, ItemID.Chik, ItemID.MagicalHarp, ItemID.RainbowRod, ItemID.ShiftingPearlSandsDye, ItemID.CrystalStorm);
 
-				public static bool[] HallowedBarOnlyItem = ItemID.Sets.Factory.CreateNamedSet("HallowedBarOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.AncientHallowedGreaves, ItemID.AncientHallowedPlateMail, ItemID.AncientHallowedMask, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHelmet, ItemID.AncientHallowedHood, ItemID.HallowedGreaves, ItemID.HallowedPlateMail, ItemID.HallowedHeadgear, ItemID.HallowedMask, ItemID.HallowedHelmet, ItemID.HallowedHood, ItemID.Drax, ItemID.PickaxeAxe, ItemID.HallowedRepeater, ItemID.Excalibur, ItemID.Gungnir, ItemID.HallowJoustingLance, ItemID.SwordWhip, ItemID.SuperStarCannon, ItemID.OpticStaff, ItemID.LightDisc);
+				public static bool[] HallowedBarOnlyItem = ItemID.Sets.Factory.CreateNamedSet("HallowedBarOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.AncientHallowedGreaves, ItemID.AncientHallowedPlateMail, ItemID.AncientHallowedMask, ItemID.AncientHallowedHeadgear, ItemID.AncientHallowedHelmet, ItemID.AncientHallowedHood, ItemID.HallowedGreaves, ItemID.HallowedPlateMail, ItemID.HallowedHeadgear, ItemID.HallowedMask, ItemID.HallowedHelmet, ItemID.HallowedHood, ItemID.Drax, ItemID.PickaxeAxe, ItemID.HallowedRepeater, ItemID.Excalibur, ItemID.Gungnir, ItemID.HallowJoustingLance, ItemID.SwordWhip, ItemID.SuperStarCannon, ItemID.OpticStaff, ItemID.LightDisc, ItemID.Flamethrower);
 
 				public static bool[] PrincessFishOnlyItem = ItemID.Sets.Factory.CreateNamedSet("PrincessFishOnlyItem").Description("The blacklists confection items from appearing in recipes for certain items.").RegisterBoolSet(ItemID.SeafoodDinner);
 

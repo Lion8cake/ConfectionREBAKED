@@ -81,6 +81,7 @@ Mods: {
 			CrookedCookie: A small agile cookie that can't jump but uses its bounces to its advantage. It's a creation of the Creamsand Witch
 			MintJr: A flying mint cookie, due to its minty ability it slows any attacker it deems as a threat. It's a creation of the Creamsand Witch
 			Hunger: A sandwich cookie with a gooie center. It leaps similarly to mimics trying to catch threats in itself. It's a creation of the Creamsand Witch
+			CreamsandWitch: A witch that uses her sugary powers do defeat anyone that get near her home land of the confection desert.
 		}
 
 		ItemAnglerChat: {
@@ -422,7 +423,7 @@ Mods: {
 			}
 
 			SaphireCreamstoneBlock: {
-				DisplayName: Saphire Creamstone Block
+				DisplayName: Sapphire Creamstone Block
 				Tooltip: ""
 			}
 
@@ -1731,7 +1732,7 @@ Mods: {
 
 			GummyWormWhip: {
 				DisplayName: Friendly Gummy Worm
-				Tooltip: "'seems calm about you flinging it like a weapon'"
+				Tooltip: "'Seems calm about you flinging it like a weapon'"
 			}
 
 			BearClaw: {

@@ -17,6 +17,7 @@ namespace TheConfectionRebirth
 		public static RecipeGroup SoulofLightRecipeGroup;
 		public static RecipeGroup SoulofNightRecipeGroup;
 		public static RecipeGroup DarkShardRecipeGroup;
+		public static RecipeGroup LightShardRecipeGroup;
 		public static RecipeGroup PixieDustRecipeGroup;
 		public static RecipeGroup UnicornHornRecipeGroup;
 		public static RecipeGroup CrystalShardRecipeGroup;
@@ -32,6 +33,7 @@ namespace TheConfectionRebirth
 			SoulofLightRecipeGroup = null;
 			SoulofNightRecipeGroup = null;
 			DarkShardRecipeGroup = null;
+			LightShardRecipeGroup = null;
 			PixieDustRecipeGroup = null;
 			UnicornHornRecipeGroup = null;
 			CrystalShardRecipeGroup = null;
@@ -56,6 +58,8 @@ namespace TheConfectionRebirth
 			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofNight), SoulofNightRecipeGroup);
 			DarkShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.DarkShard)}", ItemID.DarkShard, ModContent.ItemType<CanofMeat>());
 			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.DarkShard), DarkShardRecipeGroup);
+			LightShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LightShard)}", ItemID.LightShard, ModContent.ItemType<CreamPuff>());
+			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.LightShard), LightShardRecipeGroup);
 			PixieDustRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PixieDust)}", ItemID.PixieDust, ModContent.ItemType<Sprinkles>());
 			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PixieDust), PixieDustRecipeGroup);
 			UnicornHornRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.UnicornHorn)}", ItemID.UnicornHorn, ModContent.ItemType<CookieDough>());
@@ -125,6 +129,11 @@ namespace TheConfectionRebirth
 					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.DarkShard), DS.stack);
 					recipe.RemoveIngredient(DS);
 				}
+				if (recipe.TryGetIngredient(ItemID.LightShard, out var LS) && !ConfectionIDs.Sets.RecipeBlacklist.LightShardOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.LightShard), LS.stack);
+					recipe.RemoveIngredient(LS);
+				}
 				if (recipe.TryGetIngredient(ItemID.PixieDust, out var PD) && !ConfectionIDs.Sets.RecipeBlacklist.PixieDustOnlyItem[recipe.createItem.type])
 				{
 					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PixieDust), PD.stack);
@@ -176,15 +185,6 @@ namespace TheConfectionRebirth
 		public override void AddRecipes()
 		{
 			#region Vanilla Item Recipes
-			Recipe recipe = Recipe.Create(ItemID.GreaterHealingPotion, 3);
-			recipe.AddIngredient(ModContent.ItemType<Sprinkles>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<Saccharite>());
-			recipe.AddIngredient(ItemID.BottledWater, 3);
-			recipe.AddTile(TileID.AlchemyTable);
-			recipe.DisableDecraft();
-			recipe.SortAfterFirstRecipesOf(ItemID.GreaterHealingPotion);
-			recipe.Register();
-
 			Recipe recipe2 = Recipe.Create(ItemID.HallowedBar);
 			recipe2.AddIngredient(ModContent.ItemType<HallowedOre>(), 5);
 			recipe2.AddTile(TileID.AdamantiteForge);
@@ -507,13 +507,13 @@ namespace TheConfectionRebirth
 			#region Echo Sand Walls Crafting Group
 			//Hardened Creamsand Wall
 			Recipe CreamsandstoneWall = Recipe.Create(ModContent.ItemType<CreamsandstoneWall>(), 4);
-			CreamsandstoneWall.AddIngredient(ModContent.ItemType<Creamsandstone>());
+			CreamsandstoneWall.AddIngredient(ModContent.ItemType<HardenedCreamsand>());
 			CreamsandstoneWall.AddCondition(Condition.InGraveyard);
 			CreamsandstoneWall.AddTile(TileID.WorkBenches);
 			CreamsandstoneWall.SortAfterFirstRecipesOf(ItemID.HallowSandstoneWall);
 			CreamsandstoneWall.Register();
 
-			Recipe CreamsandstoneWall2 = Recipe.Create(ModContent.ItemType<Creamsandstone>());
+			Recipe CreamsandstoneWall2 = Recipe.Create(ModContent.ItemType<HardenedCreamsand>());
 			CreamsandstoneWall2.AddIngredient(ModContent.ItemType<CreamsandstoneWall>(), 4);
 			CreamsandstoneWall2.AddTile(TileID.WorkBenches);
 			CreamsandstoneWall2.SortAfter(CreamsandstoneWall);
@@ -521,13 +521,13 @@ namespace TheConfectionRebirth
 
 			//Creamsandstone Wall (yeah the names are reversed, its confused, I blame 15yr me)
 			Recipe HardenedCreamsandWall = Recipe.Create(ModContent.ItemType<HardenedCreamsandWall>(), 4);
-			HardenedCreamsandWall.AddIngredient(ModContent.ItemType<HardenedCreamsand>());
+			HardenedCreamsandWall.AddIngredient(ModContent.ItemType<Creamsandstone>());
 			HardenedCreamsandWall.AddCondition(Condition.InGraveyard);
 			HardenedCreamsandWall.AddTile(TileID.WorkBenches);
 			HardenedCreamsandWall.SortAfter(CreamsandstoneWall2);
 			HardenedCreamsandWall.Register();
 
-			Recipe HardenedCreamsandWall2 = Recipe.Create(ModContent.ItemType<HardenedCreamsand>());
+			Recipe HardenedCreamsandWall2 = Recipe.Create(ModContent.ItemType<Creamsandstone>());
 			HardenedCreamsandWall2.AddIngredient(ModContent.ItemType<HardenedCreamsandWall>(), 4);
 			HardenedCreamsandWall2.AddTile(TileID.WorkBenches);
 			HardenedCreamsandWall2.SortAfter(HardenedCreamsandWall);
@@ -1142,7 +1142,7 @@ namespace TheConfectionRebirth
 
 			//Yum Wall
 			Recipe YumBlockWall = Recipe.Create(ModContent.ItemType<YumBlockWall>(), 4);
-			YumBlockWall.AddIngredient(ModContent.ItemType<PastryBlock>());
+			YumBlockWall.AddIngredient(ModContent.ItemType<YumDrop>());
 			YumBlockWall.AddTile(TileID.WorkBenches);
 			YumBlockWall.SortAfterFirstRecipesOf(ItemID.MushroomWall);
 			YumBlockWall.Register();
@@ -1317,16 +1317,6 @@ namespace TheConfectionRebirth
 			DimensionSplit2.AddTile(TileID.Anvils);
 			DimensionSplit2.SortAfter(DimensionSplit);
 			DimensionSplit2.Register();
-
-			Recipe DimensionSplit3 = Recipe.Create(ModContent.ItemType<DimensionSplit>());
-			DimensionSplit3.AddIngredient(ModContent.ItemType<BananawarpPeel>());
-			DimensionSplit3.AddIngredient(ModContent.ItemType<CookieDough>(), 2);
-			DimensionSplit3.AddIngredient(ModContent.ItemType<Saccharite>(), 6);
-			DimensionSplit3.AddIngredient(ModContent.ItemType<SoulofDelight>(), 8);
-			DimensionSplit3.AddCondition(Language.GetOrRegister("CelebrationMK10"), () => Main.tenthAnniversaryWorld);
-			DimensionSplit3.AddTile(TileID.Anvils);
-			DimensionSplit3.SortAfter(DimensionSplit2);
-			DimensionSplit3.Register();
 
 			//Cherry Bomb
 			Recipe CherryGrenade = Recipe.Create(ModContent.ItemType<CherryGrenade>(), 5);
