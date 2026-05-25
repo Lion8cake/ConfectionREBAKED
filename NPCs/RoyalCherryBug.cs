@@ -240,6 +240,18 @@ namespace TheConfectionRebirth.NPCs
 
 		public override void HitEffect(NPC.HitInfo hit)
 		{
+			if (NPC.life <= 0)
+			{
+				if (!NPC.AnyNPCs(NPCID.HallowBoss))
+				{
+					int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)(NPC.Center.Y / 1.02), NPCID.HallowBoss);
+					if (Main.netMode == NetmodeID.Server)
+					{
+						NetMessage.SendData(MessageID.SyncNPC, number: index);
+					}
+				}
+			}
+
 			if (Main.netMode == NetmodeID.Server)
 			{
 				return;

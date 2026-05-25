@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
+using TheConfectionRebirth.Items.Armor.NeapoliniteSet;
 
 namespace TheConfectionRebirth.PlayerLayers
 {
@@ -22,7 +23,7 @@ namespace TheConfectionRebirth.PlayerLayers
 			{
 				DrawArmComposite(ref drawinfo);
 			}
-			else if (drawinfo.drawPlayer.body > 0 && HelmetType > 0) //Old hand rendering, again here for when other broken mods use the old renderer
+			else if (drawinfo.drawPlayer.body == ModContent.GetInstance<NeapoliniteConeMail>().Item.bodySlot && HelmetType > 0) //Old hand rendering, again here for when other broken mods use the old renderer
 			{
 				Texture2D arms = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 				Rectangle bodyFrame = drawinfo.drawPlayer.bodyFrame;
@@ -67,7 +68,7 @@ namespace TheConfectionRebirth.PlayerLayers
 			int num3 = ((!drawinfo.compShoulderOverFrontArm) ? 1 : 0);
 			int num4 = ((!drawinfo.compShoulderOverFrontArm) ? 1 : 0);
 			bool flag = !drawinfo.hidesTopSkin;
-			if (drawinfo.drawPlayer.body > 0 && HelmetType > 0)
+			if (drawinfo.drawPlayer.body == ModContent.GetInstance<NeapoliniteConeMail>().Item.bodySlot && HelmetType > 0)
 			{
 				if (!drawinfo.drawPlayer.invis)
 				{

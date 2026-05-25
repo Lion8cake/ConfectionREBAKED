@@ -17,6 +17,8 @@ using TheConfectionRebirth.Buffs.NeapoliniteBuffs;
 using TheConfectionRebirth.Dusts;
 using TheConfectionRebirth.Items;
 using TheConfectionRebirth.Items.Accessories;
+using TheConfectionRebirth.Items.Armor.BirthdayOutfit;
+using TheConfectionRebirth.Items.Armor.NeapoliniteSet;
 using TheConfectionRebirth.Items.Placeable;
 using TheConfectionRebirth.Items.Weapons;
 using TheConfectionRebirth.Mounts;
@@ -508,6 +510,7 @@ namespace TheConfectionRebirth
 					}
 				}
 			}
+
 			if (candleFire && Collision.WetCollision(Player.position, Player.width, Player.height))
 			{
 				Player.ClearBuff(ModContent.BuffType<HumanCandle>());
@@ -520,6 +523,7 @@ namespace TheConfectionRebirth
 			{
 				candleFlameDelay--;
 			}
+
 			if (!shakenOffFoamin)
 			{
 				if (Player.controlLeft || Player.controlRight)
@@ -559,6 +563,14 @@ namespace TheConfectionRebirth
 							shakingTimer = 0;
 						}
 					}
+				}
+			}
+
+			if (Player.head == ModContent.GetInstance<TopCake>().Item.headSlot)
+			{
+				if (Player.body == ModContent.GetInstance<BirthdaySuit>().Item.bodySlot && Player.legs == ModContent.GetInstance<RightTrousers>().Item.legSlot)
+				{
+					TopCake.BirthdaySuitAchievementCall(Player);
 				}
 			}
 		}
@@ -645,7 +657,7 @@ namespace TheConfectionRebirth
 
 			int time = 300;
 			int type = 0;
-			int[][] validTypes = new int[4][] {
+			int[][] validTypes = new int[4][] { //Turn this into a BuffID set
 				new int[5] { ModContent.BuffType<VanillaValorI>(), ModContent.BuffType<VanillaValorII>(), ModContent.BuffType<VanillaValorIII>(), ModContent.BuffType<VanillaValorIV>(), ModContent.BuffType<VanillaValorV>() },
 				new int[5] { ModContent.BuffType<ChocolateChargeI>(), ModContent.BuffType<ChocolateChargeII>(), ModContent.BuffType<ChocolateChargeIII>(), ModContent.BuffType<ChocolateChargeIV>(), ModContent.BuffType<ChocolateChargeV>() },
 				new int[5] { ModContent.BuffType<StrawberryStrikeI>(), ModContent.BuffType<StrawberryStrikeII>(), ModContent.BuffType<StrawberryStrikeIII>(), ModContent.BuffType<StrawberryStrikeIV>(), ModContent.BuffType<StrawberryStrikeV>() },
@@ -685,35 +697,19 @@ namespace TheConfectionRebirth
 		{
 			Player drawPlayer = drawInfo.drawPlayer;
 			int HelmetType = 0;
-			if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
+			if (drawPlayer.head == ModContent.GetInstance<NeapoliniteHat>().Item.headSlot)
 			{
 				HelmetType = 4;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
+			else if (drawPlayer.head == ModContent.GetInstance<NeapoliniteHeadgear>().Item.headSlot)
 			{
 				HelmetType = 3;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
+			else if (drawPlayer.head == ModContent.GetInstance<NeapoliniteHelmet>().Item.headSlot)
 			{
 				HelmetType = 2;
 			}
-			else if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
-			{
-				HelmetType = 1;
-			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHat>())
-			{
-				HelmetType = 4;
-			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHeadgear>())
-			{
-				HelmetType = 3;
-			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteHelmet>())
-			{
-				HelmetType = 2;
-			}
-			else if (drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NeapoliniteSet.NeapoliniteMask>())
+			else if (drawPlayer.head == ModContent.GetInstance<NeapoliniteMask>().Item.headSlot)
 			{
 				HelmetType = 1;
 			}

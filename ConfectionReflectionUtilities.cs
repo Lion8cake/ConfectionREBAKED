@@ -28,6 +28,9 @@ namespace TheConfectionRebirth
 			_addBGStartX = typeof(Main).GetField("bgStartX", BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 			_addBGLoops = typeof(Main).GetField("bgLoops", BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 			_addColorOfSurfaceBackgroundsModified = typeof(Main).GetField("ColorOfSurfaceBackgroundsModified", BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+			_addGetShimmerEquivalentType = typeof(Item).GetMethod("GetShimmerEquivalentType", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+			_addFindDecraftAmount = typeof(Item).GetMethod("FindDecraftAmount", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
 		}
 
 		public static void Unload() {
@@ -45,6 +48,8 @@ namespace TheConfectionRebirth
 			_addBGStartX = null;
 			_addBGLoops = null;
 			_addColorOfSurfaceBackgroundsModified = null;
+			_addGetShimmerEquivalentType = null;
+			_addFindDecraftAmount = null;
 		}
 
 		public static FieldInfo _addSpecialPointSpecialPositions;
@@ -64,6 +69,9 @@ namespace TheConfectionRebirth
 		public static FieldInfo _addBGStartX;
 		public static FieldInfo _addBGLoops;
 		public static FieldInfo _addColorOfSurfaceBackgroundsModified;
+
+		public static MethodInfo _addGetShimmerEquivalentType;
+		public static MethodInfo _addFindDecraftAmount;
 
 		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type) {
 			if (_addSpecialPointSpecialPositions != null && _addSpecialPointSpecialsCount != null)
@@ -241,6 +249,24 @@ namespace TheConfectionRebirth
 				}
 			}
 			return Color.White;
+		}
+
+		public static int GetShimmerEquivalentType(this Item self)
+		{
+			if (_addGetShimmerEquivalentType != null)
+			{
+				return (int)_addGetShimmerEquivalentType.Invoke(self, []);
+			}
+			return -1;
+		}
+
+		public static int FindDecraftAmount(this Item self)
+		{
+			if (_addFindDecraftAmount != null)
+			{
+				return (int)_addFindDecraftAmount.Invoke(self, []);
+			}
+			return -1;
 		}
 	}
 }

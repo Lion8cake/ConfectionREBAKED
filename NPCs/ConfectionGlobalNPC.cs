@@ -1295,6 +1295,13 @@ namespace TheConfectionRebirth.NPCs
 			{
 				shop.InsertAfter(ItemID.Bell, ModContent.ItemType<Items.Kazoo>(), Condition.Hardmode);
 			}
+			if (shop.NpcType == NPCID.WitchDoctor)
+			{
+				shop.InsertAfter(ItemID.HallowedWaterFountain, new Item(ModContent.ItemType<ConfectionWaterFountain>())
+				{
+					shopCustomPrice = Item.buyPrice(0, 4, 0, 0)
+				});
+			}
 			if (shop.NpcType == NPCID.BestiaryGirl)
 			{
 				shop.InsertAfter(ItemID.WorldGlobe, new Item(ModContent.ItemType<Items.HallowedGlobe>())

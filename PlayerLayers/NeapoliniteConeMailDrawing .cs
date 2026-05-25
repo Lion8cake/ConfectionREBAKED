@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using TheConfectionRebirth.Items.Armor.NeapoliniteSet;
 
 namespace TheConfectionRebirth.PlayerLayers
 {
@@ -22,7 +23,7 @@ namespace TheConfectionRebirth.PlayerLayers
 			{
 				DrawComposite(ref drawinfo);
 			}
-			else if (drawinfo.drawPlayer.body > 0 && HelmetType > 0) //Old chestplate renderer, here incase some weird fucked up mod wants to use the old renderer
+			else if (drawinfo.drawPlayer.body == ModContent.GetInstance<NeapoliniteConeMail>().Item.bodySlot && HelmetType > 0) //Old chestplate renderer, here incase some weird fucked up mod wants to use the old renderer
 			{
 				Texture2D male = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
 				Texture2D female = (Texture2D)ModContent.Request<Texture2D>("TheConfectionRebirth/Items/Armor/NeapoliniteSet/NeapoliniteConeMail_Body_" + HelmetType);
@@ -57,7 +58,7 @@ namespace TheConfectionRebirth.PlayerLayers
 			Vector2 compositeOffset_BackArm = GetCompositeOffset_BackArm(ref drawinfo);
 			_ = val + compositeOffset_BackArm;
 			bodyVect += compositeOffset_BackArm;
-			if (drawinfo.drawPlayer.body > 0 && HelmetType > 0)
+			if (drawinfo.drawPlayer.body == ModContent.GetInstance<NeapoliniteConeMail>().Item.bodySlot && HelmetType > 0)
 			{
 				if (!drawinfo.drawPlayer.invis)
 				{

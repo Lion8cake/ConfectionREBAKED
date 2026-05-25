@@ -111,16 +111,16 @@ namespace TheConfectionRebirth.Items
 				DrunkWorldIsNotActive NotDrunk = new DrunkWorldIsNotActive();
 
 				LeadingConditionRule ConfectionCondition = new LeadingConditionRule(new ConfectionDropRule());
-				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 15 * 5, 30 * 5));
+				ConfectionCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 20 * 5, 35 * 5));
 				itemLoot.Add(ConfectionCondition);
 
 				LeadingConditionRule HallowCondition = new LeadingConditionRule(new HallowDropRule());
-				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.HallowedOre>(), 1, 15 * 5, 30 * 5));
+				HallowCondition.OnSuccess(ItemDropRule.ByCondition(NotDrunk, ModContent.ItemType<Placeable.HallowedOre>(), 1, 20 * 5, 35 * 5));
 				itemLoot.Add(HallowCondition);
 
 				LeadingConditionRule DrunkCondition = new LeadingConditionRule(new DrunkWorldIsActive());
-				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.HallowedOre>(), 1, 8 * 5, 15 * 5));
-				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 8 * 5, 15 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.HallowedOre>(), 1, 10 * 5, 18 * 5));
+				DrunkCondition.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Placeable.NeapoliniteOre>(), 1, 10 * 5, 18 * 5));
 				itemLoot.Add(DrunkCondition);
 			}
 		}
@@ -158,6 +158,17 @@ namespace TheConfectionRebirth.Items
 				}
 			}
 			return null;
+		}
+
+		public override void SetDefaults(Item entity)
+		{
+			if (entity.type == ItemID.LightShard || entity.type == ItemID.DarkShard)
+			{
+				entity.useTime = 20;
+				entity.useAnimation = 20;
+				entity.useStyle = ItemUseStyleID.Swing;
+				entity.autoReuse = true;
+			}
 		}
 	}
 }

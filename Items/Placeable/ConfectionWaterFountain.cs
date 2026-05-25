@@ -22,6 +22,7 @@ namespace TheConfectionRebirth.Items.Placeable
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
+            Item.rare = ItemRarityID.Blue;
             Item.value = 500;
             Item.createTile = ModContent.TileType<Tiles.ConfectionWaterFountain>();
         }

@@ -2,3 +2,23 @@ Beta v0.30.2.0
 =========================
 Added Altlib support (do note there may be bugs)
 Fixed Confection using the Morning Rain music rather than Windy Day
+Fixed Yumdrop wall crafting pastry blocks
+Fixed Creamsand stone wall and hardened creamsand wall crafting their opposite block
+Fixed Creamsand stone wall and hardened creamsand wall having swapped item sprites
+Fixed a Typo in Cream Sapphire Block
+Fixed a Typo in the Gummy wyrm whip
+Fixed Light Shard not existing, locking players out of crafting the skyfracture in confection worlds
+Fixed the flamethrower being craftable using confection materials
+Fixed Greater healing potions and the dimensional split having duplicate recipes
+Fixed the creamsand witch's bestiary entry
+Fixed Neapolinite helmets causing any chestplate worn to look like neapolinite cone mail
+Fixed Hematic crates dropping souls of night rather than souls of spite
+Fixed Birthday ride not being obtainable properly
+Fixed Key of Spite and Enchanted Saccharite not having heavenely forge recipes
+Fixed Light Shard, Dark Shard, Cream puff and Can of meat being unable to be used at a chlorothyre extractinator
+Fixed Dimensional split being able to shimmer into the Lickety split early
+Fixed Pink, Purple and Blue fairy floss converting to snow blocks at a chlorothyte extractinator
+Fixed Royal Cherry Bugs not spawning the Empress of Light
+Fixed Mechanical boss treasure bags not dropping the correct amount of ores
+Fixed creamsand not being able to craft sand related recipes
+Fixed the Confection Waterfountain from being both unobtainable as well has having the wrong rarity

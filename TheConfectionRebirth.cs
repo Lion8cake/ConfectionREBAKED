@@ -5,13 +5,16 @@ using MonoMod.Cil;
 using ReLogic.Content;
 using ReLogic.Peripherals.RGB;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.Achievements;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Animations;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
@@ -192,6 +195,8 @@ namespace TheConfectionRebirth
 			IL_CaptureInterface.ModeChangeSettings.Draw += moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update += moveCaptureDefaultsHitbox;
 			On_NPC.UpdateNPC_CritterSounds += ModNPCCritterSounds;
+			IL_ItemDropDatabase.GetRulesForItemID += EditHemoCrateDrops;
+			On_Item.CanShimmer += CanLSShimmer;
 
 			On_AchievementAdvisorCard.IsAchievableInWorld += IsAchieveableInConfectionWorld;
 			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
@@ -272,6 +277,8 @@ namespace TheConfectionRebirth
 			IL_CaptureInterface.ModeChangeSettings.Draw -= moveCaptureDefaultsText;
 			IL_CaptureInterface.ModeChangeSettings.Update -= moveCaptureDefaultsHitbox;
 			On_NPC.UpdateNPC_CritterSounds -= ModNPCCritterSounds;
+			IL_ItemDropDatabase.GetRulesForItemID -= EditHemoCrateDrops;
+			On_Item.CanShimmer -= CanLSShimmer;
 
 			On_AchievementAdvisorCard.IsAchievableInWorld -= IsAchieveableInConfectionWorld;
 			IL_Recipe.UpdateWhichItemsAreMaterials -= RemoveMaterialFromUnusedRecipeGroups;
@@ -309,6 +316,55 @@ namespace TheConfectionRebirth
 				_ => throw new Exception("TheConfectionRebirth: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region CanShimmerLSLock
+		private bool CanLSShimmer(On_Item.orig_CanShimmer orig, Item self)
+		{
+			if (self.type == ModContent.ItemType<DimensionSplit>() && !NPC.downedMoonlord)
+			{
+				return false;
+			}
+			return orig.Invoke(self);
+		}
+		#endregion
+
+		#region Hematic crate drop changer
+		private void EditHemoCrateDrops(ILContext il)
+		{
+			ILCursor c = new(il);
+			int iItemDropRule_locVar = -1;
+			c.GotoNext(MoveType.Before, i => i.MatchLdloc(out _), i => i.MatchLdloc(out iItemDropRule_locVar), i => i.MatchCallvirt<List<IItemDropRule>>(nameof(List<IItemDropRule>.AddRange)));
+			c.EmitLdloca(iItemDropRule_locVar);
+			c.EmitLdarg(1);
+			c.EmitDelegate((ref List<IItemDropRule> value, int itemID) =>
+			{
+				List<IItemDropRule> value2 = [.. value];
+				if (itemID == ItemID.CrimsonFishingCrateHard)
+				{
+					foreach (IItemDropRule dropRule in value)
+					{
+						if (dropRule is AlwaysAtleastOneSuccessDropRule)
+						{
+							AlwaysAtleastOneSuccessDropRule drop2 = (AlwaysAtleastOneSuccessDropRule)dropRule;
+							for (int i = 0; i < drop2.rules.Length; i++)
+							{
+								if (drop2.rules[i] is CommonDropNotScalingWithLuck)
+								{
+									int index = value.IndexOf(dropRule);
+									if (((CommonDropNotScalingWithLuck)drop2.rules[i]).itemId == ItemID.SoulofNight)
+									{
+										((CommonDropNotScalingWithLuck)((AlwaysAtleastOneSuccessDropRule)dropRule).rules[i]).itemId = ModContent.ItemType<SoulofSpite>();
+										value2[index] = dropRule;
+									}
+								}
+							}
+						}
+					}
+				}
+				value = [.. value2];
+			});
+		}
+		#endregion
 
 		#region RecipeGroupMaterialTextPatcher
 		private void RemoveMaterialFromUnusedRecipeGroups(ILContext il)

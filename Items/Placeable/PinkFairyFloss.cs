@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Items.Placeable
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 
-			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.SnowBlock, 1);
+			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.Cloud, 1);
 		}
 
 		public override void SetDefaults()

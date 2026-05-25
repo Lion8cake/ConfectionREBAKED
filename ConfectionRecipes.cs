@@ -51,6 +51,7 @@ namespace TheConfectionRebirth
 			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Cherimoya>());
 			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<CocoaBeans>());
 			RecipeGroup.recipeGroups[RecipeGroupID.Sand].ValidItems.Add(ModContent.ItemType<HardenedCreamsand>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Sand].ValidItems.Add(ModContent.ItemType<Creamsand>());
 
 			SoulofLightRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SoulofLight)}", ItemID.SoulofLight, ModContent.ItemType<SoulofDelight>());
 			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofLight), SoulofLightRecipeGroup);
@@ -1294,9 +1295,11 @@ namespace TheConfectionRebirth
 			HeavensForge.SortAfterFirstRecipesOf(ItemID.TitaniumForge);
 			HeavensForge.Register();
 			AddAndReplace<KeyofDelight>(ItemID.LightKey, HeavensForge);
+			AddAndReplace<KeyofSpite>(ItemID.NightKey, HeavensForge);
 			AddAndReplace<ConfectionBiomeKey>(ItemID.HallowedKey, HeavensForge);
 			AddAndReplace<GrandSlammer>(ItemID.Pwnhammer, HeavensForge);
 			AddAndReplace<RoyalCherryBug>(ItemID.EmpressButterfly, HeavensForge);
+			AddAndReplace<EnchantedSaccharite>(ItemID.QueenSlimeCrystal, HeavensForge);
 
 			//Dimensional Split
 			Recipe DimensionSplit = Recipe.Create(ModContent.ItemType<DimensionSplit>());
