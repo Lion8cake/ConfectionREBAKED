@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
             DustType = ModContent.DustType<CreamwoodDust>();
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodLantern>());
@@ -43,10 +43,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			bool intoRenderTargets = true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
-
-			if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 36 == 0 && flag)
+			if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 36 == 0)
 			{
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
 			}

@@ -47,10 +47,8 @@ namespace TheConfectionRebirth.Tiles
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			spriteBatch.End();
 			spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.EffectMatrix);
-			bool intoRenderTargets = true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
 
-			if (Main.tile[i, j].TileFrameX / 18 <= 4 && flag) {
+			if (Main.tile[i, j].TileFrameX / 18 <= 4) {
 				DrawMultiTileGrass(i, j, spriteBatch);
 			}
 			spriteBatch.End();

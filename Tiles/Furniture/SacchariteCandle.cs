@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<SacchariteDust>();

@@ -109,7 +109,7 @@ namespace TheConfectionRebirth.Projectiles
 			return Collision.CanHit(Projectile.Center, 0, 0, projHitbox.Center.ToVector2(), 0, 0);
 		}
 
-		public override bool PreDraw(ref Color lightColor) {
+		public override bool PreDraw(Player player, ref Color lightColor) {
 			bool flag = Projectile.ai[0] == 1f;
 			float num = 60f;
 			float num10 = 12f;

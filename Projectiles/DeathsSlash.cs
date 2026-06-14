@@ -73,7 +73,7 @@ namespace TheConfectionRebirth.Projectiles
 					Vector2 vector = Projectile.Center + f.ToRotationVector2() * 84f * Projectile.scale;
 					if (Main.rand.Next(5) == 0) {
 						Dust dust = Dust.NewDustPerfect(vector, 115, null, 150, default(Color), 1.4f);
-						dust.noLight = (dust.noLightEmittence = true);
+						dust.noLight = (dust.noLightEmittance = true);
 					}
 					if (Main.rand.Next(2) == 0) {
 						Dust.NewDustPerfect(vector, 231, new Vector2(player.velocity.X * 0.2f + (float)(player.direction * 3), player.velocity.Y * 0.2f), 100, default(Color), 1.4f).noGravity = true;
@@ -125,7 +125,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
         {
 			Vector2 vector = Projectile.Center - Main.screenPosition;
 			Asset<Texture2D> asset = TextureAssets.Projectile[Projectile.type];

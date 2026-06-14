@@ -47,38 +47,89 @@ namespace TheConfectionRebirth
 
 		public override void AddRecipeGroups()
 		{
-			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<CreamWood>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Cherimoya>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<CocoaBeans>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Sand].ValidItems.Add(ModContent.ItemType<HardenedCreamsand>());
-			RecipeGroup.recipeGroups[RecipeGroupID.Sand].ValidItems.Add(ModContent.ItemType<Creamsand>());
+			RecipeGroups.Wood.ValidItems.Add(ModContent.ItemType<CreamWood>());
+			RecipeGroups.Fruit.ValidItems.Add(ModContent.ItemType<Cherimoya>());
+			RecipeGroups.Fruit.ValidItems.Add(ModContent.ItemType<CocoaBeans>());
+			RecipeGroups.Sand.ValidItems.Add(ModContent.ItemType<HardenedCreamsand>());
+			RecipeGroups.Sand.ValidItems.Add(ModContent.ItemType<Creamsand>());
 
-			SoulofLightRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SoulofLight)}", ItemID.SoulofLight, ModContent.ItemType<SoulofDelight>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofLight), SoulofLightRecipeGroup);
-			SoulofNightRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SoulofNight)}", ItemID.SoulofNight, ModContent.ItemType<SoulofSpite>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.SoulofNight), SoulofNightRecipeGroup);
-			DarkShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.DarkShard)}", ItemID.DarkShard, ModContent.ItemType<CanofMeat>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.DarkShard), DarkShardRecipeGroup);
-			LightShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LightShard)}", ItemID.LightShard, ModContent.ItemType<CreamPuff>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.LightShard), LightShardRecipeGroup);
-			PixieDustRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PixieDust)}", ItemID.PixieDust, ModContent.ItemType<Sprinkles>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PixieDust), PixieDustRecipeGroup);
-			UnicornHornRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.UnicornHorn)}", ItemID.UnicornHorn, ModContent.ItemType<CookieDough>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.UnicornHorn), UnicornHornRecipeGroup);
-			CrystalShardRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.CrystalShard)}", ItemID.CrystalShard, ModContent.ItemType<Saccharite>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.CrystalShard), CrystalShardRecipeGroup);
-			HallowedBarRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.HallowedBar)}", ItemID.HallowedBar, ModContent.ItemType<NeapoliniteBar>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.HallowedBar), HallowedBarRecipeGroup);
-			PrincessFishRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PrincessFish)}", ItemID.PrincessFish, ModContent.ItemType<CookieCarp>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PrincessFish), PrincessFishRecipeGroup);
-			PrismiteRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Prismite)}", ItemID.Prismite, ModContent.ItemType<Cakekite>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.Prismite), PrismiteRecipeGroup);
-			ChaosFishRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.ChaosFish)}", ItemID.ChaosFish, ModContent.ItemType<SugarFish>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.ChaosFish), ChaosFishRecipeGroup);
-			HallowedSeedsRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.HallowedSeeds)}", ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.HallowedSeeds), HallowedSeedsRecipeGroup);
-			PearlstoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.PearlstoneBlock)}", ItemID.PearlstoneBlock, ModContent.ItemType<Creamstone>());
-			RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.PearlstoneBlock), PearlstoneRecipeGroup);
+			SoulofLightRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.SoulofLight),
+				Lang.GetItemNameValue(ItemID.SoulofLight),
+				ItemID.SoulofLight, ModContent.ItemType<SoulofDelight>()
+			);
+
+			SoulofNightRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.SoulofNight),
+				Lang.GetItemNameValue(ItemID.SoulofNight),
+				ItemID.SoulofNight, ModContent.ItemType<SoulofSpite>()
+			);
+
+			DarkShardRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.DarkShard),
+				Lang.GetItemNameValue(ItemID.DarkShard),
+				ItemID.DarkShard, ModContent.ItemType<CanofMeat>()
+			);
+
+			LightShardRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.LightShard),
+				Lang.GetItemNameValue(ItemID.LightShard),
+				ItemID.LightShard, ModContent.ItemType<CreamPuff>()
+			);
+
+			PixieDustRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.PixieDust),
+				Lang.GetItemNameValue(ItemID.PixieDust),
+				ItemID.PixieDust, ModContent.ItemType<Sprinkles>()
+			);
+
+			UnicornHornRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.UnicornHorn),
+				Lang.GetItemNameValue(ItemID.UnicornHorn),
+				ItemID.UnicornHorn, ModContent.ItemType<CookieDough>()
+			);
+
+			CrystalShardRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.CrystalShard),
+				Lang.GetItemNameValue(ItemID.CrystalShard),
+				ItemID.CrystalShard, ModContent.ItemType<Saccharite>()
+			);
+
+			HallowedBarRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.HallowedBar),
+				Lang.GetItemNameValue(ItemID.HallowedBar),
+				ItemID.HallowedBar, ModContent.ItemType<NeapoliniteBar>()
+			);
+
+			PrincessFishRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.PrincessFish),
+				Lang.GetItemNameValue(ItemID.PrincessFish),
+				ItemID.PrincessFish, ModContent.ItemType<CookieCarp>()
+			);
+
+			PrismiteRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.Prismite),
+				Lang.GetItemNameValue(ItemID.Prismite),
+				ItemID.Prismite, ModContent.ItemType<Cakekite>()
+			);
+
+			ChaosFishRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.ChaosFish),
+				Lang.GetItemNameValue(ItemID.ChaosFish),
+				ItemID.ChaosFish, ModContent.ItemType<SugarFish>()
+			);
+
+			HallowedSeedsRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.HallowedSeeds),
+				Lang.GetItemNameValue(ItemID.HallowedSeeds),
+				ItemID.HallowedSeeds, ModContent.ItemType<CreamBeans>()
+			);
+
+			PearlstoneRecipeGroup = RecipeGroup.Register(
+				nameof(ItemID.PearlstoneBlock),
+				Lang.GetItemNameValue(ItemID.PearlstoneBlock),
+				ItemID.PearlstoneBlock, ModContent.ItemType<Creamstone>()
+			);
 		}
 
 		public override void PostAddRecipes()
@@ -117,67 +168,67 @@ namespace TheConfectionRebirth
 
 				if (recipe.TryGetIngredient(ItemID.SoulofLight, out var SoL) && !ConfectionIDs.Sets.RecipeBlacklist.SoulofLightOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.SoulofLight), SoL.stack);
+					recipe.AddRecipeGroup(SoulofLightRecipeGroup, SoL.stack);
 					recipe.RemoveIngredient(SoL);
 				}
 				if (recipe.TryGetIngredient(ItemID.SoulofNight, out var SoN) && !ConfectionIDs.Sets.RecipeBlacklist.SoulofNightOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.SoulofNight), SoN.stack);
+					recipe.AddRecipeGroup(SoulofNightRecipeGroup, SoN.stack);
 					recipe.RemoveIngredient(SoN);
 				}
 				if (recipe.TryGetIngredient(ItemID.DarkShard, out var DS) && !ConfectionIDs.Sets.RecipeBlacklist.DarkShardOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.DarkShard), DS.stack);
+					recipe.AddRecipeGroup(DarkShardRecipeGroup, DS.stack);
 					recipe.RemoveIngredient(DS);
 				}
 				if (recipe.TryGetIngredient(ItemID.LightShard, out var LS) && !ConfectionIDs.Sets.RecipeBlacklist.LightShardOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.LightShard), LS.stack);
+					recipe.AddRecipeGroup(LightShardRecipeGroup, LS.stack);
 					recipe.RemoveIngredient(LS);
 				}
 				if (recipe.TryGetIngredient(ItemID.PixieDust, out var PD) && !ConfectionIDs.Sets.RecipeBlacklist.PixieDustOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PixieDust), PD.stack);
+					recipe.AddRecipeGroup(PixieDustRecipeGroup, PD.stack);
 					recipe.RemoveIngredient(PD);
 				}
 				if (recipe.TryGetIngredient(ItemID.UnicornHorn, out var UH) && !ConfectionIDs.Sets.RecipeBlacklist.UnicornHornOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.UnicornHorn), UH.stack);
+					recipe.AddRecipeGroup(UnicornHornRecipeGroup, UH.stack);
 					recipe.RemoveIngredient(UH);
 				}
 				if (recipe.TryGetIngredient(ItemID.CrystalShard, out var CS) && !ConfectionIDs.Sets.RecipeBlacklist.CrystalShardOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.CrystalShard), CS.stack);
+					recipe.AddRecipeGroup(CrystalShardRecipeGroup, CS.stack);
 					recipe.RemoveIngredient(CS);
 				}
 				if (recipe.TryGetIngredient(ItemID.HallowedBar, out var HB) && !ConfectionIDs.Sets.RecipeBlacklist.HallowedBarOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.HallowedBar), HB.stack);
+					recipe.AddRecipeGroup(HallowedBarRecipeGroup, HB.stack);
 					recipe.RemoveIngredient(HB);
 				}
 				if (recipe.TryGetIngredient(ItemID.PrincessFish, out var PF) && !ConfectionIDs.Sets.RecipeBlacklist.PrincessFishOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PrincessFish), PF.stack);
+					recipe.AddRecipeGroup(PrincessFishRecipeGroup, PF.stack);
 					recipe.RemoveIngredient(PF);
 				}
 				if (recipe.TryGetIngredient(ItemID.Prismite, out var Prismite) && !ConfectionIDs.Sets.RecipeBlacklist.PrismiteOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.Prismite), Prismite.stack);
+					recipe.AddRecipeGroup(PrismiteRecipeGroup, Prismite.stack);
 					recipe.RemoveIngredient(Prismite);
 				}
 				if (recipe.TryGetIngredient(ItemID.ChaosFish, out var CF) && !ConfectionIDs.Sets.RecipeBlacklist.ChaosFishOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.ChaosFish), CF.stack);
+					recipe.AddRecipeGroup(ChaosFishRecipeGroup, CF.stack);
 					recipe.RemoveIngredient(CF);
 				}
 				if (recipe.TryGetIngredient(ItemID.HallowedSeeds, out var HS) && !ConfectionIDs.Sets.RecipeBlacklist.HallowedSeedsOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.HallowedSeeds), HS.stack);
+					recipe.AddRecipeGroup(HallowedSeedsRecipeGroup, HS.stack);
 					recipe.RemoveIngredient(HS);
 				}
 				if (recipe.TryGetIngredient(ItemID.PearlstoneBlock, out var Pearlstone) && !ConfectionIDs.Sets.RecipeBlacklist.PearlstoneOnlyItem[recipe.createItem.type])
 				{
-					recipe.AddRecipeGroup(Lang.GetItemNameValue(ItemID.PearlstoneBlock), Pearlstone.stack);
+					recipe.AddRecipeGroup(PearlstoneRecipeGroup, Pearlstone.stack);
 					recipe.RemoveIngredient(Pearlstone);
 				}
 			}
@@ -934,7 +985,7 @@ namespace TheConfectionRebirth
 
 			//Confection Campfire
 			Recipe ConfectionCampfire = Recipe.Create(ModContent.ItemType<ConfectionCampfire>());
-			ConfectionCampfire.AddRecipeGroup(RecipeGroupID.Wood, 10);
+			ConfectionCampfire.AddRecipeGroup(RecipeGroups.Wood, 10);
 			ConfectionCampfire.AddIngredient(ModContent.ItemType<ConfectionTorch>(), 5);
 			ConfectionCampfire.SortAfterFirstRecipesOf(ItemID.HallowedCampfire);
 			ConfectionCampfire.Register();
@@ -1274,7 +1325,7 @@ namespace TheConfectionRebirth
 
 			//Sherbet Campfire
 			Recipe SherbetCampfire = Recipe.Create(ModContent.ItemType<SherbetCampfire>());
-			SherbetCampfire.AddRecipeGroup(RecipeGroupID.Wood, 10);
+			SherbetCampfire.AddRecipeGroup(RecipeGroups.Wood, 10);
 			SherbetCampfire.AddIngredient(ModContent.ItemType<SherbetTorch>(), 5);
 			SherbetCampfire.SortAfterFirstRecipesOf(ItemID.RainbowCampfire);
 			SherbetCampfire.Register();
@@ -1464,7 +1515,7 @@ namespace TheConfectionRebirth
 			//Saccharite Chest
 			Recipe SacchariteChest = Recipe.Create(ModContent.ItemType<SacchariteChest>());
 			SacchariteChest.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 20);
-			SacchariteChest.AddRecipeGroup(RecipeGroupID.IronBar, 2);
+			SacchariteChest.AddRecipeGroup(RecipeGroups.IronBar, 2);
 			SacchariteChest.AddTile(TileID.WorkBenches);
 			SacchariteChest.SortAfter(SacchariteChandelier);
 			SacchariteChest.Register();
@@ -1472,7 +1523,7 @@ namespace TheConfectionRebirth
 			//Saccharite Clock
 			Recipe SacchariteClock = Recipe.Create(ModContent.ItemType<SacchariteClock>());
 			SacchariteClock.AddIngredient(ModContent.ItemType<SacchariteBrick>(), 25);
-			SacchariteClock.AddRecipeGroup(RecipeGroupID.IronBar, 3);
+			SacchariteClock.AddRecipeGroup(RecipeGroups.IronBar, 3);
 			SacchariteClock.AddIngredient(ItemID.Glass, 6);
 			SacchariteClock.AddTile(TileID.Sawmill);
 			SacchariteClock.SortAfter(SacchariteChest);
@@ -1663,7 +1714,7 @@ namespace TheConfectionRebirth
 			//Creamwood Chest
 			Recipe CreamwoodChest = Recipe.Create(ModContent.ItemType<CreamwoodChest>());
 			CreamwoodChest.AddIngredient(ModContent.ItemType<CreamWood>(), 8);
-			CreamwoodChest.AddRecipeGroup(RecipeGroupID.IronBar, 2);
+			CreamwoodChest.AddRecipeGroup(RecipeGroups.IronBar, 2);
 			CreamwoodChest.AddTile(TileID.WorkBenches);
 			CreamwoodChest.SortAfter(CreamwoodChandelier);
 			CreamwoodChest.Register();
@@ -1671,7 +1722,7 @@ namespace TheConfectionRebirth
 			//Creamwood Clock
 			Recipe CreamwoodClock = Recipe.Create(ModContent.ItemType<CreamwoodClock>());
 			CreamwoodClock.AddIngredient(ModContent.ItemType<CreamWood>(), 10);
-			CreamwoodClock.AddRecipeGroup(RecipeGroupID.IronBar, 3);
+			CreamwoodClock.AddRecipeGroup(RecipeGroups.IronBar, 3);
 			CreamwoodClock.AddIngredient(ItemID.Glass, 6);
 			CreamwoodClock.AddTile(TileID.Sawmill);
 			CreamwoodClock.SortAfter(CreamwoodChest);

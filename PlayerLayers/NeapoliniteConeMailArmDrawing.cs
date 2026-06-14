@@ -80,14 +80,14 @@ namespace TheConfectionRebirth.PlayerLayers
 							PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, CompositePlayerDrawContext.FrontShoulder, new DrawData(value, position, drawinfo.compFrontShoulderFrame, drawinfo.colorArmorBody, bodyRotation, bodyVect, 1f, drawinfo.playerEffect)
 							{
 								shader = drawinfo.cBody
-							});
+							}, drawinfo.drawPlayer.body);
 						}
 						if (i == num3)
 						{
 							PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, CompositePlayerDrawContext.FrontArm, new DrawData(value, vector, drawinfo.compFrontArmFrame, drawinfo.colorArmorBody, rotation, bodyVect, 1f, drawinfo.playerEffect)
 							{
 								shader = drawinfo.cBody
-							});
+							}, drawinfo.drawPlayer.body);
 						}
 					}
 				}
@@ -98,7 +98,7 @@ namespace TheConfectionRebirth.PlayerLayers
 				PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, CompositePlayerDrawContext.FrontArmAccessory, new DrawData(value2, vector, drawinfo.compFrontArmFrame, drawinfo.colorArmorBody, rotation, bodyVect, 1f, drawinfo.playerEffect)
 				{
 					shader = drawinfo.cHandOn
-				});
+				}, drawinfo.drawPlayer.body);
 			}
 		}
 

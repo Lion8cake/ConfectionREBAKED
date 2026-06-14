@@ -243,10 +243,10 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.SlimeStaff, 10000, 7000));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+  //      public override float SpawnChance(NPC.Spawner spawnInfo)
+  //      {
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void HitEffect(NPC.HitInfo hit)
         {

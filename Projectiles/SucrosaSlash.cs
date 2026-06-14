@@ -124,7 +124,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
         {
 			Vector2 vector = Projectile.Center - Main.screenPosition;
 			Asset<Texture2D> asset = TextureAssets.Projectile[Projectile.type];

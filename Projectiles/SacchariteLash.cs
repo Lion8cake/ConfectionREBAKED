@@ -54,7 +54,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override bool PreDraw(ref Color lightColor) {
+		public override bool PreDraw(Player player, ref Color lightColor) {
 			List<Vector2> list = new List<Vector2>();
 			Projectile.FillWhipControlPoints(Projectile, list);
 

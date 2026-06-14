@@ -34,7 +34,7 @@ namespace TheConfectionRebirth.Items.Accessories
 			bool noLightEmittence = player.wingsLogic != player.wings;
 			if (!inUse)
 			{
-				if (player.wingsLogic > 0 && player.controlJump && player.velocity.Y > 0f && !player.mount.CanHover() && !(player.mount.CanFly() && player.controlJump && player.jump == 0) && !(player.slowFall && !player.TryingToHoverDown) && !(player.rocketDelay > 0))
+				if (player.wingsLogic > 0 && player.controlJump && player.velocity.Y > 0f && !player.mount.CanHover() && !(player.mount.CanFly(player) && player.controlJump && player.jump == 0) && !(player.slowFall && !player.TryingToHoverDown) && !(player.rocketDelay > 0))
 				{
 					if (player.velocity.Y > 0f)
 					{
@@ -47,7 +47,7 @@ namespace TheConfectionRebirth.Items.Accessories
 							}
 							int dustID = Dust.NewDust(new Vector2(player.position.X + (float)(player.width / 2) + (float)addedPos, player.position.Y + (float)(player.height / 2) - 12f), 30, 20, dustType, 0f, 0f);
 							Dust dust = Main.dust[dustID];
-							dust.noLightEmittence = noLightEmittence;
+							dust.noLightEmittance = noLightEmittence;
 							dust.velocity *= 0.3f;
 							dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
 						}
@@ -66,7 +66,7 @@ namespace TheConfectionRebirth.Items.Accessories
 					int dustID = Dust.NewDust(new Vector2(player.position.X + (float)(player.width / 2) + (float)addedPos, player.position.Y + (float)(player.height / 2) - 15f), 30, 30, dustType, 0f, 0f);
 					Dust dust = Main.dust[dustID];
 					dust.velocity *= 0.3f;
-					dust.noLightEmittence = noLightEmittence;
+					dust.noLightEmittance = noLightEmittence;
 					dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
 				}
 			}

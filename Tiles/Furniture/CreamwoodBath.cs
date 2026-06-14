@@ -16,7 +16,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+            TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
 
             DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Beds };

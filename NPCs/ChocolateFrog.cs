@@ -49,14 +49,14 @@ namespace TheConfectionRebirth.NPCs
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) 
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo) 
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
 		public override void PostAI()
 		{
-			if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.noTileCollide && NPC.lifeMax > 1 && Collision.SwitchTiles(NPC.position, NPC.width, NPC.height, NPC.oldPosition, 2))
+			if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.noTileCollide && NPC.lifeMax > 1 && Collision.SwitchTiles(NPC, NPC.position, NPC.width, NPC.height, NPC.oldPosition, 2))
 			{
 				NPC.ai[0] = 1f;
 				NPC.ai[1] = 400f;

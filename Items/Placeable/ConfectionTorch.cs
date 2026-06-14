@@ -44,11 +44,11 @@ namespace TheConfectionRebirth.Items.Placeable
             Lighting.AddLight(position, 0.27f, 1.34f, 1.69f);
         }
 
-        public override void PostUpdate()
+        public override void PostUpdate(WorldItem item)
         {
-            if (!Item.wet)
+            if (!item.wet)
             {
-                Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 0.27f, 1.34f, 1.69f);
+                Lighting.AddLight((int)((item.position.X + Item.width / 2) / 16f), (int)((item.position.Y + Item.height / 2) / 16f), 0.27f, 1.34f, 1.69f);
             }
         }
     }

@@ -13,7 +13,7 @@ namespace TheConfectionRebirth.Buffs
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
-			BuffID.Sets.LongerExpertDebuff[Type] = true;
+			BuffID.Sets.BuffTimeIsExtendedWithGameDifficulty[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
 

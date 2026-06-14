@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.WaterDeath = true;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			DustType = ModContent.DustType<SacchariteDust>();
             AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.SacchariteLamp>());

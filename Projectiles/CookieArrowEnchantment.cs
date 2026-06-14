@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public bool isEnchanted = false;
 
-		public override bool PreDraw(Projectile projectile, ref Color lightColor)
+		public override bool PreDraw(Projectile projectile, Player player, ref Color lightColor)
 		{
 			if (isEnchanted)
 			{

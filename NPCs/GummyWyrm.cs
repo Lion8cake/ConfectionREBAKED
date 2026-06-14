@@ -520,10 +520,10 @@ namespace TheConfectionRebirth.NPCs {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.GummyWormWhip>(), 100));
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 	}
 
 	public class GummyWyrmBody : ConfectionWorm {

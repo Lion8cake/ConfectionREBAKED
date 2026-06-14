@@ -43,7 +43,7 @@ namespace TheConfectionRebirth.Tiles.Pylons
 
 			TileObjectData.addTile(Type);
 
-			TileID.Sets.InteractibleByNPCs[Type] = true;
+			TileID.Sets.InteractableByNPCs[Type] = true;
 			TileID.Sets.PreventsSandfall[Type] = true;
 
 			AddToArray(ref TileID.Sets.CountsAsPylon);
@@ -53,7 +53,7 @@ namespace TheConfectionRebirth.Tiles.Pylons
 		}
 
 		public override NPCShop.Entry GetNPCShopEntry() {
-			return new NPCShop.Entry(ModContent.ItemType<ConfectionPylon>(), new Condition("Mods.TheConfectionRebirth.Conditions.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>()), Condition.HappyEnoughToSellPylons, Condition.AnotherTownNPCNearby);
+			return new NPCShop.Entry(ModContent.ItemType<ConfectionPylon>(), new Condition("Mods.TheConfectionRebirth.Conditions.InConfection", () => Main.LocalPlayer.InModBiome<ConfectionBiome>()), Condition.AnotherTownNPCNearby);
 		}
 
 

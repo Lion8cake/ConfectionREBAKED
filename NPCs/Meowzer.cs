@@ -686,9 +686,9 @@ namespace TheConfectionRebirth.NPCs
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PastryTart>(), 95, 1));
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 	}
 }

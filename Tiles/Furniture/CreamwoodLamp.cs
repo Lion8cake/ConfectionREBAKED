@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.WaterDeath = true;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			DustType = ModContent.DustType<CreamwoodDust>();
             AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
 			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.CreamwoodLamp>());

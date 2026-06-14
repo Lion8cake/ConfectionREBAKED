@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            TileID.Sets.RoomNeeds.CountsAsDoor[Type] = true;
 
             DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.OpenDoor };

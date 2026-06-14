@@ -24,8 +24,8 @@ namespace TheConfectionRebirth.Tiles
 			Main.tileWaterDeath[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
-			TileID.Sets.InteractibleByNPCs[Type] = true;
-			TileID.Sets.Campfire[Type] = true;
+			TileID.Sets.InteractableByNPCs[Type] = true;
+			TileID.Sets.Campfires[Type] = true;
 
 			DustType = -1; // No dust when mined.
 			AdjTiles = new int[] { TileID.Campfire };

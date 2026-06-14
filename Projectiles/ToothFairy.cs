@@ -26,7 +26,7 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.minionSlots = 0;
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 			lightColor = Color.White;
 			return true;

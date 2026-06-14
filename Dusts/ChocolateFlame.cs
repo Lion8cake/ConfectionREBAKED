@@ -22,7 +22,7 @@ namespace TheConfectionRebirth.Dusts
 			{
 				dust.velocity.Y = 0f;
 			}
-			if (!dust.noLight && !dust.noLightEmittence)
+			if (!dust.noLight && !dust.noLightEmittance)
 			{
 				float num66 = dust.scale * 1.4f;
 				if (num66 > 1f)

@@ -17,7 +17,7 @@ namespace TheConfectionRebirth.Tiles
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.addTile(Type);
             AnimationFrameHeight = 54;
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+            TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(179, 146, 113), name);
         }

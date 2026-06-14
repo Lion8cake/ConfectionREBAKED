@@ -11,8 +11,7 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-				Ref<Effect> pixelShaderRef = Main.PixelShaderRef;
-				GameShaders.Armor.BindShader(Item.type, new ArmorShaderData(pixelShaderRef, "ArmorWisp")).UseColor(0.4f, 1f, 0.5f).UseSecondaryColor(0f, 1f, 0.2f);
+				GameShaders.Armor.BindShader(Item.type, new ArmorShaderData(Main.PixelShaderRef, "ArmorWisp")).UseColor(0.4f, 1f, 0.5f).UseSecondaryColor(0f, 1f, 0.2f);
 			}
 			Item.ResearchUnlockCount = 3;
 		}

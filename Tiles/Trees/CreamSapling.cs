@@ -122,7 +122,7 @@ namespace TheConfectionRebirth.Tiles.Trees
 			Tile tile = Main.tile[i, num];
 			Tile tile2 = Main.tile[i, num - 1];
 			byte color = 0;
-			if (Main.tenthAnniversaryWorld && !WorldGen.gen)
+			if (Main.tenthAnniversaryWorld && !WorldGen.isGeneratingOrLoadingWorld)
 			{
 				color = (byte)WorldGen.genRand.Next(1, 13);
 			}

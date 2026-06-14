@@ -103,7 +103,7 @@ namespace TheConfectionRebirth.Projectiles
 			return true;
 		}
 
-		public override void PostDraw(Color lightColor)
+		public override void PostDraw(Player player, Color lightColor)
 		{
 			if (Projectile.timeLeft > 60)
 			{

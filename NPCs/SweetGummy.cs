@@ -109,10 +109,10 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.TrifoldMap, 100));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+  //      public override float SpawnChance(NPC.Spawner spawnInfo)
+  //      {
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void HitEffect(NPC.HitInfo hit)
         {

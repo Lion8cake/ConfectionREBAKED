@@ -18,7 +18,7 @@ namespace TheConfectionRebirth.Projectiles
 
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true;
+			//ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true; //removed
 			Main.projFrames[Projectile.type] = 2;
 		}
 
@@ -157,6 +157,7 @@ namespace TheConfectionRebirth.Projectiles
 			return false;
 		}
 
+		//may have broken as of 1.4.5.6
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -431,10 +432,9 @@ namespace TheConfectionRebirth.Projectiles
 			//Projectile.AI_015_Flails_Dust(doFastThrowDust); //Spawn dusts from a flail like the Blue moon or sunfury
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
-			Player player = Main.player[Projectile.owner];
-			Vector2 playerArmPosition = Main.GetPlayerArmPosition(Projectile);
+			Vector2 playerArmPosition = Main.GetPlayerArmPosition(Projectile, player);
 			if (Projectile.ai[2] > -1 && Main.projectile[(int)Projectile.ai[2]].active)
 			{
 				playerArmPosition = Main.projectile[(int)Projectile.ai[2]].Center;

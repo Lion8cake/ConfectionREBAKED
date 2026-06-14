@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.hostile = true;
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 			Texture2D beam = ModContent.Request<Texture2D>("TheConfectionRebirth/Projectiles/MeowzerBeam").Value;
 			Texture2D tex = ModContent.Request<Texture2D>("TheConfectionRebirth/Projectiles/MeowzerBeam_Prime").Value;

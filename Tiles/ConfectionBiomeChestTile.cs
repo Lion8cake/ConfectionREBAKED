@@ -31,7 +31,7 @@ namespace TheConfectionRebirth.Tiles
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.AvoidedByNPCs[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
@@ -179,7 +179,7 @@ namespace TheConfectionRebirth.Tiles
 					if (left == player.chestX && top == player.chestY && player.chest != -1)
 					{
 						player.chest = -1;
-						Recipe.FindRecipes();
+						//Recipe.FindRecipes(); TODO: add chest to recipe updates
 						SoundEngine.PlaySound(SoundID.MenuClose);
 					}
 					else
@@ -219,7 +219,7 @@ namespace TheConfectionRebirth.Tiles
 							player.OpenChest(left, top, chest);
 						}
 
-						Recipe.FindRecipes();
+						//Recipe.FindRecipes(); //TODO: Fix chest recipes
 					}
 				}
 			}

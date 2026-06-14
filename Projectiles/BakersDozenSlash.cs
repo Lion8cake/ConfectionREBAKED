@@ -64,7 +64,7 @@ namespace TheConfectionRebirth.Projectiles
 			return new Color(255, 255, 255, 200);
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 			SpriteEffects dir = (SpriteEffects)0;
 			if (Projectile.spriteDirection == -1)

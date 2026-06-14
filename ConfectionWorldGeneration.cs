@@ -71,9 +71,10 @@ namespace TheConfectionRebirth {
 			On_WorldGen.UpdateWorld_OvergroundTile += On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile += On_WorldGen_UpdateWorld_UndergroundTile;
 			On_WorldGen.SpreadDesertWalls += On_WorldGen_SpreadDesertWalls;
-			On_WorldGen.RandPictureTile += ImpactGeneration;
+			On_WorldGen.RandHousePicture += ImpactGeneration;
 			On_WorldGen.nearPicture2 += nearImpact2;
 			On_WorldGen.PlaceTile += placeImpact;
+			On_WorldGen.IsLockedDungeonBiomeChest += AddConfectionChest;
 		}
 
 		public override void Unload()
@@ -87,9 +88,10 @@ namespace TheConfectionRebirth {
 			On_WorldGen.UpdateWorld_OvergroundTile -= On_WorldGen_UpdateWorld_OvergroundTile;
 			On_WorldGen.UpdateWorld_UndergroundTile -= On_WorldGen_UpdateWorld_UndergroundTile;
 			On_WorldGen.SpreadDesertWalls -= On_WorldGen_SpreadDesertWalls;
-			On_WorldGen.RandPictureTile -= ImpactGeneration;
+			On_WorldGen.RandHousePicture -= ImpactGeneration;
 			On_WorldGen.nearPicture2 -= nearImpact2;
 			On_WorldGen.PlaceTile -= placeImpact;
+			On_WorldGen.IsLockedDungeonBiomeChest -= AddConfectionChest;
 		}
 
 		public override void OnWorldLoad()
@@ -285,42 +287,55 @@ namespace TheConfectionRebirth {
 				ConfectionModCalling.SetCoHVariable();
 		}
 
-		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
+		public override void ModifyWorldGenTasks(List<GenPass> tasks)
 		{
 			ConfectionModCalling.UpdateFargoBoBW();
-			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
-			{
-				int index = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
-				if (index != -1)
-				{
-					tasks.Insert(index + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
-				}
-			}
-			else
-			{
-				if (confectionorHallow)
-				{
-					int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
-					if (index2 != -1)
-					{
-						tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
-						tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
-					}
-				}
-			}
+			//TODO: maybe its time to finally update this
+
+			//if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
+			//{
+			//	int index = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+			//	if (index != -1)
+			//	{
+			//		tasks.Insert(index + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+			//	}
+			//}
+			//else
+			//{
+			//	if (confectionorHallow)
+			//	{
+			//		int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+			//		if (index2 != -1)
+			//		{
+			//			tasks.Insert(index2 + 1, new PassLegacy("Confection Biome Chest", new WorldGenLegacyMethod(ConfectionChest)));
+			//			tasks.Insert(index2 + 2, new PassLegacy("Hallow Chest removal", new WorldGenLegacyMethod(HallowChestRemoval)));
+			//		}
+			//	}
+			//}
 		}
 
 		public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
 			ConfectionModCalling.UpdateFargoBoBW();
+			bool flag = true;
+			if (Main.dualDungeonsSeed)
+			{
+				flag = false;
+			}
 			if (confectionorHallow || ConfectionModCalling.FargoBoBW || Main.drunkWorld)
 			{
 				int index4 = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Good Remix"));
 				if (index4 != -1)
 				{
-					list.Insert(index4 + 1, new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix))); //Usure if finished
+					PassLegacy HardmodeGoodRemixPass = new PassLegacy("Hardmode Good Remix", new WorldGenLegacyMethod(ConfectionRemix));
+					list.Insert(index4 + 1, HardmodeGoodRemixPass);
 					if (confectionorHallow && !(Main.drunkWorld || ConfectionModCalling.FargoBoBW))
 						list.RemoveAt(index4);
+
+					if (!Main.remixWorld || !flag)
+					{
+						HardmodeGoodRemixPass.Disable();
+					}
 				}
 			}
 			if (ConfectionModCalling.FargoBoBW || Main.drunkWorld)
@@ -355,51 +370,51 @@ namespace TheConfectionRebirth {
 		}
 
 		#region BiomeChest
-		private static void ConfectionChest(GenerationProgress progres, GameConfiguration configurations)
-		{
-			for (int num79 = 0; num79 < 1; num79++)
-			{
-				bool flag5 = false;
-				while (!flag5)
-				{
-					int num80 = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
-					int num81 = WorldGen.genRand.Next((int)Main.worldSurface, GenVars.dMaxY);
-					if (!Main.wallDungeon[Main.tile[num80, num81].WallType] || Main.tile[num80, num81].HasTile)
-					{
-						continue;
-					}
-					ushort chestTileType = (ushort)ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
-					int contain = 0;
-					int style2 = 0;
-					if (num79 == 0)
-					{
-						style2 = 1;
-						contain = ModContent.ItemType<Items.Weapons.PopRocket>();
-					}
-					flag5 = WorldGen.AddBuriedChest(num80, num81, contain, notNearOtherChests: false, style2, trySlope: false, chestTileType);
-				}
-			}
-		}
+		//private static void ConfectionChest(GenerationProgress progres, GameConfiguration configurations)
+		//{
+		//	for (int num79 = 0; num79 < 1; num79++)
+		//	{
+		//		bool flag5 = false;
+		//		while (!flag5)
+		//		{
+		//			int num80 = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
+		//			int num81 = WorldGen.genRand.Next((int)Main.worldSurface, GenVars.dMaxY);
+		//			if (!Main.wallDungeon[Main.tile[num80, num81].WallType] || Main.tile[num80, num81].HasTile)
+		//			{
+		//				continue;
+		//			}
+		//			ushort chestTileType = (ushort)ModContent.TileType<Tiles.ConfectionBiomeChestTile>();
+		//			int contain = 0;
+		//			int style2 = 0;
+		//			if (num79 == 0)
+		//			{
+		//				style2 = 1;
+		//				contain = ModContent.ItemType<Items.Weapons.PopRocket>();
+		//			}
+		//			flag5 = WorldGen.AddBuriedChest(num80, num81, contain, notNearOtherChests: false, style2, trySlope: false, chestTileType);
+		//		}
+		//	}
+		//}
 
-		private static void HallowChestRemoval(GenerationProgress progres, GameConfiguration configurations)
-		{
-			if (!Main.drunkWorld)
-			{
-				for (int index = 0; index < Main.maxChests; index++)
-				{
-					if (Main.chest[index] != null)
-					{
-						int X = Main.chest[index].x;
-						int Y = Main.chest[index].y;
-						if (Main.tile[X, Y].TileType == TileID.Containers && Main.wallDungeon[Main.tile[X, Y].WallType] && (Main.tile[X, Y].TileFrameX == 26 * (18 * 2) || Main.tile[X, Y].TileFrameX == 26.5 * (18 * 2)))
-						{
-							Chest.DestroyChestDirect(X, Y, index);
-							WorldGen.KillTile(X, Y, false, false, true);
-						}
-					}
-				}
-			}
-		}
+		//private static void HallowChestRemoval(GenerationProgress progres, GameConfiguration configurations)
+		//{
+		//	if (!Main.drunkWorld)
+		//	{
+		//		for (int index = 0; index < Main.maxChests; index++)
+		//		{
+		//			if (Main.chest[index] != null)
+		//			{
+		//				int X = Main.chest[index].x;
+		//				int Y = Main.chest[index].y;
+		//				if (Main.tile[X, Y].TileType == TileID.Containers && Main.wallDungeon[Main.tile[X, Y].WallType] && (Main.tile[X, Y].TileFrameX == 26 * (18 * 2) || Main.tile[X, Y].TileFrameX == 26.5 * (18 * 2)))
+		//				{
+		//					Chest.DestroyChestDirect(X, Y, index);
+		//					WorldGen.KillTile(X, Y, false, false, true);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
 		#endregion
 
 		#region DrunkWorldgen
@@ -414,14 +429,14 @@ namespace TheConfectionRebirth {
 			num3 = (int)((double)(Main.maxTilesX) * num);
 			num4 = (int)((double)(Main.maxTilesX) * (1.0 - num));
 			num5 = 1;
-			if (GenVars.dungeonX > Main.maxTilesX / 2)
+			if (Main.dungeonX > Main.maxTilesX / 2)
 			{
 				num4 = (int)((double)(Main.maxTilesX) * num);
 				num3 = (int)((double)(Main.maxTilesX) * (1.0 - num));
 				num5 = -1;
 			}
 			num6 = 1;
-			if (GenVars.dungeonX > Main.maxTilesX / 2)
+			if (Main.dungeonX > Main.maxTilesX / 2)
 			{
 				num6 = -1;
 			}
@@ -475,107 +490,55 @@ namespace TheConfectionRebirth {
 		#region ConfectionRemixWorldgen
 		private static void ConfectionRemix(GenerationProgress progres, GameConfiguration configurations)
 		{
-			WorldGen.IsGeneratingHardMode = true;
-			WorldGen.TryProtectingSpawnedItems();
-			if (Main.rand == null)
+			bool flag = (Main.drunkWorld || ConfectionModCalling.FargoBoBW) ? Main.dungeonX > Main.maxTilesX / 2 : Main.dungeonX < Main.maxTilesX / 2;
+			int num7 = Main.maxTilesX / 7;
+			int num8 = Main.maxTilesX / 14;
+			if (flag)
 			{
-				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);
-			}
-			bool flag = (Main.drunkWorld || ConfectionModCalling.FargoBoBW) ? GenVars.dungeonX > Main.maxTilesX / 2 : GenVars.dungeonX < Main.maxTilesX / 2;
-			if (Main.remixWorld)
-			{
-				int num7 = Main.maxTilesX / 7;
-				int num8 = Main.maxTilesX / 14;
-				if (flag)
+				for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
 				{
-					for (int i = Main.maxTilesX - num7 - num8; i < Main.maxTilesX; i++)
+					for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++)
 					{
-						for (int j = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); j < Main.maxTilesY - 10; j++)
+						if (i > Main.maxTilesX - num7)
 						{
-							if (i > Main.maxTilesX - num7)
-							{
-								if (ConfectionModCalling.AltLibrary == null)
-									WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
-								else 
-									ConfectionModCalling.ConfectionConvert(i, j, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
-							{
-								if (ConfectionModCalling.AltLibrary == null)
-									WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
-								else
-									ConfectionModCalling.ConfectionConvert(i, j, 1);
-							}
+							if (ConfectionModCalling.AltLibrary == null)
+								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type);
+							else
+								ConfectionModCalling.ConfectionConvert(i, j, 1);
 						}
-					}
-				}
-				else
-				{
-					for (int k = 0; k < num7 + num8; k++)
-					{
-						for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++)
+						else if (TileID.Sets.Crimson[Main.tile[i, j].TileType] || TileID.Sets.Corrupt[Main.tile[i, j].TileType])
 						{
-							if (k < num7)
-							{
-								if (ConfectionModCalling.AltLibrary == null)
-									WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
-								else
-									ConfectionModCalling.ConfectionConvert(k, l, 1);
-							}
-							else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
-							{
-								if (ConfectionModCalling.AltLibrary == null)
-									WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type, 1, true, true);
-								else
-									ConfectionModCalling.ConfectionConvert(k, l, 1);
-							}
+							if (ConfectionModCalling.AltLibrary == null)
+								WorldGen.Convert(i, j, ModContent.GetInstance<ConfectionBiomeConversion>().Type);
+							else
+								ConfectionModCalling.ConfectionConvert(i, j, 1);
 						}
 					}
 				}
 			}
-			double num9 = (double)Main.maxTilesX / 4200.0;
-			int num10 = (int)(25.0 * num9);
-			ShapeData shapeData = new ShapeData();
-			int num11 = 0;
-			while (num10 > 0)
+			else
 			{
-				if (++num11 % 15000 == 0)
+				for (int k = 0; k < num7 + num8; k++)
 				{
-					num10--;
-				}
-				Point point = WorldGen.RandomWorldPoint((int)Main.worldSurface - 100, 1, 190, 1);
-				Tile tile = Main.tile[point.X, point.Y];
-				Tile tile2 = Main.tile[point.X, point.Y - 1];
-				ushort num12 = 0;
-				if (TileID.Sets.Crimson[tile.TileType])
-				{
-					num12 = (ushort)(192 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Corrupt[tile.TileType])
-				{
-					num12 = (ushort)(188 + WorldGen.genRand.Next(4));
-				}
-				else if (TileID.Sets.Hallow[tile.TileType])
-				{
-					num12 = (ushort)(200 + WorldGen.genRand.Next(4));
-				}
-				if (tile.HasTile && num12 != 0 && !tile2.HasTile)
-				{
-					bool flag2 = WorldUtils.Gen(new Point(point.X, point.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Modifiers.OnlyWalls(0, 54, 55, 56, 57, 58, 59, 61, 185, 212, 213, 214, 215, 2, 196, 197, 198, 199, 15, 40, 71, 64, 204, 205, 206, 207, 208, 209, 210, 211, 71), new Actions.Blank().Output(shapeData)));
-					if (shapeData.Count > 50 && flag2)
+					for (int l = (int)Main.worldSurface + WorldGen.genRand.Next(-1, 2); l < Main.maxTilesY - 10; l++)
 					{
-						WorldUtils.Gen(new Point(point.X, point.Y), new ModShapes.OuterOutline(shapeData, useDiagonals: true, useInterior: true), new Actions.PlaceWall(num12));
-						num10--;
+						if (k < num7)
+						{
+							if (ConfectionModCalling.AltLibrary == null)
+								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type);
+							else
+								ConfectionModCalling.ConfectionConvert(k, l, 1);
+						}
+						else if (TileID.Sets.Crimson[Main.tile[k, l].TileType] || TileID.Sets.Corrupt[Main.tile[k, l].TileType])
+						{
+							if (ConfectionModCalling.AltLibrary == null)
+								WorldGen.Convert(k, l, ModContent.GetInstance<ConfectionBiomeConversion>().Type);
+							else
+								ConfectionModCalling.ConfectionConvert(k, l, 1);
+						}
 					}
-					shapeData.Clear();
 				}
 			}
-			if (Main.netMode == 2)
-			{
-				Netplay.ResetSections();
-			}
-			WorldGen.UndoSpawnedItemProtection();
-			WorldGen.IsGeneratingHardMode = false;
 		}
 		#endregion
 
@@ -1171,7 +1134,7 @@ namespace TheConfectionRebirth {
 							{
 								WorldGen.KillTile(k, l - 1);
 							}
-							if (growTrees && WorldGen._genRand.NextBool(3))
+							if (growTrees && WorldGen.genRand.NextBool(3))
 							{
 								WorldGen.GrowTree(k, l);
 							}
@@ -1306,7 +1269,7 @@ namespace TheConfectionRebirth {
 		#endregion
 
 		#region Impact painting Generation
-		private PaintingEntry ImpactGeneration(On_WorldGen.orig_RandPictureTile orig)
+		private PaintingEntry ImpactGeneration(On_WorldGen.orig_RandHousePicture orig)
 		{
 			PaintingEntry entryChosenVanilla = orig.Invoke();
 			if (entryChosenVanilla.tileType == TileID.Painting6X4 && entryChosenVanilla.style == 6 && WorldGen.genRand.NextBool(2))
@@ -1430,16 +1393,25 @@ namespace TheConfectionRebirth {
 			}
 		}
 
-		private void On_WorldGen_UpdateWorld_OvergroundTile(On_WorldGen.orig_UpdateWorld_OvergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist)
+		private void On_WorldGen_UpdateWorld_OvergroundTile(On_WorldGen.orig_UpdateWorld_OvergroundTile orig, int i, int j, int wallDist)
 		{
-			orig.Invoke(i, j, checkNPCSpawns, wallDist);
+			orig.Invoke(i, j, wallDist);
 			WallSpread(i, j, wallDist);
 		}
 
-		private void On_WorldGen_UpdateWorld_UndergroundTile(On_WorldGen.orig_UpdateWorld_UndergroundTile orig, int i, int j, bool checkNPCSpawns, int wallDist)
+		private void On_WorldGen_UpdateWorld_UndergroundTile(On_WorldGen.orig_UpdateWorld_UndergroundTile orig, int i, int j, int wallDist)
 		{
-			orig.Invoke(i, j, checkNPCSpawns, wallDist);
+			orig.Invoke(i, j, wallDist);
 			WallSpread(i, j, wallDist);
+		}
+
+		private bool AddConfectionChest(On_WorldGen.orig_IsLockedDungeonBiomeChest orig, ushort chestType, int chestStyle)
+		{
+			if (chestType == ModContent.TileType<ConfectionBiomeChestTile>())
+			{
+				return true;
+			}
+			return orig(chestType, chestStyle);
 		}
 
 		private void WallSpread(int i, int j, int wallDist)
@@ -1862,9 +1834,8 @@ namespace TheConfectionRebirth {
 		}
 		#endregion
 
+		//TODO: dude... this needs to be obliterated into the sun RIGHT FUCKING NOW!!!!!
 		#region Reflections and other System type methods for tiles
-		//Stalac Checks, unfinished, cattail checks, finished, sea oats check, finished, oasis plants finished
-		//TODO: convert mormal stalacs to these
 		public static bool GrowMoreVines(int x, int y) {
 			return (bool)typeof(WorldGen).GetMethod("GrowMoreVines", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, new object[] { x, y });
 		}

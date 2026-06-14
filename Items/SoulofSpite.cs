@@ -27,8 +27,8 @@ namespace TheConfectionRebirth.Items
 			Item.maxStack = 9999;
 		}
 
-		public override void PostUpdate() {
-			Lighting.AddLight(Item.Center, new Vector3(1.52f, 0.21f, 0.37f) * 0.22f * Main.essScale);
+		public override void PostUpdate(WorldItem item) {
+			Lighting.AddLight(item.Center, new Vector3(1.52f, 0.21f, 0.37f) * 0.22f * Main.essScale);
 		}
 
 		public override Color? GetAlpha(Color lightColor) {

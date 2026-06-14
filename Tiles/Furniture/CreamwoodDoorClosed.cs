@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.OpenDoorID[Type] = ModContent.TileType<CreamwoodDoorOpen>();
 
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+			TileID.Sets.RoomNeeds.CountsAsDoor[Type] = true;
 
 			DustType = ModContent.DustType<CreamwoodDust>();
 			AdjTiles = new int[] { TileID.ClosedDoor };

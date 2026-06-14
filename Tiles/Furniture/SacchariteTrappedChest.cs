@@ -25,8 +25,8 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileID.Sets.BasicChestFake[Type] = true;
             TileID.Sets.AvoidedByNPCs[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
-            TileID.Sets.IsATrigger[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
+            TileID.Sets.Wiring.IsATrigger[Type] = true;
 
             DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { 441 };

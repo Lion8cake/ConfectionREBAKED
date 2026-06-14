@@ -79,7 +79,7 @@ namespace TheConfectionRebirth.Projectiles
 					target = Main.npc[dozenTarget[1]];
 				else
 					target = Main.player[dozenTarget[2]];
-				if (!target.active)
+				if ((target is NPC && !((NPC)target).active) || (target is Player && !((Player)target).active))
 				{
 					dozenAttack = false;
 					return false;
@@ -207,7 +207,7 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center - vector * 20f, vector, ModContent.ProjectileType<BakersDozenSlash>(), (int)((double)Projectile.damage * 0.75), 0f, Projectile.owner, 0f, target.Center.Y, Projectile.frame);
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 			default(BakersDozenTrailEffect).Draw(Projectile);
 

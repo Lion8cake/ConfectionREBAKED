@@ -27,14 +27,14 @@ namespace TheConfectionRebirth.Tiles
             Main.tileWaterDeath[Type] = true;
             TileID.Sets.FramesOnKillWall[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-            TileID.Sets.Torch[Type] = true;
+            TileID.Sets.Torches[Type] = true;
 
             DustType = DustID.IceTorch;
             AdjTiles = new int[] { TileID.Torches };
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
+			TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
             TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);

@@ -126,7 +126,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
                 if (left == player.chestX && top == player.chestY && player.chest >= 0)
                 {
                     player.chest = -1;
-                    Recipe.FindRecipes();
+                    //Recipe.FindRecipes(); //TODO: fix chest recipes not updating 
                     SoundEngine.PlaySound(SoundID.MenuClose);
                 }
                 else
@@ -156,9 +156,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
                             SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
                         }
 
-                        Recipe.FindRecipes();
-                    }
-                }
+						//Recipe.FindRecipes(); //TODO: fix chest recipes not updating
+					}
+				}
             }
 
             return true;

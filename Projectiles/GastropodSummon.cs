@@ -14,7 +14,7 @@ namespace TheConfectionRebirth.Projectiles
 		public override void SetStaticDefaults() 
 		{
 			Main.projFrames[Projectile.type] = 4;
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.MinionTargetingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
@@ -226,16 +226,16 @@ namespace TheConfectionRebirth.Projectiles
 			return false;
 		}
 
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-		{
-			if (Projectile.localAI[0] <= 0f)
-			{
-				behindProjectiles.Add(index);
-			}
-			else
-			{
-				overPlayers.Add(index);
-			}
-		}
+		//public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+		//{
+		//	if (Projectile.localAI[0] <= 0f)
+		//	{
+		//		behindProjectiles.Add(index);
+		//	}
+		//	else
+		//	{
+		//		overPlayers.Add(index);
+		//	}
+		//}
 	}
 }

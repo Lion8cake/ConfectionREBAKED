@@ -13,10 +13,7 @@ namespace TheConfectionRebirth.Items
 			if (!Main.dedServ) {
 				GameShaders.Armor.BindShader(
 					Item.type,
-					new ArmorShaderData(
-						new Ref<Effect>(Mod.Assets.Request<Effect>("Shaders/CandyCornDye",
-						AssetRequestMode.ImmediateLoad).Value
-					), "CandyCornDyeShaderPass")
+					new ArmorShaderData(Mod.Assets.Request<Effect>("Shaders/CandyCornDye"), "CandyCornDyeShaderPass")
 				).UseImage(ModContent.Request<Texture2D>("TheConfectionRebirth/Shaders/Corn"));
 			}
 			Item.ResearchUnlockCount = 3;

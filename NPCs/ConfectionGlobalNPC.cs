@@ -162,6 +162,8 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
+		/* broken spawning code
+		 * 
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			SpawnNPC_ConfectionNPC(spawnInfo, 0, out bool blockVanillaSpawn);
@@ -195,7 +197,7 @@ namespace TheConfectionRebirth.NPCs
 		/// <param name="spawnInfo"></param>
 		/// <param name="npcType"></param>
 		/// <returns></returns>
-		public static float SpawnNPC_ConfectionNPC(NPCSpawnInfo spawnInfo, int npcType)
+		public static float SpawnNPC_ConfectionNPC(NPC.Spawner spawnInfo, int npcType)
 		{
 			return SpawnNPC_ConfectionNPC(spawnInfo, npcType, out _);
 		}
@@ -207,7 +209,7 @@ namespace TheConfectionRebirth.NPCs
 		/// <param name="npcType"></param>
 		/// <param name="blockVanillaSpawn"></param>
 		/// <returns></returns>
-		public static float SpawnNPC_ConfectionNPC(NPCSpawnInfo spawnInfo, int npcType, out bool blockVanillaSpawn)
+		public static float SpawnNPC_ConfectionNPC(NPC.Spawner spawnInfo, int npcType, out bool blockVanillaSpawn)
 		{
 			blockVanillaSpawn = false;
 			int x = spawnInfo.SpawnTileX;
@@ -699,6 +701,7 @@ namespace TheConfectionRebirth.NPCs
 			}
 			return 0f;
 		}
+		*/
 
 		public override void OnSpawn(NPC npc, IEntitySource source)
 		{

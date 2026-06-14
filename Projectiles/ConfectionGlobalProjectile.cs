@@ -109,11 +109,10 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override bool PreDraw(Projectile projectile, ref Color lightColor)
+		public override bool PreDraw(Projectile projectile, Player player, ref Color lightColor)
 		{
 			if (projectile.active)
 			{
-				Player player = Main.player[projectile.owner];
 				if (ConfectionPlayer.hasSwirlBuff(player))
 				{
 					if (player.GetModPlayer<ConfectionPlayer>().coneSummonID == projectile.whoAmI)

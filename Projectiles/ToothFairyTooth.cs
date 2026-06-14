@@ -114,9 +114,8 @@ namespace TheConfectionRebirth.Projectiles
             Projectile.velocity += disp * 0.1f;
             Projectile.rotation += Projectile.velocity.X * 10;
         }
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(Player player, ref Color lightColor)
         {
-
             float alphaRatio = 1;
             if (Projectile.timeLeft < 120)
             {

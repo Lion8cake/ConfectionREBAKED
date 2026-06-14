@@ -301,10 +301,10 @@ namespace TheConfectionRebirth.NPCs
             NPC.spriteDirection = NPC.direction;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+  //      public override float SpawnChance(NPC.Spawner spawnInfo)
+  //      {
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void HitEffect(NPC.HitInfo hit)
         {

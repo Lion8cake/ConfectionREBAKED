@@ -70,26 +70,26 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-		{
-			if (Projectile.localAI[0] <= 0f)
-			{
-				behindProjectiles.Add(index);
-			}
-			else
-			{
-				overPlayers.Add(index);
-			}
-		}
+		//public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+		//{
+		//	if (Projectile.localAI[0] <= 0f)
+		//	{
+		//		behindProjectiles.Add(index);
+		//	}
+		//	else
+		//	{
+		//		overPlayers.Add(index);
+		//	}
+		//}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
 			return false;
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
-			Main.instance.PrepareDrawnEntityDrawing(Projectile, Main.player[Projectile.owner].cBody, Projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, player.cBody, Projectile.isAPreviewDummy ? Main.UIScaleMatrix : Main.Transform);
 			return true;
 		}
 

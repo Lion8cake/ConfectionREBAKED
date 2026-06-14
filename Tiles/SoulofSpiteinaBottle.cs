@@ -36,10 +36,7 @@ namespace TheConfectionRebirth.Tiles
         private readonly int animationFrameWidth = 18;
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			bool intoRenderTargets = true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
-
-			if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 36 == 0 && flag) {
+			if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 36 == 0) {
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
 			}
 

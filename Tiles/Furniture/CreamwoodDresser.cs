@@ -24,9 +24,9 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.BasicDresser[Type] = true;
 			TileID.Sets.AvoidedByNPCs[Type] = true;
-			TileID.Sets.InteractibleByNPCs[Type] = true;
+			TileID.Sets.InteractableByNPCs[Type] = true;
 			TileID.Sets.IsAContainer[Type] = true;
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
 			AdjTiles = new int[] { TileID.Dressers };
 			DustType = ModContent.DustType<CreamwoodDust>();
 			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
@@ -83,7 +83,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 				if (Main.netMode == NetmodeID.MultiplayerClient) {
 					if (left == player.chestX && top == player.chestY && player.chest != -1) {
 						player.chest = -1;
-						Recipe.FindRecipes();
+						//Recipe.FindRecipes(); //Add recipe dresser updates
 						SoundEngine.PlaySound(SoundID.MenuClose);
 					}
 					else {
@@ -99,7 +99,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 						Main.stackSplit = 600;
 						if (chestIndex == player.chest) {
 							player.chest = -1;
-							Recipe.FindRecipes();
+							//Recipe.FindRecipes(); //TODO: add dresser crafting updates
 							SoundEngine.PlaySound(SoundID.MenuClose);
 						}
 						else if (chestIndex != player.chest && player.chest == -1) {
@@ -110,14 +110,14 @@ namespace TheConfectionRebirth.Tiles.Furniture
 							player.OpenChest(left, top, chestIndex);
 							SoundEngine.PlaySound(SoundID.MenuTick);
 						}
-						Recipe.FindRecipes();
+						//Recipe.FindRecipes(); //dresser updates 
 					}
 				}
 			}
 			else {
 				Main.playerInventory = false;
 				player.chest = -1;
-				Recipe.FindRecipes();
+				//Recipe.FindRecipes(); //dresser updates again
 				player.SetTalkNPC(-1);
 				Main.npcChatCornerItem = 0;
 				Main.npcChatText = "";

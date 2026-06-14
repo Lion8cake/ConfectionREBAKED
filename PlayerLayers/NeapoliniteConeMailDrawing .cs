@@ -66,7 +66,7 @@ namespace TheConfectionRebirth.PlayerLayers
 					PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, CompositePlayerDrawContext.Torso, new DrawData(value, vector, drawinfo.compTorsoFrame, drawinfo.colorArmorBody, bodyRotation, drawinfo.bodyVect, 1f, drawinfo.playerEffect)
 					{
 						shader = drawinfo.cBody
-					});
+					}, drawinfo.drawPlayer.body);
 				}
 			}
 			if (drawinfo.drawFloatingTube)

@@ -37,13 +37,8 @@ namespace TheConfectionRebirth.Items.Weapons
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			if (player.altFunctionUse != 2)
-			{
-				player.AddBuff(Item.buffType, 2, true);
-				position = Main.MouseWorld;
-
-				player.SpawnMinionOnCursor(Item.GetSource_FromThis(), player.whoAmI, type, Item.damage, knockback);
-			}
+			position = Main.MouseWorld;
+			player.LimitPointToPlayerReachableArea(ref position);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

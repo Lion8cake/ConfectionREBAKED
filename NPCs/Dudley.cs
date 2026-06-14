@@ -381,10 +381,10 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void FindFrame(int frameHeight)
         {

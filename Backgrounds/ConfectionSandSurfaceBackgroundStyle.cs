@@ -5,11 +5,17 @@ using Terraria.Graphics.Effects;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using Terraria.ID;
 
 namespace TheConfectionRebirth.Backgrounds
 {
     public class ConfectionSandSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
     {
+		public override void SetStaticDefaults()
+		{
+			SurfaceBackgroundID.Sets.IsDesertVariant[Slot] = true;
+		}
+
 		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
 			for (int i = 0; i < fades.Length; i++) {
 				if (i == Slot) {

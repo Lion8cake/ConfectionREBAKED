@@ -19,13 +19,13 @@ namespace TheConfectionRebirth.Tiles.Furniture
             Main.tileLavaDeath[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeSleptIn[Type] = true;
-            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.InteractableByNPCs[Type] = true;
             TileID.Sets.IsValidSpawnPoint[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
 
-            DustType = ModContent.DustType<CreamwoodDust>();
+			DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { TileID.Beds };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);

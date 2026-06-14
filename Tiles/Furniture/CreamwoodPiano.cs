@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
 			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<CreamwoodDust>();

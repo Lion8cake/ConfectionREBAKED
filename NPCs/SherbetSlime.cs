@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Newtonsoft.Json.Linq;
 using System;
-using System.CommandLine.Invocation;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -247,10 +246,10 @@ namespace TheConfectionRebirth.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SherbetBricks>(), 1, 30, 60));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+  //      public override float SpawnChance(NPC.Spawner spawnInfo)
+  //      {
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void HitEffect(NPC.HitInfo hit)
         {

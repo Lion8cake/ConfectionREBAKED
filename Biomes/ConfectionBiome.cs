@@ -93,22 +93,22 @@ public class ConfectionBiome : ModBiome
 
 	private int UpdateAudio_DecideOnTOWConfectionMusic()
 	{
-		int newMusic = MusicID.OtherworldlyHallow;
+		int newMusic = MusicID.OtherworldHallow;
 		if ((double)Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2) && !WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))
 		{
 			if (Main.remixWorld && (double)Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + (double)(Main.screenHeight / 2))
 			{
 				if (Main.LocalPlayer.ZoneUndergroundDesert)
 				{
-					newMusic = MusicID.OtherworldlyDesert;
+					newMusic = MusicID.OtherworldDesert;
 				}
 				else if (Main.cloudAlpha > 0f)
 				{
-					newMusic = MusicID.OtherworldlyRain;
+					newMusic = MusicID.OtherworldRain;
 				}
 				else
 				{
-					newMusic = MusicID.OtherworldlyHallow;
+					newMusic = MusicID.OtherworldHallow;
 				}
 			}
 			else
@@ -120,56 +120,56 @@ public class ConfectionBiome : ModBiome
 		{
 			if (Main.cloudAlpha > 0f && !Main.gameMenu)
 			{
-				newMusic = MusicID.OtherworldlyRain;
+				newMusic = MusicID.OtherworldRain;
 			}
 			else
 			{
-				newMusic = MusicID.OtherworldlyHallow;
+				newMusic = MusicID.OtherworldHallow;
 			}
 		}
 		else if (Main._shouldUseStormMusic)
 		{
 			if (Main.bloodMoon)
 			{
-				newMusic = MusicID.OtherworldlyEerie;
+				newMusic = MusicID.OtherworldEerie;
 			}
 			else
 			{
-				newMusic = MusicID.OtherworldlyRain;
+				newMusic = MusicID.OtherworldRain;
 			}
 		}
 		else if (WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))
 		{
 			if (Main.bloodMoon)
 			{
-				newMusic = MusicID.OtherworldlyEerie;
+				newMusic = MusicID.OtherworldEerie;
 			}
 			else
 			{
-				newMusic = MusicID.OtherworldlyOcean;
+				newMusic = MusicID.OtherworldOcean;
 			}
 		}
 		else if (Main.LocalPlayer.ZoneDesert)
 		{
-			newMusic = MusicID.OtherworldlyDesert;
+			newMusic = MusicID.OtherworldDesert;
 		}
 		else if (Main.remixWorld)
 		{
-			newMusic = MusicID.OtherworldlySpace;
+			newMusic = MusicID.OtherworldSpace;
 		}
 		else if (!Main.dayTime)
 		{
 			if (Main.bloodMoon)
 			{
-				newMusic = MusicID.OtherworldlyEerie;
+				newMusic = MusicID.OtherworldEerie;
 			}
 			else if (Main.cloudAlpha > 0f && !Main.gameMenu)
 			{
-				newMusic = MusicID.OtherworldlyNight;
+				newMusic = MusicID.OtherworldNight;
 			}
 			else
 			{
-				newMusic = MusicID.OtherworldlyNight;
+				newMusic = MusicID.OtherworldNight;
 			}
 		}
 		return newMusic;
@@ -198,7 +198,7 @@ public class ConfectionBiome : ModBiome
 		{
 			if (Main._shouldUseStormMusic)
 			{
-				newMusic = MusicID.Monsoon;
+				newMusic = MusicID.Storm;
 			}
 			else if (Main.cloudAlpha > 0f && !Main.gameMenu)
 			{
@@ -221,7 +221,7 @@ public class ConfectionBiome : ModBiome
 			}
 			else
 			{
-				newMusic = MusicID.Monsoon;
+				newMusic = MusicID.Storm;
 			}
 		}
 		else if (WorldGen.oceanDepths((int)(Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16))
@@ -243,7 +243,7 @@ public class ConfectionBiome : ModBiome
 			}
 			else
 			{
-				newMusic = (Main.dayTime ? MusicID.Ocean : MusicID.OceanNight);
+				newMusic = (Main.dayTime ? MusicID.OceanDay : MusicID.OceanNight);
 			}
 		}
 		else if (Main.LocalPlayer.ZoneDesert)
@@ -268,7 +268,7 @@ public class ConfectionBiome : ModBiome
 		}
 		else if (Main.remixWorld)
 		{
-			newMusic = (Main.dayTime ? MusicID.SpaceDay : MusicID.Space);
+			newMusic = (Main.dayTime ? MusicID.SpaceDay : MusicID.SpaceNight);
 		}
 		else if (!Main.dayTime)
 		{
@@ -282,7 +282,7 @@ public class ConfectionBiome : ModBiome
 			}
 			else
 			{
-				newMusic = MusicID.Night;
+				newMusic = MusicID.OverworldNight;
 			}
 		}
 		return newMusic;

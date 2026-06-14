@@ -19,7 +19,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+            TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
             AdjTiles = new int[] { 172 };
             AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;

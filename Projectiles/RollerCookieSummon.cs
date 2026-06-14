@@ -83,7 +83,7 @@ namespace TheConfectionRebirth.Projectiles
 			Main.projPet[Type] = true;
 			Main.projFrames[Type] = 6;
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
-			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
+			ProjectileID.Sets.MinionTargetingFeature[Type] = true;
 			ProjectileID.Sets.TrailCacheLength[Type] = 24;
 			ProjectileID.Sets.TrailingMode[Type] = 0;
 		}
@@ -148,7 +148,7 @@ namespace TheConfectionRebirth.Projectiles
 			}
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 			Main.instance.LoadProjectile(Projectile.type);
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

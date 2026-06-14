@@ -121,7 +121,7 @@ namespace TheConfectionRebirth.NPCs
 				}
 				NPC.defense = NPC.defDefense;
 				NPC.damage = NPC.defDamage;
-				NPC.knockBackResist = 0.3f * Main.GameModeInfo.KnockbackToEnemiesMultiplier;
+				//NPC.knockBackResist = 0.3f * Main.KnockbackToEnemiesMultiplier; //TODO broken
 				NPC.ai[1] += 1f;
 				if (NPC.ai[1] >= 400f)
 				{
@@ -401,10 +401,10 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

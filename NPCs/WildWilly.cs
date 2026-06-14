@@ -63,10 +63,10 @@ namespace TheConfectionRebirth.NPCs
 			npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<WonkyHat>(), ModContent.ItemType<WonkyCoat>(), ModContent.ItemType<WonkyTrousers>()));
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
 		public override void HitEffect(NPC.HitInfo hit)
 		{

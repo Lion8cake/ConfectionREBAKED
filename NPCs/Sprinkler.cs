@@ -169,10 +169,10 @@ namespace TheConfectionRebirth.NPCs
 				NetMessage.SendData(MessageID.SyncNPC, number: index);
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
 		public override void HitEffect(NPC.HitInfo hit)
 		{

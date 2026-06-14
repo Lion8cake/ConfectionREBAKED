@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<CreamwoodDust>();
             AdjTiles = new int[] { 101 };
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			TileID.Sets.RoomNeeds.CountsAsTable[Type] = true;
 			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
         }
     }

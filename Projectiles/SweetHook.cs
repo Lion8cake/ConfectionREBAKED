@@ -33,7 +33,7 @@ namespace TheConfectionRebirth.Projectiles
 			grappleY += dirToPlayer.Y * hangDist;
 		}
 
-		public override bool PreDrawExtras()
+		public override bool PreDrawExtras(Player player)
 		{
 			Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
 			if (Main.player[Projectile.owner].mount.Active && Main.player[Projectile.owner].mount.Type == 52)

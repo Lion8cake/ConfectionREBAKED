@@ -21,7 +21,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
             TileID.Sets.CanBeSatOnForPlayers[Type] = true;
             AddMapEntry(new Color(32, 174, 221), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;

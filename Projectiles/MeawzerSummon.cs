@@ -12,7 +12,7 @@ namespace TheConfectionRebirth.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.MinionTargetingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

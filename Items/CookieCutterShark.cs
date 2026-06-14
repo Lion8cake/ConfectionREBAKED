@@ -11,7 +11,8 @@ namespace TheConfectionRebirth.Items
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 2;
-        }
+            ItemID.Sets.IsQuestFish[Type] = true;
+		}
 
         public override void SetDefaults()
         {
@@ -21,11 +22,6 @@ namespace TheConfectionRebirth.Items
             Item.height = 26;
             Item.uniqueStack = true;
             Item.rare = ItemRarityID.Quest;
-        }
-
-        public override bool IsQuestFish()
-        {
-            return true;
         }
 
         public override bool IsAnglerQuestAvailable()

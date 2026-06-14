@@ -139,7 +139,7 @@ namespace TheConfectionRebirth.Projectiles
 			return false;
 		}
 
-		public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(Player player, ref Color lightColor)
 		{
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -159,7 +159,7 @@ namespace TheConfectionRebirth.Projectiles
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 
-			Vector2 position = new(Projectile.Center.X, Projectile.Center.Y - Main.player[Projectile.owner].gfxOffY);
+			Vector2 position = new(Projectile.Center.X, Projectile.Center.Y - player.gfxOffY);
 
 			Color drawColor = Projectile.GetAlpha(lightColor);
 

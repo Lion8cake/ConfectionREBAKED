@@ -24,7 +24,7 @@ namespace TheConfectionRebirth.Projectiles
 			Projectile.aiStyle = -1;
 		}
 
-		public override void PostDraw(Color lightColor)
+		public override void PostDraw(Player player, Color lightColor)
 		{
 			Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Extra").Value;
 			int frame = 2;

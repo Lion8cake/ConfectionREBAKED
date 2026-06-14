@@ -20,7 +20,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.Torches };

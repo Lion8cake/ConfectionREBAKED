@@ -10,7 +10,7 @@ namespace TheConfectionRebirth.Items
 	{
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
-			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+			ItemID.Sets.SortingPriorityMiscImportants[Type] = 12;
 		}
 
 		public override void SetDefaults() {

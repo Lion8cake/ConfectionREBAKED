@@ -104,11 +104,10 @@ namespace TheConfectionRebirth.Projectiles
 			return false;
 		}
 
-		public override bool PreDraw(ref Color lightColor) {
+		public override bool PreDraw(Player player, ref Color lightColor) {
 			SpriteEffects dir = (SpriteEffects)0;
 			float num = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 2.355f;
 			Asset<Texture2D> asset = TextureAssets.Projectile[Projectile.type];
-			Player player = Main.player[Projectile.owner];
 			Rectangle value = asset.Frame();
 			Rectangle rect = Projectile.getRect();
 			Vector2 vector = Vector2.Zero;

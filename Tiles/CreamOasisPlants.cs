@@ -31,11 +31,8 @@ namespace TheConfectionRebirth.Tiles
 		}
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			bool intoRenderTargets = CaptureManager.Instance.IsCapturing ? false : true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
-
 			if (Main.tile[i, j].TileFrameX < 270) {
-				if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY == 0 && flag) {
+				if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY == 0) {
 					Main.instance.TilesRenderer.AddSpecialPoint(i, j, 4);
 				}
 				return false;

@@ -28,7 +28,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.RoomNeeds.CountsAsTorch[Type] = true;
 			Main.tileLighted[Type] = true;
 			AddMapEntry(new Color(106, 65, 51), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;
@@ -78,10 +78,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			bool intoRenderTargets = true;
-			bool flag = intoRenderTargets || Main.LightingEveryFrame;
-
-			if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag)
+			if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0)
 			{
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
 			}

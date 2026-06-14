@@ -14,10 +14,7 @@ namespace TheConfectionRebirth.Items
 			if (!Main.dedServ) {
 				GameShaders.Armor.BindShader(
 					Item.type,
-					new ArmorShaderData(
-						new Ref<Effect>(Mod.Assets.Request<Effect>("Shaders/SwirlsandDye",
-						AssetRequestMode.ImmediateLoad).Value
-					), "SwirlsandDyeShaderPass")
+					new ArmorShaderData(Mod.Assets.Request<Effect>("Shaders/SwirlsandDye"), "SwirlsandDyeShaderPass")
 					.UseColor(new Color(1.0f, 0.65f, 0.45f))
 				);
 			}

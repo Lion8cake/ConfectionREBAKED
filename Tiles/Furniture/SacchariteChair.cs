@@ -23,7 +23,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileID.Sets.CanBeSatOnForPlayers[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            TileID.Sets.RoomNeeds.CountsAsChair[Type] = true;
 
             DustType = ModContent.DustType<SacchariteDust>();
             AdjTiles = new int[] { TileID.Chairs };

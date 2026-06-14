@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -31,6 +33,13 @@ namespace TheConfectionRebirth
 
 			_addGetShimmerEquivalentType = typeof(Item).GetMethod("GetShimmerEquivalentType", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
 			_addFindDecraftAmount = typeof(Item).GetMethod("FindDecraftAmount", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+
+			_addConvert_ActuallyConvertTile = typeof(WorldGen).GetMethod("ActuallyConvertTile", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+			_addConvert_ActuallyConvertWall = typeof(WorldGen).GetMethod("ActuallyConvertWall", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+			_addSmartCursorTargets = typeof(SmartCursorHelper).GetField("_targets", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+
+			_addSandsharkCollision = typeof(NPC).GetMethod("Collision_MoveSandshark", BindingFlags.NonPublic | BindingFlags.Instance);
 		}
 
 		public static void Unload() {
@@ -50,6 +59,10 @@ namespace TheConfectionRebirth
 			_addColorOfSurfaceBackgroundsModified = null;
 			_addGetShimmerEquivalentType = null;
 			_addFindDecraftAmount = null;
+			_addConvert_ActuallyConvertTile = null;
+			_addConvert_ActuallyConvertWall = null;
+			_addSmartCursorTargets = null;
+			_addSandsharkCollision = null;
 		}
 
 		public static FieldInfo _addSpecialPointSpecialPositions;
@@ -70,8 +83,15 @@ namespace TheConfectionRebirth
 		public static FieldInfo _addBGLoops;
 		public static FieldInfo _addColorOfSurfaceBackgroundsModified;
 
+		public static FieldInfo _addSmartCursorTargets;
+
 		public static MethodInfo _addGetShimmerEquivalentType;
 		public static MethodInfo _addFindDecraftAmount;
+
+		public static MethodInfo _addConvert_ActuallyConvertTile;
+		public static MethodInfo _addConvert_ActuallyConvertWall;
+
+		public static MethodInfo _addSandsharkCollision;
 
 		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type) {
 			if (_addSpecialPointSpecialPositions != null && _addSpecialPointSpecialsCount != null)
@@ -111,11 +131,55 @@ namespace TheConfectionRebirth
 			}
 		}
 
+		public static void SandsharkCollision(this NPC self, bool fall, Vector2 cPosition, int cWidth, int cHeight)
+		{
+			if (_addSandsharkCollision != null)
+			{
+				_addSandsharkCollision.Invoke(self, [fall, cPosition, cWidth, cHeight]);
+			}
+		}
+
+		public static void Convert_ActuallyConvertTile(int conversionType, int x, int y, ref Tile theTile, int newType)
+		{
+			if (_addConvert_ActuallyConvertTile != null)
+			{
+				_addConvert_ActuallyConvertTile.Invoke(null, [conversionType, x, y, theTile, newType]);
+			}
+		}
+
+		public static void Convert_ActuallyConvertWall(int conversionType, int x, int y, ref Tile theTile, int newType)
+		{
+			if (_addConvert_ActuallyConvertWall != null)
+			{
+				_addConvert_ActuallyConvertWall.Invoke(null, [conversionType, x, y, theTile, newType]);
+			}
+		}
+
+		public static List<Tuple<int, int>> SmartCursorHelper_GetTargets()
+		{
+			if (_addSmartCursorTargets != null)
+			{
+				if (_addSmartCursorTargets.GetValue(null) is List<Tuple<int, int>> _targets)
+				{
+					return _targets;
+				}
+			}
+			return null;
+		}
+
+		public static void SmartCursorHelper_SetTargets(List<Tuple<int, int>> _targets)
+		{
+			if (_addSmartCursorTargets != null)
+			{
+				_addSmartCursorTargets.SetValue(null, _targets);
+			}
+		}
+
 		public static bool GetIsLoading()
 		{
 			if (_addIsLoading != null)
 			{
-				if (_addIsLoading != null && _addIsLoading.GetValue(null) is bool isLoading)
+				if (_addIsLoading.GetValue(null) is bool isLoading)
 				{
 					return isLoading;
 				}

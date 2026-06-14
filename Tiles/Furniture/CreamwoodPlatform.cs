@@ -21,7 +21,7 @@ namespace TheConfectionRebirth.Tiles.Furniture
             TileID.Sets.Platforms[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            TileID.Sets.RoomNeeds.CountsAsDoor[Type] = true;
             AddMapEntry(new Color(106, 65, 51));
 
             DustType = ModContent.DustType<CreamwoodDust>();

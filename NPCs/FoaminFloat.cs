@@ -464,10 +464,10 @@ namespace TheConfectionRebirth.NPCs
 			}
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+  //      {
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
 			if (NPC.ai[3] >= 200 && NPC.ai[0] == 2f) {

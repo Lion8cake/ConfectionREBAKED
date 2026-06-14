@@ -123,10 +123,10 @@ namespace TheConfectionRebirth.NPCs
             NPC.frame = new(x * 66, y * 64, 66, 64);
         }
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
-		}
+		//public override float SpawnChance(NPC.Spawner spawnInfo)
+		//{
+		//	return ConfectionGlobalNPC.SpawnNPC_ConfectionNPC(spawnInfo, Type);
+		//}
 
 		public override void HitEffect(NPC.HitInfo hit)
         {
